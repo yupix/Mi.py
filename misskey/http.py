@@ -68,7 +68,11 @@ class WebSocket(object):
         """
         message = Message(message, ws)
         await self.router.capture_message(message)
-        task = asyncio.create_task(self.cls.on_message(ws, message))
+        if not hasattr(message.note, 'res'):
+            task = asyncio.create_task(self.cls.on_message(ws, message))
+        else:
+            task = asyncio.create_task(self.cls.on_response(ws, message))
+
         return task
 
     async def _on_reacted(self, ws, message):

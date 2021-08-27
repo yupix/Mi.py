@@ -1,6 +1,5 @@
 import json
 from misskey.context import Header
-from misskey.note import Note
 
 
 class Reaction(object):

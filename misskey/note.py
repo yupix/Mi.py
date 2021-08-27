@@ -4,45 +4,26 @@ from misskey.user import User
 
 
 class Note(object):
-    __slots__ = (
-        'id',
-        'created_at',
-        'type',
-        'user_id',
-        'author',
-        'text',
-        'cw',
-        'visibility',
-        'visible_user_ids',
-        'renote_count',
-        'replies_count',
-        'reactions',
-        'emojis',
-        'file_ids',
-        'reply_id',
-        'renote_id',
-        'deleted_at',
-        'uri',
-        'ws'
-    )
-
     def __init__(self, data, ws=None, text=None):
         self.ws = ws
+        after_key = {'user': 'author'}
         for attr in ('id', 'createdAt', 'userId', 'user', 'text', 'cw',
                      'visibility', 'renoteCount', 'repliesCount', 'reactions',
                      'emojis', 'fileIds', 'files', 'replyId',
-                     'renoteId'
+                     'renoteId', 'res'
                      ):
             try:
                 value = data[attr]
+                p = re.compile('[A-Z]')
+                default_key = ("_"+p.search(attr)[0].lower()).join(p.split(attr)) if p.search(attr) is not None else attr
+                key = after_key.get(default_key, default_key)
             except KeyError:
                 continue
             else:  # エラーが発生しなかった場合は変数に追加
-                if attr == 'user':
-                    setattr(self, attr, User(value))
+                if key == 'author':
+                    setattr(self, key, User(value))
                 else:
-                    print(f'setattr(self,{attr}, {value})')
-                    setattr(self, f'{attr}', f'{value}')
+                    setattr(self, key, data[attr])
 
     def content(self, content):
         content = {

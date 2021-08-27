@@ -89,6 +89,9 @@ class BotBase(WebSocket):
         """デフォルト処理"""
         await self.dispatch('message', ws, message)
 
+    async def on_response(self, ws, message):
+        await self.dispatch('response', ws, message)
+
     async def on_ready(self, ws):
         await self.event_dispatch('ready', ws)
 

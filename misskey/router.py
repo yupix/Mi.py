@@ -66,9 +66,10 @@ class Router(object):
         }, ensure_ascii=False))
 
     async def capture_message(self, message: Message):
-        await self.ws.send(json.dumps({
-            'type': 'subNote',
-            'body': {
-                'id': f'{message.note.id}'
-            }
-        }))
+        if hasattr(message, 'id'):
+            await self.ws.send(json.dumps({
+                'type': 'subNote',
+                'body': {
+                    'id': f'{message.note.id}'
+                }
+            }))
