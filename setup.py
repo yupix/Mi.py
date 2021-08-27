@@ -10,7 +10,7 @@ with readme_file.open(encoding='utf-8') as fh:
 setup(
     name='mi.py',
     version='0.0.1a',
-    install_requires=['aiohttp', 'websockets'],
+    install_requires=['websockets'],
     url='https://github.com/yupix/alfakana',
     author='yupix',
     author_email='yupi0982@outlook.jp',
