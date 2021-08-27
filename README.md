@@ -1,4 +1,6 @@
 # Mi.py
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fyupix%2FMi.py.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fyupix%2FMi.py?ref=badge_shield)
+
 
 Discord.py ライクなMisskeyBot作り
 
@@ -75,3 +77,6 @@ bot.run('wss:/example.com', 'token')
 
 [Mi.py](LICENSE.md)  
 [Third party](COPYING.md)
+
+
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fyupix%2FMi.py.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fyupix%2FMi.py?ref=badge_large)
