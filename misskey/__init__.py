@@ -11,12 +11,12 @@ __version__ = '0.0.1a'
 __path__ = __import__('pkgutil').extend_path(__path__, __name__)
 
 from .bot import *
-from context import *
-from http import *
-from instance import *
-from message import *
-from note import *
-from reaction import *
-from router import *
-from user import *
-from ext.task import *
+from .context import *
+from .http import *
+from .instance import *
+from .message import *
+from .note import *
+from .reaction import *
+from .router import *
+from .user import *
+from .ext.task import *
