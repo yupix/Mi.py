@@ -9,9 +9,9 @@ with readme_file.open(encoding='utf-8') as fh:
 
 setup(
     name='mi.py',
-    version='0.0.1a',
+    version='0.0.2',
     install_requires=['websockets'],
-    url='https://github.com/yupix/alfakana',
+    url='https://github.com/yupix/mi.py',
     author='yupix',
     author_email='yupi0982@outlook.jp',
     license='MIT',
@@ -22,7 +22,7 @@ setup(
     packages=find_packages(),
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
-        'Programming Language :: Python :: 3.9.6',
+        'Programming Language :: Python :: 3.9',
         'Natural Language :: Japanese',
         'License :: OSI Approved :: MIT License',
     ]
