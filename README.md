@@ -2,6 +2,7 @@
 
 [![CodeFactor](https://www.codefactor.io/repository/github/yupix/mi.py/badge)](https://www.codefactor.io/repository/github/yupix/mi.py)
 [![buddy pipeline](https://app.buddy.works/yupi0982/mi-py/pipelines/pipeline/345007/badge.svg?token=b304dd68d3eeb7917d453a2d2102621123ae4f05e0b659dde59cad486e2984b3 "buddy pipeline")](https://app.buddy.works/yupi0982/mi-py/pipelines/pipeline/345007)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fyupix%2FMi.py.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fyupix%2FMi.py?ref=badge_shield)
 
 ## 使い方
 
@@ -106,4 +107,7 @@ bot.run('wss:/example.com', 'token')
 # LICENSE
 
 [Mi.py](LICENSE.md)  
-[Third party](COPYING.md)
+[Credit](COPYING.md)  
+[Third party](LICENSE/ThirdPartyLicense.md)
+
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fyupix%2FMi.py.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fyupix%2FMi.py?ref=badge_large)
