@@ -19,3 +19,4 @@ from note import *
 from reaction import *
 from router import *
 from user import *
+from ext.task import *
