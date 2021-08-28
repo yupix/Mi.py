@@ -1,11 +1,27 @@
 import json
 import re
+import uuid
+
+import requests
+
 from misskey.user import User
 
 
 class Note(object):
-    def __init__(self, data, ws=None, text=None):
+    def __init__(self, data=None, ws=None, text: str = '', cw: str = '', via_mobile: bool = False, token: str = None,
+                 origin_uri: str = None):
+        if data is None:  # リストをデフォルトにすると使いまわされて良くないので毎回初期化する必要がある。
+            data = {}
         self.ws = ws
+        self.field = data
+        self.origin_uri = origin_uri
+        if not data:  # 型変更としてではなく、投稿などに使う際に必要
+            self.field['text'] = text
+            if len(cw) != 0:
+                self.field['cw'] = cw
+            self.field['viaMobile'] = via_mobile
+            self.field['i'] = token
+
         after_key = {'user': 'author'}
         for attr in ('id', 'createdAt', 'userId', 'user', 'text', 'cw',
                      'visibility', 'renoteCount', 'repliesCount', 'reactions',
@@ -15,7 +31,7 @@ class Note(object):
             try:
                 value = data[attr]
                 p = re.compile('[A-Z]')
-                default_key = ("_"+p.search(attr)[0].lower()).join(p.split(attr)) if p.search(attr) is not None else attr
+                default_key = ("_" + p.search(attr)[0].lower()).join(p.split(attr)) if p.search(attr) is not None else attr
                 key = after_key.get(default_key, default_key)
             except KeyError:
                 continue
@@ -25,32 +41,6 @@ class Note(object):
                 else:
                     setattr(self, key, data[attr])
 
-    def content(self, content):
-        content = {
-            'visibility': f"{content.get('visibility', self.visibility)}",
-            'text': f"{content.get('text', '')}",
-            'cw': content.get('cw'),
-            'viaMobile': f"{content.get('viaMobile', 'false')}",
-            'localOnly': f"{content.get('localOnly', 'false')}",
-            'noExtractMentions': f"{content.get('noExtractMentions', 'false')}",
-            'noExtractHashtags': f"{content.get('noExtractHashtags', 'false')}",
-            'noExtractEmojis': f"{content.get('noExtractEmojis', 'false')}",
-            'replyId': f"{content.get('replyId', self.id)}",
-        }
-        return content
-
-    def create(self):
-        self.ws.send('')
-
-    def reply(self, content: dict = {}):
-        content = self.content(content)
-        self.ws.send(json.dumps(
-            {
-                'type': 'api',
-                'body': {
-                    'id': 'f8b2894d-1b5d-60f3-c9ea-60851f8e9730',
-                    'endpoint': 'notes/create',
-                    'data': content
-
-                }
-            }, ensure_ascii=False))
+    async def send(self) -> requests.models.Response:
+        data = json.dumps(self.field)
+        return requests.post(self.origin_uri + '/api/notes/create', data=data)
