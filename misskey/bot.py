@@ -8,9 +8,10 @@ from misskey.http import WebSocket
 
 
 class BotBase(WebSocket):
-    def __init__(self, **options):
+    def __init__(self):
         self.extra_events = {}
         self.special_events = {}
+        self.token = None
         super().__init__(self)
 
     def event(self, name=None):
@@ -134,7 +135,7 @@ class BotBase(WebSocket):
 
             bot.run(uri, token)
         """
-
+        self.token = token
         asyncio.get_event_loop().run_until_complete(self._run(f'{uri}?i={token}'))
 
 
