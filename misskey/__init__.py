@@ -22,5 +22,21 @@ from .reaction import *
 from .router import *
 from .user import *
 from .ext.task import *
+from .utils import *
 
-__all__ = ['bot', 'context', 'http', 'instance', 'message', 'note', 'reaction', 'router', 'user', 'ext', 'task']
+__all__ = [
+    'bot',
+    'context',
+    'http',
+    'instance',
+    'message',
+    'note',
+    'reaction',
+    'router',
+    'user',
+    'ext',
+    'task',
+    'utils',
+    'Note',
+    'bool_to_string'
+]
