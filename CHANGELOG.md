@@ -9,12 +9,33 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
-- add CHANGELOG.md
-- add README.md
-- add LICENSE
-- add Each event method
+- APIクラスを追加しました
+- APIクラスにnote メソッドを追加しました
+- util.pyにbool_to_string関数を追加しました。
+
+### Removed
+
+- note classからcontentとreply メソッドを削除しました
+
+### Fixed
+
+- setup.pyのrepositoryURLが間違っていたので修正
+
+### Changed
+
+- Tokenをbot classで保存するように
+- Note classのsend メソッドの送信方法をwebsocketsからrequestsに変更
+- CHANGELOG.mdの言語を今回から日本語に（CHANGELOGを書く時間が増すためです）
+
+## [v0.0.1a] 2021-08-27
+
+### Added
+
+- Added CHANGELOG.md.
+- Added README.md.
+- Added LICENSE.
+- Added Each event method.
 
 
-
-
+[v0.0.1a]: https://github.com/yupix/Mi.py/releases
 [Unreleased]: https://github.com/yupix/mi.py/compare/master...HEAD
