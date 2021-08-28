@@ -10,7 +10,7 @@ with readme_file.open(encoding='utf-8') as fh:
 setup(
     name='mi.py',
     version='0.0.2',
-    install_requires=['websockets'],
+    install_requires=['websockets', 'requests'],
     url='https://github.com/yupix/mi.py',
     author='yupix',
     author_email='yupi0982@outlook.jp',
