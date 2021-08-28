@@ -1,10 +1,29 @@
 import json
 import re
-import uuid
+from typing import Any
 
 import requests
 
-from misskey.user import User
+
+class Message(object):
+    def __init__(self, data: Any, ws=None):
+        data = json.loads(data)
+        self.type = data.get('type')
+        self.header = Header(data.get('body', {}))
+        if note := data.get('body', {}).get('body', None):
+            self.note = Note(note, ws)
+        elif note := data.get('createdNote', None):  # APIの場合
+            self.note = Note(note, ws)
+        else:
+            data = data.get('body', {}).get('res', {}).get('createdNote', {})  # WebSocketsの場合
+            data['res'] = True
+            self.note = Note(data, ws)
+
+
+class Header(object):
+    def __init__(self, data):
+        self.id = data.get('id')
+        self.type = data.get('type')
 
 
 class Note(object):
@@ -43,4 +62,63 @@ class Note(object):
 
     async def send(self) -> requests.models.Response:
         data = json.dumps(self.field)
-        return requests.post(self.origin_uri + '/api/notes/create', data=data)
+        res = requests.post(self.origin_uri + '/api/notes/create', data=data)
+        msg = Message(res.text)
+        return msg
+
+
+class Reaction(object):
+    def __init__(self, data):
+        data = json.loads(data)
+        self.header = Header(data.get('body', {}))
+        self.note = ReactionNote(data.get('body'))
+
+
+class ReactionNote(object):
+    def __init__(self, data):
+        self.reaction = data['body'].get('reaction')
+        self.user_id = data['body'].get('userId')
+
+
+class User(object):
+    __slots__ = (
+        'id',
+        'name',
+        'username',
+        'host',
+        'avatar_url',
+        'avatar_blurhash',
+        'avatar_color',
+        'instance',
+        'emojis'
+    )
+
+    def __init__(self, data: dict):
+        self.id = data.get('id')
+        self.name = data.get('name', data.get('username', None))
+        self.username = data.get('username')
+        self.host = data.get('host')
+        self.avatar_url = data.get('avatarUrl')
+        self.avatar_blurhash = data.get('avatarBlurhash')
+        self.avatar_color = data.get('avatarColor')
+        self.instance = Instance(data)
+        self.emojis = data.get('emojis')
+
+
+class Instance(object):
+    __slots__ = (
+        'home',
+        'name',
+        'software_name',
+        'icon_url',
+        'favicon_url',
+        'theme_color'
+    )
+
+    def __init__(self, data):
+        self.home = data.get('instance', {}).get('home')
+        self.name = data.get('instance', {}).get('name')
+        self.software_name = data.get('instance', {}).get('softwareName')
+        self.icon_url = data.get('instance', {}).get('iconUrl')
+        self.favicon_url = data.get('instance', {}).get('faviconUrl')
+        self.theme_color = data.get('instance', {}).get('themeColor')

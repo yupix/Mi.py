@@ -1,5 +1,3 @@
-from misskey.reaction import Reaction
-
 __title__ = 'misskey'
 __author__ = 'yupix'
 __license__ = 'MIT'
@@ -11,32 +9,25 @@ __version__ = '0.0.2'
 __path__ = __import__('pkgutil').extend_path(__path__, __name__)
 
 from .bot import *
-
-from .context import *
 from .ext import task
-from .http import *
-from .instance import *
-from .message import *
-from .note import *
-from .reaction import *
-from .router import *
-from .user import *
 from .ext.task import *
+from .http import *
+from .note import *
+from .router import *
 from .utils import *
 
 __all__ = [
     'bot',
-    'context',
     'http',
-    'instance',
-    'message',
     'note',
-    'reaction',
     'router',
-    'user',
     'ext',
     'task',
     'utils',
     'Note',
-    'bool_to_string'
+    'bool_to_string',
+    'Message',
+    'Header',
+    'User',
+    'Reaction'
 ]
