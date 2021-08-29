@@ -1,19 +1,49 @@
 name: Python Master Workflow
-on:
-  push:
-    branches:
-      - 'master'
+
+on: [push]
+
 jobs:
   codecov:
     name: Codecov Workflow
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [16.x]
+        python-version: [3.9]
+
+    services:
+      postgres:
+        image: postgres:13-alpine
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_DB: test-misskey
+          POSTGRES_HOST_AUTH_METHOD: trust
+
+      redis:
+        image: redis:alpine
+        ports:
+          - 6379:6379
 
     steps:
       - uses: actions/checkout@v1
+      - name: create instance
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: git clone --recursive https://github.com/TeamBlackCrystal/misskey.git
+      - run: |
+          yarn install --prefer-offline
+          yarn build
+          cp e2e/e2e.yml .config/default.yml
+          yarn migrateandstart &
+        working-directory: ./misskey
+
       - name: install requirements
         uses: actions/setup-python@master
         with:
-          python-version: 3.9
+          python-version: ${{ matrix.python-version }}
+
       - name: Generate coverage report
         run: |
           pip install pytest
