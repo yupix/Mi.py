@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - APIクラスを追加しました
 - APIクラスにnote メソッドを追加しました
 - util.pyにbool_to_string関数を追加しました。
+- taskにstopメソッドを追加しました。
 
 ### Removed
 
@@ -26,6 +27,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Tokenをbot classで保存するように
 - Note classのsend メソッドの送信方法をwebsocketsからrequestsに変更
 - CHANGELOG.mdの言語を今回から日本語に（CHANGELOGを書く時間が増すためです）
+- README.mdからExampleを削除してExampleフォルダ内に移動しました
+- **!BREAKING CHANGE**: noteに関する物を一つのファイルに纏めました、これによりインポートの変更が必要です。 
 
 ## [v0.0.1a] 2021-08-27
 
