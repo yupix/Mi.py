@@ -69,11 +69,16 @@ html_static_path = ['_static']
 html_logo = "_static/mi.py.svg"
 
 html_theme_options = {
-    "external_links": [
-        {"url": "https://pandas.pydata.org/pandas-docs/stable/", "name": "Pandas Docs"}
-    ],
+    #"external_links": [
+    #    {"url": "https://pandas.pydata.org/pandas-docs/stable/", "name": "API"}
+    #],
     "github_url": "https://github.com/yupix/mi.py",
     "icon_links": [
+        {
+            "name": "Discord",
+            "url": "https://discord.gg/CcT997U",
+            "icon": "fab fa-discord"
+        },
         {
             "name": "PyPI",
             "url": "https://pypi.org/project/mi.py",
