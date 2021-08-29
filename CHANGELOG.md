@@ -10,9 +10,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 - APIクラスを追加しました
-- APIクラスにnote メソッドを追加しました
-- util.pyにbool_to_string関数を追加しました。
-- taskにstopメソッドを追加しました。
+- APIクラスにnote, drive メソッドを追加しました
+- util.pyにbool_to_string関数を追加しました
+- taskにstopメソッドを追加しました
+- Driveクラスを追加しました
+- Driveクラスにuploadメソッドを追加しました
+- 一部のメソッドや関数にDocStringを追加しました
 
 ### Removed
 
@@ -21,6 +24,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 
 - setup.pyのrepositoryURLが間違っていたので修正
+- __all__ に存在しなかった関数やクラスを追加しました
 
 ### Changed
 
