@@ -6,78 +6,7 @@
 
 ## 使い方
 
-<details>
-<summary>クラスを継承したBOT作り</summary>
-
-```python
-from misskey.ext import task
-from misskey.reaction import Reaction
-from misskey.message import Message
-from misskey.router import Router
-from misskey.bot import Bot
-
-
-class SakuraAoi(Bot):
-
-    @task.loop(60)
-    async def task(self, ws):
-        print(ws)
-        print('ループしてますよ～')
-
-    async def on_ready(self, ws):
-        print('work on my machine')
-        await Router(ws).channels(['global', 'main'])
-        self.task.start()
-
-    async def on_message(self, ws, ctx: Message):
-        print(f'{ctx.note.author.instance.name} | {ctx.note.author.username}さんがノートしました: {ctx.note.text}')
-
-    async def on_reacted(self, ws, ctx: Reaction):
-        print(ctx.note.reaction)
-
-    async def on_deleted(self, ws, ctx: Message):
-        print(ctx)
-
-    async def on_error(self, err):
-        print(err)
-
-
-if __name__ == '__main__':
-    url = 'wss://exmaple.com/streaming'
-    SakuraAoi().run(url, 'token')
-```
-</details>
-
-<details>
-<summary>インスタンス化してイベントを登録するスタイル</summary>
-
-```python
-from misskey.message import Message
-from misskey.router import Router
-from misskey.bot import Bot
-
-bot = Bot()
-
-
-@bot.listen()
-async def on_message(ws, ctx: Message):
-    print(f'{ctx.note.author.instance.name} | {ctx.note.author.username}さんがノートしました: {ctx.note.text}')
-
-
-@bot.listen()
-async def on_reaction(ws, ctx):
-    print(f'{ctx.note.author.instance.name} | {ctx.author.name}さんがリアクションを付けました: {ctx.note.text}')
-
-
-@bot.event()
-async def on_ready(ws):
-    print('work on my machine')
-    await Router(ws).channels(['global', 'main'])
-
-
-bot.run('wss:/example.com', 'token')
-```
-</details>
+様々な使い方を書くにあたってREADMEから変更しました。[こちら](examples)からご覧ください。
 
 ### Collaborators
 
