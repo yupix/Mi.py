@@ -1,6 +1,6 @@
 import re
 
-from misskey import Note
+from misskey import Note, Drive
 
 
 class API(object):
@@ -17,3 +17,5 @@ class API(object):
     def note(self, *args, **kwargs):
         return Note(token=self.token, origin_uri=self.origin_uri, *args, **kwargs)
 
+    def drive(self):
+        return Drive(token=self.token, origin_uri=self.origin_uri)

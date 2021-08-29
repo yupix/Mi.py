@@ -15,6 +15,7 @@ from .http import *
 from .note import *
 from .router import *
 from .utils import *
+from .drive import *
 
 __all__ = [
     'bot',
@@ -24,6 +25,7 @@ __all__ = [
     'ext',
     'task',
     'utils',
+    'drive',
     'Note',
     'bool_to_string',
     'Message',
@@ -31,5 +33,6 @@ __all__ = [
     'User',
     'Reaction',
     'Bot',
-    'Router'
+    'Router',
+    'Drive'
 ]
