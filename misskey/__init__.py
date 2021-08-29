@@ -8,14 +8,13 @@ __version__ = '0.0.2'
 
 __path__ = __import__('pkgutil').extend_path(__path__, __name__)
 
-from .bot import Bot, BotBase
 from .ext import task
 from .ext.task import Loop, loop
-from .http import WebSocket
 from .note import Message, Header, Note, Reaction, ReactionNote, User, Instance
 from .router import Router
 from .utils import bool_to_string
 from .drive import Properties, Drive
+from .bot import Bot, BotBase
 
 __all__ = [
     'bot',
@@ -26,7 +25,6 @@ __all__ = [
     'task',
     'Loop',
     'loop',
-    'WebSocket',
     'utils',
     'drive',
     'Note',
