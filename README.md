@@ -4,6 +4,11 @@
 [![buddy pipeline](https://app.buddy.works/yupi0982/mi-py/pipelines/pipeline/345007/badge.svg?token=b304dd68d3eeb7917d453a2d2102621123ae4f05e0b659dde59cad486e2984b3 "buddy pipeline")](https://app.buddy.works/yupi0982/mi-py/pipelines/pipeline/345007)
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fyupix%2FMi.py.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fyupix%2FMi.py?ref=badge_shield)
 
+## 概要
+
+Mi.pyは[Discord.py](https://github.com/Rapptz/discord.py) ライクな書き方ができるように作っているMisskeyApi wrapperです
+現在動作を確認しているMisskeyは `Ayuskey` のみです。本家Misskey等に関しては動作を確認していませんので注意してください。
+
 ## 使い方
 
 様々な使い方を書くにあたってREADMEから変更しました。[こちら](examples)からご覧ください。
@@ -32,6 +37,8 @@
     </tr>
 </table>
 
+最後にこのプロジェクトを作るきっかけになり、一部のコードを使用させていただいているDiscord.pyがArchivedになりました。
+作者であるDannyさんや全てのコラボレーターに最大限の感謝申し上げます。
 
 # LICENSE
 
