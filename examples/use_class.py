@@ -18,10 +18,13 @@ class MyBot(Bot):
 
     async def on_ready(self, ws):
         print('work on my machine')
-        await Router(ws).channels(['global', 'main'])
+        await Router(ws).channels(['global', 'main'])  # globalとmainチャンネルに接続
         self.task.start()  # タスクを起動する
         res = await conn.note(text='Hello~~~~~').send()  # ノートを投稿
         print(res.note.text)
+        self.task.stop()  # タスクを止める
+        res = await conn.drive().upload('/home/example/example.png', 'example.png')  # ドライブに画像をアップロード
+        print(res.url)
 
     async def on_message(self, ws, ctx: Message):
         print(f'{ctx.note.author.instance.name} | {ctx.note.author.username}さんがノートしました: {ctx.note.text}')
