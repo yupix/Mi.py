@@ -4,7 +4,7 @@ import sys
 import traceback
 from typing import Any, Callable, Coroutine
 
-from misskey.http import WebSocket
+from mi.http import WebSocket
 
 
 class BotBase(WebSocket):

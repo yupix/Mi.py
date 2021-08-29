@@ -1,6 +1,6 @@
-from misskey import Bot, Message, Router
-from misskey.api import API
-from misskey.ext import task
+from mi import Bot, Message, Router
+from mi.api import API
+from mi.ext import task
 
 uri = 'wss://example.com/streaming'
 token = 'This is your token'

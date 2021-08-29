@@ -1,6 +1,6 @@
 import re
 
-from misskey import Note, Drive
+from mi import Note, Drive
 
 
 class API(object):

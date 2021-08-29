@@ -4,8 +4,8 @@ from typing import Any
 
 import websockets
 
-from misskey import Message, Reaction
-from misskey.router import Router
+from mi import Message, Reaction
+from mi.router import Router
 
 
 class WebSocket(object):

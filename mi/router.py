@@ -1,6 +1,6 @@
 import json
 
-from misskey import Message
+from mi import Message
 
 
 class Router(object):
