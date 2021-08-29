@@ -29,5 +29,7 @@ __all__ = [
     'Message',
     'Header',
     'User',
-    'Reaction'
+    'Reaction',
+    'Bot',
+    'Router'
 ]
