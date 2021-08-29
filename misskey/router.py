@@ -1,6 +1,6 @@
 import json
-from misskey.message import Message
-from threading import Thread
+
+from misskey import Message
 
 
 class Router(object):
