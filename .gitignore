@@ -1,7 +1,11 @@
 .vscode
-docs
 venv
 .venv
 .idea
 types
 dev
+_build
+docs/_build/
+mi.py.egg-info
+build
+
