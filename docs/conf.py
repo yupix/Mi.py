@@ -38,6 +38,10 @@ extensions = [
     'sphinx.ext.napoleon'
 ]
 
+autodoc_mock_imports = ["matplotlib"]
+autoclass_content = 'both'
+
+
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
 
@@ -97,8 +101,8 @@ html_theme_options = {
 
 
 html_context = {
-    "github_user": "pandas-dev",
-    "github_repo": "pydata-sphinx-theme",
+    "github_user": "yupix",
+    "github_repo": "Mi.py",
     "github_version": "master",
     "doc_path": "docs",
 }
