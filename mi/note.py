@@ -31,6 +31,7 @@ class Note(object):
                  origin_uri: str = None):
         if data is None:  # リストをデフォルトにすると使いまわされて良くないので毎回初期化する必要がある。
             data = {}
+        self.token = token
         self.ws = ws
         self.field = data
         self.origin_uri = origin_uri
@@ -40,6 +41,7 @@ class Note(object):
                 self.field['cw'] = cw
             self.field['viaMobile'] = via_mobile
             self.field['i'] = token
+            self.field['mediaIds'] = []
 
         after_key = {'user': 'author'}
         for attr in ('id', 'createdAt', 'userId', 'user', 'text', 'cw',
@@ -60,9 +62,36 @@ class Note(object):
                 else:
                     setattr(self, key, data[attr])
 
+    def add_file(self, file_id: str = None, path: str = None, name: str = None) -> None:
+        """
+        ノートにファイルを添付します。
+
+        Parameters
+        ----------
+        file_id : str
+            既にドライブにあるファイルを使用する場合のファイルID
+        path : str
+            新しくファイルをアップロードする際のファイルへのパス
+        name : str
+            新しくファイルをアップロードする際のファイル名(misskey side
+
+        Returns
+        -------
+        None
+        """
+        from mi import Drive
+        if file_id is None:
+            res = Drive(token=self.token, origin_uri=self.origin_uri).upload(path=path, name=name)
+            print(res.id)
+            self.field['mediaIds'].append(f'{res.id}')
+        else:
+            self.field['mediaIds'].append(f'{file_id}')
+
     async def send(self) -> requests.models.Response:
+        print(self.field)
         data = json.dumps(self.field)
         res = requests.post(self.origin_uri + '/api/notes/create', data=data)
+        print(res.text)
         msg = Message(res.text)
         return msg
 
