@@ -8,12 +8,32 @@ class Loop(object):
         self._task = None
         self.stop_next_iteration = None
 
-    def start(self, *args, **kwargs):
+    def start(self, *args, **kwargs) -> asyncio.Task:
+        """
+        タスクを開始する
+
+        Parameters
+        ----------
+        args : Any
+        kwargs : Any
+
+        Returns
+        -------
+        _task : asyncio.Task
+        """
         _loop = asyncio.get_event_loop()
         self._task = _loop.create_task(self.task(*args, **kwargs))
         return self._task
 
     def stop(self):
+        """
+        タスクを停止
+
+        Returns
+        -------
+        None
+
+        """
         if not self._task.done():
             self.stop_next_iteration = True
 
@@ -26,7 +46,6 @@ class Loop(object):
 
 
 def loop(n):
-
     def _deco(f):
         return Loop(f, n)
 
