@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+# Added
+
+- None
+
+## [v0.1.0a] 2021-09-01
+
 ### Added
 
 - `API`クラスを追加しました
@@ -46,5 +52,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Added Each event method.
 
 
+[v0.1.0a]: https://github.com/yupix/mi.py/compare/v0.0.1a...v0.1.0a
 [v0.0.1a]: https://github.com/yupix/Mi.py/releases
 [Unreleased]: https://github.com/yupix/mi.py/compare/master...HEAD
