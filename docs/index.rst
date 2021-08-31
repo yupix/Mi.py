@@ -6,10 +6,16 @@
 Welcome to Mi.py's documentation!
 =================================
 
+Mi.pyはDiscord.pyライクな書き方ができるように作成されているMisskey API Wrapeprです
+
+.. warning::
+
+   Mi.pyは現在Preview VersionなのでPiPyではなくgithubの方を使用することを推奨します
+
+
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
-
 
 Indices and tables
 ==================
