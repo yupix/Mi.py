@@ -27,7 +27,7 @@ class Drive(object):
         self.path: str = ''
         self.name: str = ''
 
-    async def upload(self, path: str, name: str = None) -> 'Drive':
+    def upload(self, path: str, name: str = None) -> 'Drive':
         """
 
         Parameters
