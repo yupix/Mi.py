@@ -17,6 +17,27 @@ Mi.pyはDiscord.pyライクな書き方ができるように作成されてい�
    :maxdepth: 2
    :caption: Contents:
 
+.. panels::
+    :card: + intro-card text-center
+    :column: col-lg-12 p-3
+
+    ---
+    :img-top: _static/api.svg
+    :img-top-cls: + w-25 mx-auto
+
+    API reference
+    ^^^^^^^^^^^^^
+
+    どのようにクラスやメソッドを使うのかここで探検しましょう
+
+    +++
+
+    .. link-button:: api
+            :type: ref
+            :text: To the reference guide
+            :classes: btn-block btn-secondary stretched-link
+
+
 Indices and tables
 ==================
 

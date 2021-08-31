@@ -35,7 +35,9 @@ extensions = [
     'sphinx.ext.viewcode',
     'sphinx.ext.autosummary',
     'sphinx.ext.todo',
-    'sphinx.ext.napoleon'
+    'sphinx.ext.napoleon',
+    'numpydoc',
+    'sphinx_panels'
 ]
 
 autodoc_mock_imports = ["matplotlib"]
@@ -57,6 +59,11 @@ language = 'ja'
 # This pattern also affects html_static_path and html_extra_path.
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
+
+html_sidebars = {
+    "contributing": ["search-field", "custom-template"],
+    "changelog": [],
+}
 
 # -- Options for HTML output -------------------------------------------------
 

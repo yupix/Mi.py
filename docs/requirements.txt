@@ -6,3 +6,5 @@ humanize>=0.5.1
 docutils>=0.15.2
 requests
 websockets
+numpydoc
+sphinx-panels
