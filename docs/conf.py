@@ -32,13 +32,20 @@ release = '0.5.0'
 # ones.
 extensions = [
     'sphinx.ext.autodoc',
-    'sphinx.ext.viewcode',
     'sphinx.ext.autosummary',
+    'sphinx.ext.extlinks',
+    'sphinx.ext.doctest',
+    'sphinx.ext.extlinks',
+    'sphinx.ext.viewcode',
+    'sphinx.ext.intersphinx',
+    'sphinx.ext.autosectionlabel',
     'sphinx.ext.todo',
     'sphinx.ext.napoleon',
     'numpydoc',
-    'sphinx_panels'
+    'sphinx_panels',
+    'sphinx_git'
 ]
+panels_add_bootstrap_css = False
 
 autodoc_mock_imports = ["matplotlib"]
 autoclass_content = 'both'

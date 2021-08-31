@@ -37,6 +37,10 @@ Mi.pyはDiscord.pyライクな書き方ができるように作成されてい�
             :text: To the reference guide
             :classes: btn-block btn-secondary stretched-link
 
+Recent Changes
+--------------
+
+.. git_changelog::
 
 Indices and tables
 ==================

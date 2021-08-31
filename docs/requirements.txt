@@ -8,3 +8,4 @@ requests
 websockets
 numpydoc
 sphinx-panels
+sphinx-git
