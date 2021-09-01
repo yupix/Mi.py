@@ -42,8 +42,8 @@ Mi.pyは[Discord.py](https://github.com/Rapptz/discord.py) ライクな書き方
 
 # LICENSE
 
-[Mi.py](LICENSE.md)  
-[Credit](COPYING.md)  
-[Third party](LICENSE/ThirdPartyLicense.md)
+[Mi.py](https://github.com/yupix/Mi.py/blob/master/LICENSE.md)  
+[Credit](https://github.com/yupix/Mi.py/blob/master/COPYING.md)  
+[Third party](https://github.com/yupix/Mi.py/blob/master/LICENSE/ThirdPartyLicense.md)
 
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fyupix%2FMi.py.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fyupix%2FMi.py?ref=badge_large)
