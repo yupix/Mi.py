@@ -14,8 +14,20 @@ class API(object):
         else:
             self.origin_uri = origin_uri
 
-    def note(self, *args, **kwargs):
-        return Note(token=self.token, origin_uri=self.origin_uri, *args, **kwargs)
+    def note(self, data=None, text: str = '', cw: str = '', via_mobile: bool = False, *args, **kwargs):
+        if data is None:  # リストをデフォルトにすると使いまわされて良くないので毎回初期化する必要がある。
+            if data:
+                field = data
+            else:
+                field = {}
+            field['text'] = text
+            if len(cw) != 0:
+                field['cw'] = cw
+            field['viaMobile'] = via_mobile
+            field['i'] = self.token
+        else:
+            field = data
+        return Note(token=self.token, origin_uri=self.origin_uri, data=field, *args, **kwargs)
 
     def drive(self):
         return Drive(token=self.token, origin_uri=self.origin_uri)
