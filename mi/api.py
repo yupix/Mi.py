@@ -14,14 +14,14 @@ class API(object):
         else:
             self.origin_uri = origin_uri
 
-    def note(self, data=None, text: str = '', cw: str = '', via_mobile: bool = False, *args, **kwargs):
+    def note(self, data=None, text: str = None, cw: str = None, via_mobile: bool = False, *args, **kwargs):
         if data is None:  # リストをデフォルトにすると使いまわされて良くないので毎回初期化する必要がある。
             if data:
                 field = data
             else:
                 field = {}
             field['text'] = text
-            if len(cw) != 0:
+            if cw:
                 field['cw'] = cw
             field['viaMobile'] = via_mobile
             field['i'] = self.token
