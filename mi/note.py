@@ -27,7 +27,7 @@ class Header(object):
 
 
 class Note(object):
-    def __init__(self, data=None, ws=None, text: str = '', cw: str = '', via_mobile: bool = False, token: str = None,
+    def __init__(self, data=None, ws=None, text: str = None, cw: str = None, via_mobile: bool = False, token: str = None,
                  origin_uri: str = None):
         if data is None:  # リストをデフォルトにすると使いまわされて良くないので毎回初期化する必要がある。
             data = {}
@@ -87,9 +87,39 @@ class Note(object):
             self.field['fileIds'].append(f'{file_id}')
         return self
 
+    def add_poll(self, data: list = None, item: str = '', expires_at: int = None, expired_after: int = None):
+        """
+        アンケートを作成します
+
+        Parameters
+        ----------
+        data : list
+            アンケートの配列
+        item: str
+            アンケートの項目名
+        expires_at : int
+            いつにアンケートを締め切るか 例:2021-09-02T15:00:00.000Z
+        expired_after : int
+            投稿後何秒後にアンケートを締め切るか(秒
+
+        Returns
+        -------
+        self: Note
+        """
+        if not self.field.get('poll'):
+            self.field['poll'] = {}
+            self.field['poll']['choices'] = []
+        self.field['poll']['expiresAt'] = expires_at
+        self.field['poll']['expiredAfter'] = expired_after
+        if data:
+            self.field['poll']['choices'] = data
+        else:
+            self.field['poll']['choices'].append(item)
+        return self
+
     async def send(self) -> Message:
         """
-        既にあるnoteクラスを送信します
+        既にあるnoteクラスを元にnoteを送信します
 
         Returns
         -------
