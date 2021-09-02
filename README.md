@@ -12,6 +12,7 @@ Mi.pyは[Discord.py](https://github.com/Rapptz/discord.py) ライクな書き方
 ## 使い方
 
 様々な使い方を書くにあたってREADMEから変更しました。[こちら](examples)からご覧ください。
+その他のメソッドなどについては[ドキュメント](https://mipy.readthedocs.io/) をご覧ください
 
 ### Collaborators
 
