@@ -87,10 +87,8 @@ class Note(object):
             self.field['fileIds'].append(f'{file_id}')
 
     async def send(self) -> requests.models.Response:
-        print(self.field)
         data = json.dumps(self.field)
         res = requests.post(self.origin_uri + '/api/notes/create', data=data)
-        print(res.text)
         msg = Message(res.text)
         return msg
 
