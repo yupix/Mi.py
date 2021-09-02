@@ -41,7 +41,6 @@ class Note(object):
                 self.field['cw'] = cw
             self.field['viaMobile'] = via_mobile
             self.field['i'] = token
-            self.field['mediaIds'] = []
 
         after_key = {'user': 'author'}
         for attr in ('id', 'createdAt', 'userId', 'user', 'text', 'cw',
@@ -80,12 +79,12 @@ class Note(object):
         None
         """
         from mi import Drive
+        self.field['fileIds'] = []
         if file_id is None:
             res = Drive(token=self.token, origin_uri=self.origin_uri).upload(path=path, name=name)
-            print(res.id)
-            self.field['mediaIds'].append(f'{res.id}')
+            self.field['fileIds'].append(f'{res.id}')
         else:
-            self.field['mediaIds'].append(f'{file_id}')
+            self.field['fileIds'].append(f'{file_id}')
 
     async def send(self) -> requests.models.Response:
         print(self.field)
