@@ -1,3 +1,8 @@
+"""
+Mi.pyを使用する上でちょっとした際に便利なツール一覧
+"""
+
+
 def bool_to_string(boolean: bool) -> str:
     """
     boolを小文字にして文字列として返します
