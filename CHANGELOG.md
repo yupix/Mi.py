@@ -7,9 +7,21 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
-# Added
+### Removed
 
-- None
+- 一部でテスト用のprintが残っていたので削除
+
+# Changed
+
+- `BotBase`クラスに`API`クラスをMixinする事でコネクションを別途用意する必要がなくなる様に
+- `API` クラスから`note`メソッドを削除、代わりに`Note`クラスを追加
+- `bool_to_string`をmiネームスペースから削除、今後は`mi.utils`で提供
+
+### Fixed
+
+- pypiからだとLICENSE等の相対リンクが動かないので絶対リンクに変更
+- `Note` クラスのadd_filesで誤ってDeprecatedのmediaIdsを使っていたので`fileIds`に変更
+- Noteを送るだけなのに画像などのファイルが絶対に必要になっていたので修正
 
 ## [v0.1.0a] 2021-09-01
 
@@ -51,7 +63,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Added LICENSE.
 - Added Each event method.
 
-
 [v0.1.0a]: https://github.com/yupix/mi.py/compare/v0.0.1a...v0.1.0a
+
 [v0.0.1a]: https://github.com/yupix/Mi.py/releases
+
 [Unreleased]: https://github.com/yupix/mi.py/compare/master...HEAD
