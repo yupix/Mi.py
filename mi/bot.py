@@ -1,17 +1,20 @@
 import asyncio
 import importlib
+import re
 import sys
 import traceback
 from typing import Any, Callable, Coroutine
 
+from mi.api import API
 from mi.http import WebSocket
 
 
-class BotBase(WebSocket):
+class BotBase(WebSocket, API):
     def __init__(self):
         self.extra_events = {}
         self.special_events = {}
         self.token = None
+        self.origin_uri = None
         super().__init__(self)
 
     def event(self, name=None):
@@ -136,6 +139,15 @@ class BotBase(WebSocket):
             bot.run(uri, token)
         """
         self.token = token
+        if _origin_uri := re.search(r'wss?://(.*)/streaming', uri):
+            origin_uri = _origin_uri.group(0).replace('wss', 'https').replace('ws', 'http').replace('/streaming', '')
+        else:
+            origin_uri = uri
+        if uri[-1] == '/':
+            self.origin_uri = origin_uri[:-1]
+        else:
+            self.origin_uri = origin_uri
+
         asyncio.get_event_loop().run_until_complete(self._run(f'{uri}?i={token}'))
 
 
