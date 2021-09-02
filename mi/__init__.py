@@ -12,7 +12,6 @@ from .ext import task
 from .ext.task import Loop, loop
 from .note import Message, Header, Note, Reaction, ReactionNote, User, Instance
 from .router import Router
-from .utils import bool_to_string
 from .drive import Properties, Drive
 from .bot import Bot, BotBase
 
@@ -30,7 +29,6 @@ __all__ = [
     'Note',
     'ReactionNote',
     'Instance',
-    'bool_to_string',
     'Message',
     'Header',
     'User',
@@ -38,5 +36,5 @@ __all__ = [
     'Bot',
     'Router',
     'Drive',
-    'Properties'
+    'Properties',
 ]
