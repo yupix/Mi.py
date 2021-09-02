@@ -61,7 +61,7 @@ class Note(object):
                 else:
                     setattr(self, key, data[attr])
 
-    def add_file(self, file_id: str = None, path: str = None, name: str = None) -> None:
+    def add_file(self, file_id: str = None, path: str = None, name: str = None) -> 'Note':
         """
         ノートにファイルを添付します。
 
@@ -76,7 +76,7 @@ class Note(object):
 
         Returns
         -------
-        None
+        self: Note
         """
         from mi import Drive
         self.field['fileIds'] = []
@@ -85,8 +85,16 @@ class Note(object):
             self.field['fileIds'].append(f'{res.id}')
         else:
             self.field['fileIds'].append(f'{file_id}')
+        return self
 
-    async def send(self) -> requests.models.Response:
+    async def send(self) -> Message:
+        """
+        既にあるnoteクラスを送信します
+
+        Returns
+        -------
+        msg: Message
+        """
         data = json.dumps(self.field)
         res = requests.post(self.origin_uri + '/api/notes/create', data=data)
         msg = Message(res.text)
@@ -141,10 +149,11 @@ class Instance(object):
         'theme_color'
     )
 
-    def __init__(self, data):
-        self.home = data.get('instance', {}).get('home')
-        self.name = data.get('instance', {}).get('name')
-        self.software_name = data.get('instance', {}).get('softwareName')
-        self.icon_url = data.get('instance', {}).get('iconUrl')
-        self.favicon_url = data.get('instance', {}).get('faviconUrl')
-        self.theme_color = data.get('instance', {}).get('themeColor')
+
+def __init__(self, data):
+    self.home = data.get('instance', {}).get('home')
+    self.name = data.get('instance', {}).get('name')
+    self.software_name = data.get('instance', {}).get('softwareName')
+    self.icon_url = data.get('instance', {}).get('iconUrl')
+    self.favicon_url = data.get('instance', {}).get('faviconUrl')
+    self.theme_color = data.get('instance', {}).get('themeColor')
