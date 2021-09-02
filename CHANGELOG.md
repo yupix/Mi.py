@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Added
+
+- `Note`, `Router`クラスにDocStringを追加
+- README.mdにドキュメントのURLを追加
+
 ### Removed
 
 - 一部でテスト用のprintが残っていたので削除
