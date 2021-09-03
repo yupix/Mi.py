@@ -10,14 +10,20 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 - `Note`, `Router`クラスにDocStringを追加
+- `Note`クラスに`add_poll`メソッドを追加 (アンケート)
+- `utils.py`に`upper_to_lower`を追加
 - README.mdにドキュメントのURLを追加
 
 ### Removed
 
 - 一部でテスト用のprintが残っていたので削除
+- `Note`クラスでwebsocketを受け取らないように
+- `codecov.yml`はcodecovをサポートする予定がなくなったので削除
 
 # Changed
 
+- 内部的にon_messageとon_responseを切り替えるのに使用していた`res`はデフォルト値が出来たので判断方法を変更
+- 内部的に`Note` `Message` `User` `Instance`等のクラスの引数をdictから詳細な物に変更
 - `BotBase`クラスに`API`クラスをMixinする事でコネクションを別途用意する必要がなくなる様に
 - `API` クラスから`note`メソッドを削除、代わりに`Note`クラスを追加
 - `bool_to_string`をmiネームスペースから削除、今後は`mi.utils`で提供
@@ -27,6 +33,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - pypiからだとLICENSE等の相対リンクが動かないので絶対リンクに変更
 - `Note` クラスのadd_filesで誤ってDeprecatedのmediaIdsを使っていたので`fileIds`に変更
 - Noteを送るだけなのに画像などのファイルが絶対に必要になっていたので修正
+- Noteで画像だけを送ったりする際、文章が無いと送れないのを修正
 
 ## [v0.1.0a] 2021-09-01
 
