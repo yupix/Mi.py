@@ -4,6 +4,13 @@ Mi.pyを使用する上でちょっとした際に便利なツール一覧
 import re
 
 
+def set_auth_i(cls, auth_i: dict, exist: bool = False):
+    if not exist and not auth_i:
+        return
+    cls.token = auth_i.get('token')
+    cls.origin_uri = auth_i.get('origin_uri')
+
+
 def upper_to_lower(data: dict, field: dict = None):
     if data is None:
         return {}
