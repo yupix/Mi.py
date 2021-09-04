@@ -7,6 +7,33 @@ from mi import Drive, User
 from mi.utils import api, set_auth_i, upper_to_lower
 
 
+def _add_reaction(cls, reaction, note_id=None) -> bool:
+    """
+    指定したnoteに指定したリアクションを付与します（内部用
+    Parameters
+    ----------
+    cls
+        tokenやorigin_uriを持ったインスタンス
+    reaction : str
+        付与するリアクション名
+    note_id : str
+        付与対象のノートID
+
+    Returns
+    -------
+
+    """
+
+    if note_id:
+        cls.id = note_id
+    if reaction:
+        cls.reaction = reaction
+    data = json.dumps({'noteId': cls.id, 'i': cls.token, 'reaction': reaction}, ensure_ascii=False)
+    res = api(cls.origin_uri, '/api/notes/reactions/create', data=data.encode('utf-8'))
+    status = True if res.status_code == 204 else False
+    return status
+
+
 class Message(object):
     def __init__(self, data: Any = None, web_socket=None, auth_i: dict = None):
         if data is None:
@@ -31,6 +58,23 @@ class Message(object):
         status = True if res.status_code == 204 else False
         return status
 
+    async def add_reaction(self, reaction: str, note_id: str = None) -> bool:
+        """
+        指定したnoteに指定したリアクションを付与します
+        Parameters
+        ----------
+        reaction : str
+            付与するリアクション名
+        note_id : str
+            付与対象のノートID
+
+        Returns
+        -------
+
+        """
+        set_auth_i(self.note, self.auth_i, True)
+        return _add_reaction(self.note, reaction, note_id)
+
 
 class Header(object):
     def __init__(self, data):
@@ -42,6 +86,7 @@ class Note(object):
     def __init__(self,
                  id_: str = None,
                  created_at: str = None,
+                 type_: str = None,
                  user_id: str = None,
                  author=None,
                  text: str = None,
@@ -52,6 +97,7 @@ class Note(object):
                  reaction: str = None,
                  dislike: bool = False,
                  reactions=None,
+                 my_reaction: str = None,
                  emojis=None,
                  file_ids=None,
                  files=None,
@@ -59,6 +105,7 @@ class Note(object):
                  renote_id=None,
                  via_mobile=None,
                  poll=None,
+                 note: dict = None,
                  res=None,
                  data=None,
                  token: str = None,
@@ -77,6 +124,7 @@ class Note(object):
             self.tags = []
         self.id = id_
         self.created_at = created_at
+        self.type = type_
         self.user_id = user_id
         self.author = User(**upper_to_lower(author))
         self.text = text
@@ -84,6 +132,7 @@ class Note(object):
         self.renote_count = renote_count
         self.replies_count = replies_count
         self.reactions = reactions
+        self.my_reaction = my_reaction
         self.emojis = emojis
         self.file_ids = file_ids
         self.files = files
@@ -105,6 +154,10 @@ class Note(object):
                 self.field['cw'] = cw
             self.field['viaMobile'] = via_mobile
             self.field['i'] = token
+        if note:
+            self.note_content: Note = Note(**upper_to_lower(note))
+        else:
+            self.note_content: Note = None
         if reply:
             self.reply: Note = Note(**upper_to_lower(reply))
         else:
@@ -193,6 +246,23 @@ class Note(object):
             self.field['poll']['choices'].append(item)
         return self
 
+    async def add_reaction(self, reaction: str, note_id: str = None) -> bool:
+        """
+        指定したnoteに指定したリアクションを付与します
+        Parameters
+        ----------
+        reaction : str
+            付与するリアクション名
+        note_id : str
+            付与対象のノートID
+
+        Returns
+        -------
+
+        """
+
+        return _add_reaction(self, reaction, note_id)
+
     async def send(self) -> Message:
         """
         既にあるnoteクラスを元にnoteを送信します
@@ -211,7 +281,7 @@ class Note(object):
     async def delete(self, id_: str = None) -> bool:
         if id_ is not None:
             self.id = id_
-        data = json.dumps({'noteId': self.id, 'i': self.token})
+        data = json.dumps({'noteId': self.id, 'i': self.token}, ensure_ascii=False)
         res = requests.post(self.origin_uri + '/api/notes/delete', data=data)
         status = True if res.status_code == 204 else False
         return status
