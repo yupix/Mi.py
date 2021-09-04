@@ -10,6 +10,7 @@ from mi.utils import api, set_auth_i, upper_to_lower
 def _add_reaction(cls, reaction, note_id=None) -> bool:
     """
     指定したnoteに指定したリアクションを付与します（内部用
+
     Parameters
     ----------
     cls
@@ -21,7 +22,8 @@ def _add_reaction(cls, reaction, note_id=None) -> bool:
 
     Returns
     -------
-
+    status: bool
+        成功したならTrue,失敗ならFalse
     """
 
     if note_id:
@@ -61,6 +63,7 @@ class Message(object):
     async def add_reaction(self, reaction: str, note_id: str = None) -> bool:
         """
         指定したnoteに指定したリアクションを付与します
+
         Parameters
         ----------
         reaction : str
@@ -70,7 +73,8 @@ class Message(object):
 
         Returns
         -------
-
+        func: bool
+            成功したならTrue,失敗ならFalse
         """
         set_auth_i(self.note, self.auth_i, True)
         return _add_reaction(self.note, reaction, note_id)
@@ -83,6 +87,22 @@ class Header(object):
 
 
 class Note(object):
+    """
+
+    Methods
+    -------
+    add_file(file_id, path, name)
+        ファイルをノートに添付します
+    add_poll(data, item, expires_at, expired_after)
+        アンケートをノートに追加します
+    add_reaction(reaction, note_id)
+        ノートにリアクションを追加します
+    send()
+        ノートを送信します
+    delete(id)
+        指定されたノートを削除します
+    """
+
     def __init__(self,
                  id_: str = None,
                  created_at: str = None,
@@ -249,6 +269,7 @@ class Note(object):
     async def add_reaction(self, reaction: str, note_id: str = None) -> bool:
         """
         指定したnoteに指定したリアクションを付与します
+
         Parameters
         ----------
         reaction : str
@@ -258,7 +279,8 @@ class Note(object):
 
         Returns
         -------
-
+        func: bool
+            成功したならTrue,失敗ならFalse
         """
 
         return _add_reaction(self, reaction, note_id)
@@ -295,6 +317,11 @@ class Reaction(object):
 
 
 class ReactionNote(object):
+    """
+    Attributes
+    ----------
+    data : dict
+    """
     def __init__(self, data):
         self.reaction = data['body'].get('reaction')
         self.user_id = data['body'].get('userId')
