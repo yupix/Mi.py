@@ -19,7 +19,12 @@ def upper_to_lower(data: dict, field: dict = None):
     if field is None:
         field = {}
     for attr in data:
-        default_key = ("_" + p.search(attr)[0].lower()).join(p.split(attr)) if p.search(attr) is not None else attr
+        p = re.compile('[A-Z]')
+        large = [i.group().lower() for i in p.finditer(attr)]
+        result = [None] * (len(large + p.split(attr)))
+        result[::2] = p.split(attr)
+        result[1::2] = ['_' + i.lower() for i in large]
+        default_key = "".join(result)
         if replace_list.get(attr):
             default_key = default_key.replace(attr, replace_list.get(attr))
 
