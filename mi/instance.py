@@ -2,6 +2,7 @@ class Instance(object):
     __slots__ = (
         'home',
         'name',
+        'host',
         'software_name',
         'software_version',
         'icon_url',
@@ -12,6 +13,7 @@ class Instance(object):
     def __init__(self,
                  home: str = None,
                  name: str = None,
+                 host: str = None,
                  software_name: str = None,
                  software_version: str = None,
                  icon_url: str = None,
@@ -20,6 +22,7 @@ class Instance(object):
                  ):
         self.home = home
         self.name = name
+        self.host = host
         self.software_name = software_name
         self.software_version = software_version
         self.icon_url = icon_url
