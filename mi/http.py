@@ -14,14 +14,16 @@ from mi.router import Router
 
 class WebSocket:
     """Misskey APIとやり取りを行うWebSocket object"""
-    __slots__ = ['web_socket', 'cls', 'router']
+    __slots__ = ['web_socket', 'cls', 'router', 'auth_i']
 
     def __init__(self, cls):
         self.web_socket = None
         self.cls = cls
         self.router: Router
+        self.auth_i = None
 
-    async def _run(self, uri):
+    async def _run(self, uri, auth_i: dict):
+        self.auth_i = auth_i
         try:
             async with websockets.connect(uri) as web_socket:
                 asyncio.create_task(self._on_ready(web_socket))
@@ -69,7 +71,7 @@ class WebSocket:
         -------
         task: asyncio.Task
         """
-        message = Message(message, web_socket)
+        message = Message(message, web_socket, self.auth_i)
         await self.router.capture_message(message)
         if message.note.res is None:
             task = asyncio.create_task(self.cls.on_message(web_socket, message))
