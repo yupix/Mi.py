@@ -42,7 +42,6 @@ class WebSocket:
             asyncio.create_task(self._on_error(err))
 
     async def _on_ready(self, web_socket):
-        print('ready')
         self.router = Router(web_socket)
         await self.cls.on_ready(web_socket)
 
