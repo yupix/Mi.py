@@ -20,7 +20,7 @@ def set_auth_i(cls, auth_i: dict, exist: bool = False):
 def upper_to_lower(data: dict, field: dict = None):
     if data is None:
         return {}
-    replace_list: dict = {'user': 'author', 'id': 'id_'}
+    replace_list: dict = {'user': 'author', 'id': 'id_', 'type': 'type_'}
     p = re.compile('[A-Z]')
     if field is None:
         field = {}
