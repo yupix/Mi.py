@@ -247,6 +247,5 @@ class User(object):
         set_auth_i(self, self.auth_i, True)
         data = json.dumps({'i': self.token})
         res = requests.post(self.origin_uri + '/api/i', data=data)
-        print(json.loads(res.text))
         user = UserProfile(**upper_to_lower(json.loads(res.text)))
         return user
