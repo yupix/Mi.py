@@ -180,6 +180,7 @@ class User(object):
         'is_lady',
         'is_cat',
         'is_moderator',
+        'is_verified',
         'url',
         'uri',
     )
@@ -199,6 +200,7 @@ class User(object):
                  is_bot: bool = False,
                  is_cat: bool = False,
                  is_lady: bool = False,
+                 is_verified: bool = False,
                  online_status: str = None,
                  url: str = None,
                  uri: str = None,
@@ -222,6 +224,7 @@ class User(object):
         self.is_lady = is_lady
         self.is_cat = is_cat
         self.is_moderator = is_moderator
+        self.is_verified = is_verified
         self.online_status = online_status
         self.url = url
         self.uri = uri
