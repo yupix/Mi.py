@@ -1,24 +1,10 @@
 import json
 import re
-from typing import Any, Final
+from typing import Any
 import requests
 
-from mi import Drive
+from mi import Drive, User
 from mi.utils import set_auth_i, upper_to_lower
-
-
-class _EmptyNote:
-    def __bool__(self) -> bool:
-        return False
-
-    def __repr__(self) -> str:
-        return 'Note.Empty'
-
-    def __len__(self) -> int:
-        return 0
-
-
-EmptyEmbed: Final = _EmptyNote()
 
 
 class Message(object):
@@ -74,9 +60,19 @@ class Note(object):
                  res=None,
                  data=None,
                  token: str = None,
-                 origin_uri: str = None):
+                 origin_uri: str = None,
+                 uri: str = None,
+                 url: str = None,
+                 tags: list = None,
+                 renote: dict = None,
+                 mentions: list = None,
+                 reply: dict = None
+                 ):
         if data is None:  # リストをデフォルトにすると使いまわされて良くないので毎回初期化する必要がある。
             data = {}
+        self.tags = tags
+        if tags is None:
+            self.tags = []
         self.id = id_
         self.created_at = created_at
         self.user_id = user_id
@@ -96,12 +92,23 @@ class Note(object):
         self.token = token
         self.field = data
         self.origin_uri = origin_uri
+        self.uri = uri
+        self.url = url
+        self.mentions = mentions
         if not data:  # 型変更としてではなく、投稿などに使う際に必要
             self.field['text'] = text
             if cw:
                 self.field['cw'] = cw
             self.field['viaMobile'] = via_mobile
             self.field['i'] = token
+        if reply:
+            self.reply: Note = Note(**upper_to_lower(reply))
+        else:
+            self.reply: Note = None
+        if renote:
+            self.renote: Note = Note(**upper_to_lower(renote))
+        else:
+            self.renote: Note = None
 
     @classmethod
     def from_dict(cls, data):
@@ -217,91 +224,3 @@ class ReactionNote(object):
     def __init__(self, data):
         self.reaction = data['body'].get('reaction')
         self.user_id = data['body'].get('userId')
-
-
-class User(object):
-    __slots__ = (
-        'id',
-        'name',
-        'username',
-        'host',
-        'avatar_url',
-        'avatar_blurhash',
-        'avatar_color',
-        'instance',
-        'emojis',
-        'is_admin'
-    )
-
-    def __init__(self,
-                 id_: str = None,
-                 name: str = None,
-                 username: str = None,
-                 host: str = None,
-                 avatar_url: str = None,
-                 avatar_blurhash: str = None,
-                 avatar_color: str = None,
-                 instance: dict = None,
-                 emojis=None,
-                 is_admin=None
-                 ):
-        self.id = id_
-        self.name = name
-        self.username = username
-        self.host = host
-        self.avatar_url = avatar_url
-        self.avatar_blurhash = avatar_blurhash
-        self.avatar_color = avatar_color
-        self.instance = Instance(**upper_to_lower(instance))
-        self.emojis = emojis
-        self.is_admin = is_admin
-
-    @classmethod
-    def from_dict(cls, data: dict):
-        self = cls.__new__(cls)
-        self.id = data.get('id')
-        self.name = data.get('name', data.get('username', None))
-        self.username = data.get('username')
-        self.host = data.get('host')
-        self.avatar_url = data.get('avatarUrl')
-        self.avatar_blurhash = data.get('avatarBlurhash')
-        self.avatar_color = data.get('avatarColor')
-        self.instance = Instance(**upper_to_lower(data))
-        self.emojis = data.get('emojis')
-        self.is_admin = data.get('is_admin')
-
-
-class Instance(object):
-    __slots__ = (
-        'home',
-        'name',
-        'software_name',
-        'icon_url',
-        'favicon_url',
-        'theme_color'
-    )
-
-    def __init__(self,
-                 home: str = None,
-                 name: str = None,
-                 software_name: str = None,
-                 icon_url: str = None,
-                 favicon_url=None,
-                 theme_color=None
-                 ):
-        self.home = home
-        self.name = name
-        self.software_name = software_name
-        self.icon_url = icon_url
-        self.favicon_url = favicon_url
-        self.theme_color = theme_color
-
-    @classmethod
-    def from_dict(cls, data: dict):
-        self = cls.__new__(cls)
-        self.home = data.get('instance', {}).get('home')
-        self.name = data.get('instance', {}).get('name')
-        self.software_name = data.get('instance', {}).get('softwareName')
-        self.icon_url = data.get('instance', {}).get('iconUrl')
-        self.favicon_url = data.get('instance', {}).get('faviconUrl')
-        self.theme_color = data.get('instance', {}).get('themeColor')
