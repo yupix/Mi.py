@@ -19,6 +19,9 @@ class UserProfile(object):
                  is_moderator: bool = False,
                  is_bot: bool = False,
                  is_cat: bool = False,
+                 is_lady: bool = False,
+                 is_verified: bool = False,
+                 is_premium: bool = False,
                  emojis: list = None,
                  online_status: str = None,
                  url: str = None,
@@ -46,12 +49,17 @@ class UserProfile(object):
                  two_factor_enabled: bool = False,
                  use_password_less_login: bool = False,
                  security_keys: bool = False,
+                 twitter: str = None,
+                 github: str = None,
+                 discord: str = None,
                  avatar_id: str = None,
                  banner_id: str = None,
+                 auto_watch: bool = False,
                  inject_featured_note: bool = False,
                  receive_announcement_email: bool = False,
                  always_mark_nsfw: bool = False,
                  careful_bot: bool = False,
+                 careful_massive: bool = False,
                  auto_accept_followed: bool = False,
                  no_crawle: bool = False,
                  is_explorable: bool = False,
@@ -65,10 +73,15 @@ class UserProfile(object):
                  has_unread_messaging_message: bool = False,
                  has_unread_notification: bool = False,
                  has_pending_received_follow_request: bool = False,
+                 pending_received_follow_requests_count: bool = False,
+                 client_data: dict = None,
                  integrations: dict = None,
                  muted_words: list = None,
                  muting_notification_types: list = None,
-                 email_notification_types: list = None
+                 email_notification_types: list = None,
+                 email: str = None,
+                 email_verified: bool = False,
+                 security_keys_list: list = None
                  ):
         self.id_ = id_
         self.name = name
@@ -81,6 +94,9 @@ class UserProfile(object):
         self.is_moderator = is_moderator
         self.is_bot = is_bot
         self.is_cat = is_cat
+        self.is_lady = is_lady
+        self.is_verified = is_verified
+        self.is_premium = is_premium
         self.emojis = emojis
         self.online_status = online_status
         self.url = url
@@ -108,12 +124,17 @@ class UserProfile(object):
         self.two_factor_enabled = two_factor_enabled
         self.use_password_less_login = use_password_less_login
         self.security_keys = security_keys
+        self.twitter = twitter
+        self.github = github
+        self.discord = discord
         self.avatar_id = avatar_id
         self.banner_id = banner_id
+        self.auto_watch = auto_watch
         self.inject_featured_note = inject_featured_note
         self.receive_announcement_email = receive_announcement_email
         self.always_mark_nsfw = always_mark_nsfw
         self.careful_bot = careful_bot
+        self.careful_massive = careful_massive
         self.auto_accept_followed = auto_accept_followed
         self.no_crawle = no_crawle
         self.is_explorable = is_explorable
@@ -127,10 +148,15 @@ class UserProfile(object):
         self.has_unread_messaging_message = has_unread_messaging_message
         self.has_unread_notification = has_unread_notification
         self.has_pending_received_follow_request = has_pending_received_follow_request
+        self.pending_received_follow_requests_count = pending_received_follow_requests_count
+        self.client_data = client_data
         self.integrations = integrations
         self.muted_words = muted_words
         self.muting_notification_types = muting_notification_types
         self.email_notification_types = email_notification_types
+        self.email = email
+        self.email_verified = email_verified
+        self.security_keys_list = security_keys_list
 
 
 class User(object):
