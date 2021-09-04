@@ -4,7 +4,7 @@ from typing import Any
 import requests
 
 from mi import Drive, User
-from mi.utils import set_auth_i, upper_to_lower
+from mi.utils import api, set_auth_i, upper_to_lower
 
 
 class Message(object):
@@ -49,6 +49,8 @@ class Note(object):
                  visibility=None,
                  renote_count=None,
                  replies_count=None,
+                 reaction: str = None,
+                 dislike: bool = False,
                  reactions=None,
                  emojis=None,
                  file_ids=None,
@@ -94,6 +96,8 @@ class Note(object):
         self.origin_uri = origin_uri
         self.uri = uri
         self.url = url
+        self.reaction = reaction
+        self.dislike = dislike
         self.mentions = mentions
         if not data:  # 型変更としてではなく、投稿などに使う際に必要
             self.field['text'] = text
@@ -198,7 +202,7 @@ class Note(object):
         msg: Message
         """
         data = json.dumps(self.field)
-        res = requests.post(self.origin_uri + '/api/notes/create', data=data)
+        res = api(self.origin_uri, '/api/notes/create', data)
         msg = Message(res.text)
         msg.note.origin_uri = self.origin_uri
         msg.note.token = self.token

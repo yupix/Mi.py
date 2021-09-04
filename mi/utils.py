@@ -3,6 +3,12 @@ Mi.pyを使用する上でちょっとした際に便利なツール一覧
 """
 import re
 
+import requests
+
+
+def api(origin_uri: str, endpoint: str, data):
+    return requests.post(origin_uri + endpoint, data=data)
+
 
 def set_auth_i(cls, auth_i: dict, exist: bool = False):
     if not exist and not auth_i:
