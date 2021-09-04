@@ -115,8 +115,6 @@ class BotBase(WebSocket, API):
         token : str
             Misskey account token
 
-        None
-
         Examples
         --------
 
@@ -137,6 +135,10 @@ class BotBase(WebSocket, API):
                 pass
 
             bot.run(uri, token)
+
+        Returns
+        -------
+        None: None
         """
         self.token = token
         if _origin_uri := re.search(r'wss?://(.*)/streaming', uri):
@@ -147,8 +149,9 @@ class BotBase(WebSocket, API):
             self.origin_uri = origin_uri[:-1]
         else:
             self.origin_uri = origin_uri
+        auth_i = {'token': self.token, 'origin_uri': self.origin_uri}
 
-        asyncio.get_event_loop().run_until_complete(self._run(f'{uri}?i={token}'))
+        asyncio.get_event_loop().run_until_complete(self._run(f'{uri}?i={token}', auth_i))
 
 
 class Bot(BotBase):

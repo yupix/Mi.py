@@ -4,7 +4,7 @@ from typing import Any, Final
 import requests
 
 from mi import Drive
-from mi.utils import upper_to_lower
+from mi.utils import set_auth_i, upper_to_lower
 
 
 class _EmptyNote:
@@ -22,8 +22,11 @@ EmptyEmbed: Final = _EmptyNote()
 
 
 class Message(object):
-    def __init__(self, data: Any, web_socket=None):
+    def __init__(self, data: Any = None, web_socket=None, auth_i: dict = None):
+        if data is None:
+            data = {}
         data = json.loads(data)
+        self.auth_i = auth_i
         self.type = data.get('type')
         self.header = Header(data.get('body', {}))
         if note := data.get('body', {}).get('body', None):
@@ -34,6 +37,13 @@ class Message(object):
             data = data.get('body', {}).get('res', {}).get('createdNote', {})  # WebSocketsの場合
             data['res'] = True
             self.note = Note(data)
+
+    async def delete(self) -> bool:
+        set_auth_i(self.note, self.auth_i, True)
+        data = json.dumps({'noteId': self.note.id, 'i': self.note.token})
+        res = requests.post(self.note.origin_uri + '/api/notes/delete', data=data)
+        status = True if res.status_code == 204 else False
+        return status
 
 
 class Header(object):
@@ -183,7 +193,17 @@ class Note(object):
         data = json.dumps(self.field)
         res = requests.post(self.origin_uri + '/api/notes/create', data=data)
         msg = Message(res.text)
+        msg.note.origin_uri = self.origin_uri
+        msg.note.token = self.token
         return msg
+
+    async def delete(self, id_: str = None) -> bool:
+        if id_ is not None:
+            self.id = id_
+        data = json.dumps({'noteId': self.id, 'i': self.token})
+        res = requests.post(self.origin_uri + '/api/notes/delete', data=data)
+        status = True if res.status_code == 204 else False
+        return status
 
 
 class Reaction(object):
