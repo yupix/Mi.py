@@ -11,11 +11,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - `Note`, `Router`クラスにDocStringを追加
 - `Note`クラスに`add_poll`メソッドを追加 (アンケート)
-- `utils.py`に`upper_to_lower` `set_auth_i`を追加
+- `utils.py`に`upper_to_lower` `set_auth_i` `api`関数を追加
 - `Note` `Message` クラスに`delete`メソッドを追加
 - README.mdにドキュメントのURLを追加
 - `user.py`に`UserProfile`クラスを追加
 - `bot`クラスに`i`変数を追加(BOT自身のプロフィール)
+- README.mdにcodacyのバッヂを追加
 
 ### Removed
 
