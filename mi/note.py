@@ -21,8 +21,6 @@ class Reaction(object):
 
         Parameters
         ----------
-        self
-            tokenやorigin_uriを持ったインスタンス
         reaction : str
             付与するリアクション名
         note_id : str
@@ -33,12 +31,12 @@ class Reaction(object):
         status: bool
             成功したならTrue,失敗ならFalse
         """
-
-        if note_id:
-            self.id = note_id
-        if reaction:
-            self.reaction = reaction
-        data = json.dumps({'noteId': self.id, 'i': self.token, 'reaction': reaction}, ensure_ascii=False)
+        set_auth_i(self, self.auth_i)
+        if type(self) is Message:
+            id_ = self.note.id  # Messageクラスの場合 Noteにidがあるため
+        else:
+            id_ = self.id  # Noteクラスの場合
+        data = json.dumps({'noteId': id_, 'i': self.token, 'reaction': reaction}, ensure_ascii=False)
         res = api(self.origin_uri, '/api/notes/reactions/create', data=data.encode('utf-8'))
         status = True if res.status_code == 204 else False
         return status
@@ -66,9 +64,9 @@ class Message(Reaction):
         self.type = data.get('type')
         self.header = Header(data.get('body', {}))
         if note := data.get('body', {}).get('body', None):
-            self.note = Note(**upper_to_lower(note))
+            self.note = Note(auth_i=self.auth_i, **upper_to_lower(note))
         elif note := data.get('createdNote', None):  # APIの場合
-            self.note = Note(**upper_to_lower(note))
+            self.note = Note(auth_i=self.auth_i, **upper_to_lower(note))
         else:
             data = data.get('body', {}).get('res', {}).get('createdNote', {})  # WebSocketsの場合
             data['res'] = True
@@ -110,7 +108,7 @@ class Note(Reaction):
                  reaction: str = None, dislike: bool = False, reactions=None, my_reaction: str = None, emojis=None,
                  file_ids=None, files=None, reply_id=None, renote_id=None, via_mobile=None, poll=None, note: dict = None,
                  res=None, data=None, token: str = None, origin_uri: str = None, uri: str = None, url: str = None,
-                 tags: list = None, renote: dict = None, mentions: list = None, reply: dict = None):
+                 tags: list = None, renote: dict = None, mentions: list = None, reply: dict = None, auth_i: dict = None):
         super().__init__()
         if data is None:  # リストをデフォルトにすると使いまわされて良くないので毎回初期化する必要がある。
             data = {}
@@ -142,6 +140,7 @@ class Note(Reaction):
         self.url = url
         self.reaction = reaction
         self.dislike = dislike
+        self.auth_i = auth_i
         self.mentions = mentions
         if not data:  # 型変更としてではなく、投稿などに使う際に必要
             self.field['text'] = text
