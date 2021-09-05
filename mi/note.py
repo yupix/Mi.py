@@ -7,37 +7,58 @@ from mi import Drive, User
 from mi.utils import api, set_auth_i, upper_to_lower
 
 
-def _add_reaction(cls, reaction, note_id=None) -> bool:
-    """
-    指定したnoteに指定したリアクションを付与します（内部用
+class Reaction(object):
+    def __init__(self, data=None):
+        if data is None:
+            data = "{}"
+        data = json.loads(data)
+        self.header = Header(data.get('body', {}))
+        self.note = ReactionNote(data.get('body', {}))
 
-    Parameters
+    async def add_reaction(self, reaction, note_id=None) -> bool:
+        """
+        指定したnoteに指定したリアクションを付与します（内部用
+
+        Parameters
+        ----------
+        self
+            tokenやorigin_uriを持ったインスタンス
+        reaction : str
+            付与するリアクション名
+        note_id : str
+            付与対象のノートID
+
+        Returns
+        -------
+        status: bool
+            成功したならTrue,失敗ならFalse
+        """
+
+        if note_id:
+            self.id = note_id
+        if reaction:
+            self.reaction = reaction
+        data = json.dumps({'noteId': self.id, 'i': self.token, 'reaction': reaction}, ensure_ascii=False)
+        res = api(self.origin_uri, '/api/notes/reactions/create', data=data.encode('utf-8'))
+        status = True if res.status_code == 204 else False
+        return status
+
+
+class ReactionNote(object):
+    """
+    Attributes
     ----------
-    cls
-        tokenやorigin_uriを持ったインスタンス
-    reaction : str
-        付与するリアクション名
-    note_id : str
-        付与対象のノートID
-
-    Returns
-    -------
-    status: bool
-        成功したならTrue,失敗ならFalse
+    data : dict
     """
 
-    if note_id:
-        cls.id = note_id
-    if reaction:
-        cls.reaction = reaction
-    data = json.dumps({'noteId': cls.id, 'i': cls.token, 'reaction': reaction}, ensure_ascii=False)
-    res = api(cls.origin_uri, '/api/notes/reactions/create', data=data.encode('utf-8'))
-    status = True if res.status_code == 204 else False
-    return status
+    def __init__(self, data):
+        self.reaction = data.get('body', {}).get('reaction')
+        self.user_id = data.get('body', {}).get('userId')
 
 
-class Message(object):
+class Message(Reaction):
     def __init__(self, data: Any = None, web_socket=None, auth_i: dict = None):
+        super().__init__()
         if data is None:
             data = {}
         data = json.loads(data)
@@ -60,25 +81,6 @@ class Message(object):
         status = True if res.status_code == 204 else False
         return status
 
-    async def add_reaction(self, reaction: str, note_id: str = None) -> bool:
-        """
-        指定したnoteに指定したリアクションを付与します
-
-        Parameters
-        ----------
-        reaction : str
-            付与するリアクション名
-        note_id : str
-            付与対象のノートID
-
-        Returns
-        -------
-        func: bool
-            成功したならTrue,失敗ならFalse
-        """
-        set_auth_i(self.note, self.auth_i, True)
-        return _add_reaction(self.note, reaction, note_id)
-
 
 class Header(object):
     def __init__(self, data):
@@ -86,7 +88,7 @@ class Header(object):
         self.type = data.get('type')
 
 
-class Note(object):
+class Note(Reaction):
     """
 
     Methods
@@ -103,40 +105,13 @@ class Note(object):
         指定されたノートを削除します
     """
 
-    def __init__(self,
-                 id_: str = None,
-                 created_at: str = None,
-                 type_: str = None,
-                 user_id: str = None,
-                 author=None,
-                 text: str = None,
-                 cw: str = None,
-                 visibility=None,
-                 renote_count=None,
-                 replies_count=None,
-                 reaction: str = None,
-                 dislike: bool = False,
-                 reactions=None,
-                 my_reaction: str = None,
-                 emojis=None,
-                 file_ids=None,
-                 files=None,
-                 reply_id=None,
-                 renote_id=None,
-                 via_mobile=None,
-                 poll=None,
-                 note: dict = None,
-                 res=None,
-                 data=None,
-                 token: str = None,
-                 origin_uri: str = None,
-                 uri: str = None,
-                 url: str = None,
-                 tags: list = None,
-                 renote: dict = None,
-                 mentions: list = None,
-                 reply: dict = None
-                 ):
+    def __init__(self, id_: str = None, created_at: str = None, type_: str = None, user_id: str = None, author=None,
+                 text: str = None, cw: str = None, visibility=None, renote_count=None, replies_count=None,
+                 reaction: str = None, dislike: bool = False, reactions=None, my_reaction: str = None, emojis=None,
+                 file_ids=None, files=None, reply_id=None, renote_id=None, via_mobile=None, poll=None, note: dict = None,
+                 res=None, data=None, token: str = None, origin_uri: str = None, uri: str = None, url: str = None,
+                 tags: list = None, renote: dict = None, mentions: list = None, reply: dict = None):
+        super().__init__()
         if data is None:  # リストをデフォルトにすると使いまわされて良くないので毎回初期化する必要がある。
             data = {}
         self.tags = tags
@@ -266,25 +241,6 @@ class Note(object):
             self.field['poll']['choices'].append(item)
         return self
 
-    async def add_reaction(self, reaction: str, note_id: str = None) -> bool:
-        """
-        指定したnoteに指定したリアクションを付与します
-
-        Parameters
-        ----------
-        reaction : str
-            付与するリアクション名
-        note_id : str
-            付与対象のノートID
-
-        Returns
-        -------
-        func: bool
-            成功したならTrue,失敗ならFalse
-        """
-
-        return _add_reaction(self, reaction, note_id)
-
     async def send(self) -> Message:
         """
         既にあるnoteクラスを元にnoteを送信します
@@ -307,21 +263,3 @@ class Note(object):
         res = requests.post(self.origin_uri + '/api/notes/delete', data=data)
         status = True if res.status_code == 204 else False
         return status
-
-
-class Reaction(object):
-    def __init__(self, data):
-        data = json.loads(data)
-        self.header = Header(data.get('body', {}))
-        self.note = ReactionNote(data.get('body'))
-
-
-class ReactionNote(object):
-    """
-    Attributes
-    ----------
-    data : dict
-    """
-    def __init__(self, data):
-        self.reaction = data['body'].get('reaction')
-        self.user_id = data['body'].get('userId')
