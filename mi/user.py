@@ -6,7 +6,65 @@ from mi import Instance
 from mi.utils import set_auth_i, upper_to_lower
 
 
-class UserProfile(object):
+class UserAction(object):
+    def __init__(self):
+        self.auth_i: dict
+
+    def follow(self, user_id: str = None) -> tuple[bool, str]:
+        """
+        与えられたIDのユーザーをフォローします
+
+        Parameters
+        ----------
+        user_id : str
+            フォローしたいユーザーのID
+
+        Returns
+        -------
+        status: bool
+            成功ならTrue, 失敗ならFalse
+        """
+        if user_id is None:
+            user_id = self.id
+        set_auth_i(self, self.auth_i, True)
+        data = json.dumps({'userId': user_id, 'i': self.token})
+        res = requests.post(self.origin_uri + '/api/following/create', data=data)
+        if res.json().get('error'):
+            code = res.json()['error']['code']
+            status = False
+        else:
+            code = None
+            status = True
+        return status, code
+
+    def unfollow(self, user_id: str = None) -> tuple[bool, str]:
+        """
+        Parameters
+        ----------
+        user_id :
+            フォローを解除したいユーザーのID
+
+        Returns
+        -------
+        status: bool
+            成功したならTrue, 失敗したならFalse
+        code: str or None
+            失敗した場合になぜ失敗したかを返す、成功ならNone
+        """
+        if user_id is None:
+            user_id = self.id
+        set_auth_i(self, self.auth_i, True)
+        data = json.dumps({'userId': user_id, 'i': self.token})
+        res = requests.post(self.origin_uri + '/api/following/delete', data=data)
+        status = True if res.status_code == 204 or 200 else False
+        if status is False:
+            code = res.json()['error']['code']
+        else:
+            code = None
+        return status, code
+
+
+class UserProfile(UserAction):
     def __init__(self,
                  id_: str = None,
                  name: str = None,
@@ -22,6 +80,8 @@ class UserProfile(object):
                  is_lady: bool = False,
                  is_verified: bool = False,
                  is_premium: bool = False,
+                 is_following: bool = False,
+                 is_followed: bool = False,
                  emojis: list = None,
                  online_status: str = None,
                  url: str = None,
@@ -74,6 +134,11 @@ class UserProfile(object):
                  has_unread_notification: bool = False,
                  has_pending_received_follow_request: bool = False,
                  pending_received_follow_requests_count: bool = False,
+                 has_pending_follow_request_from_you: bool = False,
+                 has_pending_follow_request_to_you: bool = False,
+                 is_blocking: bool = False,
+                 is_blocked: bool = False,
+                 is_muted: bool = False,
                  client_data: dict = None,
                  integrations: dict = None,
                  muted_words: list = None,
@@ -81,9 +146,11 @@ class UserProfile(object):
                  email_notification_types: list = None,
                  email: str = None,
                  email_verified: bool = False,
-                 security_keys_list: list = None
+                 security_keys_list: list = None,
+                 auth_i: dict = None
                  ):
-        self.id_ = id_
+        super().__init__()
+        self.id = id_
         self.name = name
         self.username = username
         self.host = host
@@ -157,9 +224,17 @@ class UserProfile(object):
         self.email = email
         self.email_verified = email_verified
         self.security_keys_list = security_keys_list
+        self.has_pending_follow_request_from_you = has_pending_follow_request_from_you
+        self.has_pending_follow_request_to_you = has_pending_follow_request_to_you
+        self.is_following = is_following
+        self.is_followed = is_followed
+        self.is_blocking = is_blocking
+        self.is_blocked = is_blocked
+        self.is_muted = is_muted
+        self.auth_i = auth_i
 
 
-class User(object):
+class User(UserAction):
     __slots__ = (
         'id',
         'name',
@@ -206,6 +281,7 @@ class User(object):
                  uri: str = None,
                  auth_i: dict = None,
                  ):
+        super().__init__()
         self.id = id_
         self.name = name
         self.username = username

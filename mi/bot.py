@@ -95,6 +95,9 @@ class BotBase(WebSocket, API):
         """デフォルト処理"""
         await self.dispatch('message', ws, message)
 
+    async def on_follow(self, ws, message):
+        await self.dispatch('followed', ws, message)
+
     async def on_response(self, ws, message):
         await self.dispatch('response', ws, message)
 

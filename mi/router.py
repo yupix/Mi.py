@@ -4,8 +4,6 @@ Misskeyのチャンネルへの接続や、メッセージのキャプチャ等�
 
 import json
 
-from mi import Message
-
 
 class Router:
     """
@@ -130,22 +128,21 @@ class Router:
             }
         }, ensure_ascii=False))
 
-    async def capture_message(self, message: Message) -> None:
+    async def capture_message(self, message_id:str) -> None:
         """
         与えられたメッセージを元にnote idを取得し、そのメッセージをon_message等の監視対象に追加します
 
         Parameters
         ----------
-        message : Message
+        message_id : str
 
         Returns
         -------
         None: None
         """
-        if hasattr(message, 'id'):
-            await self.web_socket.send(json.dumps({
-                'type': 'subNote',
-                'body': {
-                    'id': f'{message.note.id}'
-                }
-            }))
+        await self.web_socket.send(json.dumps({
+            'type': 'subNote',
+            'body': {
+                'id': f'{message_id}'
+            }
+        }))

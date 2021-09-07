@@ -1,19 +1,16 @@
 import json
 import re
 from typing import Any
+
 import requests
 
-from mi import Drive, User
+from mi import Drive, User, UserProfile
 from mi.utils import api, set_auth_i, upper_to_lower
 
 
-class Reaction(object):
-    def __init__(self, data=None):
-        if data is None:
-            data = "{}"
-        data = json.loads(data)
-        self.header = Header(data.get('body', {}))
-        self.note = ReactionNote(data.get('body', {}))
+class NoteAction(object):
+    def __init__(self):
+        self.auth_i: dict
 
     async def add_reaction(self, reaction, note_id=None) -> bool:
         """
@@ -32,14 +29,104 @@ class Reaction(object):
             成功したならTrue,失敗ならFalse
         """
         set_auth_i(self, self.auth_i)
-        if type(self) is Message:
-            id_ = self.note.id  # Messageクラスの場合 Noteにidがあるため
+        if note_id is None:
+            id_ = self.id
         else:
-            id_ = self.id  # Noteクラスの場合
+            id_ = note_id
         data = json.dumps({'noteId': id_, 'i': self.token, 'reaction': reaction}, ensure_ascii=False)
         res = api(self.origin_uri, '/api/notes/reactions/create', data=data.encode('utf-8'))
         status = True if res.status_code == 204 else False
         return status
+
+    async def delete(self, id_: str = None) -> bool:
+        if id_ is not None:
+            self.id_ = id_
+        else:
+            self.id_ = self.id
+        data = json.dumps({'noteId': self.id_, 'i': self.token}, ensure_ascii=False)
+        res = requests.post(self.origin_uri + '/api/notes/delete', data=data)
+        status = True if res.status_code == 204 else False
+        return status
+
+    def add_file(self, file_id: str = None, path: str = None, name: str = None) -> 'Note':
+        """
+        ノートにファイルを添付します。
+
+        Parameters
+        ----------
+        file_id : str
+            既にドライブにあるファイルを使用する場合のファイルID
+        path : str
+            新しくファイルをアップロードする際のファイルへのパス
+        name : str
+            新しくファイルをアップロードする際のファイル名(misskey side
+
+        Returns
+        -------
+        self: Note
+        """
+        self.field['fileIds'] = []
+        if file_id is None:
+            res = Drive(token=self.token, origin_uri=self.origin_uri).upload(path=path, name=name)
+            self.field['fileIds'].append(f'{res.id}')
+        else:
+            self.field['fileIds'].append(f'{file_id}')
+        return self
+
+    def add_poll(self, data: list = None, item: str = '', expires_at: int = None, expired_after: int = None):
+        """
+        アンケートを作成します
+
+        Parameters
+        ----------
+        data : list
+            アンケートの配列
+        item: str
+            アンケートの項目名
+        expires_at : int
+            いつにアンケートを締め切るか 例:2021-09-02T15:00:00.000Z
+        expired_after : int
+            投稿後何秒後にアンケートを締め切るか(秒
+
+        Returns
+        -------
+        self: Note
+        """
+        if not self.field.get('poll'):
+            self.field['poll'] = {}
+            self.field['poll']['choices'] = []
+        self.field['poll']['expiresAt'] = expires_at
+        self.field['poll']['expiredAfter'] = expired_after
+        if data:
+            self.field['poll']['choices'] = data
+        else:
+            self.field['poll']['choices'].append(item)
+        return self
+
+    async def send(self) -> 'Note':
+        """
+        既にあるnoteクラスを元にnoteを送信します
+
+        Returns
+        -------
+        msg: Note
+        """
+        data = json.dumps(self.field)
+        res = api(self.origin_uri, '/api/notes/create', data)
+        msg = Note(res.text)
+        msg.origin_uri = self.origin_uri
+        msg.token = self.token
+        return msg
+
+
+class Reaction(object):
+    def __init__(self, data=None):
+        if data is None:
+            data = "{}"
+        if type(data) is not dict:
+            data = json.loads(data)
+        self.header = Header(data.get('body', {}))
+        self.note = ReactionNote(data.get('body', {}))
 
 
 class ReactionNote(object):
@@ -54,30 +141,13 @@ class ReactionNote(object):
         self.user_id = data.get('body', {}).get('userId')
 
 
-class Message(Reaction):
-    def __init__(self, data: Any = None, web_socket=None, auth_i: dict = None):
-        super().__init__()
-        if data is None:
-            data = {}
-        data = json.loads(data)
+class Follow:
+    def __init__(self, id_: str = None, created_at: str = None, type_: str = None, body: dict = None, auth_i: dict = None):
         self.auth_i = auth_i
-        self.type = data.get('type')
-        self.header = Header(data.get('body', {}))
-        if note := data.get('body', {}).get('body', None):
-            self.note = Note(auth_i=self.auth_i, **upper_to_lower(note))
-        elif note := data.get('createdNote', None):  # APIの場合
-            self.note = Note(auth_i=self.auth_i, **upper_to_lower(note))
-        else:
-            data = data.get('body', {}).get('res', {}).get('createdNote', {})  # WebSocketsの場合
-            data['res'] = True
-            self.note = Note(data)
-
-    async def delete(self) -> bool:
-        set_auth_i(self.note, self.auth_i, True)
-        data = json.dumps({'noteId': self.note.id, 'i': self.note.token})
-        res = requests.post(self.note.origin_uri + '/api/notes/delete', data=data)
-        status = True if res.status_code == 204 else False
-        return status
+        self.id_ = id_
+        self.created_at = created_at
+        self.type_ = type_
+        self.user = UserProfile(**upper_to_lower(body), auth_i=self.auth_i)
 
 
 class Header(object):
@@ -86,7 +156,7 @@ class Header(object):
         self.type = data.get('type')
 
 
-class Note(Reaction):
+class Note(NoteAction):
     """
 
     Methods
@@ -119,7 +189,7 @@ class Note(Reaction):
         self.created_at = created_at
         self.type = type_
         self.user_id = user_id
-        self.author = User(**upper_to_lower(author))
+        self.author = User(auth_i=auth_i, **upper_to_lower(author))
         self.text = text
         self.visibility = visibility
         self.renote_count = renote_count
@@ -184,81 +254,3 @@ class Note(Reaction):
                     setattr(self, key, User(value))
                 else:
                     setattr(self, key, data[attr])
-
-    def add_file(self, file_id: str = None, path: str = None, name: str = None) -> 'Note':
-        """
-        ノートにファイルを添付します。
-
-        Parameters
-        ----------
-        file_id : str
-            既にドライブにあるファイルを使用する場合のファイルID
-        path : str
-            新しくファイルをアップロードする際のファイルへのパス
-        name : str
-            新しくファイルをアップロードする際のファイル名(misskey side
-
-        Returns
-        -------
-        self: Note
-        """
-        self.field['fileIds'] = []
-        if file_id is None:
-            res = Drive(token=self.token, origin_uri=self.origin_uri).upload(path=path, name=name)
-            self.field['fileIds'].append(f'{res.id}')
-        else:
-            self.field['fileIds'].append(f'{file_id}')
-        return self
-
-    def add_poll(self, data: list = None, item: str = '', expires_at: int = None, expired_after: int = None):
-        """
-        アンケートを作成します
-
-        Parameters
-        ----------
-        data : list
-            アンケートの配列
-        item: str
-            アンケートの項目名
-        expires_at : int
-            いつにアンケートを締め切るか 例:2021-09-02T15:00:00.000Z
-        expired_after : int
-            投稿後何秒後にアンケートを締め切るか(秒
-
-        Returns
-        -------
-        self: Note
-        """
-        if not self.field.get('poll'):
-            self.field['poll'] = {}
-            self.field['poll']['choices'] = []
-        self.field['poll']['expiresAt'] = expires_at
-        self.field['poll']['expiredAfter'] = expired_after
-        if data:
-            self.field['poll']['choices'] = data
-        else:
-            self.field['poll']['choices'].append(item)
-        return self
-
-    async def send(self) -> Message:
-        """
-        既にあるnoteクラスを元にnoteを送信します
-
-        Returns
-        -------
-        msg: Message
-        """
-        data = json.dumps(self.field)
-        res = api(self.origin_uri, '/api/notes/create', data)
-        msg = Message(res.text)
-        msg.note.origin_uri = self.origin_uri
-        msg.note.token = self.token
-        return msg
-
-    async def delete(self, id_: str = None) -> bool:
-        if id_ is not None:
-            self.id = id_
-        data = json.dumps({'noteId': self.id, 'i': self.token}, ensure_ascii=False)
-        res = requests.post(self.origin_uri + '/api/notes/delete', data=data)
-        status = True if res.status_code == 204 else False
-        return status

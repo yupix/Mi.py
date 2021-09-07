@@ -8,8 +8,10 @@ from typing import Any
 
 import websockets
 
-from mi import Message, Reaction
+from mi import Reaction
+from mi.note import Follow, Note
 from mi.router import Router
+from mi.utils import upper_to_lower
 
 
 class WebSocket:
@@ -53,9 +55,19 @@ class WebSocket:
         web_socket :
         message :
         """
-        msg = Message(message, web_socket)
-        event_list = {'note': '_on_message', 'reacted': '_on_reacted', 'deleted': '_on_deleted'}
-        await getattr(self, f'{event_list.get(msg.header.type, "_on_message")}')(web_socket, message)
+        message = json.loads(message)
+        base_msg = message.get('body', None)
+        if base_msg is None:
+            return
+        event_list = {'note': '_on_message', 'reacted': '_on_reacted', 'deleted': '_on_deleted', 'follow': '_on_follow',
+                      'unfollow': '_on_unfollow', 'followed': '_on_follow', 'unreadNotification': '_on_unread_notification'}
+        if base_msg['type'] == 'notification':  # follow等に必要
+            await getattr(self, '_on_notification')(web_socket, message)
+            return
+        try:
+            await getattr(self, f'{event_list.get(base_msg["type"])}')(web_socket, message)
+        except AttributeError:
+            print(base_msg['type'])
 
     async def _on_message(self, web_socket, message: Any) -> asyncio.Task:
         """
@@ -70,20 +82,29 @@ class WebSocket:
         -------
         task: asyncio.Task
         """
-        message = Message(message, web_socket, self.auth_i)
-        await self.router.capture_message(message)
-        if message.note.res is None:
+        message = Note(auth_i=self.auth_i, **upper_to_lower(message.get('body', {}).get('body', {})))
+        await self.router.capture_message(message.id)
+        if message.res is None:
             task = asyncio.create_task(self.cls.on_message(web_socket, message))
         else:
             task = asyncio.create_task(self.cls.on_response(web_socket, message))
 
         return task
 
+    async def _on_notification(self, web_socket, message: dict):
+        pass
+
+    async def _on_follow(self, web_socket, message: dict):
+        asyncio.create_task(self.cls.on_follow(web_socket, Follow(**upper_to_lower(message.get('body')), auth_i=self.auth_i)))
+
+    async def _on_unfollow(self, web_socket, message):
+        pass
+
     async def _on_reacted(self, web_socket, message):
         asyncio.create_task(self.cls.on_reacted(web_socket, Reaction(message)))
 
     async def _on_deleted(self, web_socket, message):
-        asyncio.create_task(self.cls.on_deleted(web_socket, Message(message, web_socket)))
+        asyncio.create_task(self.cls.on_deleted(web_socket, Note(message, web_socket)))
 
     async def _on_error(self, err):
         await self.cls.on_error(err)
