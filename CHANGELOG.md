@@ -7,8 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [v0.1.0-1a] 2021-09-06
+
 ### Added
 
+- `Note` `Message`クラスに`add_reaction`メソッドを追加
 - `Note`, `Router`クラスにDocStringを追加
 - `Note`クラスに`add_poll`メソッドを追加 (アンケート)
 - `utils.py`に`upper_to_lower` `set_auth_i` `api`関数を追加
@@ -37,6 +40,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - pypiからだとLICENSE等の相対リンクが動かないので絶対リンクに変更
 - `Note` クラスのadd_filesで誤ってDeprecatedのmediaIdsを使っていたので`fileIds`に変更
+- 多すぎるため詳細は書かないが、v12とayuskeyの差異を無くすために引数周りを大幅に修正
 - Noteを送るだけなのに画像などのファイルが絶対に必要になっていたので修正
 - Noteで画像だけを送ったりする際、文章が無いと送れないのを修正
 - `upper_to_lower`で文字列に複数の大文字が含まれると一番最初の文字に置き換えてしまうのを修正 from [@uraking](https://github.com/Uraking-Github)
