@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Added
+
+- `on_follow` イベントを追加しました
+
+### Changed
+
+- 内部的な変更で、`delete` `send`等のメソッドを別のクラスに分けました
+
+### Removed
+
+- `Message`クラスを削除しました。基本的に不要な情報があり、実装の複雑さが上がっているだけだからです。
+
+### Fixed
+
+- `add_reaction`の認証情報周りの不具合が修正されました
+
 ## [v0.1.0-1a] 2021-09-06
 
 ### Added
@@ -86,8 +102,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Added LICENSE.
 - Added Each event method.
 
+[v0.1.0-1a]: https://github.com/yupix/mi.py/compare/v0.1.0a...v0.1.0-1a
 [v0.1.0a]: https://github.com/yupix/mi.py/compare/v0.0.1a...v0.1.0a
-
 [v0.0.1a]: https://github.com/yupix/Mi.py/releases
 
 [Unreleased]: https://github.com/yupix/mi.py/compare/master...HEAD
