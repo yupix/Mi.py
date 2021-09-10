@@ -12,10 +12,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - `on_follow` イベントを追加しました
 - `utils.py`に`add_auth_i`関数を追加しました
 - `upper_to_lower`関数でネストされたdictのkeyを全て小文字化できるようになりました
+- `NoteAction`クラスに`emoji_count`メソッドを追加
 
 ### Changed
 
-- 内部的な変更で、`delete` `send`等のメソッドを別のクラスに分けました
+- 内部変更: `delete` `send`等のメソッドを別のクラスに分けました
+- 内部変更: on_messageへの送信部分の条件式をres使わないように
+- 内部変更: auth_iの共有方法を共通化
+- ほぼすべてのデータ格納用クラスをPydanticに置き換え(`Note`や`File`など)
+- `get_i`を`UserAction`に移動
 
 ### Removed
 
