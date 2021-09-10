@@ -1,16 +1,26 @@
 import json
 import re
-from typing import Any
+from typing import Any, Dict, List, Optional
 
+import emoji
 import requests
+from pydantic import BaseModel, Field
 
-from mi import Drive, User, UserProfile
-from mi.utils import api, set_auth_i, upper_to_lower
+from mi import Drive, Emoji, UserProfile
+from mi.exception import CredentialRequired
+from mi.user import Author
+from mi.utils import AuthI, add_auth_i, api, upper_to_lower
 
 
 class NoteAction(object):
     def __init__(self):
         self.auth_i: dict
+    def emoji_count(self):
+        if self.text is None:
+            count = len(self.emojis)
+        else:
+            count = len(self.emojis) + emoji.emoji_count(self.text)
+        return count
 
     async def add_reaction(self, reaction, note_id=None) -> bool:
         """
@@ -18,9 +28,9 @@ class NoteAction(object):
 
         Parameters
         ----------
-        reaction : str
+        reaction : Optional[str]
             付与するリアクション名
-        note_id : str
+        note_id : Optional[str]
             付与対象のノートID
 
         Returns
@@ -28,17 +38,16 @@ class NoteAction(object):
         status: bool
             成功したならTrue,失敗ならFalse
         """
-        set_auth_i(self, self.auth_i)
         if note_id is None:
             id_ = self.id
         else:
             id_ = note_id
-        data = json.dumps({'noteId': id_, 'i': self.token, 'reaction': reaction}, ensure_ascii=False)
-        res = api(self.origin_uri, '/api/notes/reactions/create', data=data.encode('utf-8'))
+        data = json.dumps({'noteId': id_, 'i': self.auth_i.token, 'reaction': reaction}, ensure_ascii=False)
+        res = api(self.auth_i.origin_uri, '/api/notes/reactions/create', data=data.encode('utf-8'))
         status = True if res.status_code == 204 else False
         return status
 
-    async def delete(self, id_: str = None) -> bool:
+    async def delete(self, id_: Optional[str] = None) -> bool:
         if id_ is not None:
             self.id_ = id_
         else:
@@ -48,44 +57,43 @@ class NoteAction(object):
         status = True if res.status_code == 204 else False
         return status
 
-    def add_file(self, file_id: str = None, path: str = None, name: str = None) -> 'Note':
+    def add_file(self, file_id: Optional[str] = None, path: Optional[str] = None, name: Optional[str] = None) -> 'Note':
         """
         ノートにファイルを添付します。
 
         Parameters
         ----------
-        file_id : str
+        file_id : Optional[str]
             既にドライブにあるファイルを使用する場合のファイルID
-        path : str
+        path : Optional[str]
             新しくファイルをアップロードする際のファイルへのパス
-        name : str
+        name : Optional[str]
             新しくファイルをアップロードする際のファイル名(misskey side
 
         Returns
         -------
         self: Note
         """
-        self.field['fileIds'] = []
-        if file_id is None:
-            res = Drive(token=self.token, origin_uri=self.origin_uri).upload(path=path, name=name)
-            self.field['fileIds'].append(f'{res.id}')
-        else:
-            self.field['fileIds'].append(f'{file_id}')
+        res = Drive(token=self.auth_i.token, origin_uri=self.auth_i.origin_uri).upload(path=path, name=name)
+        self.field['fileIds'] = [res.id]
         return self
 
-    def add_poll(self, data: list = None, item: str = '', expires_at: int = None, expired_after: int = None):
+    def add_poll(self, data: Optional[List] = None, item: Optional[str] = '', expires_at: Optional[int] = None,
+                 expired_after: Optional[int] = None, multiple: bool
+                 = None):
         """
         アンケートを作成します
 
         Parameters
         ----------
-        data : list
+        multiple :
+        data : Optional[List]
             アンケートの配列
-        item: str
+        item: Optional[str]
             アンケートの項目名
-        expires_at : int
+        expires_at : Optional[int]
             いつにアンケートを締め切るか 例:2021-09-02T15:00:00.000Z
-        expired_after : int
+        expired_after : Optional[int]
             投稿後何秒後にアンケートを締め切るか(秒
 
         Returns
@@ -101,6 +109,7 @@ class NoteAction(object):
             self.field['poll']['choices'] = data
         else:
             self.field['poll']['choices'].append(item)
+
         return self
 
     async def send(self) -> 'Note':
@@ -111,43 +120,40 @@ class NoteAction(object):
         -------
         msg: Note
         """
-        data = json.dumps(self.field)
-        res = api(self.origin_uri, '/api/notes/create', data)
-        msg = Note(res.text)
-        msg.origin_uri = self.origin_uri
-        msg.token = self.token
+        self: Note
+        field = {
+            "visibility": self.visibility,
+            "visibleUserIds": self.visible_user_ids,
+            "text": self.text,
+            "cw": self.cw,
+            "viaMobile": self.via_mobile,
+            "localOnly": self.local_only,
+            "noExtractMentions": self.no_extract_mentions,
+            "noExtractHashtags": self.no_extract_hashtags,
+            "noExtractEmojis": self.no_extract_emojis,
+            "replyId": self.reply_id,
+            "renoteId": self.renote_id,
+            "channelId": self.channel_id,
+            "i": self.auth_i.token
+        }
+        field.update(self.field)
+        field = json.dumps(field, ensure_ascii=False)
+        res = api(self.auth_i.origin_uri, '/api/notes/create', field)
+        res_json = add_auth_i(res.json(), self.auth_i.__dict__)
+        if res_json.get('error') and res_json.get('error', {}).get('code'):
+            raise CredentialRequired('認証情報がありましぇん')
+        msg = Note(**res_json)
         return msg
 
 
-class Reaction(object):
-    def __init__(self, data=None):
-        if data is None:
-            data = "{}"
-        if type(data) is not dict:
-            data = json.loads(data)
-        self.header = Header(data.get('body', {}))
-        self.note = ReactionNote(data.get('body', {}))
-
-
-class ReactionNote(object):
-    """
-    Attributes
-    ----------
-    data : dict
-    """
-
-    def __init__(self, data):
-        self.reaction = data.get('body', {}).get('reaction')
-        self.user_id = data.get('body', {}).get('userId')
-
-
 class Follow:
-    def __init__(self, id_: str = None, created_at: str = None, type_: str = None, body: dict = None, auth_i: dict = None):
+    def __init__(self, id_: Optional[str] = None, created_at: Optional[str] = None, type_: Optional[str] = None,
+                 body: dict = None, auth_i: dict = None):
         self.auth_i = auth_i
         self.id_ = id_
         self.created_at = created_at
         self.type_ = type_
-        self.user = UserProfile(**upper_to_lower(body), auth_i=self.auth_i)
+        self.user = UserProfile(**upper_to_lower(body))
 
 
 class Header(object):
@@ -156,101 +162,88 @@ class Header(object):
         self.type = data.get('type')
 
 
-class Note(NoteAction):
-    """
+class Properties(BaseModel):
+    width: Optional[int]
+    height: Optional[int]
 
-    Methods
-    -------
-    add_file(file_id, path, name)
-        ファイルをノートに添付します
-    add_poll(data, item, expires_at, expired_after)
-        アンケートをノートに追加します
-    add_reaction(reaction, note_id)
-        ノートにリアクションを追加します
-    send()
-        ノートを送信します
-    delete(id)
-        指定されたノートを削除します
-    """
 
-    def __init__(self, id_: str = None, created_at: str = None, type_: str = None, user_id: str = None, author=None,
-                 text: str = None, cw: str = None, visibility=None, renote_count=None, replies_count=None,
-                 reaction: str = None, dislike: bool = False, reactions=None, my_reaction: str = None, emojis=None,
-                 file_ids=None, files=None, reply_id=None, renote_id=None, via_mobile=None, poll=None, note: dict = None,
-                 res=None, data=None, token: str = None, origin_uri: str = None, uri: str = None, url: str = None,
-                 tags: list = None, renote: dict = None, mentions: list = None, reply: dict = None, auth_i: dict = None):
-        super().__init__()
-        if data is None:  # リストをデフォルトにすると使いまわされて良くないので毎回初期化する必要がある。
-            data = {}
-        self.tags = tags
-        if tags is None:
-            self.tags = []
-        self.id = id_
-        self.created_at = created_at
-        self.type = type_
-        self.user_id = user_id
-        self.author = User(auth_i=auth_i, **upper_to_lower(author))
-        self.text = text
-        self.visibility = visibility
-        self.renote_count = renote_count
-        self.replies_count = replies_count
-        self.reactions = reactions
-        self.my_reaction = my_reaction
-        self.emojis = emojis
-        self.file_ids = file_ids
-        self.files = files
-        self.reply_id = reply_id
-        self.renote_id = renote_id
-        self.poll = poll
-        self.res = res
-        self.token = token
-        self.field = data
-        self.origin_uri = origin_uri
-        self.uri = uri
-        self.url = url
-        self.reaction = reaction
-        self.dislike = dislike
-        self.auth_i = auth_i
-        self.mentions = mentions
-        if not data:  # 型変更としてではなく、投稿などに使う際に必要
-            self.field['text'] = text
-            if cw:
-                self.field['cw'] = cw
-            self.field['viaMobile'] = via_mobile
-            self.field['i'] = token
-        if note:
-            self.note_content: Note = Note(**upper_to_lower(note))
-        else:
-            self.note_content: Note = None
-        if reply:
-            self.reply: Note = Note(**upper_to_lower(reply))
-        else:
-            self.reply: Note = None
-        if renote:
-            self.renote: Note = Note(**upper_to_lower(renote))
-        else:
-            self.renote: Note = None
+class File(BaseModel):
+    id: Optional[str] = Field(None, alias='id_')
+    created_at: Optional[str] = Field(None, alias='created_at')
+    name: Optional[str] = None
+    type: Optional[str] = None
+    md5: Optional[str] = None
+    size: Optional[int]
+    is_sensitive: Optional[bool] = False
+    blurhash: Optional[str] = None
+    properties: Properties
+    url: Optional[str] = None
+    thumbnail_url: Optional[str] = None
+    comment: Optional[str] = None
+    folder_id: Optional[str] = None
+    folder: Optional[str] = None
+    user_id: Optional[str] = None
+    user: Optional[str] = None
 
-    @classmethod
-    def from_dict(cls, data):
 
-        self = cls.__new__(cls)
+class Poll(BaseModel):
+    multiple: Optional[bool] = False
+    expires_at: Optional[str] = None
+    choices: Optional[List] = None
+    expired_after: Optional[int] = None
 
-        after_key = {'user': 'author'}
-        for attr in ('id', 'createdAt', 'userId', 'user', 'text', 'cw',
-                     'visibility', 'renoteCount', 'repliesCount', 'reactions',
-                     'emojis', 'fileIds', 'files', 'replyId',
-                     'renoteId', 'res'
-                     ):
-            try:
-                value = data[attr]
-                p = re.compile('[A-Z]')
-                default_key = ("_" + p.search(attr)[0].lower()).join(p.split(attr)) if p.search(attr) is not None else attr
-                key = after_key.get(default_key, default_key)
-            except KeyError:
-                continue
-            else:  # エラーが発生しなかった場合は変数に追加
-                if key == 'author':
-                    setattr(self, key, User(value))
-                else:
-                    setattr(self, key, data[attr])
+
+class Renote(BaseModel):
+    id: Optional[str] = None
+    created_at: Optional[str] = None
+    user_id: Optional[str] = None
+    user: Optional[Author] = Author()
+    text: Optional[str] = None
+    cw: Optional[str] = None
+    visibility: Optional[str] = None
+    renote_count: Optional[int] = 0
+    replies_count: Optional[int] = 0
+    reactions: Dict[str, Any] = {}
+    emojis: Optional[List] = []
+    file_ids: Optional[List] = []
+    files: Optional[List] = []
+    reply_id: Optional[str] = None
+    renote_id: Optional[str] = None
+    uri: Optional[str] = None
+    poll: Optional[Poll] = None
+
+
+class Reaction(BaseModel):
+    id: Optional[str] = Field(None, alias='id_')
+    reaction: Optional[str] = None
+    user_id: Optional[str] = None
+
+
+class Note(BaseModel, NoteAction):
+    id: Optional[str] = None
+    created_at: Optional[str] = None
+    user_id: Optional[str] = None
+    author: Optional[Author] = Field(Author(), alias='user')
+    text: Optional[str] = None
+    cw: Optional[str] = None
+    visibility: Optional[str] = 'public'
+    renote_count: Optional[int] = None
+    replies_count: Optional[int] = None
+    reactions: Optional[Dict[str, Any]] = None
+    emojis: Optional[List[Emoji]] = []
+    file_ids: Optional[List[str]] = None
+    files: Optional[List[File]] = None
+    reply_id: Optional[str] = None
+    renote_id: Optional[str] = None
+    poll: Optional[Poll] = None
+    auth_i: Optional[AuthI] = AuthI()
+    visible_user_ids: Optional[List[str]] = []
+    via_mobile: Optional[bool] = False
+    local_only: Optional[bool] = False
+    no_extract_mentions: Optional[bool] = False
+    no_extract_hashtags: Optional[bool] = False
+    no_extract_emojis: Optional[bool] = False
+    media_ids: Optional[List[str]] = []
+    channel_id: Optional[str] = None
+    renote: Optional[Renote] = Renote()
+    field: Optional[dict] = Field({})

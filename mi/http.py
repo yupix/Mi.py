@@ -8,10 +8,9 @@ from typing import Any
 
 import websockets
 
-from mi import Reaction
-from mi.note import Follow, Note
+from mi.note import Follow, Note, Reaction
 from mi.router import Router
-from mi.utils import upper_to_lower
+from mi.utils import add_auth_i, upper_to_lower
 
 
 class WebSocket:
@@ -82,12 +81,10 @@ class WebSocket:
         -------
         task: asyncio.Task
         """
-        message = Note(auth_i=self.auth_i, **upper_to_lower(message.get('body', {}).get('body', {})))
+        msg = add_auth_i(message.get('body', {}).get('body', {}), self.auth_i)
+        message = Note(**upper_to_lower(msg))
         await self.router.capture_message(message.id)
-        if message.res is None:
-            task = asyncio.create_task(self.cls.on_message(web_socket, message))
-        else:
-            task = asyncio.create_task(self.cls.on_response(web_socket, message))
+        task = asyncio.create_task(self.cls.on_message(web_socket, message))
 
         return task
 
@@ -100,10 +97,12 @@ class WebSocket:
     async def _on_unfollow(self, web_socket, message):
         pass
 
-    async def _on_reacted(self, web_socket, message):
-        asyncio.create_task(self.cls.on_reacted(web_socket, Reaction(message)))
+    async def _on_reacted(self, web_socket, message):  # TODO 後で見る
+        base_msg = message.get('body', {}).get('body', {})
+        base_msg['id'] = message.get('body', {}).get('id', None)
+        asyncio.create_task(self.cls.on_reacted(web_socket, Reaction(**upper_to_lower(base_msg))))
 
-    async def _on_deleted(self, web_socket, message):
+    async def _on_deleted(self, web_socket, message):  # TODO 後で見る
         asyncio.create_task(self.cls.on_deleted(web_socket, Note(message, web_socket)))
 
     async def _on_error(self, err):

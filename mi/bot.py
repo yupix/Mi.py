@@ -5,7 +5,7 @@ import sys
 import traceback
 from typing import Any, Callable, Coroutine
 
-from mi import User, UserProfile
+from mi import UserProfile
 from mi.api import API
 from mi.http import WebSocket
 
@@ -155,7 +155,7 @@ class BotBase(WebSocket, API):
         else:
             self.origin_uri = origin_uri
         auth_i = {'token': self.token, 'origin_uri': self.origin_uri}
-        self.i = User(auth_i=auth_i).get_i()
+        self.i = UserProfile(**{'auth_i': {'token': self.token, 'origin_uri': self.origin_uri}}).get_i()
         asyncio.get_event_loop().run_until_complete(self._run(f'{uri}?i={token}', auth_i))
 
 

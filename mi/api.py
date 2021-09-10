@@ -1,6 +1,7 @@
 import re
 
 from mi import Note, Drive
+from mi.utils import add_auth_i
 
 
 class API(object):
@@ -13,6 +14,7 @@ class API(object):
             self.origin_uri = origin_uri[:-1]
         else:
             self.origin_uri = origin_uri
+        self.auth_i = {'token': self.token, 'origin_uri': self.origin_uri}
 
     def note(self, data=None, text: str = None, cw: str = None, via_mobile: bool = False, *args, **kwargs):
         if data is None:  # リストをデフォルトにすると使いまわされて良くないので毎回初期化する必要がある。
@@ -27,7 +29,8 @@ class API(object):
             field['i'] = self.token
         else:
             field = data
-        return Note(token=self.token, origin_uri=self.origin_uri, data=field, *args, **kwargs)
+        msg = add_auth_i(field, self.auth_i)
+        return Note(**msg)
 
     def drive(self):
         return Drive(token=self.token, origin_uri=self.origin_uri)

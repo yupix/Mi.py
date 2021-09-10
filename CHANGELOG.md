@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 - `on_follow` イベントを追加しました
+- `utils.py`に`add_auth_i`関数を追加しました
+- `upper_to_lower`関数でネストされたdictのkeyを全て小文字化できるようになりました
 
 ### Changed
 

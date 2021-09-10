@@ -10,10 +10,11 @@ __path__ = __import__('pkgutil').extend_path(__path__, __name__)
 
 from .ext import task
 from .ext.task import Loop, loop
-from .drive import Properties, Drive
 from .instance import Instance
-from .user import User, UserProfile
-from .note import Header, Note, Reaction, ReactionNote
+from .emoji import Emoji
+from .user import UserProfile
+from .drive import Properties, Drive
+from .note import Header, Note, Reaction
 from .router import Router
 from .bot import Bot, BotBase
 
@@ -29,12 +30,10 @@ __all__ = [
     'utils',
     'drive',
     'Note',
-    'ReactionNote',
+    'Reaction',
     'UserProfile',
     'Instance',
     'Header',
-    'User',
-    'Reaction',
     'Bot',
     'Router',
     'Drive',

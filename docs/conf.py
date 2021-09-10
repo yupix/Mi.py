@@ -12,8 +12,8 @@
 #
 import os
 import sys
-sys.path.insert(0, os.path.abspath('../'))
 
+sys.path.insert(0, os.path.abspath('../'))
 
 # -- Project information -----------------------------------------------------
 
@@ -23,7 +23,6 @@ author = 'yupix'
 
 # The full version, including alpha/beta/rc tags
 release = '0.5.0'
-
 
 # -- General configuration ---------------------------------------------------
 
@@ -43,13 +42,14 @@ extensions = [
     'sphinx.ext.napoleon',
     'numpydoc',
     'sphinx_panels',
-    'sphinx_git'
+    'sphinx_git',
+    'sphinxcontrib.autodoc_pydantic'
 ]
+autodoc_pydantic_settings_show_field_summary = True
 panels_add_bootstrap_css = False
 
 autodoc_mock_imports = ["matplotlib"]
 autoclass_content = 'both'
-
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -65,7 +65,6 @@ language = 'ja'
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
-
 
 html_sidebars = {
     "contributing": ["search-field", "custom-template"],
@@ -87,9 +86,9 @@ html_static_path = ['_static']
 html_logo = "_static/mi.py.svg"
 
 html_theme_options = {
-    #"external_links": [
+    # "external_links": [
     #    {"url": "https://pandas.pydata.org/pandas-docs/stable/", "name": "API"}
-    #],
+    # ],
     "github_url": "https://github.com/yupix/mi.py",
     "icon_links": [
         {
@@ -111,7 +110,6 @@ html_theme_options = {
     # "navbar_end": ["navbar-icon-links", "navbar-version"]  # Just for testing
     # "footer_items": ["copyright", "sphinx-version", ""]
 }
-
 
 html_context = {
     "github_user": "yupix",
