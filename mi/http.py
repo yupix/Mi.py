@@ -103,7 +103,7 @@ class WebSocket:
         asyncio.create_task(self.cls.on_reacted(web_socket, Reaction(**upper_to_lower(base_msg))))
 
     async def _on_deleted(self, web_socket, message):  # TODO 後で見る
-        asyncio.create_task(self.cls.on_deleted(web_socket, Note(message, web_socket)))
+        asyncio.create_task(self.cls.on_deleted(web_socket, Note(**message)))
 
     async def _on_error(self, err):
         await self.cls.on_error(err)
