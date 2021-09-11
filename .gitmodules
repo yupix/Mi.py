@@ -1,0 +1,3 @@
+[submodule "mi-front"]
+	path = mi-front
+	url = git@github.com:yupix/mi.py-front.git
