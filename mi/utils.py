@@ -1,32 +1,18 @@
 """
 Mi.pyを使用する上でちょっとした際に便利なツール一覧
 """
+import json
 import re
-from typing import Optional
 
 import requests
-from pydantic import BaseModel
 
 
-class AuthI(BaseModel):
-    token: Optional[str] = None
-    origin_uri: Optional[str] = None
+def json_dump(data, *args, **kwargs):
+    return json.dumps(data, ensure_ascii=False, *args, **kwargs)
 
 
 def api(origin_uri: str, endpoint: str, data):
     return requests.post(origin_uri + endpoint, data=data)
-
-
-def add_auth_i(data: dict, auth_i: dict) -> dict:
-    data['auth_i'] = auth_i
-    return data
-
-
-def set_auth_i(cls, auth_i: dict, exist: bool = False):
-    if not exist and not auth_i:
-        return
-    cls.token = auth_i.get('auth_i', {}).get('token')
-    cls.origin_uri = auth_i.get('auth_i', {}).get('origin_uri')
 
 
 def upper_to_lower(data: dict, field: dict = None, nest=True) -> dict:

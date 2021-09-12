@@ -2,15 +2,15 @@
 Mi.pyのWebSocket部分
 """
 
-import json
 import asyncio
+import json
 from typing import Any
 
 import websockets
 
 from mi.note import Follow, Note, Reaction
 from mi.router import Router
-from mi.utils import add_auth_i, upper_to_lower
+from mi.utils import upper_to_lower
 
 
 class WebSocket:
@@ -21,10 +21,8 @@ class WebSocket:
         self.web_socket = None
         self.cls = cls
         self.router: Router
-        self.auth_i = None
 
-    async def _run(self, uri, auth_i: dict):
-        self.auth_i = auth_i
+    async def _run(self, uri):
         try:
             async with websockets.connect(uri) as web_socket:
                 asyncio.create_task(self._on_ready(web_socket))
@@ -81,7 +79,7 @@ class WebSocket:
         -------
         task: asyncio.Task
         """
-        msg = add_auth_i(message.get('body', {}).get('body', {}), self.auth_i)
+        msg = message.get('body', {}).get('body', {})
         message = Note(**upper_to_lower(msg))
         await self.router.capture_message(message.id)
         task = asyncio.create_task(self.cls.on_message(web_socket, message))
@@ -92,7 +90,7 @@ class WebSocket:
         pass
 
     async def _on_follow(self, web_socket, message: dict):
-        asyncio.create_task(self.cls.on_follow(web_socket, Follow(**upper_to_lower(message.get('body')), auth_i=self.auth_i)))
+        asyncio.create_task(self.cls.on_follow(web_socket, Follow(**upper_to_lower(message.get('body')))))
 
     async def _on_unfollow(self, web_socket, message):
         pass

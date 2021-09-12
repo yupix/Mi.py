@@ -6,15 +6,13 @@ import emoji
 import requests
 from pydantic import BaseModel, Field
 
-from mi import Drive, Emoji, UserProfile
+from mi import Drive, Emoji, UserProfile, config
 from mi.exception import CredentialRequired
 from mi.user import Author
-from mi.utils import AuthI, add_auth_i, api, upper_to_lower
+from mi.utils import api, upper_to_lower
 
 
 class NoteAction(object):
-    def __init__(self):
-        self.auth_i: dict
     def emoji_count(self):
         if self.text is None:
             count = len(self.emojis)
@@ -42,8 +40,8 @@ class NoteAction(object):
             id_ = self.id
         else:
             id_ = note_id
-        data = json.dumps({'noteId': id_, 'i': self.auth_i.token, 'reaction': reaction}, ensure_ascii=False)
-        res = api(self.auth_i.origin_uri, '/api/notes/reactions/create', data=data.encode('utf-8'))
+        data = json.dumps({'noteId': id_, 'i': config.i.token, 'reaction': reaction}, ensure_ascii=False)
+        res = api(config.i.origin_uri, '/api/notes/reactions/create', data=data.encode('utf-8'))
         status = True if res.status_code == 204 else False
         return status
 
@@ -74,7 +72,7 @@ class NoteAction(object):
         -------
         self: Note
         """
-        res = Drive(token=self.auth_i.token, origin_uri=self.auth_i.origin_uri).upload(path=path, name=name)
+        res = Drive(token=config.i.token, origin_uri=config.i.origin_uri).upload(path=path, name=name)
         self.field['fileIds'] = [res.id]
         return self
 
@@ -134,12 +132,12 @@ class NoteAction(object):
             "replyId": self.reply_id,
             "renoteId": self.renote_id,
             "channelId": self.channel_id,
-            "i": self.auth_i.token
+            "i": config.i.token
         }
         field.update(self.field)
         field = json.dumps(field, ensure_ascii=False)
-        res = api(self.auth_i.origin_uri, '/api/notes/create', field)
-        res_json = add_auth_i(res.json(), self.auth_i.__dict__)
+        res = api(config.i.origin_uri, '/api/notes/create', field)
+        res_json = res.json()
         if res_json.get('error') and res_json.get('error', {}).get('code'):
             raise CredentialRequired('認証情報がありましぇん')
         msg = Note(**res_json)
@@ -148,8 +146,7 @@ class NoteAction(object):
 
 class Follow:
     def __init__(self, id_: Optional[str] = None, created_at: Optional[str] = None, type_: Optional[str] = None,
-                 body: dict = None, auth_i: dict = None):
-        self.auth_i = auth_i
+                 body: dict = None):
         self.id_ = id_
         self.created_at = created_at
         self.type_ = type_
@@ -236,7 +233,6 @@ class Note(BaseModel, NoteAction):
     reply_id: Optional[str] = None
     renote_id: Optional[str] = None
     poll: Optional[Poll] = None
-    auth_i: Optional[AuthI] = AuthI()
     visible_user_ids: Optional[List[str]] = []
     via_mobile: Optional[bool] = False
     local_only: Optional[bool] = False

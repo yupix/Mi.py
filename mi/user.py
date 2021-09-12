@@ -2,21 +2,17 @@ import json
 from typing import Any, Dict, List, Optional
 
 import requests
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
 
-from mi import Emoji, Instance
+from mi import Emoji, Instance, config
 from mi.drive import File
-from mi.utils import AuthI, set_auth_i, upper_to_lower
+from mi.utils import upper_to_lower
 
 
 class UserAction(object):
-    def __init__(self):
-        self.auth_i: dict
-
     def get_i(self):
-        data = json.dumps({'i': self.auth_i.token})
-        print(self.auth_i)
-        res = requests.post(self.auth_i.origin_uri + '/api/i', data=data)
+        data = json.dumps({'i': config.i.token})
+        res = requests.post(config.i.origin_uri + '/api/i', data=data)
         user = UserProfile(**upper_to_lower(json.loads(res.text)))
         return user
 
@@ -36,9 +32,8 @@ class UserAction(object):
         """
         if user_id is None:
             user_id = self.id
-        set_auth_i(self, self.auth_i, True)
-        data = json.dumps({'userId': user_id, 'i': self.token})
-        res = requests.post(self.origin_uri + '/api/following/create', data=data)
+        data = json.dumps({'userId': user_id, 'i': config.i.token})
+        res = requests.post(config.i.origin_uri + '/api/following/create', data=data)
         if res.json().get('error'):
             code = res.json()['error']['code']
             status = False
@@ -63,9 +58,8 @@ class UserAction(object):
         """
         if user_id is None:
             user_id = self.id
-        set_auth_i(self, self.auth_i.auth_i, True)
-        data = json.dumps({'userId': user_id, 'i': self.auth_i.token})
-        res = requests.post(self.auth_i.origin_uri + '/api/following/delete', data=data)
+        data = json.dumps({'userId': user_id, 'i': config.i.token})
+        res = requests.post(config.i.origin_uri + '/api/following/delete', data=data)
         status = True if res.status_code == 204 or 200 else False
         if status is False:
             code = res.json()['error']['code']
@@ -199,7 +193,6 @@ class UserProfile(BaseModel, UserAction):
     is_blocking: Optional[bool] = False
     is_blocked: Optional[bool] = False
     is_muted: Optional[bool] = False
-    auth_i: Optional[AuthI] = AuthI()
 
 
 class Author(BaseModel):

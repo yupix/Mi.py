@@ -5,12 +5,11 @@ import sys
 import traceback
 from typing import Any, Callable, Coroutine
 
-from mi import UserProfile
-from mi.api import API
+from mi import UserProfile, config
 from mi.http import WebSocket
 
 
-class BotBase(WebSocket, API):
+class BotBase(WebSocket):
     def __init__(self):
         self.extra_events = {}
         self.special_events = {}
@@ -155,9 +154,9 @@ class BotBase(WebSocket, API):
         else:
             self.origin_uri = origin_uri
         auth_i = {'token': self.token, 'origin_uri': self.origin_uri}
+        config.init(**auth_i)
         self.i = UserProfile(**{'auth_i': {'token': self.token, 'origin_uri': self.origin_uri}}).get_i()
-        asyncio.get_event_loop().run_until_complete(self._run(f'{uri}?i={token}', auth_i))
-
+        asyncio.get_event_loop().run_until_complete(self._run(f'{uri}?i={token}'))
 
 class Bot(BotBase):
     pass
