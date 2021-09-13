@@ -32,7 +32,7 @@ Mi.pyはDiscord.pyライクな書き方ができるように作成されてい�
 
     +++
 
-    .. link-button:: api
+    .. link-button:: mi
             :type: ref
             :text: To the reference guide
             :classes: btn-block btn-secondary stretched-link

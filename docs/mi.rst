@@ -1,6 +1,11 @@
 mi package
 ==========
 
+.. automodule:: mi
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Subpackages
 -----------
 
@@ -15,7 +20,6 @@ Submodules
 .. toctree::
    :maxdepth: 4
 
-   mi.api
    mi.bot
    mi.chart
    mi.config
@@ -28,11 +32,3 @@ Submodules
    mi.router
    mi.user
    mi.utils
-
-Module contents
----------------
-
-.. automodule:: mi
-   :members:
-   :undoc-members:
-   :show-inheritance:

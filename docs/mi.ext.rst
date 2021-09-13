@@ -1,6 +1,11 @@
 mi.ext package
 ==============
 
+.. automodule:: mi.ext
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Subpackages
 -----------
 
@@ -9,11 +14,3 @@ Subpackages
 
    mi.ext.messages
    mi.ext.task
-
-Module contents
----------------
-
-.. automodule:: mi.ext
-   :members:
-   :undoc-members:
-   :show-inheritance:

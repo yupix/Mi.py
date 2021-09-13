@@ -1,6 +1,11 @@
 mi.ext.messages package
 =======================
 
+.. automodule:: mi.ext.messages
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Submodules
 ----------
 
@@ -8,11 +13,3 @@ Submodules
    :maxdepth: 4
 
    mi.ext.messages.context
-
-Module contents
----------------
-
-.. automodule:: mi.ext.messages
-   :members:
-   :undoc-members:
-   :show-inheritance:
