@@ -13,6 +13,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - `utils.py`に`add_auth_i`関数を追加しました
 - `upper_to_lower`関数でネストされたdictのkeyを全て小文字化できるようになりました
 - `NoteAction`クラスに`emoji_count`メソッドを追加
+- `config.py`を追加、auth_i等は全てここに保存するように
+- `chart.py`を追加しました。
 
 ### Changed
 
@@ -20,15 +22,23 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - 内部変更: on_messageへの送信部分の条件式をres使わないように
 - 内部変更: auth_iの共有方法を共通化
 - ほぼすべてのデータ格納用クラスをPydanticに置き換え(`Note`や`File`など)
+- 内部変更: auth_iの部分をconfig.iに置き換え
 - `get_i`を`UserAction`に移動
 
 ### Removed
 
+- `auth_i`削除に伴い`api.py`を**削除**しました
+- `set_auth_i` `add_auth_i`関数を削除しました
+- `AuthI`モデルを削除しました
+- `auth_i`をクラスやメソッドなどの引数から削除しました
 - `Message`クラスを削除しました。基本的に不要な情報があり、実装の複雑さが上がっているだけだからです。
 
 ### Fixed
 
 - `add_reaction`の認証情報周りの不具合が修正されました
+- ドキュメントでPydanticのモデルが表示できるようになりました
+- `on_deleted`イベントが正常に動作しない既知の不具合を修正しました
+- `api`関数でデータがunicodeだと正常に動作しない場合があるのを修正
 
 ## [v0.1.0-1a] 2021-09-06
 
