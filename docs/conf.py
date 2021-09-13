@@ -50,6 +50,7 @@ panels_add_bootstrap_css = False
 
 autodoc_mock_imports = ["matplotlib"]
 autoclass_content = 'both'
+autosummary_generate = True
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
