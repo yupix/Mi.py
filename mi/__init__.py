@@ -4,20 +4,20 @@ __license__ = 'MIT'
 __copyright__ = 'Copyright 2021-present yupix'
 __author_email__ = 'yupi0982@outlook.jp'
 __url__ = 'https://github.com/yupix/Mi.py'
-__version__ = '0.1.0'
+__version__ = '0.1.5'
 
 __path__ = __import__('pkgutil').extend_path(__path__, __name__)
 
+from .bot import Bot, BotBase
+from .chart import Chart, Local, Remote
+from .drive import Drive, Properties
+from .emoji import Emoji
 from .ext import task
 from .ext.task import Loop, loop
-from .chart import Chart, Local, Remote
 from .instance import Instance
-from .emoji import Emoji
-from .user import UserProfile
-from .drive import Properties, Drive
+from .note import Follow, Header, Note, Reaction
 from .router import Router
-from .note import Header, Note, Reaction, Follow
-from .bot import Bot, BotBase
+from .user import UserProfile
 
 __all__ = [
     'Chart',

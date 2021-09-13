@@ -1,6 +1,6 @@
-from setuptools import find_packages, setup
 import pathlib
 
+from setuptools import find_packages, setup
 
 description = 'A Python wrapper for the Misskey API'
 readme_file = pathlib.Path(__file__).parent/'README.md'
@@ -9,7 +9,7 @@ with readme_file.open(encoding='utf-8') as fh:
 
 setup(
     name='mi.py',
-    version='0.1.0',
+    version='0.1.5',
     install_requires=['websockets', 'requests', 'pydantic'],
     url='https://github.com/yupix/mi.py',
     author='yupix',

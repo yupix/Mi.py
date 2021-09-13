@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [v0.1.5] 2021-09-13
+
 ### Added
 
 - `on_follow` イベントを追加しました
@@ -122,6 +124,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Added README.md.
 - Added LICENSE.
 - Added Each event method.
+
+[v0.1.5]: https://github.com/yupix/mi.py/compare/v0.1.0-1a...v0.1.0-5
 
 [v0.1.0-1a]: https://github.com/yupix/mi.py/compare/v0.1.0a...v0.1.0-1a
 [v0.1.0a]: https://github.com/yupix/mi.py/compare/v0.0.1a...v0.1.0a
