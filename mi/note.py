@@ -1,5 +1,4 @@
 import json
-import re
 from typing import Any, Dict, List, Optional
 
 import emoji
@@ -55,24 +54,26 @@ class NoteAction(object):
         status = True if res.status_code == 204 else False
         return status
 
-    def add_file(self, file_id: Optional[str] = None, path: Optional[str] = None, name: Optional[str] = None) -> 'Note':
+    def add_file(self, path: str, name: str = None, force: bool = None, is_sensitive: bool = None) -> 'Note':
         """
         ノートにファイルを添付します。
 
         Parameters
         ----------
-        file_id : Optional[str]
-            既にドライブにあるファイルを使用する場合のファイルID
-        path : Optional[str]
-            新しくファイルをアップロードする際のファイルへのパス
-        name : Optional[str]
-            新しくファイルをアップロードする際のファイル名(misskey side
+        is_sensitive : bool
+            この画像がセンシティブな物の場合Trueにする
+        force : bool
+            Trueの場合同じ名前のファイルがあった場合でも強制的に保存する
+        path : str
+            そのファイルまでのパスとそのファイル.拡張子(/home/test/test.png)
+        name: str
+            ファイル名(拡張子があるなら含めて)
 
         Returns
         -------
         self: Note
         """
-        res = Drive(token=config.i.token, origin_uri=config.i.origin_uri).upload(path=path, name=name)
+        res = Drive().upload(path, name, force, is_sensitive)
         self.field['fileIds'] = [res.id]
         return self
 
