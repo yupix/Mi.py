@@ -11,8 +11,8 @@ def json_dump(data, *args, **kwargs):
     return json.dumps(data, ensure_ascii=False, *args, **kwargs)
 
 
-def api(origin_uri: str, endpoint: str, data) -> requests.models.Response:
-    return requests.post(origin_uri + endpoint, data=data.encode('utf-8'))
+def api(origin_uri: str, endpoint: str, data, files: dict = None) -> requests.models.Response:
+    return requests.post(origin_uri + endpoint, data=data, files=files)
 
 
 def upper_to_lower(data: dict, field: dict = None, nest=True) -> dict:
