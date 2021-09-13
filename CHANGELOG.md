@@ -15,14 +15,18 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - `NoteAction`クラスに`emoji_count`メソッドを追加
 - `config.py`を追加、auth_i等は全てここに保存するように
 - `chart.py`を追加しました。
+- `Drive`モデルに `DriveAction`クラスを継承させるように
+- `DriveAction`クラスの`upload`メソッドの引数に`is_sensitive`と`force`を追加
+- `utils.py`の`api`関数で`files`を受け取るように
 
 ### Changed
 
 - 内部変更: `delete` `send`等のメソッドを別のクラスに分けました
 - 内部変更: on_messageへの送信部分の条件式をres使わないように
 - 内部変更: auth_iの共有方法を共通化
-- ほぼすべてのデータ格納用クラスをPydanticに置き換え(`Note`や`File`など)
 - 内部変更: auth_iの部分をconfig.iに置き換え
+- `upload`メソッドの引数変更に伴う`add_file`の引数に`is_sensitive`と`force`を追加
+- ほぼすべてのデータ格納用クラスをPydanticに置き換え(`Note`や`File`など)
 - `get_i`を`UserAction`に移動
 
 ### Removed
