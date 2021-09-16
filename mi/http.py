@@ -95,12 +95,12 @@ class WebSocket:
     async def _on_unfollow(self, web_socket, message):
         pass
 
-    async def _on_reacted(self, web_socket, message):  # TODO 後で見る
+    async def _on_reacted(self, web_socket, message):
         base_msg = message.get('body', {}).get('body', {})
         base_msg['id'] = message.get('body', {}).get('id', None)
         asyncio.create_task(self.cls.on_reacted(web_socket, Reaction(**upper_to_lower(base_msg))))
 
-    async def _on_deleted(self, web_socket, message):  # TODO 後で見る
+    async def _on_deleted(self, web_socket, message):
         asyncio.create_task(self.cls.on_deleted(web_socket, Note(**message)))
 
     async def _on_error(self, err):
