@@ -23,6 +23,7 @@ __all__ = [
     'Chart',
     'Local',
     'Remote',
+    'Emoji',
     'bot',
     'http',
     'note',
