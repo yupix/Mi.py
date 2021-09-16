@@ -11,8 +11,37 @@ def json_dump(data, *args, **kwargs):
     return json.dumps(data, ensure_ascii=False, *args, **kwargs)
 
 
-def api(origin_uri: str, endpoint: str, data, files: dict = None) -> requests.models.Response:
-    return requests.post(origin_uri + endpoint, data=data, files=files)
+def api(origin_uri: str, endpoint: str, data=None, json_data=None, files: dict = None) -> requests.models.Response:
+    """
+    .. deprecated:: 0.1.5
+        `data` 0.2.0で正式に削除され、以降はjson_dataを使用するようにしてください。
+
+    Parameters
+    ----------
+    origin_uri : str
+        起点となるURL
+    endpoint : str
+        エンドポイント
+    data : dict or str
+        送るデータ
+    json_data :
+    files :
+
+    Returns
+    -------
+    requests.models.Response
+    """
+
+    if type(data) is str:
+        data = data.encode('utf-8')
+
+    return requests.post(origin_uri + endpoint, data=data, files=files, json=json_data)
+
+
+def remove_dict_empty(data: dict) -> dict:
+    _data = {}
+    _data = {k: v for k, v in data.items() if v is not None}
+    return _data
 
 
 def upper_to_lower(data: dict, field: dict = None, nest=True) -> dict:
