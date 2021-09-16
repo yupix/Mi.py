@@ -7,7 +7,8 @@ from mi.utils import api
 
 
 class DriveAction(object):
-    def upload(self, path: str, name: str = None, force: bool = False, is_sensitive: bool = False) -> 'Drive':
+    def upload(self, path: str, name: str = None, force: bool = False, is_sensitive: bool = False, url: str = None) -> \
+            'Drive':  # TODO: Folderをサポート
         """
 
         Parameters
@@ -20,17 +21,25 @@ class DriveAction(object):
             そのファイルまでのパスとそのファイル.拡張子(/home/test/test.png)
         name: str
             ファイル名(拡張子があるなら含めて)
+        url : str
+            URLから画像をアップロードする
 
         Returns
         -------
         Drive: Drive
             upload後のレスポンスをDrive型に変更して返します
         """
-        with open(path, 'rb') as f:
-            file = f.read()
-        args = {'i': f'{config.i.token}', 'isSensitive': is_sensitive, 'force': force, 'name': f'{name}'}
-        file = {'file': file}
-        res = api(config.i.origin_uri, '/api/drive/files/create', data=args, files=file).json()
+        if path and url is None:
+            with open(path, 'rb') as f:
+                file = f.read()
+            args = {'i': f'{config.i.token}', 'isSensitive': is_sensitive, 'force': force, 'name': f'{name}'}
+            file = {'file': file}
+            res = api(config.i.origin_uri, '/api/drive/files/create', data=args, files=file).json()
+        elif path is None and url:
+            args = {'i': f'{config.i.token}', 'url': url, 'force': force, 'isSensitive': is_sensitive}
+            print(args)
+            res = api(config.i.origin_uri, '/api/drive/files/upload-from-url', json_data=args).json()
+
         return Drive(**res)
 
 
