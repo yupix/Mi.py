@@ -37,7 +37,6 @@ class DriveAction(object):
             res = api(config.i.origin_uri, '/api/drive/files/create', data=args, files=file).json()
         elif path is None and url:
             args = {'i': f'{config.i.token}', 'url': url, 'force': force, 'isSensitive': is_sensitive}
-            print(args)
             res = api(config.i.origin_uri, '/api/drive/files/upload-from-url', json_data=args).json()
 
         return Drive(**res)
