@@ -45,7 +45,9 @@ extensions = [
     'sphinx_git',
     'sphinxcontrib.autodoc_pydantic'
 ]
-autodoc_pydantic_settings_show_field_summary = True
+autodoc_pydantic_model_show_json = False  # Jsonを表示しないように
+autodoc_pydantic_model_show_field_summary = False
+autodoc_pydantic_field_show_default = False
 panels_add_bootstrap_css = False
 
 autodoc_mock_imports = ["matplotlib"]
