@@ -7,10 +7,9 @@ from mi.utils import api
 
 
 class DriveAction(object):
-    def upload(self, path: str, name: str = None, force: bool = False, is_sensitive: bool = False, url: str = None) -> \
-            'Drive':  # TODO: Folderをサポート
+    @staticmethod
+    def upload(path: str, name: str = None, force: bool = False, is_sensitive: bool = False, url: str = None) -> 'Drive':
         """
-
         Parameters
         ----------
         is_sensitive : bool
@@ -29,6 +28,7 @@ class DriveAction(object):
         Drive: Drive
             upload後のレスポンスをDrive型に変更して返します
         """
+
         if path and url is None:
             with open(path, 'rb') as f:
                 file = f.read()
@@ -77,7 +77,7 @@ class File(BaseModel):
     user: Dict[str, Any]
 
 
-class Drive(BaseModel, DriveAction):
+class Drive(BaseModel):
     id: Optional[str] = None
     created_at: Optional[str] = None
     name: Optional[str] = None
@@ -88,3 +88,30 @@ class Drive(BaseModel, DriveAction):
     folder_id: Optional[str] = None
     is_sensitive: Optional[bool] = False
     blurhash: Optional[str] = None
+    __drive_action = DriveAction()
+
+    class Config:
+        arbitrary_types_allowed = True
+
+    def upload(self, path: str, name: str = None, force: bool = False, is_sensitive: bool = False, url: str = None) -> 'Drive':
+        """
+        parameters
+        ----------
+        is_sensitive : bool
+            この画像がセンシティブな物の場合trueにする
+        force : bool
+            trueの場合同じ名前のファイルがあった場合でも強制的に保存する
+        path : str
+            そのファイルまでのパスとそのファイル.拡張子(/home/test/test.png)
+        name: str
+            ファイル名(拡張子があるなら含めて)
+        url : str
+            urlから画像をアップロードする
+
+        returns
+        -------
+        drive: drive
+            upload後のレスポンスをdrive型に変更して返します
+        """
+
+        return self.__drive_action.upload(path, name, force, is_sensitive, url)
