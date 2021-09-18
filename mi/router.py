@@ -3,6 +3,7 @@ Misskeyのチャンネルへの接続や、メッセージのキャプチャ等�
 """
 
 import json
+import uuid
 
 
 class Router:
@@ -64,7 +65,7 @@ class Router:
             'type': 'connect',
             'body': {
                 'channel': 'globalTimeline',
-                'id': 'foobar',
+                'id': f'{uuid.uuid4()}',
                 'params': {
                     'some': 'thing'
                 }
@@ -83,7 +84,7 @@ class Router:
             'type': 'connect',
             'body': {
                 'channel': 'main',
-                'id': 'foobar',
+                'id': f'{uuid.uuid4()}',
                 'params': {
                     'some': 'thing'
                 }
@@ -102,7 +103,7 @@ class Router:
             'type': 'connect',
             'body': {
                 'channel': 'homeTimeline',
-                'id': 'foobar',
+                'id': f'{uuid.uuid4()}',
                 'params': {
                     'some': 'thing'
                 }
@@ -121,14 +122,14 @@ class Router:
             'type': 'connect',
             'body': {
                 'channel': 'localTimeline',
-                'id': 'oobar',
+                'id': f'{uuid.uuid4()}',
                 'params': {
                     'some': 'ting'
                 }
             }
         }, ensure_ascii=False))
 
-    async def capture_message(self, message_id:str) -> None:
+    async def capture_message(self, message_id: str) -> None:
         """
         与えられたメッセージを元にnote idを取得し、そのメッセージをon_message等の監視対象に追加します
 

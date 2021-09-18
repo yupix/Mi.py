@@ -4,6 +4,7 @@ Mi.pyのWebSocket部分
 
 import asyncio
 import json
+import uuid
 from typing import Any
 
 import websockets
@@ -29,8 +30,8 @@ class WebSocket:
                 while True:
                     await web_socket.send(json.dumps({'type': 'connect',
                                                       'body': {
-                                                          'channel': 'globalTimeline',
-                                                          'id': 'foobar',
+                                                          'channel': 'main',
+                                                          'id': f'{uuid.uuid4()}',
                                                           'params': {
                                                               'some': 'thing'
                                                           }
