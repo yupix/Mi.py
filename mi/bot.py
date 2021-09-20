@@ -90,24 +90,24 @@ class BotBase(WebSocket):
     async def on_error(self, err):
         await self.event_dispatch('error', err)
 
-    async def on_message(self, ws, message):
+    async def on_message(self, ws, ctx):
         """デフォルト処理"""
-        await self.dispatch('message', ws, message)
+        await self.dispatch('message', ws, ctx)
 
-    async def on_follow(self, ws, message):
-        await self.dispatch('followed', ws, message)
+    async def on_follow(self, ws, ctx):
+        await self.dispatch('followed', ws, ctx)
 
-    async def on_response(self, ws, message):
-        await self.dispatch('response', ws, message)
+    async def on_response(self, ws, ctx):
+        await self.dispatch('response', ws, ctx)
 
     async def on_ready(self, ws):
         await self.event_dispatch('ready', ws)
 
-    async def on_reacted(self, ws, message):
-        await self.dispatch('reaction', ws, message)
+    async def on_reacted(self, ws, ctx):
+        await self.dispatch('reaction', ws, ctx)
 
-    async def on_deleted(self, ws, message):
-        await self.dispatch('deleted', ws, message)
+    async def on_deleted(self, ws, ctx):
+        await self.dispatch('deleted', ws, ctx)
 
     def run(self, uri: str, token: str) -> None:
         """
