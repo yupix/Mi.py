@@ -16,7 +16,8 @@ class UserAction(object):
         user = UserProfile(**upper_to_lower(json.loads(res.text)))
         return user
 
-    def follow(self, user_id: Optional[str] = None) -> tuple[bool, str]:
+    @staticmethod
+    def follow(user_id: Optional[str]) -> tuple[bool, str]:
         """
         与えられたIDのユーザーをフォローします
 
@@ -30,10 +31,9 @@ class UserAction(object):
         status: Optional[bool] = False
             成功ならTrue, 失敗ならFalse
         """
-        if user_id is None:
-            user_id = self.id
         data = json.dumps({'userId': user_id, 'i': config.i.token})
-        res = requests.post(config.i.origin_uri + '/api/following/create', data=data)
+        res = requests.post(config.i.origin_uri +
+                            '/api/following/create', data=data)
         if res.json().get('error'):
             code = res.json()['error']['code']
             status = False
@@ -42,7 +42,8 @@ class UserAction(object):
             status = True
         return status, code
 
-    def unfollow(self, user_id: str = None) -> tuple[bool, str]:
+    @staticmethod
+    def unfollow(user_id: str) -> tuple[bool, str]:
         """
         Parameters
         ----------
@@ -56,10 +57,9 @@ class UserAction(object):
         code: Optional[str] = None or None
             失敗した場合になぜ失敗したかを返す、成功ならNone
         """
-        if user_id is None:
-            user_id = self.id
         data = json.dumps({'userId': user_id, 'i': config.i.token})
-        res = requests.post(config.i.origin_uri + '/api/following/delete', data=data)
+        res = requests.post(config.i.origin_uri +
+                            '/api/following/delete', data=data)
         status = True if res.status_code == 204 or 200 else False
         if status is False:
             code = res.json()['error']['code']
@@ -131,7 +131,7 @@ class FieldContent(BaseModel):
     value: str
 
 
-class UserProfile(BaseModel, UserAction):
+class UserProfile(BaseModel):  # TODO: Followイベント等を再実装
     id: Optional[str] = None
     username: Optional[str] = None
     name: Optional[str] = None
