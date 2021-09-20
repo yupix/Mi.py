@@ -28,7 +28,7 @@ class UserAction(object):
 
         Returns
         -------
-        status: Optional[bool] = False
+        status: bool = False
             成功ならTrue, 失敗ならFalse
         """
         data = json.dumps({'userId': user_id, 'i': config.i.token})
@@ -52,20 +52,15 @@ class UserAction(object):
 
         Returns
         -------
-        status: Optional[bool] = False
+        status: bool = False
             成功したならTrue, 失敗したならFalse
-        code: Optional[str] = None or None
-            失敗した場合になぜ失敗したかを返す、成功ならNone
         """
         data = json.dumps({'userId': user_id, 'i': config.i.token})
         res = requests.post(config.i.origin_uri +
                             '/api/following/delete', data=data)
         status = True if res.status_code == 204 or 200 else False
-        if status is False:
-            code = res.json()['error']['code']
-        else:
-            code = None
-        return status, code
+        # TODO: エラーが発生した際の例外処理を作る
+        return status
 
 
 class Channel(BaseModel):
@@ -131,7 +126,7 @@ class FieldContent(BaseModel):
     value: str
 
 
-class UserProfile(BaseModel):  # TODO: Followイベント等を再実装
+class UserProfile(BaseModel):
     id: Optional[str] = None
     username: Optional[str] = None
     name: Optional[str] = None
@@ -193,6 +188,47 @@ class UserProfile(BaseModel):  # TODO: Followイベント等を再実装
     is_blocking: Optional[bool] = False
     is_blocked: Optional[bool] = False
     is_muted: Optional[bool] = False
+    __user_action: UserAction = UserAction()
+
+    class Config:
+        arbitrary_types_allowed = True
+
+    def follow(self, user_id: Optional[str] = None) -> bool:
+        """
+        与えられたIDのユーザーをフォローします
+
+        Parameters
+        ----------
+        user_id : Optional[str] = None
+            フォローしたいユーザーのID
+
+        Returns
+        -------
+        status: bool = False
+            成功ならTrue, 失敗ならFalse
+        """
+
+        if user_id is None:
+            user_id = self.id
+        return self.__user_action.follow(user_id)
+
+    def unfollow(self, user_id: Optional[str] = None) -> bool:
+        """
+        与えられたIDのユーザーのフォローを解除します
+
+        Parameters
+        ----------
+        user_id : Optional[str] = None
+            フォローを解除したいユーザーのID
+
+        Returns
+        -------
+        status: bool = False
+            成功ならTrue, 失敗ならFalse
+        """
+        if user_id is None:
+            user_id = self.id
+        return self.__user_action.unfollow(user_id)
 
 
 class Author(BaseModel):

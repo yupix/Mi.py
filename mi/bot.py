@@ -1,5 +1,6 @@
 import asyncio
 import importlib
+from mi.user import UserAction
 import re
 import sys
 import traceback
@@ -155,7 +156,7 @@ class BotBase(WebSocket):
             self.origin_uri = origin_uri
         auth_i = {'token': self.token, 'origin_uri': self.origin_uri}
         config.init(**auth_i)
-        self.i = UserProfile(**{'auth_i': {'token': self.token, 'origin_uri': self.origin_uri}}).get_i()
+        self.i = UserAction().get_i()
         asyncio.get_event_loop().run_until_complete(self._run(f'{uri}?i={token}'))
 
 class Bot(BotBase):

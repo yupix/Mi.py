@@ -2,13 +2,12 @@ import json
 from typing import Any, Dict, List, Optional
 
 import emoji
-import requests
 from pydantic import BaseModel, Field
 
 from mi import Drive, Emoji, UserProfile, config
 from mi.exception import ContentRequired
-from mi.user import Author
-from mi.utils import api, remove_dict_empty, upper_to_lower
+from mi.user import Author, UserAction
+from mi.utils import api, remove_dict_empty
 
 
 class NoteAction(object):
@@ -39,15 +38,18 @@ class NoteAction(object):
         status: bool
             成功したならTrue,失敗ならFalse
         """
-        data = json.dumps({'noteId': note_id, 'i': config.i.token, 'reaction': reaction}, ensure_ascii=False)
-        res = api(config.i.origin_uri, '/api/notes/reactions/create', data=data.encode('utf-8'))
+        data = json.dumps({'noteId': note_id, 'i': config.i.token,
+                          'reaction': reaction}, ensure_ascii=False)
+        res = api(config.i.origin_uri, '/api/notes/reactions/create',
+                  data=data.encode('utf-8'))
         status = True if res.status_code == 204 else False
         return status
 
     @staticmethod
     async def delete(note_id: str) -> bool:
-        data = json.dumps({'noteId': note_id, 'i': config.i.token}, ensure_ascii=False)
-        res = requests.post(config.i.origin_uri + '/api/notes/delete', data=data)
+        data = json.dumps(
+            {'noteId': note_id, 'i': config.i.token}, ensure_ascii=False)
+        res = api(config.i.origin_uri, '/api/notes/delete', data=data)
         status = True if res.status_code == 204 else False
         return status
 
@@ -103,7 +105,8 @@ class NoteAction(object):
         poll: dict
         """
         if poll is None:
-            poll = {'choices': [], 'expiresAt': expires_at, 'expiredAfter': expired_after}
+            poll = {'choices': [], 'expiresAt': expires_at,
+                    'expiredAfter': expired_after}
         if item:
             poll['choices'].append(item)
         if item_list:
@@ -145,24 +148,63 @@ class NoteAction(object):
             field['poll'] = poll
         if file_ids:
             field['fileIds'] = file_ids
-        print(field)
         field = json.dumps(remove_dict_empty(field), ensure_ascii=False)
         res = api(config.i.origin_uri, '/api/notes/create', field)
         res_json = res.json()
         if res_json.get('error') and res_json.get('error', {}).get('code') == 'CONTENT_REQUIRED':
-            raise ContentRequired('ノートの送信にはtext, file, renote またはpollのいずれか1つが無くてはいけません')
+            raise ContentRequired(
+                'ノートの送信にはtext, file, renote またはpollのいずれか1つが無くてはいけません')
         msg = Note(**res_json)
 
         return msg
 
 
-class Follow:
-    def __init__(self, id_: Optional[str] = None, created_at: Optional[str] = None, type_: Optional[str] = None,
-                 body: dict = None):
-        self.id_ = id_
-        self.created_at = created_at
-        self.type_ = type_
-        self.user = UserProfile(**upper_to_lower(body))
+class Follow(BaseModel):
+    id: Optional[str] = None
+    created_at: Optional[str] = None
+    type: Optional[str] = None
+    user: Optional[UserProfile] = UserProfile()
+    __user_action: UserAction = UserAction()
+
+    class Config:
+        arbitrary_types_allowed = True
+
+    def follow(self, user_id: Optional[str] = None) -> bool:
+        """
+        与えられたIDのユーザーをフォローします
+
+        Parameters
+        ----------
+        user_id : Optional[str] = None
+            フォローしたいユーザーのID
+
+        Returns
+        -------
+        status: bool = False
+            成功ならTrue, 失敗ならFalse
+        """
+
+        if user_id is None:
+            user_id = self.user.id
+        return self.__user_action.follow(user_id)
+
+    def unfollow(self, user_id: Optional[str] = None) -> bool:
+        """
+        与えられたIDのユーザーのフォローを解除します
+
+        Parameters
+        ----------
+        user_id : Optional[str] = None
+            フォローを解除したいユーザーのID
+
+        Returns
+        -------
+        status: bool = False
+            成功ならTrue, 失敗ならFalse
+        """
+        if user_id is None:
+            user_id = self.user.id
+        return self.__user_action.unfollow(user_id)
 
 
 class Header(object):
@@ -303,7 +345,8 @@ class Note(BaseModel):
                                              )
 
     def add_file(self, path: str = None, name: str = None, force: bool = False, is_sensitive: bool = False, url: str = None):
-        self.file_ids.append(self.__note_action.add_file(path, name=name, force=force, is_sensitive=is_sensitive, url=url).id)
+        self.file_ids.append(self.__note_action.add_file(
+            path, name=name, force=force, is_sensitive=is_sensitive, url=url).id)
         return self
 
     def add_poll(self, item: Optional[str] = '', expires_at: Optional[int] = None,
