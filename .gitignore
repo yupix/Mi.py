@@ -9,3 +9,5 @@ docs/_build/
 mi.py.egg-info
 build
 .pylintrc
+__pycache__
+dist
