@@ -58,7 +58,8 @@ class WebSocket:
         if base_msg is None:
             return
         event_list = {'note': '_on_message', 'reacted': '_on_reacted', 'deleted': '_on_deleted', 'follow': '_on_follow',
-                      'unfollow': '_on_unfollow', 'followed': '_on_follow', 'unreadNotification': '_on_unread_notification'}
+                      'unfollow': '_on_unfollow', 'followed': '_on_follow', 'unreadNotification': '_on_unread_notification',
+                      'mention': '_on_mention'}
         if base_msg['type'] == 'notification':  # follow等に必要
             await getattr(self, '_on_notification')(web_socket, message)
             return
@@ -89,6 +90,12 @@ class WebSocket:
 
     async def _on_notification(self, web_socket, message: dict):
         pass
+
+    async def _on_mention(self, web_socket, ctx: dict):
+        base_ctx = ctx.get('body', {}).get('body')
+        task = asyncio.create_task(
+            self.cls.on_mention(web_socket, Note(**base_ctx)))
+        return task
 
     async def _on_follow(self, web_socket, message: dict):
         task = asyncio.create_task(self.cls.on_follow(

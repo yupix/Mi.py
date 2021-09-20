@@ -95,6 +95,9 @@ class BotBase(WebSocket):
         """デフォルト処理"""
         await self.dispatch('message', ws, ctx)
 
+    async def on_mention(self, ws, ctx):
+        await self.dispatch('mention', ws, ctx)
+
     async def on_follow(self, ws, ctx):
         await self.dispatch('followed', ws, ctx)
 
@@ -147,7 +150,8 @@ class BotBase(WebSocket):
         """
         self.token = token
         if _origin_uri := re.search(r'wss?://(.*)/streaming', uri):
-            origin_uri = _origin_uri.group(0).replace('wss', 'https').replace('ws', 'http').replace('/streaming', '')
+            origin_uri = _origin_uri.group(0).replace('wss', 'https').replace(
+                'ws', 'http').replace('/streaming', '')
         else:
             origin_uri = uri
         if uri[-1] == '/':
@@ -157,7 +161,9 @@ class BotBase(WebSocket):
         auth_i = {'token': self.token, 'origin_uri': self.origin_uri}
         config.init(**auth_i)
         self.i = UserAction().get_i()
-        asyncio.get_event_loop().run_until_complete(self._run(f'{uri}?i={token}'))
+        asyncio.get_event_loop().run_until_complete(
+            self._run(f'{uri}?i={token}'))
+
 
 class Bot(BotBase):
     pass
