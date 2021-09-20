@@ -44,10 +44,12 @@ def remove_dict_empty(data: dict) -> dict:
     return _data
 
 
-def upper_to_lower(data: dict, field: dict = None, nest=True) -> dict:
+def upper_to_lower(data: dict, field: dict = None, nest=True, replace_list: dict = None) -> dict:
     if data is None:
         return {}
-    replace_list: dict = {}
+    if replace_list is None:
+        replace_list = {}
+
     pattern = re.compile('[A-Z]')
     if field is None:
         field = {}
