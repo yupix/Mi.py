@@ -246,3 +246,44 @@ class Author(BaseModel):
     emojis: Optional[List] = None
     online_status: Optional[str] = None
     instance: Optional[Instance] = Instance()
+    __user_action: UserAction = UserAction()
+
+    class Config:
+        arbitrary_types_allowed = True
+
+    def follow(self, user_id: Optional[str] = None) -> bool:
+        """
+        与えられたIDのユーザーをフォローします
+
+        Parameters
+        ----------
+        user_id : Optional[str] = None
+            フォローしたいユーザーのID
+
+        Returns
+        -------
+        status: bool = False
+            成功ならTrue, 失敗ならFalse
+        """
+
+        if user_id is None:
+            user_id = self.id
+        return self.__user_action.follow(user_id)
+
+    def unfollow(self, user_id: Optional[str] = None) -> bool:
+        """
+        与えられたIDのユーザーのフォローを解除します
+
+        Parameters
+        ----------
+        user_id : Optional[str] = None
+            フォローを解除したいユーザーのID
+
+        Returns
+        -------
+        status: bool = False
+            成功ならTrue, 失敗ならFalse
+        """
+        if user_id is None:
+            user_id = self.id
+        return self.__user_action.unfollow(user_id)
