@@ -91,7 +91,9 @@ class WebSocket:
         pass
 
     async def _on_follow(self, web_socket, message: dict):
-        asyncio.create_task(self.cls.on_follow(web_socket, Follow(**upper_to_lower(message.get('body')))))
+        task = asyncio.create_task(self.cls.on_follow(
+            web_socket, Follow(**upper_to_lower(message.get('body'), replace_list={'body': 'user'}))))
+        return task
 
     async def _on_unfollow(self, web_socket, message):
         pass
@@ -99,7 +101,8 @@ class WebSocket:
     async def _on_reacted(self, web_socket, message):
         base_msg = message.get('body', {}).get('body', {})
         base_msg['id'] = message.get('body', {}).get('id', None)
-        asyncio.create_task(self.cls.on_reacted(web_socket, Reaction(**upper_to_lower(base_msg))))
+        asyncio.create_task(self.cls.on_reacted(
+            web_socket, Reaction(**upper_to_lower(base_msg))))
 
     async def _on_deleted(self, web_socket, message):
         asyncio.create_task(self.cls.on_deleted(web_socket, Note(**message)))
