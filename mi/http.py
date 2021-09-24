@@ -43,7 +43,7 @@ class WebSocket:
 
     async def _on_ready(self, web_socket):
         self.router = Router(web_socket)
-        await self.cls.on_ready(web_socket)
+        await self.cls.dispatch('ready',web_socket)
 
     async def _recv(self, web_socket: Any, message: Any):
         """
@@ -84,7 +84,7 @@ class WebSocket:
         msg = message.get('body', {}).get('body', {})
         message = Note(**upper_to_lower(msg))
         await self.router.capture_message(message.id)
-        task = asyncio.create_task(self.cls.on_message(web_socket, message))
+        task = asyncio.create_task(self.cls.dispatch('message', web_socket, message))
 
         return task
 
