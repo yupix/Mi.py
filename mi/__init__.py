@@ -18,6 +18,7 @@ from .ext.task import Loop, loop
 from .note import Follow, Header, Note, Reaction
 from .router import Router
 from .bot import Bot, BotBase
+from .ext import *
 
 __all__ = [
     'Chart',
