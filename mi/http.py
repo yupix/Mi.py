@@ -96,7 +96,8 @@ class WebSocket:
 
     async def _on_follow(self, web_socket, message: dict):
         return asyncio.create_task(
-            self.cls.on_follow(
+            self.cls.dispatch(
+                'on_follow',
                 web_socket,
                 Follow(
                     **upper_to_lower(
@@ -112,11 +113,16 @@ class WebSocket:
     async def _on_reacted(self, web_socket, message):
         base_msg = message.get('body', {}).get('body', {})
         base_msg['id'] = message.get('body', {}).get('id', None)
-        asyncio.create_task(self.cls.on_reacted(
-            web_socket, Reaction(**upper_to_lower(base_msg))))
+        asyncio.create_task(
+            self.cls.dispatch(
+                'on_reacted',
+                web_socket,
+                Reaction(**upper_to_lower(base_msg))
+            )
+        )
 
     async def _on_deleted(self, web_socket, message):
-        asyncio.create_task(self.cls.on_deleted(web_socket, Note(**message)))
+        asyncio.create_task(self.cls.dispatch('on_deleted', web_socket, Note(**message)))
 
     async def _on_error(self, err):
         await self.cls.on_error(err)
