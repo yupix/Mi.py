@@ -23,7 +23,7 @@ class WebSocket:
         self.cls = cls
         self.router: Router
 
-    async def _run(self, uri):
+    async def run(self, uri):
         try:
             async with websockets.connect(uri) as web_socket:
                 asyncio.create_task(self._on_ready(web_socket))
@@ -43,7 +43,7 @@ class WebSocket:
 
     async def _on_ready(self, web_socket):
         self.router = Router(web_socket)
-        await self.cls.dispatch('ready',web_socket)
+        await self.cls.dispatch('ready', web_socket)
 
     async def _recv(self, web_socket: Any, message: Any):
         """
@@ -84,23 +84,27 @@ class WebSocket:
         msg = message.get('body', {}).get('body', {})
         message = Note(**upper_to_lower(msg))
         await self.router.capture_message(message.id)
-        task = asyncio.create_task(self.cls.dispatch('message', web_socket, message))
-
-        return task
+        return asyncio.create_task(self.cls.dispatch('message', web_socket, message))
 
     async def _on_notification(self, web_socket, message: dict):
         pass
 
     async def _on_mention(self, web_socket, ctx: dict):
         base_ctx = ctx.get('body', {}).get('body')
-        task = asyncio.create_task(
+        return asyncio.create_task(
             self.cls.on_mention(web_socket, Note(**base_ctx)))
-        return task
 
     async def _on_follow(self, web_socket, message: dict):
-        task = asyncio.create_task(self.cls.on_follow(
-            web_socket, Follow(**upper_to_lower(message.get('body'), replace_list={'body': 'user'}))))
-        return task
+        return asyncio.create_task(
+            self.cls.on_follow(
+                web_socket,
+                Follow(
+                    **upper_to_lower(
+                        message.get('body'), replace_list={'body': 'user'}
+                    )
+                ),
+            )
+        )
 
     async def _on_unfollow(self, web_socket, message):
         pass
