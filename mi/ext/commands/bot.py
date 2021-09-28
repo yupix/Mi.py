@@ -24,7 +24,6 @@ class BotBase:
         self.__extensions: Dict[str, Any] = {}
         self.i: UserProfile = None
         self.__cogs: Dict[str] = {}
-        super().__init__(self)
 
     def event(self, name=None):
         def decorator(func):
@@ -71,8 +70,6 @@ class BotBase:
     async def dispatch(self, event_name, *args, **kwargs):
         ev = 'on_' + event_name
 
-        if 'extra_events' not in locals():  # initを自分で作った際に必要
-            self.extra_events = {}
 
         for event in self.extra_events.get(ev, []):
             foo = importlib.import_module(event.__module__)
