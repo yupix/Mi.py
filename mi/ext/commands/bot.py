@@ -70,6 +70,10 @@ class BotBase:
 
     async def dispatch(self, event_name, *args, **kwargs):
         ev = 'on_' + event_name
+
+        if 'extra_events' not in locals():  # initを自分で作った際に必要
+            self.extra_events = {}
+
         for event in self.extra_events.get(ev, []):
             foo = importlib.import_module(event.__module__)
             coro = getattr(foo, ev)
@@ -81,7 +85,7 @@ class BotBase:
         cog_name = cog.__cog_name__
         existing = self.__cogs.get(cog_name)
 
-        if not existing is not None:
+        if existing is None:
             if not override:
                 raise CogNameDuplicate()
             self.remove_cog(cog_name)  # TODO: 作る
@@ -211,10 +215,7 @@ class BotBase:
                 'ws', 'http').replace('/streaming', '')
         else:
             origin_uri = uri
-        if uri[-1] == '/':
-            self.origin_uri = origin_uri[:-1]
-        else:
-            self.origin_uri = origin_uri
+        self.origin_uri = origin_uri[:-1] if uri[-1] == '/' else origin_uri
         auth_i = {'token': self.token, 'origin_uri': self.origin_uri}
         config.init(**auth_i)
         self.i = UserAction().get_i()
