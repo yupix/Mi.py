@@ -84,7 +84,7 @@ class WebSocket:
         msg = message.get('body', {}).get('body', {})
         message = Note(**upper_to_lower(msg))
         await self.router.capture_message(message.id)
-        return asyncio.create_task(self.cls.dispatch('message', web_socket, message))
+        return asyncio.create_task(self.cls._on_message(message))
 
     async def _on_notification(self, web_socket, message: dict):
         pass

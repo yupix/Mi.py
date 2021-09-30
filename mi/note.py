@@ -285,6 +285,7 @@ class Note(BaseModel):
     user_id: Optional[str] = None
     author: Optional[Author] = Field(Author(), alias='user')
     text: Optional[str] = None
+    content: Optional[str] = None
     cw: Optional[str] = None
     visibility: Optional[str] = 'public'
     renote_count: Optional[int] = None

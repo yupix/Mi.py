@@ -3,27 +3,76 @@
 import asyncio
 import importlib
 from mi.exception import CogNameDuplicate, ExtensionAlreadyLoaded, ExtensionFailed, ExtensionNotFound, NoEntryPointError
+from mi.ext.commands.context import Context
+from mi.ext.commands.core import GroupMixin
+from mi.ext.commands.view import StringView
 from mi.user import UserAction
 import re
 import sys
 import traceback
 from typing import Any, Callable, Coroutine, Dict, Optional
 
-from mi import UserProfile, config
+from mi import UserProfile, config, utils
 from mi.http import WebSocket
 
 __all__ = ['BotBase', 'Bot']
 
 
-class BotBase:
-    def __init__(self):
+class BotBase(GroupMixin):
+    def __init__(self, command_prefix, **options):
+        super().__init__(**options)
+        self.command_prefix = command_prefix
         self.extra_events = {}
         self.special_events = {}
+        self._check_once = []
+        self._checks = []
+        self._after_invoke = None
         self.token = None
         self.origin_uri = None
         self.__extensions: Dict[str, Any] = {}
         self.i: UserProfile = None
         self.__cogs: Dict[str] = {}
+        self.strip_after_prefix = options.get('strip_after_prefix', False)
+
+    async def can_run(self, ctx, *, call_once=False):
+        data = self._check_once if call_once else self._checks
+
+        if len(data) == 0:
+            return True
+
+        return await utils.async_all(f(ctx) for f in data)
+
+    async def invoke(self, ctx):
+        if ctx.command:
+            # await self.dispatch('command', ctx)
+            print(await self.can_run(ctx, call_once=True))
+            try:
+                if await self.can_run(ctx, call_once=True):
+                    print(vars(ctx.command))
+                    await ctx.command.invoke(ctx)
+                else:
+                    raise errors.CheckFailure('')
+            except CommandError as exc:
+                await ctx.command.dispatch_error(ctx, exc)
+
+    async def get_context(self, message, *, cls=Context):
+        view = StringView(message.text)
+        ctx = cls(bot=self, message=message)
+        if view.skip_string(self.command_prefix) is False:  # prefixがテキストに含まれているか確認
+            return ctx
+        invoker = view.get_word()
+        ctx.command = self.all_commands.get(invoker)
+        return ctx
+
+    async def process_commands(self, message):
+        if message.author.is_bot:
+            return
+
+        ctx = await self.get_context(message)
+        await self.invoke(ctx)
+
+    async def _on_message(self, message):
+        await self.process_commands(message)
 
     def event(self, name=None):
         def decorator(func):
@@ -70,7 +119,6 @@ class BotBase:
     async def dispatch(self, event_name, *args, **kwargs):
         ev = 'on_' + event_name
 
-
         for event in self.extra_events.get(ev, []):
             foo = importlib.import_module(event.__module__)
             coro = getattr(foo, ev)
@@ -81,14 +129,15 @@ class BotBase:
     def add_cog(self, cog, override: bool = False) -> None:
         cog_name = cog.__cog_name__
         existing = self.__cogs.get(cog_name)
-
-        if existing is None:
+        if existing is not None:
             if not override:
                 raise CogNameDuplicate()
             self.remove_cog(cog_name)  # TODO: 作る
 
         cog = cog._inject(self)
         self.__cogs[cog_name] = cog
+
+        print(vars(self.__cogs[cog_name]))
 
     def remove_cog(self, name: str):  # TODO: Optional[Cog]を返すように
         """Cogを削除します"""
@@ -118,6 +167,7 @@ class BotBase:
         try:
             setup(self)
         except Exception as e:
+            print(e)
             del sys.modules[key]
             # self._remove_module_references(lib.__name__)
             # self._call_module_finalizers(lib, key)
