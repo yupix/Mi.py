@@ -9,7 +9,8 @@ __all__ = (
     'ExtensionFailed',
     'CheckFailure',
     'ExtensionNotFound',
-    'NoEntryPointError'
+    'NoEntryPointError',
+    'InvalidCogPath'
 )
 
 
@@ -54,4 +55,8 @@ class CommandInvokeError(Exception):
 
 
 class CheckFailure(Exception):
+    pass
+
+
+class InvalidCogPath(Exception):
     pass

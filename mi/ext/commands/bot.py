@@ -3,8 +3,8 @@
 import asyncio
 import importlib
 from mi.exception import CheckFailure, CogNameDuplicate, CommandError, ExtensionAlreadyLoaded, ExtensionFailed, \
-    ExtensionNotFound, \
-    NoEntryPointError
+    ExtensionNotFound, NoEntryPointError, InvalidCogPath
+
 from mi.ext.commands.context import Context
 from mi.ext.commands.core import GroupMixin
 from mi.ext.commands.view import StringView
@@ -151,7 +151,10 @@ class BotBase(GroupMixin):
         return cog
 
     def _load_from_module_spec(self, spec: importlib.machinery.ModuleSpec, key: str) -> None:
-        lib = importlib.util.module_from_spec(spec)
+        try:
+            lib = importlib.util.module_from_spec(spec)
+        except AttributeError:
+            raise InvalidCogPath(f'cog: {key} へのパスが無効です')
         sys.modules[key] = lib
         try:
             spec.loader.exec_module(lib)
@@ -163,7 +166,7 @@ class BotBase(GroupMixin):
             setup = getattr(lib, 'setup')
         except AttributeError:
             del sys.modules[key]
-            raise NoEntryPointError(key)
+            raise NoEntryPointError(f'{key} にsetupが存在しません')
 
         try:
             setup(self)
