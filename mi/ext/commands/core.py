@@ -1,9 +1,10 @@
-__all__ = ['Command', 'command']
+__all__ = ['Command', 'command', 'GroupMixin']
 
 import asyncio
 import functools
 
 from ._types import _BaseCommand
+from ...exception import CommandError, CommandInvokeError, CommandRegistrationError
 
 
 class _CaseInsensitiveDict(dict):

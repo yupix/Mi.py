@@ -163,6 +163,48 @@ class Cog(metaclass=CogMeta):
 
         return self
 
+    @classmethod
+    def listener(cls, name=None):
+        """A decorator that marks a function as a listener.
+
+        This is the cog equivalent of :meth:`.Bot.listen`.
+
+        Parameters
+        ------------
+        name: :class:`str`
+            The name of the event being listened to. If not provided, it
+            defaults to the function's name.
+
+        Raises
+        --------
+        TypeError
+            The function is not a coroutine function or a string was not passed as
+            the name.
+        """
+
+        if name is not None and not isinstance(name, str):
+            raise TypeError(f'Cog.listener expected str but received {name.__class__.__name__!r} instead.')
+
+        def decorator(func):
+            actual = func
+            if isinstance(actual, staticmethod):
+                actual = actual.__func__
+            if not inspect.iscoroutinefunction(actual):
+                raise TypeError('Listener function must be a coroutine function.')
+            actual.__cog_listener__ = True
+            to_assign = name or actual.__name__
+            try:
+                actual.__cog_listener_names__.append(to_assign)
+            except AttributeError:
+                actual.__cog_listener_names__ = [to_assign]
+            # we have to return `func` instead of `actual` because
+            # we need the type to be `staticmethod` for the metaclass
+            # to pick it up but the metaclass unfurls the function and
+            # thus the assignments need to be on the actual function
+            return func
+
+        return decorator
+
     def _inject(self, bot):
         cls = self.__class__
 

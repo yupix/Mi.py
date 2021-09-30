@@ -2,7 +2,9 @@
 
 import asyncio
 import importlib
-from mi.exception import CogNameDuplicate, ExtensionAlreadyLoaded, ExtensionFailed, ExtensionNotFound, NoEntryPointError
+from mi.exception import CheckFailure, CogNameDuplicate, CommandError, ExtensionAlreadyLoaded, ExtensionFailed, \
+    ExtensionNotFound, \
+    NoEntryPointError
 from mi.ext.commands.context import Context
 from mi.ext.commands.core import GroupMixin
 from mi.ext.commands.view import StringView
@@ -47,11 +49,10 @@ class BotBase(GroupMixin):
             # await self.dispatch('command', ctx)
             print(await self.can_run(ctx, call_once=True))
             try:
-                if await self.can_run(ctx, call_once=True):
-                    print(vars(ctx.command))
-                    await ctx.command.invoke(ctx)
-                else:
-                    raise errors.CheckFailure('')
+                if not await self.can_run(ctx, call_once=True):
+                    raise CheckFailure('')
+                print(vars(ctx.command))
+                await ctx.command.invoke(ctx)
             except CommandError as exc:
                 await ctx.command.dispatch_error(ctx, exc)
 

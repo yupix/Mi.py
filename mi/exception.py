@@ -1,4 +1,16 @@
-__all__ = ['CogNameDuplicate', 'CredentialRequired', 'ContentRequired']
+__all__ = (
+    'CogNameDuplicate',
+    'CredentialRequired',
+    'ContentRequired',
+    'CommandError',
+    'CommandInvokeError',
+    'CommandRegistrationError',
+    'ExtensionAlreadyLoaded',
+    'ExtensionFailed',
+    'CheckFailure',
+    'ExtensionNotFound',
+    'NoEntryPointError'
+)
 
 
 class CredentialRequired(Exception):
@@ -26,4 +38,20 @@ class NoEntryPointError(Exception):
 
 
 class ExtensionNotFound(Exception):
+    pass
+
+
+class CommandRegistrationError(Exception):
+    pass
+
+
+class CommandError(Exception):
+    pass
+
+
+class CommandInvokeError(Exception):
+    pass
+
+
+class CheckFailure(Exception):
     pass
