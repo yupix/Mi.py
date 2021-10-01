@@ -1,7 +1,7 @@
-mi.ext.messages.context module
+mi.ext.commands.context module
 ==============================
 
-.. automodule:: mi.ext.messages.context
+.. automodule:: mi.ext.commands.context
    :members:
    :undoc-members:
    :show-inheritance:
