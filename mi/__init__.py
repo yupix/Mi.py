@@ -13,8 +13,6 @@ from .emoji import Emoji
 from .user import UserProfile
 from .chart import Chart, Local, Remote
 from .drive import Drive, Properties
-from .ext import task
-from .ext.task import Loop, loop
 from .note import Follow, Header, Note, Reaction
 from .router import Router
 from .bot import Bot, BotBase
@@ -32,9 +30,6 @@ __all__ = [
     'note',
     'router',
     'ext',
-    'task',
-    'Loop',
-    'loop',
     'utils',
     'drive',
     'Note',

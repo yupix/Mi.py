@@ -1,5 +1,7 @@
 import asyncio
 
+__all__ = ['Loop', 'loop']
+
 
 class Loop(object):
     def __init__(self, func, seconds=None):
