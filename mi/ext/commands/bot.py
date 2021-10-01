@@ -2,19 +2,20 @@
 
 import asyncio
 import importlib
+import inspect
 import re
 import sys
 import traceback
 from typing import Any, Callable, Coroutine, Dict, Optional
 
+from mi import UserProfile, config, utils
 from mi.exception import CheckFailure, CogNameDuplicate, CommandError, ExtensionAlreadyLoaded, ExtensionFailed, \
-    ExtensionNotFound, NoEntryPointError, InvalidCogPath
+    ExtensionNotFound, InvalidCogPath, NoEntryPointError
 from mi.ext.commands.context import Context
 from mi.ext.commands.core import GroupMixin
 from mi.ext.commands.view import StringView
-from mi.user import UserAction
-from mi import UserProfile, config, utils
 from mi.http import WebSocket
+from mi.user import UserAction
 
 __all__ = ['BotBase', 'Bot']
 
@@ -43,17 +44,18 @@ class BotBase(GroupMixin):
 
         return await utils.async_all(f(ctx) for f in data)
 
-    async def invoke(self, ctx):
+    async def invoke(self, ctx) -> bool:
         if ctx.command:
             # await self.dispatch('command', ctx)
-            print(await self.can_run(ctx, call_once=True))
             try:
                 if not await self.can_run(ctx, call_once=True):
                     raise CheckFailure('')
-                print(vars(ctx.command))
                 await ctx.command.invoke(ctx)
+                return True
             except CommandError as exc:
                 await ctx.command.dispatch_error(ctx, exc)
+        else:
+            return False
 
     async def get_context(self, message, *, cls=Context):
         view = StringView(message.text)
@@ -69,10 +71,12 @@ class BotBase(GroupMixin):
             return
 
         ctx = await self.get_context(message)
-        await self.invoke(ctx)
+        return await self.invoke(ctx)
 
     async def _on_message(self, message):
-        await self.process_commands(message)
+        status = await self.process_commands(message)
+        if status is False:
+            await self.dispatch('message', message)
 
     def event(self, name=None):
         def decorator(func):
@@ -109,19 +113,36 @@ class BotBase(GroupMixin):
         else:
             self.extra_events[name] = [func]
 
-    async def event_dispatch(self, event_name, *args, **kwargs):
+    async def event_dispatch(self, event_name, *args, **kwargs) -> bool:
+        """on_ready等といった
+
+        Parameters
+        ----------
+        event_name :
+        args :
+        kwargs :
+
+        Returns
+        -------
+
+        """
         ev = 'on_' + event_name
         for event in self.special_events.get(ev, []):
             foo = importlib.import_module(event.__module__)
             coro = getattr(foo, ev)
             await self.schedule_event(coro, event, *args, **kwargs)
+        return ev in dir(self)
 
     async def dispatch(self, event_name, *args, **kwargs):
         ev = 'on_' + event_name
 
         for event in self.extra_events.get(ev, []):
-            foo = importlib.import_module(event.__module__)
-            coro = getattr(foo, ev)
+            if inspect.ismethod(event):
+                coro = event
+                event = event.__name__
+            else:
+                foo = importlib.import_module(event.__module__)
+                coro = getattr(foo, ev)
             await self.schedule_event(coro, event, *args, **kwargs)
         coro = getattr(self, ev)
         await self.schedule_event(coro, ev, *args, **kwargs)
