@@ -2,18 +2,17 @@
 
 import asyncio
 import importlib
-from mi.exception import CheckFailure, CogNameDuplicate, CommandError, ExtensionAlreadyLoaded, ExtensionFailed, \
-    ExtensionNotFound, NoEntryPointError, InvalidCogPath
-
-from mi.ext.commands.context import Context
-from mi.ext.commands.core import GroupMixin
-from mi.ext.commands.view import StringView
-from mi.user import UserAction
 import re
 import sys
 import traceback
 from typing import Any, Callable, Coroutine, Dict, Optional
 
+from mi.exception import CheckFailure, CogNameDuplicate, CommandError, ExtensionAlreadyLoaded, ExtensionFailed, \
+    ExtensionNotFound, NoEntryPointError, InvalidCogPath
+from mi.ext.commands.context import Context
+from mi.ext.commands.core import GroupMixin
+from mi.ext.commands.view import StringView
+from mi.user import UserAction
 from mi import UserProfile, config, utils
 from mi.http import WebSocket
 
