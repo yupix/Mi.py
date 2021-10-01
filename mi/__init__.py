@@ -15,7 +15,7 @@ from .chart import Chart, Local, Remote
 from .drive import Drive, Properties
 from .note import Follow, Header, Note, Reaction
 from .router import Router
-from .bot import Bot, BotBase
+from .client import Client, BotBase
 from .ext import *
 
 __all__ = [
@@ -24,7 +24,7 @@ __all__ = [
     'Remote',
     'Emoji',
     'Follow',
-    'bot',
+    'client',
     'BotBase',
     'http',
     'note',
@@ -37,7 +37,7 @@ __all__ = [
     'UserProfile',
     'Instance',
     'Header',
-    'Bot',
+    'Client',
     'Router',
     'Drive',
     'Properties',

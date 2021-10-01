@@ -1,5 +1,6 @@
 import asyncio
 import importlib
+from mi.http import WebSocket
 from mi.user import UserAction
 import re
 import sys
@@ -7,17 +8,15 @@ import traceback
 from typing import Any, Callable, Coroutine
 
 from mi import UserProfile, config
-from mi.http import WebSocket
 
 
-class BotBase(WebSocket):
+class BotBase:
     def __init__(self):
         self.extra_events = {}
         self.special_events = {}
         self.token = None
         self.origin_uri = None
         self.i: UserProfile = None
-        super().__init__(self)
 
     def event(self, name=None):
         def decorator(func):
@@ -30,7 +29,6 @@ class BotBase(WebSocket):
         name = func.__name__ if name is None else name
         if not asyncio.iscoroutinefunction(func):
             raise TypeError('Listeners must be coroutines')
-
         if name in self.extra_events:
             self.special_events[name].append(func)
         else:
@@ -43,6 +41,9 @@ class BotBase(WebSocket):
             return func
 
         return decorator
+
+    async def _on_message(self, message):
+        await self.dispatch('on_message', message)
 
     def add_listener(self, func, name=None):
         name = func.__name__ if name is None else name
@@ -88,31 +89,6 @@ class BotBase(WebSocket):
         print(f'Ignoring exception in {event_method}', file=sys.stderr)
         traceback.print_exc()
 
-    async def on_error(self, err):
-        await self.event_dispatch('error', err)
-
-    async def on_message(self, ws, ctx):
-        """デフォルト処理"""
-        await self.dispatch('message', ws, ctx)
-
-    async def on_mention(self, ws, ctx):
-        await self.dispatch('mention', ws, ctx)
-
-    async def on_follow(self, ws, ctx):
-        await self.dispatch('followed', ws, ctx)
-
-    async def on_response(self, ws, ctx):
-        await self.dispatch('response', ws, ctx)
-
-    async def on_ready(self, ws):
-        await self.event_dispatch('ready', ws)
-
-    async def on_reacted(self, ws, ctx):
-        await self.dispatch('reaction', ws, ctx)
-
-    async def on_deleted(self, ws, ctx):
-        await self.dispatch('deleted', ws, ctx)
-
     def run(self, uri: str, token: str) -> None:
         """
         Launch the bot.
@@ -154,16 +130,13 @@ class BotBase(WebSocket):
                 'ws', 'http').replace('/streaming', '')
         else:
             origin_uri = uri
-        if uri[-1] == '/':
-            self.origin_uri = origin_uri[:-1]
-        else:
-            self.origin_uri = origin_uri
+        self.origin_uri = origin_uri[:-1] if uri[-1] == '/' else origin_uri
         auth_i = {'token': self.token, 'origin_uri': self.origin_uri}
         config.init(**auth_i)
         self.i = UserAction().get_i()
         asyncio.get_event_loop().run_until_complete(
-            self._run(f'{uri}?i={token}'))
+            WebSocket(self).run(f'{uri}?i={token}'))
 
 
-class Bot(BotBase):
+class Client(BotBase):
     pass

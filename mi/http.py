@@ -43,7 +43,9 @@ class WebSocket:
 
     async def _on_ready(self, web_socket):
         self.router = Router(web_socket)
-        await self.cls.dispatch('ready', web_socket)
+        status = await self.cls.event_dispatch('ready', web_socket)
+        if status:
+            await self.cls.dispatch('ready', web_socket)
 
     async def _recv(self, web_socket: Any, message: Any):
         """
@@ -97,7 +99,7 @@ class WebSocket:
     async def _on_follow(self, web_socket, message: dict):
         return asyncio.create_task(
             self.cls.dispatch(
-                'on_follow',
+                'follow',
                 web_socket,
                 Follow(
                     **upper_to_lower(
