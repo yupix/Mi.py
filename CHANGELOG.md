@@ -9,12 +9,19 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
+- `commandFrameWork` に関する多くのものを追加
+- `commandFrameWork` に `listener` `commands` デコレーターを追加
 - `Drive` クラスの `upload` メソッドでurlから画像をアップロードできるように `url` 引数を追加
 - `utils.py` に `remove_dict_empty` 関数を追加
 - `upper_to_lower` 関数に `replace_list` 引数を追加
-- `Follow` イベント時に ユーザーに対して `follow` `unfollow` メソッドが使用できるように
+- `Follow` イベント時のユーザーに `follow` `unfollow` メソッドを追加しました
+- `on_mention` イベントを追加しました
+- `Author`クラスに `follow` `unfollow` メソッドを追加しました
+
 ### Changed
 
+- **破壊的変更**: `commandFrameWork` を使用しない場合の bot モジュールの名前を client に変更しました
+    - 主にこれはDiscord.pyに近づけるためと `commandFrameWork` の bot モジュールとの差別化を目的としています
 - デフォルトで接続するチャンネルを `globalTimeline` から `main` に変更しました。グローバルタイムラインを見る場合は `Router` をご利用ください
 - `add_poll` の引数位置が変更されています。ご注意ください
 - `delete` メソッドの引数を `_id` -> `note_id` に変更しました
@@ -25,7 +32,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Removed
 
--  `UserProfile` クラスから `get_i` を削除しました。今後は`UserAction`から直接ご利用ください
+- `UserProfile` クラスから `get_i` を削除しました。今後は`UserAction`から直接ご利用ください
+- 内部変更: `dispatch` を使うことで `client.py` から `on_message` 等のクラスを削除
 
 ### Fixed
 
