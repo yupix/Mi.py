@@ -12,7 +12,7 @@ import websockets
 from mi.note import Follow, Note, Reaction
 from mi.router import Router
 from mi.utils import upper_to_lower
-
+from.config import i
 
 class WebSocket:
     """Misskey APIとやり取りを行うWebSocket object"""
@@ -26,7 +26,7 @@ class WebSocket:
     async def run(self, uri):
         try:
             async with websockets.connect(uri) as web_socket:
-                asyncio.create_task(self._on_ready(web_socket))
+                asyncio.create_task(self.on_ready(web_socket))
                 while True:
                     await web_socket.send(json.dumps({'type': 'connect',
                                                       'body': {
@@ -37,17 +37,17 @@ class WebSocket:
                                                           }
                                                       }}, ensure_ascii=False))
                     recv = await web_socket.recv()
-                    asyncio.create_task(self._recv(web_socket, recv))
+                    asyncio.create_task(self.recv(web_socket, recv))
         except Exception as err:
             asyncio.create_task(self._on_error(err))
 
-    async def _on_ready(self, web_socket):
+    async def on_ready(self, web_socket):
         self.router = Router(web_socket)
         status = await self.cls.event_dispatch('ready', web_socket)
         if status:
             await self.cls.dispatch('ready', web_socket)
 
-    async def _recv(self, web_socket: Any, message: Any):
+    async def recv(self, web_socket: Any, message: Any):
         """
 
         Parameters
@@ -59,18 +59,18 @@ class WebSocket:
         base_msg = message.get('body', None)
         if base_msg is None:
             return
-        event_list = {'note': '_on_message', 'reacted': '_on_reacted', 'deleted': '_on_deleted', 'follow': '_on_follow',
-                      'unfollow': '_on_unfollow', 'followed': '_on_follow', 'unreadNotification': '_on_unread_notification',
-                      'mention': '_on_mention'}
+        event_list = {'note': 'on_message', 'reacted': 'on_reacted', 'deleted': 'on_deleted', 'follow': 'on_follow',
+                      'unfollow': 'on_unfollow', 'followed': 'on_follow', 'unreadNotification': 'on_unread_notification',
+                      'mention': 'on_mention'}
         if base_msg['type'] == 'notification':  # follow等に必要
-            await getattr(self, '_on_notification')(web_socket, message)
+            await getattr(self, 'on_notification')(web_socket, message)
             return
         try:
             await getattr(self, f'{event_list.get(base_msg["type"])}')(web_socket, message)
         except AttributeError:
             print(base_msg['type'])
 
-    async def _on_message(self, web_socket, message: Any) -> asyncio.Task:
+    async def on_message(self, web_socket, message: Any) -> asyncio.Task:
         """
         Parameters
         ----------
@@ -88,15 +88,15 @@ class WebSocket:
         await self.router.capture_message(message.id)
         return asyncio.create_task(self.cls._on_message(message))
 
-    async def _on_notification(self, web_socket, message: dict):
+    async def on_notification(self, web_socket, message: dict):
         pass
 
-    async def _on_mention(self, web_socket, ctx: dict):
+    async def on_mention(self, web_socket, ctx: dict):
         base_ctx = ctx.get('body', {}).get('body')
         return asyncio.create_task(
             self.cls.on_mention(web_socket, Note(**base_ctx)))
 
-    async def _on_follow(self, web_socket, message: dict):
+    async def on_follow(self, web_socket, message: dict):
         return asyncio.create_task(
             self.cls.dispatch(
                 'follow',
@@ -109,10 +109,10 @@ class WebSocket:
             )
         )
 
-    async def _on_unfollow(self, web_socket, message):
+    async def on_unfollow(self, web_socket, message):
         pass
 
-    async def _on_reacted(self, web_socket, message):
+    async def on_reacted(self, web_socket, message):
         base_msg = message.get('body', {}).get('body', {})
         base_msg['id'] = message.get('body', {}).get('id', None)
         asyncio.create_task(
@@ -123,11 +123,11 @@ class WebSocket:
             )
         )
 
-    async def _on_deleted(self, web_socket, message):
+    async def on_deleted(self, web_socket, message):
         asyncio.create_task(self.cls.dispatch('on_deleted', web_socket, Note(**message)))
 
-    async def _on_error(self, err):
+    async def on_error(self, err):
         await self.cls.on_error(err)
 
-    async def _on_close(self, web_socket):
+    async def on_close(self, web_socket):
         pass
