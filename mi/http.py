@@ -96,7 +96,7 @@ class WebSocket:
         base_ctx['content'] = base_ctx['text']
         base_ctx['text'] = base_ctx['text'].replace(f'@{config.i.profile.username}', '').strip(' ')
         return asyncio.create_task(
-            self.cls.on_mention(web_socket, Note(**base_ctx)))
+            self.cls.dispatch('mention', web_socket, Note(**base_ctx)))
 
     async def on_follow(self, web_socket, message: dict):
         return asyncio.create_task(
