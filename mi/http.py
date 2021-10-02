@@ -12,7 +12,7 @@ import websockets
 from mi.note import Follow, Note, Reaction
 from mi.router import Router
 from mi.utils import upper_to_lower
-from.config import i
+from mi import config
 
 class WebSocket:
     """Misskey APIとやり取りを行うWebSocket object"""
@@ -93,6 +93,8 @@ class WebSocket:
 
     async def on_mention(self, web_socket, ctx: dict):
         base_ctx = ctx.get('body', {}).get('body')
+        base_ctx['content'] = base_ctx['text']
+        base_ctx['text'] = base_ctx['text'].replace(f'@{config.i.profile.username}', '').strip(' ')
         return asyncio.create_task(
             self.cls.on_mention(web_socket, Note(**base_ctx)))
 

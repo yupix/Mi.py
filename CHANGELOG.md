@@ -22,6 +22,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - **破壊的変更**: `commandFrameWork` を使用しない場合の bot モジュールの名前を client に変更しました
     - 主にこれはDiscord.pyに近づけるためと `commandFrameWork` の bot モジュールとの差別化を目的としています
+- `on_mention` イベントの `.text` に自分自身のメンションを含まないように、必要な場合は `content` をご利用ください
 - デフォルトで接続するチャンネルを `globalTimeline` から `main` に変更しました。グローバルタイムラインを見る場合は `Router` をご利用ください
 - `add_poll` の引数位置が変更されています。ご注意ください
 - `delete` メソッドの引数を `_id` -> `note_id` に変更しました
