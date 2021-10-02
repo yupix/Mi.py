@@ -59,16 +59,15 @@ class WebSocket:
         base_msg = message.get('body', None)
         if base_msg is None:
             return
+        event_type = base_msg["type"]
         event_list = {'note': 'on_message', 'reacted': 'on_reacted', 'deleted': 'on_deleted', 'follow': 'on_follow',
                       'unfollow': 'on_unfollow', 'followed': 'on_follow', 'unreadNotification': 'on_unread_notification',
                       'mention': 'on_mention'}
-        if base_msg['type'] == 'notification':  # follow等に必要
+        if event_type == 'notification' or 'unread' in event_type:  # follow等に必要
             await getattr(self, 'on_notification')(web_socket, message)
             return
-        try:
-            await getattr(self, f'{event_list.get(base_msg["type"])}')(web_socket, message)
-        except AttributeError:
-            print(base_msg['type'])
+
+        await getattr(self, f'{event_list.get(event_type)}')(web_socket, message)
 
     async def on_message(self, web_socket, message: Any) -> asyncio.Task:
         """
