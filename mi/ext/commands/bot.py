@@ -135,7 +135,6 @@ class BotBase(GroupMixin):
 
     async def dispatch(self, event_name, *args, **kwargs):
         ev = 'on_' + event_name
-
         for event in self.extra_events.get(ev, []):
             if inspect.ismethod(event):
                 coro = event
@@ -290,6 +289,8 @@ class BotBase(GroupMixin):
         auth_i = {'token': self.token, 'origin_uri': self.origin_uri}
         config.init(**auth_i)
         self.i = UserAction().get_i()
+        auth_i['profile'] = self.i
+        config.init(**auth_i)
         asyncio.get_event_loop().run_until_complete(WebSocket(self).run(f'{uri}?i={token}'))
 
 

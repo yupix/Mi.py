@@ -1,4 +1,4 @@
-__all__ = ['Command', 'command', 'GroupMixin']
+__all__ = ['Command', 'command', 'GroupMixin', 'group']
 
 import asyncio
 import functools
@@ -209,6 +209,133 @@ class Command(_BaseCommand):  # TODO: 作る
             return self._ensure_assignment_on_copy(copy)
         else:
             return self.copy()
+
+
+class Group(GroupMixin, Command):
+    """A class that implements a grouping protocol for commands to be
+    executed as subcommands.
+
+    This class is a subclass of :class:`.Command` and thus all options
+    valid in :class:`.Command` are valid in here as well.
+
+    Attributes
+    -----------
+    invoke_without_command: :class:`bool`
+        Indicates if the group callback should begin parsing and
+        invocation only if no subcommand was found. Useful for
+        making it an error handling function to tell the user that
+        no subcommand was found or to have different functionality
+        in case no subcommand was found. If this is ``False``, then
+        the group callback will always be invoked first. This means
+        that the checks and the parsing dictated by its parameters
+        will be executed. Defaults to ``False``.
+    case_insensitive: :class:`bool`
+        Indicates if the group's commands should be case insensitive.
+        Defaults to ``False``.
+    """
+
+    def __init__(self, *args, **attrs):
+        self.invoke_without_command = attrs.pop(
+            'invoke_without_command', False)
+        super().__init__(*args, **attrs)
+
+    def copy(self):
+        """Creates a copy of this :class:`Group`.
+
+        Returns
+        --------
+        :class:`Group`
+            A new instance of this group.
+        """
+        ret = super().copy()
+        for cmd in self.commands:
+            ret.add_command(cmd.copy())
+        return ret
+
+    async def invoke(self, ctx):
+        ctx.invoked_subcommand = None
+        ctx.subcommand_passed = None
+        early_invoke = not self.invoke_without_command
+        if early_invoke:
+            await self.prepare(ctx)
+
+        view = ctx.view
+        previous = view.index
+        view.skip_ws()
+        trigger = view.get_word()
+
+        if trigger:
+            ctx.subcommand_passed = trigger
+            ctx.invoked_subcommand = self.all_commands.get(trigger, None)
+
+        if early_invoke:
+            injected = hooked_wrapped_callback(self, ctx, self.callback)
+            await injected(*ctx.args, **ctx.kwargs)
+
+        ctx.invoked_parents.append(ctx.invoked_with)
+
+        if trigger and ctx.invoked_subcommand:
+            ctx.invoked_with = trigger
+            await ctx.invoked_subcommand.invoke(ctx)
+        elif not early_invoke:
+            # undo the trigger parsing
+            view.index = previous
+            view.previous = previous
+            await super().invoke(ctx)
+
+    async def reinvoke(self, ctx, *, call_hooks=False):
+        ctx.invoked_subcommand = None
+        early_invoke = not self.invoke_without_command
+        if early_invoke:
+            ctx.command = self
+            await self._parse_arguments(ctx)
+
+            if call_hooks:
+                await self.call_before_hooks(ctx)
+
+        view = ctx.view
+        previous = view.index
+        view.skip_ws()
+        trigger = view.get_word()
+
+        if trigger:
+            ctx.subcommand_passed = trigger
+            ctx.invoked_subcommand = self.all_commands.get(trigger, None)
+
+        if early_invoke:
+            try:
+                await self.callback(*ctx.args, **ctx.kwargs)
+            except:
+                ctx.command_failed = True
+                raise
+            finally:
+                if call_hooks:
+                    await self.call_after_hooks(ctx)
+
+        ctx.invoked_parents.append(ctx.invoked_with)
+
+        if trigger and ctx.invoked_subcommand:
+            ctx.invoked_with = trigger
+            await ctx.invoked_subcommand.reinvoke(ctx, call_hooks=call_hooks)
+        elif not early_invoke:
+            # undo the trigger parsing
+            view.index = previous
+            view.previous = previous
+            await super().reinvoke(ctx, call_hooks=call_hooks)
+
+
+def group(name=None, **attrs):
+    """A decorator that transforms a function into a :class:`.Group`.
+
+    This is similar to the :func:`.command` decorator but the ``cls``
+    parameter is set to :class:`Group` by default.
+
+    .. versionchanged:: 1.1
+        The ``cls`` parameter can now be passed.
+    """
+
+    attrs.setdefault('cls', Group)
+    return command(name=name, **attrs)
 
 
 def command(name=None, cls=None, **attrs):
