@@ -14,6 +14,7 @@ from mi.router import Router
 from mi.utils import upper_to_lower
 from mi import config
 
+
 class WebSocket:
     """Misskey APIとやり取りを行うWebSocket object"""
     __slots__ = ['web_socket', 'cls', 'router', 'auth_i']
@@ -63,7 +64,7 @@ class WebSocket:
         event_list = {'note': 'on_message', 'reacted': 'on_reacted', 'deleted': 'on_deleted', 'follow': 'on_follow',
                       'unfollow': 'on_unfollow', 'followed': 'on_follow', 'unreadNotification': 'on_unread_notification',
                       'mention': 'on_mention'}
-        if event_type == 'notification' or 'unread' in event_type:  # follow等に必要
+        if event_type == 'notification' or 'unread' in event_type or event_list.get(event_type) is None:
             await getattr(self, 'on_notification')(web_socket, message)
             return
 
