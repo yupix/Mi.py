@@ -4,7 +4,7 @@ from typing import Any, Dict, List, Optional
 import requests
 from pydantic import BaseModel
 
-from mi import Emoji, Instance, config
+from mi import Emoji, Instance, config, conn
 from mi.drive import File
 from mi.utils import upper_to_lower
 
@@ -287,3 +287,6 @@ class Author(BaseModel):
         if user_id is None:
             user_id = self.id
         return self.__user_action.unfollow(user_id)
+
+    def get_profile(self) -> 'UserProfile':
+        return UserProfile(**conn.get_user(user_id=self.id, username=self.username, host=self.host))
