@@ -9,14 +9,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
+- `conn.py` に `get_followers` `get_user` 関数が追加されました
 - `commandFrameWork` に関する多くのものを追加
 - `commandFrameWork` に `listener` `commands` デコレーターを追加
 - `Drive` クラスの `upload` メソッドでurlから画像をアップロードできるように `url` 引数を追加
-- `utils.py` に `remove_dict_empty` 関数を追加
+- `utils.py` に `check_multi_arg` `remove_dict_empty` 関数を追加
 - `upper_to_lower` 関数に `replace_list` 引数を追加
 - `Follow` イベント時のユーザーに `follow` `unfollow` メソッドを追加しました
 - `on_mention` イベントを追加しました
-- `Author`クラスに `follow` `unfollow` メソッドを追加しました
+- `Author`クラスに `follow` `unfollow` `get_profile` メソッドを追加しました
+- 複数の例外が追加されました
 
 ### Changed
 
@@ -30,6 +32,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - 内部変更: `NoteAction` `UserAction` クラスのメソッドを大半をstaticmethodに置き換えしました
 - 内部変更: `Note` クラスのメソッドの依存性を下げました
 - 内部変更: `Follow` をモデルに変更しました
+- 内部変更: イベントの発火に `dispatch` を用いるようになりました。 これにより `bot.py` から各イベントが削除されています
 
 ### Removed
 
@@ -55,7 +58,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - `chart.py` を追加しました。
 - `Drive` モデルに `DriveAction` クラスを継承させるように
 - `DriveAction` クラスの `upload` メソッドの引数に `is_sensitive` と `force` を追加
--  `utils.py` の `api` 関数で `files`  を受け取るように
+- `utils.py` の `api` 関数で `files`  を受け取るように
 
 ### Changed
 
@@ -63,9 +66,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - 内部変更: on_messageへの送信部分の条件式をres使わないように
 - 内部変更: auth_iの共有方法を共通化
 - 内部変更: auth_iの部分をconfig.iに置き換え
--  `upload`メソッドの引数変更に伴う`add_file`の引数に`is_sensitive`と`force` を追加
+- `upload`メソッドの引数変更に伴う`add_file`の引数に`is_sensitive`と`force` を追加
 - ほぼすべてのデータ格納用クラスをPydanticに置き換え( `Note`や`File` など)
--  `get_i`を`UserAction` に移動
+- `get_i`を`UserAction` に移動
 
 ### Removed
 
