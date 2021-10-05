@@ -16,7 +16,7 @@ class ChartAction:
         Chart: Chart
         """
         data = json_dump({'span': self.span, 'limit': self.limit, 'offset': self.offset})
-        res = api(config.i.origin_uri, '/api/charts/active-users', data).json()
+        res = api('/api/charts/active-users', data=data).json()
         return Chart(**res)
 
 

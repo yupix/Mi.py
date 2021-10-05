@@ -39,8 +39,8 @@ class NoteAction(object):
             成功したならTrue,失敗ならFalse
         """
         data = json.dumps({'noteId': note_id, 'i': config.i.token,
-                          'reaction': reaction}, ensure_ascii=False)
-        res = api(config.i.origin_uri, '/api/notes/reactions/create',
+                           'reaction': reaction}, ensure_ascii=False)
+        res = api('/api/notes/reactions/create',
                   data=data.encode('utf-8'))
         status = True if res.status_code == 204 else False
         return status
@@ -49,7 +49,7 @@ class NoteAction(object):
     async def delete(note_id: str) -> bool:
         data = json.dumps(
             {'noteId': note_id, 'i': config.i.token}, ensure_ascii=False)
-        res = api(config.i.origin_uri, '/api/notes/delete', data=data)
+        res = api('/api/notes/delete', data=data)
         status = True if res.status_code == 204 else False
         return status
 
@@ -149,7 +149,7 @@ class NoteAction(object):
         if file_ids:
             field['fileIds'] = file_ids
         field = json.dumps(remove_dict_empty(field), ensure_ascii=False)
-        res = api(config.i.origin_uri, '/api/notes/create', field)
+        res = api('/api/notes/create', data=field)
         res_json = res.json()
         if res_json.get('error') and res_json.get('error', {}).get('code') == 'CONTENT_REQUIRED':
             raise ContentRequired(

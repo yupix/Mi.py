@@ -8,7 +8,7 @@ from typing import Any, Callable, Iterable, Optional, TypeVar
 
 import requests
 
-from mi import exception
+from mi import config, exception
 
 T = TypeVar('T')
 
@@ -68,7 +68,15 @@ def json_dump(data, *args, **kwargs):
     return json.dumps(data, ensure_ascii=False, *args, **kwargs)
 
 
-def api(origin_uri: str, endpoint: str, data=None, json_data=None, files: dict = None) -> requests.models.Response:
+def api(
+        endpoint: str,
+        *,
+        origin_uri: str = None,
+        data=None,
+        json_data=None,
+        files: dict = None,
+        auth: bool = False
+) -> requests.models.Response:
     """
     .. deprecated:: 0.1.5
         `data` 0.2.0で正式に削除され、以降はjson_dataを使用するようにしてください。
@@ -81,8 +89,12 @@ def api(origin_uri: str, endpoint: str, data=None, json_data=None, files: dict =
         エンドポイント
     data : dict or str
         送るデータ
-    json_data :
+    json_data : dict
+        dict形式のデータ
+    auth: bool
+        認証情報を付与するか
     files :
+        画像などのファイル
 
     Returns
     -------
@@ -91,8 +103,11 @@ def api(origin_uri: str, endpoint: str, data=None, json_data=None, files: dict =
 
     if type(data) is str:
         data = data.encode('utf-8')
-
-    res = requests.post(origin_uri + endpoint, data=data, files=files, json=json_data)
+    if auth:
+        json_data['i'] = config.i.token
+    base_url = origin_uri or config.i.origin_uri
+    res = requests.post(base_url + endpoint, data=data, files=files, json=json_data)
+    print(res.text)
     status_code = res.status_code
     errors = {
         400: {
@@ -116,7 +131,7 @@ def api(origin_uri: str, endpoint: str, data=None, json_data=None, files: dict =
         error_base = errors.get(status_code)
         error = error_base['raise'](error_base['description'] + '\n' + res.text)
         raise error
-    return
+    return res
 
 
 def remove_dict_empty(data: dict) -> dict:

@@ -289,4 +289,4 @@ class Author(BaseModel):
         return self.__user_action.unfollow(user_id)
 
     def get_profile(self) -> 'UserProfile':
-        return UserProfile(**conn.get_user(user_id=self.id, username=self.username, host=self.host))
+        return UserProfile(**upper_to_lower(conn.get_user(user_id=self.id, username=self.username, host=self.host)))

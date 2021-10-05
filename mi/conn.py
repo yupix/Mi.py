@@ -26,8 +26,8 @@ def get_user(user_id: str = None, username: str = None, host: str = None) -> dic
     if not check_multi_arg(user_id, username):
         raise NotExistRequiredParameters('user_id, usernameどちらかは必須です')
 
-    data = {'userId': user_id, 'username': username, 'host': host}
-    return api(config.i.origin_uri, '/api/users/show', json_data=data).json()
+    data = remove_dict_empty({'userId': user_id, 'username': username, 'host': host})
+    return api('/api/users/show', json_data=data, auth=True).json()
 
 
 def get_followers(user_id: str = None,
@@ -77,12 +77,12 @@ def get_followers(user_id: str = None,
     if get_all:
         loop = True
         while loop:
-            get_data = api(config.i.origin_uri, '/api/users/followers', json_data=data).json()
+            get_data = api('/api/users/followers', json_data=data).json()
             if len(get_data) > 0:
                 data['untilId'] = get_data[-1]['id']
             else:
                 break
             yield get_data
     else:
-        get_data = api(config.i.origin_uri, '/api/users/followers', json_data=data).json()
+        get_data = api('/api/users/followers', json_data=data).json()
         yield get_data
