@@ -76,12 +76,12 @@ def get_followers(user_id: str = None,
     if get_all:
         loop = True
         while loop:
-            get_data = api('/api/users/followers', json_data=data).json()
+            get_data = api('/api/users/followers', json_data=data, auth=True).json()
             if len(get_data) > 0:
                 data['untilId'] = get_data[-1]['id']
             else:
                 break
             yield get_data
     else:
-        get_data = api('/api/users/followers', json_data=data).json()
+        get_data = api('/api/users/followers', json_data=data, auth=True).json()
         yield get_data

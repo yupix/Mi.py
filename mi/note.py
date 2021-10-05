@@ -15,11 +15,7 @@ class NoteAction(object):
     def emoji_count(text=None, emojis=None):
         if emojis is None:
             emojis = []
-        if text is None:
-            count = len(emojis)
-        else:
-            count = len(emojis) + emoji.emoji_count(text)
-        return count
+        return len(emojis) if text is None else len(emojis) + emoji.emoji_count(text)
 
     @staticmethod
     async def add_reaction(reaction: str, note_id: str = None) -> bool:
@@ -38,20 +34,15 @@ class NoteAction(object):
         status: bool
             成功したならTrue,失敗ならFalse
         """
-        data = json.dumps({'noteId': note_id, 'i': config.i.token,
-                           'reaction': reaction}, ensure_ascii=False)
-        res = api('/api/notes/reactions/create',
-                  data=data.encode('utf-8'))
-        status = True if res.status_code == 204 else False
-        return status
+        data = {'noteId': note_id, 'i': config.i.token, 'reaction': reaction}
+        res = api('/api/notes/reactions/create', json_data=data, auth=True)
+        return res.status_code == 204
 
     @staticmethod
     async def delete(note_id: str) -> bool:
-        data = json.dumps(
-            {'noteId': note_id, 'i': config.i.token}, ensure_ascii=False)
-        res = api('/api/notes/delete', data=data)
-        status = True if res.status_code == 204 else False
-        return status
+        data = {'noteId': note_id, 'i': config.i.token}
+        res = api('/api/notes/delete', json_data=data, auth=True)
+        return res.status_code == 204
 
     @staticmethod
     def add_file(path: str, *, name: str = None, force: bool = False, is_sensitive: bool = False,
@@ -78,8 +69,7 @@ class NoteAction(object):
         -------
         self: Note
         """
-        res = Drive().upload(path, name, force, is_sensitive, url=url)
-        return res
+        return Drive().upload(path, name, force, is_sensitive, url=url)
 
     @staticmethod
     def add_poll(item: Optional[str] = None, *, poll: Optional[dict], expires_at: Optional[int] = None,
@@ -148,8 +138,8 @@ class NoteAction(object):
             field['poll'] = poll
         if file_ids:
             field['fileIds'] = file_ids
-        field = json.dumps(remove_dict_empty(field), ensure_ascii=False)
-        res = api('/api/notes/create', data=field)
+        field = remove_dict_empty(field)
+        res = api('/api/notes/create', json_data=field, auth=True)
         res_json = res.json()
         if res_json.get('error') and res_json.get('error', {}).get('code') == 'CONTENT_REQUIRED':
             raise ContentRequired(

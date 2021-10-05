@@ -34,10 +34,10 @@ class DriveAction(object):
                 file = f.read()
             args = {'i': f'{config.i.token}', 'isSensitive': is_sensitive, 'force': force, 'name': f'{name}'}
             file = {'file': file}
-            res = api('/api/drive/files/create', data=args, files=file).json()
+            res = api('/api/drive/files/create', json_data=args, files=file, auth=True).json()
         elif path is None and url:
             args = {'i': f'{config.i.token}', 'url': url, 'force': force, 'isSensitive': is_sensitive}
-            res = api('/api/drive/files/upload-from-url', json_data=args).json()
+            res = api('/api/drive/files/upload-from-url', json_data=args, auth=True).json()
 
         return Drive(**res)
 
