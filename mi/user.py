@@ -1,10 +1,9 @@
 import json
 from typing import Any, Dict, List, Optional
 
-import requests
 from pydantic import BaseModel
 
-from mi import Emoji, Instance, config, conn
+from mi import Emoji, Instance, conn
 from mi.drive import File
 from mi.utils import api, upper_to_lower
 

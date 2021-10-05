@@ -1,6 +1,5 @@
 import typing
 
-from mi import config
 from mi.exception import InvalidParameters, NotExistRequiredParameters
 from mi.utils import api, check_multi_arg, remove_dict_empty
 

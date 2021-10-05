@@ -2,7 +2,6 @@ from typing import List, Optional
 
 from pydantic import BaseModel
 
-from mi import config
 from mi.utils import api, json_dump
 
 
