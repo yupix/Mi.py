@@ -70,10 +70,9 @@ def json_dump(data, *args, **kwargs):
 
 def api(
         endpoint: str,
+        json_data=None,
         *,
         origin_uri: str = None,
-        data=None,
-        json_data=None,
         files: dict = None,
         auth: bool = False
 ) -> requests.models.Response:
@@ -101,14 +100,12 @@ def api(
     requests.models.Response
     """
 
-    if type(data) is str:
-        data = data.encode('utf-8')
-    if check_multi_arg(data, json_data, files) is False and auth:
+    if check_multi_arg(json_data, files) is False and auth:
         json_data = {}
     if auth:
         json_data['i'] = config.i.token
     base_url = origin_uri or config.i.origin_uri
-    res = requests.post(base_url + endpoint, data=data, files=files, json=json_data)
+    res = requests.post(base_url + endpoint, files=files, json=json_data)
     print(res.text)
     status_code = res.status_code
     errors = {
