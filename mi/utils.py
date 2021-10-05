@@ -103,6 +103,8 @@ def api(
 
     if type(data) is str:
         data = data.encode('utf-8')
+    if check_multi_arg(data, json_data, files) is False and auth:
+        json_data = {}
     if auth:
         json_data['i'] = config.i.token
     base_url = origin_uri or config.i.origin_uri
