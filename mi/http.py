@@ -119,7 +119,7 @@ class WebSocket:
         base_msg['id'] = message.get('body', {}).get('id', None)
         asyncio.create_task(
             self.cls.dispatch(
-                'on_reacted',
+                'reacted',
                 web_socket,
                 Reaction(**upper_to_lower(base_msg))
             )

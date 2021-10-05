@@ -11,8 +11,13 @@ __all__ = (
     'ExtensionNotFound',
     'NoEntryPointError',
     'InvalidCogPath',
-    'InvalidParameters'
+    'InvalidParameters',
+    'NotExistRequiredParameters'
 )
+
+
+class NotExistRequiredParameters(Exception):
+    pass
 
 
 class InvalidParameters(Exception):
