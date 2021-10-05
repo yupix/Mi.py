@@ -12,8 +12,28 @@ __all__ = (
     'NoEntryPointError',
     'InvalidCogPath',
     'InvalidParameters',
-    'NotExistRequiredParameters'
+    'NotExistRequiredParameters',
+    'AuthenticationError',
+    'ClientError',
+    'ImAi',
+    'InternalServerError'
 )
+
+
+class ImAi(Exception):
+    pass
+
+
+class InternalServerError(Exception):
+    pass
+
+
+class ClientError(Exception):
+    pass
+
+
+class AuthenticationError(Exception):
+    pass
 
 
 class NotExistRequiredParameters(Exception):
