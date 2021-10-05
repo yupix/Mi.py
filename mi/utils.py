@@ -8,6 +8,8 @@ from typing import Any, Callable, Iterable, Optional, TypeVar
 
 import requests
 
+from mi import exception
+
 T = TypeVar('T')
 
 
@@ -90,7 +92,31 @@ def api(origin_uri: str, endpoint: str, data=None, json_data=None, files: dict =
     if type(data) is str:
         data = data.encode('utf-8')
 
-    return requests.post(origin_uri + endpoint, data=data, files=files, json=json_data)
+    res = requests.post(origin_uri + endpoint, data=data, files=files, json=json_data)
+    status_code = res.status_code
+    errors = {
+        400: {
+            'raise': exception.ClientError,
+            'description': 'Client Error'
+        },
+        401: {
+            'raise': exception.AuthenticationError,
+            'description': 'AuthenticationError'
+        },
+        418: {
+            'raise': exception.ImAi,
+            'description': 'I\'m Ai'
+        },
+        500: {
+            'raise': exception.InternalServerError,
+            'description': 'InternalServerError'
+        }
+    }
+    if status_code in [400, 401, 418, 500]:
+        error_base = errors.get(status_code)
+        error = error_base['raise'](error_base['description'])
+        raise error
+    return
 
 
 def remove_dict_empty(data: dict) -> dict:
