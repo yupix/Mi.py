@@ -53,7 +53,7 @@ class UserAction(object):
             成功したならTrue, 失敗したならFalse
         """
         data = {'userId': user_id}
-        res = api('/api/following/delete', json_data=data)
+        res = api('/api/following/delete', json_data=data, auth=True)
         return bool(res.status_code == 204 or 200)
 
 
