@@ -7,6 +7,8 @@ from mi.utils import api, check_multi_arg, remove_dict_empty
 
 def get_user(user_id: str = None, username: str = None, host: str = None) -> dict:
     """
+    ユーザーのプロフィールを返します
+
     Parameters
     ----------
     user_id : str
@@ -35,7 +37,8 @@ def get_followers(user_id: str = None,
                   until_id: str = None,
                   limit: int = 10,
                   get_all: bool = False) -> typing.Iterator[dict]:
-    """与えられたユーザーのフォロワーを取得します
+    """
+    与えられたユーザーのフォロワーを取得します
 
     Parameters
     ----------
@@ -80,3 +83,6 @@ def get_followers(user_id: str = None,
             else:
                 break
             yield get_data
+    else:
+        get_data = api(config.i.origin_uri, '/api/users/followers', json_data=data).json()
+        yield get_data
