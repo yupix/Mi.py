@@ -10,8 +10,13 @@ __all__ = (
     'CheckFailure',
     'ExtensionNotFound',
     'NoEntryPointError',
-    'InvalidCogPath'
+    'InvalidCogPath',
+    'InvalidParameters'
 )
+
+
+class InvalidParameters(Exception):
+    pass
 
 
 class CredentialRequired(Exception):
