@@ -6,15 +6,14 @@ from pydantic import BaseModel
 
 from mi import Emoji, Instance, config, conn
 from mi.drive import File
-from mi.utils import upper_to_lower
+from mi.utils import api, upper_to_lower
 
 
 class UserAction(object):
-    def get_i(self):
-        data = json.dumps({'i': config.i.token})
-        res = requests.post(config.i.origin_uri + '/api/i', data=data)
-        user = UserProfile(**upper_to_lower(json.loads(res.text)))
-        return user
+    @staticmethod
+    def get_i():
+        res = api('/api/i', auth=True)
+        return UserProfile(**upper_to_lower(json.loads(res.text)))
 
     @staticmethod
     def follow(user_id: Optional[str]) -> tuple[bool, str]:
@@ -31,9 +30,8 @@ class UserAction(object):
         status: bool = False
             成功ならTrue, 失敗ならFalse
         """
-        data = json.dumps({'userId': user_id, 'i': config.i.token})
-        res = requests.post(config.i.origin_uri +
-                            '/api/following/create', data=data)
+        data = {'userId': user_id}
+        res = api('/api/following/create', json_data=data, auth=True)
         if res.json().get('error'):
             code = res.json()['error']['code']
             status = False
@@ -43,7 +41,7 @@ class UserAction(object):
         return status, code
 
     @staticmethod
-    def unfollow(user_id: str) -> tuple[bool, str]:
+    def unfollow(user_id: str) -> bool:
         """
         Parameters
         ----------
@@ -55,12 +53,9 @@ class UserAction(object):
         status: bool = False
             成功したならTrue, 失敗したならFalse
         """
-        data = json.dumps({'userId': user_id, 'i': config.i.token})
-        res = requests.post(config.i.origin_uri +
-                            '/api/following/delete', data=data)
-        status = True if res.status_code == 204 or 200 else False
-        # TODO: エラーが発生した際の例外処理を作る
-        return status
+        data = {'userId': user_id}
+        res = api('/api/following/delete', json_data=data)
+        return bool(res.status_code == 204 or 200)
 
 
 class Channel(BaseModel):
