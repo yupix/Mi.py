@@ -126,7 +126,7 @@ class WebSocket:
         )
 
     async def on_deleted(self, web_socket, message):
-        asyncio.create_task(self.cls.dispatch('on_deleted', web_socket, Note(**message)))
+        asyncio.create_task(self.cls.dispatch('deleted', web_socket, Note(**message)))
 
     async def on_error(self, err):
         await self.cls.on_error(err)
