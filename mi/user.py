@@ -284,3 +284,28 @@ class Author(BaseModel):
 
     def get_profile(self) -> 'UserProfile':
         return UserProfile(**upper_to_lower(conn.get_user(user_id=self.id, username=self.username, host=self.host)))
+
+    def get_followers(self, until_id: str = None, limit: int = 10, get_all: bool = False):
+        """
+        ユーザーのフォロワー一覧を取得します
+        Parameters
+        ----------
+        until_id : str, default=None
+            前回のフォロワーの続きを取得する場合の起点とするユーザーid
+        limit : int, default=10
+            最大何人取得するか, max=100
+        get_all : bool, default=False
+            全てのフォロワーを取得するか否か
+
+        Returns
+        -------
+
+        """
+        return conn.get_followers(
+            user_id=self.id,
+            username=self.username,
+            host=self.host,
+            limit=limit,
+            until_id=until_id,
+            get_all=get_all
+        )
