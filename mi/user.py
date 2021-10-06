@@ -283,6 +283,14 @@ class Author(BaseModel):
         return self.__user_action.unfollow(user_id)
 
     def get_profile(self) -> 'UserProfile':
+        """
+        ユーザーのプロフィールを取得します
+
+        Returns
+        -------
+        UserProfile:
+            ユーザーのプロフィールオブジェクト
+        """
         return UserProfile(**upper_to_lower(conn.get_user(user_id=self.id, username=self.username, host=self.host)))
 
     def get_followers(self, until_id: str = None, limit: int = 10, get_all: bool = False):
