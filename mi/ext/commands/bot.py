@@ -74,7 +74,11 @@ class BotBase(GroupMixin):
             return
 
         ctx = await self.get_context(message)
-        return await self.invoke(ctx, *ctx.message.content.split(' '))
+        return (
+            await self.invoke(ctx, *ctx.message.content.split(' '))
+            if ctx.message.content
+            else await self.invoke(ctx)
+        )
 
     async def _on_message(self, message):
         status = await self.process_commands(message)
