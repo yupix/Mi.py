@@ -44,13 +44,13 @@ class BotBase(GroupMixin):
 
         return await utils.async_all(f(ctx) for f in data)
 
-    async def invoke(self, ctx) -> bool:
+    async def invoke(self, ctx, *args, **kwargs) -> bool:
         if not ctx.command:
             return False
         try:
             if not await self.can_run(ctx, call_once=True):
                 raise CheckFailure('')
-            await ctx.command.invoke(ctx)
+            await ctx.command.invoke(ctx, *args, **kwargs)
             return True
         except CommandError as exc:
             await ctx.command.dispatch_error(ctx, exc)
@@ -63,6 +63,9 @@ class BotBase(GroupMixin):
         if view.skip_string(self.command_prefix) is False:  # prefixがテキストに含まれているか確認
             return ctx
         invoker = view.get_word()
+        if not self.all_commands.get(invoker):
+            await self.dispatch('missing_command', invoker)
+        ctx.message.content = message.text.replace(self.command_prefix + invoker, '').strip(' ')
         ctx.command = self.all_commands.get(invoker)
         return ctx
 
@@ -71,7 +74,7 @@ class BotBase(GroupMixin):
             return
 
         ctx = await self.get_context(message)
-        return await self.invoke(ctx)
+        return await self.invoke(ctx, *ctx.message.content.split(' '))
 
     async def _on_message(self, message):
         status = await self.process_commands(message)
