@@ -143,8 +143,11 @@ class BotBase(GroupMixin):
                 foo = importlib.import_module(event.__module__)
                 coro = getattr(foo, ev)
             await self.schedule_event(coro, event, *args, **kwargs)
-        coro = getattr(self, ev)
-        await self.schedule_event(coro, ev, *args, **kwargs)
+        try:
+            coro = getattr(self, ev)
+            await self.schedule_event(coro, ev, *args, **kwargs)
+        except AttributeError:
+            pass
 
     def add_cog(self, cog, override: bool = False) -> None:
         cog_name = cog.__cog_name__
