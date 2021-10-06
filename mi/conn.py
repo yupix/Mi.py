@@ -55,8 +55,8 @@ def get_followers(user_id: str = None,
     get_all : bool, default=False
         全てのフォロワーを取得する
 
-    Returns
-    -------
+    Yields
+    ------
     dict
         フォロワーの情報
 
