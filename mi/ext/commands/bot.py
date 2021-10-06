@@ -45,21 +45,21 @@ class BotBase(GroupMixin):
         return await utils.async_all(f(ctx) for f in data)
 
     async def invoke(self, ctx) -> bool:
-        if ctx.command:
-            # await self.dispatch('command', ctx)
-            try:
-                if not await self.can_run(ctx, call_once=True):
-                    raise CheckFailure('')
-                await ctx.command.invoke(ctx)
-                return True
-            except CommandError as exc:
-                await ctx.command.dispatch_error(ctx, exc)
-        else:
+        if not ctx.command:
             return False
+        try:
+            if not await self.can_run(ctx, call_once=True):
+                raise CheckFailure('')
+            await ctx.command.invoke(ctx)
+            return True
+        except CommandError as exc:
+            await ctx.command.dispatch_error(ctx, exc)
 
     async def get_context(self, message, *, cls=Context):
-        view = StringView(message.text)
         ctx = cls(bot=self, message=message)
+        if message.text is None:
+            return ctx
+        view = StringView(message.text)
         if view.skip_string(self.command_prefix) is False:  # prefixがテキストに含まれているか確認
             return ctx
         invoker = view.get_word()
@@ -157,8 +157,6 @@ class BotBase(GroupMixin):
         cog = cog._inject(self)
         self.__cogs[cog_name] = cog
 
-        print(vars(self.__cogs[cog_name]))
-
     def remove_cog(self, name: str):  # TODO: Optional[Cog]を返すように
         """Cogを削除します"""
         cog = self.__cogs.get(name, None)
@@ -190,7 +188,6 @@ class BotBase(GroupMixin):
         try:
             setup(self)
         except Exception as e:
-            print(e)
             del sys.modules[key]
             # self._remove_module_references(lib.__name__)
             # self._call_module_finalizers(lib, key)
