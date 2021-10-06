@@ -171,14 +171,14 @@ class Command(_BaseCommand):  # TODO: 作る
         if hook is not None:
             await hook(ctx)
 
-    async def invoke(self, ctx):
+    async def invoke(self, ctx, *args, **kwargs):
         # terminate the invoked_subcommand chain.
         # since we're in a regular command (and not a group) then
         # the invoked subcommand is None.
         ctx.invoked_subcommand = None
         ctx.subcommand_passed = None
         injected = hooked_wrapped_callback(self, ctx, self.callback)
-        await injected(ctx)
+        await injected(ctx, *args, **kwargs)
 
     def _ensure_assignment_on_copy(self, other):
         if self.checks != other.checks:
