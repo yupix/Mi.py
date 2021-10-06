@@ -106,7 +106,6 @@ def api(
         json_data['i'] = config.i.token
     base_url = origin_uri or config.i.origin_uri
     res = requests.post(base_url + endpoint, files=files, json=json_data)
-    print(res.text)
     status_code = res.status_code
     errors = {
         400: {
