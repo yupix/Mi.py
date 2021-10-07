@@ -1,12 +1,37 @@
 import typing
+from functools import cache
 
 from mi.exception import InvalidParameters, NotExistRequiredParameters
 from mi.utils import api, check_multi_arg, remove_dict_empty
 
 
+@cache
 def get_user(user_id: str = None, username: str = None, host: str = None) -> dict:
     """
-    ユーザーのプロフィールを返します
+    ユーザーのプロフィールを取得します。一度のみサーバーにアクセスしキャッシュをその後は使います。
+    fetch_userを使った場合はキャッシュが廃棄され再度サーバーにアクセスします。
+
+    Parameters
+    ----------
+    user_id : str
+        取得したいユーザーのユーザーID
+    username : str
+        取得したいユーザーのユーザー名
+    host : str, default=None
+        取得したいユーザーがいるインスタンスのhost
+
+    Returns
+    -------
+    dict:
+        ユーザー情報
+    """
+
+    return fetch_user(user_id, username, host)
+
+
+def fetch_user(user_id: str = None, username: str = None, host: str = None) -> dict:
+    """
+    サーバーにアクセスし、ユーザーのプロフィールを取得します。基本的には get_userをお使いください。
 
     Parameters
     ----------
@@ -26,6 +51,7 @@ def get_user(user_id: str = None, username: str = None, host: str = None) -> dic
         raise NotExistRequiredParameters('user_id, usernameどちらかは必須です')
 
     data = remove_dict_empty({'userId': user_id, 'username': username, 'host': host})
+    get_user.cache_clear()
     return api('/api/users/show', json_data=data, auth=True).json()
 
 
