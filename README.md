@@ -8,13 +8,20 @@
 
 ## 概要
 
-Mi.pyは[Discord.py](https://github.com/Rapptz/discord.py) ライクな書き方ができるように作っているMisskeyApi wrapperです
-現在動作を確認しているMisskeyは `Ayuskey` のみです。本家Misskey等に関しては動作を確認していませんので注意してください。
+Mi.pyは[Discord.py](https://github.com/Rapptz/discord.py) ライクな書き方ができるように作っているMisskeyApi wrapperです 現在動作を確認しているMisskeyは `Ayuskey`
+のみです。本家Misskey等に関しては動作を確認していませんので注意してください。
 
 ## 使い方
 
-様々な使い方を書くにあたってREADMEから変更しました。[こちら](examples)からご覧ください。
-その他のメソッドなどについては[ドキュメント](https://mipy.readthedocs.io/) をご覧ください
+様々な使い方を書くにあたってREADMEから変更しました。[こちら](examples)からご覧ください。 その他のメソッドなどについては[ドキュメント](https://mipy.readthedocs.io/) をご覧ください
+
+## 注意点
+
+グローバルタイムラインに接続したりする際に使う以下の様なコードがあるとホームタイムラインとグローバルタイムラインの2つを受信したことになりon_messageが2回動作します。 これは接続するチャンネルを増やすごとに増えていく形になります
+
+```python
+await Router(ws).channels(['home', 'global'])
+```
 
 ### Collaborators
 
@@ -40,8 +47,7 @@ Mi.pyは[Discord.py](https://github.com/Rapptz/discord.py) ライクな書き方
     </tr>
 </table>
 
-最後にこのプロジェクトを作るきっかけになり、一部のコードを使用させていただいているDiscord.pyがArchivedになりました。
-作者であるDannyさんや全てのコラボレーターに最大限の感謝申し上げます。
+最後にこのプロジェクトを作るきっかけになり、一部のコードを使用させていただいているDiscord.pyがArchivedになりました。 作者であるDannyさんや全てのコラボレーターに最大限の感謝申し上げます。
 
 # LICENSE
 
