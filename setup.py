@@ -9,13 +9,13 @@ with readme_file.open(encoding='utf-8') as fh:
 
 setup(
     name='mi.py',
-    version='0.1.5',
+    version='0.2.5',
     install_requires=['websockets', 'requests', 'pydantic', 'emoji'],
     url='https://github.com/yupix/mi.py',
     author='yupix',
     author_email='yupi0982@outlook.jp',
     license='MIT',
-    python_requires='>=3.8, <4.0',
+    python_requires='>=3.9, <4.0',
     description=description,
     long_description=long_description,
     long_description_content_type='text/markdown',
@@ -23,6 +23,7 @@ setup(
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
         'Programming Language :: Python :: 3.9',
+        'Programming Language :: Python :: 3.10',
         'Natural Language :: Japanese',
         'License :: OSI Approved :: MIT License',
     ]
