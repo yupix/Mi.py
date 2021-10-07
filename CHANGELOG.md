@@ -7,9 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [v0.2.5] 2021-10-07
+
 ### Added
 
-- `conn.py` に `get_followers` `get_user` 関数が追加されました
+- `conn.py` に `get_followers` `get_user` `fetch_user` 関数が追加されました
 - `commandFrameWork` に関する多くのものを追加
 - `commandFrameWork` に `listener` `commands` デコレーターを追加
 - `Drive` クラスの `upload` メソッドでurlから画像をアップロードできるように `url` 引数を追加
@@ -163,6 +165,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Added README.md.
 - Added LICENSE.
 - Added Each event method.
+
+[v0.2.5]: https://github.com/yupix/mi.py/compare/v0.1.0-5...v0.2.5
 
 [v0.1.5]: https://github.com/yupix/mi.py/compare/v0.1.0-1a...v0.1.0-5
 
