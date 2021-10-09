@@ -1,11 +1,31 @@
 import pathlib
 
-from setuptools import find_packages, setup
+from setuptools import Extension, find_packages, setup
 
 description = 'A Python wrapper for the Misskey API'
-readme_file = pathlib.Path(__file__).parent/'README.md'
+readme_file = pathlib.Path(__file__).parent / 'README.md'
 with readme_file.open(encoding='utf-8') as fh:
     long_description = fh.read()
+
+try:
+    from Cython.Distutils import build_ext
+
+    USE_CYTHON = True
+except ImportError:
+    USE_CYTHON = False
+
+if USE_CYTHON:
+    ext = '.pyx'
+    cmdclass = {'build_ext': build_ext}
+else:
+    ext = '.c'
+    cmdclass = {}
+
+ext_modules = [
+    Extension(
+        'mi.next_utils',
+        sources=['mi/next_utils' + ext])
+]
 
 setup(
     name='mi.py',
@@ -26,5 +46,7 @@ setup(
         'Programming Language :: Python :: 3.10',
         'Natural Language :: Japanese',
         'License :: OSI Approved :: MIT License',
-    ]
+    ],
+    ext_modules=ext_modules,
+    cmdclass=cmdclass
 )

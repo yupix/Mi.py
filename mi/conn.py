@@ -2,7 +2,8 @@ import typing
 from functools import cache
 
 from mi.exception import InvalidParameters, NotExistRequiredParameters
-from mi.utils import api, check_multi_arg, remove_dict_empty
+from mi.next_utils import check_multi_arg
+from mi.utils import api, remove_dict_empty
 
 
 @cache
