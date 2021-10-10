@@ -2,13 +2,20 @@ from typing import Any, Dict, Optional
 
 from pydantic import BaseModel
 
-from mi import config
+from mi import config, exception
 from mi.utils import api
 
 
 class DriveAction(object):
     @staticmethod
-    def upload(path: str, name: str = None, force: bool = False, is_sensitive: bool = False, url: str = None) -> 'Drive':
+    def upload(
+            name: str = None,
+            to_file: str = None,
+            to_url: str = None,
+            *,
+            force: bool = False,
+            is_sensitive: bool = False
+    ) -> 'Drive':
         """
         Parameters
         ----------
@@ -16,12 +23,12 @@ class DriveAction(object):
             この画像がセンシティブな物の場合Trueにする
         force : bool
             Trueの場合同じ名前のファイルがあった場合でも強制的に保存する
-        path : str
+        to_file : str
             そのファイルまでのパスとそのファイル.拡張子(/home/test/test.png)
         name: str
             ファイル名(拡張子があるなら含めて)
-        url : str
-            URLから画像をアップロードする
+        to_url : str
+            アップロードしたいファイルのURL
 
         Returns
         -------
@@ -29,16 +36,17 @@ class DriveAction(object):
             upload後のレスポンスをDrive型に変更して返します
         """
 
-        if path and url is None:
-            with open(path, 'rb') as f:
+        if to_file and to_url is None:  # ローカルからアップロードする
+            with open(to_file, 'rb') as f:
                 file = f.read()
-            args = {'i': f'{config.i.token}', 'isSensitive': is_sensitive, 'force': force, 'name': f'{name}'}
+            args = {'isSensitive': is_sensitive, 'force': force, 'name': f'{name}'}
             file = {'file': file}
             res = api('/api/drive/files/create', json_data=args, files=file, auth=True).json()
-        elif path is None and url:
-            args = {'i': f'{config.i.token}', 'url': url, 'force': force, 'isSensitive': is_sensitive}
+        elif to_file is None and to_url:  # URLからアップロードする
+            args = {'url': to_url, 'force': force, 'isSensitive': is_sensitive}
             res = api('/api/drive/files/upload-from-url', json_data=args, auth=True).json()
-
+        else:
+            raise exception.InvalidParameters('path または url のどちらかは必須です')
         return Drive(**res)
 
 
