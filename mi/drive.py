@@ -2,7 +2,7 @@ from typing import Any, Dict, Optional
 
 from pydantic import BaseModel
 
-from mi import config, exception
+from mi import exception
 from mi.utils import api
 
 
@@ -96,7 +96,7 @@ class Drive(BaseModel):
     folder_id: Optional[str] = None
     is_sensitive: Optional[bool] = False
     blurhash: Optional[str] = None
-    __drive_action = DriveAction()
+    __drive_action = DriveAction
 
     class Config:
         arbitrary_types_allowed = True
@@ -122,4 +122,4 @@ class Drive(BaseModel):
             upload後のレスポンスをdrive型に変更して返します
         """
 
-        return self.__drive_action.upload(path, name, force, is_sensitive, url)
+        return self.__drive_action.upload(name, path, url, force=force, is_sensitive=is_sensitive)
