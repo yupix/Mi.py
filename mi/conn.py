@@ -1,6 +1,7 @@
 import typing
 from functools import cache
 
+from mi import exception
 from mi.exception import InvalidParameters, NotExistRequiredParameters
 from mi.next_utils import check_multi_arg
 from mi.utils import api, remove_dict_empty
@@ -112,3 +113,45 @@ def get_followers(user_id: str = None,
     else:
         get_data = api('/api/users/followers', json_data=data, auth=True).json()
         yield get_data
+
+
+def file_upload(
+        name: str = None,
+        to_file: str = None,
+        to_url: str = None,
+        *,
+        force: bool = False,
+        is_sensitive: bool = False
+) -> dict:
+    """
+    Parameters
+    ----------
+    is_sensitive : bool
+        この画像がセンシティブな物の場合Trueにする
+    force : bool
+        Trueの場合同じ名前のファイルがあった場合でも強制的に保存する
+    to_file : str
+        そのファイルまでのパスとそのファイル.拡張子(/home/test/test.png)
+    name: str
+        ファイル名(拡張子があるなら含めて)
+    to_url : str
+        アップロードしたいファイルのURL
+
+    Returns
+    -------
+    Drive: Drive
+        upload後のレスポンスをDrive型に変更して返します
+    """
+
+    if to_file and to_url is None:  # ローカルからアップロードする
+        with open(to_file, 'rb') as f:
+            file = f.read()
+        args = {'isSensitive': is_sensitive, 'force': force, 'name': f'{name}'}
+        file = {'file': file}
+        res = api('/api/drive/files/create', json_data=args, files=file, auth=True).json()
+    elif to_file is None and to_url:  # URLからアップロードする
+        args = {'url': to_url, 'force': force, 'isSensitive': is_sensitive}
+        res = api('/api/drive/files/upload-from-url', json_data=args, auth=True).json()
+    else:
+        raise exception.InvalidParameters('path または url のどちらかは必須です')
+    return res
