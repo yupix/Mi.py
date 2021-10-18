@@ -187,7 +187,7 @@ class UserProfile(BaseModel):
     class Config:
         arbitrary_types_allowed = True
 
-    def follow(self, user_id: Optional[str] = None) -> bool:
+    def follow(self, user_id: Optional[str] = None) -> tuple[bool, str]:
         """
         与えられたIDのユーザーをフォローします
 
@@ -198,8 +198,10 @@ class UserProfile(BaseModel):
 
         Returns
         -------
-        status: bool = False
+        bool = False
             成功ならTrue, 失敗ならFalse
+        str
+            実行に失敗した際のエラーコード
         """
 
         if user_id is None:
@@ -245,7 +247,7 @@ class Author(BaseModel):
     class Config:
         arbitrary_types_allowed = True
 
-    def follow(self, user_id: Optional[str] = None) -> bool:
+    def follow(self, user_id: Optional[str] = None) -> tuple[bool, str]:
         """
         与えられたIDのユーザーをフォローします
 
@@ -256,8 +258,10 @@ class Author(BaseModel):
 
         Returns
         -------
-        status: bool = False
+        bool = False
             成功ならTrue, 失敗ならFalse
+        str
+            実行に失敗した際のエラーコード
         """
 
         if user_id is None:

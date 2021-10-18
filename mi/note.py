@@ -34,13 +34,13 @@ class NoteAction(object):
         status: bool
             成功したならTrue,失敗ならFalse
         """
-        data = {'noteId': note_id, 'i': config.i.token, 'reaction': reaction}
+        data = {'noteId': note_id, 'reaction': reaction}
         res = api('/api/notes/reactions/create', json_data=data, auth=True)
         return res.status_code == 204
 
     @staticmethod
     async def delete(note_id: str) -> bool:
-        data = {'noteId': note_id, 'i': config.i.token}
+        data = {'noteId': note_id}
         res = api('/api/notes/delete', json_data=data, auth=True)
         return res.status_code == 204
 
@@ -131,7 +131,6 @@ class NoteAction(object):
             "channelId": channel_id,
             "preview": preview,
             "geo": geo,
-            "i": config.i.token
         }
         # field.update(other_field)
         if poll and len(poll['choices']) > 0:
@@ -159,7 +158,7 @@ class Follow(BaseModel):
     class Config:
         arbitrary_types_allowed = True
 
-    def follow(self, user_id: Optional[str] = None) -> bool:
+    def follow(self, user_id: Optional[str] = None) -> tuple[bool, str]:
         """
         与えられたIDのユーザーをフォローします
 
@@ -170,8 +169,10 @@ class Follow(BaseModel):
 
         Returns
         -------
-        status: bool = False
+        bool = False
             成功ならTrue, 失敗ならFalse
+        str
+            実行に失敗した際のエラーコード
         """
 
         if user_id is None:
@@ -299,7 +300,7 @@ class Note(BaseModel):
     channel_id: Optional[str] = None
     renote: Optional[Renote] = Renote()
     field: Optional[dict] = Field({})
-    __note_action = NoteAction()
+    __note_action = NoteAction
 
     class Config:
         arbitrary_types_allowed = True

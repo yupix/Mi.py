@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Changed
+
+- **破壊的変更**: `Drive` クラスの `upload` メソッドで使用できる引数名を変更、キーワード引数を強制するようにしました。
+    - 引数名の変更は次の通りです `url` => `to_url`, `path` => `to_file`
+    - 強制されるキーワード引数は次の通りです `force`, `is_sensitive`
+- `Drive` クラスの `upload` メソッドで例外 `InvalidParameters` を発生させるようにしました
+    - これは`to_file`, `to_url` の両方がないと変数が定義されず、`Drive`クラスの生成に失敗する可能性があるからです。
+
 ## [v0.2.5] 2021-10-07
 
 ### Added

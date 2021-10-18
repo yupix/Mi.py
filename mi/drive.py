@@ -2,44 +2,7 @@ from typing import Any, Dict, Optional
 
 from pydantic import BaseModel
 
-from mi import config
-from mi.utils import api
-
-
-class DriveAction(object):
-    @staticmethod
-    def upload(path: str, name: str = None, force: bool = False, is_sensitive: bool = False, url: str = None) -> 'Drive':
-        """
-        Parameters
-        ----------
-        is_sensitive : bool
-            この画像がセンシティブな物の場合Trueにする
-        force : bool
-            Trueの場合同じ名前のファイルがあった場合でも強制的に保存する
-        path : str
-            そのファイルまでのパスとそのファイル.拡張子(/home/test/test.png)
-        name: str
-            ファイル名(拡張子があるなら含めて)
-        url : str
-            URLから画像をアップロードする
-
-        Returns
-        -------
-        Drive: Drive
-            upload後のレスポンスをDrive型に変更して返します
-        """
-
-        if path and url is None:
-            with open(path, 'rb') as f:
-                file = f.read()
-            args = {'i': f'{config.i.token}', 'isSensitive': is_sensitive, 'force': force, 'name': f'{name}'}
-            file = {'file': file}
-            res = api('/api/drive/files/create', json_data=args, files=file, auth=True).json()
-        elif path is None and url:
-            args = {'i': f'{config.i.token}', 'url': url, 'force': force, 'isSensitive': is_sensitive}
-            res = api('/api/drive/files/upload-from-url', json_data=args, auth=True).json()
-
-        return Drive(**res)
+from mi import conn
 
 
 class Properties(BaseModel):
@@ -88,7 +51,6 @@ class Drive(BaseModel):
     folder_id: Optional[str] = None
     is_sensitive: Optional[bool] = False
     blurhash: Optional[str] = None
-    __drive_action = DriveAction()
 
     class Config:
         arbitrary_types_allowed = True
@@ -114,4 +76,7 @@ class Drive(BaseModel):
             upload後のレスポンスをdrive型に変更して返します
         """
 
-        return self.__drive_action.upload(path, name, force, is_sensitive, url)
+        if url is None and self.url:
+            url = self.url
+
+        return Drive(**conn.file_upload(name, path, url, force=force, is_sensitive=is_sensitive))
