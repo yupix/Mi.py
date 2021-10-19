@@ -61,9 +61,16 @@ class WebSocket:
         if base_msg is None:
             return
         event_type = base_msg["type"]
-        event_list = {'note': 'on_message', 'reacted': 'on_reacted', 'deleted': 'on_deleted', 'follow': 'on_follow',
-                      'unfollow': 'on_unfollow', 'followed': 'on_follow', 'unreadNotification': 'on_unread_notification',
-                      'mention': 'on_mention'}
+        event_list = {
+            'note': 'on_message',
+            'reacted': 'on_reacted',
+            'deleted': 'on_deleted',
+            'follow': 'on_follow',
+            'unfollow': 'on_unfollow',
+            'followed': 'on_follow',
+            'unreadNotification': 'on_unread_notification',
+            'mention': 'on_mention'
+        }
         if event_type == 'notification' or 'unread' in event_type or event_list.get(event_type) is None:
             await getattr(self, 'on_notification')(web_socket, message)
             return
@@ -86,7 +93,7 @@ class WebSocket:
         msg = message.get('body', {}).get('body', {})
         message = Note(**upper_to_lower(msg))
         await self.router.capture_message(message.id)
-        return asyncio.create_task(self.cls._on_message(message))
+        return asyncio.create_task(self.cls.on_message(message))
 
     async def on_notification(self, web_socket, message: dict):
         pass

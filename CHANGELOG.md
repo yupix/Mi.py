@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Added
+
+- `file_upload` 関数を追加しました
+
 ### Changed
 
 - **破壊的変更**: `Drive` クラスの `upload` メソッドで使用できる引数名を変更、キーワード引数を強制するようにしました。
@@ -14,6 +18,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
     - 強制されるキーワード引数は次の通りです `force`, `is_sensitive`
 - `Drive` クラスの `upload` メソッドで例外 `InvalidParameters` を発生させるようにしました
     - これは`to_file`, `to_url` の両方がないと変数が定義されず、`Drive`クラスの生成に失敗する可能性があるからです。
+- 内部変更: `utils.py` の一部を Cython を用いたものに変更
+- 内部変更: `DriveAction` を廃止し, `file_upload` を使用するように
+- 内部変更: `event_dispatch` でクラスにイベントがある場合呼び出すようにしました
+- 内部変更: `_on_message` イベントを `on_message` にしてオーバーライドして使用するように
+    - これにより `on_message` をcommandFrameWorkで使用するとcogのcommandが実行されなくなります。詳しくは[ドキュメント]() を御覧ください
+- 内部変更: `dispatch` で最後にイベントを呼び出さなくなりました
+    - 1つ上の変更に伴いループが発生するようになるためです（on_message -> dispatch -> on_messageのループが発生する）
+
+### Fixed
+
+- 一部の誤った typing hintを修正
 
 ## [v0.2.5] 2021-10-07
 
