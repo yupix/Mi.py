@@ -271,10 +271,10 @@ class Geo(BaseModel):
 
 
 class Note(BaseModel):
-    id: str
+    id: Optional[str] = None
     created_at: Optional[str] = None
-    user_id: str
-    author: Author = Field(..., alias='user')
+    user_id: Optional[str] = None
+    author: Author = Field(Author(), alias='user')
     text: Optional[str] = None
     content: Optional[str] = None
     cw: Optional[str] = None
