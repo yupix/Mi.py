@@ -9,10 +9,10 @@ from typing import Any
 
 import websockets
 
+from mi import config, logger
 from mi.note import Follow, Note, Reaction
 from mi.router import Router
 from mi.utils import upper_to_lower
-from mi import config
 
 
 class WebSocket:
@@ -57,6 +57,7 @@ class WebSocket:
         message :
         """
         message = json.loads(message)
+        logger.log.debug(f'received: {message}', extra={"markup": True})
         base_msg = message.get('body', None)
         if base_msg is None:
             return
@@ -71,18 +72,17 @@ class WebSocket:
             'unreadNotification': 'on_unread_notification',
             'mention': 'on_mention'
         }
+        logger.log.debug(f'received event: {event_type}')
         if event_type == 'notification' or 'unread' in event_type or event_list.get(event_type) is None:
             await getattr(self, 'on_notification')(web_socket, message)
             return
 
         await getattr(self, f'{event_list.get(event_type)}')(web_socket, message)
 
-    async def on_message(self, web_socket, message: Any) -> asyncio.Task:
+    async def on_message(self, message: Any) -> asyncio.Task:
         """
         Parameters
         ----------
-        web_socket:
-            WebSocket Instance
         message:
             Received message
 
@@ -95,7 +95,7 @@ class WebSocket:
         await self.router.capture_message(message.id)
         return asyncio.create_task(self.cls.on_message(message))
 
-    async def on_notification(self, web_socket, message: dict):
+    async def on_notification(self, message: dict):
         pass
 
     async def on_mention(self, web_socket, ctx: dict):

@@ -6,9 +6,12 @@ import inspect
 import re
 import sys
 import traceback
+from types import ModuleType
 from typing import Any, Callable, Coroutine, Dict, Optional
 
-from mi import UserProfile, config, utils
+import rich
+
+from mi import UserProfile, config, logger, utils
 from mi.exception import CheckFailure, CogNameDuplicate, CommandError, ExtensionAlreadyLoaded, ExtensionFailed, \
     ExtensionNotFound, InvalidCogPath, NoEntryPointError
 from mi.ext.commands.context import Context
@@ -172,33 +175,18 @@ class BotBase(GroupMixin):
 
         return cog
 
-    def _load_from_module_spec(self, spec: importlib.machinery.ModuleSpec, key: str) -> None:
+    def _load_from_module(self, spec: ModuleType, key: str) -> None:
         try:
-            lib = importlib.util.module_from_spec(spec)
+            setup = getattr(spec, 'setup')
         except AttributeError:
-            raise InvalidCogPath(f'cog: {key} へのパスが無効です')
-        sys.modules[key] = lib
-        try:
-            spec.loader.exec_module(lib)
-        except Exception as e:
-            del sys.modules[key]
-            raise ExtensionFailed(key, e) from e
-
-        try:
-            setup = getattr(lib, 'setup')
-        except AttributeError:
-            del sys.modules[key]
             raise NoEntryPointError(f'{key} にsetupが存在しません')
 
         try:
             setup(self)
         except Exception as e:
-            del sys.modules[key]
-            # self._remove_module_references(lib.__name__)
-            # self._call_module_finalizers(lib, key)
             raise ExtensionFailed(key, e) from e
         else:
-            self.__extensions[key] = lib
+            self.__extensions[key] = spec
 
     def _resolve_name(self, name: str, package: Optional[str]) -> str:
         try:
@@ -219,9 +207,11 @@ class BotBase(GroupMixin):
         name = self._resolve_name(name, package)
         if name in self.__extensions:
             raise ExtensionAlreadyLoaded
-
-        spec = importlib.util.find_spec(name)
-        self._load_from_module_spec(spec, name)
+        try:
+            module = importlib.import_module(name)
+        except ModuleNotFoundError:
+            raise InvalidCogPath(f'cog: {name} へのパスが無効です')
+        self._load_from_module(module, name)
 
     async def schedule_event(self, coro: Callable[..., Coroutine[Any, Any, Any]], event_name: str, *args: Any,
                              **kwargs: Any) -> asyncio.Task:
@@ -246,7 +236,7 @@ class BotBase(GroupMixin):
     async def on_error(self, err):
         await self.event_dispatch('error', err)
 
-    def run(self, uri: str, token: str) -> None:
+    def run(self, uri: str, token: str, debug: bool = False) -> None:
         """
         Launch the bot.
         Parameters
@@ -255,6 +245,8 @@ class BotBase(GroupMixin):
             websocket url of the Misskey instance to connect to
         token : str
             Misskey account token
+        debug : bool
+            Debug Mode
 
         Examples
         --------
@@ -281,6 +273,7 @@ class BotBase(GroupMixin):
         -------
         None: None
         """
+        logger.init(debug)
         self.token = token
         if _origin_uri := re.search(r'wss?://(.*)/streaming', uri):
             origin_uri = _origin_uri.group(0).replace('wss', 'https').replace(
