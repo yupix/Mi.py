@@ -179,7 +179,7 @@ class BotBase(GroupMixin):
 
     def remove_cog(self, name: str):  # TODO: Optional[Cog]を返すように
         """Cogを削除します"""
-        cog = self.__cogs.get(name, None)
+        cog = self.__cogs.get(name)
         if cog is None:
             return
 
@@ -200,7 +200,8 @@ class BotBase(GroupMixin):
         else:
             self.__extensions[key] = spec
 
-    def _resolve_name(self, name: str, package: Optional[str]) -> str:
+    @staticmethod
+    def _resolve_name(name: str, package: Optional[str]) -> str:
         try:
             return importlib.util.resolve_name(name, package)
         except ImportError:
