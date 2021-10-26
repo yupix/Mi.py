@@ -189,7 +189,7 @@ class BotBase(GroupMixin):
 
     def _load_from_module(self, spec: ModuleType, key: str) -> None:
         try:
-            setup = getattr(spec, "setup")
+            setup = spec.setup
         except AttributeError:
             raise NoEntryPointError(f"{key} にsetupが存在しません")
 

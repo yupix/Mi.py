@@ -85,7 +85,7 @@ class WebSocket:
             or "unread" in event_type
             or event_list.get(event_type) is None
         ):
-            await getattr(self, "on_notification")(message)
+            await self.on_notification(message)
             return
 
         await getattr(self, f"{event_list.get(event_type)}")(message)
