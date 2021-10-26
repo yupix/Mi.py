@@ -131,8 +131,26 @@ def remove_dict_empty(data: dict) -> dict:
 
 
 def upper_to_lower(
-    data: dict, field: dict = None, nest=True, replace_list: dict = None
+        data: dict, field: dict = None, nest=True, replace_list: dict = None
 ) -> dict:
+    """
+
+    Parameters
+    ----------
+    data: dict
+        小文字にしたいkeyがあるdict
+    field: dict, default=None
+        謎
+    nest: bool, default=True
+        ネストされたdictのkeyも小文字にするか否か
+    replace_list: dict, default=None
+        dictのkey名を特定の物に置き換える
+
+    Returns
+    -------
+    field : dict
+        小文字になった, key名が変更されたdict
+    """
     if data is None:
         return {}
     if replace_list is None:
