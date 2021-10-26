@@ -85,6 +85,5 @@ class Drive(BaseModel):
         if url is None and self.url:
             url = self.url
 
-        return Drive(
-            **conn.file_upload(name, path, url, force=force, is_sensitive=is_sensitive)
-        )
+        return Drive(**conn.file_upload(
+            name, path, url, force=force, is_sensitive=is_sensitive))
