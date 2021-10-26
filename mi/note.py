@@ -10,7 +10,7 @@ from mi.user import Author, UserAction
 from mi.utils import api, remove_dict_empty
 
 
-class NoteAction(object):
+class NoteAction:
     @staticmethod
     def emoji_count(text=None, emojis=None):
         if emojis is None:
@@ -231,7 +231,7 @@ class Follow(BaseModel):
         return self.__user_action.unfollow(user_id)
 
 
-class Header(object):
+class Header:
     def __init__(self, data):
         self.id = data.get("id")
         self.type = data.get("type")
