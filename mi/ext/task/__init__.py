@@ -3,7 +3,7 @@ import asyncio
 __all__ = ["Loop", "loop"]
 
 
-class Loop(object):
+class Loop:
     def __init__(self, func, seconds=None):
         self.seconds = seconds
         self.func = func

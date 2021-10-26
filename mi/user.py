@@ -8,7 +8,7 @@ from mi.drive import File
 from mi.utils import api, upper_to_lower
 
 
-class UserAction(object):
+class UserAction:
     @staticmethod
     def get_i():
         res = api("/api/i", auth=True)
