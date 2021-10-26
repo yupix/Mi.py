@@ -8,15 +8,15 @@ __version__ = "0.2.5"
 
 __path__ = __import__("pkgutil").extend_path(__path__, __name__)
 
-from .chart import Chart, Local, Remote
-from .client import BotBase, Client
-from .drive import Drive, Properties
-from .emoji import Emoji
-from .ext import *
 from .instance import Instance
+from .emoji import Emoji
+from .user import UserProfile
+from .chart import Chart, Local, Remote
+from .drive import Drive, Properties
 from .note import Follow, Header, Note, Reaction
 from .router import Router
-from .user import UserProfile
+from .client import Client, BotBase
+from .ext import *
 
 __all__ = [
     "Chart",
