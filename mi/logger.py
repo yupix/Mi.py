@@ -12,11 +12,14 @@ def init(debug):
     global console
     global log
 
-    level = 'DEBUG' if debug else 'INFO'
+    level = "DEBUG" if debug else "INFO"
     console = Console()
     pretty.install()
     logging.basicConfig(
-        level=level, format="%(message)s", datefmt="[%X]", handlers=[RichHandler(rich_tracebacks=debug)]
+        level=level,
+        format="%(message)s",
+        datefmt="[%X]",
+        handlers=[RichHandler(rich_tracebacks=debug)],
     )
 
     log = logging.getLogger("rich")
