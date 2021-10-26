@@ -34,19 +34,25 @@ class NoteAction(object):
         status: bool
             成功したならTrue,失敗ならFalse
         """
-        data = {'noteId': note_id, 'reaction': reaction}
-        res = api('/api/notes/reactions/create', json_data=data, auth=True)
+        data = {"noteId": note_id, "reaction": reaction}
+        res = api("/api/notes/reactions/create", json_data=data, auth=True)
         return res.status_code == 204
 
     @staticmethod
     async def delete(note_id: str) -> bool:
-        data = {'noteId': note_id}
-        res = api('/api/notes/delete', json_data=data, auth=True)
+        data = {"noteId": note_id}
+        res = api("/api/notes/delete", json_data=data, auth=True)
         return res.status_code == 204
 
     @staticmethod
-    def add_file(path: str, *, name: str = None, force: bool = False, is_sensitive: bool = False,
-                 url) -> Drive:
+    def add_file(
+        path: str,
+        *,
+        name: str = None,
+        force: bool = False,
+        is_sensitive: bool = False,
+        url
+    ) -> Drive:
         """
         ノートにファイルを添付します。
 
@@ -72,8 +78,14 @@ class NoteAction(object):
         return Drive().upload(path, name, force, is_sensitive, url=url)
 
     @staticmethod
-    def add_poll(item: Optional[str] = None, *, poll: Optional[dict], expires_at: Optional[int] = None,
-                 expired_after: Optional[int] = None, item_list: Optional[List] = None) -> dict:
+    def add_poll(
+        item: Optional[str] = None,
+        *,
+        poll: Optional[dict],
+        expires_at: Optional[int] = None,
+        expired_after: Optional[int] = None,
+        item_list: Optional[List] = None
+    ) -> dict:
         """
         アンケートを作成します
 
@@ -95,20 +107,39 @@ class NoteAction(object):
         poll: dict
         """
         if poll is None:
-            poll = {'choices': [], 'expiresAt': expires_at,
-                    'expiredAfter': expired_after}
+            poll = {
+                "choices": [],
+                "expiresAt": expires_at,
+                "expiredAfter": expired_after,
+            }
         if item:
-            poll['choices'].append(item)
+            poll["choices"].append(item)
         if item_list:
-            poll['choices'].extend(item_list)
+            poll["choices"].extend(item_list)
 
         return poll
 
     @staticmethod
-    async def send(*, other_field: dict = None, visibility, visible_user_ids, text, cw, via_mobile, local_only,
-                   no_extract_mentions,
-                   no_extract_hashtags, no_extract_emojis, reply_id, renote_id, channel_id, preview, geo, file_ids,
-                   poll) -> 'Note':
+    async def send(
+        *,
+        other_field: dict = None,
+        visibility,
+        visible_user_ids,
+        text,
+        cw,
+        via_mobile,
+        local_only,
+        no_extract_mentions,
+        no_extract_hashtags,
+        no_extract_emojis,
+        reply_id,
+        renote_id,
+        channel_id,
+        preview,
+        geo,
+        file_ids,
+        poll
+    ) -> "Note":
         """
         既にあるnoteクラスを元にnoteを送信します
 
@@ -133,16 +164,18 @@ class NoteAction(object):
             "geo": geo,
         }
         # field.update(other_field)
-        if poll and len(poll['choices']) > 0:
-            field['poll'] = poll
+        if poll and len(poll["choices"]) > 0:
+            field["poll"] = poll
         if file_ids:
-            field['fileIds'] = file_ids
+            field["fileIds"] = file_ids
         field = remove_dict_empty(field)
-        res = api('/api/notes/create', json_data=field, auth=True)
+        res = api("/api/notes/create", json_data=field, auth=True)
         res_json = res.json()
-        if res_json.get('error') and res_json.get('error', {}).get('code') == 'CONTENT_REQUIRED':
-            raise ContentRequired(
-                'ノートの送信にはtext, file, renote またはpollのいずれか1つが無くてはいけません')
+        if (
+            res_json.get("error")
+            and res_json.get("error", {}).get("code") == "CONTENT_REQUIRED"
+        ):
+            raise ContentRequired("ノートの送信にはtext, file, renote またはpollのいずれか1つが無くてはいけません")
         msg = Note(**res_json)
 
         return msg
@@ -200,8 +233,8 @@ class Follow(BaseModel):
 
 class Header(object):
     def __init__(self, data):
-        self.id = data.get('id')
-        self.type = data.get('type')
+        self.id = data.get("id")
+        self.type = data.get("type")
 
 
 class Properties(BaseModel):
@@ -210,8 +243,8 @@ class Properties(BaseModel):
 
 
 class File(BaseModel):
-    id: Optional[str] = Field(None, alias='id_')
-    created_at: Optional[str] = Field(None, alias='created_at')
+    id: Optional[str] = Field(None, alias="id_")
+    created_at: Optional[str] = Field(None, alias="created_at")
     name: Optional[str] = None
     type: Optional[str] = None
     md5: Optional[str] = None
@@ -256,7 +289,7 @@ class Renote(BaseModel):
 
 
 class Reaction(BaseModel):
-    id: Optional[str] = Field(None, alias='id_')
+    id: Optional[str] = Field(None, alias="id_")
     reaction: Optional[str] = None
     user_id: Optional[str] = None
 
@@ -274,11 +307,11 @@ class Note(BaseModel):
     id: Optional[str] = None
     created_at: Optional[str] = None
     user_id: Optional[str] = None
-    author: Optional[Author] = Field(Author(), alias='user')
+    author: Optional[Author] = Field(Author(), alias="user")
     text: Optional[str] = None
     content: Optional[str] = None
     cw: Optional[str] = None
-    visibility: Optional[str] = 'public'
+    visibility: Optional[str] = "public"
     renote_count: Optional[int] = None
     replies_count: Optional[int] = None
     reactions: Optional[Dict[str, Any]] = None
@@ -308,47 +341,67 @@ class Note(BaseModel):
     def __poll_formatter(self) -> dict:
         if self.poll:
             poll = json.loads(self.poll.json(ensure_ascii=False))
-            poll['expiresAt'] = poll.pop('expired_after')
-            poll['expiredAfter'] = poll.pop('expires_at')
-            if poll['expiredAfter'] is None:
-                poll.pop('expiredAfter')
+            poll["expiresAt"] = poll.pop("expired_after")
+            poll["expiredAfter"] = poll.pop("expires_at")
+            if poll["expiredAfter"] is None:
+                poll.pop("expiredAfter")
         else:
             poll = None
         return poll
 
-    async def send(self) -> 'Note':
+    async def send(self) -> "Note":
         poll = self.__poll_formatter()
-        return await self.__note_action.send(visibility=self.visibility,
-                                             visible_user_ids=self.visible_user_ids,
-                                             text=self.text,
-                                             cw=self.cw,
-                                             via_mobile=self.via_mobile,
-                                             local_only=self.local_only,
-                                             no_extract_mentions=self.no_extract_mentions,
-                                             no_extract_hashtags=self.no_extract_hashtags,
-                                             no_extract_emojis=self.no_extract_emojis,
-                                             preview=self.preview,
-                                             geo=self.geo,
-                                             file_ids=self.file_ids,
-                                             reply_id=self.reply_id,
-                                             renote_id=self.renote_id,
-                                             channel_id=self.channel_id,
-                                             poll=poll
-                                             )
+        return await self.__note_action.send(
+            visibility=self.visibility,
+            visible_user_ids=self.visible_user_ids,
+            text=self.text,
+            cw=self.cw,
+            via_mobile=self.via_mobile,
+            local_only=self.local_only,
+            no_extract_mentions=self.no_extract_mentions,
+            no_extract_hashtags=self.no_extract_hashtags,
+            no_extract_emojis=self.no_extract_emojis,
+            preview=self.preview,
+            geo=self.geo,
+            file_ids=self.file_ids,
+            reply_id=self.reply_id,
+            renote_id=self.renote_id,
+            channel_id=self.channel_id,
+            poll=poll,
+        )
 
-    def add_file(self, path: str = None, name: str = None, force: bool = False, is_sensitive: bool = False, url: str = None):
-        self.file_ids.append(self.__note_action.add_file(
-            path, name=name, force=force, is_sensitive=is_sensitive, url=url).id)
+    def add_file(
+        self,
+        path: str = None,
+        name: str = None,
+        force: bool = False,
+        is_sensitive: bool = False,
+        url: str = None,
+    ):
+        self.file_ids.append(
+            self.__note_action.add_file(
+                path, name=name, force=force, is_sensitive=is_sensitive, url=url
+            ).id
+        )
         return self
 
-    def add_poll(self, item: Optional[str] = '', expires_at: Optional[int] = None,
-                 expired_after: Optional[int] = None, item_list: Optional[dict] = None) -> 'Note':
+    def add_poll(
+        self,
+        item: Optional[str] = "",
+        expires_at: Optional[int] = None,
+        expired_after: Optional[int] = None,
+        item_list: Optional[dict] = None,
+    ) -> "Note":
         poll = self.__poll_formatter()
-        self.poll = Poll(**self.__note_action.add_poll(item,
-                                                       poll=poll,
-                                                       expires_at=expires_at,
-                                                       expired_after=expired_after,
-                                                       item_list=item_list))
+        self.poll = Poll(
+            **self.__note_action.add_poll(
+                item,
+                poll=poll,
+                expires_at=expires_at,
+                expired_after=expired_after,
+                item_list=item_list,
+            )
+        )
         return self
 
     async def add_reaction(self, reaction: str, note_id: str = None) -> bool:

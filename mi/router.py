@@ -44,8 +44,12 @@ class Router:
         -------
         None: None
         """
-        channel_dict = {'global': self.global_time_line, 'main': self.main_channel,
-                        'home': self.home_time_line, 'local': self.local_time_line}
+        channel_dict = {
+            "global": self.global_time_line,
+            "main": self.main_channel,
+            "home": self.home_time_line,
+            "local": self.local_time_line,
+        }
         try:
             for channel in channel_list:
                 func = channel_dict.get(channel)
@@ -61,16 +65,19 @@ class Router:
         -------
         None: None
         """
-        await self.web_socket.send(json.dumps({
-            'type': 'connect',
-            'body': {
-                'channel': 'globalTimeline',
-                'id': f'{uuid.uuid4()}',
-                'params': {
-                    'some': 'thing'
-                }
-            }
-        }, ensure_ascii=False))
+        await self.web_socket.send(
+            json.dumps(
+                {
+                    "type": "connect",
+                    "body": {
+                        "channel": "globalTimeline",
+                        "id": f"{uuid.uuid4()}",
+                        "params": {"some": "thing"},
+                    },
+                },
+                ensure_ascii=False,
+            )
+        )
 
     async def main_channel(self) -> None:
         """
@@ -80,16 +87,19 @@ class Router:
         -------
         None: None
         """
-        await self.web_socket.send(json.dumps({
-            'type': 'connect',
-            'body': {
-                'channel': 'main',
-                'id': f'{uuid.uuid4()}',
-                'params': {
-                    'some': 'thing'
-                }
-            }
-        }, ensure_ascii=False))
+        await self.web_socket.send(
+            json.dumps(
+                {
+                    "type": "connect",
+                    "body": {
+                        "channel": "main",
+                        "id": f"{uuid.uuid4()}",
+                        "params": {"some": "thing"},
+                    },
+                },
+                ensure_ascii=False,
+            )
+        )
 
     async def home_time_line(self) -> None:
         """
@@ -99,16 +109,19 @@ class Router:
         -------
         None: None
         """
-        await self.web_socket.send(json.dumps({
-            'type': 'connect',
-            'body': {
-                'channel': 'homeTimeline',
-                'id': f'{uuid.uuid4()}',
-                'params': {
-                    'some': 'thing'
-                }
-            }
-        }, ensure_ascii=False))
+        await self.web_socket.send(
+            json.dumps(
+                {
+                    "type": "connect",
+                    "body": {
+                        "channel": "homeTimeline",
+                        "id": f"{uuid.uuid4()}",
+                        "params": {"some": "thing"},
+                    },
+                },
+                ensure_ascii=False,
+            )
+        )
 
     async def local_time_line(self) -> None:
         """
@@ -118,16 +131,19 @@ class Router:
         -------
         None: None
         """
-        await self.web_socket.send(json.dumps({
-            'type': 'connect',
-            'body': {
-                'channel': 'localTimeline',
-                'id': f'{uuid.uuid4()}',
-                'params': {
-                    'some': 'ting'
-                }
-            }
-        }, ensure_ascii=False))
+        await self.web_socket.send(
+            json.dumps(
+                {
+                    "type": "connect",
+                    "body": {
+                        "channel": "localTimeline",
+                        "id": f"{uuid.uuid4()}",
+                        "params": {"some": "ting"},
+                    },
+                },
+                ensure_ascii=False,
+            )
+        )
 
     async def capture_message(self, message_id: str) -> None:
         """
@@ -141,9 +157,6 @@ class Router:
         -------
         None: None
         """
-        await self.web_socket.send(json.dumps({
-            'type': 'subNote',
-            'body': {
-                'id': f'{message_id}'
-            }
-        }))
+        await self.web_socket.send(
+            json.dumps({"type": "subNote", "body": {"id": f"{message_id}"}})
+        )

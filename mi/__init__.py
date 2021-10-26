@@ -1,12 +1,12 @@
-__title__ = 'misskey'
-__author__ = 'yupix'
-__license__ = 'MIT'
-__copyright__ = 'Copyright 2021-present yupix'
-__author_email__ = 'yupi0982@outlook.jp'
-__url__ = 'https://github.com/yupix/Mi.py'
-__version__ = '0.2.5'
+__title__ = "misskey"
+__author__ = "yupix"
+__license__ = "MIT"
+__copyright__ = "Copyright 2021-present yupix"
+__author_email__ = "yupi0982@outlook.jp"
+__url__ = "https://github.com/yupix/Mi.py"
+__version__ = "0.2.5"
 
-__path__ = __import__('pkgutil').extend_path(__path__, __name__)
+__path__ = __import__("pkgutil").extend_path(__path__, __name__)
 
 from .instance import Instance
 from .emoji import Emoji
@@ -19,26 +19,26 @@ from .client import Client, BotBase
 from .ext import *
 
 __all__ = [
-    'Chart',
-    'Local',
-    'Remote',
-    'Emoji',
-    'Follow',
-    'client',
-    'BotBase',
-    'http',
-    'note',
-    'router',
-    'ext',
-    'utils',
-    'drive',
-    'Note',
-    'Reaction',
-    'UserProfile',
-    'Instance',
-    'Header',
-    'Client',
-    'Router',
-    'Drive',
-    'Properties',
+    "Chart",
+    "Local",
+    "Remote",
+    "Emoji",
+    "Follow",
+    "client",
+    "BotBase",
+    "http",
+    "note",
+    "router",
+    "ext",
+    "utils",
+    "drive",
+    "Note",
+    "Reaction",
+    "UserProfile",
+    "Instance",
+    "Header",
+    "Client",
+    "Router",
+    "Drive",
+    "Properties",
 ]

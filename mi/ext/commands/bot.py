@@ -9,15 +9,23 @@ import traceback
 from typing import Any, Callable, Coroutine, Dict, Optional
 
 from mi import UserProfile, config, utils
-from mi.exception import CheckFailure, CogNameDuplicate, CommandError, ExtensionAlreadyLoaded, ExtensionFailed, \
-    ExtensionNotFound, InvalidCogPath, NoEntryPointError
+from mi.exception import (
+    CheckFailure,
+    CogNameDuplicate,
+    CommandError,
+    ExtensionAlreadyLoaded,
+    ExtensionFailed,
+    ExtensionNotFound,
+    InvalidCogPath,
+    NoEntryPointError,
+)
 from mi.ext.commands.context import Context
 from mi.ext.commands.core import GroupMixin
 from mi.ext.commands.view import StringView
 from mi.http import WebSocket
 from mi.user import UserAction
 
-__all__ = ['BotBase', 'Bot']
+__all__ = ["BotBase", "Bot"]
 
 
 class BotBase(GroupMixin):
@@ -34,7 +42,7 @@ class BotBase(GroupMixin):
         self.__extensions: Dict[str, Any] = {}
         self.i: UserProfile = None
         self.__cogs: Dict[str] = {}
-        self.strip_after_prefix = options.get('strip_after_prefix', False)
+        self.strip_after_prefix = options.get("strip_after_prefix", False)
 
     async def can_run(self, ctx, *, call_once=False):
         data = self._check_once if call_once else self._checks
@@ -49,7 +57,7 @@ class BotBase(GroupMixin):
             return False
         try:
             if not await self.can_run(ctx, call_once=True):
-                raise CheckFailure('')
+                raise CheckFailure("")
             await ctx.command.invoke(ctx, *args, **kwargs)
             return True
         except CommandError as exc:
@@ -64,8 +72,10 @@ class BotBase(GroupMixin):
             return ctx
         invoker = view.get_word()
         if not self.all_commands.get(invoker):
-            await self.dispatch('missing_command', invoker)
-        ctx.message.content = message.text.replace(self.command_prefix + invoker, '').strip(' ')
+            await self.dispatch("missing_command", invoker)
+        ctx.message.content = message.text.replace(
+            self.command_prefix + invoker, ""
+        ).strip(" ")
         ctx.command = self.all_commands.get(invoker)
         return ctx
 
@@ -75,7 +85,7 @@ class BotBase(GroupMixin):
 
         ctx = await self.get_context(message)
         return (
-            await self.invoke(ctx, *ctx.message.content.split(' '))
+            await self.invoke(ctx, *ctx.message.content.split(" "))
             if ctx.message.content
             else await self.invoke(ctx)
         )
@@ -83,7 +93,7 @@ class BotBase(GroupMixin):
     async def _on_message(self, message):
         status = await self.process_commands(message)
         if status is False:
-            await self.dispatch('message', message)
+            await self.dispatch("message", message)
 
     def event(self, name=None):
         def decorator(func):
@@ -95,7 +105,7 @@ class BotBase(GroupMixin):
     def add_event(self, func, name=None):
         name = func.__name__ if name is None else name
         if not asyncio.iscoroutinefunction(func):
-            raise TypeError('Listeners must be coroutines')
+            raise TypeError("Listeners must be coroutines")
 
         if name in self.extra_events:
             self.special_events[name].append(func)
@@ -103,7 +113,6 @@ class BotBase(GroupMixin):
             self.special_events[name] = [func]
 
     def listen(self, name=None):
-
         def decorator(func):
             self.add_listener(func, name)
             return func
@@ -113,7 +122,7 @@ class BotBase(GroupMixin):
     def add_listener(self, func, name=None):
         name = func.__name__ if name is None else name
         if not asyncio.iscoroutinefunction(func):
-            raise TypeError('Listeners must be coroutines')
+            raise TypeError("Listeners must be coroutines")
 
         if name in self.extra_events:
             self.extra_events[name].append(func)
@@ -133,7 +142,7 @@ class BotBase(GroupMixin):
         -------
 
         """
-        ev = 'on_' + event_name
+        ev = "on_" + event_name
         for event in self.special_events.get(ev, []):
             foo = importlib.import_module(event.__module__)
             coro = getattr(foo, ev)
@@ -141,7 +150,7 @@ class BotBase(GroupMixin):
         return ev in dir(self)
 
     async def dispatch(self, event_name, *args, **kwargs):
-        ev = 'on_' + event_name
+        ev = "on_" + event_name
         for event in self.extra_events.get(ev, []):
             if inspect.ismethod(event):
                 coro = event
@@ -177,11 +186,13 @@ class BotBase(GroupMixin):
 
         return cog
 
-    def _load_from_module_spec(self, spec: importlib.machinery.ModuleSpec, key: str) -> None:
+    def _load_from_module_spec(
+        self, spec: importlib.machinery.ModuleSpec, key: str
+    ) -> None:
         try:
             lib = importlib.util.module_from_spec(spec)
         except AttributeError:
-            raise InvalidCogPath(f'cog: {key} へのパスが無効です')
+            raise InvalidCogPath(f"cog: {key} へのパスが無効です")
         sys.modules[key] = lib
         try:
             spec.loader.exec_module(lib)
@@ -190,10 +201,10 @@ class BotBase(GroupMixin):
             raise ExtensionFailed(key, e) from e
 
         try:
-            setup = getattr(lib, 'setup')
+            setup = getattr(lib, "setup")
         except AttributeError:
             del sys.modules[key]
-            raise NoEntryPointError(f'{key} にsetupが存在しません')
+            raise NoEntryPointError(f"{key} にsetupが存在しません")
 
         try:
             setup(self)
@@ -228,12 +239,25 @@ class BotBase(GroupMixin):
         spec = importlib.util.find_spec(name)
         self._load_from_module_spec(spec, name)
 
-    async def schedule_event(self, coro: Callable[..., Coroutine[Any, Any, Any]], event_name: str, *args: Any,
-                             **kwargs: Any) -> asyncio.Task:
-        return asyncio.create_task(self._run_event(coro, event_name, *args, **kwargs), name=f'MI.py: {event_name}')
+    async def schedule_event(
+        self,
+        coro: Callable[..., Coroutine[Any, Any, Any]],
+        event_name: str,
+        *args: Any,
+        **kwargs: Any,
+    ) -> asyncio.Task:
+        return asyncio.create_task(
+            self._run_event(coro, event_name, *args, **kwargs),
+            name=f"MI.py: {event_name}",
+        )
 
-    async def _run_event(self, coro: Callable[..., Coroutine[Any, Any, Any]], event_name: str, *args: Any,
-                         **kwargs: Any) -> None:
+    async def _run_event(
+        self,
+        coro: Callable[..., Coroutine[Any, Any, Any]],
+        event_name: str,
+        *args: Any,
+        **kwargs: Any,
+    ) -> None:
         try:
             await coro(*args, **kwargs)
         except asyncio.CancelledError:
@@ -245,11 +269,11 @@ class BotBase(GroupMixin):
                 pass
 
     async def __on_error(self, event_method: str) -> None:
-        print(f'Ignoring exception in {event_method}', file=sys.stderr)
+        print(f"Ignoring exception in {event_method}", file=sys.stderr)
         traceback.print_exc()
 
     async def on_error(self, err):
-        await self.event_dispatch('error', err)
+        await self.event_dispatch("error", err)
 
     def run(self, uri: str, token: str) -> None:
         """
@@ -287,18 +311,24 @@ class BotBase(GroupMixin):
         None: None
         """
         self.token = token
-        if _origin_uri := re.search(r'wss?://(.*)/streaming', uri):
-            origin_uri = _origin_uri.group(0).replace('wss', 'https').replace(
-                'ws', 'http').replace('/streaming', '')
+        if _origin_uri := re.search(r"wss?://(.*)/streaming", uri):
+            origin_uri = (
+                _origin_uri.group(0)
+                .replace("wss", "https")
+                .replace("ws", "http")
+                .replace("/streaming", "")
+            )
         else:
             origin_uri = uri
-        self.origin_uri = origin_uri[:-1] if uri[-1] == '/' else origin_uri
-        auth_i = {'token': self.token, 'origin_uri': self.origin_uri}
+        self.origin_uri = origin_uri[:-1] if uri[-1] == "/" else origin_uri
+        auth_i = {"token": self.token, "origin_uri": self.origin_uri}
         config.init(**auth_i)
         self.i = UserAction().get_i()
-        auth_i['profile'] = self.i
+        auth_i["profile"] = self.i
         config.init(**auth_i)
-        asyncio.get_event_loop().run_until_complete(WebSocket(self).run(f'{uri}?i={token}'))
+        asyncio.get_event_loop().run_until_complete(
+            WebSocket(self).run(f"{uri}?i={token}")
+        )
 
 
 class Bot(BotBase):
