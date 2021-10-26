@@ -175,7 +175,8 @@ class NoteAction:
             res_json.get("error")
             and res_json.get("error", {}).get("code") == "CONTENT_REQUIRED"
         ):
-            raise ContentRequired("ノートの送信にはtext, file, renote またはpollのいずれか1つが無くてはいけません")
+            raise ContentRequired(
+                "ノートの送信にはtext, file, renote またはpollのいずれか1つが無くてはいけません")
         msg = Note(**res_json)
 
         return msg

@@ -116,7 +116,8 @@ class WebSocket:
         base_ctx = ctx.get("body", {}).get("body")
         base_ctx["content"] = base_ctx["text"]
         base_ctx["text"] = (
-            base_ctx["text"].replace(f"@{config.i.profile.username}", "").strip(" ")
+            base_ctx["text"].replace(
+                f"@{config.i.profile.username}", "").strip(" ")
         )
         return asyncio.create_task(self.cls.dispatch("mention", Note(**base_ctx)))
 

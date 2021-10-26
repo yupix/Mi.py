@@ -194,7 +194,8 @@ class Cog(metaclass=CogMeta):
             if isinstance(actual, staticmethod):
                 actual = actual.__func__
             if not inspect.iscoroutinefunction(actual):
-                raise TypeError("Listener function must be a coroutine function.")
+                raise TypeError(
+                    "Listener function must be a coroutine function.")
             actual.__cog_listener__ = True
             to_assign = name or actual.__name__
             try:
