@@ -1,6 +1,6 @@
 import asyncio
 
-__all__ = ['Loop', 'loop']
+__all__ = ["Loop", "loop"]
 
 
 class Loop(object):

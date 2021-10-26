@@ -1,4 +1,4 @@
-__all__ = ['Command', 'command', 'GroupMixin', 'group']
+__all__ = ["Command", "command", "GroupMixin", "group"]
 
 import asyncio
 import functools
@@ -29,7 +29,7 @@ class _CaseInsensitiveDict(dict):
 
 class GroupMixin:
     def __init__(self, *args, **kwargs):
-        case_insensitive = kwargs.get('case_insensitive', False)
+        case_insensitive = kwargs.get("case_insensitive", False)
         self.all_commands = _CaseInsensitiveDict() if case_insensitive else {}
         self.case_insensitive = case_insensitive
         super().__init__(*args, **kwargs)
@@ -68,7 +68,7 @@ class GroupMixin:
         """
 
         if not isinstance(command, Command):
-            raise TypeError('The command passed must be a subclass of Command')
+            raise TypeError("The command passed must be a subclass of Command")
 
         if isinstance(self, Command):
             command.parent = self
@@ -109,24 +109,24 @@ class Command(_BaseCommand):  # TODO: 作る
     def __init__(self, func, **kwargs):
         if not asyncio.iscoroutinefunction(func):
             raise TypeError("関数は非同期である必要があります")
-        self.name = name = kwargs.get('name') or func.__name__
+        self.name = name = kwargs.get("name") or func.__name__
         if not isinstance(name, str):
-            raise TypeError('コマンドのネームスペースはstringである必要があります')
+            raise TypeError("コマンドのネームスペースはstringである必要があります")
 
         self.callback = func
-        self.enabled = kwargs.get('enabled', True)
+        self.enabled = kwargs.get("enabled", True)
         self.__original_kwargs__ = kwargs.copy()
-        self.aliases = kwargs.get('aliases', [])
+        self.aliases = kwargs.get("aliases", [])
 
         try:
             checks = func.__commands_checks__
             checks.reverse()
         except AttributeError:
-            checks = kwargs.get('checks', [])
+            checks = kwargs.get("checks", [])
         finally:
             self.checks = checks
         self.cog = None
-        parent = kwargs.get('parent')
+        parent = kwargs.get("parent")
         self.parent = parent if isinstance(parent, _BaseCommand) else None
 
     @property
@@ -142,7 +142,7 @@ class Command(_BaseCommand):  # TODO: 作る
             command = command.parent
             entries.append(command.name)
 
-        return ' '.join(reversed(entries))
+        return " ".join(reversed(entries))
 
     @property
     def qualified_name(self):
@@ -155,7 +155,7 @@ class Command(_BaseCommand):  # TODO: 作る
 
         parent = self.full_parent_name
         if parent:
-            return parent + ' ' + self.name
+            return parent + " " + self.name
         else:
             return self.name
 
@@ -235,8 +235,7 @@ class Group(GroupMixin, Command):
     """
 
     def __init__(self, *args, **attrs):
-        self.invoke_without_command = attrs.pop(
-            'invoke_without_command', False)
+        self.invoke_without_command = attrs.pop("invoke_without_command", False)
         super().__init__(*args, **attrs)
 
     def copy(self):
@@ -334,7 +333,7 @@ def group(name=None, **attrs):
         The ``cls`` parameter can now be passed.
     """
 
-    attrs.setdefault('cls', Group)
+    attrs.setdefault("cls", Group)
     return command(name=name, **attrs)
 
 
@@ -373,7 +372,7 @@ def command(name=None, cls=None, **attrs):
 
     def decorator(func):
         if isinstance(func, Command):
-            raise TypeError('Callback is already a command.')
+            raise TypeError("Callback is already a command.")
         return cls(func, name=name, **attrs)
 
     return decorator

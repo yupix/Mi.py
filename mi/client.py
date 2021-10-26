@@ -28,14 +28,13 @@ class BotBase:
     def add_event(self, func, name=None):
         name = func.__name__ if name is None else name
         if not asyncio.iscoroutinefunction(func):
-            raise TypeError('Listeners must be coroutines')
+            raise TypeError("Listeners must be coroutines")
         if name in self.extra_events:
             self.special_events[name].append(func)
         else:
             self.special_events[name] = [func]
 
     def listen(self, name=None):
-
         def decorator(func):
             self.add_listener(func, name)
             return func
@@ -43,12 +42,12 @@ class BotBase:
         return decorator
 
     async def _on_message(self, message):
-        await self.dispatch('on_message', message)
+        await self.dispatch("on_message", message)
 
     def add_listener(self, func, name=None):
         name = func.__name__ if name is None else name
         if not asyncio.iscoroutinefunction(func):
-            raise TypeError('Listeners must be coroutines')
+            raise TypeError("Listeners must be coroutines")
 
         if name in self.extra_events:
             self.extra_events[name].append(func)
@@ -56,25 +55,38 @@ class BotBase:
             self.extra_events[name] = [func]
 
     async def event_dispatch(self, event_name, *args, **kwargs):
-        ev = 'on_' + event_name
+        ev = "on_" + event_name
         for event in self.special_events.get(ev, []):
             foo = importlib.import_module(event.__module__)
             coro = getattr(foo, ev)
             await self.schedule_event(coro, event, *args, **kwargs)
 
     async def dispatch(self, event_name, *args, **kwargs):
-        ev = 'on_' + event_name
+        ev = "on_" + event_name
         for event in self.extra_events.get(ev, []):
             foo = importlib.import_module(event.__module__)
             coro = getattr(foo, ev)
             await self.schedule_event(coro, event, *args, **kwargs)
 
-    async def schedule_event(self, coro: Callable[..., Coroutine[Any, Any, Any]], event_name: str, *args: Any,
-                             **kwargs: Any) -> asyncio.Task:
-        return asyncio.create_task(self._run_event(coro, event_name, *args, **kwargs), name=f'MI.py: {event_name}')
+    async def schedule_event(
+        self,
+        coro: Callable[..., Coroutine[Any, Any, Any]],
+        event_name: str,
+        *args: Any,
+        **kwargs: Any,
+    ) -> asyncio.Task:
+        return asyncio.create_task(
+            self._run_event(coro, event_name, *args, **kwargs),
+            name=f"MI.py: {event_name}",
+        )
 
-    async def _run_event(self, coro: Callable[..., Coroutine[Any, Any, Any]], event_name: str, *args: Any,
-                         **kwargs: Any) -> None:
+    async def _run_event(
+        self,
+        coro: Callable[..., Coroutine[Any, Any, Any]],
+        event_name: str,
+        *args: Any,
+        **kwargs: Any,
+    ) -> None:
         try:
             await coro(*args, **kwargs)
         except asyncio.CancelledError:
@@ -86,7 +98,7 @@ class BotBase:
                 pass
 
     async def __on_error(self, event_method: str) -> None:
-        print(f'Ignoring exception in {event_method}', file=sys.stderr)
+        print(f"Ignoring exception in {event_method}", file=sys.stderr)
         traceback.print_exc()
 
     def run(self, uri: str, token: str) -> None:
@@ -125,17 +137,22 @@ class BotBase:
         None: None
         """
         self.token = token
-        if _origin_uri := re.search(r'wss?://(.*)/streaming', uri):
-            origin_uri = _origin_uri.group(0).replace('wss', 'https').replace(
-                'ws', 'http').replace('/streaming', '')
+        if _origin_uri := re.search(r"wss?://(.*)/streaming", uri):
+            origin_uri = (
+                _origin_uri.group(0)
+                .replace("wss", "https")
+                .replace("ws", "http")
+                .replace("/streaming", "")
+            )
         else:
             origin_uri = uri
-        self.origin_uri = origin_uri[:-1] if uri[-1] == '/' else origin_uri
-        auth_i = {'token': self.token, 'origin_uri': self.origin_uri}
+        self.origin_uri = origin_uri[:-1] if uri[-1] == "/" else origin_uri
+        auth_i = {"token": self.token, "origin_uri": self.origin_uri}
         config.init(**auth_i)
         self.i = UserAction().get_i()
         asyncio.get_event_loop().run_until_complete(
-            WebSocket(self).run(f'{uri}?i={token}'))
+            WebSocket(self).run(f"{uri}?i={token}")
+        )
 
 
 class Client(BotBase):

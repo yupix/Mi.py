@@ -11,7 +11,7 @@ from mi.utils import api, upper_to_lower
 class UserAction(object):
     @staticmethod
     def get_i():
-        res = api('/api/i', auth=True)
+        res = api("/api/i", auth=True)
         return UserProfile(**upper_to_lower(json.loads(res.text)))
 
     @staticmethod
@@ -29,10 +29,10 @@ class UserAction(object):
         status: bool = False
             成功ならTrue, 失敗ならFalse
         """
-        data = {'userId': user_id}
-        res = api('/api/following/create', json_data=data, auth=True)
-        if res.json().get('error'):
-            code = res.json()['error']['code']
+        data = {"userId": user_id}
+        res = api("/api/following/create", json_data=data, auth=True)
+        if res.json().get("error"):
+            code = res.json()["error"]["code"]
             status = False
         else:
             code = None
@@ -52,8 +52,8 @@ class UserAction(object):
         status: bool = False
             成功したならTrue, 失敗したならFalse
         """
-        data = {'userId': user_id}
-        res = api('/api/following/delete', json_data=data, auth=True)
+        data = {"userId": user_id}
+        res = api("/api/following/delete", json_data=data, auth=True)
         return bool(res.status_code == 204 or 200)
 
 
@@ -286,7 +286,7 @@ class Author(BaseModel):
             user_id = self.id
         return self.__user_action.unfollow(user_id)
 
-    def get_profile(self) -> 'UserProfile':
+    def get_profile(self) -> "UserProfile":
         """
         ユーザーのプロフィールを取得します
 
@@ -295,9 +295,15 @@ class Author(BaseModel):
         UserProfile:
             ユーザーのプロフィールオブジェクト
         """
-        return UserProfile(**upper_to_lower(conn.get_user(user_id=self.id, username=self.username, host=self.host)))
+        return UserProfile(
+            **upper_to_lower(
+                conn.get_user(user_id=self.id, username=self.username, host=self.host)
+            )
+        )
 
-    def get_followers(self, until_id: str = None, limit: int = 10, get_all: bool = False):
+    def get_followers(
+        self, until_id: str = None, limit: int = 10, get_all: bool = False
+    ):
         """
         ユーザーのフォロワー一覧を取得します
         Parameters
@@ -319,5 +325,5 @@ class Author(BaseModel):
             host=self.host,
             limit=limit,
             until_id=until_id,
-            get_all=get_all
+            get_all=get_all,
         )

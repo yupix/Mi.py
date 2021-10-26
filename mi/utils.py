@@ -10,7 +10,7 @@ import requests
 
 from mi import config, exception
 
-T = TypeVar('T')
+T = TypeVar("T")
 
 
 def check_multi_arg(*args) -> bool:
@@ -69,12 +69,12 @@ def json_dump(data, *args, **kwargs):
 
 
 def api(
-        endpoint: str,
-        json_data=None,
-        *,
-        origin_uri: str = None,
-        files: dict = None,
-        auth: bool = False
+    endpoint: str,
+    json_data=None,
+    *,
+    origin_uri: str = None,
+    files: dict = None,
+    auth: bool = False
 ) -> requests.models.Response:
     """
     .. deprecated:: 0.1.5
@@ -103,31 +103,25 @@ def api(
     if check_multi_arg(json_data, files) is False and auth:
         json_data = {}
     if auth:
-        json_data['i'] = config.i.token
+        json_data["i"] = config.i.token
     base_url = origin_uri or config.i.origin_uri
     res = requests.post(base_url + endpoint, files=files, json=json_data)
     status_code = res.status_code
     errors = {
-        400: {
-            'raise': exception.ClientError,
-            'description': 'Client Error'
-        },
+        400: {"raise": exception.ClientError, "description": "Client Error"},
         401: {
-            'raise': exception.AuthenticationError,
-            'description': 'AuthenticationError'
+            "raise": exception.AuthenticationError,
+            "description": "AuthenticationError",
         },
-        418: {
-            'raise': exception.ImAi,
-            'description': 'I\'m Ai'
-        },
+        418: {"raise": exception.ImAi, "description": "I'm Ai"},
         500: {
-            'raise': exception.InternalServerError,
-            'description': 'InternalServerError'
-        }
+            "raise": exception.InternalServerError,
+            "description": "InternalServerError",
+        },
     }
     if status_code in [400, 401, 418, 500]:
         error_base = errors.get(status_code)
-        error = error_base['raise'](error_base['description'] + '\n' + res.text)
+        error = error_base["raise"](error_base["description"] + "\n" + res.text)
         raise error
     return res
 
@@ -138,21 +132,23 @@ def remove_dict_empty(data: dict) -> dict:
     return _data
 
 
-def upper_to_lower(data: dict, field: dict = None, nest=True, replace_list: dict = None) -> dict:
+def upper_to_lower(
+    data: dict, field: dict = None, nest=True, replace_list: dict = None
+) -> dict:
     if data is None:
         return {}
     if replace_list is None:
         replace_list = {}
 
-    pattern = re.compile('[A-Z]')
+    pattern = re.compile("[A-Z]")
     if field is None:
         field = {}
     for attr in data:
-        pattern = re.compile('[A-Z]')
+        pattern = re.compile("[A-Z]")
         large = [i.group().lower() for i in pattern.finditer(attr)]
         result = [None] * (len(large + pattern.split(attr)))
         result[::2] = pattern.split(attr)
-        result[1::2] = ['_' + i.lower() for i in large]
+        result[1::2] = ["_" + i.lower() for i in large]
         default_key = "".join(result)
         if replace_list.get(attr):
             default_key = default_key.replace(attr, replace_list.get(attr))
@@ -176,4 +172,4 @@ def bool_to_string(boolean: bool) -> str:
         小文字になったbool文字列
     """
 
-    return 'true' if boolean else 'false'
+    return "true" if boolean else "false"
