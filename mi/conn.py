@@ -1,14 +1,17 @@
 import typing
 from functools import cache
 
+from mi.next_utils import check_multi_arg
+
 from mi import exception
 from mi.exception import InvalidParameters, NotExistRequiredParameters
-from mi.next_utils import check_multi_arg
 from mi.utils import api, remove_dict_empty
 
 
 @cache
-def get_user(user_id: str = None, username: str = None, host: str = None) -> dict:
+def get_user(user_id: str = None,
+             username: str = None,
+             host: str = None) -> dict:
     """
     ユーザーのプロフィールを取得します。一度のみサーバーにアクセスしキャッシュをその後は使います。
     fetch_userを使った場合はキャッシュが廃棄され再度サーバーにアクセスします。
@@ -30,7 +33,9 @@ def get_user(user_id: str = None, username: str = None, host: str = None) -> dic
     return fetch_user(user_id, username, host)
 
 
-def fetch_user(user_id: str = None, username: str = None, host: str = None) -> dict:
+def fetch_user(user_id: str = None,
+               username: str = None,
+               host: str = None) -> dict:
     """
     サーバーにアクセスし、ユーザーのプロフィールを取得します。基本的には get_userをお使いください。
 
@@ -51,19 +56,23 @@ def fetch_user(user_id: str = None, username: str = None, host: str = None) -> d
     if not check_multi_arg(user_id, username):
         raise NotExistRequiredParameters("user_id, usernameどちらかは必須です")
 
-    data = remove_dict_empty({"userId": user_id, "username": username, "host": host})
+    data = remove_dict_empty({
+        "userId": user_id,
+        "username": username,
+        "host": host
+    })
     get_user.cache_clear()
     return api("/api/users/show", json_data=data, auth=True).json()
 
 
 def get_followers(
-        user_id: str = None,
-        username: str = None,
-        host: str = None,
-        since_id: str = None,
-        until_id: str = None,
-        limit: int = 10,
-        get_all: bool = False,
+    user_id: str = None,
+    username: str = None,
+    host: str = None,
+    since_id: str = None,
+    until_id: str = None,
+    limit: int = 10,
+    get_all: bool = False,
 ) -> typing.Iterator[dict]:
     """
     与えられたユーザーのフォロワーを取得します
@@ -100,37 +109,37 @@ def get_followers(
     if limit > 100:
         raise InvalidParameters("limit は100以上を受け付けません")
 
-    data = remove_dict_empty(
-        {
-            "userId": user_id,
-            "username": username,
-            "host": host,
-            "sinceId": since_id,
-            "untilId": until_id,
-            "limit": limit,
-        }
-    )
+    data = remove_dict_empty({
+        "userId": user_id,
+        "username": username,
+        "host": host,
+        "sinceId": since_id,
+        "untilId": until_id,
+        "limit": limit,
+    })
     if get_all:
         loop = True
         while loop:
-            get_data = api("/api/users/followers", json_data=data, auth=True).json()
+            get_data = api("/api/users/followers", json_data=data,
+                           auth=True).json()
             if len(get_data) > 0:
                 data["untilId"] = get_data[-1]["id"]
             else:
                 break
             yield get_data
     else:
-        get_data = api("/api/users/followers", json_data=data, auth=True).json()
+        get_data = api("/api/users/followers", json_data=data,
+                       auth=True).json()
         yield get_data
 
 
 def file_upload(
-        name: str = None,
-        to_file: str = None,
-        to_url: str = None,
-        *,
-        force: bool = False,
-        is_sensitive: bool = False,
+    name: str = None,
+    to_file: str = None,
+    to_url: str = None,
+    *,
+    force: bool = False,
+    is_sensitive: bool = False,
 ) -> dict:
     """
     Parameters
@@ -156,12 +165,15 @@ def file_upload(
             file = f.read()
         args = {"isSensitive": is_sensitive, "force": force, "name": f"{name}"}
         file = {"file": file}
-        res = api(
-            "/api/drive/files/create", json_data=args, files=file, auth=True
-        ).json()
+        res = api("/api/drive/files/create",
+                  json_data=args,
+                  files=file,
+                  auth=True).json()
     elif to_file is None and to_url:  # URLからアップロードする
         args = {"url": to_url, "force": force, "isSensitive": is_sensitive}
-        res = api("/api/drive/files/upload-from-url", json_data=args, auth=True).json()
+        res = api("/api/drive/files/upload-from-url",
+                  json_data=args,
+                  auth=True).json()
     else:
         raise exception.InvalidParameters("path または url のどちらかは必須です")
     return res
