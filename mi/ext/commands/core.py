@@ -3,8 +3,8 @@ __all__ = ["Command", "command", "GroupMixin", "group"]
 import asyncio
 import functools
 
-from ._types import _BaseCommand
 from ...exception import CommandError, CommandInvokeError, CommandRegistrationError
+from ._types import _BaseCommand
 
 
 class _CaseInsensitiveDict(dict):
@@ -231,7 +231,8 @@ class Group(GroupMixin, Command):
     """
 
     def __init__(self, *args, **attrs):
-        self.invoke_without_command = attrs.pop("invoke_without_command", False)
+        self.invoke_without_command = attrs.pop("invoke_without_command",
+                                                False)
         super().__init__(*args, **attrs)
 
     def copy(self):
