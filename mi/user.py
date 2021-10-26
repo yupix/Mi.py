@@ -203,7 +203,6 @@ class UserProfile(BaseModel):
         str
             実行に失敗した際のエラーコード
         """
-
         if user_id is None:
             user_id = self.id
         return self.__user_action.follow(user_id)
@@ -263,7 +262,6 @@ class Author(BaseModel):
         str
             実行に失敗した際のエラーコード
         """
-
         if user_id is None:
             user_id = self.id
         return self.__user_action.follow(user_id)

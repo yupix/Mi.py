@@ -57,7 +57,6 @@ def find(predicate: Callable[[T], Any], seq: Iterable[T]) -> Optional[T]:
     seq: :class:`collections.abc.Iterable`
         The iterable to search through.
     """
-
     for element in seq:
         if predicate(element):
             return element
@@ -99,7 +98,6 @@ def api(
     -------
     requests.models.Response
     """
-
     if check_multi_arg(json_data, files) is False and auth:
         json_data = {}
     if auth:
@@ -171,5 +169,4 @@ def bool_to_string(boolean: bool) -> str:
     true or false: str
         小文字になったbool文字列
     """
-
     return "true" if boolean else "false"

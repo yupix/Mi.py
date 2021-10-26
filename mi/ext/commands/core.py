@@ -66,7 +66,6 @@ class GroupMixin:
         TypeError
             If the command passed is not a subclass of :class:`.Command`.
         """
-
         if not isinstance(command, Command):
             raise TypeError("The command passed must be a subclass of Command")
 
@@ -152,7 +151,6 @@ class Command(_BaseCommand):  # TODO: 作る
         For example, in ``?one two three`` the qualified name would be
         ``one two three``.
         """
-
         parent = self.full_parent_name
         if parent:
             return parent + " " + self.name
@@ -330,7 +328,6 @@ def group(name=None, **attrs):
     .. versionchanged:: 1.1
         The ``cls`` parameter can now be passed.
     """
-
     attrs.setdefault("cls", Group)
     return command(name=name, **attrs)
 
