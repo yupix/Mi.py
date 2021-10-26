@@ -49,12 +49,13 @@ class WebSocket:
                                 "body": {
                                     "channel": "main",
                                     "id": f"{uuid.uuid4()}",
-                                    "params": {"some": "thing"},
+                                    "params": {
+                                        "some": "thing"
+                                    },
                                 },
                             },
                             ensure_ascii=False,
-                        )
-                    )
+                        ))
                     recv = await web_socket.recv()
                     asyncio.create_task(self.recv(web_socket, recv))
         except Exception as err:
@@ -104,11 +105,8 @@ class WebSocket:
             "messagingMessage": "on_messaging",
         }
         logger.log.debug(f"received event: {event_type}")
-        if (
-                event_type == "notification"
-                or "unread" in event_type
-                or event_list.get(event_type) is None
-        ):
+        if (event_type == "notification" or "unread" in event_type
+                or event_list.get(event_type) is None):
             await self.on_notification(message)
             return
 
@@ -175,10 +173,10 @@ class WebSocket:
 
         base_ctx = ctx.get("body", {}).get("body")
         base_ctx["content"] = base_ctx["text"]
-        base_ctx["text"] = (
-            base_ctx["text"].replace(f"@{config.i.profile.username}", "").strip(" ")
-        )
-        return asyncio.create_task(self.cls.dispatch("mention", Note(**base_ctx)))
+        base_ctx["text"] = (base_ctx["text"].replace(
+            f"@{config.i.profile.username}", "").strip(" "))
+        return asyncio.create_task(
+            self.cls.dispatch("mention", Note(**base_ctx)))
 
     async def on_follow(self, message: dict) -> asyncio.Task:
         """
@@ -195,11 +193,9 @@ class WebSocket:
         return asyncio.create_task(
             self.cls.dispatch(
                 "follow",
-                Follow(
-                    **upper_to_lower(message.get("body"), replace_list={"body": "user"})
-                ),
-            )
-        )
+                Follow(**upper_to_lower(message.get("body"),
+                                        replace_list={"body": "user"})),
+            ))
 
     async def on_unfollow(self, message):
         pass
@@ -220,8 +216,7 @@ class WebSocket:
         base_msg = message.get("body", {}).get("body", {})
         base_msg["id"] = message.get("body", {}).get("id", None)
         asyncio.create_task(
-            self.cls.dispatch("reacted", Reaction(**upper_to_lower(base_msg)))
-        )
+            self.cls.dispatch("reacted", Reaction(**upper_to_lower(base_msg))))
 
     async def on_deleted(self, message):
         """

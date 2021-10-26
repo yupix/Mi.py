@@ -67,14 +67,12 @@ def json_dump(data, *args, **kwargs):
     return json.dumps(data, ensure_ascii=False, *args, **kwargs)
 
 
-def api(
-        endpoint: str,
+def api(endpoint: str,
         json_data=None,
         *,
         origin_uri: str = None,
         files: dict = None,
-        auth: bool = False
-) -> requests.models.Response:
+        auth: bool = False) -> requests.models.Response:
     """
     .. deprecated:: 0.1.5
         `data` 0.2.0で正式に削除され、以降はjson_dataを使用するようにしてください。
@@ -106,12 +104,18 @@ def api(
     res = requests.post(base_url + endpoint, files=files, json=json_data)
     status_code = res.status_code
     errors = {
-        400: {"raise": exception.ClientError, "description": "Client Error"},
+        400: {
+            "raise": exception.ClientError,
+            "description": "Client Error"
+        },
         401: {
             "raise": exception.AuthenticationError,
             "description": "AuthenticationError",
         },
-        418: {"raise": exception.ImAi, "description": "I'm Ai"},
+        418: {
+            "raise": exception.ImAi,
+            "description": "I'm Ai"
+        },
         500: {
             "raise": exception.InternalServerError,
             "description": "InternalServerError",
@@ -119,7 +123,8 @@ def api(
     }
     if status_code in [400, 401, 418, 500]:
         error_base = errors.get(status_code)
-        error = error_base["raise"](error_base["description"] + "\n" + res.text)
+        error = error_base["raise"](error_base["description"] + "\n" +
+                                    res.text)
         raise error
     return res
 
@@ -142,9 +147,10 @@ def remove_dict_empty(data: dict) -> dict:
     return _data
 
 
-def upper_to_lower(
-        data: dict, field: dict = None, nest=True, replace_list: dict = None
-) -> dict:
+def upper_to_lower(data: dict,
+                   field: dict = None,
+                   nest=True,
+                   replace_list: dict = None) -> dict:
     """
 
     Parameters
