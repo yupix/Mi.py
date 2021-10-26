@@ -68,12 +68,12 @@ def json_dump(data, *args, **kwargs):
 
 
 def api(
-    endpoint: str,
-    json_data=None,
-    *,
-    origin_uri: str = None,
-    files: dict = None,
-    auth: bool = False
+        endpoint: str,
+        json_data=None,
+        *,
+        origin_uri: str = None,
+        files: dict = None,
+        auth: bool = False
 ) -> requests.models.Response:
     """
     .. deprecated:: 0.1.5
@@ -125,6 +125,18 @@ def api(
 
 
 def remove_dict_empty(data: dict) -> dict:
+    """
+    Parameters
+    ----------
+    data: dict
+        空のkeyを削除したいdict
+
+    Returns
+    -------
+    _data: dict
+        空のkeyがなくなったdict
+    """
+
     _data = {}
     _data = {k: v for k, v in data.items() if v is not None}
     return _data
@@ -151,6 +163,7 @@ def upper_to_lower(
     field : dict
         小文字になった, key名が変更されたdict
     """
+
     if data is None:
         return {}
     if replace_list is None:
