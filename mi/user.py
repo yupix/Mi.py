@@ -295,7 +295,8 @@ class Author(BaseModel):
         """
         return UserProfile(
             **upper_to_lower(
-                conn.get_user(user_id=self.id, username=self.username, host=self.host)
+                conn.get_user(user_id=self.id,
+                              username=self.username, host=self.host)
             )
         )
 

@@ -37,7 +37,7 @@ class WebSocket:
         -------
         None
         """
-        
+
         try:
             async with websockets.connect(uri) as web_socket:
                 asyncio.create_task(self.on_ready(web_socket))
@@ -105,9 +105,9 @@ class WebSocket:
         }
         logger.log.debug(f"received event: {event_type}")
         if (
-                event_type == "notification"
-                or "unread" in event_type
-                or event_list.get(event_type) is None
+            event_type == "notification"
+            or "unread" in event_type
+            or event_list.get(event_type) is None
         ):
             await self.on_notification(message)
             return
@@ -176,7 +176,8 @@ class WebSocket:
         base_ctx = ctx.get("body", {}).get("body")
         base_ctx["content"] = base_ctx["text"]
         base_ctx["text"] = (
-            base_ctx["text"].replace(f"@{config.i.profile.username}", "").strip(" ")
+            base_ctx["text"].replace(
+                f"@{config.i.profile.username}", "").strip(" ")
         )
         return asyncio.create_task(self.cls.dispatch("mention", Note(**base_ctx)))
 
