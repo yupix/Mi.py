@@ -156,8 +156,7 @@ class Command(_BaseCommand):  # TODO: 作る
         parent = self.full_parent_name
         if parent:
             return parent + " " + self.name
-        else:
-            return self.name
+        return self.name
 
     async def call_after_hooks(self, ctx):
         # cog = self.cog
@@ -207,8 +206,7 @@ class Command(_BaseCommand):  # TODO: 作る
             kw.update(self.__original_kwargs__)
             copy = self.__class__(self.callback, **kw)
             return self._ensure_assignment_on_copy(copy)
-        else:
-            return self.copy()
+        return self.copy()
 
 
 class Group(GroupMixin, Command):
