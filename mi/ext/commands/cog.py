@@ -184,7 +184,6 @@ class Cog(metaclass=CogMeta):
             The function is not a coroutine function or a string was not passed as
             the name.
         """
-
         if name is not None and not isinstance(name, str):
             raise TypeError(
                 f"Cog.listener expected str but received {name.__class__.__name__!r} instead."

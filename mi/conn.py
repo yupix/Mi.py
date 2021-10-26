@@ -27,7 +27,6 @@ def get_user(user_id: str = None, username: str = None, host: str = None) -> dic
     dict:
         ユーザー情報
     """
-
     return fetch_user(user_id, username, host)
 
 
@@ -152,7 +151,6 @@ def file_upload(
     Drive: Drive
         upload後のレスポンスをDrive型に変更して返します
     """
-
     if to_file and to_url is None:  # ローカルからアップロードする
         with open(to_file, "rb") as f:
             file = f.read()

@@ -82,7 +82,6 @@ class Drive(BaseModel):
         drive: drive
             upload後のレスポンスをdrive型に変更して返します
         """
-
         if url is None and self.url:
             url = self.url
 

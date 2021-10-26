@@ -207,7 +207,6 @@ class Follow(BaseModel):
         str
             実行に失敗した際のエラーコード
         """
-
         if user_id is None:
             user_id = self.user.id
         return self.__user_action.follow(user_id)
