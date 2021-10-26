@@ -15,7 +15,8 @@ class NoteAction:
     def emoji_count(text=None, emojis=None):
         if emojis is None:
             emojis = []
-        return len(emojis) if text is None else len(emojis) + emoji.emoji_count(text)
+        return len(
+            emojis) if text is None else len(emojis) + emoji.emoji_count(text)
 
     @staticmethod
     async def add_reaction(reaction: str, note_id: str = None) -> bool:
@@ -45,14 +46,12 @@ class NoteAction:
         return res.status_code == 204
 
     @staticmethod
-    def add_file(
-        path: str,
-        *,
-        name: str = None,
-        force: bool = False,
-        is_sensitive: bool = False,
-        url
-    ) -> Drive:
+    def add_file(path: str,
+                 *,
+                 name: str = None,
+                 force: bool = False,
+                 is_sensitive: bool = False,
+                 url) -> Drive:
         """
         ノートにファイルを添付します。
 
@@ -78,14 +77,12 @@ class NoteAction:
         return Drive().upload(path, name, force, is_sensitive, url=url)
 
     @staticmethod
-    def add_poll(
-        item: Optional[str] = None,
-        *,
-        poll: Optional[dict],
-        expires_at: Optional[int] = None,
-        expired_after: Optional[int] = None,
-        item_list: Optional[List] = None
-    ) -> dict:
+    def add_poll(item: Optional[str] = None,
+                 *,
+                 poll: Optional[dict],
+                 expires_at: Optional[int] = None,
+                 expired_after: Optional[int] = None,
+                 item_list: Optional[List] = None) -> dict:
         """
         アンケートを作成します
 
@@ -120,26 +117,24 @@ class NoteAction:
         return poll
 
     @staticmethod
-    async def send(
-        *,
-        other_field: dict = None,
-        visibility,
-        visible_user_ids,
-        text,
-        cw,
-        via_mobile,
-        local_only,
-        no_extract_mentions,
-        no_extract_hashtags,
-        no_extract_emojis,
-        reply_id,
-        renote_id,
-        channel_id,
-        preview,
-        geo,
-        file_ids,
-        poll
-    ) -> "Note":
+    async def send(*,
+                   other_field: dict = None,
+                   visibility,
+                   visible_user_ids,
+                   text,
+                   cw,
+                   via_mobile,
+                   local_only,
+                   no_extract_mentions,
+                   no_extract_hashtags,
+                   no_extract_emojis,
+                   reply_id,
+                   renote_id,
+                   channel_id,
+                   preview,
+                   geo,
+                   file_ids,
+                   poll) -> "Note":
         """
         既にあるnoteクラスを元にnoteを送信します
 
@@ -171,10 +166,8 @@ class NoteAction:
         field = remove_dict_empty(field)
         res = api("/api/notes/create", json_data=field, auth=True)
         res_json = res.json()
-        if (
-            res_json.get("error")
-            and res_json.get("error", {}).get("code") == "CONTENT_REQUIRED"
-        ):
+        if (res_json.get("error") and res_json.get("error", {}).get("code")
+                == "CONTENT_REQUIRED"):
             raise ContentRequired(
                 "ノートの送信にはtext, file, renote またはpollのいずれか1つが無くてはいけません")
         msg = Note(**res_json)
@@ -379,10 +372,11 @@ class Note(BaseModel):
         url: str = None,
     ):
         self.file_ids.append(
-            self.__note_action.add_file(
-                path, name=name, force=force, is_sensitive=is_sensitive, url=url
-            ).id
-        )
+            self.__note_action.add_file(path,
+                                        name=name,
+                                        force=force,
+                                        is_sensitive=is_sensitive,
+                                        url=url).id)
         return self
 
     def add_poll(
@@ -393,15 +387,13 @@ class Note(BaseModel):
         item_list: Optional[dict] = None,
     ) -> "Note":
         poll = self.__poll_formatter()
-        self.poll = Poll(
-            **self.__note_action.add_poll(
-                item,
-                poll=poll,
-                expires_at=expires_at,
-                expired_after=expired_after,
-                item_list=item_list,
-            )
-        )
+        self.poll = Poll(**self.__note_action.add_poll(
+            item,
+            poll=poll,
+            expires_at=expires_at,
+            expired_after=expired_after,
+            item_list=item_list,
+        ))
         return self
 
     async def add_reaction(self, reaction: str, note_id: str = None) -> bool:

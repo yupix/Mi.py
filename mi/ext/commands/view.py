@@ -80,7 +80,7 @@ class StringView:
 
     def skip_string(self, string):
         strlen = len(string)
-        if self.buffer[self.index: self.index + strlen] == string:
+        if self.buffer[self.index:self.index + strlen] == string:
             self.previous = self.index
             self.index += strlen
             return True
@@ -93,7 +93,7 @@ class StringView:
         return result
 
     def read(self, n):
-        result = self.buffer[self.index: self.index + n]
+        result = self.buffer[self.index:self.index + n]
         self.previous = self.index
         self.index += n
         return result
@@ -119,7 +119,7 @@ class StringView:
             except IndexError:
                 break
         self.previous = self.index
-        result = self.buffer[self.index: self.index + pos]
+        result = self.buffer[self.index:self.index + pos]
         self.index += pos
         return result
 

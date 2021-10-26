@@ -293,16 +293,14 @@ class Author(BaseModel):
         UserProfile:
             ユーザーのプロフィールオブジェクト
         """
-        return UserProfile(
-            **upper_to_lower(
-                conn.get_user(user_id=self.id,
-                              username=self.username, host=self.host)
-            )
-        )
+        return UserProfile(**upper_to_lower(
+            conn.get_user(
+                user_id=self.id, username=self.username, host=self.host)))
 
-    def get_followers(
-        self, until_id: str = None, limit: int = 10, get_all: bool = False
-    ):
+    def get_followers(self,
+                      until_id: str = None,
+                      limit: int = 10,
+                      get_all: bool = False):
         """
         ユーザーのフォロワー一覧を取得します
         Parameters

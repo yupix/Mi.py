@@ -65,7 +65,6 @@ class CogMeta(type):
                 async def bar(self, ctx):
                     pass # hidden -> False
     """
-
     def __new__(cls, *args, **kwargs):
         name, bases, attrs = args
         attrs["__cog_name__"] = kwargs.pop("name", name)
@@ -111,8 +110,7 @@ class CogMeta(type):
                         listeners[elem] = value
 
         new_cls.__cog_commands__ = list(
-            commands.values()
-        )  # this will be copied in Cog.__new__
+            commands.values())  # this will be copied in Cog.__new__
 
         listeners_as_list = []
         for listener in listeners.values():
@@ -147,8 +145,7 @@ class Cog(metaclass=CogMeta):
 
         # Either update the command with the cog provided defaults or copy it.
         self.__cog_commands__ = tuple(
-            c._update_copy(cmd_attrs) for c in cls.__cog_commands__
-        )
+            c._update_copy(cmd_attrs) for c in cls.__cog_commands__)
 
         lookup = {cmd.qualified_name: cmd for cmd in self.__cog_commands__}
 
