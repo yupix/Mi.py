@@ -14,3 +14,11 @@ enabled = true
 [[transformers]]
 name = "isort"
 enabled = true
+
+[[transformers]]
+name = "autopep8"
+enabled = true
+
+[[transformers]]
+name = "black"
+enabled = true
