@@ -70,7 +70,8 @@ class WebSocket:
             'unfollow': 'on_unfollow',
             'followed': 'on_follow',
             'unreadNotification': 'on_unread_notification',
-            'mention': 'on_mention'
+            'mention': 'on_mention',
+            'messagingMessage': 'on_messaging'
         }
         logger.log.debug(f'received event: {event_type}')
         if event_type == 'notification' or 'unread' in event_type or event_list.get(event_type) is None:
@@ -93,7 +94,10 @@ class WebSocket:
         msg = message.get('body', {}).get('body', {})
         message = Note(**upper_to_lower(msg))
         await self.router.capture_message(message.id)
-        return asyncio.create_task(self.cls.on_message(message))
+        return asyncio.create_task(self.cls._on_message(message))
+
+    async def on_messaging(self, ctx):
+        return asyncio.create_task(self.cls.dispatch('messaging', ctx))
 
     async def on_notification(self, message: dict):
         pass

@@ -81,9 +81,10 @@ class BotBase(GroupMixin):
             await self.invoke(ctx, *ctx.message.content.split(' '))
         else:
             await self.invoke(ctx)
+
         await self.dispatch('message', message)
 
-    async def on_message(self, message):
+    async def _on_message(self, message):
         await self.process_commands(message)
 
     def event(self, name=None):
@@ -153,6 +154,8 @@ class BotBase(GroupMixin):
                 foo = importlib.import_module(event.__module__)
                 coro = getattr(foo, ev)
             await self.schedule_event(coro, event, *args, **kwargs)
+        if ev in dir(self):
+            await self.schedule_event(getattr(self, ev), ev, *args, **kwargs)
 
     def add_cog(self, cog, override: bool = False) -> None:
         cog_name = cog.__cog_name__
