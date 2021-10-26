@@ -57,13 +57,13 @@ def fetch_user(user_id: str = None, username: str = None, host: str = None) -> d
 
 
 def get_followers(
-    user_id: str = None,
-    username: str = None,
-    host: str = None,
-    since_id: str = None,
-    until_id: str = None,
-    limit: int = 10,
-    get_all: bool = False,
+        user_id: str = None,
+        username: str = None,
+        host: str = None,
+        since_id: str = None,
+        until_id: str = None,
+        limit: int = 10,
+        get_all: bool = False,
 ) -> typing.Iterator[dict]:
     """
     与えられたユーザーのフォロワーを取得します
@@ -125,12 +125,12 @@ def get_followers(
 
 
 def file_upload(
-    name: str = None,
-    to_file: str = None,
-    to_url: str = None,
-    *,
-    force: bool = False,
-    is_sensitive: bool = False,
+        name: str = None,
+        to_file: str = None,
+        to_url: str = None,
+        *,
+        force: bool = False,
+        is_sensitive: bool = False,
 ) -> dict:
     """
     Parameters

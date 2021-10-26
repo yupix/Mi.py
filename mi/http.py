@@ -37,7 +37,7 @@ class WebSocket:
         -------
         None
         """
-        
+
         try:
             async with websockets.connect(uri) as web_socket:
                 asyncio.create_task(self.on_ready(web_socket))
