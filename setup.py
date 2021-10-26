@@ -30,7 +30,7 @@ ext_modules = [
 setup(
     name='mi.py',
     version='0.2.5',
-    install_requires=['websockets', 'requests', 'pydantic', 'emoji'],
+    install_requires=['websockets', 'requests', 'pydantic', 'emoji', 'rich'],
     url='https://github.com/yupix/mi.py',
     author='yupix',
     author_email='yupi0982@outlook.jp',

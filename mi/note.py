@@ -274,7 +274,7 @@ class Note(BaseModel):
     id: Optional[str] = None
     created_at: Optional[str] = None
     user_id: Optional[str] = None
-    author: Optional[Author] = Field(Author(), alias='user')
+    author: Author = Field(Author(), alias='user')
     text: Optional[str] = None
     content: Optional[str] = None
     cw: Optional[str] = None

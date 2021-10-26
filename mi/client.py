@@ -1,13 +1,13 @@
 import asyncio
 import importlib
-from mi.http import WebSocket
-from mi.user import UserAction
 import re
 import sys
 import traceback
 from typing import Any, Callable, Coroutine
 
-from mi import UserProfile, config
+from mi import UserProfile, config, logger
+from mi.http import WebSocket
+from mi.user import UserAction
 
 
 class BotBase:
@@ -89,7 +89,7 @@ class BotBase:
         print(f'Ignoring exception in {event_method}', file=sys.stderr)
         traceback.print_exc()
 
-    def run(self, uri: str, token: str) -> None:
+    def run(self, uri: str, token: str, debug: bool = False) -> None:
         """
         Launch the bot.
         Parameters
@@ -98,6 +98,8 @@ class BotBase:
             websocket url of the Misskey instance to connect to
         token : str
             Misskey account token
+        debug : bool
+            Debug Mode
 
         Examples
         --------
@@ -124,6 +126,7 @@ class BotBase:
         -------
         None: None
         """
+        logger.init(debug)
         self.token = token
         if _origin_uri := re.search(r'wss?://(.*)/streaming', uri):
             origin_uri = _origin_uri.group(0).replace('wss', 'https').replace(
