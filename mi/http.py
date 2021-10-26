@@ -25,7 +25,19 @@ class WebSocket:
         self.cls = cls
         self.router: Router
 
-    async def run(self, uri):
+    async def run(self, uri: str) -> None:
+        """
+        WebSocketを起動してMisskeyインスタンスのセッションを確立します
+
+        Parameters
+        ----------
+        uri : str
+
+        Returns
+        -------
+        None
+        """
+        
         try:
             async with websockets.connect(uri) as web_socket:
                 asyncio.create_task(self.on_ready(web_socket))
@@ -48,7 +60,18 @@ class WebSocket:
         except Exception as err:
             asyncio.create_task(self._on_error(err))
 
-    async def on_ready(self, web_socket):
+    async def on_ready(self, web_socket) -> None:
+        """
+        Botの起動準備が完了した際にイベントを実行する関数
+
+        Parameters
+        ----------
+        web_socket
+
+        Returns
+        -------
+        None
+        """
         self.router = Router(web_socket)
         status = await self.cls.event_dispatch("ready", web_socket)
         if status:
@@ -56,6 +79,7 @@ class WebSocket:
 
     async def recv(self, web_socket: Any, message: Any):
         """
+        WebSocketで受け取ったデータをparseして各イベントに分担する関数
 
         Parameters
         ----------
@@ -81,9 +105,9 @@ class WebSocket:
         }
         logger.log.debug(f"received event: {event_type}")
         if (
-            event_type == "notification"
-            or "unread" in event_type
-            or event_list.get(event_type) is None
+                event_type == "notification"
+                or "unread" in event_type
+                or event_list.get(event_type) is None
         ):
             await self.on_notification(message)
             return
@@ -92,6 +116,8 @@ class WebSocket:
 
     async def on_message(self, message: Any) -> asyncio.Task:
         """
+        タイムラインに来たノートに関するイベントを発生させる関数
+
         Parameters
         ----------
         message:
@@ -107,12 +133,46 @@ class WebSocket:
         return asyncio.create_task(self.cls._on_message(message))
 
     async def on_messaging(self, ctx):
+        """
+        チャットイベント
+
+        Parameters
+        ----------
+        ctx
+
+        Returns
+        -------
+
+        """
         return asyncio.create_task(self.cls.dispatch("messaging", ctx))
 
     async def on_notification(self, message: dict):
+        """
+        通知イベント
+
+        Parameters
+        ----------
+        message
+
+        Returns
+        -------
+
+        """
         pass
 
-    async def on_mention(self, ctx: dict):
+    async def on_mention(self, ctx: dict) -> asyncio.Task:
+        """
+        メンションイベント
+
+        Parameters
+        ----------
+        ctx : dict
+
+        Returns
+        -------
+        asyncio.Task
+        """
+
         base_ctx = ctx.get("body", {}).get("body")
         base_ctx["content"] = base_ctx["text"]
         base_ctx["text"] = (
@@ -120,7 +180,18 @@ class WebSocket:
         )
         return asyncio.create_task(self.cls.dispatch("mention", Note(**base_ctx)))
 
-    async def on_follow(self, message: dict):
+    async def on_follow(self, message: dict) -> asyncio.Task:
+        """
+        フォローイベント
+
+        Parameters
+        ----------
+        message
+
+        Returns
+        -------
+
+        """
         return asyncio.create_task(
             self.cls.dispatch(
                 "follow",
@@ -134,6 +205,18 @@ class WebSocket:
         pass
 
     async def on_reacted(self, message):
+        """
+        ノートのリアクションイベント
+
+        Parameters
+        ----------
+        message:dict
+
+        Returns
+        -------
+        None
+        """
+
         base_msg = message.get("body", {}).get("body", {})
         base_msg["id"] = message.get("body", {}).get("id", None)
         asyncio.create_task(
@@ -141,6 +224,17 @@ class WebSocket:
         )
 
     async def on_deleted(self, message):
+        """
+        ノートの削除イベント
+
+        Parameters
+        ----------
+        message
+
+        Returns
+        -------
+
+        """
         asyncio.create_task(self.cls.dispatch("deleted", Note(**message)))
 
     async def on_error(self, err):
