@@ -56,12 +56,12 @@ class Drive(BaseModel):
         arbitrary_types_allowed = True
 
     def upload(
-            self,
-            path: str,
-            name: str = None,
-            force: bool = False,
-            is_sensitive: bool = False,
-            url: str = None,
+        self,
+        path: str,
+        name: str = None,
+        force: bool = False,
+        is_sensitive: bool = False,
+        url: str = None,
     ) -> "Drive":
         """
         parameters
@@ -85,6 +85,5 @@ class Drive(BaseModel):
         if url is None and self.url:
             url = self.url
 
-        return Drive(
-            **conn.file_upload(name, path, url, force=force, is_sensitive=is_sensitive)
-        )
+        return Drive(**conn.file_upload(
+            name, path, url, force=force, is_sensitive=is_sensitive))
