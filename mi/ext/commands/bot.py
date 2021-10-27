@@ -68,22 +68,22 @@ class BotBase(GroupMixin):
 
     async def get_context(self, message, *, cls=Context):
         ctx = cls(bot=self, message=message)
-        if message.text is None:
+        if message.content is None:
             return ctx
-        view = StringView(message.text)
+        view = StringView(message.content)
         if view.skip_string(self.command_prefix) is False:  # prefixがテキストに含まれているか確認
             return ctx
         invoker = view.get_word()
         if not self.all_commands.get(invoker):
             await self.dispatch("missing_command", invoker)
-        ctx.message.content = message.text.replace(
+        ctx.message.content = message.content.replace(
             self.command_prefix + invoker, ""
         ).strip(" ")
         ctx.command = self.all_commands.get(invoker)
         return ctx
 
     async def process_commands(self, message):
-        if message.author.is_bot:
+        if message.author.bot:
             return
 
         ctx = await self.get_context(message)

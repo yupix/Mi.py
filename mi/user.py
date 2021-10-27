@@ -5,7 +5,8 @@ from pydantic import BaseModel
 
 from mi import Emoji, Instance, conn
 from mi.drive import File
-from mi.utils import api, upper_to_lower
+from mi.utils import api, check_value, upper_to_lower
+from mi.types.user import Author as UserPayload
 
 
 class UserAction:
@@ -226,22 +227,21 @@ class UserProfile(BaseModel):
         return self.__user_action.unfollow(user_id)
 
 
-class Author(BaseModel):
-    id: Optional[str] = None
-    name: Optional[str] = None
-    username: Optional[str] = None
-    host: Optional[str] = None
-    avatar_url: Optional[str] = None
-    avatar_blurhash: Optional[str] = None
-    avatar_color: Optional[str] = None
-    is_admin: Optional[bool] = False
-    is_bot: Optional[bool] = False
-    is_cat: Optional[bool] = False
-    is_lady: Optional[bool] = False
-    emojis: Optional[List] = None
-    online_status: Optional[str] = None
-    instance: Optional[Instance] = Instance()
-    __user_action: UserAction = UserAction()
+class Author:
+    def __init__(self, data: UserPayload):
+        self.id: str = data['id']
+        self.name: str = data['name']
+        self.username: str = data['username']
+        self.host: str = data['host']
+        self.avatar_url: str = data['avatar_url']
+        self.avatar_blurhash: str = data['avatar_blurhash']
+        self.avatar_color: str = data['avatar_color']
+        self.admin: bool = data.get('is_admin', False)
+        self.bot: bool = data.get('is_bot', False)
+        self.emojis: list = data['emojis']
+        self.online_status = data.get('online_status', None)
+        self.instance = Instance(data['instance']) if data.get('instance') else Instance({})
+        self.__user_action: UserAction = UserAction()
 
     class Config:
         arbitrary_types_allowed = True
@@ -300,7 +300,7 @@ class Author(BaseModel):
         )
 
     def get_followers(
-        self, until_id: str = None, limit: int = 10, get_all: bool = False
+            self, until_id: str = None, limit: int = 10, get_all: bool = False
     ):
         """
         ユーザーのフォロワー一覧を取得します

@@ -1,12 +1,12 @@
-from typing import Optional
-
-from pydantic import BaseModel
+from .types.instance import Instance as InstancePayload
 
 
-class Instance(BaseModel):
-    name: Optional[str] = None
-    software_name: Optional[str] = None
-    software_version: Optional[str] = None
-    icon_url: Optional[str] = None
-    favicon_url: Optional[str] = None
-    theme_color: Optional[str] = None
+class Instance:
+    def __init__(self, data: InstancePayload):
+        self.host: str = data['host']
+        self.name: str = data['name']
+        self.software_name: str = data['software_version']
+        self.software_version: str = data['software_version']
+        self.icon_url: str = data['icon_url']
+        self.favicon_url: str = data['favicon_url']
+        self.theme_color: str = data['theme_color']

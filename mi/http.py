@@ -128,7 +128,13 @@ class WebSocket:
         task: asyncio.Task
         """
         msg = message.get("body", {}).get("body", {})
-        message = Note(**upper_to_lower(msg))
+        message = Note(upper_to_lower(
+            msg,
+            replace_list={
+                'user': 'author',
+                'text': 'content'
+            }
+        ))
         await self.router.capture_message(message.id)
         return asyncio.create_task(self.cls._on_message(message))
 
