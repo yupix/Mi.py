@@ -1,18 +1,15 @@
 import json
-from typing import Any, Dict, List, Optional, Union
+from typing import Any, Dict, List, Optional
 
 import emoji
 from pydantic import BaseModel, Field
 
 from mi import Drive, Emoji, UserProfile
 from mi.exception import ContentRequired
-from .types.note import (
-    Note as NotePayload,
-    Renote as RenotePayload,
-    Poll as PollPayload
-)
 from mi.user import Author, UserAction
 from mi.utils import api, remove_dict_empty
+from .abc.note import AbstractNote
+from .types.note import (Note as NotePayload, Poll as PollPayload, Renote as RenotePayload)
 
 
 class NoteAction:
@@ -271,7 +268,7 @@ class Poll:
         self.expired_after: int = data['expired_after']
 
 
-class Renote:
+class Renote(AbstractNote):
     def __init__(self, data: RenotePayload):
         self.id = data['id']
         self.created_at = data['created_at']
@@ -292,6 +289,52 @@ class Renote:
         self.renote_id = data['renote_id']
         self.uri = data['uri']
         self.poll = Poll(data['poll']) if data.get('poll') else None
+        self.__note_action = NoteAction
+
+    def add_file(
+            self,
+            path: str = None,
+            name: str = None,
+            force: bool = False,
+            is_sensitive: bool = False,
+            url: str = None,
+    ):
+        self.file_ids.append(
+            self.__note_action.add_file(
+                path, name=name, force=force, is_sensitive=is_sensitive, url=url
+            ).id
+        )
+        return self
+
+    def emoji_count(self) -> int:
+        """
+        ノートの本文にemojiが何個含まれているかを返します
+
+        Returns
+        -------
+        int
+            含まれている絵文字の数
+        """
+        return self.__note_action.emoji_count(self.content)
+
+    async def delete(self, note_id: str = None) -> bool:
+        """
+        指定したIDのノートを削除します
+
+        Parameters
+        ----------
+        note_id: str
+            削除するノートのid
+
+        returns
+        -------
+        bool
+            成功したか否か
+        """
+
+        if note_id is None:
+            note_id = self.id
+        return await self.__note_action.delete(note_id)
 
 
 class Reaction(BaseModel):
@@ -309,7 +352,7 @@ class Geo(BaseModel):
     speed: Optional[int] = 0
 
 
-class Note:
+class Note(AbstractNote):
     def __init__(self, data: NotePayload):
         self.id: str = data['id']
         self.created_at: str = data['created_at']
@@ -414,9 +457,32 @@ class Note:
         return await self.__note_action.add_reaction(reaction, note_id=note_id)
 
     def emoji_count(self) -> int:
-        return self.__note_action.emoji_count(self.text)
+        """
+        ノートの本文にemojiが何個含まれているかを返します
+
+        Returns
+        -------
+        int
+            含まれている絵文字の数
+        """
+
+        return self.__note_action.emoji_count(self.content)
 
     async def delete(self, note_id: str = None) -> bool:
+        """
+        指定したIDのノートを削除します
+
+        Parameters
+        ----------
+        note_id: str
+            削除するノートのid
+
+        Returns
+        -------
+        bool
+            成功したか否か
+        """
+
         if note_id is None:
             note_id = self.id
         return await self.__note_action.delete(note_id)
