@@ -4,21 +4,15 @@ from typing import Any, Dict, List, Optional
 import emoji
 from pydantic import BaseModel, Field
 
-from mi import Drive, Emoji, UserProfile
+from mi import Drive, Emoji, UserProfile, utils
 from mi.exception import ContentRequired
 from mi.user import Author, UserAction
-from mi.utils import api, remove_dict_empty
+from mi.utils import api, remove_dict_empty, upper_to_lower
 from .abc.note import AbstractNote
 from .types.note import (Note as NotePayload, Poll as PollPayload, Renote as RenotePayload)
 
 
 class NoteAction:
-    @staticmethod
-    def emoji_count(text=None, emojis=None):
-        if emojis is None:
-            emojis = []
-        return len(emojis) if text is None else len(emojis) + emoji.emoji_count(text)
-
     @staticmethod
     async def add_reaction(reaction: str, note_id: str = None) -> bool:
         """
@@ -139,7 +133,7 @@ class NoteAction:
                    preview,
                    geo,
                    file_ids,
-                   poll) -> "Note":
+                   poll) -> 'NoteContent':
         """
         既にあるnoteクラスを元にnoteを送信します
 
@@ -176,7 +170,7 @@ class NoteAction:
                 and res_json.get("error", {}).get("code") == "CONTENT_REQUIRED"
         ):
             raise ContentRequired("ノートの送信にはtext, file, renote またはpollのいずれか1つが無くてはいけません")
-        return Note(res_json)
+        return NoteContent(res_json)
 
 
 class Follow(BaseModel):
@@ -313,7 +307,7 @@ class Renote(AbstractNote):
         int
             含まれている絵文字の数
         """
-        return self.__note_action.emoji_count(self.content)
+        return utils.emoji_count(self.content)
 
     async def delete(self, note_id: str = None) -> bool:
         """
@@ -351,6 +345,74 @@ class Geo(BaseModel):
 
 
 class Note(AbstractNote):
+    def __init__(self,
+                 content: str,
+                 *,
+                 visibility: str = 'public',
+                 visible_user_ids: List[str] = None,
+                 cw: str = None,
+                 local_only: bool = False,
+                 no_extract_mentions: bool = False,
+                 no_extract_hashtags: bool = False,
+                 no_extract_emojis: bool = False,
+                 reply_id: List[str] = None,
+                 renote_id: str = None,
+                 channel_id: str = None,
+                 file_ids: List[File] = None,
+                 poll: Poll = None):
+        self.content: str = content
+        self.visibility: str = visibility
+        self.visible_user_ids: List[str] = visible_user_ids
+        self.cw: str = cw
+        self.local_only: bool = local_only
+        self.no_extract_mentions: bool = no_extract_mentions
+        self.no_extract_hashtags: bool = no_extract_hashtags
+        self.no_extract_emojis: bool = no_extract_emojis
+        self.reply_id: List[str] = reply_id
+        self.renote_id: str = renote_id
+        self.channel_id: str = channel_id
+        self.file_ids: List[File] = file_ids
+        self.poll: Poll = poll
+
+    async def send(self):
+        field = {
+            "visibility": self.visibility,
+            "visibleUserIds": self.visible_user_ids,
+            "text": self.content,
+            "cw": self.cw,
+            "localOnly": self.local_only,
+            "noExtractMentions": self.no_extract_mentions,
+            "noExtractHashtags": self.no_extract_hashtags,
+            "noExtractEmojis": self.no_extract_emojis,
+            "replyId": self.reply_id,
+            "renoteId": self.renote_id,
+            "channelId": self.channel_id,
+        }
+        if self.poll and len(self.poll.choices) > 0:
+            field["poll"] = self.poll
+        if self.file_ids:
+            field["fileIds"] = self.file_ids
+        field = remove_dict_empty(field)
+        res = api("/api/notes/create", json_data=field, auth=True)
+        res_json = res.json()
+        if (
+                res_json.get("error")
+                and res_json.get("error", {}).get("code") == "CONTENT_REQUIRED"
+        ):
+            raise ContentRequired("ノートの送信にはtext, file, renote またはpollのいずれか1つが無くてはいけません")
+        return NoteContent(upper_to_lower(res_json['createdNote'], replace_list={"user": "author"}))
+
+    def emoji_count(self) -> int:
+        return utils.emoji_count(self.content)
+
+    async def delete(self, note_id: str = None) -> bool:
+        pass
+
+    def add_file(self, path: str = None, name: str = None, force: bool = False, is_sensitive: bool = False, url: str = None):
+        pass
+
+
+class NoteContent(AbstractNote):
     def __init__(self, data: NotePayload):
         self.id: str = data['id']
         self.created_at: str = data['created_at']
@@ -463,7 +525,7 @@ class Note(AbstractNote):
             含まれている絵文字の数
         """
 
-        return self.__note_action.emoji_count(self.content)
+        return utils.emoji_count(self.content)
 
     async def delete(self, note_id: str = None) -> bool:
         """
