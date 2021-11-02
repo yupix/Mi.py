@@ -1,7 +1,7 @@
-from abc import ABCMeta, abstractmethod
+from abc import ABC, abstractmethod
 
 
-class AbstractNote(metaclass=ABCMeta):
+class AbstractNote(ABC):
     @abstractmethod
     def emoji_count(self) -> int:
         """
