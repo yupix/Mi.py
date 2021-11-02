@@ -10,7 +10,7 @@ from typing import Any
 import websockets
 
 from mi import config, logger
-from mi.note import Follow, Note, Reaction
+from mi.note import Follow, NoteContent, Reaction
 from mi.router import Router
 from mi.utils import upper_to_lower
 
@@ -126,7 +126,12 @@ class WebSocket:
         task: asyncio.Task
         """
         msg = message.get("body", {}).get("body", {})
-        message = Note(**upper_to_lower(msg))
+        message = NoteContent(
+            upper_to_lower(msg,
+                           replace_list={
+                               "user": "author",
+                               "text": "content"
+                           }))
         await self.router.capture_message(message.id)
         return asyncio.create_task(self.cls._on_message(message))
 
@@ -176,7 +181,7 @@ class WebSocket:
         base_ctx["text"] = (base_ctx["text"].replace(
             f"@{config.i.profile.username}", "").strip(" "))
         return asyncio.create_task(
-            self.cls.dispatch("mention", Note(**base_ctx)))
+            self.cls.dispatch("mention", NoteContent(**base_ctx)))
 
     async def on_follow(self, message: dict) -> asyncio.Task:
         """
@@ -230,7 +235,8 @@ class WebSocket:
         -------
 
         """
-        asyncio.create_task(self.cls.dispatch("deleted", Note(**message)))
+        asyncio.create_task(
+            self.cls.dispatch("deleted", NoteContent(**message)))
 
     async def on_error(self, err):
         await self.cls.on_error(err)

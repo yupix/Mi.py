@@ -12,6 +12,7 @@ from typing import Any, Callable, Coroutine, Dict, Optional
 import rich
 
 from mi import UserProfile, config, logger, utils
+from mi.conn import get_instance_meta
 from mi.exception import (
     CheckFailure,
     CogNameDuplicate,
@@ -68,22 +69,22 @@ class BotBase(GroupMixin):
 
     async def get_context(self, message, *, cls=Context):
         ctx = cls(bot=self, message=message)
-        if message.text is None:
+        if message.content is None:
             return ctx
-        view = StringView(message.text)
-        if view.skip_string(self.command_prefix) is False:  # prefixがテキストに含まれているか確認
+        view = StringView(message.content)
+        if view.skip_string(
+                self.command_prefix) is False:  # prefixがテキストに含まれているか確認
             return ctx
         invoker = view.get_word()
         if not self.all_commands.get(invoker):
             await self.dispatch("missing_command", invoker)
-        ctx.message.content = message.text.replace(
-            self.command_prefix + invoker, ""
-        ).strip(" ")
+        ctx.message.content = message.content.replace(
+            self.command_prefix + invoker, "").strip(" ")
         ctx.command = self.all_commands.get(invoker)
         return ctx
 
     async def process_commands(self, message):
-        if message.author.is_bot:
+        if message.author.bot:
             return
 
         ctx = await self.get_context(message)
@@ -207,7 +208,10 @@ class BotBase(GroupMixin):
         except ImportError:
             raise ExtensionNotFound(name)
 
-    def load_extension(self, name: str, *, package: Optional[str] = None) -> None:
+    def load_extension(self,
+                       name: str,
+                       *,
+                       package: Optional[str] = None) -> None:
         """拡張をロードする
 
         Parameters
@@ -302,12 +306,8 @@ class BotBase(GroupMixin):
         logger.init(debug)
         self.token = token
         if _origin_uri := re.search(r"wss?://(.*)/streaming", uri):
-            origin_uri = (
-                _origin_uri.group(0)
-                .replace("wss", "https")
-                .replace("ws", "http")
-                .replace("/streaming", "")
-            )
+            origin_uri = (_origin_uri.group(0).replace("wss", "https").replace(
+                "ws", "http").replace("/streaming", ""))
         else:
             origin_uri = uri
         self.origin_uri = origin_uri[:-1] if uri[-1] == "/" else origin_uri
@@ -315,10 +315,10 @@ class BotBase(GroupMixin):
         config.init(**auth_i)
         self.i = UserAction().get_i()
         auth_i["profile"] = self.i
+        auth_i["instance"] = get_instance_meta()
         config.init(**auth_i)
         asyncio.get_event_loop().run_until_complete(
-            WebSocket(self).run(f"{uri}?i={token}")
-        )
+            WebSocket(self).run(f"{uri}?i={token}"))
 
 
 class Bot(BotBase):

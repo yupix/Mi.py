@@ -9,6 +9,32 @@ from mi.utils import api, remove_dict_empty
 
 
 @cache
+def get_instance_meta() -> dict:
+    """
+    BOTのアカウントがあるインスタンス情報をdictで返します。一度実行するとキャッシュされます。
+
+    Returns
+    -------
+    dict:
+        インスタンス情報
+    """
+    return api("/api/meta").json()
+
+
+def fetch_instance_meta() -> dict:
+    """
+    BOTのアカウントがある最新のインスタンス情報をdictで返します
+
+    Returns
+    -------
+    dict:
+        インスタンス情報
+    """
+    get_instance_meta.cache_clear()
+    return api("/api/meta").json()
+
+
+@cache
 def get_user(user_id: str = None,
              username: str = None,
              host: str = None) -> dict:
@@ -160,6 +186,7 @@ def file_upload(
     Drive: Drive
         upload後のレスポンスをDrive型に変更して返します
     """
+
     if to_file and to_url is None:  # ローカルからアップロードする
         with open(to_file, "rb") as f:
             file = f.read()
@@ -177,3 +204,34 @@ def file_upload(
     else:
         raise exception.InvalidParameters("path または url のどちらかは必須です")
     return res
+
+
+def get_announcements(limit: int, with_unreads: bool, since_id: str,
+                      until_id: str):
+    """
+
+    Parameters
+    ----------
+    limit: int
+        最大取得数
+    with_unreads: bool
+        既読済みか否か
+    since_id: str
+    until_id: str
+        前回の最後の値を与える(既に実行し取得しきれない場合に使用)
+
+    Returns
+    -------
+
+    """
+
+    if limit > 100:
+        raise InvalidParameters("limit は100以上を受け付けません")
+
+    args = {
+        "limit": limit,
+        "withUnreads": with_unreads,
+        "sinceId": since_id,
+        "untilId": until_id,
+    }
+    return api("/api/announcements", args, auth=True)

@@ -2,7 +2,6 @@
 venv
 .venv
 .idea
-types
 dev
 _build
 docs/_build/
