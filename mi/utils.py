@@ -6,11 +6,18 @@ import re
 from inspect import isawaitable
 from typing import Any, Callable, Iterable, Optional, TypeVar
 
+import emoji
 import requests
 
 from mi import config, exception
 
 T = TypeVar("T")
+
+
+def emoji_count(text=None, emojis=None):
+    if emojis is None:
+        emojis = []
+    return len(emojis) if text is None else len(emojis) + emoji.emoji_count(text)
 
 
 def check_multi_arg(*args) -> bool:
