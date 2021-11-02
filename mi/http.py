@@ -126,13 +126,12 @@ class WebSocket:
         task: asyncio.Task
         """
         msg = message.get("body", {}).get("body", {})
-        message = NoteContent(upper_to_lower(
-            msg,
-            replace_list={
-                'user': 'author',
-                'text': 'content'
-            }
-        ))
+        message = NoteContent(
+            upper_to_lower(msg,
+                           replace_list={
+                               "user": "author",
+                               "text": "content"
+                           }))
         await self.router.capture_message(message.id)
         return asyncio.create_task(self.cls._on_message(message))
 
@@ -236,7 +235,8 @@ class WebSocket:
         -------
 
         """
-        asyncio.create_task(self.cls.dispatch("deleted", NoteContent(**message)))
+        asyncio.create_task(
+            self.cls.dispatch("deleted", NoteContent(**message)))
 
     async def on_error(self, err):
         await self.cls.on_error(err)

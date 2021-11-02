@@ -17,7 +17,8 @@ T = TypeVar("T")
 def emoji_count(text=None, emojis=None):
     if emojis is None:
         emojis = []
-    return len(emojis) if text is None else len(emojis) + emoji.emoji_count(text)
+    return len(
+        emojis) if text is None else len(emojis) + emoji.emoji_count(text)
 
 
 def check_multi_arg(*args) -> bool:

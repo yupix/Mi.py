@@ -72,14 +72,14 @@ class BotBase(GroupMixin):
         if message.content is None:
             return ctx
         view = StringView(message.content)
-        if view.skip_string(self.command_prefix) is False:  # prefixがテキストに含まれているか確認
+        if view.skip_string(
+                self.command_prefix) is False:  # prefixがテキストに含まれているか確認
             return ctx
         invoker = view.get_word()
         if not self.all_commands.get(invoker):
             await self.dispatch("missing_command", invoker)
         ctx.message.content = message.content.replace(
-            self.command_prefix + invoker, ""
-        ).strip(" ")
+            self.command_prefix + invoker, "").strip(" ")
         ctx.command = self.all_commands.get(invoker)
         return ctx
 
@@ -208,7 +208,10 @@ class BotBase(GroupMixin):
         except ImportError:
             raise ExtensionNotFound(name)
 
-    def load_extension(self, name: str, *, package: Optional[str] = None) -> None:
+    def load_extension(self,
+                       name: str,
+                       *,
+                       package: Optional[str] = None) -> None:
         """拡張をロードする
 
         Parameters
@@ -303,12 +306,8 @@ class BotBase(GroupMixin):
         logger.init(debug)
         self.token = token
         if _origin_uri := re.search(r"wss?://(.*)/streaming", uri):
-            origin_uri = (
-                _origin_uri.group(0)
-                .replace("wss", "https")
-                .replace("ws", "http")
-                .replace("/streaming", "")
-            )
+            origin_uri = (_origin_uri.group(0).replace("wss", "https").replace(
+                "ws", "http").replace("/streaming", ""))
         else:
             origin_uri = uri
         self.origin_uri = origin_uri[:-1] if uri[-1] == "/" else origin_uri
@@ -319,8 +318,7 @@ class BotBase(GroupMixin):
         auth_i["instance"] = get_instance_meta()
         config.init(**auth_i)
         asyncio.get_event_loop().run_until_complete(
-            WebSocket(self).run(f"{uri}?i={token}")
-        )
+            WebSocket(self).run(f"{uri}?i={token}"))
 
 
 class Bot(BotBase):

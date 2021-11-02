@@ -18,7 +18,7 @@ def get_instance_meta() -> dict:
     dict:
         インスタンス情報
     """
-    return api('/api/meta').json()
+    return api("/api/meta").json()
 
 
 def fetch_instance_meta() -> dict:
@@ -31,7 +31,7 @@ def fetch_instance_meta() -> dict:
         インスタンス情報
     """
     get_instance_meta.cache_clear()
-    return api('/api/meta').json()
+    return api("/api/meta").json()
 
 
 @cache
@@ -92,13 +92,13 @@ def fetch_user(user_id: str = None,
 
 
 def get_followers(
-        user_id: str = None,
-        username: str = None,
-        host: str = None,
-        since_id: str = None,
-        until_id: str = None,
-        limit: int = 10,
-        get_all: bool = False,
+    user_id: str = None,
+    username: str = None,
+    host: str = None,
+    since_id: str = None,
+    until_id: str = None,
+    limit: int = 10,
+    get_all: bool = False,
 ) -> typing.Iterator[dict]:
     """
     与えられたユーザーのフォロワーを取得します
@@ -160,12 +160,12 @@ def get_followers(
 
 
 def file_upload(
-        name: str = None,
-        to_file: str = None,
-        to_url: str = None,
-        *,
-        force: bool = False,
-        is_sensitive: bool = False,
+    name: str = None,
+    to_file: str = None,
+    to_url: str = None,
+    *,
+    force: bool = False,
+    is_sensitive: bool = False,
 ) -> dict:
     """
     Parameters
@@ -206,7 +206,8 @@ def file_upload(
     return res
 
 
-def get_announcements(limit: int, with_unreads: bool, since_id: str, until_id: str):
+def get_announcements(limit: int, with_unreads: bool, since_id: str,
+                      until_id: str):
     """
 
     Parameters
@@ -227,5 +228,10 @@ def get_announcements(limit: int, with_unreads: bool, since_id: str, until_id: s
     if limit > 100:
         raise InvalidParameters("limit は100以上を受け付けません")
 
-    args = {'limit': limit, 'withUnreads': with_unreads, 'sinceId': since_id, 'untilId': until_id}
-    return api('/api/announcements', args, auth=True)
+    args = {
+        "limit": limit,
+        "withUnreads": with_unreads,
+        "sinceId": since_id,
+        "untilId": until_id,
+    }
+    return api("/api/announcements", args, auth=True)
