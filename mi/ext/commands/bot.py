@@ -12,6 +12,7 @@ from typing import Any, Callable, Coroutine, Dict, Optional
 import rich
 
 from mi import UserProfile, config, logger, utils
+from mi.conn import get_instance_meta
 from mi.exception import (
     CheckFailure,
     CogNameDuplicate,
@@ -315,6 +316,7 @@ class BotBase(GroupMixin):
         config.init(**auth_i)
         self.i = UserAction().get_i()
         auth_i["profile"] = self.i
+        auth_i["instance"] = get_instance_meta()
         config.init(**auth_i)
         asyncio.get_event_loop().run_until_complete(
             WebSocket(self).run(f"{uri}?i={token}")

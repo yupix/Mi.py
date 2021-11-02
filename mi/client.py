@@ -6,6 +6,7 @@ import traceback
 from typing import Any, Callable, Coroutine
 
 from mi import UserProfile, config, logger
+from mi.conn import get_instance_meta
 from mi.http import WebSocket
 from mi.user import UserAction
 
@@ -149,6 +150,9 @@ class BotBase:
         auth_i = {"token": self.token, "origin_uri": self.origin_uri}
         config.init(**auth_i)
         self.i = UserAction().get_i()
+        auth_i["profile"] = self.i
+        auth_i["instance"] = get_instance_meta()
+        config.init(**auth_i)
         asyncio.get_event_loop().run_until_complete(
             WebSocket(self).run(f"{uri}?i={token}"))
 
