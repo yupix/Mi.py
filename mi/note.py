@@ -421,6 +421,7 @@ class Note(AbstractNote):
 
 class NoteContent(AbstractNote):
     def __init__(self, data: NotePayload):
+        print(data)
         self.id: str = data["id"]
         self.created_at: str = data["created_at"]
         self.user_id: str = data["user_id"]

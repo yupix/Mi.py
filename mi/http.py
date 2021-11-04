@@ -10,6 +10,7 @@ from typing import Any
 import websockets
 
 from mi import config, logger
+from mi.chat import ChatContent
 from mi.note import Follow, NoteContent, Reaction
 from mi.router import Router
 from mi.utils import upper_to_lower
@@ -73,10 +74,9 @@ class WebSocket:
         -------
         None
         """
+
         self.router = Router(web_socket)
-        status = await self.cls.event_dispatch("ready", web_socket)
-        if status:
-            await self.cls.dispatch("ready", web_socket)
+        await self.cls.event_dispatch("ready", web_socket)
 
     async def recv(self, web_socket: Any, message: Any):
         """
@@ -147,6 +147,13 @@ class WebSocket:
         -------
 
         """
+        msg = ctx.get("body", {}).get("body", {})
+        ctx = ChatContent(
+            upper_to_lower(msg,
+                           replace_list={
+                               "user": "author",
+                               "text": "content"
+                           }))
         return asyncio.create_task(self.cls.dispatch("messaging", ctx))
 
     async def on_notification(self, message: dict):
