@@ -3,11 +3,7 @@ from abc import ABC, abstractmethod
 
 class AbstractChat(ABC):
     @abstractmethod
-    def __init__(self, content: str, *, user_id: str, group_id: str, file_id: str):
-        pass
-
-    @abstractmethod
-    async def send(self):
+    async def send(self) -> dict:
         pass
 
     @abstractmethod
