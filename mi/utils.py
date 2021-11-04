@@ -75,12 +75,14 @@ def json_dump(data, *args, **kwargs):
     return json.dumps(data, ensure_ascii=False, *args, **kwargs)
 
 
-def api(endpoint: str,
-        json_data=None,
-        *,
-        origin_uri: str = None,
-        files: dict = None,
-        auth: bool = False) -> requests.models.Response:
+def api(
+    endpoint: str,
+    json_data=None,
+    *,
+    origin_uri: str = None,
+    files: dict = None,
+    auth: bool = False,
+) -> requests.models.Response:
     """
     .. deprecated:: 0.1.5
         `data` 0.2.0で正式に削除され、以降はjson_dataを使用するようにしてください。
@@ -132,7 +134,9 @@ def api(endpoint: str,
     if status_code in [400, 401, 418, 500]:
         error_base = errors.get(status_code)
         error_code = json.loads(res.text)
-        error = error_base["raise"](f"{error_base['description']} => {error_code['error']['message']}  \n {res.text}")
+        error = error_base["raise"](
+            f"{error_base['description']} => {error_code['error']['message']}  \n {res.text}"
+        )
         raise error
     return res
 
