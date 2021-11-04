@@ -255,11 +255,12 @@ class BotBase(GroupMixin):
             pass
         except Exception:
             try:
-                await self.__on_error(event_name, *args, **kwargs)
+                await self.__on_error(event_name)
             except asyncio.CancelledError:
                 pass
 
-    async def __on_error(self, event_method: str) -> None:
+    @staticmethod
+    async def __on_error(event_method: str) -> None:
         print(f"Ignoring exception in {event_method}", file=sys.stderr)
         traceback.print_exc()
 
