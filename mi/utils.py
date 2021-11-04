@@ -131,8 +131,8 @@ def api(endpoint: str,
     }
     if status_code in [400, 401, 418, 500]:
         error_base = errors.get(status_code)
-        error = error_base["raise"](error_base["description"] + "\n" +
-                                    res.text)
+        error_code = json.loads(res.text)
+        error = error_base["raise"](f"{error_base['description']} => {error_code['error']['message']}  \n {res.text}")
         raise error
     return res
 
