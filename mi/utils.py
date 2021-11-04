@@ -183,7 +183,6 @@ def upper_to_lower(data: dict,
     if replace_list is None:
         replace_list = {}
 
-    pattern = re.compile("[A-Z]")
     if field is None:
         field = {}
     for attr in data:
