@@ -3,10 +3,13 @@ from typing import List
 from .abc.chat import AbstractChat
 from .types.chat import Chat as ChatPayload
 from .user import Author
-from .utils import api, remove_dict_empty
+from .utils import api, remove_dict_empty, upper_to_lower
 
 
 class Chat(AbstractChat):
+    """
+    チャットを行う際に使用するクラス
+    """
 
     def __init__(self, content: str, *, user_id: str = None, group_id: str = None, file_id: str = None):
         self.content = content
@@ -20,8 +23,24 @@ class Chat(AbstractChat):
             'fileId': self.file_id
         }
 
-    async def send(self):
-        return api('/api/messaging/messages/create', remove_dict_empty(self.__payload), auth=True)
+    async def send(self) -> "ChatContent":
+        """
+        チャットを投稿します
+
+        Returns
+        -------
+        ChatContent
+        """
+        res = api('/api/messaging/messages/create', remove_dict_empty(self.__payload), auth=True).json()
+        return ChatContent(
+            upper_to_lower(
+                res,
+                replace_list={
+                    "user": "author",
+                    "text": "content"
+                }
+            )
+        )
 
     def add_file(self, path: str = None, name: str = None, force: bool = False, is_sensitive: bool = False, url: str = None):
         pass
