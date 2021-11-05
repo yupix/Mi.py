@@ -17,8 +17,7 @@ T = TypeVar("T")
 def emoji_count(text=None, emojis=None):
     if emojis is None:
         emojis = []
-    return len(
-        emojis) if text is None else len(emojis) + emoji.emoji_count(text)
+    return len(emojis) if text is None else len(emojis) + emoji.emoji_count(text)
 
 
 def check_multi_arg(*args) -> bool:
@@ -114,18 +113,12 @@ def api(
     res = requests.post(base_url + endpoint, files=files, json=json_data)
     status_code = res.status_code
     errors = {
-        400: {
-            "raise": exception.ClientError,
-            "description": "Client Error"
-        },
+        400: {"raise": exception.ClientError, "description": "Client Error"},
         401: {
             "raise": exception.AuthenticationError,
             "description": "AuthenticationError",
         },
-        418: {
-            "raise": exception.ImAi,
-            "description": "I'm Ai"
-        },
+        418: {"raise": exception.ImAi, "description": "I'm Ai"},
         500: {
             "raise": exception.InternalServerError,
             "description": "InternalServerError",
@@ -159,10 +152,9 @@ def remove_dict_empty(data: dict) -> dict:
     return _data
 
 
-def upper_to_lower(data: dict,
-                   field: dict = None,
-                   nest=True,
-                   replace_list: dict = None) -> dict:
+def upper_to_lower(
+    data: dict, field: dict = None, nest=True, replace_list: dict = None
+) -> dict:
     """
 
     Parameters

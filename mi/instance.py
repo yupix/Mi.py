@@ -7,8 +7,9 @@ class Instance:
         self.host: str = data.get("host", config.i.instance["uri"])
         self.name: str = data.get("name", config.i.instance["name"])
         self.software_name: str = data.get("software_name")
-        self.software_version: str = data.get("software_version",
-                                              config.i.instance["version"])
+        self.software_version: str = data.get(
+            "software_version", config.i.instance["version"]
+        )
         self.icon_url: str = data.get("icon_url")
         self.favicon_url: str = data.get("favicon_url")
         self.theme_color: str = data.get("theme_color")

@@ -240,8 +240,9 @@ class Author:
         self.bot: bool = data.get("is_bot", False)
         self.emojis: list = data["emojis"]
         self.online_status = data.get("online_status", None)
-        self.instance = (Instance(data["instance"])
-                         if data.get("instance") else Instance({}))
+        self.instance = (
+            Instance(data["instance"]) if data.get("instance") else Instance({})
+        )
         self.__user_action: UserAction = UserAction()
 
     class Config:
@@ -294,14 +295,15 @@ class Author:
         UserProfile:
             ユーザーのプロフィールオブジェクト
         """
-        return UserProfile(**upper_to_lower(
-            conn.get_user(
-                user_id=self.id, username=self.username, host=self.host)))
+        return UserProfile(
+            **upper_to_lower(
+                conn.get_user(user_id=self.id, username=self.username, host=self.host)
+            )
+        )
 
-    def get_followers(self,
-                      until_id: str = None,
-                      limit: int = 10,
-                      get_all: bool = False):
+    def get_followers(
+        self, until_id: str = None, limit: int = 10, get_all: bool = False
+    ):
         """
         ユーザーのフォロワー一覧を取得します
         Parameters
