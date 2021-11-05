@@ -13,11 +13,18 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - `file_upload` 関数を追加しました
 - `run` メソッドに `debug` 引数を追加しました
 - DocStringを一部追加しました
-- 抽象クラス `AbstractNote` を追加しました
+- 抽象クラス `AbstractNote` `AbstractChat` `AbstractChatContent` を追加しました
 - TypedDictを追加しました
+- チャットをする際に用いる `Chat` `ChatContent` クラスを追加しました
+- `on_chat` イベントを追加しました
+- `NoteContent` クラスを追加しました
+    - ノートの受信イベントでは基本このクラスが使用されます。
 
 ### Changed
 
+- api周りでのエラー出力が分かりやすくなりました
+- 今までの `Note` クラスに当たるものを `NoteContent` に変更し別途 `Note` クラスを作成させるようにしました
+    - これは不要なデータなどを生成しないようにすることが目的です。
 - 部分的にPydanticを廃止
     - 素直に使わないほうが部分的に楽だから
 - `Drive` クラスの `upload` メソッドで例外 `InvalidParameters` を発生させるようにしました
@@ -34,6 +41,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 
+- __on_error が動かない不具合を修正しました
 - 一部の誤った typing hintを修正
 - バグの原因になるコードを修正
 
