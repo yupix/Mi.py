@@ -1,19 +1,21 @@
 from abc import ABC, abstractmethod
 
+from mi.types.chat import Chat as ChatPayload
+
 
 class AbstractChat(ABC):
     @abstractmethod
-    async def send(self) -> dict:
+    async def send(self) -> 'AbstractChatContent':
         pass
 
     @abstractmethod
     def add_file(
-        self,
-        path: str = None,
-        name: str = None,
-        force: bool = False,
-        is_sensitive: bool = False,
-        url: str = None,
+            self,
+            path: str = None,
+            name: str = None,
+            force: bool = False,
+            is_sensitive: bool = False,
+            url: str = None,
     ):
         """
         チャットにファイルを添付します。
@@ -35,3 +37,9 @@ class AbstractChat(ABC):
         -------
         self: Note
         """
+
+
+class AbstractChatContent(ABC):
+    @abstractmethod
+    async def delete(self):
+        pass
