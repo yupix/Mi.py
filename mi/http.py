@@ -101,7 +101,7 @@ class WebSocket:
             "followed": "on_follow",
             "unreadNotification": "on_unread_notification",
             "mention": "on_mention",
-            "messagingMessage": "on_messaging",
+            "messagingMessage": "on_chat",
         }
         logger.log.debug(f"received event: {event_type}")
         if (
@@ -134,7 +134,7 @@ class WebSocket:
         await self.router.capture_message(message.id)
         return asyncio.create_task(self.cls._on_message(message))
 
-    async def on_messaging(self, ctx):
+    async def on_chat(self, ctx):
         """
         チャットイベント
 
@@ -150,7 +150,7 @@ class WebSocket:
         ctx = ChatContent(
             upper_to_lower(msg, replace_list={"user": "author", "text": "content"})
         )
-        return asyncio.create_task(self.cls.dispatch("messaging", ctx))
+        return asyncio.create_task(self.cls.dispatch("chat", ctx))
 
     async def on_notification(self, message: dict):
         """
