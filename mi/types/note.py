@@ -9,6 +9,7 @@ class Geo(TypedDict):
     """
     衛生情報
     """
+
     coordinates: Optional[List[Any]]
     altitude: Optional[int]
     accuracy: Optional[int]
