@@ -13,12 +13,12 @@ class Chat(AbstractChat):
     """
 
     def __init__(
-            self,
-            content: str,
-            *,
-            user_id: str = None,
-            group_id: str = None,
-            file_id: str = None
+        self,
+        content: str,
+        *,
+        user_id: str = None,
+        group_id: str = None,
+        file_id: str = None
     ):
         self.content = content
         self.user_id = user_id
@@ -45,17 +45,16 @@ class Chat(AbstractChat):
             auth=True,
         ).json()
         return ChatContent(
-            upper_to_lower(res,
-                           replace_list={"user": "author", "text": "content"})
+            upper_to_lower(res, replace_list={"user": "author", "text": "content"})
         )
 
     def add_file(
-            self,
-            path: str = None,
-            name: str = None,
-            force: bool = False,
-            is_sensitive: bool = False,
-            url: str = None,
+        self,
+        path: str = None,
+        name: str = None,
+        force: bool = False,
+        is_sensitive: bool = False,
+        url: str = None,
     ):
         pass
 

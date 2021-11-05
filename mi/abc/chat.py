@@ -5,17 +5,17 @@ from mi.types.chat import Chat as ChatPayload
 
 class AbstractChat(ABC):
     @abstractmethod
-    async def send(self) -> 'AbstractChatContent':
+    async def send(self) -> "AbstractChatContent":
         pass
 
     @abstractmethod
     def add_file(
-            self,
-            path: str = None,
-            name: str = None,
-            force: bool = False,
-            is_sensitive: bool = False,
-            url: str = None,
+        self,
+        path: str = None,
+        name: str = None,
+        force: bool = False,
+        is_sensitive: bool = False,
+        url: str = None,
     ):
         """
         チャットにファイルを添付します。
