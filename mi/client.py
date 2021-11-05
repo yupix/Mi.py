@@ -142,8 +142,12 @@ class BotBase:
         logger.init(debug)
         self.token = token
         if _origin_uri := re.search(r"wss?://(.*)/streaming", uri):
-            origin_uri = (_origin_uri.group(0).replace("wss", "https").replace(
-                "ws", "http").replace("/streaming", ""))
+            origin_uri = (
+                _origin_uri.group(0)
+                .replace("wss", "https")
+                .replace("ws", "http")
+                .replace("/streaming", "")
+            )
         else:
             origin_uri = uri
         self.origin_uri = origin_uri[:-1] if uri[-1] == "/" else origin_uri
@@ -154,7 +158,8 @@ class BotBase:
         auth_i["instance"] = get_instance_meta()
         config.init(**auth_i)
         asyncio.get_event_loop().run_until_complete(
-            WebSocket(self).run(f"{uri}?i={token}"))
+            WebSocket(self).run(f"{uri}?i={token}")
+        )
 
 
 class Client(BotBase):

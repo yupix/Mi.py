@@ -231,8 +231,7 @@ class Group(GroupMixin, Command):
     """
 
     def __init__(self, *args, **attrs):
-        self.invoke_without_command = attrs.pop("invoke_without_command",
-                                                False)
+        self.invoke_without_command = attrs.pop("invoke_without_command", False)
         super().__init__(*args, **attrs)
 
     def copy(self):
