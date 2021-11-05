@@ -7,8 +7,9 @@
 
 ## 概要
 
-Mi.pyは[Discord.py](https://github.com/Rapptz/discord.py) ライクな書き方ができるように作っているMisskeyApi wrapperです 現在動作を確認しているMisskeyは `Ayuskey`
-のみです。本家Misskey等に関しては動作を確認していませんので注意してください。
+Mi.pyは[Discord.py](https://github.com/Rapptz/discord.py)
+ライクな書き方ができるように作っているMisskeyApi wrapperです 現在動作を確認しているMisskeyは本家Misskey v12の最新です。
+`Ayuskey` での動作確認も一応行っていますが、 11/5時点でAyuskeyそのものの動作が怪しいため現在はテストを行っていません。
 
 ## 使い方
 
