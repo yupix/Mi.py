@@ -80,7 +80,7 @@ class ChatContent(AbstractChatContent):
 
     async def delete(self):
         """
-        チャットを削除します（管理者 / モデレーターまたはノートの作者である必要があります）
+        チャットを削除します（チャットの作者である必要があります）
 
         Returns
         -------
