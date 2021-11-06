@@ -7,11 +7,11 @@ class Config:
     """
 
     def __init__(
-            self,
-            token: Optional[str],
-            origin_uri: Optional[str],
-            profile: Any = None,
-            instance: dict = None,
+        self,
+        token: Optional[str],
+        origin_uri: Optional[str],
+        profile: Any = None,
+        instance: dict = None,
     ):
         self.token: str = token
         self.origin_uri: str = origin_uri

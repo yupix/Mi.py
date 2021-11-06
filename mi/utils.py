@@ -22,8 +22,9 @@ def get_module_logger(module_name):
     if not logger.hasHandlers():
         handler = logging.StreamHandler()
         formatter = logging.Formatter(
-            '%(asctime)s %(name)s:%(lineno)s %(funcName)s [%(levelname)s]: '
-            '%(message)s')
+            "%(asctime)s %(name)s:%(lineno)s %(funcName)s [%(levelname)s]: "
+            "%(message)s"
+        )
         handler.setFormatter(formatter)
         logger.addHandler(handler)
     return logger
@@ -44,8 +45,7 @@ def emoji_count(text=None, emojis=None):
     """
     if emojis is None:
         emojis = []
-    return len(emojis) if text is None else len(emojis) + emoji.emoji_count(
-        text)
+    return len(emojis) if text is None else len(emojis) + emoji.emoji_count(text)
 
 
 def check_multi_arg(*args) -> bool:
@@ -103,12 +103,12 @@ def json_dump(data, *args, **kwargs):
 
 
 def api(
-        endpoint: str,
-        json_data=None,
-        *,
-        origin_uri: str = None,
-        files: dict = None,
-        auth: bool = False,
+    endpoint: str,
+    json_data=None,
+    *,
+    origin_uri: str = None,
+    files: dict = None,
+    auth: bool = False,
 ) -> requests.models.Response:
     """
     .. deprecated:: 0.1.5
@@ -181,7 +181,7 @@ def remove_dict_empty(data: dict) -> dict:
 
 
 def upper_to_lower(
-        data: dict, field: dict = None, nest=True, replace_list: dict = None
+    data: dict, field: dict = None, nest=True, replace_list: dict = None
 ) -> dict:
     """
 

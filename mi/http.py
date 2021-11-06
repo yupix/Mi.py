@@ -19,7 +19,7 @@ from mi.utils import get_module_logger, upper_to_lower
 class WebSocket:
     """Misskey APIとやり取りを行うWebSocket object"""
 
-    __slots__ = ['web_socket', 'cls', 'router', 'auth_i', 'logger']
+    __slots__ = ["web_socket", "cls", "router", "auth_i", "logger"]
 
     def __init__(self, cls):
         self.logger = get_module_logger(__name__)
