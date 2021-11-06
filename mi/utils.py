@@ -17,7 +17,8 @@ T = TypeVar("T")
 
 def get_module_logger(module_name):
     logger = logging.getLogger(module_name)
-    logger.setLevel(logging.INFO)
+    log_level = logging.DEBUG if config.debug else logging.INFO
+    logger.setLevel(log_level)
     if not logger.hasHandlers():
         handler = logging.StreamHandler()
         formatter = logging.Formatter(
