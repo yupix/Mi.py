@@ -72,11 +72,11 @@ class BotBase:
             await self.schedule_event(coro, event, *args, **kwargs)
 
     async def schedule_event(
-        self,
-        coro: Callable[..., Coroutine[Any, Any, Any]],
-        event_name: str,
-        *args: Any,
-        **kwargs: Any,
+            self,
+            coro: Callable[..., Coroutine[Any, Any, Any]],
+            event_name: str,
+            *args: Any,
+            **kwargs: Any,
     ) -> asyncio.Task:
         return asyncio.create_task(
             self._run_event(coro, event_name, *args, **kwargs),
@@ -84,11 +84,11 @@ class BotBase:
         )
 
     async def _run_event(
-        self,
-        coro: Callable[..., Coroutine[Any, Any, Any]],
-        event_name: str,
-        *args: Any,
-        **kwargs: Any,
+            self,
+            coro: Callable[..., Coroutine[Any, Any, Any]],
+            event_name: str,
+            *args: Any,
+            **kwargs: Any,
     ) -> None:
         try:
             await coro(*args, **kwargs)
@@ -141,24 +141,27 @@ class BotBase:
         -------
         None: None
         """
-        self.logger.init(debug)
         self.token = token
         if _origin_uri := re.search(r"wss?://(.*)/streaming", uri):
             origin_uri = (
                 _origin_uri.group(0)
-                .replace("wss", "https")
-                .replace("ws", "http")
-                .replace("/streaming", "")
+                    .replace("wss", "https")
+                    .replace("ws", "http")
+                    .replace("/streaming", "")
             )
         else:
             origin_uri = uri
         self.origin_uri = origin_uri[:-1] if uri[-1] == "/" else origin_uri
-        auth_i = {"token": self.token, "origin_uri": self.origin_uri}
-        config.init(**auth_i)
+        auth_i = {
+            "token": self.token,
+            "origin_uri": self.origin_uri,
+        }
+        config.i = config.Config(**auth_i)
+        config.debug = debug
         self.i = UserAction().get_i()
         auth_i["profile"] = self.i
         auth_i["instance"] = get_instance_meta()
-        config.init(**auth_i)
+        config.i = config.Config(**auth_i)
         asyncio.get_event_loop().run_until_complete(
             WebSocket(self).run(f"{uri}?i={token}")
         )
