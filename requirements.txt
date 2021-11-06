@@ -3,4 +3,3 @@ websockets
 pydantic
 emoji
 cython
-rich

@@ -5,10 +5,11 @@ import sys
 import traceback
 from typing import Any, Callable, Coroutine
 
-from mi import UserProfile, config, logger
+from mi import UserProfile, config
 from mi.conn import get_instance_meta
 from mi.http import WebSocket
 from mi.user import UserAction
+from mi.utils import get_module_logger
 
 
 class BotBase:
@@ -18,6 +19,7 @@ class BotBase:
         self.token = None
         self.origin_uri = None
         self.i: UserProfile = None
+        self.logger = get_module_logger(__name__)
 
     def event(self, name=None):
         def decorator(func):
@@ -139,7 +141,7 @@ class BotBase:
         -------
         None: None
         """
-        logger.init(debug)
+        self.logger.init(debug)
         self.token = token
         if _origin_uri := re.search(r"wss?://(.*)/streaming", uri):
             origin_uri = (

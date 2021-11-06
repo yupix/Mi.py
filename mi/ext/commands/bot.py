@@ -11,7 +11,7 @@ from typing import Any, Callable, Coroutine, Dict, Optional
 
 import rich
 
-from mi import UserProfile, config, logger, utils
+from mi import UserProfile, config, utils
 from mi.conn import get_instance_meta
 from mi.exception import (
     CheckFailure,
@@ -31,6 +31,8 @@ from mi.user import UserAction
 
 __all__ = ["BotBase", "Bot"]
 
+from mi.utils import get_module_logger
+
 
 class BotBase(GroupMixin):
     def __init__(self, command_prefix, **options):
@@ -47,6 +49,7 @@ class BotBase(GroupMixin):
         self.i: UserProfile = None
         self.__cogs: Dict[str] = {}
         self.strip_after_prefix = options.get("strip_after_prefix", False)
+        self.logger = get_module_logger(__name__)
 
     async def can_run(self, ctx, *, call_once=False):
         data = self._check_once if call_once else self._checks
@@ -301,7 +304,6 @@ class BotBase(GroupMixin):
         -------
         None: None
         """
-        logger.init(debug)
         self.token = token
         if _origin_uri := re.search(r"wss?://(.*)/streaming", uri):
             origin_uri = (

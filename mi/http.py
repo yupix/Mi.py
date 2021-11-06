@@ -9,19 +9,20 @@ from typing import Any
 
 import websockets
 
-from mi import config, logger
+from mi import config
 from mi.chat import ChatContent
 from mi.note import Follow, NoteContent, Reaction
 from mi.router import Router
-from mi.utils import upper_to_lower
+from mi.utils import get_module_logger, upper_to_lower
 
 
 class WebSocket:
     """Misskey APIとやり取りを行うWebSocket object"""
 
-    __slots__ = ["web_socket", "cls", "router", "auth_i"]
+    __slots__ = ['web_socket', 'cls', 'router', 'auth_i', 'logger']
 
     def __init__(self, cls):
+        self.logger = get_module_logger(__name__)
         self.web_socket = None
         self.cls = cls
         self.router: Router
@@ -87,7 +88,7 @@ class WebSocket:
         message :
         """
         message = json.loads(message)
-        logger.log.debug(f"received: {message}", extra={"markup": True})
+        self.logger.debug(f"received: {message}")
         base_msg = message.get("body", None)
         if base_msg is None:
             return
@@ -103,7 +104,7 @@ class WebSocket:
             "mention": "on_mention",
             "messagingMessage": "on_chat",
         }
-        logger.log.debug(f"received event: {event_type}")
+        self.logger.debug(f"received event: {event_type}")
         if (
             event_type == "notification"
             or "unread" in event_type

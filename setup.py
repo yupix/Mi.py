@@ -26,7 +26,7 @@ ext_modules = [Extension("mi.next_utils", sources=["mi/next_utils" + ext])]
 setup(
     name="mi.py",
     version="0.2.5",
-    install_requires=["websockets", "requests", "pydantic", "emoji", "rich"],
+    install_requires=["websockets", "requests", "pydantic", "emoji"],
     url="https://github.com/yupix/mi.py",
     author="yupix",
     author_email="yupi0982@outlook.jp",

@@ -2,6 +2,7 @@
 Mi.pyを使用する上でちょっとした際に便利なツール一覧
 """
 import json
+import logging
 import re
 from inspect import isawaitable
 from typing import Any, Callable, Iterable, Optional, TypeVar
@@ -14,10 +15,36 @@ from mi import config, exception
 T = TypeVar("T")
 
 
+def get_module_logger(module_name):
+    logger = logging.getLogger(module_name)
+    logger.setLevel(logging.INFO)
+    if not logger.hasHandlers():
+        handler = logging.StreamHandler()
+        formatter = logging.Formatter(
+            '%(asctime)s %(name)s:%(lineno)s %(funcName)s [%(levelname)s]: '
+            '%(message)s')
+        handler.setFormatter(formatter)
+        logger.addHandler(handler)
+    return logger
+
+
 def emoji_count(text=None, emojis=None):
+    """
+    テキストの中にいくつのemojiが含まれているかをカウントします
+
+    Parameters
+    ----------
+    text
+    emojis
+
+    Returns
+    -------
+
+    """
     if emojis is None:
         emojis = []
-    return len(emojis) if text is None else len(emojis) + emoji.emoji_count(text)
+    return len(emojis) if text is None else len(emojis) + emoji.emoji_count(
+        text)
 
 
 def check_multi_arg(*args) -> bool:
@@ -75,12 +102,12 @@ def json_dump(data, *args, **kwargs):
 
 
 def api(
-    endpoint: str,
-    json_data=None,
-    *,
-    origin_uri: str = None,
-    files: dict = None,
-    auth: bool = False,
+        endpoint: str,
+        json_data=None,
+        *,
+        origin_uri: str = None,
+        files: dict = None,
+        auth: bool = False,
 ) -> requests.models.Response:
     """
     .. deprecated:: 0.1.5
@@ -153,7 +180,7 @@ def remove_dict_empty(data: dict) -> dict:
 
 
 def upper_to_lower(
-    data: dict, field: dict = None, nest=True, replace_list: dict = None
+        data: dict, field: dict = None, nest=True, replace_list: dict = None
 ) -> dict:
     """
 
