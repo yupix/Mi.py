@@ -19,7 +19,7 @@ from mi.utils import get_module_logger, upper_to_lower
 class WebSocket:
     """Misskey APIとやり取りを行うWebSocket object"""
 
-    __slots__ = ['web_socket', 'cls', 'router', 'auth_i', 'logger']
+    __slots__ = ["web_socket", "cls", "router", "auth_i", "logger"]
 
     def __init__(self, cls):
         self.logger = get_module_logger(__name__)
@@ -106,9 +106,9 @@ class WebSocket:
         }
         self.logger.debug(f"received event: {event_type}")
         if (
-                event_type == "notification"
-                or "unread" in event_type
-                or event_list.get(event_type) is None
+            event_type == "notification"
+            or "unread" in event_type
+            or event_list.get(event_type) is None
         ):
             await self.on_notification(message)
             return
@@ -130,8 +130,7 @@ class WebSocket:
         """
         msg = message.get("body", {}).get("body", {})
         message = NoteContent(
-            upper_to_lower(msg,
-                           replace_list={"user": "author", "text": "content"})
+            upper_to_lower(msg, replace_list={"user": "author", "text": "content"})
         )
         await self.router.capture_message(message.id)
         return asyncio.create_task(self.cls._on_message(message))
@@ -150,8 +149,7 @@ class WebSocket:
         """
         msg = ctx.get("body", {}).get("body", {})
         ctx = ChatContent(
-            upper_to_lower(msg,
-                           replace_list={"user": "author", "text": "content"})
+            upper_to_lower(msg, replace_list={"user": "author", "text": "content"})
         )
         return asyncio.create_task(self.cls.dispatch("chat", ctx))
 
@@ -185,8 +183,7 @@ class WebSocket:
         base_ctx = ctx.get("body", {}).get("body")
         base_ctx["content"] = base_ctx["text"]
         base_ctx["text"] = (
-            base_ctx["text"].replace(f"@{config.i.profile.username}",
-                                     "").strip(" ")
+            base_ctx["text"].replace(f"@{config.i.profile.username}", "").strip(" ")
         )
         return asyncio.create_task(
             self.cls.dispatch("mention", NoteContent(**base_ctx))
@@ -208,8 +205,7 @@ class WebSocket:
             self.cls.dispatch(
                 "follow",
                 Follow(
-                    **upper_to_lower(message.get("body"),
-                                     replace_list={"body": "user"})
+                    **upper_to_lower(message.get("body"), replace_list={"body": "user"})
                 ),
             )
         )
@@ -249,8 +245,7 @@ class WebSocket:
 
         """
         base_msg = message.get("body", {}).get("body", {})
-        asyncio.create_task(
-            self.cls.dispatch("deleted", base_msg))
+        asyncio.create_task(self.cls.dispatch("deleted", base_msg))
 
     async def on_error(self, err):
         await self.cls.on_error(err)
