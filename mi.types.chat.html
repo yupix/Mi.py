@@ -1,0 +1,443 @@
+
+<!DOCTYPE html>
+
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>mi.types.chat module &#8212; Mi.py 0.5.0 ドキュメント</title>
+    
+  <link href="_static/css/theme.css" rel="stylesheet">
+  <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/css/blank.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/translations.js"></script>
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="ja">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+    <nav class="navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><div class="container-xl">
+
+  <div id="navbar-start">
+    
+    
+
+<a class="navbar-brand" href="index.html">
+  <img src="_static/mi.py.svg" class="logo" alt="logo">
+</a>
+
+
+    
+  </div>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapsible" aria-controls="navbar-collapsible" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  
+  <div id="navbar-collapsible" class="col-lg-9 collapse navbar-collapse">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <ul id="navbar-main-elements" class="navbar-nav">
+    
+    
+</ul>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+        <li class="nav-item">
+          <a class="nav-link" href="https://github.com/yupix/mi.py" rel="noopener" target="_blank" title="GitHub">
+            <span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="https://discord.gg/CcT997U" rel="noopener" target="_blank" title="Discord">
+            <span><i class="fab fa-discord"></i></span>
+            <label class="sr-only">Discord</label>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="https://pypi.org/project/mi.py" rel="noopener" target="_blank" title="PyPI">
+            <span><i class="fas fa-box"></i></span>
+            <label class="sr-only">PyPI</label>
+          </a>
+        </li>
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+</div>
+    </nav>
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+            
+            <!-- Only show if we have sidebars configured, else just a small margin  -->
+            <div class="col-12 col-md-3 bd-sidebar"><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <div class="bd-toc-item active">
+    <ul class="current nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="mi.ext.html">
+   mi.ext package
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="mi.ext.commands.html">
+     mi.ext.commands package
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+    <label for="toctree-checkbox-2">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="mi.ext.commands.bot.html">
+       mi.ext.commands.bot module
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="mi.ext.commands.cog.html">
+       mi.ext.commands.cog module
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="mi.ext.commands.context.html">
+       mi.ext.commands.context module
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="mi.ext.commands.core.html">
+       mi.ext.commands.core module
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="mi.ext.commands.view.html">
+       mi.ext.commands.view module
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="mi.ext.task.html">
+     mi.ext.task package
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="mi.types.html">
+   mi.types package
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     mi.types.chat module
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="mi.types.drive.html">
+     mi.types.drive module
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="mi.types.emoji.html">
+     mi.types.emoji module
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="mi.types.instance.html">
+     mi.types.instance module
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="mi.types.note.html">
+     mi.types.note module
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="mi.types.user.html">
+     mi.types.user module
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="mi.chart.html">
+   mi.chart module
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="mi.chat.html">
+   mi.chat module
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="mi.client.html">
+   mi.client module
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="mi.config.html">
+   mi.config module
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="mi.conn.html">
+   mi.conn module
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="mi.drive.html">
+   mi.drive module
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="mi.emoji.html">
+   mi.emoji module
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="mi.exception.html">
+   mi.exception module
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="mi.http.html">
+   mi.http module
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="mi.instance.html">
+   mi.instance module
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="mi.next_utils.html">
+   mi.next_utils module
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="mi.next_utils.html">
+   mi.next_utils module
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="mi.note.html">
+   mi.note module
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="mi.router.html">
+   mi.router module
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="mi.user.html">
+   mi.user module
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="mi.utils.html">
+   mi.utils module
+  </a>
+ </li>
+</ul>
+
+  </div>
+</nav>
+            </div>
+            
+          
+
+          
+          <div class="d-none d-xl-block col-xl-2 bd-toc">
+            
+              
+              <div class="toc-item">
+                
+
+<nav id="bd-toc-nav">
+    
+</nav>
+              </div>
+              
+              <div class="toc-item">
+                
+
+<div class="tocsection editthispage">
+    <a href="https://github.com/yupix/Mi.py/edit/master/docs/mi.types.chat.rst">
+        <i class="fas fa-pencil-alt"></i> Edit this page
+    </a>
+</div>
+
+              </div>
+              
+            
+          </div>
+          
+
+          
+          
+            
+          
+          <main class="col-12 col-md-9 col-xl-7 py-md-5 pl-md-5 pr-md-4 bd-content" role="main">
+              
+              <div>
+                
+  <div class="section" id="module-mi.types.chat">
+<span id="mi-types-chat-module"></span><h1>mi.types.chat module<a class="headerlink" href="#module-mi.types.chat" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="mi.types.chat.Chat">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">mi.types.chat.</span></span><span class="sig-name descname"><span class="pre">Chat</span></span><a class="reference internal" href="_modules/mi/types/chat.html#Chat"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#mi.types.chat.Chat" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>ベースクラス: <code class="xref py py-class docutils literal notranslate"><span class="pre">TypedDict</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mi.types.chat.Chat.author">
+<span class="sig-name descname"><span class="pre">author</span></span><em class="property"><span class="pre">:</span> <a class="reference internal" href="mi.types.user.html#mi.types.user.Author" title="mi.types.user.Author"><span class="pre">mi.types.user.Author</span></a></em><a class="headerlink" href="#mi.types.chat.Chat.author" title="この定義へのパーマリンク">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mi.types.chat.Chat.content">
+<span class="sig-name descname"><span class="pre">content</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#mi.types.chat.Chat.content" title="この定義へのパーマリンク">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mi.types.chat.Chat.created_at">
+<span class="sig-name descname"><span class="pre">created_at</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#mi.types.chat.Chat.created_at" title="この定義へのパーマリンク">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mi.types.chat.Chat.file_id">
+<span class="sig-name descname"><span class="pre">file_id</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#mi.types.chat.Chat.file_id" title="この定義へのパーマリンク">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mi.types.chat.Chat.group_id">
+<span class="sig-name descname"><span class="pre">group_id</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#mi.types.chat.Chat.group_id" title="この定義へのパーマリンク">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mi.types.chat.Chat.id">
+<span class="sig-name descname"><span class="pre">id</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#mi.types.chat.Chat.id" title="この定義へのパーマリンク">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mi.types.chat.Chat.is_read">
+<span class="sig-name descname"><span class="pre">is_read</span></span><em class="property"><span class="pre">:</span> <span class="pre">bool</span></em><a class="headerlink" href="#mi.types.chat.Chat.is_read" title="この定義へのパーマリンク">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mi.types.chat.Chat.reads">
+<span class="sig-name descname"><span class="pre">reads</span></span><em class="property"><span class="pre">:</span> <span class="pre">List</span></em><a class="headerlink" href="#mi.types.chat.Chat.reads" title="この定義へのパーマリンク">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mi.types.chat.Chat.recipient">
+<span class="sig-name descname"><span class="pre">recipient</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#mi.types.chat.Chat.recipient" title="この定義へのパーマリンク">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mi.types.chat.Chat.recipient_id">
+<span class="sig-name descname"><span class="pre">recipient_id</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#mi.types.chat.Chat.recipient_id" title="この定義へのパーマリンク">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mi.types.chat.Chat.user_id">
+<span class="sig-name descname"><span class="pre">user_id</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#mi.types.chat.Chat.user_id" title="この定義へのパーマリンク">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+              </div>
+              
+              
+              <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+              
+          </main>
+          
+
+      </div>
+    </div>
+  
+  <script src="_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+<footer class="footer mt-5 mt-md-0">
+  <div class="container">
+    
+    <div class="footer-item">
+      <p class="copyright">
+    &copy; Copyright 2021, yupix.<br>
+</p>
+    </div>
+    
+    <div class="footer-item">
+      <p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.2.0.<br>
+</p>
+    </div>
+    
+  </div>
+</footer>
+  </body>
+</html>
