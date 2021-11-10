@@ -72,11 +72,11 @@ class BotBase:
             await self.schedule_event(coro, event, *args, **kwargs)
 
     async def schedule_event(
-            self,
-            coro: Callable[..., Coroutine[Any, Any, Any]],
-            event_name: str,
-            *args: Any,
-            **kwargs: Any,
+        self,
+        coro: Callable[..., Coroutine[Any, Any, Any]],
+        event_name: str,
+        *args: Any,
+        **kwargs: Any,
     ) -> asyncio.Task:
         return asyncio.create_task(
             self._run_event(coro, event_name, *args, **kwargs),
@@ -84,11 +84,11 @@ class BotBase:
         )
 
     async def _run_event(
-            self,
-            coro: Callable[..., Coroutine[Any, Any, Any]],
-            event_name: str,
-            *args: Any,
-            **kwargs: Any,
+        self,
+        coro: Callable[..., Coroutine[Any, Any, Any]],
+        event_name: str,
+        *args: Any,
+        **kwargs: Any,
     ) -> None:
         try:
             await coro(*args, **kwargs)
@@ -145,9 +145,9 @@ class BotBase:
         if _origin_uri := re.search(r"wss?://(.*)/streaming", uri):
             origin_uri = (
                 _origin_uri.group(0)
-                    .replace("wss", "https")
-                    .replace("ws", "http")
-                    .replace("/streaming", "")
+                .replace("wss", "https")
+                .replace("ws", "http")
+                .replace("/streaming", "")
             )
         else:
             origin_uri = uri

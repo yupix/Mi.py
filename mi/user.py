@@ -242,8 +242,7 @@ class Author:
         self.emojis: list = data["emojis"]
         self.online_status = data.get("online_status", None)
         self.instance = (
-            Instance(data["instance"]) if data.get("instance") else Instance(
-                {})
+            Instance(data["instance"]) if data.get("instance") else Instance({})
         )
         self.__user_action: UserAction = UserAction()
 
@@ -299,13 +298,14 @@ class Author:
         """
         return UserProfile(
             **upper_to_lower(
-                Controller.get_user(user_id=self.id, username=self.username,
-                                    host=self.host)
+                Controller.get_user(
+                    user_id=self.id, username=self.username, host=self.host
+                )
             )
         )
 
     def get_followers(
-            self, until_id: str = None, limit: int = 10, get_all: bool = False
+        self, until_id: str = None, limit: int = 10, get_all: bool = False
     ):
         """
         ユーザーのフォロワー一覧を取得します

@@ -74,8 +74,7 @@ class BotBase(GroupMixin, Controller):
         if message.content is None:
             return ctx
         view = StringView(message.content)
-        if view.skip_string(
-                self.command_prefix) is False:  # prefixがテキストに含まれているか確認
+        if view.skip_string(self.command_prefix) is False:  # prefixがテキストに含まれているか確認
             return ctx
         invoker = view.get_word()
         if not self.all_commands.get(invoker):
@@ -211,8 +210,7 @@ class BotBase(GroupMixin, Controller):
         except ImportError:
             raise ExtensionNotFound(name)
 
-    def load_extension(self, name: str, *,
-                       package: Optional[str] = None) -> None:
+    def load_extension(self, name: str, *, package: Optional[str] = None) -> None:
         """拡張をロードする
 
         Parameters
@@ -232,11 +230,11 @@ class BotBase(GroupMixin, Controller):
         self._load_from_module(module, name)
 
     async def schedule_event(
-            self,
-            coro: Callable[..., Coroutine[Any, Any, Any]],
-            event_name: str,
-            *args: Any,
-            **kwargs: Any,
+        self,
+        coro: Callable[..., Coroutine[Any, Any, Any]],
+        event_name: str,
+        *args: Any,
+        **kwargs: Any,
     ) -> asyncio.Task:
         return asyncio.create_task(
             self._run_event(coro, event_name, *args, **kwargs),
@@ -244,11 +242,11 @@ class BotBase(GroupMixin, Controller):
         )
 
     async def _run_event(
-            self,
-            coro: Callable[..., Coroutine[Any, Any, Any]],
-            event_name: str,
-            *args: Any,
-            **kwargs: Any,
+        self,
+        coro: Callable[..., Coroutine[Any, Any, Any]],
+        event_name: str,
+        *args: Any,
+        **kwargs: Any,
     ) -> None:
         try:
             await coro(*args, **kwargs)
@@ -309,9 +307,9 @@ class BotBase(GroupMixin, Controller):
         if _origin_uri := re.search(r"wss?://(.*)/streaming", uri):
             origin_uri = (
                 _origin_uri.group(0)
-                    .replace("wss", "https")
-                    .replace("ws", "http")
-                    .replace("/streaming", "")
+                .replace("wss", "https")
+                .replace("ws", "http")
+                .replace("/streaming", "")
             )
         else:
             origin_uri = uri
