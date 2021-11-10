@@ -342,8 +342,94 @@
               
               <div>
                 
-  <div class="section" id="mi-client-module">
-<h1>mi.client module<a class="headerlink" href="#mi-client-module" title="このヘッドラインへのパーマリンク">¶</a></h1>
+  <div class="section" id="module-mi.client">
+<span id="mi-client-module"></span><h1>mi.client module<a class="headerlink" href="#module-mi.client" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="mi.client.BotBase">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">mi.client.</span></span><span class="sig-name descname"><span class="pre">BotBase</span></span><a class="reference internal" href="_modules/mi/client.html#BotBase"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#mi.client.BotBase" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>ベースクラス: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="mi.client.BotBase.add_event">
+<span class="sig-name descname"><span class="pre">add_event</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/client.html#BotBase.add_event"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#mi.client.BotBase.add_event" title="この定義へのパーマリンク">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mi.client.BotBase.add_listener">
+<span class="sig-name descname"><span class="pre">add_listener</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/client.html#BotBase.add_listener"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#mi.client.BotBase.add_listener" title="この定義へのパーマリンク">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mi.client.BotBase.dispatch">
+<em class="property"><span class="pre">async</span> </em><span class="sig-name descname"><span class="pre">dispatch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event_name</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/client.html#BotBase.dispatch"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#mi.client.BotBase.dispatch" title="この定義へのパーマリンク">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mi.client.BotBase.event">
+<span class="sig-name descname"><span class="pre">event</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/client.html#BotBase.event"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#mi.client.BotBase.event" title="この定義へのパーマリンク">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mi.client.BotBase.event_dispatch">
+<em class="property"><span class="pre">async</span> </em><span class="sig-name descname"><span class="pre">event_dispatch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event_name</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/client.html#BotBase.event_dispatch"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#mi.client.BotBase.event_dispatch" title="この定義へのパーマリンク">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mi.client.BotBase.listen">
+<span class="sig-name descname"><span class="pre">listen</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/client.html#BotBase.listen"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#mi.client.BotBase.listen" title="この定義へのパーマリンク">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mi.client.BotBase.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">uri</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">token</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debug</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/mi/client.html#BotBase.run"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#mi.client.BotBase.run" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>Launch the bot.
+:param uri: websocket url of the Misskey instance to connect to
+:type uri: str
+:param token: Misskey account token
+:type token: str
+:param debug: Debug Mode
+:type debug: bool</p>
+<p class="rubric">サンプル</p>
+<p>When inheriting from a class:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyBot</span><span class="p">(</span><span class="n">Bot</span><span class="p">):</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">on_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ws</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+        <span class="k">pass</span>
+<span class="n">bot</span> <span class="o">=</span> <span class="n">MyBot</span><span class="p">()</span>
+<span class="n">bot</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">uri</span><span class="p">,</span> <span class="n">token</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>When using a listener:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">bot</span> <span class="o">=</span> <span class="n">Bot</span><span class="p">()</span>
+
+<span class="nd">@bot</span><span class="o">.</span><span class="n">event</span><span class="p">()</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">on_message</span><span class="p">(</span><span class="n">ws</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+<span class="n">bot</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">uri</span><span class="p">,</span> <span class="n">token</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">戻り値</dt>
+<dd class="field-odd"><p><strong>None</strong></p>
+</dd>
+<dt class="field-even">戻り値の型</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mi.client.BotBase.schedule_event">
+<em class="property"><span class="pre">async</span> </em><span class="sig-name descname"><span class="pre">schedule_event</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">coro</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span> </span><span class="pre">Coroutine</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span> </span><span class="pre">Any</span><span class="p"><span class="pre">,</span> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">event_name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">_asyncio.Task</span></span></span><a class="reference internal" href="_modules/mi/client.html#BotBase.schedule_event"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#mi.client.BotBase.schedule_event" title="この定義へのパーマリンク">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="mi.client.Client">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">mi.client.</span></span><span class="sig-name descname"><span class="pre">Client</span></span><a class="reference internal" href="_modules/mi/client.html#Client"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#mi.client.Client" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>ベースクラス: <a class="reference internal" href="#mi.client.BotBase" title="mi.client.BotBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">mi.client.BotBase</span></code></a></p>
+</dd></dl>
+
 </div>
 
 

@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>mi.emoji &#8212; Mi.py 0.5.0 ドキュメント</title>
+    <title>mi.chart &#8212; Mi.py 0.5.0 ドキュメント</title>
     
   <link href="../../_static/css/theme.css" rel="stylesheet">
   <link href="../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
@@ -141,17 +141,46 @@
               
               <div>
                 
-  <h1>mi.emoji のソースコード</h1><div class="highlight"><pre>
+  <h1>mi.chart のソースコード</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span>
 
 <span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">BaseModel</span>
 
+<span class="kn">from</span> <span class="nn">mi.utils</span> <span class="kn">import</span> <span class="n">api</span><span class="p">,</span> <span class="n">json_dump</span>
 
-<div class="viewcode-block" id="Emoji"><a class="viewcode-back" href="../../mi.emoji.html#mi.Emoji">[ドキュメント]</a><span class="k">class</span> <span class="nc">Emoji</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
-    <span class="n">name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="n">url</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="n">host</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
-    <span class="n">aliases</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span></div>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;ChartAction&#39;</span><span class="p">,</span> <span class="s1">&#39;Chart&#39;</span><span class="p">,</span> <span class="s1">&#39;Local&#39;</span><span class="p">,</span> <span class="s1">&#39;Remote&#39;</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="ChartAction"><a class="viewcode-back" href="../../mi.chart.html#mi.ChartAction">[ドキュメント]</a><span class="k">class</span> <span class="nc">ChartAction</span><span class="p">:</span>
+<div class="viewcode-block" id="ChartAction.get_active_users"><a class="viewcode-back" href="../../mi.chart.html#mi.ChartAction.get_active_users">[ドキュメント]</a>    <span class="k">def</span> <span class="nf">get_active_users</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Chart&quot;</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Chartクラスをもとにアクティブなユーザーの統計を取得します</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        Chart: Chart</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">json_dump</span><span class="p">(</span>
+            <span class="p">{</span><span class="s2">&quot;span&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">span</span><span class="p">,</span> <span class="s2">&quot;limit&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">limit</span><span class="p">,</span> <span class="s2">&quot;offset&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">offset</span><span class="p">}</span>
+        <span class="p">)</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="n">api</span><span class="p">(</span><span class="s2">&quot;/api/charts/active-users&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">Chart</span><span class="p">(</span><span class="o">**</span><span class="n">res</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="Local"><a class="viewcode-back" href="../../mi.chart.html#mi.Local">[ドキュメント]</a><span class="k">class</span> <span class="nc">Local</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">users</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="Remote"><a class="viewcode-back" href="../../mi.chart.html#mi.Remote">[ドキュメント]</a><span class="k">class</span> <span class="nc">Remote</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">users</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="Chart"><a class="viewcode-back" href="../../mi.chart.html#mi.Chart">[ドキュメント]</a><span class="k">class</span> <span class="nc">Chart</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">,</span> <span class="n">ChartAction</span><span class="p">):</span>
+    <span class="n">span</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">limit</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">offset</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">local</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Local</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">remote</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Remote</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span></div>
 </pre></div>
 
               </div>

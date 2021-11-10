@@ -342,8 +342,152 @@
               
               <div>
                 
-  <div class="section" id="mi-router-module">
-<h1>mi.router module<a class="headerlink" href="#mi-router-module" title="このヘッドラインへのパーマリンク">¶</a></h1>
+  <div class="section" id="module-mi.router">
+<span id="mi-router-module"></span><h1>mi.router module<a class="headerlink" href="#module-mi.router" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>Misskeyのチャンネルへの接続や、メッセージのキャプチャ等のWebSocket関連</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="mi.router.Router">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">mi.router.</span></span><span class="sig-name descname"><span class="pre">Router</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">web_socket</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/router.html#Router"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#mi.router.Router" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>ベースクラス: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mi.router.Router.web_socket">
+<span class="sig-name descname"><span class="pre">web_socket</span></span><a class="headerlink" href="#mi.router.Router.web_socket" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>WebSocketクライアント</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>Any</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">channels:</span></span></dt>
+<dd><p>与えられたlistを元にチャンネルに接続します</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">global_time_line:</span></span></dt>
+<dd><p>WebSocketでGlobalTimeLineに接続します</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">main_channel:</span></span></dt>
+<dd><p>WebSocketでMainチャンネルに接続します</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">home_time_line:</span></span></dt>
+<dd><p>WebSocketでHomeTimeLineに接続します</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">local_time_line:</span></span></dt>
+<dd><p>WebSocketでLocalTimeLineに接続します</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">capture_message:</span></span></dt>
+<dd><p>与えられたメッセージを元にnote idを取得し、そのメッセージをon_message等の監視対象に追加します</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mi.router.Router.capture_message">
+<em class="property"><span class="pre">async</span> </em><span class="sig-name descname"><span class="pre">capture_message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/mi/router.html#Router.capture_message"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#mi.router.Router.capture_message" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>与えられたメッセージを元にnote idを取得し、そのメッセージをon_message等の監視対象に追加します</p>
+<dl class="field-list simple">
+<dt class="field-odd">パラメータ</dt>
+<dd class="field-odd"><p><strong>message_id</strong> (<em>str</em>) -- </p>
+</dd>
+<dt class="field-even">戻り値</dt>
+<dd class="field-even"><p><strong>None</strong></p>
+</dd>
+<dt class="field-odd">戻り値の型</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mi.router.Router.channels">
+<em class="property"><span class="pre">async</span> </em><span class="sig-name descname"><span class="pre">channels</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">channel_list</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/mi/router.html#Router.channels"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#mi.router.Router.channels" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>与えられたlistを元にチャンネルに接続します</p>
+<dl class="field-list simple">
+<dt class="field-odd">パラメータ</dt>
+<dd class="field-odd"><p><strong>channel_list</strong> (<em>List</em><em>[</em><em>'global'</em><em>, </em><em>'local'</em><em>, </em><em>'home'</em><em>, </em><em>'main'</em><em>]</em>) -- </p>
+</dd>
+<dt class="field-even">戻り値</dt>
+<dd class="field-even"><p><strong>None</strong></p>
+</dd>
+<dt class="field-odd">戻り値の型</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mi.router.Router.global_time_line">
+<em class="property"><span class="pre">async</span> </em><span class="sig-name descname"><span class="pre">global_time_line</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/mi/router.html#Router.global_time_line"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#mi.router.Router.global_time_line" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>WebSocketでGlobalTimeLineに接続します</p>
+<dl class="field-list simple">
+<dt class="field-odd">戻り値</dt>
+<dd class="field-odd"><p><strong>None</strong></p>
+</dd>
+<dt class="field-even">戻り値の型</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mi.router.Router.home_time_line">
+<em class="property"><span class="pre">async</span> </em><span class="sig-name descname"><span class="pre">home_time_line</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/mi/router.html#Router.home_time_line"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#mi.router.Router.home_time_line" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>WebSocketでHomeTimeLineに接続します</p>
+<dl class="field-list simple">
+<dt class="field-odd">戻り値</dt>
+<dd class="field-odd"><p><strong>None</strong></p>
+</dd>
+<dt class="field-even">戻り値の型</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mi.router.Router.local_time_line">
+<em class="property"><span class="pre">async</span> </em><span class="sig-name descname"><span class="pre">local_time_line</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/mi/router.html#Router.local_time_line"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#mi.router.Router.local_time_line" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>WebSocketでLocalTimeLineに接続します</p>
+<dl class="field-list simple">
+<dt class="field-odd">戻り値</dt>
+<dd class="field-odd"><p><strong>None</strong></p>
+</dd>
+<dt class="field-even">戻り値の型</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mi.router.Router.main_channel">
+<em class="property"><span class="pre">async</span> </em><span class="sig-name descname"><span class="pre">main_channel</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/mi/router.html#Router.main_channel"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#mi.router.Router.main_channel" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>WebSocketでMainチャンネルに接続します</p>
+<dl class="field-list simple">
+<dt class="field-odd">戻り値</dt>
+<dd class="field-odd"><p><strong>None</strong></p>
+</dd>
+<dt class="field-even">戻り値の型</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 
 

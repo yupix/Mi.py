@@ -342,8 +342,157 @@
               
               <div>
                 
-  <div class="section" id="mi-conn-module">
-<h1>mi.conn module<a class="headerlink" href="#mi-conn-module" title="このヘッドラインへのパーマリンク">¶</a></h1>
+  <div class="section" id="module-mi.conn">
+<span id="mi-conn-module"></span><h1>mi.conn module<a class="headerlink" href="#module-mi.conn" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="mi.conn.Controller">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">mi.conn.</span></span><span class="sig-name descname"><span class="pre">Controller</span></span><a class="reference internal" href="_modules/mi/conn.html#Controller"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#mi.conn.Controller" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>ベースクラス: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="mi.conn.Controller.delete_chat">
+<em class="property"><span class="pre">async</span> <span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">delete_chat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">requests.models.Response</span></span></span><a class="reference internal" href="_modules/mi/conn.html#Controller.delete_chat"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#mi.conn.Controller.delete_chat" title="この定義へのパーマリンク">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mi.conn.Controller.fetch_instance_meta">
+<span class="sig-name descname"><span class="pre">fetch_instance_meta</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="_modules/mi/conn.html#Controller.fetch_instance_meta"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#mi.conn.Controller.fetch_instance_meta" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>BOTのアカウントがある最新のインスタンス情報をdictで返します</p>
+<dl class="field-list simple">
+<dt class="field-odd">戻り値</dt>
+<dd class="field-odd"><p>インスタンス情報</p>
+</dd>
+<dt class="field-even">戻り値の型</dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mi.conn.Controller.fetch_user">
+<span class="sig-name descname"><span class="pre">fetch_user</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">host</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="_modules/mi/conn.html#Controller.fetch_user"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#mi.conn.Controller.fetch_user" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>サーバーにアクセスし、ユーザーのプロフィールを取得します。基本的には get_userをお使いください。</p>
+<dl class="field-list simple">
+<dt class="field-odd">パラメータ</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>user_id</strong> (<em>str</em>) -- 取得したいユーザーのユーザーID</p></li>
+<li><p><strong>username</strong> (<em>str</em>) -- 取得したいユーザーのユーザー名</p></li>
+<li><p><strong>host</strong> (<em>str</em><em>, </em><em>default=None</em>) -- 取得したいユーザーがいるインスタンスのhost</p></li>
+</ul>
+</dd>
+<dt class="field-even">戻り値</dt>
+<dd class="field-even"><p>ユーザー情報</p>
+</dd>
+<dt class="field-odd">戻り値の型</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mi.conn.Controller.file_upload">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">file_upload</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">to_file</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">to_url</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_sensitive</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="_modules/mi/conn.html#Controller.file_upload"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#mi.conn.Controller.file_upload" title="この定義へのパーマリンク">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">パラメータ</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>is_sensitive</strong> (<em>bool</em>) -- この画像がセンシティブな物の場合Trueにする</p></li>
+<li><p><strong>force</strong> (<em>bool</em>) -- Trueの場合同じ名前のファイルがあった場合でも強制的に保存する</p></li>
+<li><p><strong>to_file</strong> (<em>str</em>) -- そのファイルまでのパスとそのファイル.拡張子(/home/test/test.png)</p></li>
+<li><p><strong>name</strong> (<em>str</em>) -- ファイル名(拡張子があるなら含めて)</p></li>
+<li><p><strong>to_url</strong> (<em>str</em>) -- アップロードしたいファイルのURL</p></li>
+</ul>
+</dd>
+<dt class="field-even">戻り値</dt>
+<dd class="field-even"><p><strong>Drive</strong> -- upload後のレスポンスをDrive型に変更して返します</p>
+</dd>
+<dt class="field-odd">戻り値の型</dt>
+<dd class="field-odd"><p><a class="reference internal" href="mi.html#mi.Drive" title="mi.Drive">Drive</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mi.conn.Controller.get_announcements">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">get_announcements</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">limit</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">with_unreads</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">since_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">until_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/conn.html#Controller.get_announcements"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#mi.conn.Controller.get_announcements" title="この定義へのパーマリンク">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">パラメータ</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>limit</strong> (<em>int</em>) -- 最大取得数</p></li>
+<li><p><strong>with_unreads</strong> (<em>bool</em>) -- 既読済みか否か</p></li>
+<li><p><strong>since_id</strong> (<em>str</em>) -- </p></li>
+<li><p><strong>until_id</strong> (<em>str</em>) -- 前回の最後の値を与える(既に実行し取得しきれない場合に使用)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mi.conn.Controller.get_followers">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">get_followers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">host</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">since_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">until_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">get_all</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/mi/conn.html#Controller.get_followers"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#mi.conn.Controller.get_followers" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>与えられたユーザーのフォロワーを取得します</p>
+<dl class="field-list simple">
+<dt class="field-odd">パラメータ</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>user_id</strong> (<em>str</em><em>, </em><em>default=None</em>) -- ユーザーのid</p></li>
+<li><p><strong>username</strong> (<em>str</em><em>, </em><em>default=None</em>) -- ユーザー名</p></li>
+<li><p><strong>host</strong> (<em>str</em><em>, </em><em>default=None</em>) -- ユーザーがいるインスタンスのhost名</p></li>
+<li><p><strong>since_id</strong> (<em>str</em><em>, </em><em>default=None</em>) -- </p></li>
+<li><p><strong>until_id</strong> (<em>str</em><em>, </em><em>default=None</em>) -- 前回の最後の値を与える(既に実行し取得しきれない場合に使用)</p></li>
+<li><p><strong>limit</strong> (<em>int</em><em>, </em><em>default=10</em>) -- 取得する情報の最大数 max: 100</p></li>
+<li><p><strong>get_all</strong> (<em>bool</em><em>, </em><em>default=False</em>) -- 全てのフォロワーを取得する</p></li>
+</ul>
+</dd>
+<dt class="field-even">列挙</dt>
+<dd class="field-even"><p><em>dict</em> -- フォロワーの情報</p>
+</dd>
+<dt class="field-odd">例外</dt>
+<dd class="field-odd"><p><a class="reference internal" href="mi.exception.html#mi.exception.InvalidParameters" title="mi.exception.InvalidParameters"><strong>InvalidParameters</strong></a> -- limit引数が不正な場合</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mi.conn.Controller.get_instance_meta">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">get_instance_meta</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="_modules/mi/conn.html#Controller.get_instance_meta"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#mi.conn.Controller.get_instance_meta" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>BOTのアカウントがあるインスタンス情報をdictで返します。一度実行するとキャッシュされます。</p>
+<dl class="field-list simple">
+<dt class="field-odd">戻り値</dt>
+<dd class="field-odd"><p>インスタンス情報</p>
+</dd>
+<dt class="field-even">戻り値の型</dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mi.conn.Controller.get_user">
+<span class="sig-name descname"><span class="pre">get_user</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">host</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="_modules/mi/conn.html#Controller.get_user"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#mi.conn.Controller.get_user" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>ユーザーのプロフィールを取得します。一度のみサーバーにアクセスしキャッシュをその後は使います。
+fetch_userを使った場合はキャッシュが廃棄され再度サーバーにアクセスします。</p>
+<dl class="field-list simple">
+<dt class="field-odd">パラメータ</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>user_id</strong> (<em>str</em>) -- 取得したいユーザーのユーザーID</p></li>
+<li><p><strong>username</strong> (<em>str</em>) -- 取得したいユーザーのユーザー名</p></li>
+<li><p><strong>host</strong> (<em>str</em><em>, </em><em>default=None</em>) -- 取得したいユーザーがいるインスタンスのhost</p></li>
+</ul>
+</dd>
+<dt class="field-even">戻り値</dt>
+<dd class="field-even"><p>ユーザー情報</p>
+</dd>
+<dt class="field-odd">戻り値の型</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mi.conn.Controller.get_user_notes">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">get_user_notes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">since_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_my_renotes</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_replies</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">with_files</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">until_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">get_all</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exclude_nsfw</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_type</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">since_date</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">until_data</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/mi/conn.html#Controller.get_user_notes"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#mi.conn.Controller.get_user_notes" title="この定義へのパーマリンク">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </div>
 
 
