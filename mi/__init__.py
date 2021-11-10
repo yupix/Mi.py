@@ -15,6 +15,7 @@ from .chart import Chart, Local, Remote
 from .drive import Drive, Properties
 from .note import Follow, Header, Note, Reaction
 from .router import Router
+from .chat import *
 from .client import Client, BotBase
 from .ext import *
 

@@ -14,29 +14,26 @@ class AbstractNote(ABC):
         """
 
     @abstractmethod
-    async def delete(self, note_id: str = None) -> bool:
+    async def delete(self) -> bool:
         """
         指定したIDのノートを削除します
 
-        Parameters
-        ----------
-        note_id: str
-            削除するノートのid
-
         returns
         -------
-        bool
+        is_success: bool
             成功したか否か
+        status_code: int
+            HTTP レスポンスステータスコード
         """
 
     @abstractmethod
     def add_file(
-        self,
-        path: str = None,
-        name: str = None,
-        force: bool = False,
-        is_sensitive: bool = False,
-        url: str = None,
+            self,
+            path: str = None,
+            name: str = None,
+            force: bool = False,
+            is_sensitive: bool = False,
+            url: str = None,
     ):
         """
         ノートにファイルを添付します。

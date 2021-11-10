@@ -3,7 +3,8 @@ from typing import Any, Dict, List, Optional
 
 from pydantic import BaseModel
 
-from mi import Emoji, Instance, conn
+from mi import Emoji, Instance
+from mi.conn import Controller
 from mi.drive import File
 from mi.types.user import Author as UserPayload
 from mi.utils import api, upper_to_lower
@@ -241,7 +242,8 @@ class Author:
         self.emojis: list = data["emojis"]
         self.online_status = data.get("online_status", None)
         self.instance = (
-            Instance(data["instance"]) if data.get("instance") else Instance({})
+            Instance(data["instance"]) if data.get("instance") else Instance(
+                {})
         )
         self.__user_action: UserAction = UserAction()
 
@@ -297,12 +299,13 @@ class Author:
         """
         return UserProfile(
             **upper_to_lower(
-                conn.get_user(user_id=self.id, username=self.username, host=self.host)
+                Controller.get_user(user_id=self.id, username=self.username,
+                                    host=self.host)
             )
         )
 
     def get_followers(
-        self, until_id: str = None, limit: int = 10, get_all: bool = False
+            self, until_id: str = None, limit: int = 10, get_all: bool = False
     ):
         """
         ユーザーのフォロワー一覧を取得します
@@ -319,7 +322,7 @@ class Author:
         -------
 
         """
-        return conn.get_followers(
+        return Controller.get_followers(
             user_id=self.id,
             username=self.username,
             host=self.host,

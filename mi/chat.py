@@ -1,10 +1,12 @@
 from typing import List
 
 from .abc.chat import AbstractChat, AbstractChatContent
-from .conn import delete_chat
+from .conn import Controller
 from .types.chat import Chat as ChatPayload
 from .user import Author
 from .utils import api, remove_dict_empty, upper_to_lower
+
+__all__ = ['Chat', 'ChatContent']
 
 
 class Chat(AbstractChat):
@@ -87,5 +89,5 @@ class ChatContent(AbstractChatContent):
         bool:
             成功したか否か
         """
-        res = await delete_chat(self.id)
+        res = await Controller.delete_chat(self.id)
         return res.status_code == 204

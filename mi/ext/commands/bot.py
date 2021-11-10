@@ -9,10 +9,8 @@ import traceback
 from types import ModuleType
 from typing import Any, Callable, Coroutine, Dict, Optional
 
-import rich
-
 from mi import UserProfile, config, utils
-from mi.conn import get_instance_meta
+from mi.conn import Controller
 from mi.exception import (
     CheckFailure,
     CogNameDuplicate,
@@ -34,7 +32,7 @@ __all__ = ["BotBase", "Bot"]
 from mi.utils import get_module_logger
 
 
-class BotBase(GroupMixin):
+class BotBase(GroupMixin, Controller):
     def __init__(self, command_prefix, **options):
         super().__init__(**options)
         self.command_prefix = command_prefix
@@ -50,6 +48,7 @@ class BotBase(GroupMixin):
         self.__cogs: Dict[str] = {}
         self.strip_after_prefix = options.get("strip_after_prefix", False)
         self.logger = get_module_logger(__name__)
+        self.loop = asyncio.get_event_loop()
 
     async def can_run(self, ctx, *, call_once=False):
         data = self._check_once if call_once else self._checks
@@ -325,7 +324,7 @@ class BotBase(GroupMixin):
         config.debug = debug
         self.i = UserAction().get_i()
         auth_i["profile"] = self.i
-        auth_i["instance"] = get_instance_meta()
+        auth_i["instance"] = self.get_instance_meta()
         config.i = config.Config(**auth_i)
         asyncio.get_event_loop().run_until_complete(
             WebSocket(self).run(f"{uri}?i={token}")
