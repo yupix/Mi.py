@@ -1,0 +1,36 @@
+name: Document Release
+on:
+  push:
+    branches:
+    - master
+
+jobs:
+  release:
+    name: Build
+    runs-on: ubuntu-latest
+    if: "!contains(github.event.head_commit.message, 'auto rebuilding site')"
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        ref: "master"
+
+    - name: Set up Python
+    - uses: actions/setup-python@v2
+      with:
+        python-version: 3.9.0
+
+    - name: Install dependencies
+      run: |
+        cd docs
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    - name: Build
+      run: |
+        make html
+        
+    - name: Deploy
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./_build/html
