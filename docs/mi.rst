@@ -26,7 +26,6 @@ Submodules
    mi.exception
    mi.http
    mi.instance
-   mi.logger
    mi.next_utils
    mi.next_utils
    mi.note
