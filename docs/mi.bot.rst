@@ -1,3 +1,5 @@
+:orphan:
+
 mi.bot module
 =============
 

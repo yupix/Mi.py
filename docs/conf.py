@@ -43,11 +43,7 @@ extensions = [
     "numpydoc",
     "sphinx_panels",
     "sphinx_git",
-    "sphinxcontrib.autodoc_pydantic",
 ]
-autodoc_pydantic_model_show_json = False  # Jsonを表示しないように
-autodoc_pydantic_model_show_field_summary = False
-autodoc_pydantic_field_show_default = False
 panels_add_bootstrap_css = False
 
 autodoc_mock_imports = ["matplotlib"]
@@ -113,6 +109,8 @@ html_theme_options = {
     # "navbar_end": ["navbar-icon-links", "navbar-version"]  # Just for testing
     # "footer_items": ["copyright", "sphinx-version", ""]
 }
+
+numpydoc_show_class_members = False
 
 html_context = {
     "github_user": "yupix",
