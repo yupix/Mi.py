@@ -204,7 +204,7 @@
                     <span class="n">recv</span> <span class="o">=</span> <span class="k">await</span> <span class="n">web_socket</span><span class="o">.</span><span class="n">recv</span><span class="p">()</span>
                     <span class="n">asyncio</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="n">web_socket</span><span class="p">,</span> <span class="n">recv</span><span class="p">))</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
-            <span class="n">asyncio</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_on_error</span><span class="p">(</span><span class="n">err</span><span class="p">))</span></div>
+            <span class="n">asyncio</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cls</span><span class="o">.</span><span class="n">__on_error</span><span class="p">(</span><span class="n">err</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="WebSocket.on_ready"><a class="viewcode-back" href="../../mi.http.html#mi.http.WebSocket.on_ready">[ドキュメント]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">on_ready</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">web_socket</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -423,7 +423,7 @@
     
     <div class="footer-item">
       <p class="sphinx-version">
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.2.0.<br>
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.3.0.<br>
 </p>
     </div>
     
