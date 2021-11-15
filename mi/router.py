@@ -38,7 +38,8 @@ class Router:
 
         Parameters
         ----------
-        channel_list : List['global', 'local', 'home', 'main']
+        channel_list : List
+            ['global', 'local', 'home', 'main']
 
         Returns
         -------
