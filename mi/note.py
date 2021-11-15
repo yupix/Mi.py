@@ -261,7 +261,7 @@ class Poll:
         self.multiple: bool = data["multiple"]
         self.expires_at: int = data["expires_at"]
         self.choices: List = data["choices"]
-        self.expired_after: int = data["expired_after"]
+        self.expired_after: int = data.get("expired_after")
 
 
 class Renote(AbstractNote):
@@ -283,7 +283,7 @@ class Renote(AbstractNote):
         self.files = data["files"]
         self.reply_id = data["reply_id"]
         self.renote_id = data["renote_id"]
-        self.uri = data["uri"]
+        self.uri = data.get("uri")
         self.poll = Poll(data["poll"]) if data.get("poll") else None
         self.__note_action = NoteAction
 
