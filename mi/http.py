@@ -60,7 +60,7 @@ class WebSocket:
                     recv = await web_socket.recv()
                     asyncio.create_task(self.recv(web_socket, recv))
         except Exception as err:
-            asyncio.create_task(self._on_error(err))
+            asyncio.create_task(self.cls.__on_error(err))
 
     async def on_ready(self, web_socket) -> None:
         """
