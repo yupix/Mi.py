@@ -95,7 +95,7 @@ class PinnedNote(BaseModel):
     channelId: Optional[str] = None
     channel: Optional[Channel] = Channel()
     localOnly: Optional[bool] = False
-    emojis: Optional[List[Emoji]]
+    # emojis: Optional[List[Emoji]] # TODO: 2021 修正
     reactions: Optional[Dict[str, Any]] = {}
     renoteCount: Optional[int] = 0
     repliesCount: Optional[int] = 0
