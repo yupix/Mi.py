@@ -23,6 +23,14 @@ else:
 
 ext_modules = [Extension("mi.next_utils", sources=["mi/next_utils" + ext])]
 
+packages = [
+    'mi',
+    'mi.abc',
+    'mi.types',
+    'mi.ext.commands',
+    'mi.ext.task'
+]
+
 setup(
     name="mi.py",
     version="0.2.5",
@@ -35,7 +43,7 @@ setup(
     description=description,
     long_description=long_description,
     long_description_content_type="text/markdown",
-    packages=find_packages("mi"),
+    packages=packages,
     classifiers=[
         "Development Status :: 2 - Pre-Alpha",
         "Programming Language :: Python :: 3.9",
