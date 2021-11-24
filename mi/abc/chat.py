@@ -1,7 +1,5 @@
 from abc import ABC, abstractmethod
 
-from mi.types.chat import Chat as ChatPayload
-
 
 class AbstractChat(ABC):
     @abstractmethod
