@@ -153,7 +153,7 @@
 
 <span class="kn">import</span> <span class="nn">websockets</span>
 
-<span class="kn">from</span> <span class="nn">mi</span> <span class="kn">import</span> <span class="n">config</span>
+<span class="kn">from</span> <span class="nn">mi</span> <span class="kn">import</span> <span class="n">Emoji</span><span class="p">,</span> <span class="n">config</span>
 <span class="kn">from</span> <span class="nn">mi.chat</span> <span class="kn">import</span> <span class="n">ChatContent</span>
 <span class="kn">from</span> <span class="nn">mi.note</span> <span class="kn">import</span> <span class="n">Follow</span><span class="p">,</span> <span class="n">NoteContent</span><span class="p">,</span> <span class="n">Reaction</span>
 <span class="kn">from</span> <span class="nn">mi.router</span> <span class="kn">import</span> <span class="n">Router</span>
@@ -232,10 +232,17 @@
 <span class="sd">        message :</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">message</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+        <span class="n">base_type</span> <span class="o">=</span> <span class="n">message</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;type&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;received: </span><span class="si">{</span><span class="n">message</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="n">base_msg</span> <span class="o">=</span> <span class="n">message</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;body&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">base_type</span> <span class="o">==</span> <span class="s1">&#39;channel&#39;</span><span class="p">:</span>
+            <span class="n">base_msg</span> <span class="o">=</span> <span class="n">message</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;body&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">base_msg</span> <span class="o">=</span> <span class="n">message</span>
+
         <span class="k">if</span> <span class="n">base_msg</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span>
+
         <span class="n">event_type</span> <span class="o">=</span> <span class="n">base_msg</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span>
         <span class="n">event_list</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s2">&quot;note&quot;</span><span class="p">:</span> <span class="s2">&quot;on_message&quot;</span><span class="p">,</span>
@@ -247,17 +254,35 @@
             <span class="s2">&quot;unreadNotification&quot;</span><span class="p">:</span> <span class="s2">&quot;on_unread_notification&quot;</span><span class="p">,</span>
             <span class="s2">&quot;mention&quot;</span><span class="p">:</span> <span class="s2">&quot;on_mention&quot;</span><span class="p">,</span>
             <span class="s2">&quot;messagingMessage&quot;</span><span class="p">:</span> <span class="s2">&quot;on_chat&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;emojiAdded&quot;</span><span class="p">:</span> <span class="s2">&quot;on_emoji_add&quot;</span>
         <span class="p">}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;received event: </span><span class="si">{</span><span class="n">event_type</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="p">(</span>
-            <span class="n">event_type</span> <span class="o">==</span> <span class="s2">&quot;notification&quot;</span>
-            <span class="ow">or</span> <span class="s2">&quot;unread&quot;</span> <span class="ow">in</span> <span class="n">event_type</span>
-            <span class="ow">or</span> <span class="n">event_list</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">event_type</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span>
+                <span class="n">event_type</span> <span class="o">==</span> <span class="s2">&quot;notification&quot;</span>
+                <span class="ow">or</span> <span class="s2">&quot;unread&quot;</span> <span class="ow">in</span> <span class="n">event_type</span>
+                <span class="ow">or</span> <span class="n">event_list</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">event_type</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span>
         <span class="p">):</span>
             <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_notification</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
             <span class="k">return</span>
 
         <span class="k">await</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">event_list</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">event_type</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)(</span><span class="n">message</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="WebSocket.on_emoji_add"><a class="viewcode-back" href="../../mi.http.html#mi.http.WebSocket.on_emoji_add">[ドキュメント]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">on_emoji_add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        emojiがインスタンスに追加された際のイベント</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        message</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cls</span><span class="o">.</span><span class="n">event_dispatch</span><span class="p">(</span><span class="s2">&quot;emoji_add&quot;</span><span class="p">,</span> <span class="n">Emoji</span><span class="p">(</span>
+                <span class="n">message</span><span class="p">[</span><span class="s1">&#39;body&#39;</span><span class="p">][</span><span class="s1">&#39;emoji&#39;</span><span class="p">]</span>
+            <span class="p">)))</span></div>
 
 <div class="viewcode-block" id="WebSocket.on_message"><a class="viewcode-back" href="../../mi.http.html#mi.http.WebSocket.on_message">[ドキュメント]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">on_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Task</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -274,7 +299,8 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">msg</span> <span class="o">=</span> <span class="n">message</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;body&quot;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;body&quot;</span><span class="p">,</span> <span class="p">{})</span>
         <span class="n">message</span> <span class="o">=</span> <span class="n">NoteContent</span><span class="p">(</span>
-            <span class="n">upper_to_lower</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">replace_list</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;user&quot;</span><span class="p">:</span> <span class="s2">&quot;author&quot;</span><span class="p">,</span> <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;content&quot;</span><span class="p">})</span>
+            <span class="n">upper_to_lower</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span>
+                           <span class="n">replace_list</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;user&quot;</span><span class="p">:</span> <span class="s2">&quot;author&quot;</span><span class="p">,</span> <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;content&quot;</span><span class="p">})</span>
         <span class="p">)</span>
         <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">router</span><span class="o">.</span><span class="n">capture_message</span><span class="p">(</span><span class="n">message</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cls</span><span class="o">.</span><span class="n">_on_message</span><span class="p">(</span><span class="n">message</span><span class="p">))</span></div>
@@ -293,7 +319,8 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">msg</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;body&quot;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;body&quot;</span><span class="p">,</span> <span class="p">{})</span>
         <span class="n">ctx</span> <span class="o">=</span> <span class="n">ChatContent</span><span class="p">(</span>
-            <span class="n">upper_to_lower</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">replace_list</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;user&quot;</span><span class="p">:</span> <span class="s2">&quot;author&quot;</span><span class="p">,</span> <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;content&quot;</span><span class="p">})</span>
+            <span class="n">upper_to_lower</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span>
+                           <span class="n">replace_list</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;user&quot;</span><span class="p">:</span> <span class="s2">&quot;author&quot;</span><span class="p">,</span> <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;content&quot;</span><span class="p">})</span>
         <span class="p">)</span>
         <span class="k">return</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cls</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s2">&quot;chat&quot;</span><span class="p">,</span> <span class="n">ctx</span><span class="p">))</span></div>
 
@@ -327,7 +354,8 @@
         <span class="n">base_ctx</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;body&quot;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;body&quot;</span><span class="p">)</span>
         <span class="n">base_ctx</span><span class="p">[</span><span class="s2">&quot;content&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">base_ctx</span><span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">]</span>
         <span class="n">base_ctx</span><span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="n">base_ctx</span><span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;@</span><span class="si">{</span><span class="n">config</span><span class="o">.</span><span class="n">i</span><span class="o">.</span><span class="n">profile</span><span class="o">.</span><span class="n">username</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
+            <span class="n">base_ctx</span><span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;@</span><span class="si">{</span><span class="n">config</span><span class="o">.</span><span class="n">i</span><span class="o">.</span><span class="n">profile</span><span class="o">.</span><span class="n">username</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                                     <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
         <span class="p">)</span>
         <span class="k">return</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">cls</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s2">&quot;mention&quot;</span><span class="p">,</span> <span class="n">NoteContent</span><span class="p">(</span><span class="o">**</span><span class="n">base_ctx</span><span class="p">))</span>
@@ -349,7 +377,8 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">cls</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span>
                 <span class="s2">&quot;follow&quot;</span><span class="p">,</span>
                 <span class="n">Follow</span><span class="p">(</span>
-                    <span class="o">**</span><span class="n">upper_to_lower</span><span class="p">(</span><span class="n">message</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;body&quot;</span><span class="p">),</span> <span class="n">replace_list</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;body&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">})</span>
+                    <span class="o">**</span><span class="n">upper_to_lower</span><span class="p">(</span><span class="n">message</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;body&quot;</span><span class="p">),</span>
+                                     <span class="n">replace_list</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;body&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">})</span>
                 <span class="p">),</span>
             <span class="p">)</span>
         <span class="p">)</span></div>
