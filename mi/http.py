@@ -9,7 +9,7 @@ from typing import Any
 
 import websockets
 
-from mi import config
+from mi import Emoji, config
 from mi.chat import ChatContent
 from mi.note import Follow, NoteContent, Reaction
 from mi.router import Router
@@ -88,10 +88,17 @@ class WebSocket:
         message :
         """
         message = json.loads(message)
+        base_type = message.get('type')
         self.logger.debug(f"received: {message}")
-        base_msg = message.get("body", None)
+
+        if base_type == 'channel':
+            base_msg = message.get("body", None)
+        else:
+            base_msg = message
+
         if base_msg is None:
             return
+
         event_type = base_msg["type"]
         event_list = {
             "note": "on_message",
@@ -103,17 +110,35 @@ class WebSocket:
             "unreadNotification": "on_unread_notification",
             "mention": "on_mention",
             "messagingMessage": "on_chat",
+            "emojiAdded": "on_emoji_add"
         }
         self.logger.debug(f"received event: {event_type}")
         if (
-            event_type == "notification"
-            or "unread" in event_type
-            or event_list.get(event_type) is None
+                event_type == "notification"
+                or "unread" in event_type
+                or event_list.get(event_type) is None
         ):
             await self.on_notification(message)
             return
 
         await getattr(self, f"{event_list.get(event_type)}")(message)
+
+    async def on_emoji_add(self, message: dict):
+        """
+        emojiがインスタンスに追加された際のイベント
+
+        Parameters
+        ----------
+        message
+
+        Returns
+        -------
+
+        """
+        await asyncio.create_task(
+            self.cls.event_dispatch("emoji_add", Emoji(
+                message['body']['emoji']
+            )))
 
     async def on_message(self, message: Any) -> asyncio.Task:
         """
@@ -130,7 +155,8 @@ class WebSocket:
         """
         msg = message.get("body", {}).get("body", {})
         message = NoteContent(
-            upper_to_lower(msg, replace_list={"user": "author", "text": "content"})
+            upper_to_lower(msg,
+                           replace_list={"user": "author", "text": "content"})
         )
         await self.router.capture_message(message.id)
         return asyncio.create_task(self.cls._on_message(message))
@@ -149,7 +175,8 @@ class WebSocket:
         """
         msg = ctx.get("body", {}).get("body", {})
         ctx = ChatContent(
-            upper_to_lower(msg, replace_list={"user": "author", "text": "content"})
+            upper_to_lower(msg,
+                           replace_list={"user": "author", "text": "content"})
         )
         return asyncio.create_task(self.cls.dispatch("chat", ctx))
 
@@ -183,7 +210,8 @@ class WebSocket:
         base_ctx = ctx.get("body", {}).get("body")
         base_ctx["content"] = base_ctx["text"]
         base_ctx["text"] = (
-            base_ctx["text"].replace(f"@{config.i.profile.username}", "").strip(" ")
+            base_ctx["text"].replace(f"@{config.i.profile.username}",
+                                     "").strip(" ")
         )
         return asyncio.create_task(
             self.cls.dispatch("mention", NoteContent(**base_ctx))
@@ -205,7 +233,8 @@ class WebSocket:
             self.cls.dispatch(
                 "follow",
                 Follow(
-                    **upper_to_lower(message.get("body"), replace_list={"body": "user"})
+                    **upper_to_lower(message.get("body"),
+                                     replace_list={"body": "user"})
                 ),
             )
         )
