@@ -138,7 +138,8 @@ class Controller:
         """
         return api("/api/meta").json()
 
-    def fetch_instance_meta(self) -> dict:
+    @staticmethod
+    def fetch_instance_meta() -> dict:
         """
         BOTのアカウントがある最新のインスタンス情報をdictで返します
 
@@ -147,12 +148,12 @@ class Controller:
         dict:
             インスタンス情報
         """
-        self.get_instance_meta.cache_clear()
+        Controller.get_instance_meta.cache_clear()
         return api("/api/meta").json()
 
     @staticmethod
     @cache
-    def get_user(self, user_id: str = None, username: str = None,
+    def get_user(user_id: str = None, username: str = None,
                  host: str = None) -> dict:
         """
         ユーザーのプロフィールを取得します。一度のみサーバーにアクセスしキャッシュをその後は使います。
@@ -172,10 +173,10 @@ class Controller:
         dict:
             ユーザー情報
         """
-        return self.fetch_user(user_id, username, host)
+        return Controller.fetch_user(user_id, username, host)
 
     @staticmethod
-    def fetch_user(self, user_id: str = None, username: str = None,
+    def fetch_user(user_id: str = None, username: str = None,
                    host: str = None) -> dict:
         """
         サーバーにアクセスし、ユーザーのプロフィールを取得します。基本的には get_userをお使いください。
@@ -199,7 +200,7 @@ class Controller:
 
         data = remove_dict_empty(
             {"userId": user_id, "username": username, "host": host})
-        self.get_user.cache_clear()
+        Controller.get_user.cache_clear()
         return api("/api/users/show", json_data=data, auth=True).json()
 
     @staticmethod
