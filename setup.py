@@ -28,7 +28,7 @@ packages = [
     'mi.abc',
     'mi.types',
     'mi.ext.commands',
-    'mi.ext.task'
+    'mi.ext.tasks'
 ]
 
 setup(
