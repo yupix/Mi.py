@@ -282,7 +282,8 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">api</span><span class="p">(</span><span class="s2">&quot;/api/meta&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">json</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="Controller.fetch_instance_meta"><a class="viewcode-back" href="../../mi.conn.html#mi.conn.Controller.fetch_instance_meta">[ドキュメント]</a>    <span class="k">def</span> <span class="nf">fetch_instance_meta</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<div class="viewcode-block" id="Controller.fetch_instance_meta"><a class="viewcode-back" href="../../mi.conn.html#mi.conn.Controller.fetch_instance_meta">[ドキュメント]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">fetch_instance_meta</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        BOTのアカウントがある最新のインスタンス情報をdictで返します</span>
 
@@ -291,12 +292,12 @@
 <span class="sd">        dict:</span>
 <span class="sd">            インスタンス情報</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">get_instance_meta</span><span class="o">.</span><span class="n">cache_clear</span><span class="p">()</span>
+        <span class="n">Controller</span><span class="o">.</span><span class="n">get_instance_meta</span><span class="o">.</span><span class="n">cache_clear</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">api</span><span class="p">(</span><span class="s2">&quot;/api/meta&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">json</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="Controller.get_user"><a class="viewcode-back" href="../../mi.conn.html#mi.conn.Controller.get_user">[ドキュメント]</a>    <span class="nd">@staticmethod</span>
     <span class="nd">@cache</span>
-    <span class="k">def</span> <span class="nf">get_user</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">username</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="k">def</span> <span class="nf">get_user</span><span class="p">(</span><span class="n">user_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">username</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
                  <span class="n">host</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        ユーザーのプロフィールを取得します。一度のみサーバーにアクセスしキャッシュをその後は使います。</span>
@@ -316,10 +317,10 @@
 <span class="sd">        dict:</span>
 <span class="sd">            ユーザー情報</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">fetch_user</span><span class="p">(</span><span class="n">user_id</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">host</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">Controller</span><span class="o">.</span><span class="n">fetch_user</span><span class="p">(</span><span class="n">user_id</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">host</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Controller.fetch_user"><a class="viewcode-back" href="../../mi.conn.html#mi.conn.Controller.fetch_user">[ドキュメント]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">fetch_user</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">username</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="k">def</span> <span class="nf">fetch_user</span><span class="p">(</span><span class="n">user_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">username</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
                    <span class="n">host</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        サーバーにアクセスし、ユーザーのプロフィールを取得します。基本的には get_userをお使いください。</span>
@@ -343,7 +344,7 @@
 
         <span class="n">data</span> <span class="o">=</span> <span class="n">remove_dict_empty</span><span class="p">(</span>
             <span class="p">{</span><span class="s2">&quot;userId&quot;</span><span class="p">:</span> <span class="n">user_id</span><span class="p">,</span> <span class="s2">&quot;username&quot;</span><span class="p">:</span> <span class="n">username</span><span class="p">,</span> <span class="s2">&quot;host&quot;</span><span class="p">:</span> <span class="n">host</span><span class="p">})</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">get_user</span><span class="o">.</span><span class="n">cache_clear</span><span class="p">()</span>
+        <span class="n">Controller</span><span class="o">.</span><span class="n">get_user</span><span class="o">.</span><span class="n">cache_clear</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">api</span><span class="p">(</span><span class="s2">&quot;/api/users/show&quot;</span><span class="p">,</span> <span class="n">json_data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">json</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="Controller.get_followers"><a class="viewcode-back" href="../../mi.conn.html#mi.conn.Controller.get_followers">[ドキュメント]</a>    <span class="nd">@staticmethod</span>
