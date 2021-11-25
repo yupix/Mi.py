@@ -150,6 +150,7 @@ class Controller:
         self.get_instance_meta.cache_clear()
         return api("/api/meta").json()
 
+    @staticmethod
     @cache
     def get_user(self, user_id: str = None, username: str = None,
                  host: str = None) -> dict:
@@ -173,6 +174,7 @@ class Controller:
         """
         return self.fetch_user(user_id, username, host)
 
+    @staticmethod
     def fetch_user(self, user_id: str = None, username: str = None,
                    host: str = None) -> dict:
         """
