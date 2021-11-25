@@ -23,7 +23,7 @@ class Loop:
         -------
         _task : asyncio.Task
         """
-        _loop = asyncio.get_event_loop()
+        _loop = asyncio.get_running_loop()
         self._task = _loop.create_task(self.task(*args, **kwargs))
         return self._task
 

@@ -1,2 +1,2 @@
 from .commands import *
-from .task import *
+from .tasks import *
