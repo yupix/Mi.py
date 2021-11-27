@@ -152,11 +152,13 @@
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span>
 
 <span class="kn">import</span> <span class="nn">websockets</span>
+<span class="kn">from</span> <span class="nn">websockets.legacy.client</span> <span class="kn">import</span> <span class="n">WebSocketClientProtocol</span>
 
 <span class="kn">from</span> <span class="nn">mi</span> <span class="kn">import</span> <span class="n">Emoji</span><span class="p">,</span> <span class="n">config</span>
 <span class="kn">from</span> <span class="nn">mi.chat</span> <span class="kn">import</span> <span class="n">ChatContent</span>
 <span class="kn">from</span> <span class="nn">mi.note</span> <span class="kn">import</span> <span class="n">Follow</span><span class="p">,</span> <span class="n">NoteContent</span><span class="p">,</span> <span class="n">Reaction</span>
 <span class="kn">from</span> <span class="nn">mi.router</span> <span class="kn">import</span> <span class="n">Router</span>
+<span class="kn">from</span> <span class="nn">mi.types.bot</span> <span class="kn">import</span> <span class="n">AbstractBotBase</span>
 <span class="kn">from</span> <span class="nn">mi.utils</span> <span class="kn">import</span> <span class="n">get_module_logger</span><span class="p">,</span> <span class="n">upper_to_lower</span>
 
 
@@ -165,7 +167,7 @@
 
     <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;web_socket&quot;</span><span class="p">,</span> <span class="s2">&quot;cls&quot;</span><span class="p">,</span> <span class="s2">&quot;router&quot;</span><span class="p">,</span> <span class="s2">&quot;auth_i&quot;</span><span class="p">,</span> <span class="s2">&quot;logger&quot;</span><span class="p">]</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">cls</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">cls</span><span class="p">:</span><span class="n">AbstractBotBase</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">get_module_logger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">web_socket</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cls</span> <span class="o">=</span> <span class="bp">cls</span>
@@ -206,7 +208,7 @@
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
             <span class="n">asyncio</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cls</span><span class="o">.</span><span class="n">__on_error</span><span class="p">(</span><span class="n">err</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="WebSocket.on_ready"><a class="viewcode-back" href="../../mi.http.html#mi.http.WebSocket.on_ready">[ドキュメント]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">on_ready</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">web_socket</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="WebSocket.on_ready"><a class="viewcode-back" href="../../mi.http.html#mi.http.WebSocket.on_ready">[ドキュメント]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">on_ready</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">web_socket</span><span class="p">:</span> <span class="n">WebSocketClientProtocol</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Botの起動準備が完了した際にイベントを実行する関数</span>
 
