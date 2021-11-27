@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>mi.config module &#8212; Mi.py 0.5.0 ドキュメント</title>
+    <title>mi.ext.tasks package &#8212; Mi.py 0.5.0 ドキュメント</title>
     
   <link href="_static/css/theme.css" rel="stylesheet">
   <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
@@ -120,17 +120,17 @@
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
   <div class="bd-toc-item active">
-    <ul class="nav bd-sidenav">
- <li class="toctree-l1 has-children">
+    <ul class="current nav bd-sidenav">
+ <li class="toctree-l1 current active has-children">
   <a class="reference internal" href="mi.ext.html">
    mi.ext package
   </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
   <label for="toctree-checkbox-1">
    <i class="fas fa-chevron-down">
    </i>
   </label>
-  <ul>
+  <ul class="current">
    <li class="toctree-l2 has-children">
     <a class="reference internal" href="mi.ext.commands.html">
      mi.ext.commands package
@@ -168,8 +168,8 @@
      </li>
     </ul>
    </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="mi.ext.tasks.html">
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
      mi.ext.tasks package
     </a>
    </li>
@@ -223,7 +223,7 @@
   </ul>
  </li>
 </ul>
-<ul class="current nav bd-sidenav">
+<ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="mi.chart.html">
    mi.chart module
@@ -239,8 +239,8 @@
    mi.client module
   </a>
  </li>
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
+ <li class="toctree-l1">
+  <a class="reference internal" href="mi.config.html">
    mi.config module
   </a>
  </li>
@@ -318,9 +318,19 @@
               
               <div class="toc-item">
                 
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
 
 <nav id="bd-toc-nav">
-    
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#module-mi.ext.tasks">
+   Module contents
+  </a>
+ </li>
+</ul>
+
 </nav>
               </div>
               
@@ -328,7 +338,7 @@
                 
 
 <div class="tocsection editthispage">
-    <a href="https://github.com/yupix/Mi.py/edit/master/docs/mi.config.rst">
+    <a href="https://github.com/yupix/Mi.py/edit/master/docs/mi.ext.tasks.rst">
         <i class="fas fa-pencil-alt"></i> Edit this page
     </a>
 </div>
@@ -347,15 +357,61 @@
               
               <div>
                 
-  <div class="section" id="module-mi.config">
-<span id="mi-config-module"></span><h1>mi.config module<a class="headerlink" href="#module-mi.config" title="このヘッドラインへのパーマリンク">¶</a></h1>
+  <div class="section" id="mi-ext-tasks-package">
+<h1>mi.ext.tasks package<a class="headerlink" href="#mi-ext-tasks-package" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="section" id="module-mi.ext.tasks">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-mi.ext.tasks" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <dl class="py class">
-<dt class="sig sig-object py" id="mi.config.Config">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.config.</span></span><span class="sig-name descname"><span class="pre">Config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">token</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">origin_uri</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">profile</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/config.html#Config"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#mi.config.Config" title="この定義へのパーマリンク">¶</a></dt>
+<dt class="sig sig-object py" id="mi.ext.tasks.Loop">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.ext.tasks.</span></span><span class="sig-name descname"><span class="pre">Loop</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seconds</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/ext/tasks.html#Loop"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#mi.ext.tasks.Loop" title="この定義へのパーマリンク">¶</a></dt>
 <dd><p>ベースクラス: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Botを動作させる上でのConfig</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="mi.ext.tasks.Loop.start">
+<span class="sig-name descname"><span class="pre">start</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">_asyncio.Task</span></span></span><a class="reference internal" href="_modules/mi/ext/tasks.html#Loop.start"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#mi.ext.tasks.Loop.start" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>タスクを開始する</p>
+<dl class="field-list simple">
+<dt class="field-odd">パラメータ</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>args</strong> (<em>Any</em>) -- </p></li>
+<li><p><strong>kwargs</strong> (<em>Any</em>) -- </p></li>
+</ul>
+</dd>
+<dt class="field-even">戻り値</dt>
+<dd class="field-even"><p><strong>_task</strong></p>
+</dd>
+<dt class="field-odd">戻り値の型</dt>
+<dd class="field-odd"><p>asyncio.Task</p>
+</dd>
+</dl>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="mi.ext.tasks.Loop.stop">
+<span class="sig-name descname"><span class="pre">stop</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/ext/tasks.html#Loop.stop"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#mi.ext.tasks.Loop.stop" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>タスクを停止</p>
+<dl class="field-list simple">
+<dt class="field-odd">戻り値</dt>
+<dd class="field-odd"><p></p>
+</dd>
+<dt class="field-even">戻り値の型</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mi.ext.tasks.Loop.task">
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">task</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/ext/tasks.html#Loop.task"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#mi.ext.tasks.Loop.task" title="この定義へのパーマリンク">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mi.ext.tasks.loop">
+<span class="sig-prename descclassname"><span class="pre">mi.ext.tasks.</span></span><span class="sig-name descname"><span class="pre">loop</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/ext/tasks.html#loop"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#mi.ext.tasks.loop" title="この定義へのパーマリンク">¶</a></dt>
+<dd></dd></dl>
+
+</div>
 </div>
 
 
