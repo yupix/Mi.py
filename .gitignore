@@ -10,3 +10,5 @@ build
 .pylintrc
 __pycache__
 dist
+main.py
+cogs
