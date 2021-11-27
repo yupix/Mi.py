@@ -2,6 +2,7 @@ __all__ = ["Command", "command", "GroupMixin", "group"]
 
 import asyncio
 import functools
+from typing import Any, Dict
 
 from ...exception import CommandError, CommandInvokeError, CommandRegistrationError
 from ._types import _BaseCommand
@@ -28,7 +29,7 @@ class _CaseInsensitiveDict(dict):
 
 
 class GroupMixin:
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args: tuple[Any], **kwargs: Dict[Any, Any]):
         case_insensitive = kwargs.get("case_insensitive", False)
         self.all_commands = _CaseInsensitiveDict() if case_insensitive else {}
         self.case_insensitive = case_insensitive
@@ -231,7 +232,8 @@ class Group(GroupMixin, Command):
     """
 
     def __init__(self, *args, **attrs):
-        self.invoke_without_command = attrs.pop("invoke_without_command", False)
+        self.invoke_without_command = attrs.pop(
+            "invoke_without_command", False)
         super().__init__(*args, **attrs)
 
     def copy(self):
