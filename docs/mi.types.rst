@@ -1,5 +1,3 @@
-:orphan:
-
 mi.types package
 ================
 
@@ -9,6 +7,7 @@ Submodules
 .. toctree::
    :maxdepth: 4
 
+   mi.types.bot
    mi.types.chat
    mi.types.drive
    mi.types.emoji

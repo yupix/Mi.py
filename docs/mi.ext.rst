@@ -8,7 +8,7 @@ Subpackages
    :maxdepth: 4
 
    mi.ext.commands
-   mi.ext.task
+   mi.ext.tasks
 
 Module contents
 ---------------
