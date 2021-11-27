@@ -1,10 +1,13 @@
+from typing import Any, Dict
+
+
 class Context:
-    def __init__(self, **attrs):
+    def __init__(self, **attrs: Dict[Any, Any]):
         self.message = attrs.pop("message", None)
         self.bot = attrs.pop("bot", None)
         self.command = attrs.pop("command", None)
 
-    async def invoke(self, command, /, *args, **kwargs):
+    async def invoke(self, command, /, *args: tuple[Any], **kwargs: Dict[Any, Any]):
         arguments = []
         if command.cog is not None:
             arguments.apped(command.cog)

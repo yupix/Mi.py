@@ -7,7 +7,7 @@ import re
 import sys
 import traceback
 from types import ModuleType
-from typing import Any, Callable, Coroutine, Dict, Optional
+from typing import Any, Callable, Coroutine, Dict, List, Optional
 
 from websockets.legacy.client import WebSocketClientProtocol
 
@@ -40,8 +40,8 @@ class BotBase(GroupMixin, Controller):
         self.command_prefix = command_prefix
         self.extra_events: Dict[str, Any] = {}
         self.special_events: Dict[str, Any] = {}
-        self._check_once = []
-        self._checks = []
+        self._check_once: List[Any] = [] # TODO: いつか確認する
+        self._checks:List[Any] = [] # TODO: いつか確認する
         self._after_invoke = None
         self.token = None
         self.origin_uri = None
@@ -52,7 +52,7 @@ class BotBase(GroupMixin, Controller):
         self.logger = get_module_logger(__name__)
         self.loop = asyncio.get_event_loop()
 
-    async def can_run(self, ctx, *, call_once: bool = False):
+    async def can_run(self, ctx: Context, *, call_once: bool = False):
         data = self._check_once if call_once else self._checks
 
         if len(data) == 0:
@@ -60,7 +60,7 @@ class BotBase(GroupMixin, Controller):
 
         return await utils.async_all(f(ctx) for f in data)
 
-    async def invoke(self, ctx, *args: tuple[Any], **kwargs:Dict[Any, Any]):
+    async def invoke(self, ctx:Context, *args: tuple[Any], **kwargs:Dict[Any, Any]):
         if not ctx.command:
             return False
         try:
