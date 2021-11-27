@@ -8,11 +8,13 @@ import uuid
 from typing import Any
 
 import websockets
+from websockets.legacy.client import WebSocketClientProtocol
 
 from mi import Emoji, config
 from mi.chat import ChatContent
 from mi.note import Follow, NoteContent, Reaction
 from mi.router import Router
+from mi.types.bot import AbstractBotBase
 from mi.utils import get_module_logger, upper_to_lower
 
 
@@ -21,7 +23,7 @@ class WebSocket:
 
     __slots__ = ["web_socket", "cls", "router", "auth_i", "logger"]
 
-    def __init__(self, cls):
+    def __init__(self, cls:AbstractBotBase):
         self.logger = get_module_logger(__name__)
         self.web_socket = None
         self.cls = cls
@@ -62,7 +64,7 @@ class WebSocket:
         except Exception as err:
             asyncio.create_task(self.cls.__on_error(err))
 
-    async def on_ready(self, web_socket) -> None:
+    async def on_ready(self, web_socket: WebSocketClientProtocol) -> None:
         """
         Botの起動準備が完了した際にイベントを実行する関数
 

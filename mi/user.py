@@ -6,7 +6,8 @@ from pydantic import BaseModel
 from mi import Emoji, Instance
 from mi.conn import Controller
 from mi.drive import File
-from mi.types.user import Author as UserPayload
+from mi.types.user import (Author as UserPayload
+                           )
 from mi.utils import api, upper_to_lower
 
 
@@ -17,7 +18,7 @@ class UserAction:
         return UserProfile(**upper_to_lower(json.loads(res.text)))
 
     @staticmethod
-    def follow(user_id: Optional[str]) -> tuple[bool, str]:
+    def follow(user_id: Optional[str]) -> tuple[bool, Optional[str]]:
         """
         与えられたIDのユーザーをフォローします
 

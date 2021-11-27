@@ -3,14 +3,17 @@ Misskeyのチャンネルへの接続や、メッセージのキャプチャ等�
 """
 
 import json
+from typing import List
 import uuid
+
+from websockets.legacy.client import WebSocketClientProtocol
 
 
 class Router:
     """
     Attributes
     ----------
-    web_socket : Any
+    web_socket : WebSocketClientProtocol
         WebSocketクライアント
 
     Methods
@@ -29,10 +32,10 @@ class Router:
         与えられたメッセージを元にnote idを取得し、そのメッセージをon_message等の監視対象に追加します
     """
 
-    def __init__(self, web_socket):
+    def __init__(self, web_socket: WebSocketClientProtocol):
         self.web_socket = web_socket
 
-    async def channels(self, channel_list: list) -> None:
+    async def channels(self, channel_list: List[str]) -> None:
         """
         与えられたlistを元にチャンネルに接続します
 

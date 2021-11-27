@@ -9,6 +9,8 @@ import traceback
 from types import ModuleType
 from typing import Any, Callable, Coroutine, Dict, Optional
 
+from websockets.legacy.client import WebSocketClientProtocol
+
 from mi import UserProfile, config, utils
 from mi.conn import Controller
 from mi.exception import (
@@ -33,7 +35,7 @@ from mi.utils import get_module_logger
 
 
 class BotBase(GroupMixin, Controller):
-    def __init__(self, command_prefix, **options):
+    def __init__(self, command_prefix: str, **options: Dict[Any, Any]):
         super().__init__(**options)
         self.command_prefix = command_prefix
         self.extra_events = {}
@@ -45,12 +47,12 @@ class BotBase(GroupMixin, Controller):
         self.origin_uri = None
         self.__extensions: Dict[str, Any] = {}
         self.i: UserProfile = None
-        self.__cogs: Dict[str] = {}
+        self.__cogs: Dict[str, str] = {}
         self.strip_after_prefix = options.get("strip_after_prefix", False)
         self.logger = get_module_logger(__name__)
         self.loop = asyncio.get_event_loop()
 
-    async def can_run(self, ctx, *, call_once=False):
+    async def can_run(self, ctx, *, call_once: bool = False):
         data = self._check_once if call_once else self._checks
 
         if len(data) == 0:
@@ -101,14 +103,23 @@ class BotBase(GroupMixin, Controller):
     async def _on_message(self, message):
         await self.process_commands(message)
 
-    def event(self, name=None):
+    async def on_ready(self, ws: WebSocketClientProtocol):
+        """
+        on_readyのデフォルト処理
+
+        Parameters
+        ----------
+        ws : WebSocketClientProtocol
+        """
+
+    def event(self, name: Optional[str] = None):
         def decorator(func):
             self.add_event(func, name)
             return func
 
         return decorator
 
-    def add_event(self, func, name=None):
+    def add_event(self, func, name: Optional[str] = None):
         name = func.__name__ if name is None else name
         if not asyncio.iscoroutinefunction(func):
             raise TypeError("Listeners must be coroutines")
@@ -125,7 +136,7 @@ class BotBase(GroupMixin, Controller):
 
         return decorator
 
-    def add_listener(self, func, name=None):
+    def add_listener(self, func, name: Optional[str] = None):
         name = func.__name__ if name is None else name
         if not asyncio.iscoroutinefunction(func):
             raise TypeError("Listeners must be coroutines")
@@ -157,7 +168,7 @@ class BotBase(GroupMixin, Controller):
             await self.schedule_event(getattr(self, ev), ev, *args, **kwargs)
         return ev in dir(self)
 
-    async def dispatch(self, event_name, *args, **kwargs):
+    async def dispatch(self, event_name: str, *args, **kwargs):
         ev = "on_" + event_name
         for event in self.extra_events.get(ev, []):
             if inspect.ismethod(event):
@@ -309,9 +320,9 @@ class BotBase(GroupMixin, Controller):
         if _origin_uri := re.search(r"wss?://(.*)/streaming", uri):
             origin_uri = (
                 _origin_uri.group(0)
-                    .replace("wss", "https")
-                    .replace("ws", "http")
-                    .replace("/streaming", "")
+                .replace("wss", "https")
+                .replace("ws", "http")
+                .replace("/streaming", "")
             )
         else:
             origin_uri = uri
