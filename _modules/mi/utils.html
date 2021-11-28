@@ -149,7 +149,7 @@
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">from</span> <span class="nn">inspect</span> <span class="kn">import</span> <span class="n">isawaitable</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">TypeVar</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">TypeVar</span>
 
 <span class="kn">import</span> <span class="nn">emoji</span>
 <span class="kn">import</span> <span class="nn">requests</span>
@@ -248,10 +248,10 @@
 
 <div class="viewcode-block" id="api"><a class="viewcode-back" href="../../mi.utils.html#mi.utils.api">[ドキュメント]</a><span class="k">def</span> <span class="nf">api</span><span class="p">(</span>
         <span class="n">endpoint</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-        <span class="n">json_data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">json_data</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">{},</span>
         <span class="o">*</span><span class="p">,</span>
-        <span class="n">origin_uri</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">files</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">origin_uri</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">files</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">auth</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">requests</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">Response</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -262,15 +262,13 @@
 <span class="sd">    ----------</span>
 <span class="sd">    origin_uri : str</span>
 <span class="sd">        起点となるURL</span>
-<span class="sd">    endpoint : str</span>
+<span class="sd">    endpoint : Optional[str]</span>
 <span class="sd">        エンドポイント</span>
-<span class="sd">    data : dict or str</span>
-<span class="sd">        送るデータ</span>
-<span class="sd">    json_data : dict</span>
+<span class="sd">    json_data : Dict[str, str]</span>
 <span class="sd">        dict形式のデータ</span>
 <span class="sd">    auth: bool</span>
 <span class="sd">        認証情報を付与するか</span>
-<span class="sd">    files :</span>
+<span class="sd">    files : Any</span>
 <span class="sd">        画像などのファイル</span>
 
 <span class="sd">    Returns</span>
@@ -297,7 +295,7 @@
         <span class="p">},</span>
     <span class="p">}</span>
     <span class="k">if</span> <span class="n">status_code</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">400</span><span class="p">,</span> <span class="mi">401</span><span class="p">,</span> <span class="mi">418</span><span class="p">,</span> <span class="mi">500</span><span class="p">]:</span>
-        <span class="n">error_base</span> <span class="o">=</span> <span class="n">errors</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">status_code</span><span class="p">)</span>
+        <span class="n">error_base</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="n">errors</span><span class="p">[(</span><span class="n">status_code</span><span class="p">)]</span>
         <span class="n">error_code</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
         <span class="n">error</span> <span class="o">=</span> <span class="n">error_base</span><span class="p">[</span><span class="s2">&quot;raise&quot;</span><span class="p">](</span>
             <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">error_base</span><span class="p">[</span><span class="s1">&#39;description&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> =&gt; </span><span class="si">{</span><span class="n">error_code</span><span class="p">[</span><span class="s1">&#39;error&#39;</span><span class="p">][</span><span class="s1">&#39;message&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">  </span><span class="se">\n</span><span class="s2"> </span><span class="si">{</span><span class="n">res</span><span class="o">.</span><span class="n">text</span><span class="si">}</span><span class="s2">&quot;</span>
@@ -409,7 +407,7 @@
     
     <div class="footer-item">
       <p class="sphinx-version">
-Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.3.0.<br>
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 4.3.1.<br>
 </p>
     </div>
     
