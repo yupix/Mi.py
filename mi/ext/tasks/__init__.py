@@ -1,16 +1,19 @@
 import asyncio
+from typing import Any, Callable, Coroutine, Dict, Optional
+from mi.exception import TaskNotRunningError
 
 __all__ = ["Loop", "loop"]
 
 
+
 class Loop:
-    def __init__(self, func, seconds=None):
-        self.seconds = seconds
-        self.func = func
-        self._task = None
+    def __init__(self, func: Callable[..., Coroutine[Any, Any, Any]], seconds: int = 60):
+        self.seconds: int = seconds
+        self.func: Callable[..., Coroutine[Any, Any, Any]] = func
+        self._task: Optional[asyncio.Task] = None
         self.stop_next_iteration = None
 
-    def start(self, *args, **kwargs) -> asyncio.Task:
+    def start(self, *args: tuple[Any], **kwargs: Dict[Any, Any]) -> asyncio.Task:
         """
         タスクを開始する
 
@@ -36,10 +39,13 @@ class Loop:
         None
 
         """
+        if self._task is None:
+            raise TaskNotRunningError('タスクは起動していません')
+
         if not self._task.done():
             self.stop_next_iteration = True
 
-    async def task(self, *args, **kwargs):
+    async def task(self, *args: tuple[Any], **kwargs: Dict[Any, Any]):
         while True:
             if self.stop_next_iteration:
                 return
@@ -47,8 +53,8 @@ class Loop:
             await asyncio.sleep(self.seconds)
 
 
-def loop(n):
-    def _deco(f):
+def loop(n: int):
+    def _deco(f: Callable[..., Coroutine[Any, Any, Any]]) -> Loop:
         return Loop(f, n)
 
     return _deco

@@ -5,7 +5,7 @@ import json
 import logging
 import re
 from inspect import isawaitable
-from typing import Any, Callable, Iterable, Optional, TypeVar
+from typing import Any, Callable, Dict, Iterable, Optional, TypeVar
 
 import emoji
 import requests
@@ -104,10 +104,10 @@ def json_dump(data, *args, **kwargs):
 
 def api(
         endpoint: str,
-        json_data=None,
+        json_data: Dict[str, str] = {},
         *,
-        origin_uri: str = None,
-        files: dict = None,
+        origin_uri: Optional[str] = None,
+        files: Any = None,
         auth: bool = False,
 ) -> requests.models.Response:
     """
@@ -118,15 +118,13 @@ def api(
     ----------
     origin_uri : str
         起点となるURL
-    endpoint : str
+    endpoint : Optional[str]
         エンドポイント
-    data : dict or str
-        送るデータ
-    json_data : dict
+    json_data : Dict[str, str]
         dict形式のデータ
     auth: bool
         認証情報を付与するか
-    files :
+    files : Any
         画像などのファイル
 
     Returns
@@ -153,7 +151,7 @@ def api(
         },
     }
     if status_code in [400, 401, 418, 500]:
-        error_base = errors.get(status_code)
+        error_base: Dict[str, Any] = errors[(status_code)]
         error_code = json.loads(res.text)
         error = error_base["raise"](
             f"{error_base['description']} => {error_code['error']['message']}  \n {res.text}"
