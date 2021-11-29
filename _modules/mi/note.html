@@ -148,9 +148,9 @@
 <span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">BaseModel</span><span class="p">,</span> <span class="n">Field</span>
 
 <span class="kn">from</span> <span class="nn">mi</span> <span class="kn">import</span> <span class="n">Drive</span><span class="p">,</span> <span class="n">Emoji</span><span class="p">,</span> <span class="n">UserProfile</span><span class="p">,</span> <span class="n">utils</span>
-<span class="kn">from</span> <span class="nn">mi.exception</span> <span class="kn">import</span> <span class="n">ContentRequired</span>
+<span class="kn">from</span> <span class="nn">mi.exception</span> <span class="kn">import</span> <span class="n">ContentRequired</span><span class="p">,</span> <span class="n">NotExistRequiredParameters</span>
 <span class="kn">from</span> <span class="nn">mi.user</span> <span class="kn">import</span> <span class="n">Author</span><span class="p">,</span> <span class="n">UserAction</span>
-<span class="kn">from</span> <span class="nn">mi.utils</span> <span class="kn">import</span> <span class="n">api</span><span class="p">,</span> <span class="n">remove_dict_empty</span><span class="p">,</span> <span class="n">upper_to_lower</span>
+<span class="kn">from</span> <span class="nn">mi.utils</span> <span class="kn">import</span> <span class="n">api</span><span class="p">,</span> <span class="n">check_multi_arg</span><span class="p">,</span> <span class="n">remove_dict_empty</span><span class="p">,</span> <span class="n">upper_to_lower</span>
 <span class="kn">from</span> <span class="nn">.abc.note</span> <span class="kn">import</span> <span class="n">AbstractNote</span>
 <span class="kn">from</span> <span class="nn">.types.note</span> <span class="kn">import</span> <span class="p">(</span><span class="n">Note</span> <span class="k">as</span> <span class="n">NotePayload</span><span class="p">,</span>
                          <span class="n">Poll</span> <span class="k">as</span> <span class="n">PollPayload</span><span class="p">,</span>
@@ -159,7 +159,7 @@
 
 <div class="viewcode-block" id="NoteAction"><a class="viewcode-back" href="../../mi.note.html#mi.NoteAction">[ドキュメント]</a><span class="k">class</span> <span class="nc">NoteAction</span><span class="p">:</span>
 <div class="viewcode-block" id="NoteAction.add_reaction"><a class="viewcode-back" href="../../mi.note.html#mi.NoteAction.add_reaction">[ドキュメント]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">async</span> <span class="k">def</span> <span class="nf">add_reaction</span><span class="p">(</span><span class="n">reaction</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">note_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">add_reaction</span><span class="p">(</span><span class="n">reaction</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">note_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        指定したnoteに指定したリアクションを付与します（内部用</span>
 
@@ -175,7 +175,7 @@
 <span class="sd">        status: bool</span>
 <span class="sd">            成功したならTrue,失敗ならFalse</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;noteId&quot;</span><span class="p">:</span> <span class="n">note_id</span><span class="p">,</span> <span class="s2">&quot;reaction&quot;</span><span class="p">:</span> <span class="n">reaction</span><span class="p">}</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">remove_dict_empty</span><span class="p">({</span><span class="s2">&quot;noteId&quot;</span><span class="p">:</span> <span class="n">note_id</span><span class="p">,</span> <span class="s2">&quot;reaction&quot;</span><span class="p">:</span> <span class="n">reaction</span><span class="p">})</span>
         <span class="n">res</span> <span class="o">=</span> <span class="n">api</span><span class="p">(</span><span class="s2">&quot;/api/notes/reactions/create&quot;</span><span class="p">,</span> <span class="n">json_data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">res</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">204</span></div>
 
@@ -189,10 +189,10 @@
     <span class="k">def</span> <span class="nf">add_file</span><span class="p">(</span>
             <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
             <span class="o">*</span><span class="p">,</span>
-            <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">force</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
             <span class="n">is_sensitive</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-            <span class="n">url</span>
+            <span class="n">url</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Drive</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        ノートにファイルを添付します。</span>
@@ -263,23 +263,22 @@
 <div class="viewcode-block" id="NoteAction.send"><a class="viewcode-back" href="../../mi.note.html#mi.NoteAction.send">[ドキュメント]</a>    <span class="nd">@staticmethod</span>
     <span class="k">async</span> <span class="k">def</span> <span class="nf">send</span><span class="p">(</span>
             <span class="o">*</span><span class="p">,</span>
-            <span class="n">other_field</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-            <span class="n">visibility</span><span class="p">,</span>
-            <span class="n">visible_user_ids</span><span class="p">,</span>
-            <span class="n">text</span><span class="p">,</span>
-            <span class="n">cw</span><span class="p">,</span>
-            <span class="n">via_mobile</span><span class="p">,</span>
-            <span class="n">local_only</span><span class="p">,</span>
-            <span class="n">no_extract_mentions</span><span class="p">,</span>
-            <span class="n">no_extract_hashtags</span><span class="p">,</span>
-            <span class="n">no_extract_emojis</span><span class="p">,</span>
-            <span class="n">reply_id</span><span class="p">,</span>
-            <span class="n">renote_id</span><span class="p">,</span>
-            <span class="n">channel_id</span><span class="p">,</span>
-            <span class="n">preview</span><span class="p">,</span>
-            <span class="n">geo</span><span class="p">,</span>
-            <span class="n">file_ids</span><span class="p">,</span>
-            <span class="n">poll</span>
+            <span class="n">visibility</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+            <span class="n">visible_user_ids</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+            <span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+            <span class="n">cw</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+            <span class="n">via_mobile</span><span class="p">:</span><span class="nb">bool</span><span class="p">,</span>
+            <span class="n">local_only</span><span class="p">:</span><span class="nb">bool</span><span class="p">,</span>
+            <span class="n">no_extract_mentions</span><span class="p">:</span><span class="nb">bool</span><span class="p">,</span>
+            <span class="n">no_extract_hashtags</span><span class="p">:</span><span class="nb">bool</span><span class="p">,</span>
+            <span class="n">no_extract_emojis</span><span class="p">:</span><span class="nb">bool</span><span class="p">,</span>
+            <span class="n">reply_id</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span>
+            <span class="n">renote_id</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span>
+            <span class="n">channel_id</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span>
+            <span class="n">preview</span><span class="p">:</span><span class="nb">bool</span><span class="p">,</span>
+            <span class="n">geo</span><span class="p">:</span><span class="n">Any</span><span class="p">,</span>
+            <span class="n">file_ids</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+            <span class="n">poll</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span>  <span class="c1"># TODO:ここはもうちょい正確に type hint 定義したい</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;NoteContent&quot;</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        既にあるnoteクラスを元にnoteを送信します</span>
@@ -331,7 +330,7 @@
 <div class="viewcode-block" id="Follow.Config"><a class="viewcode-back" href="../../mi.note.html#mi.Follow.Config">[ドキュメント]</a>    <span class="k">class</span> <span class="nc">Config</span><span class="p">:</span>
         <span class="n">arbitrary_types_allowed</span> <span class="o">=</span> <span class="kc">True</span></div>
 
-<div class="viewcode-block" id="Follow.follow"><a class="viewcode-back" href="../../mi.note.html#mi.Follow.follow">[ドキュメント]</a>    <span class="k">def</span> <span class="nf">follow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+<div class="viewcode-block" id="Follow.follow"><a class="viewcode-back" href="../../mi.note.html#mi.Follow.follow">[ドキュメント]</a>    <span class="k">def</span> <span class="nf">follow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        与えられたIDのユーザーをフォローします</span>
 
@@ -347,8 +346,13 @@
 <span class="sd">        str</span>
 <span class="sd">            実行に失敗した際のエラーコード</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">check_multi_arg</span><span class="p">(</span><span class="n">user_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">id</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">NotExistRequiredParameters</span><span class="p">(</span><span class="s2">&quot;user_idが存在しません&quot;</span><span class="p">)</span>
+
         <span class="k">if</span> <span class="n">user_id</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">user_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">id</span>
+
+        
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__user_action</span><span class="o">.</span><span class="n">follow</span><span class="p">(</span><span class="n">user_id</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Follow.unfollow"><a class="viewcode-back" href="../../mi.note.html#mi.Follow.unfollow">[ドキュメント]</a>    <span class="k">def</span> <span class="nf">unfollow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
@@ -414,7 +418,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">created_at</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;created_at&quot;</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">user_id</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;user_id&quot;</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">user</span> <span class="o">=</span> <span class="n">Author</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;user&quot;</span><span class="p">])</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">content</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;content&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">content</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;content&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cw</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;cw&quot;</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">visibility</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;visibility&quot;</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">renote_count</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;renote_count&quot;</span><span class="p">]</span>

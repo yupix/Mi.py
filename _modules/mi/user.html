@@ -162,7 +162,7 @@
         <span class="k">return</span> <span class="n">UserProfile</span><span class="p">(</span><span class="o">**</span><span class="n">upper_to_lower</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">text</span><span class="p">)))</span></div>
 
 <div class="viewcode-block" id="UserAction.follow"><a class="viewcode-back" href="../../mi.user.html#mi.UserAction.follow">[ドキュメント]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">follow</span><span class="p">(</span><span class="n">user_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
+    <span class="k">def</span> <span class="nf">follow</span><span class="p">(</span><span class="n">user_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        与えられたIDのユーザーをフォローします</span>
 
@@ -450,7 +450,7 @@
         <span class="p">)</span></div>
 
 <div class="viewcode-block" id="Author.get_followers"><a class="viewcode-back" href="../../mi.user.html#mi.Author.get_followers">[ドキュメント]</a>    <span class="k">def</span> <span class="nf">get_followers</span><span class="p">(</span>
-            <span class="bp">self</span><span class="p">,</span> <span class="n">until_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">limit</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="n">get_all</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="bp">self</span><span class="p">,</span> <span class="n">until_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">limit</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="n">get_all</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
     <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        ユーザーのフォロワー一覧を取得します</span>
