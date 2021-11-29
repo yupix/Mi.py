@@ -4,9 +4,9 @@ from typing import Any, Dict, List, Optional
 from pydantic import BaseModel, Field
 
 from mi import Drive, Emoji, UserProfile, utils
-from mi.exception import ContentRequired
+from mi.exception import ContentRequired, NotExistRequiredParameters
 from mi.user import Author, UserAction
-from mi.utils import api, remove_dict_empty, upper_to_lower
+from mi.utils import api, check_multi_arg, remove_dict_empty, upper_to_lower
 from .abc.note import AbstractNote
 from .types.note import (Note as NotePayload,
                          Poll as PollPayload,
@@ -186,7 +186,7 @@ class Follow(BaseModel):
     class Config:
         arbitrary_types_allowed = True
 
-    def follow(self, user_id: Optional[str] = None) -> tuple[bool, str]:
+    def follow(self, user_id: Optional[str] = None) -> tuple[bool, Optional[str]]:
         """
         与えられたIDのユーザーをフォローします
 
@@ -202,8 +202,13 @@ class Follow(BaseModel):
         str
             実行に失敗した際のエラーコード
         """
+        if check_multi_arg(user_id, self.user.id):
+            raise NotExistRequiredParameters("user_idが存在しません")
+
         if user_id is None:
             user_id = self.user.id
+
+        
         return self.__user_action.follow(user_id)
 
     def unfollow(self, user_id: Optional[str] = None) -> bool:
