@@ -5,7 +5,7 @@ import json
 import logging
 import re
 from inspect import isawaitable
-from typing import Any, Callable, Dict, Iterable, Optional, TypeVar
+from typing import Any, Callable, Dict, Iterable, List, Optional, TypeVar
 
 import emoji
 import requests
@@ -29,7 +29,7 @@ def get_module_logger(module_name):
     return logger
 
 
-def emoji_count(text=None, emojis=None):
+def emoji_count(text: Optional[str] = None, emojis: Optional[List[str]] = None):
     """
     テキストの中にいくつのemojiが含まれているかをカウントします
 
@@ -48,7 +48,7 @@ def emoji_count(text=None, emojis=None):
         text)
 
 
-def check_multi_arg(*args) -> bool:
+def check_multi_arg(*args: Any) -> bool:
     """複数の値を受け取り値が存在するかをboolで返します
 
     Parameters
@@ -160,7 +160,7 @@ def api(
     return res
 
 
-def remove_dict_empty(data: dict) -> dict:
+def remove_dict_empty(data: Dict[str, Any]) -> Dict[str, Any]:
     """
     Parameters
     ----------

@@ -10,10 +10,10 @@ class Loop:
     def __init__(self, func: Callable[..., Coroutine[Any, Any, Any]], seconds: int = 60):
         self.seconds: int = seconds
         self.func: Callable[..., Coroutine[Any, Any, Any]] = func
-        self._task: Optional[asyncio.Task] = None
+        self._task: Optional[asyncio.Task[Any]] = None
         self.stop_next_iteration = None
 
-    def start(self, *args: tuple[Any], **kwargs: Dict[Any, Any]) -> asyncio.Task:
+    def start(self, *args: tuple[Any], **kwargs: Dict[Any, Any]) -> asyncio.Task[Any]:
         """
         タスクを開始する
 
@@ -24,7 +24,7 @@ class Loop:
 
         Returns
         -------
-        _task : asyncio.Task
+        _task : asyncio.Task[Any]
         """
         _loop = asyncio.get_running_loop()
         self._task = _loop.create_task(self.task(*args, **kwargs))
