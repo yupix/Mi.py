@@ -18,7 +18,7 @@ class UserAction:
         return UserProfile(**upper_to_lower(json.loads(res.text)))
 
     @staticmethod
-    def follow(user_id: Optional[str]) -> tuple[bool, Optional[str]]:
+    def follow(user_id: str) -> tuple[bool, Optional[str]]:
         """
         与えられたIDのユーザーをフォローします
 
@@ -306,7 +306,7 @@ class Author:
         )
 
     def get_followers(
-            self, until_id: str = None, limit: int = 10, get_all: bool = False
+            self, until_id: Optional[str] = None, limit: int = 10, get_all: bool = False
     ):
         """
         ユーザーのフォロワー一覧を取得します
