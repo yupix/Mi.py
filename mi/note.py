@@ -15,7 +15,7 @@ from .types.note import (Note as NotePayload,
 
 class NoteAction:
     @staticmethod
-    async def add_reaction(reaction: str, note_id: str = None) -> bool:
+    async def add_reaction(reaction: str, note_id: Optional[str] = None) -> bool:
         """
         指定したnoteに指定したリアクションを付与します（内部用
 
@@ -31,7 +31,7 @@ class NoteAction:
         status: bool
             成功したならTrue,失敗ならFalse
         """
-        data = {"noteId": note_id, "reaction": reaction}
+        data = remove_dict_empty({"noteId": note_id, "reaction": reaction})
         res = api("/api/notes/reactions/create", json_data=data, auth=True)
         return res.status_code == 204
 
@@ -45,10 +45,10 @@ class NoteAction:
     def add_file(
             path: str,
             *,
-            name: str = None,
+            name: Optional[str] = None,
             force: bool = False,
             is_sensitive: bool = False,
-            url
+            url: Optional[str] = None
     ) -> Drive:
         """
         ノートにファイルを添付します。
@@ -119,23 +119,22 @@ class NoteAction:
     @staticmethod
     async def send(
             *,
-            other_field: dict = None,
-            visibility,
-            visible_user_ids,
-            text,
-            cw,
-            via_mobile,
-            local_only,
-            no_extract_mentions,
-            no_extract_hashtags,
-            no_extract_emojis,
-            reply_id,
-            renote_id,
-            channel_id,
-            preview,
-            geo,
-            file_ids,
-            poll
+            visibility: str,
+            visible_user_ids: str,
+            text: str,
+            cw: str,
+            via_mobile:bool,
+            local_only:bool,
+            no_extract_mentions:bool,
+            no_extract_hashtags:bool,
+            no_extract_emojis:bool,
+            reply_id:str,
+            renote_id:str,
+            channel_id:str,
+            preview:bool,
+            geo:Any,
+            file_ids: List[str],
+            poll: Dict[str, Any]  # TODO:ここはもうちょい正確に type hint 定義したい
     ) -> "NoteContent":
         """
         既にあるnoteクラスを元にnoteを送信します
@@ -270,7 +269,7 @@ class Renote(AbstractNote):
         self.created_at = data["created_at"]
         self.user_id = data["user_id"]
         self.user = Author(data["user"])
-        self.content = data.get("content", None)
+        self.content: Optional[str] = data.get("content", None)
         self.cw = data["cw"]
         self.visibility = data["visibility"]
         self.renote_count = data["renote_count"]

@@ -58,10 +58,10 @@ class Drive(BaseModel):
     def upload(
         self,
         path: str,
-        name: str = None,
+        name: Optional[str] = None,
         force: bool = False,
         is_sensitive: bool = False,
-        url: str = None,
+        url: Optional[str] = None,
     ) -> "Drive":
         """
         parameters
