@@ -7,7 +7,7 @@ import re
 import sys
 import traceback
 from types import ModuleType
-from typing import Any, Callable, Coroutine, Dict, List, Optional
+from typing import Any, Callable, Coroutine, Dict, List, Optional, Tuple
 
 from websockets.legacy.client import WebSocketClientProtocol
 
@@ -40,11 +40,11 @@ class BotBase(GroupMixin, Controller):
         self.command_prefix = command_prefix
         self.extra_events: Dict[str, Any] = {}
         self.special_events: Dict[str, Any] = {}
-        self._check_once: List[Any] = [] # TODO: いつか確認する
-        self._checks:List[Any] = [] # TODO: いつか確認する
+        self._check_once: List[Any] = []  # TODO: いつか確認する
+        self._checks: List[Any] = []  # TODO: いつか確認する
         self._after_invoke = None
-        self.token = None
-        self.origin_uri = None
+        self.token: Optional[str] = None
+        self.origin_uri: Optional[str] = None
         self.__extensions: Dict[str, Any] = {}
         self.i: UserProfile = None
         self.__cogs: Dict[str, str] = {}
@@ -60,7 +60,7 @@ class BotBase(GroupMixin, Controller):
 
         return await utils.async_all(f(ctx) for f in data)
 
-    async def invoke(self, ctx:Context, *args: tuple[Any], **kwargs:Dict[Any, Any]):
+    async def invoke(self, ctx: Context, *args: tuple[Any], **kwargs: Dict[Any, Any]):
         if not ctx.command:
             return False
         try:
@@ -146,7 +146,7 @@ class BotBase(GroupMixin, Controller):
         else:
             self.extra_events[name] = [func]
 
-    async def event_dispatch(self, event_name:str, *args: tuple[Any], **kwargs:Dict[Any, Any]) -> bool:
+    async def event_dispatch(self, event_name: str, *args: tuple[Any], **kwargs: Dict[Any, Any]) -> bool:
         """on_ready等といった
 
         Parameters
@@ -168,7 +168,7 @@ class BotBase(GroupMixin, Controller):
             await self.schedule_event(getattr(self, ev), ev, *args, **kwargs)
         return ev in dir(self)
 
-    async def dispatch(self, event_name: str, *args: tuple[Any], **kwargs:Dict[Any, Any]):
+    async def dispatch(self, event_name: str, *args: tuple[Any], **kwargs: Dict[Any, Any]):
         ev = "on_" + event_name
         for event in self.extra_events.get(ev, []):
             if inspect.ismethod(event):
@@ -247,8 +247,8 @@ class BotBase(GroupMixin, Controller):
             coro: Callable[..., Coroutine[Any, Any, Any]],
             event_name: str,
             *args: tuple[Any],
-            **kwargs:Dict[Any, Any],
-    ) -> asyncio.Task:
+            **kwargs: Dict[Any, Any],
+    ) -> asyncio.Task[Any]:
         return asyncio.create_task(
             self._run_event(coro, event_name, *args, **kwargs),
             name=f"MI.py: {event_name}",
@@ -327,7 +327,7 @@ class BotBase(GroupMixin, Controller):
         else:
             origin_uri = uri
         self.origin_uri = origin_uri[:-1] if uri[-1] == "/" else origin_uri
-        auth_i = {
+        auth_i: Dict[str, Any] = {
             "token": self.token,
             "origin_uri": self.origin_uri,
         }

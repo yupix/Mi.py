@@ -1,5 +1,5 @@
-import typing
 from functools import cache
+from typing import Any, Dict, Iterator, List, Optional, Tuple
 
 import requests
 
@@ -21,7 +21,7 @@ class Controller:
                   username: str = None,
                   hostname: str = None,
                   get_all: bool = False
-                  ) -> typing.Iterator[dict]:
+                  ) -> Iterator[dict]:
         """
 
         Parameters
@@ -75,18 +75,18 @@ class Controller:
     def get_user_notes(
             user_id: str,
             *,
-            since_id: str = None,
+            since_id: Optional[str] = None,
             include_my_renotes: bool = True,
             include_replies: bool = True,
             with_files: bool = False,
-            until_id: str = None,
+            until_id: Optional[str] = None,
             limit: int = 10,
             get_all: bool = False,
             exclude_nsfw: bool = True,
             file_type: list = None,
             since_date: int = 0,
             until_data: int = 0
-    ) -> typing.Iterator[dict]:
+    ) -> Iterator[dict]:
         if limit > 100:
             raise InvalidParameters("limit は100以上を受け付けません")
 
@@ -127,7 +127,7 @@ class Controller:
 
     @staticmethod
     @cache
-    def get_instance_meta() -> dict:
+    def get_instance_meta() -> Dict[str, Tuple[str, List[str], Dict[str, Any]]]:
         """
         BOTのアカウントがあるインスタンス情報をdictで返します。一度実行するとキャッシュされます。
 
@@ -153,8 +153,8 @@ class Controller:
 
     @staticmethod
     @cache
-    def get_user(user_id: str = None, username: str = None,
-                 host: str = None) -> dict:
+    def get_user(user_id: Optional[str] = None, username: Optional[str] = None,
+                 host: Optional[str] = None) -> Dict[str, Tuple[str, List[Any], Dict[str, Any]]]:
         """
         ユーザーのプロフィールを取得します。一度のみサーバーにアクセスしキャッシュをその後は使います。
         fetch_userを使った場合はキャッシュが廃棄され再度サーバーにアクセスします。
@@ -176,8 +176,8 @@ class Controller:
         return Controller.fetch_user(user_id, username, host)
 
     @staticmethod
-    def fetch_user(user_id: str = None, username: str = None,
-                   host: str = None) -> dict:
+    def fetch_user(user_id: Optional[str] = None, username: Optional[str] = None,
+                   host: Optional[str] = None) -> Dict[str, Tuple[str, List[Any], Dict[str, Any]]]:
         """
         サーバーにアクセスし、ユーザーのプロフィールを取得します。基本的には get_userをお使いください。
 
@@ -205,14 +205,14 @@ class Controller:
 
     @staticmethod
     def get_followers(
-            user_id: str = None,
-            username: str = None,
-            host: str = None,
-            since_id: str = None,
-            until_id: str = None,
+            user_id: Optional[str] = None,
+            username: Optional[str] = None,
+            host: Optional[str] = None,
+            since_id: Optional[str] = None,
+            until_id: Optional[str] = None,
             limit: int = 10,
             get_all: bool = False,
-    ) -> typing.Iterator[dict]:
+    ) -> Iterator[dict]:
         """
         与えられたユーザーのフォロワーを取得します
 
