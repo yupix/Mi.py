@@ -12,6 +12,7 @@ from typing import Any, Callable, Coroutine, Dict, List, Optional, Tuple
 from websockets.legacy.client import WebSocketClientProtocol
 
 from mi import UserProfile, config, utils
+from mi.abc.ext.bot import AbstractBotBase
 from mi.conn import Controller
 from mi.exception import (
     CheckFailure,
@@ -34,7 +35,7 @@ __all__ = ["BotBase", "Bot"]
 from mi.utils import get_module_logger
 
 
-class BotBase(GroupMixin, Controller):
+class BotBase(GroupMixin, Controller, AbstractBotBase):
     def __init__(self, command_prefix: str, **options: Dict[Any, Any]):
         super().__init__(**options)
         self.command_prefix = command_prefix
