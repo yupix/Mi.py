@@ -61,8 +61,8 @@ class BotBase(GroupMixin, Controller, AbstractBotBase):
 
         return await utils.async_all(f(ctx) for f in data)
 
-    async def invoke(self, ctx: Context, *args: tuple[Any], **kwargs: Dict[Any, Any]):
-        if not ctx.command:
+    async def invoke(self, ctx: Context, *args: Tuple[Any], **kwargs: Dict[Any, Any]):
+        if ctx.command is None:
             return False
         try:
             if not await self.can_run(ctx, call_once=True):
@@ -77,8 +77,7 @@ class BotBase(GroupMixin, Controller, AbstractBotBase):
         if message.content is None:
             return ctx
         view = StringView(message.content)
-        if view.skip_string(
-                self.command_prefix) is False:  # prefixがテキストに含まれているか確認
+        if view.skip_string(self.command_prefix) is False:  # prefixがテキストに含まれているか確認
             return ctx
         invoker = view.get_word()
         if not self.all_commands.get(invoker):
@@ -130,7 +129,7 @@ class BotBase(GroupMixin, Controller, AbstractBotBase):
         else:
             self.special_events[name] = [func]
 
-    def listen(self, name=None):
+    def listen(self, name:Optional[str]=None):
         def decorator(func):
             self.add_listener(func, name)
             return func
@@ -147,7 +146,7 @@ class BotBase(GroupMixin, Controller, AbstractBotBase):
         else:
             self.extra_events[name] = [func]
 
-    async def event_dispatch(self, event_name: str, *args: tuple[Any], **kwargs: Dict[Any, Any]) -> bool:
+    async def event_dispatch(self, event_name: str, *args: Tuple[Any], **kwargs: Dict[Any, Any]) -> bool:
         """on_ready等といった
 
         Parameters
@@ -321,9 +320,9 @@ class BotBase(GroupMixin, Controller, AbstractBotBase):
         if _origin_uri := re.search(r"wss?://(.*)/streaming", uri):
             origin_uri = (
                 _origin_uri.group(0)
-                .replace("wss", "https")
-                .replace("ws", "http")
-                .replace("/streaming", "")
+                    .replace("wss", "https")
+                    .replace("ws", "http")
+                    .replace("/streaming", "")
             )
         else:
             origin_uri = uri
