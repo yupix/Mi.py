@@ -351,8 +351,8 @@
 <span id="mi-ext-commands-core-module"></span><h1>mi.ext.commands.core module<a class="headerlink" href="#module-mi.ext.commands.core" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="mi.ext.commands.core.Command">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.ext.commands.core.</span></span><span class="sig-name descname"><span class="pre">Command</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/ext/commands/core.html#Command"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#mi.ext.commands.core.Command" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>ベースクラス: <code class="xref py py-class docutils literal notranslate"><span class="pre">mi.ext.commands._types._BaseCommand</span></code></p>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.ext.commands.core.</span></span><span class="sig-name descname"><span class="pre">Command</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Coroutine</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/ext/commands/core.html#Command"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#mi.ext.commands.core.Command" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>ベースクラス: <code class="xref py py-class docutils literal notranslate"><span class="pre">mi.ext.commands._types._BaseCommand</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">mi.abc.ext.core.AbstractCommand</span></code></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="mi.ext.commands.core.Command.call_after_hooks">
 <em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">call_after_hooks</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ctx</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/ext/commands/core.html#Command.call_after_hooks"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#mi.ext.commands.core.Command.call_after_hooks" title="この定義へのパーマリンク">¶</a></dt>
@@ -360,50 +360,30 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mi.ext.commands.core.Command.copy">
-<span class="sig-name descname"><span class="pre">copy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/ext/commands/core.html#Command.copy"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#mi.ext.commands.core.Command.copy" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>Creates a copy of this command.</p>
-<dl class="field-list simple">
-<dt class="field-odd">戻り値</dt>
-<dd class="field-odd"><p>A new instance of this command.</p>
-</dd>
-<dt class="field-even">戻り値の型</dt>
-<dd class="field-even"><p><a class="reference internal" href="#mi.ext.commands.core.Command" title="mi.ext.commands.core.Command"><code class="xref py py-class docutils literal notranslate"><span class="pre">Command</span></code></a></p>
-</dd>
-</dl>
-</dd></dl>
+<span class="sig-name descname"><span class="pre">copy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#mi.ext.commands.core.Command" title="mi.ext.commands.core.Command"><span class="pre">mi.ext.commands.core.Command</span></a></span></span><a class="reference internal" href="_modules/mi/ext/commands/core.html#Command.copy"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#mi.ext.commands.core.Command.copy" title="この定義へのパーマリンク">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="mi.ext.commands.core.Command.full_parent_name">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">full_parent_name</span></span><a class="headerlink" href="#mi.ext.commands.core.Command.full_parent_name" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>Retrieves the fully qualified parent command name.</p>
-<p>This the base command name required to execute it. For example,
-in <code class="docutils literal notranslate"><span class="pre">?one</span> <span class="pre">two</span> <span class="pre">three</span></code> the parent name would be <code class="docutils literal notranslate"><span class="pre">one</span> <span class="pre">two</span></code>.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
-</dd>
-</dl>
-</dd></dl>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">full_parent_name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#mi.ext.commands.core.Command.full_parent_name" title="この定義へのパーマリンク">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mi.ext.commands.core.Command.invoke">
-<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">invoke</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ctx</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/ext/commands/core.html#Command.invoke"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#mi.ext.commands.core.Command.invoke" title="この定義へのパーマリンク">¶</a></dt>
+<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">invoke</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ctx</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/ext/commands/core.html#Command.invoke"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#mi.ext.commands.core.Command.invoke" title="この定義へのパーマリンク">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="mi.ext.commands.core.Command.qualified_name">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">qualified_name</span></span><a class="headerlink" href="#mi.ext.commands.core.Command.qualified_name" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>Retrieves the fully qualified command name.</p>
-<p>This is the full parent name with the command name as well.
-For example, in <code class="docutils literal notranslate"><span class="pre">?one</span> <span class="pre">two</span> <span class="pre">three</span></code> the qualified name would be
-<code class="docutils literal notranslate"><span class="pre">one</span> <span class="pre">two</span> <span class="pre">three</span></code>.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
-</dd>
-</dl>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">qualified_name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#mi.ext.commands.core.Command.qualified_name" title="この定義へのパーマリンク">¶</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
+<dl class="py class">
+<dt class="sig sig-object py" id="mi.ext.commands.core.Group">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.ext.commands.core.</span></span><span class="sig-name descname"><span class="pre">Group</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">typing.Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">attrs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/ext/commands/core.html#Group"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#mi.ext.commands.core.Group" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>ベースクラス: <a class="reference internal" href="#mi.ext.commands.core.GroupMixin" title="mi.ext.commands.core.GroupMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">mi.ext.commands.core.GroupMixin</span></code></a>, <a class="reference internal" href="#mi.ext.commands.core.Command" title="mi.ext.commands.core.Command"><code class="xref py py-class docutils literal notranslate"><span class="pre">mi.ext.commands.core.Command</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">mi.abc.ext.core.AbstractGroup</span></code></p>
 </dd></dl>
 
 <dl class="py class">
@@ -412,25 +392,13 @@ For example, in <code class="docutils literal notranslate"><span class="pre">?on
 <dd><p>ベースクラス: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="mi.ext.commands.core.GroupMixin.add_command">
-<span class="sig-name descname"><span class="pre">add_command</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">command</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/ext/commands/core.html#GroupMixin.add_command"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#mi.ext.commands.core.GroupMixin.add_command" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>Adds a <a class="reference internal" href="#mi.ext.commands.core.Command" title="mi.ext.commands.core.Command"><code class="xref py py-class docutils literal notranslate"><span class="pre">Command</span></code></a> into the internal list of commands.</p>
-<p>This is usually not called, instead the <code class="xref py py-meth docutils literal notranslate"><span class="pre">command()</span></code> or
-<code class="xref py py-meth docutils literal notranslate"><span class="pre">group()</span></code> shortcut decorators are used instead.</p>
-<div class="versionchanged">
-<p><span class="versionmodified changed">バージョン 1.4 で変更: </span>Raise <a class="reference internal" href="mi.exception.html#mi.exception.CommandRegistrationError" title="mi.exception.CommandRegistrationError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">CommandRegistrationError</span></code></a> instead of generic <code class="xref py py-exc docutils literal notranslate"><span class="pre">ClientException</span></code></p>
-</div>
-<dl class="field-list simple">
-<dt class="field-odd">パラメータ</dt>
-<dd class="field-odd"><p><strong>command</strong> (<a class="reference internal" href="#mi.ext.commands.core.Command" title="mi.ext.commands.core.Command"><code class="xref py py-class docutils literal notranslate"><span class="pre">Command</span></code></a>) -- The command to add.</p>
-</dd>
-<dt class="field-even">例外</dt>
-<dd class="field-even"><ul class="simple">
-<li><p><a class="reference internal" href="mi.exception.html#mi.exception.CommandRegistrationError" title="mi.exception.CommandRegistrationError"><strong>CommandRegistrationError</strong></a> -- If the command or its alias is already registered by different command.</p></li>
-<li><p><strong>TypeError</strong> -- If the command passed is not a subclass of <a class="reference internal" href="#mi.ext.commands.core.Command" title="mi.ext.commands.core.Command"><code class="xref py py-class docutils literal notranslate"><span class="pre">Command</span></code></a>.</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
+<span class="sig-name descname"><span class="pre">add_command</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">command</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">mi.abc.ext.core.AbstractCommand</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/ext/commands/core.html#GroupMixin.add_command"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#mi.ext.commands.core.GroupMixin.add_command" title="この定義へのパーマリンク">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mi.ext.commands.core.GroupMixin.command">
+<span class="sig-name descname"><span class="pre">command</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cls</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/ext/commands/core.html#GroupMixin.command"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#mi.ext.commands.core.GroupMixin.command" title="この定義へのパーマリンク">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="mi.ext.commands.core.GroupMixin.commands">
@@ -448,47 +416,53 @@ For example, in <code class="docutils literal notranslate"><span class="pre">?on
 <span class="sig-name descname"><span class="pre">recursively_remove_all_commands</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/ext/commands/core.html#GroupMixin.recursively_remove_all_commands"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#mi.ext.commands.core.GroupMixin.recursively_remove_all_commands" title="この定義へのパーマリンク">¶</a></dt>
 <dd></dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="mi.ext.commands.core.GroupMixin.remove_command">
+<span class="sig-name descname"><span class="pre">remove_command</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/ext/commands/core.html#GroupMixin.remove_command"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#mi.ext.commands.core.GroupMixin.remove_command" title="この定義へのパーマリンク">¶</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="mi.ext.commands.core.command">
-<span class="sig-prename descclassname"><span class="pre">mi.ext.commands.core.</span></span><span class="sig-name descname"><span class="pre">command</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cls</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">attrs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/ext/commands/core.html#command"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#mi.ext.commands.core.command" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>A decorator that transforms a function into a <a class="reference internal" href="#mi.ext.commands.core.Command" title="mi.ext.commands.core.Command"><code class="xref py py-class docutils literal notranslate"><span class="pre">Command</span></code></a>
-or if called with <a class="reference internal" href="#mi.ext.commands.core.group" title="mi.ext.commands.core.group"><code class="xref py py-func docutils literal notranslate"><span class="pre">group()</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Group</span></code>.</p>
-<p>By default the <code class="docutils literal notranslate"><span class="pre">help</span></code> attribute is received automatically from the
-docstring of the function and is cleaned up with the use of
-<code class="docutils literal notranslate"><span class="pre">inspect.cleandoc</span></code>. If the docstring is <code class="docutils literal notranslate"><span class="pre">bytes</span></code>, then it is decoded
-into <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code> using utf-8 encoding.</p>
-<p>All checks added using the <code class="xref py py-func docutils literal notranslate"><span class="pre">check()</span></code> &amp; co. decorators are added into
-the function. There is no way to supply your own checks through this
-decorator.</p>
+<span class="sig-prename descclassname"><span class="pre">mi.ext.commands.core.</span></span><span class="sig-name descname"><span class="pre">command</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cls</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">attrs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/ext/commands/core.html#command"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#mi.ext.commands.core.command" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>command Decorator</p>
+<p>コマンドの作成に用います。</p>
 <dl class="field-list simple">
 <dt class="field-odd">パラメータ</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) -- The name to create the command with. By default this uses the
-function name unchanged.</p></li>
-<li><p><strong>cls</strong> -- The class to construct with. By default this is <a class="reference internal" href="#mi.ext.commands.core.Command" title="mi.ext.commands.core.Command"><code class="xref py py-class docutils literal notranslate"><span class="pre">Command</span></code></a>.
-You usually do not change this.</p></li>
-<li><p><strong>attrs</strong> -- Keyword arguments to pass into the construction of the class denoted
-by <code class="docutils literal notranslate"><span class="pre">cls</span></code>.</p></li>
+<li><p><strong>name</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) -- コマンドの名前, by default None</p></li>
+<li><p><strong>cls</strong> (<em>Any</em><em>, </em><em>optional</em>) -- 自前のクラスを使用する場合, by default None</p></li>
 </ul>
 </dd>
+<dt class="field-even">戻り値</dt>
+<dd class="field-even"><p>コマンドクラス</p>
+</dd>
+<dt class="field-odd">戻り値の型</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#mi.ext.commands.core.Command" title="mi.ext.commands.core.Command">Command</a></p>
+</dd>
 <dt class="field-even">例外</dt>
-<dd class="field-even"><p><strong>TypeError</strong> -- If the function is not a coroutine or is already a command.</p>
+<dd class="field-even"><p><strong>TypeError</strong> -- Callback is already a command.</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="mi.ext.commands.core.group">
-<span class="sig-prename descclassname"><span class="pre">mi.ext.commands.core.</span></span><span class="sig-name descname"><span class="pre">group</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">attrs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/ext/commands/core.html#group"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#mi.ext.commands.core.group" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>A decorator that transforms a function into a <code class="xref py py-class docutils literal notranslate"><span class="pre">Group</span></code>.</p>
-<p>This is similar to the <a class="reference internal" href="#mi.ext.commands.core.command" title="mi.ext.commands.core.command"><code class="xref py py-func docutils literal notranslate"><span class="pre">command()</span></code></a> decorator but the <code class="docutils literal notranslate"><span class="pre">cls</span></code>
-parameter is set to <code class="xref py py-class docutils literal notranslate"><span class="pre">Group</span></code> by default.</p>
-<div class="versionchanged">
-<p><span class="versionmodified changed">バージョン 1.1 で変更: </span>The <code class="docutils literal notranslate"><span class="pre">cls</span></code> parameter can now be passed.</p>
-</div>
+<span class="sig-prename descclassname"><span class="pre">mi.ext.commands.core.</span></span><span class="sig-name descname"><span class="pre">group</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">attrs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/ext/commands/core.html#group"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#mi.ext.commands.core.group" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>group decorator</p>
+<p>サブコマンドを作成する際に使用します。</p>
+<dl class="field-list simple">
+<dt class="field-odd">パラメータ</dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) -- コマンド名, by default None</p>
+</dd>
+</dl>
 </dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mi.ext.commands.core.hooked_wrapped_callback">
+<span class="sig-prename descclassname"><span class="pre">mi.ext.commands.core.</span></span><span class="sig-name descname"><span class="pre">hooked_wrapped_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">command</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#mi.ext.commands.core.Command" title="mi.ext.commands.core.Command"><span class="pre">mi.ext.commands.core.Command</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">ctx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coro</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/ext/commands/core.html#hooked_wrapped_callback"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#mi.ext.commands.core.hooked_wrapped_callback" title="この定義へのパーマリンク">¶</a></dt>
+<dd></dd></dl>
 
 </div>
 

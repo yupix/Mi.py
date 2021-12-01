@@ -143,105 +143,41 @@
                 
   <h1>mi.ext.commands.cog のソースコード</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">inspect</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">ClassVar</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">ClassVar</span><span class="p">,</span> <span class="n">Coroutine</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">from</span> <span class="nn">mi.abc.ext.bot</span> <span class="kn">import</span> <span class="n">AbstractBotBase</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Cog&quot;</span><span class="p">]</span>
+<span class="kn">from</span> <span class="nn">mi.ext.commands.core</span> <span class="kn">import</span> <span class="n">Command</span>
+<span class="kn">from</span> <span class="nn">mi.ext.commands._types</span> <span class="kn">import</span> <span class="n">_BaseCommand</span>
 
-<span class="kn">from</span> <span class="nn">._types</span> <span class="kn">import</span> <span class="n">_BaseCommand</span>
 
-
-<span class="k">class</span> <span class="nc">CogMeta</span><span class="p">(</span><span class="nb">type</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;A metaclass for defining a cog.</span>
-
-<span class="sd">    Note that you should probably not use this directly. It is exposed</span>
-<span class="sd">    purely for documentation purposes along with making custom metaclasses to intermix</span>
-<span class="sd">    with other metaclasses such as the :class:`abc.ABCMeta` metaclass.</span>
-
-<span class="sd">    For example, to create an abstract cog mixin class, the following would be done.</span>
-
-<span class="sd">    .. code-block:: python3</span>
-
-<span class="sd">        import abc</span>
-
-<span class="sd">        class CogABCMeta(commands.CogMeta, abc.ABCMeta):</span>
-<span class="sd">            pass</span>
-
-<span class="sd">        class SomeMixin(metaclass=abc.ABCMeta):</span>
-<span class="sd">            pass</span>
-
-<span class="sd">        class SomeCogMixin(SomeMixin, commands.Cog, metaclass=CogABCMeta):</span>
-<span class="sd">            pass</span>
-
-<span class="sd">    .. note::</span>
-
-<span class="sd">        When passing an attribute of a metaclass that is documented below, note</span>
-<span class="sd">        that you must pass it as a keyword-only argument to the class creation</span>
-<span class="sd">        like the following example:</span>
-
-<span class="sd">        .. code-block:: python3</span>
-
-<span class="sd">            class MyCog(commands.Cog, name=&#39;My Cog&#39;):</span>
-<span class="sd">                pass</span>
-
-<span class="sd">    Attributes</span>
-<span class="sd">    -----------</span>
-<span class="sd">    name: :class:`str`</span>
-<span class="sd">        The cog name. By default, it is the name of the class with no modification.</span>
-<span class="sd">    description: :class:`str`</span>
-<span class="sd">        The cog description. By default, it is the cleaned docstring of the class.</span>
-
-<span class="sd">        .. versionadded:: 1.6</span>
-
-<span class="sd">    command_attrs: :class:`dict`</span>
-<span class="sd">        A list of attributes to apply to every command inside this cog. The dictionary</span>
-<span class="sd">        is passed into the :class:`Command` options at ``__init__``.</span>
-<span class="sd">        If you specify attributes inside the command attribute in the class, it will</span>
-<span class="sd">        override the one specified inside this attribute. For example:</span>
-
-<span class="sd">        .. code-block:: python3</span>
-
-<span class="sd">            class MyCog(commands.Cog, command_attrs=dict(hidden=True)):</span>
-<span class="sd">                @commands.command()</span>
-<span class="sd">                async def foo(self, ctx):</span>
-<span class="sd">                    pass # hidden -&gt; True</span>
-
-<span class="sd">                @commands.command(hidden=False)</span>
-<span class="sd">                async def bar(self, ctx):</span>
-<span class="sd">                    pass # hidden -&gt; False</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="k">def</span> <span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="CogMeta"><a class="viewcode-back" href="../../../../mi.ext.commands.cog.html#mi.ext.commands.cog.CogMeta">[ドキュメント]</a><span class="k">class</span> <span class="nc">CogMeta</span><span class="p">(</span><span class="nb">type</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Any</span><span class="p">],</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]):</span>
         <span class="n">name</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">attrs</span> <span class="o">=</span> <span class="n">args</span>
-        <span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;__cog_name__&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
-        <span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;__cog_settings__&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;command_attrs&quot;</span><span class="p">,</span> <span class="p">{})</span>
-
-        <span class="n">description</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;description&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">description</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">description</span> <span class="o">=</span> <span class="n">inspect</span><span class="o">.</span><span class="n">cleandoc</span><span class="p">(</span><span class="n">attrs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;__doc__&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">))</span>
-        <span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;__cog_description__&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">description</span>
-
+        <span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;__cog_name__&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+        <span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;__cog_settings__&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;command_attrs&quot;</span><span class="p">,</span> <span class="p">{})</span>
         <span class="n">commands</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="n">listeners</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="n">no_bot_cog</span> <span class="o">=</span> <span class="s2">&quot;Commands or listeners must not start with cog_ or bot_ (in method </span><span class="si">{0.__name__}</span><span class="s2">.</span><span class="si">{1}</span><span class="s2">)&quot;</span>
-
         <span class="n">new_cls</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">attrs</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">base</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="n">new_cls</span><span class="o">.</span><span class="vm">__mro__</span><span class="p">):</span>
+
+        <span class="k">for</span> <span class="n">base</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="n">new_cls</span><span class="o">.</span><span class="vm">__mro__</span><span class="p">):</span>  <span class="c1"># 多重継承を確認</span>
             <span class="k">for</span> <span class="n">elem</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">base</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
                 <span class="k">if</span> <span class="n">elem</span> <span class="ow">in</span> <span class="n">commands</span><span class="p">:</span>
-                    <span class="k">del</span> <span class="n">commands</span><span class="p">[</span><span class="n">elem</span><span class="p">]</span>  <span class="c1"># commandsから消す</span>
+                    <span class="k">del</span> <span class="n">commands</span><span class="p">[</span><span class="n">elem</span><span class="p">]</span>  <span class="c1"># commandsから削除</span>
                 <span class="k">if</span> <span class="n">elem</span> <span class="ow">in</span> <span class="n">listeners</span><span class="p">:</span>
-                    <span class="k">del</span> <span class="n">listeners</span><span class="p">[</span><span class="n">elem</span><span class="p">]</span>
+                    <span class="k">del</span> <span class="n">listeners</span><span class="p">[</span><span class="n">elem</span><span class="p">]</span>  <span class="c1"># listenersから削除</span>
 
                 <span class="n">is_static_method</span> <span class="o">=</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">staticmethod</span><span class="p">)</span>
-                <span class="k">if</span> <span class="n">is_static_method</span><span class="p">:</span>
-                    <span class="n">value</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="vm">__func__</span>
-                <span class="c1"># value が重要</span>
+
+                <span class="k">if</span> <span class="n">is_static_method</span><span class="p">:</span>  <span class="c1"># staticmethodか確認</span>
+                    <span class="n">value</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="vm">__func__</span>  <span class="c1"># 関数をvalueに !valueが重要</span>
+
                 <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">_BaseCommand</span><span class="p">):</span>
                     <span class="k">if</span> <span class="n">is_static_method</span><span class="p">:</span>
                         <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
                             <span class="sa">f</span><span class="s2">&quot;Command in method </span><span class="si">{</span><span class="n">base</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">elem</span><span class="si">!r}</span><span class="s2"> must not be staticmethod.&quot;</span>
                         <span class="p">)</span>
-                    <span class="k">if</span> <span class="n">elem</span><span class="o">.</span><span class="n">startswith</span><span class="p">((</span><span class="s2">&quot;cog_&quot;</span><span class="p">,</span> <span class="s2">&quot;bot_&quot;</span><span class="p">)):</span>
+                    <span class="k">if</span> <span class="n">elem</span><span class="o">.</span><span class="n">startswith</span><span class="p">((</span><span class="s2">&quot;cog&quot;</span><span class="p">,</span> <span class="s2">&quot;bot_&quot;</span><span class="p">)):</span>
                         <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="n">no_bot_cog</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">elem</span><span class="p">))</span>
                     <span class="n">commands</span><span class="p">[</span><span class="n">elem</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
                 <span class="k">elif</span> <span class="n">inspect</span><span class="o">.</span><span class="n">iscoroutinefunction</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
@@ -250,132 +186,80 @@
                     <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
                         <span class="k">continue</span>
                     <span class="k">else</span><span class="p">:</span>
-                        <span class="k">if</span> <span class="n">elem</span><span class="o">.</span><span class="n">startswith</span><span class="p">((</span><span class="s2">&quot;cog_&quot;</span><span class="p">,</span> <span class="s2">&quot;bot_&quot;</span><span class="p">)):</span>
+                        <span class="k">if</span> <span class="n">elem</span><span class="o">.</span><span class="n">startswith</span><span class="p">((</span><span class="s2">&quot;cog&quot;</span><span class="p">,</span> <span class="s2">&quot;bot_&quot;</span><span class="p">)):</span>
                             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="n">no_bot_cog</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">elem</span><span class="p">))</span>
                         <span class="n">listeners</span><span class="p">[</span><span class="n">elem</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
 
-        <span class="n">new_cls</span><span class="o">.</span><span class="n">__cog_commands__</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
-            <span class="n">commands</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
-        <span class="p">)</span>  <span class="c1"># this will be copied in Cog.__new__</span>
+        <span class="n">new_cls</span><span class="o">.</span><span class="n">__cog_commands__</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">commands</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
 
-        <span class="n">listeners_as_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">listeners_as_list</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[]</span>
+
         <span class="k">for</span> <span class="n">listener</span> <span class="ow">in</span> <span class="n">listeners</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
             <span class="k">for</span> <span class="n">listener_name</span> <span class="ow">in</span> <span class="n">listener</span><span class="o">.</span><span class="n">__cog_listener_names__</span><span class="p">:</span>
-                <span class="c1"># I use __name__ instead of just storing the value so I can inject</span>
-                <span class="c1"># the self attribute when the time comes to add them to the bot</span>
-                <span class="n">listeners_as_list</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">listener_name</span><span class="p">,</span> <span class="n">listener</span><span class="o">.</span><span class="vm">__name__</span><span class="p">))</span>
+                <span class="n">listeners_as_list</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">listener_name</span><span class="p">,</span> <span class="n">listener</span><span class="p">))</span>
 
         <span class="n">new_cls</span><span class="o">.</span><span class="n">__cog_listeners__</span> <span class="o">=</span> <span class="n">listeners_as_list</span>
         <span class="k">return</span> <span class="n">new_cls</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
-
-    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">qualified_name</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">__cog_name__</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Any</span><span class="p">],</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="Cog"><a class="viewcode-back" href="../../../../mi.ext.commands.cog.html#mi.ext.commands.cog.Cog">[ドキュメント]</a><span class="k">class</span> <span class="nc">Cog</span><span class="p">(</span><span class="n">metaclass</span><span class="o">=</span><span class="n">CogMeta</span><span class="p">):</span>
     <span class="n">__cog_name__</span> <span class="o">=</span> <span class="n">ClassVar</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
-    <span class="n">__cog_settings__</span> <span class="o">=</span> <span class="n">ClassVar</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span>
-    <span class="n">__cog_commands__</span><span class="p">:</span> <span class="n">ClassVar</span><span class="p">[</span><span class="n">List</span><span class="p">]</span>
+    <span class="n">__cog_settings__</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">__cog_commands__</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Command</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">__cog_listeners__</span><span class="p">:</span> <span class="n">ClassVar</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]]</span>
 
-    <span class="k">def</span> <span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="c1"># For issue 426, we need to store a copy of the command objects</span>
-        <span class="c1"># since we modify them to inject `self` to them.</span>
-        <span class="c1"># To do this, we need to interfere with the Cog creation process.</span>
+    <span class="k">def</span> <span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Any</span><span class="p">],</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]):</span>
         <span class="bp">self</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span>
         <span class="n">cmd_attrs</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">__cog_settings__</span>
-
-        <span class="c1"># Either update the command with the cog provided defaults or copy it.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__cog_commands__</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span>
-            <span class="n">c</span><span class="o">.</span><span class="n">_update_copy</span><span class="p">(</span><span class="n">cmd_attrs</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">__cog_commands__</span>
-        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__cog_commands__</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">_update_copy</span><span class="p">(</span><span class="n">cmd_attrs</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">__cog_commands__</span><span class="p">)</span>
 
         <span class="n">lookup</span> <span class="o">=</span> <span class="p">{</span><span class="n">cmd</span><span class="o">.</span><span class="n">qualified_name</span><span class="p">:</span> <span class="n">cmd</span> <span class="k">for</span> <span class="n">cmd</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__cog_commands__</span><span class="p">}</span>
 
-        <span class="c1"># Update the Command instances dynamically as well</span>
         <span class="k">for</span> <span class="n">command</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__cog_commands__</span><span class="p">:</span>
             <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="o">.</span><span class="n">callback</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">command</span><span class="p">)</span>
             <span class="n">parent</span> <span class="o">=</span> <span class="n">command</span><span class="o">.</span><span class="n">parent</span>
-            <span class="k">if</span> <span class="n">parent</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="c1"># Get the latest parent reference</span>
+            <span class="k">if</span> <span class="n">parent</span><span class="p">:</span>
                 <span class="n">parent</span> <span class="o">=</span> <span class="n">lookup</span><span class="p">[</span><span class="n">parent</span><span class="o">.</span><span class="n">qualified_name</span><span class="p">]</span>
 
-                <span class="c1"># Update our parent&#39;s reference to our self</span>
                 <span class="n">parent</span><span class="o">.</span><span class="n">remove_command</span><span class="p">(</span><span class="n">command</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
                 <span class="n">parent</span><span class="o">.</span><span class="n">add_command</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
-
         <span class="k">return</span> <span class="bp">self</span>
 
 <div class="viewcode-block" id="Cog.listener"><a class="viewcode-back" href="../../../../mi.ext.commands.cog.html#mi.ext.commands.cog.Cog.listener">[ドキュメント]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">listener</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;A decorator that marks a function as a listener.</span>
-
-<span class="sd">        This is the cog equivalent of :meth:`.Bot.listen`.</span>
-
-<span class="sd">        Parameters</span>
-<span class="sd">        ------------</span>
-<span class="sd">        name: :class:`str`</span>
-<span class="sd">            The name of the event being listened to. If not provided, it</span>
-<span class="sd">            defaults to the function&#39;s name.</span>
-
-<span class="sd">        Raises</span>
-<span class="sd">        --------</span>
-<span class="sd">        TypeError</span>
-<span class="sd">            The function is not a coroutine function or a string was not passed as</span>
-<span class="sd">            the name.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;Cog.listener expected str but received </span><span class="si">{</span><span class="n">name</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">!r}</span><span class="s2"> instead.&quot;</span>
-            <span class="p">)</span>
-
-        <span class="k">def</span> <span class="nf">decorator</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">listener</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Cog.listener expected str but received </span><span class="si">{</span><span class="n">name</span><span class="o">.</span><span class="n">__clsss__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">!r}</span><span class="s1"> instead.&#39;</span><span class="p">)</span>
+        
+        <span class="k">def</span> <span class="nf">decorator</span><span class="p">(</span><span class="n">func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">Coroutine</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]):</span>
             <span class="n">actual</span> <span class="o">=</span> <span class="n">func</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">actual</span><span class="p">,</span> <span class="nb">staticmethod</span><span class="p">):</span>
                 <span class="n">actual</span> <span class="o">=</span> <span class="n">actual</span><span class="o">.</span><span class="vm">__func__</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">inspect</span><span class="o">.</span><span class="n">iscoroutinefunction</span><span class="p">(</span><span class="n">actual</span><span class="p">):</span>
-                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Listener function must be a coroutine function.&quot;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Listener function must be a coroutine function.&#39;</span><span class="p">)</span>
             <span class="n">actual</span><span class="o">.</span><span class="n">__cog_listener__</span> <span class="o">=</span> <span class="kc">True</span>
             <span class="n">to_assign</span> <span class="o">=</span> <span class="n">name</span> <span class="ow">or</span> <span class="n">actual</span><span class="o">.</span><span class="vm">__name__</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">actual</span><span class="o">.</span><span class="n">__cog_listener_names__</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">to_assign</span><span class="p">)</span>
             <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
                 <span class="n">actual</span><span class="o">.</span><span class="n">__cog_listener_names__</span> <span class="o">=</span> <span class="p">[</span><span class="n">to_assign</span><span class="p">]</span>
-            <span class="c1"># we have to return `func` instead of `actual` because</span>
-            <span class="c1"># we need the type to be `staticmethod` for the metaclass</span>
-            <span class="c1"># to pick it up but the metaclass unfurls the function and</span>
-            <span class="c1"># thus the assignments need to be on the actual function</span>
             <span class="k">return</span> <span class="n">func</span>
-
         <span class="k">return</span> <span class="n">decorator</span></div>
 
-    <span class="k">def</span> <span class="nf">_inject</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bot</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_inject</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bot</span><span class="p">:</span> <span class="n">AbstractBotBase</span><span class="p">):</span>
         <span class="bp">cls</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span>
-
-        <span class="c1"># realistically, the only thing that can cause loading errors</span>
-        <span class="c1"># is essentially just the command loading, which raises if there are</span>
-        <span class="c1"># duplicates. When this condition is met, we want to undo all what</span>
-        <span class="c1"># we&#39;ve added so far for some form of atomic loading.</span>
+        <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__cog_commands__</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">command</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__cog_commands__</span><span class="p">):</span>
-            <span class="n">command</span><span class="o">.</span><span class="n">cog</span> <span class="o">=</span> <span class="bp">self</span>
             <span class="k">if</span> <span class="n">command</span><span class="o">.</span><span class="n">parent</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="k">try</span><span class="p">:</span>
                     <span class="n">bot</span><span class="o">.</span><span class="n">add_command</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
                 <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-                    <span class="c1"># undo our additions</span>
                     <span class="k">for</span> <span class="n">to_undo</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__cog_commands__</span><span class="p">[:</span><span class="n">index</span><span class="p">]:</span>
                         <span class="k">if</span> <span class="n">to_undo</span><span class="o">.</span><span class="n">parent</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                             <span class="n">bot</span><span class="o">.</span><span class="n">remove_command</span><span class="p">(</span><span class="n">to_undo</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-                    <span class="k">raise</span> <span class="n">e</span>
-
-        <span class="c1"># while Bot.add_listener can raise if it&#39;s not a coroutine,</span>
-        <span class="c1"># this precondition is already met by the listener decorator</span>
-        <span class="c1"># already, thus this should never raise.</span>
-        <span class="c1"># Outside of, memory errors and the like...</span>
+                        <span class="k">raise</span> <span class="n">e</span>
         <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">method_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__cog_listeners__</span><span class="p">:</span>
             <span class="n">bot</span><span class="o">.</span><span class="n">add_listener</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">method_name</span><span class="p">),</span> <span class="n">name</span><span class="p">)</span>
 

@@ -156,6 +156,7 @@
 <span class="kn">from</span> <span class="nn">websockets.legacy.client</span> <span class="kn">import</span> <span class="n">WebSocketClientProtocol</span>
 
 <span class="kn">from</span> <span class="nn">mi</span> <span class="kn">import</span> <span class="n">UserProfile</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">utils</span>
+<span class="kn">from</span> <span class="nn">mi.abc.ext.bot</span> <span class="kn">import</span> <span class="n">AbstractBotBase</span>
 <span class="kn">from</span> <span class="nn">mi.conn</span> <span class="kn">import</span> <span class="n">Controller</span>
 <span class="kn">from</span> <span class="nn">mi.exception</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">CheckFailure</span><span class="p">,</span>
@@ -178,7 +179,7 @@
 <span class="kn">from</span> <span class="nn">mi.utils</span> <span class="kn">import</span> <span class="n">get_module_logger</span>
 
 
-<div class="viewcode-block" id="BotBase"><a class="viewcode-back" href="../../../../mi.ext.commands.bot.html#mi.BotBase">[ドキュメント]</a><span class="k">class</span> <span class="nc">BotBase</span><span class="p">(</span><span class="n">GroupMixin</span><span class="p">,</span> <span class="n">Controller</span><span class="p">):</span>
+<div class="viewcode-block" id="BotBase"><a class="viewcode-back" href="../../../../mi.ext.commands.bot.html#mi.BotBase">[ドキュメント]</a><span class="k">class</span> <span class="nc">BotBase</span><span class="p">(</span><span class="n">GroupMixin</span><span class="p">,</span> <span class="n">Controller</span><span class="p">,</span> <span class="n">AbstractBotBase</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command_prefix</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">]):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">options</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">command_prefix</span> <span class="o">=</span> <span class="n">command_prefix</span>
@@ -204,8 +205,8 @@
 
         <span class="k">return</span> <span class="k">await</span> <span class="n">utils</span><span class="o">.</span><span class="n">async_all</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">ctx</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">data</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="BotBase.invoke"><a class="viewcode-back" href="../../../../mi.ext.commands.bot.html#mi.BotBase.invoke">[ドキュメント]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">invoke</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ctx</span><span class="p">:</span> <span class="n">Context</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Any</span><span class="p">],</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">]):</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">ctx</span><span class="o">.</span><span class="n">command</span><span class="p">:</span>
+<div class="viewcode-block" id="BotBase.invoke"><a class="viewcode-back" href="../../../../mi.ext.commands.bot.html#mi.BotBase.invoke">[ドキュメント]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">invoke</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ctx</span><span class="p">:</span> <span class="n">Context</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Any</span><span class="p">],</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">]):</span>
+        <span class="k">if</span> <span class="n">ctx</span><span class="o">.</span><span class="n">command</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">False</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">can_run</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="n">call_once</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
@@ -220,8 +221,7 @@
         <span class="k">if</span> <span class="n">message</span><span class="o">.</span><span class="n">content</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">ctx</span>
         <span class="n">view</span> <span class="o">=</span> <span class="n">StringView</span><span class="p">(</span><span class="n">message</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">view</span><span class="o">.</span><span class="n">skip_string</span><span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">command_prefix</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>  <span class="c1"># prefixがテキストに含まれているか確認</span>
+        <span class="k">if</span> <span class="n">view</span><span class="o">.</span><span class="n">skip_string</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">command_prefix</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>  <span class="c1"># prefixがテキストに含まれているか確認</span>
             <span class="k">return</span> <span class="n">ctx</span>
         <span class="n">invoker</span> <span class="o">=</span> <span class="n">view</span><span class="o">.</span><span class="n">get_word</span><span class="p">()</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_commands</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">invoker</span><span class="p">):</span>
@@ -273,7 +273,7 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">special_events</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">func</span><span class="p">]</span></div>
 
-<div class="viewcode-block" id="BotBase.listen"><a class="viewcode-back" href="../../../../mi.ext.commands.bot.html#mi.BotBase.listen">[ドキュメント]</a>    <span class="k">def</span> <span class="nf">listen</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="BotBase.listen"><a class="viewcode-back" href="../../../../mi.ext.commands.bot.html#mi.BotBase.listen">[ドキュメント]</a>    <span class="k">def</span> <span class="nf">listen</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="k">def</span> <span class="nf">decorator</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">add_listener</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">func</span>
@@ -290,7 +290,7 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">extra_events</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">func</span><span class="p">]</span></div>
 
-<div class="viewcode-block" id="BotBase.event_dispatch"><a class="viewcode-back" href="../../../../mi.ext.commands.bot.html#mi.BotBase.event_dispatch">[ドキュメント]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">event_dispatch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Any</span><span class="p">],</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<div class="viewcode-block" id="BotBase.event_dispatch"><a class="viewcode-back" href="../../../../mi.ext.commands.bot.html#mi.BotBase.event_dispatch">[ドキュメント]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">event_dispatch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Any</span><span class="p">],</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;on_ready等といった</span>
 
 <span class="sd">        Parameters</span>
@@ -464,9 +464,9 @@
         <span class="k">if</span> <span class="n">_origin_uri</span> <span class="o">:=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;wss?://(.*)/streaming&quot;</span><span class="p">,</span> <span class="n">uri</span><span class="p">):</span>
             <span class="n">origin_uri</span> <span class="o">=</span> <span class="p">(</span>
                 <span class="n">_origin_uri</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-                <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;wss&quot;</span><span class="p">,</span> <span class="s2">&quot;https&quot;</span><span class="p">)</span>
-                <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;ws&quot;</span><span class="p">,</span> <span class="s2">&quot;http&quot;</span><span class="p">)</span>
-                <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;/streaming&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+                    <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;wss&quot;</span><span class="p">,</span> <span class="s2">&quot;https&quot;</span><span class="p">)</span>
+                    <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;ws&quot;</span><span class="p">,</span> <span class="s2">&quot;http&quot;</span><span class="p">)</span>
+                    <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;/streaming&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
             <span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">origin_uri</span> <span class="o">=</span> <span class="n">uri</span>
