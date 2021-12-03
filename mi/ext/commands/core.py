@@ -27,8 +27,7 @@ class GroupMixin:
                 command.recursively_remove_all_commands()
             self.remove_command(command.name)
 
-    def add_command(self, command:AbstractCommand):
-        print('呼ばれた')
+    def add_command(self, command: AbstractCommand):
         if not isinstance(command, Command):
             raise TypeError(f'{command} passed must be a subclass of Command')
 

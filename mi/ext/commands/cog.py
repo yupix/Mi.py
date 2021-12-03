@@ -106,7 +106,6 @@ class Cog(metaclass=CogMeta):
 
     def _inject(self, bot: AbstractBotBase):
         cls = self.__class__
-        print(self.__cog_commands__)
         for index, command in enumerate(self.__cog_commands__):
             if command.parent is None:
                 try:
