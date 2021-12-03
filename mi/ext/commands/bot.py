@@ -7,13 +7,12 @@ import re
 import sys
 import traceback
 from types import ModuleType
-from typing import Any, Callable, Coroutine, Dict, List, Optional, Tuple
+from typing import Any, Callable, Coroutine, Dict, List, Optional, Tuple, Union
 
 from websockets.legacy.client import WebSocketClientProtocol
 
-from mi import UserProfile, config, utils
+from mi import Client, UserProfile, config, utils
 from mi.abc.ext.bot import AbstractBotBase
-from mi.conn import Controller
 from mi.exception import (
     CheckFailure,
     CogNameDuplicate,
@@ -35,7 +34,7 @@ __all__ = ["BotBase", "Bot"]
 from mi.utils import get_module_logger
 
 
-class BotBase(GroupMixin, Controller, AbstractBotBase):
+class BotBase(GroupMixin, AbstractBotBase):
     def __init__(self, command_prefix: str, **options: Dict[Any, Any]):
         super().__init__(**options)
         self.command_prefix = command_prefix
@@ -53,7 +52,7 @@ class BotBase(GroupMixin, Controller, AbstractBotBase):
         self.logger = get_module_logger(__name__)
         self.loop = asyncio.get_event_loop()
 
-    async def can_run(self, ctx: Context, *, call_once: bool = False):
+    async def can_run(self, ctx: Context, *, call_once: bool = False) -> bool:
         data = self._check_once if call_once else self._checks
 
         if len(data) == 0:
@@ -113,13 +112,13 @@ class BotBase(GroupMixin, Controller, AbstractBotBase):
         """
 
     def event(self, name: Optional[str] = None):
-        def decorator(func):
+        def decorator(func: Coroutine[Any, Any, Any]):
             self.add_event(func, name)
             return func
 
         return decorator
 
-    def add_event(self, func, name: Optional[str] = None):
+    def add_event(self, func: Coroutine[Any, Any, Any], name: Optional[str] = None):
         name = func.__name__ if name is None else name
         if not asyncio.iscoroutinefunction(func):
             raise TypeError("Listeners must be coroutines")
@@ -130,13 +129,13 @@ class BotBase(GroupMixin, Controller, AbstractBotBase):
             self.special_events[name] = [func]
 
     def listen(self, name:Optional[str]=None):
-        def decorator(func):
+        def decorator(func: Coroutine[Any,Any,Any]):
             self.add_listener(func, name)
             return func
 
         return decorator
 
-    def add_listener(self, func, name: Optional[str] = None):
+    def add_listener(self, func: Union[Coroutine[Any, Any,Any], Callable[..., Any]], name: Optional[str] = None):
         name = func.__name__ if name is None else name
         if not asyncio.iscoroutinefunction(func):
             raise TypeError("Listeners must be coroutines")
@@ -342,5 +341,5 @@ class BotBase(GroupMixin, Controller, AbstractBotBase):
         )
 
 
-class Bot(BotBase):
+class Bot(BotBase, Client):
     pass
