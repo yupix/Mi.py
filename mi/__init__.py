@@ -18,28 +18,3 @@ from .router import *
 from .chat import *
 from .client import *
 from .ext import *
-
-__all__ = [
-    "Chart",
-    "Local",
-    "Remote",
-    "Emoji",
-    "Follow",
-    "client",
-    "BotBase",
-    "http",
-    "note",
-    "router",
-    "ext",
-    "utils",
-    "drive",
-    "Note",
-    "Reaction",
-    "UserProfile",
-    "Instance",
-    "Header",
-    "Client",
-    "Router",
-    "Drive",
-    "Properties",
-]
