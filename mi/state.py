@@ -1,10 +1,13 @@
 import asyncio
-from typing import Any, Callable, Dict
-from mi.chat import Chat, ChatContent
+import json
+from typing import Any, Callable, Dict, Iterator, Optional
 
+from mi import User, UserProfile
+from mi.chat import ChatContent
 from mi.emoji import Emoji
+from mi.iterators import InstanceIterator
 from mi.note import NoteContent, ReactionContent
-from mi.utils import get_module_logger, str_lower, upper_to_lower
+from mi.utils import api, get_module_logger, str_lower, upper_to_lower
 
 
 class ConnectionState:
@@ -27,21 +30,17 @@ class ConnectionState:
         self.logger.debug(f'ChannelType: {channel_type}')
         await getattr(self, f'_parse_{channel_type}')(base_msg['body'])
 
-
     async def _parse_messaging_message(self, message: Dict[str, Any]) -> None:
         """
         チャットが来た際のデータを処理する関数
-        """    
+        """
         await self.dispatch('message', ChatContent(message))
-
 
     async def _parse_unread_messaging_message(self, message: Dict[str, Any]) -> None:
         """
         チャットが既読になっていない場合のデータを処理する関数
-        """    
+        """
         await self.dispatch('message', ChatContent(message))
-
-
 
     async def _parse_notification(self, message: Dict[str, Any]) -> None:
         """
@@ -58,7 +57,6 @@ class ConnectionState:
         """
         notification_type = str_lower(message['type'])
         await getattr(self, f'_parse_{notification_type}')(message)
-
 
     async def _parse_unread_notification(self, message: Dict[str, Any]) -> None:
         """
@@ -82,7 +80,7 @@ class ConnectionState:
         """
         ノートイベントを解析する関数
         """
-        await self.dispatch('message', NoteContent(message))
+        await self.dispatch('message', NoteContent(message, self))
 
     async def on_emoji_add(self, message: dict):
         """
@@ -241,3 +239,20 @@ class ConnectionState:
 
     async def on_close(self, web_socket):
         pass
+
+    @staticmethod
+    async def _get_i():
+        res = api("/api/i", auth=True)
+        return UserProfile(**upper_to_lower(json.loads(res.text)))
+
+    def get_users(self,
+                  limit: int = 10,
+                  *,
+                  offset: int = 0,
+                  sort: Optional[str] = None,
+                  state: str = 'all',
+                  origin: str = 'local',
+                  username: Optional[str] = None,
+                  hostname: Optional[str] = None,
+                  get_all: bool = False) -> Iterator[User]:
+        return InstanceIterator(self).get_users(limit=limit, offset=offset, sort=sort, state=state, origin=origin, username=username, hostname=hostname, get_all=get_all)
