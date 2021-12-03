@@ -1,4 +1,4 @@
-from abc import ABC, abstractmethod
+from abc import abstractmethod
 import asyncio
 from types import ModuleType
 from typing import Any, Callable, Coroutine, Dict, Optional, Tuple
@@ -7,20 +7,20 @@ from websockets.legacy.client import WebSocketClientProtocol
 
 from mi.abc.ext.core import AbstractGroupMixin
 
-from .context import Context
+from .context import AbstractContext
 
 
 class AbstractBotBase(AbstractGroupMixin):
     @abstractmethod
-    async def can_run(self, ctx: Context, *, call_once: bool = False):
+    async def can_run(self, ctx: AbstractContext, *, call_once: bool = False) -> bool:
         pass
 
     @abstractmethod
-    async def invoke(self, ctx: Context, *args: Tuple[Any], **kwargs: Dict[Any, Any]):
+    async def invoke(self, ctx: AbstractContext, *args: Tuple[Any], **kwargs: Dict[Any, Any]):
         pass
 
     @abstractmethod
-    async def get_context(self, message, *, cls: Any = Context):
+    async def get_context(self, message, *, cls: Any = AbstractContext):
         pass
 
     @abstractmethod
@@ -98,11 +98,6 @@ class AbstractBotBase(AbstractGroupMixin):
             *args: Any,
             **kwargs: Any,
     ) -> None:
-        pass
-
-    @staticmethod
-    @abstractmethod
-    async def __on_error(event_method: str) -> None:
         pass
 
     @abstractmethod

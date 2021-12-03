@@ -1,7 +1,9 @@
 from typing import Any, Dict
 
+from mi.abc.ext.context import AbstractContext
 
-class Context:
+
+class Context(AbstractContext):
     def __init__(self, **attrs: Dict[Any, Any]):
         self.message = attrs.pop("message", None)
         self.bot = attrs.pop("bot", None)
