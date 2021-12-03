@@ -212,7 +212,7 @@ class Controller:
             until_id: Optional[str] = None,
             limit: int = 10,
             get_all: bool = False,
-    ) -> Iterator[dict]:
+    ) -> Iterator[Dict[str, Any]]:
         """
         与えられたユーザーのフォロワーを取得します
 

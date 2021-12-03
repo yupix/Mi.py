@@ -305,9 +305,7 @@ class Author:
             )
         )
 
-    def get_followers(
-            self, until_id: Optional[str] = None, limit: int = 10, get_all: bool = False
-    ):
+    def get_followers(self, until_id: Optional[str] = None, limit: int = 10, get_all: bool = False) -> Iterator[Dict[str, Any]]:
         """
         ユーザーのフォロワー一覧を取得します
         Parameters
