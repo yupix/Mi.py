@@ -1,13 +1,11 @@
 import json
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, Iterator, List, Optional
 
 from pydantic import BaseModel
 
 from mi import Emoji, Instance
-from mi.conn import Controller
 from mi.drive import File
-from mi.types.user import (Author as UserPayload
-                           )
+from mi.types.user import (Author as UserPayload)
 from mi.utils import api, upper_to_lower
 
 
@@ -229,27 +227,96 @@ class UserProfile(BaseModel):
         return self.__user_action.unfollow(user_id)
 
 
-class Author:
+class User:
     def __init__(self, data: UserPayload):
-        self.id: str = data["id"]
+        self.id: str = data.get("id")
         self.name: str = data["name"]
         self.username: str = data["username"]
-        self.host: str = data["host"]
-        self.avatar_url: str = data["avatar_url"]
-        self.avatar_blurhash: str = data["avatar_blurhash"]
-        self.avatar_color: str = data["avatar_color"]
+        self.host: Optional[str] = data.get("host")
+        self.avatar_url: Optional[str] = data.get("avatar_url")
+        self.avatar_blurhash: Optional[str] = data.get("avatar_blurhash")
+        self.avatar_color: str = data.get("avatar_color")
         self.admin: bool = data.get("is_admin", False)
         self.bot: bool = data.get("is_bot", False)
-        self.emojis: list = data["emojis"]
+        self.emojis: list = data.get("emojis")
         self.online_status = data.get("online_status", None)
         self.instance = (
-            Instance(data["instance"]) if data.get("instance") else Instance(
-                {})
+            Instance(data["instance"]) if data.get("instance") else Instance({})
         )
         self.__user_action: UserAction = UserAction()
 
     class Config:
         arbitrary_types_allowed = True
+
+    @staticmethod
+    def get_followers(
+            user_id: Optional[str] = None,
+            username: Optional[str] = None,
+            host: Optional[str] = None,
+            since_id: Optional[str] = None,
+            until_id: Optional[str] = None,
+            limit: int = 10,
+            get_all: bool = False,
+    ) -> Iterator[Dict[str, Any]]:
+        """
+        与えられたユーザーのフォロワーを取得します
+
+        Parameters
+        ----------
+        user_id : str, default=None
+            ユーザーのid
+        username : str, default=None
+            ユーザー名
+        host : str, default=None
+            ユーザーがいるインスタンスのhost名
+        since_id : str, default=None
+        until_id : str, default=None
+            前回の最後の値を与える(既に実行し取得しきれない場合に使用)
+        limit : int, default=10
+            取得する情報の最大数 max: 100
+        get_all : bool, default=False
+            全てのフォロワーを取得する
+
+        Yields
+        ------
+        dict
+            フォロワーの情報
+
+        Raises
+        ------
+        InvalidParameters
+            limit引数が不正な場合
+        """
+        if not check_multi_arg(user_id, username):
+            raise NotExistRequiredParameters("user_id, usernameどちらかは必須です")
+
+        if limit > 100:
+            raise InvalidParameters("limit は100以上を受け付けません")
+
+        data = remove_dict_empty(
+            {
+                "userId": user_id,
+                "username": username,
+                "host": host,
+                "sinceId": since_id,
+                "untilId": until_id,
+                "limit": limit,
+            }
+        )
+        if get_all:
+            loop = True
+            while loop:
+                get_data = api("/api/users/followers", json_data=data,
+                               auth=True).json()
+                if len(get_data) > 0:
+                    data["untilId"] = get_data[-1]["id"]
+                else:
+                    break
+                yield get_data
+        else:
+            get_data = api("/api/users/followers", json_data=data,
+                           auth=True).json()
+            yield get_data
 
     def follow(self, user_id: Optional[str] = None) -> tuple[bool, str]:
         """
@@ -300,12 +367,13 @@ class Author:
         """
         return UserProfile(
             **upper_to_lower(
-                Controller.get_user(user_id=self.id, username=self.username,
-                                    host=self.host)
+                self.get_user(user_id=self.id, username=self.username,
+                                host=self.host)
             )
         )
 
-    def get_followers(self, until_id: Optional[str] = None, limit: int = 10, get_all: bool = False) -> Iterator[Dict[str, Any]]:
+    def get_followers(self, until_id: Optional[str] = None, limit: int = 10, get_all: bool = False) -> Iterator[
+        Dict[str, Any]]:
         """
         ユーザーのフォロワー一覧を取得します
         Parameters
@@ -321,7 +389,7 @@ class Author:
         -------
 
         """
-        return Controller.get_followers(
+        return Client.get_followers(
             user_id=self.id,
             username=self.username,
             host=self.host,

@@ -5,7 +5,7 @@ from pydantic import BaseModel, Field
 
 from mi import Drive, Emoji, UserProfile, utils
 from mi.exception import ContentRequired, NotExistRequiredParameters
-from mi.user import Author, UserAction
+from mi.user import User, UserAction
 from mi.utils import api, check_multi_arg, remove_dict_empty, upper_to_lower
 from .abc.note import AbstractNote
 from .types.note import (Note as NotePayload,
@@ -262,10 +262,10 @@ class File(BaseModel):
 
 class Poll:
     def __init__(self, data: PollPayload):
-        self.multiple: bool = data["multiple"]
-        self.expires_at: int = data["expires_at"]
-        self.choices: List = data["choices"]
-        self.expired_after: int = data.get("expired_after")
+        self.multiple: Optional[bool] = data.get("multiple")
+        self.expires_at: Optional[int] = data.get("expires_at")
+        self.choices: Optional[List[str]] = data.get("choices")
+        self.expired_after: Optional[int] = data.get("expired_after")
 
 
 class Renote(AbstractNote):
@@ -273,7 +273,7 @@ class Renote(AbstractNote):
         self.id = data["id"]
         self.created_at = data["created_at"]
         self.user_id = data["user_id"]
-        self.user = Author(data["user"])
+        self.user = User(data.get("user", {}))
         self.content: Optional[str] = data.get("content", None)
         self.cw = data["cw"]
         self.visibility = data["visibility"]
@@ -281,7 +281,7 @@ class Renote(AbstractNote):
         self.replies_count = data["replies_count"]
         self.reactions = data["reactions"]
         self.emojis = data["emojis"]
-        self.file_ids = data["file_ids"]
+        self.file_ids: List[str] = data["file_ids"]
         self.files = data["files"]
         self.reply_id = data["reply_id"]
         self.files = data["files"]
@@ -293,11 +293,11 @@ class Renote(AbstractNote):
 
     def add_file(
             self,
-            path: str = None,
-            name: str = None,
+            path: Optional[str] = None,
+            name: Optional[str] = None,
             force: bool = False,
             is_sensitive: bool = False,
-            url: str = None,
+            url: Optional[str] = None,
     ):
         self.file_ids.append(
             self.__note_action.add_file(
@@ -338,19 +338,22 @@ class Renote(AbstractNote):
         return await self.__note_action.delete(note_id)
 
 
+class ReactionContent:
+    def __init__(self, data):
+        self.created_at = data.get('created_at')
+        self.type = data.get('type')
+        self.is_read:bool = data['is_read']
+        self.user: User = User(data['user'])
+        self.note: NoteContent = NoteContent(data['note'])
+        self.reaction = data['reaction']
+
+        
+
 class Reaction(BaseModel):
     id: Optional[str] = Field(None, alias="id_")
     reaction: Optional[str] = None
     user_id: Optional[str] = None
 
-
-class Geo(BaseModel):
-    coordinates: Optional[List[Any]] = []
-    altitude: Optional[int] = 0
-    accuracy: Optional[int] = 0
-    altitude_accuracy: Optional[int] = 0
-    heading: Optional[int] = 360
-    speed: Optional[int] = 0
 
 
 class Note(AbstractNote):
@@ -359,31 +362,31 @@ class Note(AbstractNote):
             content: str,
             *,
             visibility: str = "public",
-            visible_user_ids: List[str] = None,
-            cw: str = None,
+            visible_user_ids: Optional[List[str]] = None,
+            cw: Optional[str] = None,
             local_only: bool = False,
             no_extract_mentions: bool = False,
             no_extract_hashtags: bool = False,
             no_extract_emojis: bool = False,
-            reply_id: List[str] = None,
-            renote_id: str = None,
-            channel_id: str = None,
-            file_ids: List[File] = None,
-            poll: Poll = None
+            reply_id: List[str] = [],
+            renote_id: Optional[str] = None,
+            channel_id: Optional[str] = None,
+            file_ids: List[File] = [],
+            poll: Optional[Poll] = None
     ):
         self.content: str = content
         self.visibility: str = visibility
-        self.visible_user_ids: List[str] = visible_user_ids
-        self.cw: str = cw
+        self.visible_user_ids: Optional[List[str]] = visible_user_ids
+        self.cw: Optional[str] = cw
         self.local_only: bool = local_only
         self.no_extract_mentions: bool = no_extract_mentions
         self.no_extract_hashtags: bool = no_extract_hashtags
         self.no_extract_emojis: bool = no_extract_emojis
         self.reply_id: List[str] = reply_id
-        self.renote_id: str = renote_id
-        self.channel_id: str = channel_id
+        self.renote_id: Optional[str] = renote_id
+        self.channel_id: Optional[str] = channel_id
         self.file_ids: List[File] = file_ids
-        self.poll: Poll = poll
+        self.poll: Optional[Poll] = poll
 
     async def send(self):
         field = {
@@ -439,8 +442,8 @@ class NoteContent(AbstractNote):
         self.id: str = data["id"]
         self.created_at: str = data["created_at"]
         self.user_id: str = data["user_id"]
-        self.author = Author(data["author"])
-        self.content: Optional[str] = data.get("content")
+        self.author = User(data["user"])
+        self.content: Optional[str] = data.get("text")
         self.cw: str = data["cw"]
         self.renote: Renote = Renote(data["renote"]) if data.get(
             "renote") else None
@@ -466,7 +469,6 @@ class NoteContent(AbstractNote):
             "no_extract_hashtags")
         self.no_extract_emojis: Optional[bool] = data.get("no_extract_emojis")
         self.preview: Optional[bool] = data.get("preview")
-        self.geo: Optional[Geo] = Geo(data["geo"]) if data.get("geo") else None
         self.media_ids: Optional[List[str]] = data.get("media_ids")
         self.field: Optional[dict] = {}
         self.tags: Optional[List[str]] = data.get("tags", [])

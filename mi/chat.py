@@ -1,9 +1,8 @@
 from typing import List
 
 from .abc.chat import AbstractChat, AbstractChatContent
-from .conn import Controller
 from .types.chat import Chat as ChatPayload
-from .user import Author
+from .user import User
 from .utils import api, remove_dict_empty, upper_to_lower
 
 __all__ = ['Chat', 'ChatContent']
@@ -70,9 +69,9 @@ class ChatContent(AbstractChatContent):
     def __init__(self, data: ChatPayload):
         self.id: str = data["id"]
         self.created_at: str = data["created_at"]
-        self.content: str = data["content"]
+        self.content: str = data["text"]
         self.user_id: str = data["user_id"]
-        self.author: Author = Author(data["author"])
+        self.author: User = User(data["user"])
         self.recipient_id: str = data["recipient_id"]
         self.recipient: str = data["recipient"]
         self.group_id: str = data["group_id"]
@@ -89,5 +88,5 @@ class ChatContent(AbstractChatContent):
         bool:
             成功したか否か
         """
-        res = await Controller.delete_chat(self.id)
-        return res.status_code == 204
+        # res = await Client.delete_chat(self.id)
+        # return res.status_code == 204
