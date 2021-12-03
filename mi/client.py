@@ -1,3 +1,4 @@
+from __future__ import annotations
 import asyncio
 import importlib
 import inspect
@@ -5,20 +6,21 @@ import re
 import sys
 import traceback
 from functools import cache
-from typing import Any, Callable, Coroutine, Dict, Iterator, List, Optional, Tuple, Union
+from typing import Any, Callable, Coroutine, Dict, Iterator, List, Optional, TYPE_CHECKING, Tuple, Union
 
 import requests
 from websockets.legacy.client import WebSocketClientProtocol
 
-from mi import UserProfile, config
+from mi import config
 from mi.exception import InvalidParameters, NotExistRequiredParameters
 from mi.http import WebSocket
 from mi.next_utils import check_multi_arg
 from mi.note import NoteContent
 from mi.state import ConnectionState
-from mi.user import UserAction
 from mi.utils import api, get_module_logger, remove_dict_empty, upper_to_lower
 
+if TYPE_CHECKING:
+    from . import UserProfile
 
 class Client:
     def __init__(self, **options: Dict[Any, Any]):
@@ -425,7 +427,7 @@ class Client:
         }
         config.i = config.Config(**auth_i)
         config.debug = debug
-        self.i = UserAction().get_i()
+        self.i = self._connection._get_i()
         auth_i["profile"] = self.i
         auth_i["instance"] = self.get_instance_meta()
         config.i = config.Config(**auth_i)
