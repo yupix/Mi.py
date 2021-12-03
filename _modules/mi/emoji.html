@@ -147,7 +147,7 @@
 <span class="kn">from</span> <span class="nn">mi.types.emoji</span> <span class="kn">import</span> <span class="n">Emoji</span> <span class="k">as</span> <span class="n">EmojiPayload</span>
 
 
-<div class="viewcode-block" id="Emoji"><a class="viewcode-back" href="../../mi.emoji.html#mi.Emoji">[ドキュメント]</a><span class="k">class</span> <span class="nc">Emoji</span><span class="p">:</span>
+<div class="viewcode-block" id="Emoji"><a class="viewcode-back" href="../../mi.emoji.html#mi.emoji.Emoji">[ドキュメント]</a><span class="k">class</span> <span class="nc">Emoji</span><span class="p">:</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">EmojiPayload</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">aliases</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;aliases&#39;</span><span class="p">)</span>

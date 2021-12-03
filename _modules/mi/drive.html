@@ -149,13 +149,13 @@
 <span class="kn">from</span> <span class="nn">mi</span> <span class="kn">import</span> <span class="n">conn</span>
 
 
-<div class="viewcode-block" id="Properties"><a class="viewcode-back" href="../../mi.drive.html#mi.Properties">[ドキュメント]</a><span class="k">class</span> <span class="nc">Properties</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="Properties"><a class="viewcode-back" href="../../mi.drive.html#mi.drive.Properties">[ドキュメント]</a><span class="k">class</span> <span class="nc">Properties</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
     <span class="n">width</span><span class="p">:</span> <span class="nb">int</span>
     <span class="n">height</span><span class="p">:</span> <span class="nb">int</span>
     <span class="n">avgColor</span><span class="p">:</span> <span class="nb">str</span></div>
 
 
-<div class="viewcode-block" id="Folder"><a class="viewcode-back" href="../../mi.drive.html#mi.Folder">[ドキュメント]</a><span class="k">class</span> <span class="nc">Folder</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="Folder"><a class="viewcode-back" href="../../mi.drive.html#mi.drive.Folder">[ドキュメント]</a><span class="k">class</span> <span class="nc">Folder</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
     <span class="nb">id</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">createdAt</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
@@ -165,7 +165,7 @@
     <span class="n">parent</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span></div>
 
 
-<div class="viewcode-block" id="File"><a class="viewcode-back" href="../../mi.drive.html#mi.File">[ドキュメント]</a><span class="k">class</span> <span class="nc">File</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="File"><a class="viewcode-back" href="../../mi.drive.html#mi.drive.File">[ドキュメント]</a><span class="k">class</span> <span class="nc">File</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
     <span class="nb">id</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">createdAt</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
@@ -184,7 +184,7 @@
     <span class="n">user</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span></div>
 
 
-<div class="viewcode-block" id="Drive"><a class="viewcode-back" href="../../mi.drive.html#mi.Drive">[ドキュメント]</a><span class="k">class</span> <span class="nc">Drive</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="Drive"><a class="viewcode-back" href="../../mi.drive.html#mi.drive.Drive">[ドキュメント]</a><span class="k">class</span> <span class="nc">Drive</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
     <span class="nb">id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">created_at</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
@@ -196,10 +196,10 @@
     <span class="n">is_sensitive</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
     <span class="n">blurhash</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 
-<div class="viewcode-block" id="Drive.Config"><a class="viewcode-back" href="../../mi.drive.html#mi.Drive.Config">[ドキュメント]</a>    <span class="k">class</span> <span class="nc">Config</span><span class="p">:</span>
+<div class="viewcode-block" id="Drive.Config"><a class="viewcode-back" href="../../mi.drive.html#mi.drive.Drive.Config">[ドキュメント]</a>    <span class="k">class</span> <span class="nc">Config</span><span class="p">:</span>
         <span class="n">arbitrary_types_allowed</span> <span class="o">=</span> <span class="kc">True</span></div>
 
-<div class="viewcode-block" id="Drive.upload"><a class="viewcode-back" href="../../mi.drive.html#mi.Drive.upload">[ドキュメント]</a>    <span class="k">def</span> <span class="nf">upload</span><span class="p">(</span>
+<div class="viewcode-block" id="Drive.upload"><a class="viewcode-back" href="../../mi.drive.html#mi.drive.Drive.upload">[ドキュメント]</a>    <span class="k">def</span> <span class="nf">upload</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>

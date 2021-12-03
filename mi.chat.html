@@ -347,73 +347,8 @@
               
               <div>
                 
-  <div class="section" id="module-mi.chat">
-<span id="mi-chat-module"></span><h1>mi.chat module<a class="headerlink" href="#module-mi.chat" title="このヘッドラインへのパーマリンク">¶</a></h1>
-<dl class="py class">
-<dt class="sig sig-object py" id="mi.chat.Chat">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.chat.</span></span><span class="sig-name descname"><span class="pre">Chat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">group_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/chat.html#Chat"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#mi.chat.Chat" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>ベースクラス: <code class="xref py py-class docutils literal notranslate"><span class="pre">mi.abc.chat.AbstractChat</span></code></p>
-<p>チャットを行う際に使用するクラス</p>
-<dl class="py method">
-<dt class="sig sig-object py" id="mi.chat.Chat.add_file">
-<span class="sig-name descname"><span class="pre">add_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_sensitive</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/chat.html#Chat.add_file"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#mi.chat.Chat.add_file" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>チャットにファイルを添付します。</p>
-<dl class="field-list simple">
-<dt class="field-odd">パラメータ</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>is_sensitive</strong> (<em>bool</em>) -- この画像がセンシティブな物の場合Trueにする</p></li>
-<li><p><strong>force</strong> (<em>bool</em>) -- Trueの場合同じ名前のファイルがあった場合でも強制的に保存する</p></li>
-<li><p><strong>path</strong> (<em>str</em>) -- そのファイルまでのパスとそのファイル.拡張子(/home/test/test.png)</p></li>
-<li><p><strong>name</strong> (<em>str</em>) -- ファイル名(拡張子があるなら含めて)</p></li>
-<li><p><strong>url</strong> (<em>str</em>) -- URLから画像をアップロードする場合にURLを指定する</p></li>
-</ul>
-</dd>
-<dt class="field-even">戻り値</dt>
-<dd class="field-even"><p><strong>self</strong></p>
-</dd>
-<dt class="field-odd">戻り値の型</dt>
-<dd class="field-odd"><p><a class="reference internal" href="mi.html#mi.Note" title="mi.Note">Note</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="mi.chat.Chat.send">
-<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">send</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#mi.chat.ChatContent" title="mi.chat.ChatContent"><span class="pre">mi.chat.ChatContent</span></a></span></span><a class="reference internal" href="_modules/mi/chat.html#Chat.send"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#mi.chat.Chat.send" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>チャットを投稿します</p>
-<dl class="field-list simple">
-<dt class="field-odd">戻り値</dt>
-<dd class="field-odd"><p></p>
-</dd>
-<dt class="field-even">戻り値の型</dt>
-<dd class="field-even"><p><a class="reference internal" href="#mi.chat.ChatContent" title="mi.chat.ChatContent">ChatContent</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="mi.chat.ChatContent">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.chat.</span></span><span class="sig-name descname"><span class="pre">ChatContent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="mi.types.chat.html#mi.types.chat.Chat" title="mi.types.chat.Chat"><span class="pre">mi.types.chat.Chat</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/chat.html#ChatContent"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#mi.chat.ChatContent" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>ベースクラス: <code class="xref py py-class docutils literal notranslate"><span class="pre">mi.abc.chat.AbstractChatContent</span></code></p>
-<p>チャットオブジェクト</p>
-<dl class="py method">
-<dt class="sig sig-object py" id="mi.chat.ChatContent.delete">
-<em class="property"><span class="pre">async</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">delete</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/chat.html#ChatContent.delete"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#mi.chat.ChatContent.delete" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>チャットを削除します（チャットの作者である必要があります）</p>
-<dl class="field-list simple">
-<dt class="field-odd">戻り値</dt>
-<dd class="field-odd"><p>成功したか否か</p>
-</dd>
-<dt class="field-even">戻り値の型</dt>
-<dd class="field-even"><p>bool</p>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
+  <div class="section" id="mi-chat-module">
+<h1>mi.chat module<a class="headerlink" href="#mi-chat-module" title="このヘッドラインへのパーマリンク">¶</a></h1>
 </div>
 
 
