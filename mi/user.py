@@ -1,5 +1,6 @@
+from __future__ import annotations
 import json
-from typing import Any, Dict, Iterator, List, Optional
+from typing import Any, Dict, Iterator, List, Optional, TYPE_CHECKING
 
 from pydantic import BaseModel
 
@@ -7,6 +8,9 @@ from mi import Emoji, Instance
 from mi.drive import File
 from mi.types.user import (Author as UserPayload)
 from mi.utils import api, upper_to_lower
+
+if TYPE_CHECKING:
+    from mi import ConnectionState
 
 
 class UserAction:
@@ -228,7 +232,7 @@ class UserProfile(BaseModel):
 
 
 class User:
-    def __init__(self, data: UserPayload):
+    def __init__(self, data: UserPayload, state: ConnectionState):
         self.id: str = data.get("id")
         self.name: str = data["name"]
         self.username: str = data["username"]
@@ -241,7 +245,7 @@ class User:
         self.emojis: list = data.get("emojis")
         self.online_status = data.get("online_status", None)
         self.instance = (
-            Instance(data["instance"]) if data.get("instance") else Instance({})
+            Instance(data["instance"], state) if data.get("instance") else Instance({}, state)
         )
         self.__user_action: UserAction = UserAction()
 
@@ -368,7 +372,7 @@ class User:
         return UserProfile(
             **upper_to_lower(
                 self.get_user(user_id=self.id, username=self.username,
-                                host=self.host)
+                              host=self.host)
             )
         )
 

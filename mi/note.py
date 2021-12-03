@@ -1,5 +1,6 @@
+from __future__ import annotations
 import json
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, TYPE_CHECKING
 
 from pydantic import BaseModel, Field
 
@@ -11,6 +12,9 @@ from .abc.note import AbstractNote
 from .types.note import (Note as NotePayload,
                          Poll as PollPayload,
                          Renote as RenotePayload)
+
+if TYPE_CHECKING:
+    from mi import ConnectionState
 
 
 class NoteAction:
@@ -123,16 +127,16 @@ class NoteAction:
             visible_user_ids: str,
             text: str,
             cw: str,
-            via_mobile:bool,
-            local_only:bool,
-            no_extract_mentions:bool,
-            no_extract_hashtags:bool,
-            no_extract_emojis:bool,
-            reply_id:str,
-            renote_id:str,
-            channel_id:str,
-            preview:bool,
-            geo:Any,
+            via_mobile: bool,
+            local_only: bool,
+            no_extract_mentions: bool,
+            no_extract_hashtags: bool,
+            no_extract_emojis: bool,
+            reply_id: str,
+            renote_id: str,
+            channel_id: str,
+            preview: bool,
+            geo: Any,
             file_ids: List[str],
             poll: Dict[str, Any]  # TODO:ここはもうちょい正確に type hint 定義したい
     ) -> "NoteContent":
@@ -208,7 +212,6 @@ class Follow(BaseModel):
         if user_id is None:
             user_id = self.user.id
 
-        
         return self.__user_action.follow(user_id)
 
     def unfollow(self, user_id: Optional[str] = None) -> bool:
@@ -269,11 +272,11 @@ class Poll:
 
 
 class Renote(AbstractNote):
-    def __init__(self, data: RenotePayload):
+    def __init__(self, data: RenotePayload, state: ConnectionState):
         self.id = data["id"]
         self.created_at = data["created_at"]
         self.user_id = data["user_id"]
-        self.user = User(data.get("user", {}))
+        self.user = User(data.get("user", {}), state)
         self.content: Optional[str] = data.get("content", None)
         self.cw = data["cw"]
         self.visibility = data["visibility"]
@@ -290,6 +293,7 @@ class Renote(AbstractNote):
         self.uri = data.get("uri")
         self.poll = Poll(data["poll"]) if data.get("poll") else None
         self.__note_action = NoteAction
+        self._state = state
 
     def add_file(
             self,
@@ -342,18 +346,16 @@ class ReactionContent:
     def __init__(self, data):
         self.created_at = data.get('created_at')
         self.type = data.get('type')
-        self.is_read:bool = data['is_read']
+        self.is_read: bool = data['is_read']
         self.user: User = User(data['user'])
         self.note: NoteContent = NoteContent(data['note'])
         self.reaction = data['reaction']
 
-        
 
 class Reaction(BaseModel):
     id: Optional[str] = Field(None, alias="id_")
     reaction: Optional[str] = None
     user_id: Optional[str] = None
-
 
 
 class Note(AbstractNote):
@@ -438,14 +440,14 @@ class Note(AbstractNote):
 
 
 class NoteContent(AbstractNote):
-    def __init__(self, data: NotePayload):
+    def __init__(self, data: NotePayload, state: ConnectionState):
         self.id: str = data["id"]
         self.created_at: str = data["created_at"]
         self.user_id: str = data["user_id"]
-        self.author = User(data["user"])
+        self.author = User(data["user"], state)
         self.content: Optional[str] = data.get("text")
         self.cw: str = data["cw"]
-        self.renote: Renote = Renote(data["renote"]) if data.get(
+        self.renote: Renote = Renote(data["renote"], state) if data.get(
             "renote") else None
         self.visibility: str = data["visibility"]
         self.renote_count: int = data["renote_count"]
@@ -473,6 +475,7 @@ class NoteContent(AbstractNote):
         self.field: Optional[dict] = {}
         self.tags: Optional[List[str]] = data.get("tags", [])
         self.channel_id: Optional[str] = data.get("channel_id")
+        self._state = state
         self.__note_action = NoteAction
 
     def __poll_formatter(self) -> dict:

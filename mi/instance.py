@@ -6,9 +6,11 @@ from .utils import remove_dict_empty, api
 
 if TYPE_CHECKING:
     from .user import User
+    from . import ConnectionState
+
 
 class Instance:
-    def __init__(self, data: Union[Dict[Any, Any], InstancePayload]):
+    def __init__(self, data: Union[Dict[Any, Any], InstancePayload], state: ConnectionState):
         self.host: Optional[str] = data.get("host")
         self.name: Optional[str] = data.get("name")
         self.software_name: Optional[str] = data.get("software_name")
@@ -16,9 +18,10 @@ class Instance:
         self.icon_url: Optional[str] = data.get("icon_url")
         self.favicon_url: Optional[str] = data.get("favicon_url")
         self.theme_color: Optional[str] = data.get("theme_color")
+        self._state = state
 
-    @staticmethod
-    def get_users(limit: int = 10,
+    def get_users(self,
+                  limit: int = 10,
                   *,
                   offset: int = 0,
                   sort: Optional[str] = None,
@@ -45,25 +48,5 @@ class Instance:
         -------
         Iterator[User]
         """
-        args = remove_dict_empty({'limit': limit,
-                                  'offset': offset,
-                                  'sort': sort,
-                                  'state': state,
-                                  'origin': origin,
-                                  'username': username,
-                                  'hostname': hostname
-                                  })
-        res = api('/api/admin/show-users', json_data=args, auth=True).json()
-
-        if get_all:
-            while True:
-                for i in res:
-                    yield i
-                args['offset'] = args['offset'] + len(res)
-                res = api('/api/admin/show-users',
-                          json_data=args, auth=True).json()
-                if len(res) == 0:
-                    break
-        else:
-            for i in res:
-                yield i
+        return self._state.get_users(limit=limit, offset=offset, sort=sort, state=state, origin=origin, username=username,
+                                     hostname=hostname, get_all=get_all)
