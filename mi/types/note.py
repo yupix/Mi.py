@@ -17,15 +17,15 @@ class Geo(TypedDict):
     speed: Optional[int]
 
 
-class Poll(TypedDict):
+class Poll(TypedDict, total=False):
     """
     アンケート情報
     """
 
-    multiple: Optional[bool]
-    expires_at: Optional[int]
-    choices: Optional[List]
-    expired_after: Optional[int]
+    multiple: bool
+    expires_at: int
+    choices: List[str]
+    expired_after: int
 
 
 class Renote(TypedDict):
