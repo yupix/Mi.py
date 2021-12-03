@@ -111,9 +111,6 @@ def api(
         auth: bool = False,
 ) -> requests.models.Response:
     """
-    .. deprecated:: 0.1.5
-        `data` 0.2.0で正式に削除され、以降はjson_dataを使用するようにしてください。
-
     Parameters
     ----------
     origin_uri : str
