@@ -16,7 +16,7 @@ class CogMeta(type):
         no_bot_cog = "Commands or listeners must not start with cog_ or bot_ (in method {0.__name__}.{1})"
         new_cls = super().__new__(cls, name, bases, attrs, **kwargs)
 
-        for base in reversed(new_cls.__mro__):  # 多重継承を確認
+        for base in reversed(new_cls.__mro__):  # 多重継承を確認 !コマンドを登録
             for elem, value in base.__dict__.items():
                 if elem in commands:
                     del commands[elem]  # commandsから削除
@@ -85,10 +85,10 @@ class Cog(metaclass=CogMeta):
         return self
 
     @classmethod
-    def listener(cls, name: Optional[str]=None):
+    def listener(cls, name: Optional[str] = None):
         if name is not None:
             raise TypeError(f'Cog.listener expected str but received {name.__clsss__.__name__!r} instead.')
-        
+
         def decorator(func: Callable[..., Coroutine[Any, Any, Any]]):
             actual = func
             if isinstance(actual, staticmethod):
@@ -102,6 +102,7 @@ class Cog(metaclass=CogMeta):
             except AttributeError:
                 actual.__cog_listener_names__ = [to_assign]
             return func
+
         return decorator
 
     def _inject(self, bot: AbstractBotBase):

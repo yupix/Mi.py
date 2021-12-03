@@ -11,7 +11,7 @@ from ...abc.ext.core import AbstractCommand, AbstractGroup
 class GroupMixin:
     def __init__(self, *args: tuple[Any], **kwargs: Dict[Any, Any]):
         # TODO: case_insensitiveの実態調査してから実装するか考慮する
-        case_insensitive = kwargs.get("case_insensitive", False) 
+        case_insensitive = kwargs.get("case_insensitive", False)
         self.all_commands: Dict[str, Command] = {}
         self.case_insensitive = case_insensitive
         super().__init__(*args, **kwargs)
@@ -44,14 +44,14 @@ class GroupMixin:
                 raise CommandRegistrationError(alias, alias_conflict=True)
             self.all_commands[alias] = command
 
-    def remove_command(self, name:str):
+    def remove_command(self, name: str):
         command = self.all_commands.pop(name, None)
         if command is None:
             return None
-        
+
         if name in command.aliases:
             return command
-        
+
         for alias in command.aliases:
             cmd = self.all_commands.pop(alias, None)
             if cmd is not None and cmd != command:
@@ -69,7 +69,7 @@ class GroupMixin:
 
 def hooked_wrapped_callback(command: 'Command', ctx, coro):
     @functools.wraps(coro)
-    async def wrapped(*args: Tuple[Any], **kwargs: Dict[Any,Any]):
+    async def wrapped(*args: Tuple[Any], **kwargs: Dict[Any, Any]):
         try:
             ret = await coro(ctx, *args, **kwargs)
         except CommandError:
