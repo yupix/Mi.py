@@ -4,7 +4,7 @@ from typing import Any, Dict, List, Optional, TYPE_CHECKING
 
 from pydantic import BaseModel, Field
 
-from mi import Drive, Emoji, UserProfile, utils
+from mi import Drive, Emoji, User, utils
 from mi.exception import ContentRequired, NotExistRequiredParameters
 from mi.user import User, UserAction
 from mi.utils import api, check_multi_arg, remove_dict_empty, upper_to_lower
@@ -180,15 +180,13 @@ class NoteAction:
         return NoteContent(res_json)
 
 
-class Follow(BaseModel):
-    id: Optional[str] = None
-    created_at: Optional[str] = None
-    type: Optional[str] = None
-    user: Optional[UserProfile] = UserProfile()
-    __user_action: UserAction = UserAction()
-
-    class Config:
-        arbitrary_types_allowed = True
+class Follow:
+    def __init__(self, data):
+        self.id: Optional[str] = data.get('id')
+        self.created_at: Optional[str] = data.get('created_at')
+        self.type: Optional[str] = data.get('type')
+        self.user: Optional[User] = data.get('user')
+        self.__user_action: UserAction = UserAction()
 
     def follow(self, user_id: Optional[str] = None) -> tuple[bool, Optional[str]]:
         """

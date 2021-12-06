@@ -11,7 +11,7 @@ from typing import Any, Callable, Coroutine, Dict, List, Optional, Tuple, Union
 
 from websockets.legacy.client import WebSocketClientProtocol
 
-from mi import Client, UserProfile, config, utils
+from mi import Client, User, config, utils
 from mi.abc.ext.bot import AbstractBotBase
 from mi.exception import (
     CheckFailure,
@@ -46,7 +46,7 @@ class BotBase(GroupMixin, AbstractBotBase):
         self.token: Optional[str] = None
         self.origin_uri: Optional[str] = None
         self.__extensions: Dict[str, Any] = {}
-        self.i: UserProfile = None
+        self.i: User = None
         self.__cogs: Dict[str, str] = {}
         self.strip_after_prefix = options.get("strip_after_prefix", False)
         self.logger = get_module_logger(__name__)
@@ -332,7 +332,7 @@ class BotBase(GroupMixin, AbstractBotBase):
         }
         config.i = config.Config(**auth_i)
         config.debug = debug
-        self.i = UserAction().get_i()
+        self.i = self._connection._get_i()
         auth_i["profile"] = self.i
         auth_i["instance"] = self.get_instance_meta()
         config.i = config.Config(**auth_i)

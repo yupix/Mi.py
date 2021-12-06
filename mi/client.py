@@ -20,7 +20,7 @@ from mi.state import ConnectionState
 from mi.utils import api, get_module_logger, remove_dict_empty, upper_to_lower
 
 if TYPE_CHECKING:
-    from . import UserProfile
+    from . import User
 
 class Client:
     def __init__(self, **options: Dict[Any, Any]):
@@ -30,7 +30,7 @@ class Client:
         self.token: Optional[str] = None
         self.origin_uri: Optional[str] = None
         self._connection:ConnectionState = ConnectionState(self.dispatch)
-        self.i: UserProfile = None
+        self.i: User = None
         self.logger = get_module_logger(__name__)
         self.loop = asyncio.get_event_loop()
 
@@ -293,7 +293,7 @@ class Client:
         data = remove_dict_empty(
             {"userId": user_id, "username": username, "host": host})
         Client.get_user.cache_clear()
-        return UserProfile(**upper_to_lower(api("/api/users/show", json_data=data, auth=True).json()))
+        return User(**upper_to_lower(api("/api/users/show", json_data=data, auth=True).json()))
 
     @staticmethod
     def file_upload(

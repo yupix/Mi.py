@@ -2,7 +2,7 @@ import asyncio
 import json
 from typing import Any, Callable, Dict, Iterator, Optional
 
-from mi import User, UserProfile
+from mi import User
 from mi.chat import ChatContent
 from mi.emoji import Emoji
 from mi.iterators import InstanceIterator
@@ -240,10 +240,9 @@ class ConnectionState:
     async def on_close(self, web_socket):
         pass
 
-    @staticmethod
-    async def _get_i():
+    def _get_i(self):
         res = api("/api/i", auth=True)
-        return UserProfile(**upper_to_lower(json.loads(res.text)))
+        return User(upper_to_lower(json.loads(res.text)), state=self)
 
     def get_users(self,
                   limit: int = 10,
@@ -256,3 +255,6 @@ class ConnectionState:
                   hostname: Optional[str] = None,
                   get_all: bool = False) -> Iterator[User]:
         return InstanceIterator(self).get_users(limit=limit, offset=offset, sort=sort, state=state, origin=origin, username=username, hostname=hostname, get_all=get_all)
+
+
+
