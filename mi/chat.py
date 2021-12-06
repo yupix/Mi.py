@@ -1,4 +1,5 @@
-from typing import List
+from __future__ import annotations
+from typing import TYPE_CHECKING, List
 
 from .abc.chat import AbstractChat, AbstractChatContent
 from .types.chat import Chat as ChatPayload
@@ -7,6 +8,8 @@ from .utils import api, remove_dict_empty, upper_to_lower
 
 __all__ = ['Chat', 'ChatContent']
 
+if TYPE_CHECKING:
+    from mi.state import ConnectionState
 
 class Chat(AbstractChat):
     """
@@ -66,7 +69,7 @@ class ChatContent(AbstractChatContent):
     チャットオブジェクト
     """
 
-    def __init__(self, data: ChatPayload):
+    def __init__(self, data: ChatPayload, state: ConnectionState):
         self.id: str = data["id"]
         self.created_at: str = data["created_at"]
         self.content: str = data["text"]
@@ -78,6 +81,7 @@ class ChatContent(AbstractChatContent):
         self.file_id: str = data["file_id"]
         self.is_read: bool = data["is_read"]
         self.reads: List = data["reads"]
+        self._state = state
 
     async def delete(self):
         """
@@ -88,5 +92,5 @@ class ChatContent(AbstractChatContent):
         bool:
             成功したか否か
         """
-        # res = await Client.delete_chat(self.id)
-        # return res.status_code == 204
+        res = await self._state._delete_chat(self.id)
+        return res.status_code == 204
