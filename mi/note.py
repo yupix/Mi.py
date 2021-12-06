@@ -4,9 +4,9 @@ from typing import Any, Dict, List, Optional, TYPE_CHECKING
 
 from pydantic import BaseModel, Field
 
-from mi import Drive, Emoji, User, utils
+from mi import Emoji, User, utils
 from mi.exception import ContentRequired, NotExistRequiredParameters
-from mi.user import User, UserAction
+from mi.user import User
 from mi.utils import api, check_multi_arg, remove_dict_empty, upper_to_lower
 from .abc.note import AbstractNote
 from .types.note import (Note as NotePayload,
@@ -18,107 +18,6 @@ if TYPE_CHECKING:
 
 
 class NoteAction:
-    @staticmethod
-    async def add_reaction(reaction: str, note_id: Optional[str] = None) -> bool:
-        """
-        指定したnoteに指定したリアクションを付与します（内部用
-
-        Parameters
-        ----------
-        reaction : Optional[str]
-            付与するリアクション名
-        note_id : Optional[str]
-            付与対象のノートID
-
-        Returns
-        -------
-        status: bool
-            成功したならTrue,失敗ならFalse
-        """
-        data = remove_dict_empty({"noteId": note_id, "reaction": reaction})
-        res = api("/api/notes/reactions/create", json_data=data, auth=True)
-        return res.status_code == 204
-
-    @staticmethod
-    async def delete(note_id: str) -> tuple[bool, int]:
-        data = {"noteId": note_id}
-        res = api("/api/notes/delete", json_data=data, auth=True)
-        return res.status_code == 204, res.status_code
-
-    @staticmethod
-    def add_file(
-            path: str,
-            *,
-            name: Optional[str] = None,
-            force: bool = False,
-            is_sensitive: bool = False,
-            url: Optional[str] = None
-    ) -> Drive:
-        """
-        ノートにファイルを添付します。
-
-        Parameters
-        ----------
-        is_sensitive : bool
-            この画像がセンシティブな物の場合Trueにする
-        field : dict
-            ファイル送信用のdict
-        force : bool
-            Trueの場合同じ名前のファイルがあった場合でも強制的に保存する
-        path : str
-            そのファイルまでのパスとそのファイル.拡張子(/home/test/test.png)
-        name: str
-            ファイル名(拡張子があるなら含めて)
-        url : str
-            URLから画像をアップロードする場合にURLを指定する
-
-        Returns
-        -------
-        self: Note
-        """
-        return Drive().upload(path, name, force, is_sensitive, url=url)
-
-    @staticmethod
-    def add_poll(
-            item: Optional[str] = None,
-            *,
-            poll: Optional[dict],
-            expires_at: Optional[int] = None,
-            expired_after: Optional[int] = None,
-            item_list: Optional[List] = None
-    ) -> dict:
-        """
-        アンケートを作成します
-
-        Parameters
-        ----------
-        poll : Optional[dict]
-            既にあるpollを使用する
-        item_list : Optional[List]
-            アンケート選択肢を配列にしたもの
-        item: Optional[str]
-            アンケートの選択肢(単体)
-        expires_at : Optional[int]
-            いつにアンケートを締め切るか 例:2021-09-02T15:00:00.000Z
-        expired_after : Optional[int]
-            投稿後何秒後にアンケートを締め切るか(秒
-
-        Returns
-        -------
-        poll: dict
-        """
-        if poll is None:
-            poll = {
-                "choices": [],
-                "expiresAt": expires_at,
-                "expiredAfter": expired_after,
-            }
-        if item:
-            poll["choices"].append(item)
-        if item_list:
-            poll["choices"].extend(item_list)
-
-        return poll
 
     @staticmethod
     async def send(
@@ -181,12 +80,12 @@ class NoteAction:
 
 
 class Follow:
-    def __init__(self, data):
+    def __init__(self, data, state: ConnectionState):
         self.id: Optional[str] = data.get('id')
         self.created_at: Optional[str] = data.get('created_at')
         self.type: Optional[str] = data.get('type')
         self.user: Optional[User] = data.get('user')
-        self.__user_action: UserAction = UserAction()
+        self._state = state
 
     def follow(self, user_id: Optional[str] = None) -> tuple[bool, Optional[str]]:
         """
@@ -210,7 +109,7 @@ class Follow:
         if user_id is None:
             user_id = self.user.id
 
-        return self.__user_action.follow(user_id)
+        return self._state.follow_user(user_id)
 
     def unfollow(self, user_id: Optional[str] = None) -> bool:
         """
@@ -228,13 +127,14 @@ class Follow:
         """
         if user_id is None:
             user_id = self.user.id
-        return self.__user_action.unfollow(user_id)
+        return self._state.unfollow_user(user_id)
 
 
 class Header:
-    def __init__(self, data):
+    def __init__(self, data, state: ConnectionState):
         self.id = data.get("id")
         self.type = data.get("type")
+        self._state = state
 
 
 class Properties(BaseModel):

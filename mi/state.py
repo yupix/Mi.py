@@ -1,13 +1,14 @@
 import asyncio
 import json
-from typing import Any, Callable, Dict, Iterator, Optional
+from typing import Any, Callable, Dict, Iterator, List, Optional
 
 from mi import User
 from mi.chat import ChatContent
+from mi.drive import Drive
 from mi.emoji import Emoji
 from mi.iterators import InstanceIterator
 from mi.note import NoteContent, ReactionContent
-from mi.utils import api, get_module_logger, str_lower, upper_to_lower
+from mi.utils import api, get_module_logger, remove_dict_empty, str_lower, upper_to_lower
 
 
 class ConnectionState:
@@ -198,8 +199,48 @@ class ConnectionState:
             )
         )
 
-    async def on_unfollow(self, message):
-        pass
+    @staticmethod
+    def follow_user(user_id: str) -> tuple[bool, Optional[str]]:
+        """
+        与えられたIDのユーザーをフォローします
+
+        Parameters
+        ----------
+        user_id : Optional[str] = None
+            フォローしたいユーザーのID
+
+        Returns
+        -------
+        status: bool = False
+            成功ならTrue, 失敗ならFalse
+        """
+        data = {"userId": user_id}
+        res = api("/api/following/create", json_data=data, auth=True)
+        if res.json().get("error"):
+            code = res.json()["error"]["code"]
+            status = False
+        else:
+            code = None
+            status = True
+        return status, code
+
+    @staticmethod
+    def unfollow_user(user_id: str) -> bool:
+        """
+        Parameters
+        ----------
+        user_id :
+            フォローを解除したいユーザーのID
+
+        Returns
+        -------
+        status: bool = False
+            成功したならTrue, 失敗したならFalse
+        """
+        data = {"userId": user_id}
+        res = api("/api/following/delete", json_data=data, auth=True)
+        return bool(res.status_code == 204 or 200)
+
 
     async def on_reaction(self, message):
         """
@@ -258,3 +299,105 @@ class ConnectionState:
 
 
 
+    @staticmethod
+    async def add_reaction(reaction: str, note_id: Optional[str] = None) -> bool:
+        """
+        指定したnoteに指定したリアクションを付与します（内部用
+
+        Parameters
+        ----------
+        reaction : Optional[str]
+            付与するリアクション名
+        note_id : Optional[str]
+            付与対象のノートID
+
+        Returns
+        -------
+        status: bool
+            成功したならTrue,失敗ならFalse
+        """
+        data = remove_dict_empty({"noteId": note_id, "reaction": reaction})
+        res = api("/api/notes/reactions/create", json_data=data, auth=True)
+        return res.status_code == 204
+
+    @staticmethod
+    async def delete(note_id: str) -> tuple[bool, int]:
+        data = {"noteId": note_id}
+        res = api("/api/notes/delete", json_data=data, auth=True)
+        return res.status_code == 204, res.status_code
+
+
+    @staticmethod
+    def add_file(
+            path: str,
+            *,
+            name: Optional[str] = None,
+            force: bool = False,
+            is_sensitive: bool = False,
+            url: Optional[str] = None
+    ) -> Drive:
+        """
+        ノートにファイルを添付します。
+
+        Parameters
+        ----------
+        is_sensitive : bool
+            この画像がセンシティブな物の場合Trueにする
+        field : dict
+            ファイル送信用のdict
+        force : bool
+            Trueの場合同じ名前のファイルがあった場合でも強制的に保存する
+        path : str
+            そのファイルまでのパスとそのファイル.拡張子(/home/test/test.png)
+        name: str
+            ファイル名(拡張子があるなら含めて)
+        url : str
+            URLから画像をアップロードする場合にURLを指定する
+
+        Returns
+        -------
+        self: Note
+        """
+        return Drive().upload(path, name, force, is_sensitive, url=url)
+
+    @staticmethod
+    def add_poll(
+            item: Optional[str] = None,
+            *,
+            poll: Optional[dict],
+            expires_at: Optional[int] = None,
+            expired_after: Optional[int] = None,
+            item_list: Optional[List] = None
+    ) -> dict:
+        """
+        アンケートを作成します
+
+        Parameters
+        ----------
+        poll : Optional[dict]
+            既にあるpollを使用する
+        item_list : Optional[List]
+            アンケート選択肢を配列にしたもの
+        item: Optional[str]
+            アンケートの選択肢(単体)
+        expires_at : Optional[int]
+            いつにアンケートを締め切るか 例:2021-09-02T15:00:00.000Z
+        expired_after : Optional[int]
+            投稿後何秒後にアンケートを締め切るか(秒
+
+        Returns
+        -------
+        poll: dict
+        """
+        if poll is None:
+            poll = {
+                "choices": [],
+                "expiresAt": expires_at,
+                "expiredAfter": expired_after,
+            }
+        if item:
+            poll["choices"].append(item)
+        if item_list:
+            poll["choices"].extend(item_list)
+
+        return poll

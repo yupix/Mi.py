@@ -1,67 +1,18 @@
 from __future__ import annotations
-import json
 from typing import Any, Dict, Iterator, List, Optional, TYPE_CHECKING
 
 from pydantic import BaseModel
 
-from mi import Emoji, Instance
+from mi import Instance
 from mi.drive import File
+from mi.exception import InvalidParameters, NotExistRequiredParameters
 from mi.types.user import (Author as UserPayload)
-from mi.utils import api, upper_to_lower
+from mi.utils import api, check_multi_arg, remove_dict_empty, upper_to_lower
 
 if TYPE_CHECKING:
     from mi import ConnectionState
 
 __all__ = ['User', 'UserDetails']
-
-
-class UserAction:
-    @staticmethod
-    def get_i():
-        res = api("/api/i", auth=True)
-        return User(upper_to_lower(json.loads(res.text)))
-
-    @staticmethod
-    def follow(user_id: str) -> tuple[bool, Optional[str]]:
-        """
-        与えられたIDのユーザーをフォローします
-
-        Parameters
-        ----------
-        user_id : Optional[str] = None
-            フォローしたいユーザーのID
-
-        Returns
-        -------
-        status: bool = False
-            成功ならTrue, 失敗ならFalse
-        """
-        data = {"userId": user_id}
-        res = api("/api/following/create", json_data=data, auth=True)
-        if res.json().get("error"):
-            code = res.json()["error"]["code"]
-            status = False
-        else:
-            code = None
-            status = True
-        return status, code
-
-    @staticmethod
-    def unfollow(user_id: str) -> bool:
-        """
-        Parameters
-        ----------
-        user_id :
-            フォローを解除したいユーザーのID
-
-        Returns
-        -------
-        status: bool = False
-            成功したならTrue, 失敗したならFalse
-        """
-        data = {"userId": user_id}
-        res = api("/api/following/delete", json_data=data, auth=True)
-        return bool(res.status_code == 204 or 200)
 
 
 class Channel(BaseModel):
@@ -136,7 +87,8 @@ class UserDetails:
         ユーザーのアバターのblurhash
     avatar_color: str
         ユーザーのアバターの色
-    
+    lang: str
+        ユーザーの言語
     """
     def __init__(self, data) -> None:
         self.avatar_blurhash: Optional[str] = data.get("avatar_blurhash")
@@ -150,6 +102,7 @@ class UserDetails:
         self.has_pending_follow_request_from_you = data.get("has_pending_follow_request_from_you", False)
         self.has_pending_follow_request_to_you = data.get("has_pending_follow_request_to_you", False)
         self.public_reactions = data.get("public_reactions", False)
+        self.lang = data.get("lang")
 
 
 class User:
@@ -194,8 +147,6 @@ class User:
         ユーザーが住んでいる場所
     birthday: str
         ユーザーの誕生日
-    lang: str
-        ユーザーの言語
     fields: list
         謎
     followers_count: int
@@ -250,7 +201,6 @@ class User:
         self.description = data.get("description")
         self.location = data.get("location")
         self.birthday = data.get("birthday")
-        self.lang = data.get("lang")
         self.fields = data.get("fields", [])
         self.followers_count = data.get("followers_count", 0)
         self.following_count = data.get("following_count", 0)
@@ -266,12 +216,12 @@ class User:
         self.blocked = data.get("is_blocked", False)
         self.muted = data.get("is_muted", False)
         self.details = UserDetails(data)
+        self._state = state
         
         
         self.instance = (
             Instance(data["instance"], state) if data.get("instance") else Instance({}, state)
         )
-        self.__user_action: UserAction = UserAction()
 
     class Config:
         arbitrary_types_allowed = True
@@ -347,14 +297,9 @@ class User:
                            auth=True).json()
             yield get_data
 
-    async def follow(self, user_id: Optional[str] = None) -> tuple[bool, str]:
+    async def follow(self) -> tuple[bool, Optional[str]]:
         """
-        与えられたIDのユーザーをフォローします
-
-        Parameters
-        ----------
-        user_id : Optional[str] = None
-            フォローしたいユーザーのID
+        ユーザーをフォローします
 
         Returns
         -------
@@ -363,27 +308,20 @@ class User:
         str
             実行に失敗した際のエラーコード
         """
-        if user_id is None:
-            user_id = self.id
-        return self.__user_action.follow(user_id)
 
-    async def unfollow(self, user_id: Optional[str] = None) -> bool:
+        return self._state.follow_user(self.id)
+
+    async def unfollow(self) -> bool:
         """
-        与えられたIDのユーザーのフォローを解除します
-
-        Parameters
-        ----------
-        user_id : Optional[str] = None
-            フォローを解除したいユーザーのID
+        ユーザーのフォローを解除します
 
         Returns
         -------
         status: bool = False
             成功ならTrue, 失敗ならFalse
         """
-        if user_id is None:
-            user_id = self.id
-        return self.__user_action.unfollow(user_id)
+
+        return self._state.unfollow_user(self.id)
 
     async def get_profile(self) -> "User":
         """
@@ -418,7 +356,7 @@ class User:
         -------
 
         """
-        return Client.get_followers(
+        return self._state.get_followers(
             user_id=self.id,
             username=self.username,
             host=self.host,

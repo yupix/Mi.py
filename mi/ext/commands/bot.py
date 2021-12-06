@@ -27,7 +27,6 @@ from mi.ext.commands.context import Context
 from mi.ext.commands.core import GroupMixin
 from mi.ext.commands.view import StringView
 from mi.http import WebSocket
-from mi.user import UserAction
 
 __all__ = ["BotBase", "Bot"]
 
