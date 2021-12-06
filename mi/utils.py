@@ -156,6 +156,35 @@ def api(
         raise error
     return res
 
+def remove_empty_object(data: Dict[str, Any]) -> Dict[str, Any]:
+    """
+    Parameters
+    ----------
+    data: dict
+        空のkeyを削除したいdict
+
+    Returns
+    -------
+    _data: Dict[str, Any]
+        空のkeyがなくなったdict
+    """
+    return remove_list_empty(remove_dict_empty(data))
+    
+
+def remove_list_empty(data: Dict[str, Any]) -> Dict[str, Any]:
+    """
+    Parameters
+    ----------
+    data: dict
+        空のkeyを削除したいdict
+
+    Returns
+    -------
+    _data: Dict[str, Any]
+        空のkeyがなくなったdict
+    """
+    
+    return {k: v for k, v in data.items() if v}
 
 def remove_dict_empty(data: Dict[str, Any]) -> Dict[str, Any]:
     """
