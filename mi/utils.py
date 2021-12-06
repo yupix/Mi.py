@@ -176,8 +176,9 @@ def remove_dict_empty(data: Dict[str, Any]) -> Dict[str, Any]:
 
 
 def upper_to_lower(
-        data: Dict[str,Any], field: Optional[Dict[str,Any]] = None, nest:bool=True, replace_list: Optional[Dict[str,Any]] = None
-) -> Dict[str,Any]:
+        data: Dict[str, Any], field: Optional[Dict[str, Any]] = None, nest: bool = True,
+        replace_list: Optional[Dict[str, Any]] = None
+) -> Dict[str, Any]:
     """
 
     Parameters
@@ -219,13 +220,14 @@ def upper_to_lower(
     return field
 
 
-def str_lower(text:str):
-        pattern = re.compile("[A-Z]")
-        large = [i.group().lower() for i in pattern.finditer(text)]
-        result = [None] * (len(large + pattern.split(text)))
-        result[::2] = pattern.split(text)
-        result[1::2] = ["_" + i.lower() for i in large]
-        return  "".join(result)
+def str_lower(text: str):
+    pattern = re.compile("[A-Z]")
+    large = [i.group().lower() for i in pattern.finditer(text)]
+    result = [None] * (len(large + pattern.split(text)))
+    result[::2] = pattern.split(text)
+    result[1::2] = ["_" + i.lower() for i in large]
+    return "".join(result)
+
 
 def bool_to_string(boolean: bool) -> str:
     """
