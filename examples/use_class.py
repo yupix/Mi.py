@@ -1,7 +1,7 @@
 from websockets.legacy.client import WebSocketClientProtocol
 from mi import Drive, Note
 from mi.ext import commands, tasks
-from mi.note import NoteContent
+from mi.note import Note
 from mi.router import Router
 
 uri = "wss://example.com/streaming"
@@ -29,7 +29,7 @@ class MyBot(commands.Bot):
         )  # ドライブに画像をアップロード
         print(res.url)
 
-    async def on_message(self, ctx: NoteContent):
+    async def on_message(self, ctx: Note):
         print(
             f"{ctx.author.instance.name} | {ctx.author.username}さんがノートしました: {ctx.content}"
         )

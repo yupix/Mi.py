@@ -9,4 +9,5 @@ websockets
 numpydoc
 sphinx-panels
 sphinx-git
-autodoc_pydantic
+furo
+sphinxcontrib-trio

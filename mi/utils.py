@@ -156,6 +156,35 @@ def api(
         raise error
     return res
 
+def remove_empty_object(data: Dict[str, Any]) -> Dict[str, Any]:
+    """
+    Parameters
+    ----------
+    data: dict
+        空のkeyを削除したいdict
+
+    Returns
+    -------
+    _data: Dict[str, Any]
+        空のkeyがなくなったdict
+    """
+    return remove_list_empty(remove_dict_empty(data))
+    
+
+def remove_list_empty(data: Dict[str, Any]) -> Dict[str, Any]:
+    """
+    Parameters
+    ----------
+    data: dict
+        空のkeyを削除したいdict
+
+    Returns
+    -------
+    _data: Dict[str, Any]
+        空のkeyがなくなったdict
+    """
+    
+    return {k: v for k, v in data.items() if v}
 
 def remove_dict_empty(data: Dict[str, Any]) -> Dict[str, Any]:
     """
@@ -176,8 +205,9 @@ def remove_dict_empty(data: Dict[str, Any]) -> Dict[str, Any]:
 
 
 def upper_to_lower(
-        data: dict, field: dict = None, nest=True, replace_list: dict = None
-) -> dict:
+        data: Dict[str, Any], field: Optional[Dict[str, Any]] = None, nest: bool = True,
+        replace_list: Optional[Dict[str, Any]] = None
+) -> Dict[str, Any]:
     """
 
     Parameters
@@ -217,6 +247,15 @@ def upper_to_lower(
         if type(field[default_key]) is dict and nest is True:
             field[default_key] = upper_to_lower(field[default_key])
     return field
+
+
+def str_lower(text: str):
+    pattern = re.compile("[A-Z]")
+    large = [i.group().lower() for i in pattern.finditer(text)]
+    result = [None] * (len(large + pattern.split(text)))
+    result[::2] = pattern.split(text)
+    result[1::2] = ["_" + i.lower() for i in large]
+    return "".join(result)
 
 
 def bool_to_string(boolean: bool) -> str:

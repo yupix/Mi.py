@@ -58,8 +58,8 @@ class Note(TypedDict):
     id: str
     created_at: str
     user_id: str
-    author: Author
-    content: Optional[str]
+    user: Author
+    text: Optional[str]
     cw: Optional[str]
     visibility: Optional[str]
     renote_count: Optional[int]
