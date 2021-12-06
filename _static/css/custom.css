@@ -1,0 +1,33 @@
+.py-attribute-table {
+    display: flex;
+    flex-wrap: wrap;
+    background-color: var(--color-api-background);
+    margin-bottom: -1rem;
+    border-radius: 4px 4px 0 0;
+    border-left: #5dcfff solid 4px;
+}
+
+.class > .sig-object {
+    border-left: #5dcfff solid 4px;
+    border-radius: 0 0 0 3px;
+    margin-bottom: 2em;
+}
+
+
+.py-attribute-table-entry {
+    list-style: None;
+}
+
+.py-attribute-table-column {
+    flex: .5;
+}
+
+.py-attribute-table-column > span {
+    font-weight: bold;
+    margin-left: 1rem;
+}
+
+.py-attribute-table-badge {
+    font-weight: bold;
+    margin-right: .5rem;
+}

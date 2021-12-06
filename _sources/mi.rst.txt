@@ -1,42 +1,68 @@
-mi package
-==========
+.. currentmodule:: mi
 
-Subpackages
------------
+API Reference
+===============
 
-.. toctree::
-   :maxdepth: 4
+このセクションではMi.pyのAPIについて説明します
 
-   mi.ext
-   mi.types
+.. note::
+   このライブラリではloggingを用いてdebug出力が可能です。標準設定では出ないため、起動時の引数として `debug` を渡すようにしてください
 
-Submodules
-----------
+イベントリファレンス
+--------------------
 
-.. toctree::
-   :maxdepth: 4
+.. function:: on_message()
+   
+   :class:`Note` が作成された際に呼び出されます
 
-   mi.chart
-   mi.chat
-   mi.client
-   mi.config
-   mi.conn
-   mi.drive
-   mi.emoji
-   mi.exception
-   mi.http
-   mi.instance
-   mi.next_utils
-   mi.next_utils
-   mi.note
-   mi.router
-   mi.user
-   mi.utils
+抽象基底クラス
+----------------
 
-Module contents
+[abstract base class](https://docs.python.org/ja/3/glossary.html#term-abstract-base-class)はメソッドなどの一覧を取得するために継承することが可能なクラスです。抽象基底クラスはインスタンス化することはできません。
+
+AbstractBotBase
+~~~~~~~~~~~~~~~~
+
+.. attributetable:: mi.abc.AbstractChat
+
+.. autoclass:: mi.abc.AbstractChat()
+   :members:
+
+AbstractChatContent
+~~~~~~~~~~~~~~~~~~~
+
+.. attributetable:: mi.abc.AbstractChatContent
+
+.. autoclass:: mi.abc.AbstractChatContent()
+   :members:
+
+Misskey モデル
 ---------------
 
-.. automodule:: mi
+.. danger::
+   下記のクラスは、 **ユーザーによって作成されることを考慮していません** 。
+   独自のインスタンスは作成するべきではなく、値を変更するべきではありません。
+
+Note
+~~~~~~~~~~~
+
+.. attributetable:: Note
+
+.. autoclass:: Note()
    :members:
-   :undoc-members:
-   :show-inheritance:
+
+User
+~~~~~
+
+.. attributetable:: User
+
+.. autoclass:: User()
+   :members:
+
+UserDetails
+~~~~~~~~~~~~
+
+.. attributetable:: UserDetails
+
+.. autoclass:: UserDetails()
+   :members:

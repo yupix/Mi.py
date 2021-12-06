@@ -4,14 +4,61 @@ mi.ext.commands package
 Submodules
 ----------
 
-.. toctree::
-   :maxdepth: 4
+mi.ext.commands.bot module
+--------------------------
 
-   mi.ext.commands.bot
-   mi.ext.commands.cog
-   mi.ext.commands.context
-   mi.ext.commands.core
-   mi.ext.commands.view
+.. automodule:: mi.ext.commands.bot
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+mi.ext.commands.cog module
+--------------------------
+
+.. automodule:: mi.ext.commands.cog
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+mi.ext.commands.context module
+------------------------------
+
+.. automodule:: mi.ext.commands.context
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+mi.ext.commands.core module
+---------------------------
+
+.. automodule:: mi.ext.commands.core
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+mi.ext.commands.old\_cog module
+-------------------------------
+
+.. automodule:: mi.ext.commands.old_cog
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+mi.ext.commands.old\_core module
+--------------------------------
+
+.. automodule:: mi.ext.commands.old_core
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+mi.ext.commands.view module
+---------------------------
+
+.. automodule:: mi.ext.commands.view
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 Module contents
 ---------------
