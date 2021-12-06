@@ -7,7 +7,7 @@ from pydantic import BaseModel, Field
 from mi import Emoji, User, utils
 from mi.exception import ContentRequired, NotExistRequiredParameters
 from mi.user import User
-from mi.utils import api, check_multi_arg, remove_dict_empty, upper_to_lower
+from mi.utils import api, check_multi_arg, remove_dict_empty
 from .abc.note import AbstractNote
 from .types.note import (Note as NotePayload,
                          Poll as PollPayload,
@@ -16,7 +16,7 @@ from .types.note import (Note as NotePayload,
 if TYPE_CHECKING:
     from mi import ConnectionState
 
-__all__ = ['Note']
+__all__ = ['Note', 'Poll']
 
 
 class NoteAction:
