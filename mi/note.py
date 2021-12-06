@@ -440,13 +440,35 @@ class Note(AbstractNote):
 
 
 class NoteContent(AbstractNote):
+    """
+    Attributes
+    -----------
+    id: str 
+    created_at: str
+    user_id: str
+    author: User
+    content: Optiona[str]
+    cw: Optional[str]
+    renote: Renote
+    visibility: str
+    renote_count: int
+    replies_count:int
+    reactions:Dict[str, Any]
+    emojis:List[Emoji]
+    file_ids:Optional[List[str]]
+    files: Optiona[List[str]]
+    reply_id: Optional[str]
+    renote_id: Optional[str]
+    poll: Optional[Poll]
+    """
+    
     def __init__(self, data: NotePayload, state: ConnectionState):
         self.id: str = data["id"]
         self.created_at: str = data["created_at"]
         self.user_id: str = data["user_id"]
         self.author = User(data["user"], state)
         self.content: Optional[str] = data.get("text")
-        self.cw: str = data["cw"]
+        self.cw: Optional[str] = data["cw"]
         self.renote: Renote = Renote(data["renote"], state) if data.get(
             "renote") else None
         self.visibility: str = data["visibility"]
