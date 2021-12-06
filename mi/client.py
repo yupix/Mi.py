@@ -349,8 +349,8 @@ class Client:
             channel_id: Optional[str] = None,
             file_ids: List[File] = [],
             poll: Optional[Poll] = None
-            ):
-        self._connection._post_note(
+            ) -> Note:
+        return self._connection._post_note(
             content,
             visibility=visibility,
             visible_user_ids=visible_user_ids,
