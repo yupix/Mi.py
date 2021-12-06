@@ -14,12 +14,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - `file_upload` 関数を追加しました
 - `run` メソッドに `debug` 引数を追加しました
 - DocStringを一部追加しました
-- 抽象クラス `AbstractNote` `AbstractChat` `AbstractChatContent` を追加しました
+- 多くの抽象クラスを追加しました
 - TypedDictを追加しました
 - チャットをする際に用いる `Chat` `ChatContent` クラスを追加しました
 - `on_chat` イベントを追加しました
 - ~~`NoteContent` クラスを追加しました~~
     ~~- ノートの受信イベントでは基本このクラスが使用されます。~~
+- `NoteContent` クラスを追加しました
+    - ノートの受信イベントでは基本このクラスが使用されます。
+- `Instance` クラスに `get_users` メソッドを追加しました
 
 ### Changed
 
@@ -34,6 +37,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - 内部変更: `DriveAction` を廃止し, `file_upload` を使用するように
 - 内部変更: `event_dispatch` でクラスにイベントがある場合呼び出すようにしました
 - 内部変更: シングルクォーテーションをダブルクォーテーションに変更しました
+- 内部変更: cogシステムを作り直しました
+- 内部変更: イベントの呼び出し方を変更しました
+- **破壊的変更**: taskをtasksに変更しました
 - **破壊的変更**: websocketを引数で渡さないようになりました
 - **破壊的変更**: 'Note' クラスの `text` 変数を `content` と統合しました
 - **破壊的変更**: `Drive` クラスの `upload` メソッドで使用できる引数名を変更、キーワード引数を強制するようにしました。
@@ -65,7 +71,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - `upper_to_lower` 関数に `replace_list` 引数を追加
 - `Follow` イベント時のユーザーに `follow` `unfollow` メソッドを追加しました
 - `on_mention` イベントを追加しました
-- `Author`クラスに `follow` `unfollow` `get_profile` メソッドを追加しました
+- `User`クラスに `follow` `unfollow` `get_profile` メソッドを追加しました
 - 複数の例外が追加されました
 
 ### Changed

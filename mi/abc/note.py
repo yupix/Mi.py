@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from typing import Optional
 
 
 class AbstractNote(ABC):
@@ -29,11 +30,11 @@ class AbstractNote(ABC):
     @abstractmethod
     def add_file(
             self,
-            path: str = None,
-            name: str = None,
+            path: Optional[str] = None,
+            name: Optional[str] = None,
             force: bool = False,
             is_sensitive: bool = False,
-            url: str = None,
+            url: Optional[str] = None,
     ):
         """
         ノートにファイルを添付します。

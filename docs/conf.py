@@ -13,7 +13,8 @@
 import os
 import sys
 
-sys.path.insert(0, os.path.abspath("../"))
+sys.path.insert(0, os.path.abspath('..'))
+sys.path.append(os.path.abspath('extensions'))
 
 # -- Project information -----------------------------------------------------
 
@@ -33,19 +34,22 @@ extensions = [
     "sphinx.ext.autodoc",
     "sphinx.ext.autosummary",
     "sphinx.ext.extlinks",
+    "sphinx.ext.intersphinx",
+    "sphinx.ext.napoleon",
+    "sphinxcontrib_trio",
     "sphinx.ext.doctest",
     "sphinx.ext.extlinks",
     "sphinx.ext.viewcode",
-    "sphinx.ext.intersphinx",
     "sphinx.ext.autosectionlabel",
     "sphinx.ext.todo",
-    "sphinx.ext.napoleon",
     "numpydoc",
     "sphinx_panels",
     "sphinx_git",
+    "attributetable",
 ]
+autodoc_member_order = 'bysource'
+autodoc_typehints = 'none'
 panels_add_bootstrap_css = False
-
 autodoc_mock_imports = ["matplotlib"]
 autoclass_content = "both"
 autosummary_generate = True
@@ -75,40 +79,14 @@ html_sidebars = {
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = "pydata_sphinx_theme"
+html_theme = "furo"
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ["_static"]
-
+html_css_files = ["css/custom.css"]
 html_logo = "_static/mi.py.svg"
-
-html_theme_options = {
-    # "external_links": [
-    #    {"url": "https://pandas.pydata.org/pandas-docs/stable/", "name": "API"}
-    # ],
-    "github_url": "https://github.com/yupix/mi.py",
-    "icon_links": [
-        {
-            "name": "Discord",
-            "url": "https://discord.gg/CcT997U",
-            "icon": "fab fa-discord",
-        },
-        {
-            "name": "PyPI",
-            "url": "https://pypi.org/project/mi.py",
-            "icon": "fas fa-box",
-        },
-    ],
-    "use_edit_page_button": True,
-    "show_toc_level": 1,
-    # "navbar_align": "left",  # [left, content, right] For testing that the navbar items align properly
-    # "navbar_start": ["navbar-logo", "navbar-version"],
-    # "navbar_center": ["navbar-nav", "navbar-version"],  # Just for testing
-    # "navbar_end": ["navbar-icon-links", "navbar-version"]  # Just for testing
-    # "footer_items": ["copyright", "sphinx-version", ""]
-}
 
 numpydoc_show_class_members = False
 
