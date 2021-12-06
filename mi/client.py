@@ -12,15 +12,15 @@ import requests
 from websockets.legacy.client import WebSocketClientProtocol
 
 from mi import config
-from mi.exception import InvalidParameters, NotExistRequiredParameters
+from mi.exception import InvalidParameters
 from mi.http import WebSocket
-from mi.next_utils import check_multi_arg
-from mi.note import NoteContent
+from mi.note import Note
 from mi.state import ConnectionState
 from mi.utils import api, get_module_logger, remove_dict_empty, upper_to_lower
 
 if TYPE_CHECKING:
-    from . import User
+    from . import User, File, Poll
+
 
 class Client:
     def __init__(self, **options: Dict[Any, Any]):
@@ -29,7 +29,7 @@ class Client:
         self.special_events: Dict[str, Any] = {}
         self.token: Optional[str] = None
         self.origin_uri: Optional[str] = None
-        self._connection:ConnectionState = ConnectionState(self.dispatch)
+        self._connection: ConnectionState = ConnectionState(self.dispatch)
         self.i: User = None
         self.logger = get_module_logger(__name__)
         self.loop = asyncio.get_event_loop()
@@ -178,7 +178,7 @@ class Client:
             file_type: list = None,
             since_date: int = 0,
             until_data: int = 0
-    ) -> Iterator[NoteContent]:
+    ) -> Iterator[Note]:
         if limit > 100:
             raise InvalidParameters("limit は100以上を受け付けません")
 
@@ -206,14 +206,14 @@ class Client:
                     break
                 args["untilId"] = get_data[-1]["id"]
                 for data in get_data:
-                    yield NoteContent(upper_to_lower(data,
+                    yield Note(upper_to_lower(data,
                                                      replace_list={"user": "author",
                                                                    "text": "content"}))
         else:
             get_data = api("/api/users/notes", json_data=args,
                            auth=True).json()
             for data in get_data:
-                yield NoteContent(upper_to_lower(data,
+                yield Note(upper_to_lower(data,
                                                  replace_list={"user": "author",
                                                                "text": "content"}))
 
@@ -243,9 +243,8 @@ class Client:
         Client.get_instance_meta.cache_clear()
         return api("/api/meta").json()
 
-    @staticmethod
     @cache
-    def get_user(user_id: Optional[str] = None, username: Optional[str] = None,
+    def get_user(self, user_id: Optional[str] = None, username: Optional[str] = None,
                  host: Optional[str] = None) -> Dict[str, Tuple[str, List[Any], Dict[str, Any]]]:
         """
         ユーザーのプロフィールを取得します。一度のみサーバーにアクセスしキャッシュをその後は使います。
@@ -265,10 +264,9 @@ class Client:
         dict:
             ユーザー情報
         """
-        return Client.fetch_user(user_id, username, host)
+        return self._connection._get_user(user_id, username, host)
 
-    @staticmethod
-    def fetch_user(user_id: Optional[str] = None, username: Optional[str] = None,
+    def fetch_user(self, user_id: Optional[str] = None, username: Optional[str] = None,
                    host: Optional[str] = None) -> Dict[str, Tuple[str, List[Any], Dict[str, Any]]]:
         """
         サーバーにアクセスし、ユーザーのプロフィールを取得します。基本的には get_userをお使いください。
@@ -287,13 +285,7 @@ class Client:
         dict:
             ユーザー情報
         """
-        if not check_multi_arg(user_id, username):
-            raise NotExistRequiredParameters("user_id, usernameどちらかは必須です")
-
-        data = remove_dict_empty(
-            {"userId": user_id, "username": username, "host": host})
-        Client.get_user.cache_clear()
-        return User(**upper_to_lower(api("/api/users/show", json_data=data, auth=True).json()))
+        self._connection._fetch_user()
 
     @staticmethod
     def file_upload(
@@ -341,6 +333,38 @@ class Client:
         else:
             raise InvalidParameters("path または url のどちらかは必須です")
         return res
+
+    def post_note(self,
+            content: str,
+            *,
+            visibility: str = "public",
+            visible_user_ids: Optional[List[str]] = None,
+            cw: Optional[str] = None,
+            local_only: bool = False,
+            no_extract_mentions: bool = False,
+            no_extract_hashtags: bool = False,
+            no_extract_emojis: bool = False,
+            reply_id: List[str] = [],
+            renote_id: Optional[str] = None,
+            channel_id: Optional[str] = None,
+            file_ids: List[File] = [],
+            poll: Optional[Poll] = None
+            ):
+        self._connection._post_note(
+            content,
+            visibility=visibility,
+            visible_user_ids=visible_user_ids,
+            cw=cw,
+            local_only=local_only,
+            no_extract_mentions=no_extract_mentions,
+            no_extract_hashtags=no_extract_hashtags,
+            no_extract_emojis=no_extract_emojis,
+            reply_id=reply_id,
+            renote_id=renote_id,
+            channel_id=channel_id,
+            file_ids=file_ids,
+            poll=poll
+            )
 
     @staticmethod
     def get_announcements(limit: int, with_unreads: bool, since_id: str,

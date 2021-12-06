@@ -77,6 +77,7 @@ class FieldContent(BaseModel):
     name: str
     value: str
 
+
 class UserDetails:
     """
     ユーザー情報だが、一般的に使うか怪しいもの
@@ -90,6 +91,7 @@ class UserDetails:
     lang: str
         ユーザーの言語
     """
+
     def __init__(self, data) -> None:
         self.avatar_blurhash: Optional[str] = data.get("avatar_blurhash")
         self.avatar_color: Optional[str] = data.get("avatar_color")
@@ -184,11 +186,12 @@ class User:
         self.name: str = data["name"]
         self.username: str = data["username"]
         self.host: Optional[str] = data.get("host")
-        self.avatar_url: Optional[str] = data.get("avatar_url")        
+        self.avatar_url: Optional[str] = data.get("avatar_url")
         self.admin: bool = data.get("is_admin", False)
         self.moderator: bool = data.get("is_moderator", False)
         self.bot: bool = data.get("is_bot", False)
-        self.cat:bool = data.get("is_cat", False)
+        self.cat: bool = data.get("is_cat", False)
+        self.lady: bool = data.get('is_lady', False)
         self.emojis: List[str] = data.get("emojis")
         self.online_status = data.get("online_status", None)
         self.url: Optional[str] = data.get("url")
@@ -217,8 +220,7 @@ class User:
         self.muted = data.get("is_muted", False)
         self.details = UserDetails(data)
         self._state = state
-        
-        
+
         self.instance = (
             Instance(data["instance"], state) if data.get("instance") else Instance({}, state)
         )
@@ -227,7 +229,7 @@ class User:
         arbitrary_types_allowed = True
 
     @staticmethod
-    def get_followers(
+    def _get_followers(
             user_id: Optional[str] = None,
             username: Optional[str] = None,
             host: Optional[str] = None,
@@ -334,8 +336,8 @@ class User:
         """
         return User(
             **upper_to_lower(
-                self.get_user(user_id=self.id, username=self.username,
-                              host=self.host)
+                self._state._get_user(user_id=self.id, username=self.username,
+                                     host=self.host)
             )
         )
 
@@ -356,7 +358,7 @@ class User:
         -------
 
         """
-        return self._state.get_followers(
+        return self._state._get_followers(
             user_id=self.id,
             username=self.username,
             host=self.host,

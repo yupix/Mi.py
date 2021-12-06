@@ -16,6 +16,8 @@ from .types.note import (Note as NotePayload,
 if TYPE_CHECKING:
     from mi import ConnectionState
 
+__all__ = ['Note']
+
 
 class NoteAction:
 
@@ -38,7 +40,7 @@ class NoteAction:
             geo: Any,
             file_ids: List[str],
             poll: Dict[str, Any]  # TODO:ここはもうちょい正確に type hint 定義したい
-    ) -> "NoteContent":
+    ) -> "Note":
         """
         既にあるnoteクラスを元にnoteを送信します
 
@@ -76,7 +78,7 @@ class NoteAction:
         ):
             raise ContentRequired(
                 "ノートの送信にはtext, file, renote またはpollのいずれか1つが無くてはいけません")
-        return NoteContent(res_json)
+        return Note(res_json)
 
 
 class Follow:
@@ -246,7 +248,7 @@ class ReactionContent:
         self.type = data.get('type')
         self.is_read: bool = data['is_read']
         self.user: User = User(data['user'])
-        self.note: NoteContent = NoteContent(data['note'])
+        self.note: Note = Note(data['note'])
         self.reaction = data['reaction']
 
 
@@ -257,87 +259,6 @@ class Reaction(BaseModel):
 
 
 class Note(AbstractNote):
-    def __init__(
-            self,
-            content: str,
-            *,
-            visibility: str = "public",
-            visible_user_ids: Optional[List[str]] = None,
-            cw: Optional[str] = None,
-            local_only: bool = False,
-            no_extract_mentions: bool = False,
-            no_extract_hashtags: bool = False,
-            no_extract_emojis: bool = False,
-            reply_id: List[str] = [],
-            renote_id: Optional[str] = None,
-            channel_id: Optional[str] = None,
-            file_ids: List[File] = [],
-            poll: Optional[Poll] = None
-    ):
-        self.content: str = content
-        self.visibility: str = visibility
-        self.visible_user_ids: Optional[List[str]] = visible_user_ids
-        self.cw: Optional[str] = cw
-        self.local_only: bool = local_only
-        self.no_extract_mentions: bool = no_extract_mentions
-        self.no_extract_hashtags: bool = no_extract_hashtags
-        self.no_extract_emojis: bool = no_extract_emojis
-        self.reply_id: List[str] = reply_id
-        self.renote_id: Optional[str] = renote_id
-        self.channel_id: Optional[str] = channel_id
-        self.file_ids: List[File] = file_ids
-        self.poll: Optional[Poll] = poll
-
-    async def send(self):
-        field = {
-            "visibility": self.visibility,
-            "visibleUserIds": self.visible_user_ids,
-            "text": self.content,
-            "cw": self.cw,
-            "localOnly": self.local_only,
-            "noExtractMentions": self.no_extract_mentions,
-            "noExtractHashtags": self.no_extract_hashtags,
-            "noExtractEmojis": self.no_extract_emojis,
-            "replyId": self.reply_id,
-            "renoteId": self.renote_id,
-            "channelId": self.channel_id,
-        }
-        if self.poll and len(self.poll.choices) > 0:
-            field["poll"] = self.poll
-        if self.file_ids:
-            field["fileIds"] = self.file_ids
-        field = remove_dict_empty(field)
-        res = api("/api/notes/create", json_data=field, auth=True)
-        res_json = res.json()
-        if (
-                res_json.get("error")
-                and res_json.get("error", {}).get("code") == "CONTENT_REQUIRED"
-        ):
-            raise ContentRequired(
-                "ノートの送信にはtext, file, renote またはpollのいずれか1つが無くてはいけません")
-        return NoteContent(
-            upper_to_lower(res_json["createdNote"],
-                           replace_list={"user": "author"})
-        )
-
-    def emoji_count(self) -> int:
-        return utils.emoji_count(self.content)
-
-    async def delete(self, note_id: str = None) -> bool:
-        pass
-
-    def add_file(
-            self,
-            path: str = None,
-            name: str = None,
-            force: bool = False,
-            is_sensitive: bool = False,
-            url: str = None,
-    ):
-        pass
-
-
-class NoteContent(AbstractNote):
     """
     Attributes
     -----------
@@ -359,12 +280,12 @@ class NoteContent(AbstractNote):
     renote_id: Optional[str]
     poll: Optional[Poll]
     """
-    
+
     def __init__(self, data: NotePayload, state: ConnectionState):
         self.id: str = data["id"]
         self.created_at: str = data["created_at"]
         self.user_id: str = data["user_id"]
-        self.author = User(data["user"], state)
+        self.author = User(data["user"], state)  #TODO: (Serarch) 自分自身が投稿したらNoneかも
         self.content: Optional[str] = data.get("text")
         self.cw: Optional[str] = data["cw"]
         self.renote: Renote = Renote(data["renote"], state) if data.get(
@@ -439,7 +360,7 @@ class NoteContent(AbstractNote):
             url: str = None,
     ):
         self.file_ids.append(
-            self.__note_action.add_file(
+            self._state._add_file(
                 path, name=name, force=force, is_sensitive=is_sensitive,
                 url=url
             ).id
@@ -455,7 +376,7 @@ class NoteContent(AbstractNote):
     ) -> "Note":
         poll = self.__poll_formatter()
         self.poll = Poll(
-            **self.__note_action.add_poll(
+            **self._state._add_poll(
                 item,
                 poll=poll,
                 expires_at=expires_at,
@@ -468,7 +389,7 @@ class NoteContent(AbstractNote):
     async def add_reaction(self, reaction: str, note_id: str = None) -> bool:
         if note_id is None:
             note_id = self.id
-        return await self.__note_action.add_reaction(reaction, note_id=note_id)
+        return await self._state._add_reaction(reaction, note_id=note_id)
 
     def emoji_count(self) -> int:
         """
@@ -494,4 +415,4 @@ class NoteContent(AbstractNote):
             HTTP レスポンスステータスコード
         """
 
-        return await self.__note_action.delete(self.id)
+        return await self._state._note_delete(self.id)

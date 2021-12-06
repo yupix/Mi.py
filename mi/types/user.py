@@ -51,7 +51,7 @@ class PinnedPage(TypedDict):
 
 
 class Author(TypedDict):
-    id: Optional[str]
+    id: str
     name: str
     username: str
     host: Optional[str]
@@ -59,7 +59,7 @@ class Author(TypedDict):
     avatar_blurhash: Optional[str]
     avatar_color: Optional[str]
     is_admin: Optional[bool]
-    is_bot: Optional[bool]
+    is_bot: bool
     is_cat: Optional[bool]
     is_lady: Optional[bool]
     emojis: Optional[List[str]]

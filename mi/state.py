@@ -1,14 +1,16 @@
 import asyncio
+from functools import cache
 import json
-from typing import Any, Callable, Dict, Iterator, List, Optional
+from typing import Any, Callable, Dict, Iterator, List, Optional, Tuple
 
 from mi import User
 from mi.chat import ChatContent
-from mi.drive import Drive
+from mi.drive import Drive, File
 from mi.emoji import Emoji
+from mi.exception import ContentRequired, InvalidParameters, NotExistRequiredParameters
 from mi.iterators import InstanceIterator
-from mi.note import NoteContent, ReactionContent
-from mi.utils import api, get_module_logger, remove_dict_empty, str_lower, upper_to_lower
+from mi.note import Note, ReactionContent, Poll
+from mi.utils import api, check_multi_arg, get_module_logger, remove_dict_empty, remove_empty_object, str_lower, upper_to_lower
 
 
 class ConnectionState:
@@ -81,7 +83,7 @@ class ConnectionState:
         """
         ノートイベントを解析する関数
         """
-        await self.dispatch('message', NoteContent(message, self))
+        await self.dispatch('message', Note(message, self))
 
     async def on_emoji_add(self, message: dict):
         """
@@ -114,7 +116,7 @@ class ConnectionState:
         task: asyncio.Task
         """
         msg = message.get("body", {}).get("body", {})
-        message = NoteContent(
+        message = Note(
             upper_to_lower(msg,
                            replace_list={"user": "author", "text": "content"})
         )
@@ -174,7 +176,7 @@ class ConnectionState:
                                      "").strip(" ")
         )
         return asyncio.create_task(
-            self.dispatch("mention", NoteContent(**base_ctx))
+            self.dispatch("mention", Note(**base_ctx))
         )
 
     async def on_follow(self, message: dict) -> asyncio.Task:
@@ -241,7 +243,6 @@ class ConnectionState:
         res = api("/api/following/delete", json_data=data, auth=True)
         return bool(res.status_code == 204 or 200)
 
-
     async def on_reaction(self, message):
         """
         ノートのリアクションイベント
@@ -258,7 +259,7 @@ class ConnectionState:
         base_msg = message.get("body", {}).get("body", {})
         base_msg["id"] = message.get("body", {}).get("id", None)
         asyncio.create_task(
-            self.dispatch("reaction", NoteContent(upper_to_lower(base_msg)))
+            self.dispatch("reaction", Note(upper_to_lower(base_msg)))
         )
 
     async def on_deleted(self, message):
@@ -285,22 +286,21 @@ class ConnectionState:
         res = api("/api/i", auth=True)
         return User(upper_to_lower(json.loads(res.text)), state=self)
 
-    def get_users(self,
-                  limit: int = 10,
-                  *,
-                  offset: int = 0,
-                  sort: Optional[str] = None,
-                  state: str = 'all',
-                  origin: str = 'local',
-                  username: Optional[str] = None,
-                  hostname: Optional[str] = None,
-                  get_all: bool = False) -> Iterator[User]:
-        return InstanceIterator(self).get_users(limit=limit, offset=offset, sort=sort, state=state, origin=origin, username=username, hostname=hostname, get_all=get_all)
-
-
+    def _get_users(self,
+                   limit: int = 10,
+                   *,
+                   offset: int = 0,
+                   sort: Optional[str] = None,
+                   state: str = 'all',
+                   origin: str = 'local',
+                   username: Optional[str] = None,
+                   hostname: Optional[str] = None,
+                   get_all: bool = False) -> Iterator[User]:
+        return InstanceIterator(self).get_users(limit=limit, offset=offset, sort=sort, state=state, origin=origin,
+                                                username=username, hostname=hostname, get_all=get_all)
 
     @staticmethod
-    async def add_reaction(reaction: str, note_id: Optional[str] = None) -> bool:
+    async def _add_reaction(reaction: str, note_id: Optional[str] = None) -> bool:
         """
         指定したnoteに指定したリアクションを付与します（内部用
 
@@ -321,14 +321,13 @@ class ConnectionState:
         return res.status_code == 204
 
     @staticmethod
-    async def delete(note_id: str) -> tuple[bool, int]:
+    async def _note_delete(note_id: str) -> tuple[bool, int]:
         data = {"noteId": note_id}
         res = api("/api/notes/delete", json_data=data, auth=True)
         return res.status_code == 204, res.status_code
 
-
     @staticmethod
-    def add_file(
+    def _add_file(
             path: str,
             *,
             name: Optional[str] = None,
@@ -361,7 +360,7 @@ class ConnectionState:
         return Drive().upload(path, name, force, is_sensitive, url=url)
 
     @staticmethod
-    def add_poll(
+    def _add_poll(
             item: Optional[str] = None,
             *,
             poll: Optional[dict],
@@ -401,3 +400,168 @@ class ConnectionState:
             poll["choices"].extend(item_list)
 
         return poll
+
+    @cache
+    def _get_user(self, user_id: Optional[str] = None, username: Optional[str] = None,
+                  host: Optional[str] = None) -> Dict[str, Tuple[str, List[Any], Dict[str, Any]]]:
+        """
+        ユーザーのプロフィールを取得します。一度のみサーバーにアクセスしキャッシュをその後は使います。
+        fetch_userを使った場合はキャッシュが廃棄され再度サーバーにアクセスします。
+
+        Parameters
+        ----------
+        user_id : str
+            取得したいユーザーのユーザーID
+        username : str
+            取得したいユーザーのユーザー名
+        host : str, default=None
+            取得したいユーザーがいるインスタンスのhost
+
+        Returns
+        -------
+        dict:
+            ユーザー情報
+        """
+        return self._fetch_user(user_id, username, host)
+
+    def _fetch_user(self, user_id: Optional[str] = None, username: Optional[str] = None,
+                    host: Optional[str] = None) -> Dict[str, Tuple[str, List[Any], Dict[str, Any]]]:
+        """
+        サーバーにアクセスし、ユーザーのプロフィールを取得します。基本的には get_userをお使いください。
+
+        Parameters
+        ----------
+        user_id : str
+            取得したいユーザーのユーザーID
+        username : str
+            取得したいユーザーのユーザー名
+        host : str, default=None
+            取得したいユーザーがいるインスタンスのhost
+
+        Returns
+        -------
+        dict:
+            ユーザー情報
+        """
+        if not check_multi_arg(user_id, username):
+            raise NotExistRequiredParameters("user_id, usernameどちらかは必須です")
+
+        data = remove_dict_empty(
+            {"userId": user_id, "username": username, "host": host})
+        self._get_user.cache_clear()
+        return User(upper_to_lower(api("/api/users/show", json_data=data, auth=True).json()), state=self)
+
+    def _post_note(self,
+            content: str,
+            *,
+            visibility: str = "public",
+            visible_user_ids: Optional[List[str]] = None,
+            cw: Optional[str] = None,
+            local_only: bool = False,
+            no_extract_mentions: bool = False,
+            no_extract_hashtags: bool = False,
+            no_extract_emojis: bool = False,
+            reply_id: List[str] = [],
+            renote_id: Optional[str] = None,
+            channel_id: Optional[str] = None,
+            file_ids: List[File] = [],
+            poll: Optional[Poll] = None
+            ):
+        field = {
+            "visibility": visibility,
+            "visibleUserIds": visible_user_ids,
+            "text": content,
+            "cw": cw,
+            "localOnly": local_only,
+            "noExtractMentions": no_extract_mentions,
+            "noExtractHashtags": no_extract_hashtags,
+            "noExtractEmojis": no_extract_emojis,
+            "replyId": reply_id,
+            "renoteId": renote_id,
+            "channelId": channel_id
+        }
+        if poll and len(poll.choices) > 0:
+            field["poll"] = poll
+        if file_ids:
+            field["fileIds"] = file_ids
+        field = remove_empty_object(field)
+        print(field)
+        res = api("/api/notes/create", json_data=field, auth=True)
+        res_json = res.json()
+        if (
+                res_json.get("error")
+                and res_json.get("error", {}).get("code") == "CONTENT_REQUIRED"
+        ):
+            raise ContentRequired(
+                "ノートの送信にはtext, file, renote またはpollのいずれか1つが無くてはいけません")
+        return Note(
+            upper_to_lower(res_json["createdNote"],
+                           replace_list={"user": "author"})
+        ,state=self)
+        
+    @staticmethod
+    def _get_followers(
+            user_id: Optional[str] = None,
+            username: Optional[str] = None,
+            host: Optional[str] = None,
+            since_id: Optional[str] = None,
+            until_id: Optional[str] = None,
+            limit: int = 10,
+            get_all: bool = False,
+    ) -> Iterator[Dict[str, Any]]:
+        """
+        与えられたユーザーのフォロワーを取得します
+        Parameters
+        ----------
+        user_id : str, default=None
+            ユーザーのid
+        username : str, default=None
+            ユーザー名
+        host : str, default=None
+            ユーザーがいるインスタンスのhost名
+        since_id : str, default=None
+        until_id : str, default=None
+            前回の最後の値を与える(既に実行し取得しきれない場合に使用)
+        limit : int, default=10
+            取得する情報の最大数 max: 100
+        get_all : bool, default=False
+            全てのフォロワーを取得する
+        Yields
+        ------
+        dict
+            フォロワーの情報
+        Raises
+        ------
+        InvalidParameters
+            limit引数が不正な場合
+        """
+        if not check_multi_arg(user_id, username):
+            raise NotExistRequiredParameters("user_id, usernameどちらかは必須です")
+
+        if limit > 100:
+            raise InvalidParameters("limit は100以上を受け付けません")
+
+        data = remove_dict_empty(
+            {
+                "userId": user_id,
+                "username": username,
+                "host": host,
+                "sinceId": since_id,
+                "untilId": until_id,
+                "limit": limit,
+            }
+        )
+        if get_all:
+            loop = True
+            while loop:
+                get_data = api("/api/users/followers", json_data=data,
+                               auth=True).json()
+                if len(get_data) > 0:
+                    data["untilId"] = get_data[-1]["id"]
+                else:
+                    break
+                yield get_data
+        else:
+            get_data = api("/api/users/followers", json_data=data,
+                           auth=True).json()
+            yield get_data
