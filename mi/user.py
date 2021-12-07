@@ -150,7 +150,7 @@ class User:
     birthday: str
         ユーザーの誕生日
     fields: list
-        謎
+        プロフィールのリンクフィールド
     followers_count: int
         フォロワーの数
     following_count: int
@@ -174,7 +174,7 @@ class User:
     blocked: bool
         ユーザーのことをブロックしているかどうか
     muted:bool
-        ユーアーのことをミュートしているかどうか
+        ユーザーのことをミュートしているかどうか
     instance: Any
         ユーザーのインスタンス
     details: UserDetails

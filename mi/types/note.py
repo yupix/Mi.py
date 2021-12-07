@@ -7,7 +7,7 @@ from .drive import File
 
 class Geo(TypedDict):
     """
-    衛生情報
+    衛星情報
     """
     coordinates: Optional[List[Any]]
     altitude: Optional[int]
