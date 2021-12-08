@@ -37,7 +37,7 @@ class ConnectionState:
         """
         チャットが来た際のデータを処理する関数
         """
-        await self.dispatch('message', ChatContent(message))
+        await self.dispatch('message', ChatContent(message, state=self))
 
     async def _parse_unread_messaging_message(self, message: Dict[str, Any]) -> None:
         """
@@ -116,10 +116,7 @@ class ConnectionState:
         task: asyncio.Task
         """
         msg = message.get("body", {}).get("body", {})
-        message = Note(
-            upper_to_lower(msg,
-                           replace_list={"user": "author", "text": "content"})
-        )
+        message = Note(upper_to_lower(msg))
         await self.dispatch(message.id)
         return asyncio.create_task(self.cls._on_message(message))
 
@@ -136,10 +133,7 @@ class ConnectionState:
 
         """
         msg = ctx.get("body", {}).get("body", {})
-        ctx = ChatContent(
-            upper_to_lower(msg,
-                           replace_list={"user": "author", "text": "content"})
-        )
+        ctx = ChatContent(upper_to_lower(msg), state=self)
         return asyncio.create_task(self.dispatch("chat", ctx))
 
     async def on_notification(self, message: dict):
@@ -452,21 +446,21 @@ class ConnectionState:
         return User(upper_to_lower(api("/api/users/show", json_data=data, auth=True).json()), state=self)
 
     def _post_note(self,
-            content: str,
-            *,
-            visibility: str = "public",
-            visible_user_ids: Optional[List[str]] = None,
-            cw: Optional[str] = None,
-            local_only: bool = False,
-            no_extract_mentions: bool = False,
-            no_extract_hashtags: bool = False,
-            no_extract_emojis: bool = False,
-            reply_id: List[str] = [],
-            renote_id: Optional[str] = None,
-            channel_id: Optional[str] = None,
-            file_ids: List[File] = [],
-            poll: Optional[Poll] = None
-            ):
+                   content: str,
+                   *,
+                   visibility: str = "public",
+                   visible_user_ids: Optional[List[str]] = None,
+                   cw: Optional[str] = None,
+                   local_only: bool = False,
+                   no_extract_mentions: bool = False,
+                   no_extract_hashtags: bool = False,
+                   no_extract_emojis: bool = False,
+                   reply_id: Optional[str] = None,
+                   renote_id: Optional[str] = None,
+                   channel_id: Optional[str] = None,
+                   file_ids: List[File] = [],
+                   poll: Optional[Poll] = None
+                   ):
         field = {
             "visibility": visibility,
             "visibleUserIds": visible_user_ids,
@@ -495,10 +489,9 @@ class ConnectionState:
             raise ContentRequired(
                 "ノートの送信にはtext, file, renote またはpollのいずれか1つが無くてはいけません")
         return Note(
-            upper_to_lower(res_json["createdNote"],
-                           replace_list={"user": "author"})
-        ,state=self)
-        
+            upper_to_lower(res_json["createdNote"])
+            , state=self)
+
     @staticmethod
     def _get_followers(
             user_id: Optional[str] = None,
