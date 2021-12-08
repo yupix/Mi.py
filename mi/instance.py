@@ -1,8 +1,8 @@
 from __future__ import annotations
-from typing import Any, Dict, Iterator, Optional, TYPE_CHECKING, Union
+
+from typing import Iterator, Optional, TYPE_CHECKING
 
 from .types.instance import Instance as InstancePayload
-from .utils import remove_dict_empty, api
 
 if TYPE_CHECKING:
     from .user import User
@@ -10,7 +10,18 @@ if TYPE_CHECKING:
 
 
 class Instance:
-    def __init__(self, data: Union[Dict[Any, Any], InstancePayload], state: ConnectionState):
+    def __init__(self, data: InstancePayload, state: ConnectionState):
+        """
+        インスタンス情報
+        
+        Parameters
+        ----------
+        data : InstancePayload
+            インスタンス情報の入った dict
+        state: ConnectionState
+            botのコネクション
+        """
+
         self.host: Optional[str] = data.get("host")
         self.name: Optional[str] = data.get("name")
         self.software_name: Optional[str] = data.get("software_name")
