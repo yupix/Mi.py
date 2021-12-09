@@ -1,17 +1,17 @@
 from __future__ import annotations
+
 import asyncio
 import inspect
-from functools import cache
 import json
+from functools import cache
 from typing import Any, Callable, Dict, Iterator, List, Optional, TYPE_CHECKING, Tuple
 
 from mi import User
 from mi.chat import ChatContent
 from mi.drive import Drive, File
-from mi.emoji import Emoji
 from mi.exception import ContentRequired, InvalidParameters, NotExistRequiredParameters
 from mi.iterators import InstanceIterator
-from mi.note import Note, ReactionContent, Poll
+from mi.note import Note, Poll, ReactionContent
 from mi.utils import api, check_multi_arg, get_module_logger, remove_dict_empty, remove_empty_object, str_lower, upper_to_lower
 
 if TYPE_CHECKING:
@@ -54,7 +54,7 @@ class ConnectionState:
         """
         チャットが既読になっていない場合のデータを処理する関数
         """
-        self.dispatch('message', ChatContent(message))
+        self.dispatch('message', ChatContent(message, state=self))
 
     def parse_notification(self, message: Dict[str, Any]) -> None:
         """
@@ -94,117 +94,7 @@ class ConnectionState:
         """
         ノートイベントを解析する関数
         """
-        self.dispatch('message', Note(message, self))
-
-    async def on_emoji_add(self, message: dict):
-        """
-        emojiがインスタンスに追加された際のイベント
-
-        Parameters
-        ----------
-        message
-
-        Returns
-        -------
-
-        """
-        await asyncio.create_task(
-            self.dispatch("emoji_add", Emoji(
-                message['body']['emoji']
-            )))
-
-    async def on_message(self, message: Any) -> asyncio.Task:
-        """
-        タイムラインに来たノートに関するイベントを発生させる関数
-
-        Parameters
-        ----------
-        message:
-            Received message
-
-        Returns
-        -------
-        task: asyncio.Task
-        """
-        msg = message.get("body", {}).get("body", {})
-        message = Note(upper_to_lower(msg))
-        await self.dispatch(message.id)
-        return asyncio.create_task(self.cls._on_message(message))
-
-    async def on_chat(self, ctx):
-        """
-        チャットイベント
-
-        Parameters
-        ----------
-        ctx
-
-        Returns
-        -------
-
-        """
-        msg = ctx.get("body", {}).get("body", {})
-        ctx = ChatContent(upper_to_lower(msg), state=self)
-        return asyncio.create_task(self.dispatch("chat", ctx))
-
-    async def on_notification(self, message: dict):
-        """
-        通知イベント
-
-        Parameters
-        ----------
-        message
-
-        Returns
-        -------
-
-        """
-        pass
-
-    async def on_mention(self, ctx: dict) -> asyncio.Task:
-        """
-        メンションイベント
-
-        Parameters
-        ----------
-        ctx : dict
-
-        Returns
-        -------
-        asyncio.Task
-        """
-
-        base_ctx = ctx.get("body", {}).get("body")
-        base_ctx["content"] = base_ctx["text"]
-        base_ctx["text"] = (
-            base_ctx["text"].replace(f"@{config.i.profile.username}",
-                                     "").strip(" ")
-        )
-        return asyncio.create_task(
-            self.dispatch("mention", Note(**base_ctx))
-        )
-
-    async def on_follow(self, message: dict) -> asyncio.Task:
-        """
-        フォローイベント
-
-        Parameters
-        ----------
-        message
-
-        Returns
-        -------
-
-        """
-        return asyncio.create_task(
-            self.dispatch(
-                "follow",
-                Follow(
-                    **upper_to_lower(message.get("body"),
-                                     replace_list={"body": "user"})
-                ),
-            )
-        )
+        self.dispatch('message', Note(message, state=self))
 
     @staticmethod
     def follow_user(user_id: str) -> tuple[bool, Optional[str]]:
