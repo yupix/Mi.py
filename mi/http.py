@@ -7,6 +7,7 @@ import sys
 from typing import Any, Dict, Optional
 
 import aiohttp
+from mi.exception import AuthenticationError
 
 from mi.gateway import MisskeyClientWebSocketResponse
 from . import __version__, config
@@ -63,10 +64,13 @@ class HTTPClient:
             if kwargs.get('json') is None:
                 kwargs['json'] = {}
             kwargs['json']['i'] = self.token
-
         async with self.__session.request(route.method, route.url, **kwargs) as res:
             data = await json_or_text(res)
-            return data
+            if 300 > res.status >= 200:
+                return data
+            
+            if res.status == 403:
+                raise AuthenticationError(res, data)
 
     async def static_login(self, token: str):
         self.token = token
