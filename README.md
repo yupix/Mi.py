@@ -47,6 +47,11 @@ await Router(ws).channels(['home', 'global'])
     </tr>
 </table>
 
+### Libraries
+
+- [Discord.py](https://github.com/Rapptz/discord.py)
+    - 一部や仕組みを参考にさせてもらっています。実際にコードも利用しています 
+
 最後にこのプロジェクトを作るきっかけになり、一部のコードを使用させていただいているDiscord.pyがArchivedになりました。 作者であるDannyさんや全てのコラボレーターに最大限の感謝申し上げます。
 
 # LICENSE
