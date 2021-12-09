@@ -243,14 +243,14 @@ class Renote(AbstractNote):
 
 
 class ReactionContent:
-    def __init__(self, data):
+    def __init__(self, data, state: ConnectionState):
         self.created_at = data.get('created_at')
         self.type = data.get('type')
         self.is_read: bool = data['is_read']
-        self.user: User = User(data['user'])
-        self.note: Note = Note(data['note'])
+        self.user: User = User(data['user'], state=state)
+        self.note: Note = Note(data['note'], state=state)
         self.reaction = data['reaction']
-
+        self._state = state
 
 class Reaction(BaseModel):
     id: Optional[str] = Field(None, alias="id_")
