@@ -2,11 +2,8 @@
 Misskeyのチャンネルへの接続や、メッセージのキャプチャ等のWebSocket関連
 """
 
-import json
 from typing import List
 import uuid
-
-from websockets.legacy.client import WebSocketClientProtocol
 
 
 class Router:
@@ -35,7 +32,7 @@ class Router:
     def __init__(self, web_socket):
         self.web_socket = web_socket
 
-    async def channels(self, channel_list: List[str]) -> None:
+    async def connect_channel(self, channel_list: List[str]) -> None:
         """
         与えられたlistを元にチャンネルに接続します
 
@@ -49,93 +46,25 @@ class Router:
         None: None
         """
         channel_dict = {
-            "global": self.global_time_line,
-            "main": self.main_channel,
-            "home": self.home_time_line,
-            "local": self.local_time_line,
+            "global": 'globalTimeline',
+            "main": 'main',
+            "home": 'homeTimeline',
+            "local": 'localTimeline',
         }
         try:
             for channel in channel_list:
-                func = channel_dict.get(channel)
-                await getattr(self, func.__name__)()
+                get_channel = channel_dict[channel]
+                await self.web_socket.send_json({
+                        "type": "connect",
+                        "body": {
+                            "channel": f"{get_channel}",
+                            "id": f"{uuid.uuid4()}",
+                        },
+                    }
+                )
+
         except KeyError:
             pass
-
-    async def global_time_line(self) -> None:
-        """
-        WebSocketでGlobalTimeLineに接続します
-
-        Returns
-        -------
-        None: None
-        """
-        await self.web_socket.send_json(
-            {
-                "type": "connect",
-                "body": {
-                    "channel": "globalTimeline",
-                    "id": f"{uuid.uuid4()}",
-                    "params": {"some": "thing"},
-                },
-            }
-        )
-
-    async def main_channel(self) -> None:
-        """
-        WebSocketでMainチャンネルに接続します
-
-        Returns
-        -------
-        None: None
-        """
-        await self.web_socket.send_json(
-            {
-                "type": "connect",
-                "body": {
-                    "channel": "main",
-                    "id": f"{uuid.uuid4()}",
-                    "params": {"some": "thing"},
-                },
-            }
-        )
-
-    async def home_time_line(self) -> None:
-        """
-        WebSocketでHomeTimeLineに接続します
-
-        Returns
-        -------
-        None: None
-        """
-        await self.web_socket.send_json(
-            {
-                "type": "connect",
-                "body": {
-                    "channel": "homeTimeline",
-                    "id": f"{uuid.uuid4()}",
-                    "params": {"some": "thing"},
-                }
-            }
-        )
-
-    async def local_time_line(self) -> None:
-        """
-        WebSocketでLocalTimeLineに接続します
-
-        Returns
-        -------
-        None: None
-        """
-        await self.web_socket.send_json(
-            {
-                "type": "connect",
-                "body": {
-                    "channel": "localTimeline",
-                    "id": f"{uuid.uuid4()}",
-                    "params": {"some": "ting"},
-                },
-            }
-        )
 
     async def capture_message(self, message_id: str) -> None:
         """
