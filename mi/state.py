@@ -1,5 +1,6 @@
 from __future__ import annotations
 import asyncio
+import inspect
 from functools import cache
 import json
 from typing import Any, Callable, Dict, Iterator, List, Optional, TYPE_CHECKING, Tuple
@@ -20,9 +21,14 @@ if TYPE_CHECKING:
 class ConnectionState:
     def __init__(self, dispatch: Callable[..., Any], http: HTTPClient):
         self.dispatch = dispatch
+        self.http: HTTPClient = http
         self.logger = get_module_logger(__name__)
+        self.parsers = parsers = {}
+        for attr, func in inspect.getmembers(self):
+            if attr.startswith('parse'):
+                parsers[attr[6:].upper()] = func
 
-    async def _parse_channel(self, message: Dict[str, Any]) -> None:
+    def parse_channel(self, message: Dict[str, Any]) -> None:
         """parse_channel is a function to parse channel event
 
         チャンネルタイプのデータを解析後適切なパーサーに移動させます
@@ -32,24 +38,24 @@ class ConnectionState:
         message : Dict[str, Any]
             Received message
         """
-        base_msg = message['body']
+        base_msg = upper_to_lower(message['body'])
         channel_type = str_lower(base_msg.get('type'))
         self.logger.debug(f'ChannelType: {channel_type}')
-        await getattr(self, f'_parse_{channel_type}')(base_msg['body'])
+        getattr(self, f'parse_{channel_type}')(base_msg['body'])
 
-    async def _parse_messaging_message(self, message: Dict[str, Any]) -> None:
+    def parse_messaging_message(self, message: Dict[str, Any]) -> None:
         """
         チャットが来た際のデータを処理する関数
         """
-        await self.dispatch('message', ChatContent(message, state=self))
+        self.dispatch('message', ChatContent(message, state=self))
 
-    async def _parse_unread_messaging_message(self, message: Dict[str, Any]) -> None:
+    def parse_unread_messaging_message(self, message: Dict[str, Any]) -> None:
         """
         チャットが既読になっていない場合のデータを処理する関数
         """
-        await self.dispatch('message', ChatContent(message))
+        self.dispatch('message', ChatContent(message))
 
-    async def _parse_notification(self, message: Dict[str, Any]) -> None:
+    def parse_notification(self, message: Dict[str, Any]) -> None:
         """
         通知イベントを解析する関数
         
@@ -63,9 +69,9 @@ class ConnectionState:
         None
         """
         notification_type = str_lower(message['type'])
-        await getattr(self, f'_parse_{notification_type}')(message)
+        getattr(self, f'_parse_{notification_type}')(message)
 
-    async def _parse_unread_notification(self, message: Dict[str, Any]) -> None:
+    def parse_unread_notification(self, message: Dict[str, Any]) -> None:
         """
         未読の通知を解析する関数
 
@@ -75,19 +81,19 @@ class ConnectionState:
             Received message
         """
         notification_type = str_lower(message['type'])
-        await getattr(self, f'_parse_{notification_type}')(message)
+        getattr(self, f'_parse_{notification_type}')(message)
 
-    async def _parse_reaction(self, message: Dict[str, Any]) -> None:
+    def parse_reaction(self, message: Dict[str, Any]) -> None:
         """
         リアクションに関する情報を解析する関数
         """
-        await self.dispatch('reaction', ReactionContent(message))
+        self.dispatch('reaction', ReactionContent(message))
 
-    async def _parse_note(self, message: Dict[str, Any]) -> None:
+    def parse_note(self, message: Dict[str, Any]) -> None:
         """
         ノートイベントを解析する関数
         """
-        await self.dispatch('message', Note(message, self))
+        self.dispatch('message', Note(message, self))
 
     async def on_emoji_add(self, message: dict):
         """

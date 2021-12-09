@@ -26,7 +26,6 @@ from mi.exception import (
 from mi.ext.commands.context import Context
 from mi.ext.commands.core import GroupMixin
 from mi.ext.commands.view import StringView
-from mi.http import WebSocket
 
 __all__ = ["BotBase", "Bot"]
 
@@ -166,7 +165,7 @@ class BotBase(GroupMixin, AbstractBotBase):
             await self.schedule_event(getattr(self, ev), ev, *args, **kwargs)
         return ev in dir(self)
 
-    async def dispatch(self, event_name: str, *args: tuple[Any], **kwargs: Dict[Any, Any]):
+    def dispatch(self, event_name: str, *args: tuple[Any], **kwargs: Dict[Any, Any]):
         ev = "on_" + event_name
         for event in self.extra_events.get(ev, []):
             if inspect.ismethod(event):
@@ -175,9 +174,9 @@ class BotBase(GroupMixin, AbstractBotBase):
             else:
                 foo = importlib.import_module(event.__module__)
                 coro = getattr(foo, ev)
-            await self.schedule_event(coro, event, *args, **kwargs)
+            self.schedule_event(coro, event, *args, **kwargs)
         if ev in dir(self):
-            await self.schedule_event(getattr(self, ev), ev, *args, **kwargs)
+            self.schedule_event(getattr(self, ev), ev, *args, **kwargs)
 
     def add_cog(self, cog, override: bool = False) -> None:
         cog_name = cog.__cog_name__
@@ -240,7 +239,7 @@ class BotBase(GroupMixin, AbstractBotBase):
             raise InvalidCogPath(f"cog: {name} へのパスが無効です")
         self._load_from_module(module, name)
 
-    async def schedule_event(
+    def schedule_event(
             self,
             coro: Callable[..., Coroutine[Any, Any, Any]],
             event_name: str,
@@ -277,67 +276,6 @@ class BotBase(GroupMixin, AbstractBotBase):
     async def on_error(self, err):
         await self.event_dispatch("error", err)
 
-    def run(self, uri: str, token: str, debug: bool = False) -> None:
-        """
-        Launch the bot.
-        Parameters
-        ----------
-        uri : str
-            websocket url of the Misskey instance to connect to
-        token : str
-            Misskey account token
-        debug : bool
-            Debug Mode
-
-        Examples
-        --------
-
-        When inheriting from a class: ::
-
-            class MyBot(Bot):
-                async def on_message(self, ws, message):
-                    pass
-            bot = MyBot()
-            bot.run(uri, token)
-
-        When using a listener: ::
-
-            bot = Bot()
-
-            @bot.event()
-            async def on_message(ws, message):
-                pass
-
-            bot.run(uri, token)
-
-        Returns
-        -------
-        None: None
-        """
-        self.token = token
-        if _origin_uri := re.search(r"wss?://(.*)/streaming", uri):
-            origin_uri = (
-                _origin_uri.group(0)
-                    .replace("wss", "https")
-                    .replace("ws", "http")
-                    .replace("/streaming", "")
-            )
-        else:
-            origin_uri = uri
-        self.origin_uri = origin_uri[:-1] if uri[-1] == "/" else origin_uri
-        auth_i: Dict[str, Any] = {
-            "token": self.token,
-            "origin_uri": self.origin_uri,
-        }
-        config.i = config.Config(**auth_i)
-        config.debug = debug
-        self.i = self._connection._get_i()
-        auth_i["profile"] = self.i
-        auth_i["instance"] = self.get_instance_meta()
-        config.i = config.Config(**auth_i)
-        asyncio.get_event_loop().run_until_complete(
-            WebSocket(self).run(f"{uri}?i={token}")
-        )
 
 
 class Bot(BotBase, Client):

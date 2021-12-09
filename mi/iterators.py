@@ -2,7 +2,8 @@ from __future__ import annotations
 
 from typing import Iterator, Optional, TYPE_CHECKING
 
-from . import User, api, remove_dict_empty
+from . import User
+from .utils import api, remove_dict_empty
 
 if TYPE_CHECKING:
     from . import ConnectionState

@@ -5,7 +5,7 @@ import json
 import logging
 import re
 from inspect import isawaitable
-from typing import Any, Callable, Dict, Iterable, List, Optional, TypeVar
+from typing import Any, Callable, Dict, Iterable, List, Optional, TypeVar, Union
 
 import emoji
 import requests
@@ -109,8 +109,12 @@ def api(
         origin_uri: Optional[str] = None,
         files: Any = None,
         auth: bool = False,
-) -> requests.models.Response:
+        lower: bool = False
+) -> Union[requests.models.Response, Dict[str, Union[str, List[Union[Dict[str, Any]]], Dict[str, Any]]]]:
     """
+    .. danger::
+        開発者に向けての注意事項です。今後この関数ではdict **のみ** を返します。そのため早いうちに json()を使ったものを修正してください
+    
     Parameters
     ----------
     origin_uri : str
@@ -123,10 +127,11 @@ def api(
         認証情報を付与するか
     files : Any
         画像などのファイル
-
+    lower: bool
+        keyを小文字に変換するか
     Returns
     -------
-    requests.models.Response
+    requests.models.Response or Dict[str, Any]
     """
     if check_multi_arg(json_data, files) is False and auth:
         json_data = {}
@@ -154,6 +159,8 @@ def api(
             f"{error_base['description']} => {error_code['error']['message']}  \n {res.text}"
         )
         raise error
+    if lower:
+        return upper_to_lower(res.json())
     return res
 
 def remove_empty_object(data: Dict[str, Any]) -> Dict[str, Any]:

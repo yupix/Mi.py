@@ -285,26 +285,24 @@ class Note(AbstractNote):
         self.id: str = data["id"]
         self.created_at: str = data["created_at"]
         self.user_id: str = data["user_id"]
-        self.author = User(data["user"], state)  #TODO: (Serarch) 自分自身が投稿したらNoneかも
+        self.author: User = User(data["user"], state)
         self.content: Optional[str] = data.get("text")
-        self.cw: Optional[str] = data["cw"]
-        self.renote: Renote = Renote(data["renote"], state) if data.get(
-            "renote") else None
+        self.cw: Optional[str] = data.get("cw")
+        self.renote: Optional[Renote] = Renote(data['renote'], state=state) if data.get('renote') else None
         self.visibility: str = data["visibility"]
         self.renote_count: int = data["renote_count"]
         self.replies_count: int = data["replies_count"]
         self.reactions: Dict[str, Any] = data["reactions"]
         self.emojis: List[Emoji] = data["emojis"]
         self.file_ids: Optional[List[str]] = data["file_ids"]
-        self.files: Optional[List[File]] = data["files"]
+        self.files: List[File] = data["files"]
         self.reply_id: Optional[str] = data["reply_id"]
         self.renote_id: Optional[str] = data["renote_id"]
-        self.poll: Optional[Poll] = Poll(data["poll"]) if data.get(
-            "poll") else None
+        self.poll: Optional[Poll] = Poll(data["poll"]) if data.get("poll") else None
         self.visible_user_ids: Optional[List[str]] = data.get(
             "visible_user_ids", [])
         self.via_mobile: Optional[bool] = data.get("via_mobile", False)
-        self.local_only: Optional[bool] = data.get("local_only", False)
+        self.local_only: bool = data.get("local_only", False)
         self.no_extract_mentions: Optional[bool] = data.get(
             "no_extract_mentions", False
         )
@@ -330,6 +328,34 @@ class Note(AbstractNote):
             poll = None
         return poll
 
+    async def reply(
+            self, content: str,
+            *,
+            cw: Optional[str] = None,
+            no_extract_mentions: bool = False,
+            no_extract_hashtags: bool = False,
+            no_extract_emojis: bool = False,
+            renote_id: Optional[str] = None,
+            channel_id: Optional[str] = None,
+            file_ids: List[File] = [],
+            poll: Optional[Poll] = None
+    ) -> Note:
+        return self._state._post_note(
+            content,
+            visibility=self.visibility,
+            visible_user_ids=self.visible_user_ids,
+            cw=cw,
+            local_only=self.local_only,
+            no_extract_mentions=no_extract_mentions,
+            no_extract_hashtags=no_extract_hashtags,
+            no_extract_emojis=no_extract_emojis,
+            reply_id=self.id,
+            renote_id=renote_id,
+            channel_id=channel_id,
+            file_ids=file_ids,
+            poll=poll
+        )
+
     async def send(self) -> "Note":
         poll = self.__poll_formatter()
         return await self.__note_action.send(
@@ -353,12 +379,17 @@ class Note(AbstractNote):
 
     def add_file(
             self,
-            path: str = None,
-            name: str = None,
+            path: Optional[str] = None,
+            url: Optional[str] = None,
+            name: Optional[str] = None,
+            *,
             force: bool = False,
             is_sensitive: bool = False,
-            url: str = None,
     ):
+        """
+        .. deprecated:: 0.2.7
+            :func:`send` のfile引数を使用するようにしてください
+        """
         self.file_ids.append(
             self._state._add_file(
                 path, name=name, force=force, is_sensitive=is_sensitive,
@@ -376,7 +407,7 @@ class Note(AbstractNote):
     ) -> "Note":
         poll = self.__poll_formatter()
         self.poll = Poll(
-            **self._state._add_poll(
+            self._state._add_poll(
                 item,
                 poll=poll,
                 expires_at=expires_at,

@@ -14,7 +14,7 @@ from websockets.legacy.client import WebSocketClientProtocol
 
 from mi import config, User
 from mi.exception import InvalidParameters
-from mi.http import HTTPClient, WebSocket
+from mi.http import HTTPClient
 from mi.note import Note
 from mi.state import ConnectionState
 from mi.utils import api, get_module_logger, remove_dict_empty, upper_to_lower
@@ -83,7 +83,7 @@ class Client:
         else:
             self.extra_events[name] = [func]
 
-    async def event_dispatch(self, event_name: str, *args: Tuple[Any], **kwargs: Dict[Any, Any]) -> bool:
+    def event_dispatch(self, event_name: str, *args: Tuple[Any], **kwargs: Dict[Any, Any]) -> bool:
         """on_ready等といった
 
         Parameters
@@ -100,12 +100,12 @@ class Client:
         for event in self.special_events.get(ev, []):
             foo = importlib.import_module(event.__module__)
             coro = getattr(foo, ev)
-            await self.schedule_event(coro, event, *args, **kwargs)
+            self.schedule_event(coro, event, *args, **kwargs)
         if ev in dir(self):
-            await self.schedule_event(getattr(self, ev), ev, *args, **kwargs)
+            self.schedule_event(getattr(self, ev), ev, *args, **kwargs)
         return ev in dir(self)
 
-    async def dispatch(self, event_name: str, *args: tuple[Any], **kwargs: Dict[Any, Any]):
+    def dispatch(self, event_name: str, *args: tuple[Any], **kwargs: Dict[Any, Any]):
         ev = "on_" + event_name
         for event in self.extra_events.get(ev, []):
             if inspect.ismethod(event):
@@ -114,11 +114,11 @@ class Client:
             else:
                 foo = importlib.import_module(event.__module__)
                 coro = getattr(foo, ev)
-            await self.schedule_event(coro, event, *args, **kwargs)
+            self.schedule_event(coro, event, *args, **kwargs)
         if ev in dir(self):
-            await self.schedule_event(getattr(self, ev), ev, *args, **kwargs)
+            self.schedule_event(getattr(self, ev), ev, *args, **kwargs)
 
-    async def schedule_event(
+    def schedule_event(
             self,
             coro: Callable[..., Coroutine[Any, Any, Any]],
             event_name: str,
@@ -489,6 +489,6 @@ class Client:
         auth_i["profile"] = self.i
         auth_i["instance"] = self.get_instance_meta()
         config.i = config.Config(**auth_i)
-        asyncio.get_event_loop().run_until_complete(
-            WebSocket(self).run(f"{uri}?i={token}")
-        )
+        # asyncio.get_event_loop().run_until_complete(
+        #     WebSocket(self).run(f"{uri}?i={token}")
+        # )

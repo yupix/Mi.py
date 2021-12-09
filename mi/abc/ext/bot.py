@@ -103,7 +103,3 @@ class AbstractBotBase(AbstractGroupMixin):
     @abstractmethod
     async def on_error(self, err):
         pass
-
-    @abstractmethod
-    def run(self, uri: str, token: str, debug: bool = False) -> None:
-        pass

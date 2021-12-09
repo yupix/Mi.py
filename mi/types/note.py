@@ -50,7 +50,16 @@ class Renote(TypedDict):
     channel_id: Optional[str]
 
 
-class Note(TypedDict):
+class _NoteOptional(TypedDict, total=False):
+    """
+    ノートに必ず存在すると限らない物
+    """
+    text: str
+    cw: str
+    geo: Geo
+
+
+class Note(_NoteOptional):
     """
     note object
     """
@@ -59,8 +68,6 @@ class Note(TypedDict):
     created_at: str
     user_id: str
     user: Author
-    text: Optional[str]
-    cw: Optional[str]
     visibility: Optional[str]
     renote_count: Optional[int]
     replies_count: Optional[int]
@@ -78,7 +85,6 @@ class Note(TypedDict):
     no_extract_hashtags: Optional[bool]
     no_extract_emojis: Optional[bool]
     preview: Optional[bool]
-    geo: Optional[Geo]
     media_ids: Optional[List[str]]
     renote: Optional[Renote]
     field: Optional[dict]
