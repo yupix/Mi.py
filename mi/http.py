@@ -68,7 +68,7 @@ class HTTPClient:
             data = await json_or_text(res)
             if 300 > res.status >= 200:
                 return data
-            
+
             if res.status == 403:
                 raise AuthenticationError(res, data)
 

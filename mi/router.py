@@ -55,12 +55,12 @@ class Router:
             for channel in channel_list:
                 get_channel = channel_dict[channel]
                 await self.web_socket.send_json({
-                        "type": "connect",
-                        "body": {
-                            "channel": f"{get_channel}",
-                            "id": f"{uuid.uuid4()}",
-                        },
-                    }
+                    "type": "connect",
+                    "body": {
+                        "channel": f"{get_channel}",
+                        "id": f"{uuid.uuid4()}",
+                    },
+                }
                 )
 
         except KeyError:

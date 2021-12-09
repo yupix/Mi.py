@@ -410,7 +410,7 @@ class Client:
         while True:
             await self.ws.poll_event()
 
-    async def start(self, url: str, token: str, *, debug:bool = False, recconect: bool = True):
+    async def start(self, url: str, token: str, *, debug: bool = False, recconect: bool = True):
         self.token = token
         if _origin_uri := re.search(r"wss?://(.*)/streaming", url):
             origin_uri = (

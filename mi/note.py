@@ -1,10 +1,11 @@
 from __future__ import annotations
+
 import json
 from typing import Any, Dict, List, Optional, TYPE_CHECKING
 
 from pydantic import BaseModel, Field
 
-from mi import Emoji, User, utils
+from mi import Emoji, utils
 from mi.exception import ContentRequired, NotExistRequiredParameters
 from mi.user import User
 from mi.utils import api, check_multi_arg, remove_dict_empty
@@ -251,6 +252,7 @@ class ReactionContent:
         self.note: Note = Note(data['note'], state=state)
         self.reaction = data['reaction']
         self._state = state
+
 
 class Reaction(BaseModel):
     id: Optional[str] = Field(None, alias="id_")

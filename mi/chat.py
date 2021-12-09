@@ -11,6 +11,7 @@ __all__ = ['Chat', 'ChatContent']
 if TYPE_CHECKING:
     from mi.state import ConnectionState
 
+
 class Chat(AbstractChat):
     """
     チャットを行う際に使用するクラス
@@ -48,10 +49,7 @@ class Chat(AbstractChat):
             remove_dict_empty(self.__payload),
             auth=True,
         ).json()
-        return ChatContent(
-            upper_to_lower(res,
-                           replace_list={"user": "author", "text": "content"})
-        )
+        return ChatContent(upper_to_lower(res))
 
     def add_file(
             self,
@@ -74,7 +72,7 @@ class ChatContent(AbstractChatContent):
         self.created_at: str = data["created_at"]
         self.content: str = data["text"]
         self.user_id: str = data["user_id"]
-        self.author: User = User(data["user"])
+        self.author: User = User(data["user"], state=state)
         self.recipient_id: str = data["recipient_id"]
         self.recipient: str = data["recipient"]
         self.group_id: str = data["group_id"]

@@ -1,12 +1,12 @@
 from __future__ import annotations
 
 import json
-import uuid
-from typing import TYPE_CHECKING, Any, Callable, Dict, Optional
+from typing import Any, Callable, Dict, Optional, TYPE_CHECKING
 
 import aiohttp
 
 from . import config
+
 if TYPE_CHECKING:
     from .client import Client
 

@@ -3,7 +3,6 @@
 import asyncio
 import importlib
 import inspect
-import re
 import sys
 import traceback
 from types import ModuleType
@@ -11,7 +10,7 @@ from typing import Any, Callable, Coroutine, Dict, List, Optional, Tuple, Union
 
 from websockets.legacy.client import WebSocketClientProtocol
 
-from mi import Client, User, config, utils
+from mi import Client, User, utils
 from mi.abc.ext.bot import AbstractBotBase
 from mi.exception import (
     CheckFailure,
@@ -126,14 +125,14 @@ class BotBase(GroupMixin, AbstractBotBase):
         else:
             self.special_events[name] = [func]
 
-    def listen(self, name:Optional[str]=None):
-        def decorator(func: Coroutine[Any,Any,Any]):
+    def listen(self, name: Optional[str] = None):
+        def decorator(func: Coroutine[Any, Any, Any]):
             self.add_listener(func, name)
             return func
 
         return decorator
 
-    def add_listener(self, func: Union[Coroutine[Any, Any,Any], Callable[..., Any]], name: Optional[str] = None):
+    def add_listener(self, func: Union[Coroutine[Any, Any, Any], Callable[..., Any]], name: Optional[str] = None):
         name = func.__name__ if name is None else name
         if not asyncio.iscoroutinefunction(func):
             raise TypeError("Listeners must be coroutines")
@@ -275,7 +274,6 @@ class BotBase(GroupMixin, AbstractBotBase):
 
     async def on_error(self, err):
         await self.event_dispatch("error", err)
-
 
 
 class Bot(BotBase, Client):
