@@ -8,18 +8,21 @@ import traceback
 from functools import cache
 from typing import Any, Callable, Coroutine, Dict, Iterator, List, Optional, TYPE_CHECKING, Tuple, Union
 
+import aiohttp
 import requests
 from websockets.legacy.client import WebSocketClientProtocol
 
-from mi import config
+from mi import config, User
 from mi.exception import InvalidParameters
-from mi.http import WebSocket
+from mi.http import HTTPClient, WebSocket
 from mi.note import Note
 from mi.state import ConnectionState
 from mi.utils import api, get_module_logger, remove_dict_empty, upper_to_lower
+from mi.types import Note as NotePayload
+from .gateway import MisskeyWebSocket
 
 if TYPE_CHECKING:
-    from . import User, File, Poll
+    from . import File, Poll
 
 
 class Client:
@@ -29,10 +32,13 @@ class Client:
         self.special_events: Dict[str, Any] = {}
         self.token: Optional[str] = None
         self.origin_uri: Optional[str] = None
-        self._connection: ConnectionState = ConnectionState(self.dispatch)
+        connector: Optional[aiohttp.BaseConnector] = options.pop('connector', None)
+        self.http: HTTPClient = HTTPClient(connector=connector)
+        self._connection: ConnectionState = ConnectionState(self.dispatch, self.http)
         self.i: User = None
         self.logger = get_module_logger(__name__)
         self.loop = asyncio.get_event_loop()
+        self.ws: MisskeyWebSocket = None
 
     async def on_ready(self, ws: WebSocketClientProtocol):
         """
@@ -163,8 +169,8 @@ class Client:
             auth=True
         )
 
-    @staticmethod
     def get_user_notes(
+            self,
             user_id: str,
             *,
             since_id: Optional[str] = None,
@@ -175,7 +181,7 @@ class Client:
             limit: int = 10,
             get_all: bool = False,
             exclude_nsfw: bool = True,
-            file_type: list = None,
+            file_type: Optional[List[str]] = None,
             since_date: int = 0,
             until_data: int = 0
     ) -> Iterator[Note]:
@@ -201,21 +207,17 @@ class Client:
             loop = True
             while loop:
                 get_data = api("/api/users/notes", json_data=args,
-                               auth=True).json()
+                               auth=True, lower=True)
                 if len(get_data) <= 0:
                     break
                 args["untilId"] = get_data[-1]["id"]
                 for data in get_data:
-                    yield Note(upper_to_lower(data,
-                                                     replace_list={"user": "author",
-                                                                   "text": "content"}))
+                    yield Note(NotePayload(**data), state=self._connection)
         else:
             get_data = api("/api/users/notes", json_data=args,
                            auth=True).json()
             for data in get_data:
-                yield Note(upper_to_lower(data,
-                                                 replace_list={"user": "author",
-                                                               "text": "content"}))
+                yield Note(NotePayload(**upper_to_lower(data)), state=self._connection)
 
     @staticmethod
     @cache
@@ -335,21 +337,21 @@ class Client:
         return res
 
     def post_note(self,
-            content: str,
-            *,
-            visibility: str = "public",
-            visible_user_ids: Optional[List[str]] = None,
-            cw: Optional[str] = None,
-            local_only: bool = False,
-            no_extract_mentions: bool = False,
-            no_extract_hashtags: bool = False,
-            no_extract_emojis: bool = False,
-            reply_id: List[str] = [],
-            renote_id: Optional[str] = None,
-            channel_id: Optional[str] = None,
-            file_ids: List[File] = [],
-            poll: Optional[Poll] = None
-            ) -> Note:
+                  content: str,
+                  *,
+                  visibility: str = "public",
+                  visible_user_ids: Optional[List[str]] = None,
+                  cw: Optional[str] = None,
+                  local_only: bool = False,
+                  no_extract_mentions: bool = False,
+                  no_extract_hashtags: bool = False,
+                  no_extract_emojis: bool = False,
+                  reply_id: List[str] = [],
+                  renote_id: Optional[str] = None,
+                  channel_id: Optional[str] = None,
+                  file_ids: List[File] = [],
+                  poll: Optional[Poll] = None
+                  ) -> Note:
         return self._connection._post_note(
             content,
             visibility=visibility,
@@ -364,7 +366,7 @@ class Client:
             channel_id=channel_id,
             file_ids=file_ids,
             poll=poll
-            )
+        )
 
     @staticmethod
     def get_announcements(limit: int, with_unreads: bool, since_id: str,
@@ -396,6 +398,38 @@ class Client:
             "untilId": until_id,
         }
         return api("/api/announcements", args, auth=True)
+
+    async def login(self, token):
+        data = await self.http.static_login(token)
+        self.i = User(data, self._connection)
+
+    async def connect(self, *, reconnect: bool = True) -> None:
+
+        coro = MisskeyWebSocket.from_client(self)
+        self.ws = await asyncio.wait_for(coro, timeout=60)
+        while True:
+            await self.ws.poll_event()
+
+    async def start(self, url: str, token: str, *, recconect: bool = True):
+        self.token = token
+        if _origin_uri := re.search(r"wss?://(.*)/streaming", url):
+            origin_uri = (
+                _origin_uri.group(0)
+                    .replace("wss", "https")
+                    .replace("ws", "http")
+                    .replace("/streaming", "")
+            )
+        else:
+            origin_uri = url
+        self.origin_uri = origin_uri[:-1] if url[-1] == "/" else origin_uri
+        self.url = url
+        auth_i: Dict[str, Any] = {
+            "token": self.token,
+            "origin_uri": self.origin_uri,
+        }
+        config.i = config.Config(**auth_i)
+        await self.login(token)
+        await self.connect(reconnect=recconect)
 
     def run(self, uri: str, token: str, debug: bool = False) -> None:
         """

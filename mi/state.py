@@ -1,7 +1,8 @@
+from __future__ import annotations
 import asyncio
 from functools import cache
 import json
-from typing import Any, Callable, Dict, Iterator, List, Optional, Tuple
+from typing import Any, Callable, Dict, Iterator, List, Optional, TYPE_CHECKING, Tuple
 
 from mi import User
 from mi.chat import ChatContent
@@ -12,9 +13,12 @@ from mi.iterators import InstanceIterator
 from mi.note import Note, ReactionContent, Poll
 from mi.utils import api, check_multi_arg, get_module_logger, remove_dict_empty, remove_empty_object, str_lower, upper_to_lower
 
+if TYPE_CHECKING:
+    from mi import HTTPClient
+
 
 class ConnectionState:
-    def __init__(self, dispatch: Callable[..., Any]):
+    def __init__(self, dispatch: Callable[..., Any], http: HTTPClient):
         self.dispatch = dispatch
         self.logger = get_module_logger(__name__)
 

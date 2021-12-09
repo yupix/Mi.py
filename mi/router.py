@@ -32,7 +32,7 @@ class Router:
         与えられたメッセージを元にnote idを取得し、そのメッセージをon_message等の監視対象に追加します
     """
 
-    def __init__(self, web_socket: WebSocketClientProtocol):
+    def __init__(self, web_socket):
         self.web_socket = web_socket
 
     async def channels(self, channel_list: List[str]) -> None:
@@ -69,18 +69,15 @@ class Router:
         -------
         None: None
         """
-        await self.web_socket.send(
-            json.dumps(
-                {
-                    "type": "connect",
-                    "body": {
-                        "channel": "globalTimeline",
-                        "id": f"{uuid.uuid4()}",
-                        "params": {"some": "thing"},
-                    },
+        await self.web_socket.send_json(
+            {
+                "type": "connect",
+                "body": {
+                    "channel": "globalTimeline",
+                    "id": f"{uuid.uuid4()}",
+                    "params": {"some": "thing"},
                 },
-                ensure_ascii=False,
-            )
+            }
         )
 
     async def main_channel(self) -> None:
@@ -91,18 +88,15 @@ class Router:
         -------
         None: None
         """
-        await self.web_socket.send(
-            json.dumps(
-                {
-                    "type": "connect",
-                    "body": {
-                        "channel": "main",
-                        "id": f"{uuid.uuid4()}",
-                        "params": {"some": "thing"},
-                    },
+        await self.web_socket.send_json(
+            {
+                "type": "connect",
+                "body": {
+                    "channel": "main",
+                    "id": f"{uuid.uuid4()}",
+                    "params": {"some": "thing"},
                 },
-                ensure_ascii=False,
-            )
+            }
         )
 
     async def home_time_line(self) -> None:
@@ -113,18 +107,15 @@ class Router:
         -------
         None: None
         """
-        await self.web_socket.send(
-            json.dumps(
-                {
-                    "type": "connect",
-                    "body": {
-                        "channel": "homeTimeline",
-                        "id": f"{uuid.uuid4()}",
-                        "params": {"some": "thing"},
-                    },
-                },
-                ensure_ascii=False,
-            )
+        await self.web_socket.send_json(
+            {
+                "type": "connect",
+                "body": {
+                    "channel": "homeTimeline",
+                    "id": f"{uuid.uuid4()}",
+                    "params": {"some": "thing"},
+                }
+            }
         )
 
     async def local_time_line(self) -> None:
@@ -135,18 +126,15 @@ class Router:
         -------
         None: None
         """
-        await self.web_socket.send(
-            json.dumps(
-                {
-                    "type": "connect",
-                    "body": {
-                        "channel": "localTimeline",
-                        "id": f"{uuid.uuid4()}",
-                        "params": {"some": "ting"},
-                    },
+        await self.web_socket.send_json(
+            {
+                "type": "connect",
+                "body": {
+                    "channel": "localTimeline",
+                    "id": f"{uuid.uuid4()}",
+                    "params": {"some": "ting"},
                 },
-                ensure_ascii=False,
-            )
+            }
         )
 
     async def capture_message(self, message_id: str) -> None:
@@ -161,6 +149,6 @@ class Router:
         -------
         None: None
         """
-        await self.web_socket.send(
-            json.dumps({"type": "subNote", "body": {"id": f"{message_id}"}})
+        await self.web_socket.send_json(
+            {"type": "subNote", "body": {"id": f"{message_id}"}}
         )
