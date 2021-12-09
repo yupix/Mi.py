@@ -50,18 +50,46 @@ class PinnedPage(TypedDict):
     my_reaction: Optional[Dict[str, Any]]
 
 
-class Author(TypedDict):
+class OptionalUser(TypedDict, total=False):
+    host: str
+    is_admin: bool
+    is_moderator: bool
+    is_bot: bool
+    is_cat: bool
+    is_lady: bool
+    online_status: str
+
+
+class User(OptionalUser):
     id: str
     name: str
     username: str
-    host: Optional[str]
     avatar_url: Optional[str]
     avatar_blurhash: Optional[str]
     avatar_color: Optional[str]
-    is_admin: Optional[bool]
-    is_bot: bool
-    is_cat: Optional[bool]
-    is_lady: Optional[bool]
     emojis: Optional[List[str]]
-    online_status: Optional[str]
+    url: str
+    uri: str
+    created_at: str
+    updated_at: str
+    locked: bool
+    silienced: bool
+    suspended: bool
+    description: str
+    location: str
+    birthday: str
+    fields: Any
+    followers_count: int
+    following_count: int
+    notes_count: int
+    pinned_note_ids: List[str]
+    pinned_notes: List[str]
+    pinned_page_id: str
+    pinned_page: str
+    ff_visibility: str
+    following: bool
+    followed: bool
+    blocking: bool
+    blocked: bool
+    muted: bool
     instance: Optional[Instance]

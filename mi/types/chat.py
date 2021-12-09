@@ -1,6 +1,6 @@
 from typing import List, TypedDict
 
-from mi.types.user import Author
+from mi.types.user import User
 
 
 class Chat(TypedDict):
@@ -8,7 +8,7 @@ class Chat(TypedDict):
     created_at: str
     content: str
     user_id: str
-    author: Author
+    author: User
     recipient_id: str
     recipient: str
     group_id: str

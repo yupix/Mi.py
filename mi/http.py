@@ -51,7 +51,7 @@ class HTTPClient:
         self.__session: aiohttp.ClientSession = MISSING
         self.token: Optional[str] = None
 
-    async def request(self, route: Route, *, files=None, form=None, **kwargs):
+    async def request(self, route: Route, *, files=None, form=None, **kwargs) -> Optional[Dict[str, Any]]:
         headers: Dict[str, str] = {
             'User-Agent': self.user_agent,
         }

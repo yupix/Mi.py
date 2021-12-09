@@ -1,6 +1,6 @@
 from typing import Any, Dict, List, Optional, TypedDict
 
-from .user import Author
+from .user import User
 from .emoji import Emoji
 from .drive import File
 
@@ -32,7 +32,7 @@ class Renote(TypedDict):
     id: Optional[str]
     created_at: Optional[str]
     user_id: Optional[str]
-    user: Optional[Author]
+    user: Optional[User]
     content: Optional[str]
     cw: Optional[str]
     visibility: Optional[str]
@@ -67,7 +67,7 @@ class Note(_NoteOptional):
     id: str
     created_at: str
     user_id: str
-    user: Author
+    user: User
     visibility: Optional[str]
     renote_count: Optional[int]
     replies_count: Optional[int]
