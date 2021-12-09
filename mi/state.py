@@ -41,6 +41,7 @@ class ConnectionState:
         base_msg = upper_to_lower(message['body'])
         channel_type = str_lower(base_msg.get('type'))
         self.logger.debug(f'ChannelType: {channel_type}')
+        self.logger.debug(f'recv event type: {channel_type}')
         getattr(self, f'parse_{channel_type}')(base_msg['body'])
 
     def parse_messaging_message(self, message: Dict[str, Any]) -> None:
@@ -69,7 +70,7 @@ class ConnectionState:
         None
         """
         notification_type = str_lower(message['type'])
-        getattr(self, f'_parse_{notification_type}')(message)
+        getattr(self, f'parse_{notification_type}')(message)
 
     def parse_unread_notification(self, message: Dict[str, Any]) -> None:
         """
@@ -81,13 +82,13 @@ class ConnectionState:
             Received message
         """
         notification_type = str_lower(message['type'])
-        getattr(self, f'_parse_{notification_type}')(message)
+        getattr(self, f'parse_{notification_type}')(message)
 
     def parse_reaction(self, message: Dict[str, Any]) -> None:
         """
         リアクションに関する情報を解析する関数
         """
-        self.dispatch('reaction', ReactionContent(message))
+        self.dispatch('reaction', ReactionContent(message, state=self))
 
     def parse_note(self, message: Dict[str, Any]) -> None:
         """
