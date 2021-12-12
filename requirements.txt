@@ -1,4 +1,5 @@
-requests
+aiocache
+aiohttp
 websockets
 pydantic
 emoji
