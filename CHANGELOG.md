@@ -8,20 +8,24 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 
 ### Added
-
+- `Note` クラスに `reply` メソッドを追加しました
+- 以下のクラスを追加
+    - MisskeyWebSocket
+    - MisskeyClientWebSocketResponse
+    - Route
+    - HTTPClient
+- `Client` に `post_chat` `delete_chat` メソッドを追加しました
 - `Client` に `post_note` メソッドを追加しました。今後のノート投稿はこちらを使用してください
 - `rich` を使ったデバッグ機能を追加しました
 - `file_upload` 関数を追加しました
 - `run` メソッドに `debug` 引数を追加しました
 - DocStringを一部追加しました
-- 多くの抽象クラスを追加しました
+- 抽象基底クラスを追加しました
 - TypedDictを追加しました
 - チャットをする際に用いる `Chat` `ChatContent` クラスを追加しました
 - `on_chat` イベントを追加しました
 - ~~`NoteContent` クラスを追加しました~~
     ~~- ノートの受信イベントでは基本このクラスが使用されます。~~
-- `NoteContent` クラスを追加しました
-    - ノートの受信イベントでは基本このクラスが使用されます。
 - `Instance` クラスに `get_users` メソッドを追加しました
 
 ### Changed
@@ -33,15 +37,22 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
     - 素直に使わないほうが部分的に楽だから
 - `Drive` クラスの `upload` メソッドで例外 `InvalidParameters` を発生させるようにしました
     - これは`to_file`, `to_url` の両方がないと変数が定義されず、`Drive`クラスの生成に失敗する可能性があるからです。
+- `get_user` メソッドが 非同期になりました。
 - 内部変更: `utils.py` の一部を Cython を用いたものに変更
 - 内部変更: `DriveAction` を廃止し, `file_upload` を使用するように
 - 内部変更: `event_dispatch` でクラスにイベントがある場合呼び出すようにしました
 - 内部変更: シングルクォーテーションをダブルクォーテーションに変更しました
 - 内部変更: cogシステムを作り直しました
-- 内部変更: イベントの呼び出し方を変更しました
+- 内部変更: websocketに関連する部分を作り直しました
+- 内部変更: イベントの発火部分を作り直しました
+- 内部的変更: `dispatch` に関連する物を非同期から同期に変更しました
+- **破壊的変更**: 使用しているライブラリを `websockets` から `aiohttp` に変更しました
+- **破壊的変更**: `Router` クラスの `channels` メソッドを `connect_channel` に変更しました
 - **破壊的変更**: taskをtasksに変更しました
-- **破壊的変更**: websocketを引数で渡さないようになりました
-- **破壊的変更**: 'Note' クラスの `text` 変数を `content` と統合しました
+- **破壊的変更**: `on_ready` を除きwebsocketを引数で渡さないようになりました
+- **破壊的変更**: `Note` クラスの `text` 変数を `content` と統合しました
+- **破壊的変更**: `Reaction` クラスと `ReactionContent` を結合させました
+- **破壊的変更**: `Chat` クラスと `ChatContent` を結合させました
 - **破壊的変更**: `Drive` クラスの `upload` メソッドで使用できる引数名を変更、キーワード引数を強制するようにしました。
     - 引数名の変更は次の通りです `url` => `to_url`, `path` => `to_file`
     - 強制されるキーワード引数は次の通りです `force`, `is_sensitive`
@@ -54,6 +65,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Removed
 
+- **破壊的変更**: `WebSocket` クラスを削除しました
+- `Router` クラスから以下のメソッドを削除しました
+    - main_channel
+    - home_time_line
+    - local_time_line
+    - global_time_line
 - `NoteContent` クラスを削除しました
 - `UserAction` クラスを削除しました
 - `UserProfile` クラスを削除しました
