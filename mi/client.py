@@ -289,7 +289,7 @@ class Client:
         dict:
             ユーザー情報
         """
-        await self._connection._fetch_user(user_id=user_id, username=username, host=)
+        await self._connection._fetch_user(user_id=user_id, username=username, host=host)
 
     @staticmethod
     def file_upload(
