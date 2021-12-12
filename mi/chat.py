@@ -1,68 +1,18 @@
 from __future__ import annotations
-from typing import TYPE_CHECKING, List
 
-from .abc.chat import AbstractChat, AbstractChatContent
+from typing import List, TYPE_CHECKING
+
+from .abc.chat import AbstractChatContent
 from .types.chat import Chat as ChatPayload
 from .user import User
-from .utils import api, remove_dict_empty, upper_to_lower
 
-__all__ = ['Chat', 'ChatContent']
+__all__ = ['Chat']
 
 if TYPE_CHECKING:
     from mi.state import ConnectionState
 
 
-class Chat(AbstractChat):
-    """
-    チャットを行う際に使用するクラス
-    """
-
-    def __init__(
-            self,
-            content: str,
-            *,
-            user_id: str = None,
-            group_id: str = None,
-            file_id: str = None
-    ):
-        self.content = content
-        self.user_id = user_id
-        self.group_id = group_id
-        self.file_id = file_id
-        self.__payload = {
-            "userId": self.user_id,
-            "groupId": self.group_id,
-            "text": self.content,
-            "fileId": self.file_id,
-        }
-
-    async def send(self) -> "ChatContent":
-        """
-        チャットを投稿します
-
-        Returns
-        -------
-        ChatContent
-        """
-        res = api(
-            "/api/messaging/messages/create",
-            remove_dict_empty(self.__payload),
-            auth=True,
-        ).json()
-        return ChatContent(upper_to_lower(res))
-
-    def add_file(
-            self,
-            path: str = None,
-            name: str = None,
-            force: bool = False,
-            is_sensitive: bool = False,
-            url: str = None,
-    ):
-        pass
-
-
-class ChatContent(AbstractChatContent):
+class Chat(AbstractChatContent):
     """
     チャットオブジェクト
     """
@@ -81,7 +31,7 @@ class ChatContent(AbstractChatContent):
         self.reads: List = data["reads"]
         self._state = state
 
-    async def delete(self):
+    async def delete(self) -> bool:
         """
         チャットを削除します（チャットの作者である必要があります）
 
@@ -90,5 +40,5 @@ class ChatContent(AbstractChatContent):
         bool:
             成功したか否か
         """
-        res = await self._state._delete_chat(self.id)
-        return res.status_code == 204
+        res = await self._state.delete_chat(self.id)
+        return bool(res)
