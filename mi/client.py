@@ -9,13 +9,13 @@ from functools import cache
 from typing import Any, Callable, Coroutine, Dict, Iterator, List, Optional, TYPE_CHECKING, Tuple, Union
 
 import aiohttp
-import requests
 from websockets.legacy.client import WebSocketClientProtocol
 
 from mi import config, User
 from mi.exception import InvalidParameters
-from mi.http import HTTPClient
+from mi.http import HTTPClient, Route
 from mi.note import Note
+from mi.chat import Chat
 from mi.state import ConnectionState
 from mi.utils import api, get_module_logger, remove_dict_empty, upper_to_lower
 from mi.types import Note as NotePayload
@@ -26,7 +26,7 @@ if TYPE_CHECKING:
 
 
 class Client:
-    def __init__(self, loop:Optional[asyncio.AbstractEventLoop]=None,**options: Dict[Any, Any]):
+    def __init__(self, loop: Optional[asyncio.AbstractEventLoop] = None, **options: Dict[Any, Any]):
         super().__init__(**options)
         self.extra_events: Dict[str, Any] = {}
         self.special_events: Dict[str, Any] = {}
@@ -163,14 +163,43 @@ class Client:
 
     # ここからクライアント操作
 
-    @staticmethod
-    async def delete_chat(message_id: str) -> requests.models.Response:
-        args = {"messageId": f"{message_id}"}
-        return api(
-            '/api/messaging/messages/delete',
-            json_data=args,
-            auth=True
-        )
+    async def post_chat(self, content: str, *, user_id: str = None, group_id: str = None, file_id: str = None) -> Chat:
+        """post_chat API
+
+        チャットを送信します。
+
+        Parameters
+        ----------
+        content : str
+            テキスト
+        user_id : str, optional
+            送信対象のユーザーid, by default None
+        group_id : str, optional
+            送信対象のグループid, by default None
+        file_id : str, optional
+            添付するファイルid, by default None
+            
+        Returns
+        -------
+        None
+        """
+        return await self._connection.post_chat(content, user_id=user_id, group_id=group_id, file_id=file_id)
+
+    async def delete_chat(self, message_id: str) -> bool:
+        """
+        指定されたIDのチャットを削除します。
+
+        Parameters
+        ----------
+        message_id : str
+            削除するメッセージのid
+
+        Returns
+        -------
+        bool
+            削除に成功したかどうか
+        """
+        return await self._connection.delete_chat(message_id=message_id)
 
     def get_user_notes(
             self,
@@ -249,7 +278,7 @@ class Client:
         return api("/api/meta").json()
 
     async def get_user(self, user_id: Optional[str] = None, username: Optional[str] = None,
-                 host: Optional[str] = None) -> User:
+                       host: Optional[str] = None) -> User:
         """
         ユーザーのプロフィールを取得します。一度のみサーバーにアクセスしキャッシュをその後は使います。
         fetch_userを使った場合はキャッシュが廃棄され再度サーバーにアクセスします。
@@ -271,7 +300,7 @@ class Client:
         return await self._connection.get_user(user_id=user_id, username=username, host=host)
 
     async def fetch_user(self, user_id: Optional[str] = None, username: Optional[str] = None,
-                   host: Optional[str] = None) -> User:
+                         host: Optional[str] = None) -> User:
         """
         サーバーにアクセスし、ユーザーのプロフィールを取得します。基本的には get_userをお使いください。
 
@@ -354,21 +383,11 @@ class Client:
                   file_ids: List[File] = [],
                   poll: Optional[Poll] = None
                   ) -> Note:
-        return self._connection._post_note(
-            content,
-            visibility=visibility,
-            visible_user_ids=visible_user_ids,
-            cw=cw,
-            local_only=local_only,
-            no_extract_mentions=no_extract_mentions,
-            no_extract_hashtags=no_extract_hashtags,
-            no_extract_emojis=no_extract_emojis,
-            reply_id=reply_id,
-            renote_id=renote_id,
-            channel_id=channel_id,
-            file_ids=file_ids,
-            poll=poll
-        )
+        return self._connection.post_note(content, visibility=visibility, visible_user_ids=visible_user_ids, cw=cw,
+                                          local_only=local_only, no_extract_mentions=no_extract_mentions,
+                                          no_extract_hashtags=no_extract_hashtags, no_extract_emojis=no_extract_emojis,
+                                          reply_id=reply_id, renote_id=renote_id, channel_id=channel_id, file_ids=file_ids,
+                                          poll=poll)
 
     @staticmethod
     def get_announcements(limit: int, with_unreads: bool, since_id: str,
@@ -417,9 +436,9 @@ class Client:
         if _origin_uri := re.search(r"wss?://(.*)/streaming", url):
             origin_uri = (
                 _origin_uri.group(0)
-                    .replace("wss", "https")
-                    .replace("ws", "http")
-                    .replace("/streaming", "")
+                .replace("wss", "https")
+                .replace("ws", "http")
+                .replace("/streaming", "")
             )
         else:
             origin_uri = url
@@ -475,9 +494,9 @@ class Client:
         if _origin_uri := re.search(r"wss?://(.*)/streaming", uri):
             origin_uri = (
                 _origin_uri.group(0)
-                    .replace("wss", "https")
-                    .replace("ws", "http")
-                    .replace("/streaming", "")
+                .replace("wss", "https")
+                .replace("ws", "http")
+                .replace("/streaming", "")
             )
         else:
             origin_uri = uri

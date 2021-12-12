@@ -3,20 +3,20 @@ from __future__ import annotations
 import asyncio
 import inspect
 import json
-from functools import cache
 from typing import Any, Callable, Dict, Iterator, List, Optional, TYPE_CHECKING, Tuple
 
 from aiocache import cached
 from aiocache.factory import Cache
 
 from mi import User
-from mi.chat import ChatContent
-from mi.drive import Drive, File
+from mi.chat import Chat
+from mi.drive import Drive
 from mi.exception import ContentRequired, InvalidParameters, NotExistRequiredParameters
 from mi.http import Route
 from mi.iterators import InstanceIterator
-from mi.note import Note, Poll, ReactionContent
-from mi.utils import api, check_multi_arg, get_cache_key, get_module_logger, key_builder, remove_dict_empty, remove_empty_object, remove_list_empty, str_lower, upper_to_lower
+from mi.note import Note, Poll, Reaction
+from mi.utils import api, check_multi_arg, get_cache_key, get_module_logger, key_builder, remove_dict_empty, \
+    remove_empty_object, str_lower, upper_to_lower
 
 if TYPE_CHECKING:
     from mi import HTTPClient
@@ -53,18 +53,18 @@ class ConnectionState:
         """
         チャットが来た際のデータを処理する関数
         """
-        self.dispatch('message', ChatContent(message, state=self))
+        self.dispatch('message', Chat(message, state=self))
 
     def parse_unread_messaging_message(self, message: Dict[str, Any]) -> None:
         """
         チャットが既読になっていない場合のデータを処理する関数
         """
-        self.dispatch('message', ChatContent(message, state=self))
+        self.dispatch('message', Chat(message, state=self))
 
     def parse_notification(self, message: Dict[str, Any]) -> None:
         """
         通知イベントを解析する関数
-        
+
         Parameters
         ----------
         message: Dict[str, Any]
@@ -93,7 +93,7 @@ class ConnectionState:
         """
         リアクションに関する情報を解析する関数
         """
-        self.dispatch('reaction', ReactionContent(message, state=self))
+        self.dispatch('reaction', Reaction(message, state=self))
 
     def parse_note(self, message: Dict[str, Any]) -> None:
         """
@@ -302,7 +302,8 @@ class ConnectionState:
         return poll
 
     @cached(ttl=10, namespace='get_user', key_builder=key_builder)
-    async def get_user(self, user_id: Optional[str] = None, username: Optional[str] = None, host: Optional[str] = None) -> User:
+    async def get_user(self, user_id: Optional[str] = None, username: Optional[str] = None,
+                       host: Optional[str] = None) -> User:
         """
         ユーザーのプロフィールを取得します。一度のみサーバーにアクセスしキャッシュをその後は使います。
         fetch_userを使った場合はキャッシュが廃棄され再度サーバーにアクセスします。
@@ -322,12 +323,21 @@ class ConnectionState:
             ユーザー情報
         """
         field = remove_dict_empty({"userId": user_id, "username": username, "host": host})
-        data = await self.http.request(Route('POST', '/api/users/show'),json=field, auth=True)
+        data = await self.http.request(Route('POST', '/api/users/show'), json=field, auth=True)
         return User(upper_to_lower(data), state=self)
+
+    async def post_chat(self, content: str, *, user_id: str = None, group_id: str = None, file_id=None) -> Chat:
+        args = remove_dict_empty({'userId': user_id, 'groupId': group_id, 'text': content, 'fileId': file_id})
+        return Chat(await self.http.request(Route('POST', '/api/messaging/messages/create'), json=args, auth=True, lower=True), state=self)
+
+    async def delete_chat(self, message_id: str) -> bool:
+        args = {'messageId': f'{message_id}'}
+        data = await self.http.request(Route('POST', '/api/messaging/messages/delete'), json=args, auth=True)
+        return bool(data)
 
     @get_cache_key
     async def _fetch_user(self, user_id: Optional[str] = None, username: Optional[str] = None,
-                    host: Optional[str] = None, **kwargs) -> User:
+                          host: Optional[str] = None, **kwargs) -> User:
         """
         サーバーにアクセスし、ユーザーのプロフィールを取得します。基本的には get_userをお使いください。
 
@@ -349,27 +359,29 @@ class ConnectionState:
             raise NotExistRequiredParameters("user_id, usernameどちらかは必須です")
 
         field = remove_dict_empty({"userId": user_id, "username": username, "host": host})
-        data = await self.http.request(Route('POST', '/api/users/show'),json=field, auth=True)
+        data = await self.http.request(Route('POST', '/api/users/show'), json=field, auth=True)
         old_cache = Cache(namespace='get_user')
         await old_cache.delete(kwargs['cache_key'].format('get_user'))
         return User(upper_to_lower(data), state=self)
 
-    def _post_note(self,
-                   content: str,
-                   *,
-                   visibility: str = "public",
-                   visible_user_ids: Optional[List[str]] = None,
-                   cw: Optional[str] = None,
-                   local_only: bool = False,
-                   no_extract_mentions: bool = False,
-                   no_extract_hashtags: bool = False,
-                   no_extract_emojis: bool = False,
-                   reply_id: Optional[str] = None,
-                   renote_id: Optional[str] = None,
-                   channel_id: Optional[str] = None,
-                   file_ids: List[File] = [],
-                   poll: Optional[Poll] = None
-                   ):
+    def post_note(self,
+                  content: str,
+                  *,
+                  visibility: str = "public",
+                  visible_user_ids: Optional[List[str]] = None,
+                  cw: Optional[str] = None,
+                  local_only: bool = False,
+                  no_extract_mentions: bool = False,
+                  no_extract_hashtags: bool = False,
+                  no_extract_emojis: bool = False,
+                  reply_id: Optional[str] = None,
+                  renote_id: Optional[str] = None,
+                  channel_id: Optional[str] = None,
+                  file_ids=None,
+                  poll: Optional[Poll] = None
+                  ):
+        if file_ids is None:
+            file_ids = []
         field = {
             "visibility": visibility,
             "visibleUserIds": visible_user_ids,
@@ -388,18 +400,11 @@ class ConnectionState:
         if file_ids:
             field["fileIds"] = file_ids
         field = remove_empty_object(field)
-        print(field)
         res = api("/api/notes/create", json_data=field, auth=True)
         res_json = res.json()
-        if (
-                res_json.get("error")
-                and res_json.get("error", {}).get("code") == "CONTENT_REQUIRED"
-        ):
-            raise ContentRequired(
-                "ノートの送信にはtext, file, renote またはpollのいずれか1つが無くてはいけません")
-        return Note(
-            upper_to_lower(res_json["createdNote"])
-            , state=self)
+        if res_json.get("error") and res_json.get("error", {}).get("code") == "CONTENT_REQUIRED":
+            raise ContentRequired("ノートの送信にはtext, file, renote またはpollのいずれか1つが無くてはいけません")
+        return Note(upper_to_lower(res_json["createdNote"]), state=self)
 
     @staticmethod
     def _get_followers(
