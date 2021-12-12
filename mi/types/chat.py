@@ -6,9 +6,9 @@ from mi.types.user import User
 class Chat(TypedDict):
     id: str
     created_at: str
-    content: str
+    text: str
     user_id: str
-    author: User
+    user: User
     recipient_id: str
     recipient: str
     group_id: str
