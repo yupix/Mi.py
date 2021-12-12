@@ -3,7 +3,7 @@ from __future__ import annotations
 import json
 from typing import Any, Dict, List, Optional, TYPE_CHECKING
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
 
 from mi import Emoji, utils
 from mi.exception import ContentRequired, NotExistRequiredParameters
@@ -12,7 +12,9 @@ from mi.utils import api, check_multi_arg, remove_dict_empty
 from .abc.note import AbstractNote
 from .types.note import (Note as NotePayload,
                          Poll as PollPayload,
-                         Renote as RenotePayload)
+                         Renote as RenotePayload,
+                         Reaction as ReactionPayload
+                         )
 
 if TYPE_CHECKING:
     from mi import ConnectionState
@@ -145,23 +147,24 @@ class Properties(BaseModel):
     height: Optional[int]
 
 
-class File(BaseModel):
-    id: Optional[str] = Field(None, alias="id_")
-    created_at: Optional[str] = Field(None, alias="created_at")
-    name: Optional[str] = None
-    type: Optional[str] = None
-    md5: Optional[str] = None
-    size: Optional[int]
-    is_sensitive: Optional[bool] = False
-    blurhash: Optional[str] = None
-    properties: Properties
-    url: Optional[str] = None
-    thumbnail_url: Optional[str] = None
-    comment: Optional[str] = None
-    folder_id: Optional[str] = None
-    folder: Optional[str] = None
-    user_id: Optional[str] = None
-    user: Optional[str] = None
+class File:
+    def __init__(self, data):
+        self.id: Optional[str] = data.get('id')
+        self.created_at: Optional[str] = data.get('create_at')
+        self.name: Optional[str] = data.get('name')
+        self.type: Optional[str] = data.get('type')
+        self.md5: Optional[str] = data.get('md5')
+        self.size: Optional[int].get('size')
+        self.is_sensitive: Optional[bool] = bool(data.get('is_sensitive'))
+        self.blurhash: Optional[str] = data.get('blurhash')
+        self.properties: Properties = data.get('properties')
+        self.url: Optional[str] = data.get('url')
+        self.thumbnail_url: Optional[str] = data.get('thumbnail_url')
+        self.comment: Optional[str] = data.get('comment')
+        self.folder_id: Optional[str] = data.get('folder_id')
+        self.folder: Optional[str] = data.get('folder')
+        self.user_id: Optional[str] = data.get('user_id')
+        self.user: Optional[str] = data.get('user')
 
 
 class Poll:
@@ -243,21 +246,16 @@ class Renote(AbstractNote):
         return await self.__note_action.delete(note_id)
 
 
-class ReactionContent:
-    def __init__(self, data, state: ConnectionState):
+class Reaction:
+    def __init__(self, data: ReactionPayload, state: ConnectionState):
+        self.id: Optional[str] = data.get('id')
         self.created_at = data.get('created_at')
-        self.type = data.get('type')
-        self.is_read: bool = data['is_read']
-        self.user: User = User(data['user'], state=state)
-        self.note: Note = Note(data['note'], state=state)
-        self.reaction = data['reaction']
-        self._state = state
-
-
-class Reaction(BaseModel):
-    id: Optional[str] = Field(None, alias="id_")
-    reaction: Optional[str] = None
-    user_id: Optional[str] = None
+        self.type: Optional[str] = data.get('type')
+        self.is_read: bool = bool(data.get('is_read'))
+        self.user: Optional[User] = User(data['user'], state=state) if data.get('user') else None
+        self.note: Optional[Note] = Note(data['note'], state=state) if data.get('note') else None
+        self.reaction: str = data['reaction']
+        self._state: ConnectionState = state
 
 
 class Note(AbstractNote):
@@ -268,7 +266,7 @@ class Note(AbstractNote):
     created_at: str
     user_id: str
     author: User
-    content: Optiona[str]
+    content: Optional[str]
     cw: Optional[str]
     renote: Renote
     visibility: str
@@ -277,7 +275,7 @@ class Note(AbstractNote):
     reactions:Dict[str, Any]
     emojis:List[Emoji]
     file_ids:Optional[List[str]]
-    files: Optiona[List[str]]
+    files: Optional[List[str]]
     reply_id: Optional[str]
     renote_id: Optional[str]
     poll: Optional[Poll]
@@ -295,21 +293,17 @@ class Note(AbstractNote):
         self.renote_count: int = data["renote_count"]
         self.replies_count: int = data["replies_count"]
         self.reactions: Dict[str, Any] = data["reactions"]
-        self.emojis: List[Emoji] = data["emojis"]
+        self.emojis: List[Emoji] = [Emoji(i) for i in data["emojis"]]
         self.file_ids: Optional[List[str]] = data["file_ids"]
-        self.files: List[File] = data["files"]
+        self.files: List[File] = [File(i) for i in data["files"]]
         self.reply_id: Optional[str] = data["reply_id"]
         self.renote_id: Optional[str] = data["renote_id"]
         self.poll: Optional[Poll] = Poll(data["poll"]) if data.get("poll") else None
-        self.visible_user_ids: Optional[List[str]] = data.get(
-            "visible_user_ids", [])
+        self.visible_user_ids: Optional[List[str]] = data.get("visible_user_ids", [])
         self.via_mobile: Optional[bool] = data.get("via_mobile", False)
         self.local_only: bool = data.get("local_only", False)
-        self.no_extract_mentions: Optional[bool] = data.get(
-            "no_extract_mentions", False
-        )
-        self.no_extract_hashtags: Optional[bool] = data.get(
-            "no_extract_hashtags")
+        self.no_extract_mentions: Optional[bool] = data.get("no_extract_mentions", False)
+        self.no_extract_hashtags: Optional[bool] = data.get("no_extract_hashtags")
         self.no_extract_emojis: Optional[bool] = data.get("no_extract_emojis")
         self.preview: Optional[bool] = data.get("preview")
         self.media_ids: Optional[List[str]] = data.get("media_ids")
@@ -339,10 +333,12 @@ class Note(AbstractNote):
             no_extract_emojis: bool = False,
             renote_id: Optional[str] = None,
             channel_id: Optional[str] = None,
-            file_ids: List[File] = [],
+            file_ids=None,
             poll: Optional[Poll] = None
     ) -> Note:
-        return self._state._post_note(
+        if file_ids is None:
+            file_ids = []
+        return self._state.post_note(
             content,
             visibility=self.visibility,
             visible_user_ids=self.visible_user_ids,
