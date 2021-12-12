@@ -66,15 +66,19 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Removed
 
 - **破壊的変更**: `WebSocket` クラスを削除しました
+- **破壊的変更**: `requests` ライブラリを削除しました
 - `Router` クラスから以下のメソッドを削除しました
     - main_channel
     - home_time_line
     - local_time_line
     - global_time_line
-- `NoteContent` クラスを削除しました
-- `UserAction` クラスを削除しました
-- `UserProfile` クラスを削除しました
-    - これらは `User` に統合され、詳細な情報は `User` クラスの detailsオブジェクト(`UserDetails`) から取得可能です
+- クラスの削除について
+    - `ChatContent`
+    - `ReactionContent`
+    - `NoteContent`
+    - `UserAction`
+    - `UserProfile`
+        - `UserProfile`にあったものは `User` に統合され、詳細な情報は `User` クラスの detailsオブジェクト(`UserDetails`) から取得可能です
 
 ## [v0.2.5] 2021-10-07
 
