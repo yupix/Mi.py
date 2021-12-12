@@ -7,10 +7,9 @@ import sys
 from typing import Any, Dict, Optional
 
 import aiohttp
-from mi.exception import AuthenticationError
 
 from mi.gateway import MisskeyClientWebSocketResponse
-from . import __version__, config
+from . import __version__, config, exception
 
 
 class _MissingSentinel:
@@ -69,8 +68,24 @@ class HTTPClient:
             if 300 > res.status >= 200:
                 return data
 
-            if res.status == 403:
-                raise AuthenticationError(res, data)
+        errors = {
+            400: {"raise": exception.ClientError, "description": "Client Error"},
+            401: {
+                "raise": exception.AuthenticationError,
+                "description": "AuthenticationError",
+            },
+            418: {"raise": exception.ImAi, "description": "I'm Ai"},
+            500: {
+                "raise": exception.InternalServerError,
+                "description": "InternalServerError",
+            },
+        }
+        if res.status in [400, 401, 418, 500]:
+            error_base: Dict[str, Any] = errors[res.status]
+            error = error_base["raise"](
+                f"{error_base['description']} => {data['error']['message']}  \n {res.text}"
+            )
+            raise error
 
     async def static_login(self, token: str):
         self.token = token
