@@ -90,3 +90,16 @@ class Note(_NoteOptional):
     field: Optional[dict]
     tags: Optional[List[str]]
     channel_id: Optional[str]
+
+
+class OptionalReaction(TypedDict, total=False):
+    created_at: str
+    type: str
+    is_read: bool
+    user: User
+    note: Note
+    id: str
+
+
+class Reaction(OptionalReaction):
+    reaction: str
