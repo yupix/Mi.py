@@ -4,11 +4,12 @@ Mi.pyのWebSocket部分
 
 import json
 import sys
-from typing import Any, Dict, Optional
+from typing import Any, Dict, Optional, Union
 
 import aiohttp
 
 from mi.gateway import MisskeyClientWebSocketResponse
+from mi.utils import upper_to_lower
 from . import __version__, config, exception
 
 
@@ -50,7 +51,7 @@ class HTTPClient:
         self.__session: aiohttp.ClientSession = MISSING
         self.token: Optional[str] = None
 
-    async def request(self, route: Route, *, files=None, form=None, **kwargs) -> Optional[Dict[str, Any]]:
+    async def request(self, route: Route, *, files=None, form=None, **kwargs) -> Union[Union[bool, dict[str, Any]], Any]:
         headers: Dict[str, str] = {
             'User-Agent': self.user_agent,
         }
@@ -58,6 +59,7 @@ class HTTPClient:
         if json in kwargs:
             headers['Content-Type'] = 'application/json'
             kwargs['data'] = kwargs.pop('json')
+        is_lower = kwargs.pop('lower') if kwargs.get('lower') else False
 
         if kwargs.pop('auth'):
             if kwargs.get('json') is None:
@@ -65,6 +67,10 @@ class HTTPClient:
             kwargs['json']['i'] = self.token
         async with self.__session.request(route.method, route.url, **kwargs) as res:
             data = await json_or_text(res)
+            if is_lower:
+                data = upper_to_lower(data)
+            if res.status == 204:
+                return True
             if 300 > res.status >= 200:
                 return data
 
