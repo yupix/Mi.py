@@ -3,7 +3,7 @@ from __future__ import annotations
 import asyncio
 import inspect
 import json
-from typing import Any, Callable, Dict, Iterator, List, Optional, TYPE_CHECKING, Tuple
+from typing import Any, Callable, Dict, Iterator, List, Optional, TYPE_CHECKING
 
 from aiocache import cached
 from aiocache.factory import Cache
@@ -328,7 +328,8 @@ class ConnectionState:
 
     async def post_chat(self, content: str, *, user_id: str = None, group_id: str = None, file_id=None) -> Chat:
         args = remove_dict_empty({'userId': user_id, 'groupId': group_id, 'text': content, 'fileId': file_id})
-        return Chat(await self.http.request(Route('POST', '/api/messaging/messages/create'), json=args, auth=True, lower=True), state=self)
+        return Chat(await self.http.request(Route('POST', '/api/messaging/messages/create'), json=args, auth=True, lower=True),
+                    state=self)
 
     async def delete_chat(self, message_id: str) -> bool:
         args = {'messageId': f'{message_id}'}

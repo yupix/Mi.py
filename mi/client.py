@@ -1,4 +1,5 @@
 from __future__ import annotations
+
 import asyncio
 import importlib
 import inspect
@@ -11,14 +12,14 @@ from typing import Any, Callable, Coroutine, Dict, Iterator, List, Optional, TYP
 import aiohttp
 from websockets.legacy.client import WebSocketClientProtocol
 
-from mi import config, User
-from mi.exception import InvalidParameters
-from mi.http import HTTPClient, Route
-from mi.note import Note
+from mi import User, config
 from mi.chat import Chat
+from mi.exception import InvalidParameters
+from mi.http import HTTPClient
+from mi.note import Note
 from mi.state import ConnectionState
-from mi.utils import api, get_module_logger, remove_dict_empty, upper_to_lower
 from mi.types import Note as NotePayload
+from mi.utils import api, get_module_logger, remove_dict_empty, upper_to_lower
 from .gateway import MisskeyWebSocket
 
 if TYPE_CHECKING:
@@ -436,9 +437,9 @@ class Client:
         if _origin_uri := re.search(r"wss?://(.*)/streaming", url):
             origin_uri = (
                 _origin_uri.group(0)
-                .replace("wss", "https")
-                .replace("ws", "http")
-                .replace("/streaming", "")
+                    .replace("wss", "https")
+                    .replace("ws", "http")
+                    .replace("/streaming", "")
             )
         else:
             origin_uri = url
@@ -494,9 +495,9 @@ class Client:
         if _origin_uri := re.search(r"wss?://(.*)/streaming", uri):
             origin_uri = (
                 _origin_uri.group(0)
-                .replace("wss", "https")
-                .replace("ws", "http")
-                .replace("/streaming", "")
+                    .replace("wss", "https")
+                    .replace("ws", "http")
+                    .replace("/streaming", "")
             )
         else:
             origin_uri = uri
