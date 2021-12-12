@@ -221,7 +221,7 @@ class ConnectionState:
         return res.status_code == 204
 
     @staticmethod
-    async def _note_delete(note_id: str) -> tuple[bool, int]:
+    async def note_delete(note_id: str) -> tuple[bool, int]:
         data = {"noteId": note_id}
         res = api("/api/notes/delete", json_data=data, auth=True)
         return res.status_code == 204, res.status_code

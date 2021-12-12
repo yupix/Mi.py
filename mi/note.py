@@ -301,7 +301,7 @@ class Note(AbstractNote):
         self.poll: Optional[Poll] = Poll(data["poll"]) if data.get("poll") else None
         self.visible_user_ids: Optional[List[str]] = data.get("visible_user_ids", [])
         self.via_mobile: Optional[bool] = data.get("via_mobile", False)
-        self.local_only: bool = data.get("local_only", False)
+        self.local_only: bool = bool(data.get("local_only", False))
         self.no_extract_mentions: Optional[bool] = data.get("no_extract_mentions", False)
         self.no_extract_hashtags: Optional[bool] = data.get("no_extract_hashtags")
         self.no_extract_emojis: Optional[bool] = data.get("no_extract_emojis")
@@ -444,4 +444,4 @@ class Note(AbstractNote):
             HTTP レスポンスステータスコード
         """
 
-        return await self._state._note_delete(self.id)
+        return await self._state.note_delete(self.id)
