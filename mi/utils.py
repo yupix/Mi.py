@@ -14,6 +14,29 @@ from mi import config, exception
 
 T = TypeVar("T")
 
+def get_cache_key(func):
+    async def decorator(self, *args, **kwargs):
+        ordered_kwargs = sorted(kwargs.items())
+        key = (
+            (func.__module__ or "")
+            + '.{0}'
+            + f'{self}'
+            + str(args)
+            + str(ordered_kwargs)
+        )
+        return await func(self, *args, **kwargs, cache_key = key)
+    return decorator
+
+def key_builder(func, cls, *args, **kwargs):
+    ordered_kwargs = sorted(kwargs.items())
+    key = (
+        (func.__module__ or "")
+        + f'.{func.__name__}'
+        + f'{cls}'
+        + str(args)
+        + str(ordered_kwargs)
+    )
+    return key
 
 def get_module_logger(module_name):
     logger = logging.getLogger(module_name)
@@ -178,7 +201,7 @@ def remove_empty_object(data: Dict[str, Any]) -> Dict[str, Any]:
     return remove_list_empty(remove_dict_empty(data))
     
 
-def remove_list_empty(data: Dict[str, Any]) -> Dict[str, Any]:
+def remove_list_empty(data: List[Any]) -> List[Any]:
     """
     Parameters
     ----------
@@ -191,7 +214,7 @@ def remove_list_empty(data: Dict[str, Any]) -> Dict[str, Any]:
         空のkeyがなくなったdict
     """
     
-    return {k: v for k, v in data.items() if v}
+    return [k for k in data if k]
 
 def remove_dict_empty(data: Dict[str, Any]) -> Dict[str, Any]:
     """

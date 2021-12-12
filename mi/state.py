@@ -6,23 +6,28 @@ import json
 from functools import cache
 from typing import Any, Callable, Dict, Iterator, List, Optional, TYPE_CHECKING, Tuple
 
+from aiocache import cached
+from aiocache.factory import Cache
+
 from mi import User
 from mi.chat import ChatContent
 from mi.drive import Drive, File
 from mi.exception import ContentRequired, InvalidParameters, NotExistRequiredParameters
+from mi.http import Route
 from mi.iterators import InstanceIterator
 from mi.note import Note, Poll, ReactionContent
-from mi.utils import api, check_multi_arg, get_module_logger, remove_dict_empty, remove_empty_object, str_lower, upper_to_lower
+from mi.utils import api, check_multi_arg, get_cache_key, get_module_logger, key_builder, remove_dict_empty, remove_empty_object, remove_list_empty, str_lower, upper_to_lower
 
 if TYPE_CHECKING:
     from mi import HTTPClient
 
 
 class ConnectionState:
-    def __init__(self, dispatch: Callable[..., Any], http: HTTPClient):
+    def __init__(self, dispatch: Callable[..., Any], http: HTTPClient, loop: asyncio.AbstractEventLoop):
         self.dispatch = dispatch
         self.http: HTTPClient = http
         self.logger = get_module_logger(__name__)
+        self.loop: asyncio.AbstractEventLoop = loop
         self.parsers = parsers = {}
         for attr, func in inspect.getmembers(self):
             if attr.startswith('parse'):
@@ -296,9 +301,8 @@ class ConnectionState:
 
         return poll
 
-    @cache
-    def _get_user(self, user_id: Optional[str] = None, username: Optional[str] = None,
-                  host: Optional[str] = None) -> Dict[str, Tuple[str, List[Any], Dict[str, Any]]]:
+    @cached(ttl=10, namespace='get_user', key_builder=key_builder)
+    async def get_user(self, user_id: Optional[str] = None, username: Optional[str] = None, host: Optional[str] = None) -> User:
         """
         ユーザーのプロフィールを取得します。一度のみサーバーにアクセスしキャッシュをその後は使います。
         fetch_userを使った場合はキャッシュが廃棄され再度サーバーにアクセスします。
@@ -317,10 +321,13 @@ class ConnectionState:
         dict:
             ユーザー情報
         """
-        return self._fetch_user(user_id, username, host)
+        field = remove_dict_empty({"userId": user_id, "username": username, "host": host})
+        data = await self.http.request(Route('POST', '/api/users/show'),json=field, auth=True)
+        return User(upper_to_lower(data), state=self)
 
-    def _fetch_user(self, user_id: Optional[str] = None, username: Optional[str] = None,
-                    host: Optional[str] = None) -> Dict[str, Tuple[str, List[Any], Dict[str, Any]]]:
+    @get_cache_key
+    async def _fetch_user(self, user_id: Optional[str] = None, username: Optional[str] = None,
+                    host: Optional[str] = None, **kwargs) -> User:
         """
         サーバーにアクセスし、ユーザーのプロフィールを取得します。基本的には get_userをお使いください。
 
@@ -341,10 +348,11 @@ class ConnectionState:
         if not check_multi_arg(user_id, username):
             raise NotExistRequiredParameters("user_id, usernameどちらかは必須です")
 
-        data = remove_dict_empty(
-            {"userId": user_id, "username": username, "host": host})
-        self._get_user.cache_clear()
-        return User(upper_to_lower(api("/api/users/show", json_data=data, auth=True).json()), state=self)
+        field = remove_dict_empty({"userId": user_id, "username": username, "host": host})
+        data = await self.http.request(Route('POST', '/api/users/show'),json=field, auth=True)
+        old_cache = Cache(namespace='get_user')
+        await old_cache.delete(kwargs['cache_key'].format('get_user'))
+        return User(upper_to_lower(data), state=self)
 
     def _post_note(self,
                    content: str,

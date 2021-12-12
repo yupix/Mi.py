@@ -26,19 +26,22 @@ if TYPE_CHECKING:
 
 
 class Client:
-    def __init__(self, **options: Dict[Any, Any]):
+    def __init__(self, loop:Optional[asyncio.AbstractEventLoop]=None,**options: Dict[Any, Any]):
         super().__init__(**options)
         self.extra_events: Dict[str, Any] = {}
         self.special_events: Dict[str, Any] = {}
         self.token: Optional[str] = None
         self.origin_uri: Optional[str] = None
+        self.loop = asyncio.get_event_loop() if loop is None else loop
         connector: Optional[aiohttp.BaseConnector] = options.pop('connector', None)
         self.http: HTTPClient = HTTPClient(connector=connector)
-        self._connection: ConnectionState = ConnectionState(self.dispatch, self.http)
+        self._connection: ConnectionState = self._get_state(**options)
         self.i: User = None
         self.logger = get_module_logger(__name__)
-        self.loop = asyncio.get_event_loop()
         self.ws: MisskeyWebSocket = None
+
+    def _get_state(self, **options: Any) -> ConnectionState:
+        return ConnectionState(dispatch=self.dispatch, http=self.http, loop=self.loop, **options)
 
     async def on_ready(self, ws: WebSocketClientProtocol):
         """
@@ -245,9 +248,8 @@ class Client:
         Client.get_instance_meta.cache_clear()
         return api("/api/meta").json()
 
-    @cache
-    def get_user(self, user_id: Optional[str] = None, username: Optional[str] = None,
-                 host: Optional[str] = None) -> Dict[str, Tuple[str, List[Any], Dict[str, Any]]]:
+    async def get_user(self, user_id: Optional[str] = None, username: Optional[str] = None,
+                 host: Optional[str] = None) -> User:
         """
         ユーザーのプロフィールを取得します。一度のみサーバーにアクセスしキャッシュをその後は使います。
         fetch_userを使った場合はキャッシュが廃棄され再度サーバーにアクセスします。
@@ -266,10 +268,10 @@ class Client:
         dict:
             ユーザー情報
         """
-        return self._connection._get_user(user_id, username, host)
+        return await self._connection.get_user(user_id=user_id, username=username, host=host)
 
-    def fetch_user(self, user_id: Optional[str] = None, username: Optional[str] = None,
-                   host: Optional[str] = None) -> Dict[str, Tuple[str, List[Any], Dict[str, Any]]]:
+    async def fetch_user(self, user_id: Optional[str] = None, username: Optional[str] = None,
+                   host: Optional[str] = None) -> User:
         """
         サーバーにアクセスし、ユーザーのプロフィールを取得します。基本的には get_userをお使いください。
 
@@ -287,7 +289,7 @@ class Client:
         dict:
             ユーザー情報
         """
-        self._connection._fetch_user()
+        await self._connection._fetch_user(user_id=user_id, username=username, host=)
 
     @staticmethod
     def file_upload(
