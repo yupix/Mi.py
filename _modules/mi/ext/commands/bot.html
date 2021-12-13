@@ -187,18 +187,16 @@
           <h1>mi.ext.commands.bot のソースコード</h1><div class="highlight"><pre>
 <span></span><span class="sd">"""Commands FrameWork用のCore部分"""</span>
 
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 <span class="kn">import</span> <span class="nn">asyncio</span>
 <span class="kn">import</span> <span class="nn">importlib</span>
 <span class="kn">import</span> <span class="nn">inspect</span>
-<span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">traceback</span>
 <span class="kn">from</span> <span class="nn">types</span> <span class="kn">import</span> <span class="n">ModuleType</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Coroutine</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Coroutine</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
 
-<span class="kn">from</span> <span class="nn">websockets.legacy.client</span> <span class="kn">import</span> <span class="n">WebSocketClientProtocol</span>
-
-<span class="kn">from</span> <span class="nn">mi</span> <span class="kn">import</span> <span class="n">Client</span><span class="p">,</span> <span class="n">User</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">utils</span>
+<span class="kn">from</span> <span class="nn">mi</span> <span class="kn">import</span> <span class="n">Client</span><span class="p">,</span> <span class="n">User</span><span class="p">,</span> <span class="n">utils</span>
 <span class="kn">from</span> <span class="nn">mi.abc.ext.bot</span> <span class="kn">import</span> <span class="n">AbstractBotBase</span>
 <span class="kn">from</span> <span class="nn">mi.exception</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">CheckFailure</span><span class="p">,</span>
@@ -213,11 +211,12 @@
 <span class="kn">from</span> <span class="nn">mi.ext.commands.context</span> <span class="kn">import</span> <span class="n">Context</span>
 <span class="kn">from</span> <span class="nn">mi.ext.commands.core</span> <span class="kn">import</span> <span class="n">GroupMixin</span>
 <span class="kn">from</span> <span class="nn">mi.ext.commands.view</span> <span class="kn">import</span> <span class="n">StringView</span>
-<span class="kn">from</span> <span class="nn">mi.http</span> <span class="kn">import</span> <span class="n">WebSocket</span>
+<span class="kn">from</span> <span class="nn">mi.utils</span> <span class="kn">import</span> <span class="n">get_module_logger</span>
+
+<span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">aiohttp.client_ws</span> <span class="kn">import</span> <span class="n">ClientWebSocketResponse</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"BotBase"</span><span class="p">,</span> <span class="s2">"Bot"</span><span class="p">]</span>
-
-<span class="kn">from</span> <span class="nn">mi.utils</span> <span class="kn">import</span> <span class="n">get_module_logger</span>
 
 
 <div class="viewcode-block" id="BotBase"><a class="viewcode-back" href="../../../../mi.ext.commands.html#mi.ext.commands.bot.BotBase">[ドキュメント]</a><span class="k">class</span> <span class="nc">BotBase</span><span class="p">(</span><span class="n">GroupMixin</span><span class="p">,</span> <span class="n">AbstractBotBase</span><span class="p">):</span>
@@ -266,7 +265,7 @@
             <span class="k">return</span> <span class="n">ctx</span>
         <span class="n">invoker</span> <span class="o">=</span> <span class="n">view</span><span class="o">.</span><span class="n">get_word</span><span class="p">()</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_commands</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">invoker</span><span class="p">):</span>
-            <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s2">"missing_command"</span><span class="p">,</span> <span class="n">invoker</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s2">"missing_command"</span><span class="p">,</span> <span class="n">invoker</span><span class="p">)</span>
         <span class="n">ctx</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">content</span> <span class="o">=</span> <span class="n">message</span><span class="o">.</span><span class="n">content</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">command_prefix</span> <span class="o">+</span> <span class="n">invoker</span><span class="p">,</span> <span class="s2">""</span>
         <span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s2">" "</span><span class="p">)</span>
@@ -283,18 +282,18 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span><span class="n">ctx</span><span class="p">)</span>
 
-        <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s2">"message"</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s2">"message"</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span></div>
 
     <span class="k">async</span> <span class="k">def</span> <span class="nf">_on_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
         <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">process_commands</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
 
-<div class="viewcode-block" id="BotBase.on_ready"><a class="viewcode-back" href="../../../../mi.ext.commands.html#mi.ext.commands.bot.BotBase.on_ready">[ドキュメント]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">on_ready</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ws</span><span class="p">:</span> <span class="n">WebSocketClientProtocol</span><span class="p">):</span>
+<div class="viewcode-block" id="BotBase.on_ready"><a class="viewcode-back" href="../../../../mi.ext.commands.html#mi.ext.commands.bot.BotBase.on_ready">[ドキュメント]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">on_ready</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ws</span><span class="p">:</span> <span class="n">ClientWebSocketResponse</span><span class="p">):</span>
         <span class="sd">"""</span>
 <span class="sd">        on_readyのデフォルト処理</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        ws : WebSocketClientProtocol</span>
+<span class="sd">        ws : ClientWebSocketResponse</span>
 <span class="sd">        """</span></div>
 
 <div class="viewcode-block" id="BotBase.event"><a class="viewcode-back" href="../../../../mi.ext.commands.html#mi.ext.commands.bot.BotBase.event">[ドキュメント]</a>    <span class="k">def</span> <span class="nf">event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
@@ -314,14 +313,14 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">special_events</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">func</span><span class="p">]</span></div>
 
-<div class="viewcode-block" id="BotBase.listen"><a class="viewcode-back" href="../../../../mi.ext.commands.html#mi.ext.commands.bot.BotBase.listen">[ドキュメント]</a>    <span class="k">def</span> <span class="nf">listen</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="k">def</span> <span class="nf">decorator</span><span class="p">(</span><span class="n">func</span><span class="p">:</span> <span class="n">Coroutine</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span><span class="n">Any</span><span class="p">,</span><span class="n">Any</span><span class="p">]):</span>
+<div class="viewcode-block" id="BotBase.listen"><a class="viewcode-back" href="../../../../mi.ext.commands.html#mi.ext.commands.bot.BotBase.listen">[ドキュメント]</a>    <span class="k">def</span> <span class="nf">listen</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="k">def</span> <span class="nf">decorator</span><span class="p">(</span><span class="n">func</span><span class="p">:</span> <span class="n">Coroutine</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">]):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">add_listener</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">func</span>
 
         <span class="k">return</span> <span class="n">decorator</span></div>
 
-<div class="viewcode-block" id="BotBase.add_listener"><a class="viewcode-back" href="../../../../mi.ext.commands.html#mi.ext.commands.bot.BotBase.add_listener">[ドキュメント]</a>    <span class="k">def</span> <span class="nf">add_listener</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Coroutine</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span><span class="n">Any</span><span class="p">],</span> <span class="n">Callable</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span> <span class="n">name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="BotBase.add_listener"><a class="viewcode-back" href="../../../../mi.ext.commands.html#mi.ext.commands.bot.BotBase.add_listener">[ドキュメント]</a>    <span class="k">def</span> <span class="nf">add_listener</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Coroutine</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">Callable</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span> <span class="n">name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
         <span class="n">name</span> <span class="o">=</span> <span class="n">func</span><span class="o">.</span><span class="vm">__name__</span> <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">name</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">iscoroutinefunction</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">"Listeners must be coroutines"</span><span class="p">)</span>
@@ -353,7 +352,7 @@
             <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">schedule_event</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ev</span><span class="p">),</span> <span class="n">ev</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">ev</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="BotBase.dispatch"><a class="viewcode-back" href="../../../../mi.ext.commands.html#mi.ext.commands.bot.BotBase.dispatch">[ドキュメント]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">dispatch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Any</span><span class="p">],</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">]):</span>
+<div class="viewcode-block" id="BotBase.dispatch"><a class="viewcode-back" href="../../../../mi.ext.commands.html#mi.ext.commands.bot.BotBase.dispatch">[ドキュメント]</a>    <span class="k">def</span> <span class="nf">dispatch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Any</span><span class="p">],</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">]):</span>
         <span class="n">ev</span> <span class="o">=</span> <span class="s2">"on_"</span> <span class="o">+</span> <span class="n">event_name</span>
         <span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">extra_events</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">ev</span><span class="p">,</span> <span class="p">[]):</span>
             <span class="k">if</span> <span class="n">inspect</span><span class="o">.</span><span class="n">ismethod</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
@@ -362,9 +361,9 @@
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">foo</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="vm">__module__</span><span class="p">)</span>
                 <span class="n">coro</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">foo</span><span class="p">,</span> <span class="n">ev</span><span class="p">)</span>
-            <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">schedule_event</span><span class="p">(</span><span class="n">coro</span><span class="p">,</span> <span class="n">event</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">schedule_event</span><span class="p">(</span><span class="n">coro</span><span class="p">,</span> <span class="n">event</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">ev</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-            <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">schedule_event</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ev</span><span class="p">),</span> <span class="n">ev</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">schedule_event</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ev</span><span class="p">),</span> <span class="n">ev</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="BotBase.add_cog"><a class="viewcode-back" href="../../../../mi.ext.commands.html#mi.ext.commands.bot.BotBase.add_cog">[ドキュメント]</a>    <span class="k">def</span> <span class="nf">add_cog</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cog</span><span class="p">,</span> <span class="n">override</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">cog_name</span> <span class="o">=</span> <span class="n">cog</span><span class="o">.</span><span class="n">__cog_name__</span>
@@ -427,7 +426,7 @@
             <span class="k">raise</span> <span class="n">InvalidCogPath</span><span class="p">(</span><span class="sa">f</span><span class="s2">"cog: </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> へのパスが無効です"</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_load_from_module</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="BotBase.schedule_event"><a class="viewcode-back" href="../../../../mi.ext.commands.html#mi.ext.commands.bot.BotBase.schedule_event">[ドキュメント]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">schedule_event</span><span class="p">(</span>
+<div class="viewcode-block" id="BotBase.schedule_event"><a class="viewcode-back" href="../../../../mi.ext.commands.html#mi.ext.commands.bot.BotBase.schedule_event">[ドキュメント]</a>    <span class="k">def</span> <span class="nf">schedule_event</span><span class="p">(</span>
             <span class="bp">self</span><span class="p">,</span>
             <span class="n">coro</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">Coroutine</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span>
             <span class="n">event_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
@@ -462,69 +461,7 @@
         <span class="n">traceback</span><span class="o">.</span><span class="n">print_exc</span><span class="p">()</span>
 
 <div class="viewcode-block" id="BotBase.on_error"><a class="viewcode-back" href="../../../../mi.ext.commands.html#mi.ext.commands.bot.BotBase.on_error">[ドキュメント]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">on_error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">err</span><span class="p">):</span>
-        <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">event_dispatch</span><span class="p">(</span><span class="s2">"error"</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="BotBase.run"><a class="viewcode-back" href="../../../../mi.ext.commands.html#mi.ext.commands.bot.BotBase.run">[ドキュメント]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uri</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">token</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">debug</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">"""</span>
-<span class="sd">        Launch the bot.</span>
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        uri : str</span>
-<span class="sd">            websocket url of the Misskey instance to connect to</span>
-<span class="sd">        token : str</span>
-<span class="sd">            Misskey account token</span>
-<span class="sd">        debug : bool</span>
-<span class="sd">            Debug Mode</span>
-
-<span class="sd">        Examples</span>
-<span class="sd">        --------</span>
-
-<span class="sd">        When inheriting from a class: ::</span>
-
-<span class="sd">            class MyBot(Bot):</span>
-<span class="sd">                async def on_message(self, ws, message):</span>
-<span class="sd">                    pass</span>
-<span class="sd">            bot = MyBot()</span>
-<span class="sd">            bot.run(uri, token)</span>
-
-<span class="sd">        When using a listener: ::</span>
-
-<span class="sd">            bot = Bot()</span>
-
-<span class="sd">            @bot.event()</span>
-<span class="sd">            async def on_message(ws, message):</span>
-<span class="sd">                pass</span>
-
-<span class="sd">            bot.run(uri, token)</span>
-
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        None: None</span>
-<span class="sd">        """</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">token</span> <span class="o">=</span> <span class="n">token</span>
-        <span class="k">if</span> <span class="n">_origin_uri</span> <span class="o">:=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s2">"wss?://(.*)/streaming"</span><span class="p">,</span> <span class="n">uri</span><span class="p">):</span>
-            <span class="n">origin_uri</span> <span class="o">=</span> <span class="p">(</span>
-                <span class="n">_origin_uri</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-                    <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"wss"</span><span class="p">,</span> <span class="s2">"https"</span><span class="p">)</span>
-                    <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"ws"</span><span class="p">,</span> <span class="s2">"http"</span><span class="p">)</span>
-                    <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"/streaming"</span><span class="p">,</span> <span class="s2">""</span><span class="p">)</span>
-            <span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">origin_uri</span> <span class="o">=</span> <span class="n">uri</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">origin_uri</span> <span class="o">=</span> <span class="n">origin_uri</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="n">uri</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"/"</span> <span class="k">else</span> <span class="n">origin_uri</span>
-        <span class="n">auth_i</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s2">"token"</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">token</span><span class="p">,</span>
-            <span class="s2">"origin_uri"</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">origin_uri</span><span class="p">,</span>
-        <span class="p">}</span>
-        <span class="n">config</span><span class="o">.</span><span class="n">i</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">Config</span><span class="p">(</span><span class="o">**</span><span class="n">auth_i</span><span class="p">)</span>
-        <span class="n">config</span><span class="o">.</span><span class="n">debug</span> <span class="o">=</span> <span class="n">debug</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">i</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="o">.</span><span class="n">_get_i</span><span class="p">()</span>
-        <span class="n">auth_i</span><span class="p">[</span><span class="s2">"profile"</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">i</span>
-        <span class="n">auth_i</span><span class="p">[</span><span class="s2">"instance"</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_instance_meta</span><span class="p">()</span>
-        <span class="n">config</span><span class="o">.</span><span class="n">i</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">Config</span><span class="p">(</span><span class="o">**</span><span class="n">auth_i</span><span class="p">)</span>
-        <span class="n">asyncio</span><span class="o">.</span><span class="n">get_event_loop</span><span class="p">()</span><span class="o">.</span><span class="n">run_until_complete</span><span class="p">(</span>
-            <span class="n">WebSocket</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">uri</span><span class="si">}</span><span class="s2">?i=</span><span class="si">{</span><span class="n">token</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-        <span class="p">)</span></div></div>
+        <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">event_dispatch</span><span class="p">(</span><span class="s2">"error"</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span></div></div>
 
 
 <div class="viewcode-block" id="Bot"><a class="viewcode-back" href="../../../../mi.ext.commands.html#mi.ext.commands.bot.Bot">[ドキュメント]</a><span class="k">class</span> <span class="nc">Bot</span><span class="p">(</span><span class="n">BotBase</span><span class="p">,</span> <span class="n">Client</span><span class="p">):</span>

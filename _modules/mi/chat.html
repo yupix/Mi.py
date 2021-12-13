@@ -186,72 +186,20 @@
         <article role="main">
           <h1>mi.chat のソースコード</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">List</span>
 
-<span class="kn">from</span> <span class="nn">.abc.chat</span> <span class="kn">import</span> <span class="n">AbstractChat</span><span class="p">,</span> <span class="n">AbstractChatContent</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">TYPE_CHECKING</span>
+
+<span class="kn">from</span> <span class="nn">.abc.chat</span> <span class="kn">import</span> <span class="n">AbstractChatContent</span>
 <span class="kn">from</span> <span class="nn">.types.chat</span> <span class="kn">import</span> <span class="n">Chat</span> <span class="k">as</span> <span class="n">ChatPayload</span>
 <span class="kn">from</span> <span class="nn">.user</span> <span class="kn">import</span> <span class="n">User</span>
-<span class="kn">from</span> <span class="nn">.utils</span> <span class="kn">import</span> <span class="n">api</span><span class="p">,</span> <span class="n">remove_dict_empty</span><span class="p">,</span> <span class="n">upper_to_lower</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'Chat'</span><span class="p">,</span> <span class="s1">'ChatContent'</span><span class="p">]</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'Chat'</span><span class="p">]</span>
 
 <span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
     <span class="kn">from</span> <span class="nn">mi.state</span> <span class="kn">import</span> <span class="n">ConnectionState</span>
 
-<div class="viewcode-block" id="Chat"><a class="viewcode-back" href="../../api/mi.chat.Chat.html#mi.chat.Chat">[ドキュメント]</a><span class="k">class</span> <span class="nc">Chat</span><span class="p">(</span><span class="n">AbstractChat</span><span class="p">):</span>
-    <span class="sd">"""</span>
-<span class="sd">    チャットを行う際に使用するクラス</span>
-<span class="sd">    """</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
-            <span class="bp">self</span><span class="p">,</span>
-            <span class="n">content</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-            <span class="o">*</span><span class="p">,</span>
-            <span class="n">user_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-            <span class="n">group_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-            <span class="n">file_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">content</span> <span class="o">=</span> <span class="n">content</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">user_id</span> <span class="o">=</span> <span class="n">user_id</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">group_id</span> <span class="o">=</span> <span class="n">group_id</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">file_id</span> <span class="o">=</span> <span class="n">file_id</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__payload</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s2">"userId"</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">user_id</span><span class="p">,</span>
-            <span class="s2">"groupId"</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">group_id</span><span class="p">,</span>
-            <span class="s2">"text"</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">content</span><span class="p">,</span>
-            <span class="s2">"fileId"</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">file_id</span><span class="p">,</span>
-        <span class="p">}</span>
-
-<div class="viewcode-block" id="Chat.send"><a class="viewcode-back" href="../../api/mi.chat.Chat.html#mi.chat.Chat.send">[ドキュメント]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">send</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">"ChatContent"</span><span class="p">:</span>
-        <span class="sd">"""</span>
-<span class="sd">        チャットを投稿します</span>
-
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        ChatContent</span>
-<span class="sd">        """</span>
-        <span class="n">res</span> <span class="o">=</span> <span class="n">api</span><span class="p">(</span>
-            <span class="s2">"/api/messaging/messages/create"</span><span class="p">,</span>
-            <span class="n">remove_dict_empty</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__payload</span><span class="p">),</span>
-            <span class="n">auth</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-        <span class="p">)</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">ChatContent</span><span class="p">(</span>
-            <span class="n">upper_to_lower</span><span class="p">(</span><span class="n">res</span><span class="p">,</span>
-                           <span class="n">replace_list</span><span class="o">=</span><span class="p">{</span><span class="s2">"user"</span><span class="p">:</span> <span class="s2">"author"</span><span class="p">,</span> <span class="s2">"text"</span><span class="p">:</span> <span class="s2">"content"</span><span class="p">})</span>
-        <span class="p">)</span></div>
-
-<div class="viewcode-block" id="Chat.add_file"><a class="viewcode-back" href="../../api/mi.chat.Chat.html#mi.chat.Chat.add_file">[ドキュメント]</a>    <span class="k">def</span> <span class="nf">add_file</span><span class="p">(</span>
-            <span class="bp">self</span><span class="p">,</span>
-            <span class="n">path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-            <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-            <span class="n">force</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-            <span class="n">is_sensitive</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-            <span class="n">url</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="p">):</span>
-        <span class="k">pass</span></div></div>
-
-
-<div class="viewcode-block" id="ChatContent"><a class="viewcode-back" href="../../api/mi.chat.ChatContent.html#mi.chat.ChatContent">[ドキュメント]</a><span class="k">class</span> <span class="nc">ChatContent</span><span class="p">(</span><span class="n">AbstractChatContent</span><span class="p">):</span>
+<div class="viewcode-block" id="Chat"><a class="viewcode-back" href="../../mi.html#mi.Chat">[ドキュメント]</a><span class="k">class</span> <span class="nc">Chat</span><span class="p">(</span><span class="n">AbstractChatContent</span><span class="p">):</span>
     <span class="sd">"""</span>
 <span class="sd">    チャットオブジェクト</span>
 <span class="sd">    """</span>
@@ -261,7 +209,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">created_at</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">"created_at"</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">content</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">"text"</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">user_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">"user_id"</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">author</span><span class="p">:</span> <span class="n">User</span> <span class="o">=</span> <span class="n">User</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">"user"</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">author</span><span class="p">:</span> <span class="n">User</span> <span class="o">=</span> <span class="n">User</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">"user"</span><span class="p">],</span> <span class="n">state</span><span class="o">=</span><span class="n">state</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">recipient_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">"recipient_id"</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">recipient</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">"recipient"</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">group_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">"group_id"</span><span class="p">]</span>
@@ -270,7 +218,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">reads</span><span class="p">:</span> <span class="n">List</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">"reads"</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_state</span> <span class="o">=</span> <span class="n">state</span>
 
-<div class="viewcode-block" id="ChatContent.delete"><a class="viewcode-back" href="../../api/mi.chat.ChatContent.html#mi.chat.ChatContent.delete">[ドキュメント]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Chat.delete"><a class="viewcode-back" href="../../mi.html#mi.Chat.delete">[ドキュメント]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="sd">"""</span>
 <span class="sd">        チャットを削除します（チャットの作者である必要があります）</span>
 
@@ -279,8 +227,8 @@
 <span class="sd">        bool:</span>
 <span class="sd">            成功したか否か</span>
 <span class="sd">        """</span>
-        <span class="n">res</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">_delete_chat</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">res</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">204</span></div></div>
+        <span class="n">res</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">delete_chat</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="n">res</span><span class="p">)</span></div></div>
 </pre></div>
         </article>
       </div>

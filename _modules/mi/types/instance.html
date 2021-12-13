@@ -185,17 +185,84 @@
         </div>
         <article role="main">
           <h1>mi.types.instance のソースコード</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">TypedDict</span>
+<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">TypedDict</span>
+
+<span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">mi.types</span> <span class="kn">import</span> <span class="n">Emoji</span>
 
 
-<div class="viewcode-block" id="Instance"><a class="viewcode-back" href="../../../mi.types.html#mi.types.instance.Instance">[ドキュメント]</a><span class="k">class</span> <span class="nc">Instance</span><span class="p">(</span><span class="n">TypedDict</span><span class="p">):</span>
-    <span class="n">host</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
-    <span class="n">name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
-    <span class="n">software_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
-    <span class="n">software_version</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
-    <span class="n">icon_url</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
-    <span class="n">favicon_url</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
-    <span class="n">theme_color</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span></div>
+<div class="viewcode-block" id="Features"><a class="viewcode-back" href="../../../mi.types.html#mi.types.instance.Features">[ドキュメント]</a><span class="k">class</span> <span class="nc">Features</span><span class="p">:</span>
+    <span class="n">registration</span><span class="p">:</span> <span class="nb">bool</span>
+    <span class="n">local_time_line</span><span class="p">:</span> <span class="nb">bool</span>
+    <span class="n">global_time_line</span><span class="p">:</span> <span class="nb">bool</span>
+    <span class="n">email_required_for_signup</span><span class="p">:</span> <span class="nb">bool</span>
+    <span class="n">elasticsearch</span><span class="p">:</span> <span class="nb">bool</span>
+    <span class="n">hcaptcha</span><span class="p">:</span> <span class="nb">bool</span>
+    <span class="n">recaptcha</span><span class="p">:</span> <span class="nb">bool</span>
+    <span class="n">object_storage</span><span class="p">:</span> <span class="nb">bool</span>
+    <span class="n">twitter</span><span class="p">:</span> <span class="nb">bool</span>
+    <span class="n">github</span><span class="p">:</span> <span class="nb">bool</span>
+    <span class="n">github</span><span class="p">:</span> <span class="nb">bool</span>
+    <span class="n">discord</span><span class="p">:</span> <span class="nb">bool</span>
+    <span class="n">service_worker</span><span class="p">:</span> <span class="nb">bool</span>
+    <span class="n">miauth</span><span class="p">:</span> <span class="nb">bool</span></div>
+
+
+<div class="viewcode-block" id="OptionalMeta"><a class="viewcode-back" href="../../../mi.types.html#mi.types.instance.OptionalMeta">[ドキュメント]</a><span class="k">class</span> <span class="nc">OptionalMeta</span><span class="p">(</span><span class="n">TypedDict</span><span class="p">,</span> <span class="n">total</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="n">pinned_page</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="n">cache_remote_files</span><span class="p">:</span> <span class="nb">bool</span>
+    <span class="n">proxy_remote_files</span><span class="p">:</span> <span class="nb">bool</span>
+    <span class="n">require_setup</span><span class="p">:</span> <span class="nb">bool</span>
+    <span class="n">features</span><span class="p">:</span> <span class="n">Features</span></div>
+
+
+<div class="viewcode-block" id="Meta"><a class="viewcode-back" href="../../../mi.types.html#mi.types.instance.Meta">[ドキュメント]</a><span class="k">class</span> <span class="nc">Meta</span><span class="p">(</span><span class="n">OptionalMeta</span><span class="p">):</span>
+    <span class="n">maintainer_name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">maintainer_email</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">version</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">uri</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">description</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">langs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="n">tos_url</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="n">repository_url</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">feedback_url</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">secure</span><span class="p">:</span> <span class="nb">bool</span>
+    <span class="n">disable_registration</span><span class="p">:</span> <span class="nb">bool</span>
+    <span class="n">disable_local_timeline</span><span class="p">:</span> <span class="nb">bool</span>
+    <span class="n">disable_global_timeline</span><span class="p">:</span> <span class="nb">bool</span>
+    <span class="n">drive_capacity_per_local_user_mb</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">drive_capacity_per_remote_user_mb</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">email_required_for_signup</span><span class="p">:</span> <span class="nb">bool</span>
+    <span class="n">enable_hcaptcha</span><span class="p">:</span> <span class="nb">bool</span>
+    <span class="n">enable_recaptcha</span><span class="p">:</span> <span class="nb">bool</span>
+    <span class="n">recaptcha_site_key</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">sw_publickey</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">mascot_image_url</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">error_image_url</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">max_note_text_length</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">emojis</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Emoji</span><span class="p">]</span>
+    <span class="n">ads</span><span class="p">:</span> <span class="nb">list</span>
+    <span class="n">enable_email</span><span class="p">:</span> <span class="nb">bool</span>
+    <span class="n">enable_twitter_integration</span><span class="p">:</span> <span class="nb">bool</span>
+    <span class="n">enable_github_integration</span><span class="p">:</span> <span class="nb">bool</span>
+    <span class="n">enable_discord_integration</span><span class="p">:</span> <span class="nb">bool</span>
+    <span class="n">enable_service_worker</span><span class="p">:</span> <span class="nb">bool</span>
+    <span class="n">translator_available</span><span class="p">:</span> <span class="nb">bool</span></div>
+
+
+<div class="viewcode-block" id="OptionalInstance"><a class="viewcode-back" href="../../../mi.types.html#mi.types.instance.OptionalInstance">[ドキュメント]</a><span class="k">class</span> <span class="nc">OptionalInstance</span><span class="p">(</span><span class="n">TypedDict</span><span class="p">,</span> <span class="n">total</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="n">host</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">software_name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">software_version</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">icon_url</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">favicon_url</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">theme_color</span><span class="p">:</span> <span class="nb">str</span></div>
+
+
+<div class="viewcode-block" id="Instance"><a class="viewcode-back" href="../../../mi.types.html#mi.types.instance.Instance">[ドキュメント]</a><span class="k">class</span> <span class="nc">Instance</span><span class="p">(</span><span class="n">OptionalInstance</span><span class="p">,</span> <span class="n">Meta</span><span class="p">):</span>
+    <span class="n">meta</span><span class="p">:</span> <span class="n">Meta</span></div>
 </pre></div>
         </article>
       </div>

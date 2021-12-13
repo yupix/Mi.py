@@ -237,20 +237,48 @@
     <span class="n">my_reaction</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span></div>
 
 
-<div class="viewcode-block" id="Author"><a class="viewcode-back" href="../../../mi.types.html#mi.types.user.Author">[ドキュメント]</a><span class="k">class</span> <span class="nc">Author</span><span class="p">(</span><span class="n">TypedDict</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionalUser"><a class="viewcode-back" href="../../../mi.types.html#mi.types.user.OptionalUser">[ドキュメント]</a><span class="k">class</span> <span class="nc">OptionalUser</span><span class="p">(</span><span class="n">TypedDict</span><span class="p">,</span> <span class="n">total</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="n">host</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">is_admin</span><span class="p">:</span> <span class="nb">bool</span>
+    <span class="n">is_moderator</span><span class="p">:</span> <span class="nb">bool</span>
+    <span class="n">is_bot</span><span class="p">:</span> <span class="nb">bool</span>
+    <span class="n">is_cat</span><span class="p">:</span> <span class="nb">bool</span>
+    <span class="n">is_lady</span><span class="p">:</span> <span class="nb">bool</span>
+    <span class="n">online_status</span><span class="p">:</span> <span class="nb">str</span></div>
+
+
+<div class="viewcode-block" id="User"><a class="viewcode-back" href="../../../mi.types.html#mi.types.user.User">[ドキュメント]</a><span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">OptionalUser</span><span class="p">):</span>
     <span class="nb">id</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">username</span><span class="p">:</span> <span class="nb">str</span>
-    <span class="n">host</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
     <span class="n">avatar_url</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
     <span class="n">avatar_blurhash</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
     <span class="n">avatar_color</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
-    <span class="n">is_admin</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span>
-    <span class="n">is_bot</span><span class="p">:</span> <span class="nb">bool</span>
-    <span class="n">is_cat</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span>
-    <span class="n">is_lady</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span>
     <span class="n">emojis</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span>
-    <span class="n">online_status</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="n">url</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">uri</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">created_at</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">updated_at</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">locked</span><span class="p">:</span> <span class="nb">bool</span>
+    <span class="n">silienced</span><span class="p">:</span> <span class="nb">bool</span>
+    <span class="n">suspended</span><span class="p">:</span> <span class="nb">bool</span>
+    <span class="n">description</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">location</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">birthday</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">fields</span><span class="p">:</span> <span class="n">Any</span>
+    <span class="n">followers_count</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">following_count</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">notes_count</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">pinned_note_ids</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="n">pinned_notes</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="n">pinned_page_id</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">pinned_page</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">ff_visibility</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">following</span><span class="p">:</span> <span class="nb">bool</span>
+    <span class="n">followed</span><span class="p">:</span> <span class="nb">bool</span>
+    <span class="n">blocking</span><span class="p">:</span> <span class="nb">bool</span>
+    <span class="n">blocked</span><span class="p">:</span> <span class="nb">bool</span>
+    <span class="n">muted</span><span class="p">:</span> <span class="nb">bool</span>
     <span class="n">instance</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Instance</span><span class="p">]</span></div>
 </pre></div>
         </article>

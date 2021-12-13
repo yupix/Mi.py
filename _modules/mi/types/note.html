@@ -187,14 +187,14 @@
           <h1>mi.types.note のソースコード</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">TypedDict</span>
 
-<span class="kn">from</span> <span class="nn">.user</span> <span class="kn">import</span> <span class="n">Author</span>
+<span class="kn">from</span> <span class="nn">.user</span> <span class="kn">import</span> <span class="n">User</span>
 <span class="kn">from</span> <span class="nn">.emoji</span> <span class="kn">import</span> <span class="n">Emoji</span>
 <span class="kn">from</span> <span class="nn">.drive</span> <span class="kn">import</span> <span class="n">File</span>
 
 
 <div class="viewcode-block" id="Geo"><a class="viewcode-back" href="../../../mi.types.html#mi.types.note.Geo">[ドキュメント]</a><span class="k">class</span> <span class="nc">Geo</span><span class="p">(</span><span class="n">TypedDict</span><span class="p">):</span>
     <span class="sd">"""</span>
-<span class="sd">    衛生情報</span>
+<span class="sd">    衛星情報</span>
 <span class="sd">    """</span>
     <span class="n">coordinates</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">Any</span><span class="p">]]</span>
     <span class="n">altitude</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span>
@@ -216,14 +216,14 @@
 
 
 <div class="viewcode-block" id="Renote"><a class="viewcode-back" href="../../../mi.types.html#mi.types.note.Renote">[ドキュメント]</a><span class="k">class</span> <span class="nc">Renote</span><span class="p">(</span><span class="n">TypedDict</span><span class="p">):</span>
-    <span class="nb">id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
-    <span class="n">created_at</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
-    <span class="n">user_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
-    <span class="n">user</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Author</span><span class="p">]</span>
-    <span class="n">content</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
-    <span class="n">cw</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
-    <span class="n">visibility</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
-    <span class="n">renote_count</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span>
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">created_at</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">user_id</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">user</span><span class="p">:</span> <span class="n">User</span>
+    <span class="n">text</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">cw</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">visibility</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">renote_count</span><span class="p">:</span> <span class="nb">int</span>
     <span class="n">replies_count</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span>
     <span class="n">reactions</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span>
     <span class="n">emojis</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">]</span>
@@ -237,7 +237,16 @@
     <span class="n">channel_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span></div>
 
 
-<div class="viewcode-block" id="Note"><a class="viewcode-back" href="../../../mi.types.html#mi.types.note.Note">[ドキュメント]</a><span class="k">class</span> <span class="nc">Note</span><span class="p">(</span><span class="n">TypedDict</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">_NoteOptional</span><span class="p">(</span><span class="n">TypedDict</span><span class="p">,</span> <span class="n">total</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    ノートに必ず存在すると限らない物</span>
+<span class="sd">    """</span>
+    <span class="n">text</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">cw</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">geo</span><span class="p">:</span> <span class="n">Geo</span>
+
+
+<div class="viewcode-block" id="Note"><a class="viewcode-back" href="../../../mi.types.html#mi.types.note.Note">[ドキュメント]</a><span class="k">class</span> <span class="nc">Note</span><span class="p">(</span><span class="n">_NoteOptional</span><span class="p">):</span>
     <span class="sd">"""</span>
 <span class="sd">    note object</span>
 <span class="sd">    """</span>
@@ -245,9 +254,7 @@
     <span class="nb">id</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">created_at</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">user_id</span><span class="p">:</span> <span class="nb">str</span>
-    <span class="n">user</span><span class="p">:</span> <span class="n">Author</span>
-    <span class="n">text</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
-    <span class="n">cw</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="n">user</span><span class="p">:</span> <span class="n">User</span>
     <span class="n">visibility</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
     <span class="n">renote_count</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span>
     <span class="n">replies_count</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span>
@@ -265,12 +272,24 @@
     <span class="n">no_extract_hashtags</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span>
     <span class="n">no_extract_emojis</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span>
     <span class="n">preview</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span>
-    <span class="n">geo</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Geo</span><span class="p">]</span>
     <span class="n">media_ids</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span>
     <span class="n">renote</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Renote</span><span class="p">]</span>
     <span class="n">field</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">]</span>
     <span class="n">tags</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span>
     <span class="n">channel_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="OptionalReaction"><a class="viewcode-back" href="../../../mi.types.html#mi.types.note.OptionalReaction">[ドキュメント]</a><span class="k">class</span> <span class="nc">OptionalReaction</span><span class="p">(</span><span class="n">TypedDict</span><span class="p">,</span> <span class="n">total</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="n">created_at</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">is_read</span><span class="p">:</span> <span class="nb">bool</span>
+    <span class="n">user</span><span class="p">:</span> <span class="n">User</span>
+    <span class="n">note</span><span class="p">:</span> <span class="n">Note</span>
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">str</span></div>
+
+
+<div class="viewcode-block" id="Reaction"><a class="viewcode-back" href="../../../mi.types.html#mi.types.note.Reaction">[ドキュメント]</a><span class="k">class</span> <span class="nc">Reaction</span><span class="p">(</span><span class="n">OptionalReaction</span><span class="p">):</span>
+    <span class="n">reaction</span><span class="p">:</span> <span class="nb">str</span></div>
 </pre></div>
         </article>
       </div>

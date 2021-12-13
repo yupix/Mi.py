@@ -204,38 +204,10 @@
 <p>[abstract base class](<a class="reference external" href="https://docs.python.org/ja/3/glossary.html#term-abstract-base-class">https://docs.python.org/ja/3/glossary.html#term-abstract-base-class</a>)はメソッドなどの一覧を取得するために継承することが可能なクラスです。抽象基底クラスはインスタンス化することはできません。</p>
 <div class="section" id="abstractbotbase">
 <h3>AbstractBotBase<a class="headerlink" href="#abstractbotbase" title="このヘッドラインへのパーマリンク">¶</a></h3>
-<div class="py-attribute-table" data-move-to-id="mi.abc.AbstractChat"><div class="py-attribute-table-column">
-<span>
-Methods</span><ul>
-<li class="py-attribute-table-entry">
-<span class="py-attribute-table-badge" title="メソッド">
-def</span><a class="reference internal" href="#mi.abc.AbstractChat.add_file">add_file</a></li></ul>
-</div></div><dl class="py class">
+<div class="py-attribute-table" data-move-to-id="mi.abc.AbstractChat"></div><dl class="py class">
 <dt class="sig sig-object py" id="mi.abc.AbstractChat">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.abc.</span></span><span class="sig-name descname"><span class="pre">AbstractChat</span></span><a class="reference internal" href="_modules/mi/abc/chat.html#AbstractChat"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#mi.abc.AbstractChat" title="この定義へのパーマリンク">¶</a></dt>
-<dd><dl class="py method">
-<dt class="sig sig-object py" id="mi.abc.AbstractChat.add_file">
-<em class="property"><span class="pre">abstractmethod</span> </em><span class="sig-name descname"><span class="pre">add_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_sensitive</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/abc/chat.html#AbstractChat.add_file"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#mi.abc.AbstractChat.add_file" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>チャットにファイルを添付します。</p>
-<dl class="field-list simple">
-<dt class="field-odd">パラメータ</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>is_sensitive</strong> (<em>bool</em>) -- この画像がセンシティブな物の場合Trueにする</p></li>
-<li><p><strong>force</strong> (<em>bool</em>) -- Trueの場合同じ名前のファイルがあった場合でも強制的に保存する</p></li>
-<li><p><strong>path</strong> (<em>str</em>) -- そのファイルまでのパスとそのファイル.拡張子(/home/test/test.png)</p></li>
-<li><p><strong>name</strong> (<em>str</em>) -- ファイル名(拡張子があるなら含めて)</p></li>
-<li><p><strong>url</strong> (<em>str</em>) -- URLから画像をアップロードする場合にURLを指定する</p></li>
-</ul>
-</dd>
-<dt class="field-even">戻り値</dt>
-<dd class="field-even"><p><strong>self</strong></p>
-</dd>
-<dt class="field-odd">戻り値の型</dt>
-<dd class="field-odd"><p><a class="reference internal" href="#mi.Note" title="mi.Note">Note</a></p>
-</dd>
-</dl>
-</dd></dl>
-</dd></dl>
+<dd></dd></dl>
 </div>
 <div class="section" id="abstractchatcontent">
 <h3>AbstractChatContent<a class="headerlink" href="#abstractchatcontent" title="このヘッドラインへのパーマリンク">¶</a></h3>
@@ -279,8 +251,6 @@ Attributes</span><ul>
 <span>
 Methods</span><ul>
 <li class="py-attribute-table-entry">
-<span class="py-attribute-table-badge" title="メソッド">
-def</span><a class="reference internal" href="#mi.Note.add_file">add_file</a></li><li class="py-attribute-table-entry">
 <span class="py-attribute-table-badge" title="coroutine">
 async</span><a class="reference internal" href="#mi.Note.delete">delete</a></li><li class="py-attribute-table-entry">
 <span class="py-attribute-table-badge" title="メソッド">
@@ -329,7 +299,7 @@ def</span><a class="reference internal" href="#mi.Note.emoji_count">emoji_count<
 <span class="sig-name descname"><span class="pre">content</span></span><a class="headerlink" href="#mi.Note.content" title="この定義へのパーマリンク">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>Optiona[str]</p>
+<dd class="field-odd"><p>Optional[str]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -410,7 +380,7 @@ def</span><a class="reference internal" href="#mi.Note.emoji_count">emoji_count<
 <span class="sig-name descname"><span class="pre">files</span></span><a class="headerlink" href="#mi.Note.files" title="この定義へのパーマリンク">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>Optiona[List[str]]</p>
+<dd class="field-odd"><p>Optional[List[str]]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -438,28 +408,6 @@ def</span><a class="reference internal" href="#mi.Note.emoji_count">emoji_count<
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>Optional[<a class="reference internal" href="mi.types.html#mi.types.note.Poll" title="mi.types.note.Poll">Poll</a>]</p>
-</dd>
-</dl>
-</dd></dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="mi.Note.add_file">
-<span class="sig-name descname"><span class="pre">add_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_sensitive</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/note.html#Note.add_file"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#mi.Note.add_file" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>ノートにファイルを添付します。</p>
-<dl class="field-list simple">
-<dt class="field-odd">パラメータ</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>is_sensitive</strong> (<em>bool</em>) -- この画像がセンシティブな物の場合Trueにする</p></li>
-<li><p><strong>force</strong> (<em>bool</em>) -- Trueの場合同じ名前のファイルがあった場合でも強制的に保存する</p></li>
-<li><p><strong>path</strong> (<em>str</em>) -- そのファイルまでのパスとそのファイル.拡張子(/home/test/test.png)</p></li>
-<li><p><strong>name</strong> (<em>str</em>) -- ファイル名(拡張子があるなら含めて)</p></li>
-<li><p><strong>url</strong> (<em>str</em>) -- URLから画像をアップロードする場合にURLを指定する</p></li>
-</ul>
-</dd>
-<dt class="field-even">戻り値</dt>
-<dd class="field-even"><p><strong>self</strong></p>
-</dd>
-<dt class="field-odd">戻り値の型</dt>
-<dd class="field-odd"><p><a class="reference internal" href="#mi.Note" title="mi.Note">Note</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -740,7 +688,7 @@ async</span><a class="reference internal" href="#mi.User.unfollow">unfollow</a><
 <dl class="py attribute">
 <dt class="sig sig-object py" id="mi.User.fields">
 <span class="sig-name descname"><span class="pre">fields</span></span><a class="headerlink" href="#mi.User.fields" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>謎</p>
+<dd><p>プロフィールのリンクフィールド</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>list</p>
@@ -860,7 +808,7 @@ async</span><a class="reference internal" href="#mi.User.unfollow">unfollow</a><
 <dl class="py attribute">
 <dt class="sig sig-object py" id="mi.User.muted">
 <span class="sig-name descname"><span class="pre">muted</span></span><a class="headerlink" href="#mi.User.muted" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>ユーアーのことをミュートしているかどうか</p>
+<dd><p>ユーザーのことをミュートしているかどうか</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>bool</p>
@@ -980,6 +928,30 @@ Attributes</span><ul>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+</dd></dl>
+<div class="py-attribute-table" data-move-to-id="mi.Chat"><div class="py-attribute-table-column">
+<span>
+Methods</span><ul>
+<li class="py-attribute-table-entry">
+<span class="py-attribute-table-badge" title="coroutine">
+async</span><a class="reference internal" href="#mi.Chat.delete">delete</a></li></ul>
+</div></div><dl class="py class">
+<dt class="sig sig-object py" id="mi.Chat">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.</span></span><span class="sig-name descname"><span class="pre">Chat</span></span><a class="reference internal" href="_modules/mi/chat.html#Chat"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#mi.Chat" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>チャットオブジェクト</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="mi.Chat.delete">
+<em class="property"><span class="pre">await</span> </em><span class="sig-name descname"><span class="pre">delete</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/chat.html#Chat.delete"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#mi.Chat.delete" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>チャットを削除します（チャットの作者である必要があります）</p>
+<dl class="field-list simple">
+<dt class="field-odd">戻り値</dt>
+<dd class="field-odd"><p>成功したか否か</p>
+</dd>
+<dt class="field-even">戻り値の型</dt>
+<dd class="field-even"><p>bool</p>
 </dd>
 </dl>
 </dd></dl>

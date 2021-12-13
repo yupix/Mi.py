@@ -191,37 +191,7 @@
 <div class="viewcode-block" id="AbstractChat"><a class="viewcode-back" href="../../../mi.html#mi.abc.AbstractChat">[ドキュメント]</a><span class="k">class</span> <span class="nc">AbstractChat</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
     <span class="nd">@abstractmethod</span>
     <span class="k">async</span> <span class="k">def</span> <span class="nf">send</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">'AbstractChatContent'</span><span class="p">:</span>
-        <span class="k">pass</span>
-
-<div class="viewcode-block" id="AbstractChat.add_file"><a class="viewcode-back" href="../../../mi.html#mi.abc.AbstractChat.add_file">[ドキュメント]</a>    <span class="nd">@abstractmethod</span>
-    <span class="k">def</span> <span class="nf">add_file</span><span class="p">(</span>
-            <span class="bp">self</span><span class="p">,</span>
-            <span class="n">path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-            <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-            <span class="n">force</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-            <span class="n">is_sensitive</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-            <span class="n">url</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="p">):</span>
-        <span class="sd">"""</span>
-<span class="sd">        チャットにファイルを添付します。</span>
-
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        is_sensitive : bool</span>
-<span class="sd">            この画像がセンシティブな物の場合Trueにする</span>
-<span class="sd">        force : bool</span>
-<span class="sd">            Trueの場合同じ名前のファイルがあった場合でも強制的に保存する</span>
-<span class="sd">        path : str</span>
-<span class="sd">            そのファイルまでのパスとそのファイル.拡張子(/home/test/test.png)</span>
-<span class="sd">        name: str</span>
-<span class="sd">            ファイル名(拡張子があるなら含めて)</span>
-<span class="sd">        url : str</span>
-<span class="sd">            URLから画像をアップロードする場合にURLを指定する</span>
-
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        self: Note</span>
-<span class="sd">        """</span></div></div>
+        <span class="k">pass</span></div>
 
 
 <div class="viewcode-block" id="AbstractChatContent"><a class="viewcode-back" href="../../../mi.html#mi.abc.AbstractChatContent">[ドキュメント]</a><span class="k">class</span> <span class="nc">AbstractChatContent</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
