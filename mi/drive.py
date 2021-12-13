@@ -50,39 +50,3 @@ class Drive(BaseModel):
     is_sensitive: Optional[bool] = False
     blurhash: Optional[str] = None
 
-    class Config:
-        arbitrary_types_allowed = True
-
-    def upload(
-        self,
-        path: str,
-        name: Optional[str] = None,
-        force: bool = False,
-        is_sensitive: bool = False,
-        url: Optional[str] = None,
-    ) -> "Drive":
-        """
-        parameters
-        ----------
-        is_sensitive : bool
-            この画像がセンシティブな物の場合trueにする
-        force : bool
-            trueの場合同じ名前のファイルがあった場合でも強制的に保存する
-        path : str
-            そのファイルまでのパスとそのファイル.拡張子(/home/test/test.png)
-        name: str
-            ファイル名(拡張子があるなら含めて)
-        url : str
-            urlから画像をアップロードする
-
-        returns
-        -------
-        drive: drive
-            upload後のレスポンスをdrive型に変更して返します
-        """
-        if url is None and self.url:
-            url = self.url
-
-        #return Drive( TDOO: 修正
-        #    file_upload(name, path, url, force=force, is_sensitive=is_sensitive)
-        #)

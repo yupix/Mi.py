@@ -136,16 +136,6 @@ class Renote(AbstractNote):
         self.poll = Poll(data["poll"]) if data.get("poll") else None
         self._state = state
 
-    def add_file(
-            self,
-            path: Optional[str] = None,
-            name: Optional[str] = None,
-            force: bool = False,
-            is_sensitive: bool = False,
-            url: Optional[str] = None,
-    ):
-        pass
-
     def emoji_count(self) -> int:
         """
         ノートの本文にemojiが何個含まれているかを返します
@@ -257,34 +247,6 @@ class Note(AbstractNote):
             poll=poll
         )
 
-    def add_file(
-            self,
-            path: Optional[str] = None,
-            url: Optional[str] = None,
-            name: Optional[str] = None,
-            *,
-            force: bool = False,
-            is_sensitive: bool = False,
-    ):
-        """
-        .. deprecated:: 0.2.7
-            :func:`send` のfile引数を使用するようにしてください
-        """
-        pass
-
-    def add_poll(
-            self,
-            item: Optional[str] = "",
-            expires_at: Optional[int] = None,
-            expired_after: Optional[int] = None,
-            item_list: Optional[dict] = None,
-    ) -> "Note":
-        pass
-
-    async def add_reaction(self, reaction: str, note_id: str = None) -> bool:
-        if note_id is None:
-            note_id = self.id
-        return await self._state.add_reaction(reaction, note_id=note_id)
 
     def emoji_count(self) -> int:
         """
