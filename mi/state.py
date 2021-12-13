@@ -225,11 +225,10 @@ class ConnectionState:
         res = api("/api/notes/reactions/create", json_data=data, auth=True)
         return res.status_code == 204
 
-    @staticmethod
-    async def note_delete(note_id: str) -> tuple[bool, int]:
+    async def delete_note(self, note_id: str) -> bool:
         data = {"noteId": note_id}
-        res = api("/api/notes/delete", json_data=data, auth=True)
-        return res.status_code == 204, res.status_code
+        res = await self.http.request(Route('POST', '/api/notes/delete'), json=data, auth=True)
+        return bool(res)
 
     @staticmethod
     def _add_file(
