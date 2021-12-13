@@ -4,7 +4,7 @@ from mi.abc.ext.context import AbstractContext
 
 
 class Context(AbstractContext):
-    def __init__(self, **attrs: Dict[Any, Any]):
+    def __init__(self, **attrs: Any):
         self.message = attrs.pop("message", None)
         self.bot = attrs.pop("bot", None)
         self.command = attrs.pop("command", None)

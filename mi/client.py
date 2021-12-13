@@ -507,7 +507,7 @@ class Client:
         }
         config.i = config.Config(**auth_i)
         config.debug = debug
-        self.i = self._connection._get_i()
+        self.i = self._connection.get_i()
         auth_i["profile"] = self.i
         auth_i["instance"] = self.get_instance_meta()
         config.i = config.Config(**auth_i)

@@ -33,7 +33,7 @@ class Router:
     """
 
     def __init__(self, web_socket: ClientWebSocketResponse):
-        self.web_socket:ClientWebSocketResponse = web_socket
+        self.web_socket: ClientWebSocketResponse = web_socket
 
     async def connect_channel(self, channel_list: List[str]) -> None:
         """
@@ -81,7 +81,6 @@ class Router:
         -------
         None: None
         """
-        print('caputure')
         await self.web_socket.send_json(
             {"type": "subNote", "body": {"id": f"{message_id}"}}
         )

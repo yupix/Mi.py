@@ -15,7 +15,8 @@ from mi.exception import ContentRequired, InvalidParameters, NotExistRequiredPar
 from mi.http import Route
 from mi.iterators import InstanceIterator
 from mi.note import Note, Poll, Reaction
-from mi.utils import api, check_multi_arg, get_cache_key, get_module_logger, key_builder, remove_dict_empty, str_lower, upper_to_lower
+from mi.utils import api, check_multi_arg, get_cache_key, get_module_logger, key_builder, remove_dict_empty, str_lower, \
+    upper_to_lower
 
 if TYPE_CHECKING:
     from mi import HTTPClient
@@ -105,7 +106,7 @@ class ConnectionState:
         ノートイベントを解析する関数
         """
         note = Note(message, state=self)
-        #Router(self.http.ws).capture_message(note.id) TODO: caputure message
+        # Router(self.http.ws).capture_message(note.id) TODO: capture message
         self.dispatch('message', note)
 
     @staticmethod
@@ -150,64 +151,25 @@ class ConnectionState:
         res = api("/api/following/delete", json_data=data, auth=True)
         return bool(res.status_code == 204 or 200)
 
-    async def on_reaction(self, message):
-        """
-        ノートのリアクションイベント
-
-        Parameters
-        ----------
-        message:dict
-
-        Returns
-        -------
-        None
-        """
-
-        base_msg = message.get("body", {}).get("body", {})
-        base_msg["id"] = message.get("body", {}).get("id", None)
-        asyncio.create_task(
-            self.dispatch("reaction", Note(upper_to_lower(base_msg)))
-        )
-
-    async def on_deleted(self, message):
-        """
-        ノートの削除イベント
-
-        Parameters
-        ----------
-        message
-
-        Returns
-        -------
-
-        """
-        base_msg = message.get("body", {}).get("body", {})
-        asyncio.create_task(self.dispatch("deleted", base_msg))
-
-        # TODO: on_erroを実装
-
-    async def on_close(self, web_socket):
-        pass
-
-    def _get_i(self):
+    def get_i(self):
         res = api("/api/i", auth=True)
         return User(upper_to_lower(json.loads(res.text)), state=self)
 
-    def _get_users(self,
-                   limit: int = 10,
-                   *,
-                   offset: int = 0,
-                   sort: Optional[str] = None,
-                   state: str = 'all',
-                   origin: str = 'local',
-                   username: Optional[str] = None,
-                   hostname: Optional[str] = None,
-                   get_all: bool = False) -> Iterator[User]:
+    def get_users(self,
+                  limit: int = 10,
+                  *,
+                  offset: int = 0,
+                  sort: Optional[str] = None,
+                  state: str = 'all',
+                  origin: str = 'local',
+                  username: Optional[str] = None,
+                  hostname: Optional[str] = None,
+                  get_all: bool = False) -> Iterator[User]:
         return InstanceIterator(self).get_users(limit=limit, offset=offset, sort=sort, state=state, origin=origin,
                                                 username=username, hostname=hostname, get_all=get_all)
 
     @staticmethod
-    async def _add_reaction(reaction: str, note_id: Optional[str] = None) -> bool:
+    async def add_reaction(reaction: str, note_id: Optional[str] = None) -> bool:
         """
         指定したnoteに指定したリアクションを付与します（内部用
 
@@ -248,8 +210,6 @@ class ConnectionState:
         ----------
         is_sensitive : bool
             この画像がセンシティブな物の場合Trueにする
-        field : dict
-            ファイル送信用のdict
         force : bool
             Trueの場合同じ名前のファイルがあった場合でも強制的に保存する
         path : str
@@ -288,7 +248,7 @@ class ConnectionState:
         expires_at : Optional[int]
             いつにアンケートを締め切るか 例:2021-09-02T15:00:00.000Z
         expired_after : Optional[int]
-            投稿後何秒後にアンケートを締め切るか(秒
+            投稿後何秒後にアンケートを締め切るか(秒)
 
         Returns
         -------

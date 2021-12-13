@@ -78,7 +78,7 @@ class BotBase(GroupMixin, AbstractBotBase):
             return ctx
         invoker = view.get_word()
         if not self.all_commands.get(invoker):
-            await self.dispatch("missing_command", invoker)
+            self.dispatch("missing_command", invoker)
         ctx.message.content = message.content.replace(
             self.command_prefix + invoker, ""
         ).strip(" ")
@@ -95,7 +95,7 @@ class BotBase(GroupMixin, AbstractBotBase):
         else:
             await self.invoke(ctx)
 
-        await self.dispatch("message", message)
+        self.dispatch("message", message)
 
     async def _on_message(self, message):
         await self.process_commands(message)

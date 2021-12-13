@@ -17,7 +17,7 @@ from .types.note import (Note as NotePayload,
 if TYPE_CHECKING:
     from mi import ConnectionState
 
-__all__ = ['Note', 'Poll']
+__all__ = ['Note', 'Poll', 'Reaction']
 
 
 class Follow:
@@ -211,7 +211,7 @@ class Note(AbstractNote):
         self.reactions: Dict[str, Any] = data["reactions"]
         self.emojis: List[Emoji] = [Emoji(i) for i in data["emojis"]]
         self.file_ids: Optional[List[str]] = data["file_ids"]
-        self.files: List[File] = [File(i) for i in data["files"]]
+        self.files: List[File] = [File(i, state=state) for i in data["files"]]
         self.reply_id: Optional[str] = data["reply_id"]
         self.renote_id: Optional[str] = data["renote_id"]
         self.poll: Optional[Poll] = Poll(data["poll"]) if data.get("poll") else None
@@ -285,7 +285,7 @@ class Note(AbstractNote):
     async def add_reaction(self, reaction: str, note_id: str = None) -> bool:
         if note_id is None:
             note_id = self.id
-        return await self._state._add_reaction(reaction, note_id=note_id)
+        return await self._state.add_reaction(reaction, note_id=note_id)
 
     def emoji_count(self) -> int:
         """

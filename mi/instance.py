@@ -59,5 +59,5 @@ class Instance:
         -------
         Iterator[User]
         """
-        return self._state._get_users(limit=limit, offset=offset, sort=sort, state=state, origin=origin, username=username,
-                                      hostname=hostname, get_all=get_all)
+        return self._state.get_users(limit=limit, offset=offset, sort=sort, state=state, origin=origin, username=username,
+                                     hostname=hostname, get_all=get_all)
