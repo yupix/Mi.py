@@ -179,7 +179,7 @@ class Client:
             送信対象のグループid, by default None
         file_id : str, optional
             添付するファイルid, by default None
-            
+
         Returns
         -------
         None
@@ -368,27 +368,27 @@ class Client:
             raise InvalidParameters("path または url のどちらかは必須です")
         return res
 
-    def post_note(self,
-                  content: str,
-                  *,
-                  visibility: str = "public",
-                  visible_user_ids: Optional[List[str]] = None,
-                  cw: Optional[str] = None,
-                  local_only: bool = False,
-                  no_extract_mentions: bool = False,
-                  no_extract_hashtags: bool = False,
-                  no_extract_emojis: bool = False,
-                  reply_id: List[str] = [],
-                  renote_id: Optional[str] = None,
-                  channel_id: Optional[str] = None,
-                  file_ids: List[File] = [],
-                  poll: Optional[Poll] = None
-                  ) -> Note:
-        return self._connection.post_note(content, visibility=visibility, visible_user_ids=visible_user_ids, cw=cw,
-                                          local_only=local_only, no_extract_mentions=no_extract_mentions,
-                                          no_extract_hashtags=no_extract_hashtags, no_extract_emojis=no_extract_emojis,
-                                          reply_id=reply_id, renote_id=renote_id, channel_id=channel_id, file_ids=file_ids,
-                                          poll=poll)
+    async def post_note(self,
+                        content: str,
+                        *,
+                        visibility: str = "public",
+                        visible_user_ids: Optional[List[str]] = None,
+                        cw: Optional[str] = None,
+                        local_only: bool = False,
+                        no_extract_mentions: bool = False,
+                        no_extract_hashtags: bool = False,
+                        no_extract_emojis: bool = False,
+                        reply_id: List[str] = [],
+                        renote_id: Optional[str] = None,
+                        channel_id: Optional[str] = None,
+                        file_ids: List[File] = [],
+                        poll: Optional[Poll] = None
+                        ) -> Note:
+        return await self._connection.post_note(content, visibility=visibility, visible_user_ids=visible_user_ids, cw=cw,
+                                                local_only=local_only, no_extract_mentions=no_extract_mentions,
+                                                no_extract_hashtags=no_extract_hashtags, no_extract_emojis=no_extract_emojis,
+                                                reply_id=reply_id, renote_id=renote_id, channel_id=channel_id, file_ids=file_ids,
+                                                poll=poll)
 
     @staticmethod
     def get_announcements(limit: int, with_unreads: bool, since_id: str,
@@ -437,9 +437,9 @@ class Client:
         if _origin_uri := re.search(r"wss?://(.*)/streaming", url):
             origin_uri = (
                 _origin_uri.group(0)
-                    .replace("wss", "https")
-                    .replace("ws", "http")
-                    .replace("/streaming", "")
+                .replace("wss", "https")
+                .replace("ws", "http")
+                .replace("/streaming", "")
             )
         else:
             origin_uri = url
@@ -495,9 +495,9 @@ class Client:
         if _origin_uri := re.search(r"wss?://(.*)/streaming", uri):
             origin_uri = (
                 _origin_uri.group(0)
-                    .replace("wss", "https")
-                    .replace("ws", "http")
-                    .replace("/streaming", "")
+                .replace("wss", "https")
+                .replace("ws", "http")
+                .replace("/streaming", "")
             )
         else:
             origin_uri = uri

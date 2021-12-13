@@ -402,16 +402,16 @@ class ConnectionState:
             "renoteId": renote_id,
             "channelId": channel_id
         }
+        if not check_multi_arg(content, file_ids, renote_id, poll):
+            raise ContentRequired("ノートの送信にはcontent, file_ids, renote_id またはpollのいずれか1つが無くてはいけません")
+
         if poll and len(poll.choices) > 0:
             field["poll"] = poll
         if file_ids:
             field["fileIds"] = file_ids
-        field = remove_empty_object(field)
-        res = api("/api/notes/create", json_data=field, auth=True)
-        res_json = res.json()
-        if res_json.get("error") and res_json.get("error", {}).get("code") == "CONTENT_REQUIRED":
-            raise ContentRequired("ノートの送信にはtext, file, renote またはpollのいずれか1つが無くてはいけません")
-        return Note(upper_to_lower(res_json["createdNote"]), state=self)
+        field = remove_dict_empty(field)
+        res = await self.http.request(Route('POST', '/api/notes/create'), json=field, auth=True, lower=True)
+        return Note(res["created_note"], state=self)
 
     @staticmethod
     def _get_followers(
