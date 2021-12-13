@@ -13,6 +13,11 @@
     margin-bottom: 2em;
 }
 
+dd > .deprecated {
+    border-left: solid goldenrod 7px;
+    border-top: solid goldenrod 7px;
+    border-radius: 5px;
+}
 
 .py-attribute-table-entry {
     list-style: None;
