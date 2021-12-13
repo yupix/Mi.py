@@ -273,6 +273,13 @@ class Client:
         """
         return await self._connection.fetch_instance(host=host)
 
+    async def get_i(self) -> User:
+        """
+        BOTアカウントの情報を取得します
+        """
+        
+        return await self._connection.get_i()
+
     async def get_user(self, user_id: Optional[str] = None, username: Optional[str] = None,
                        host: Optional[str] = None) -> User:
         """

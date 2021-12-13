@@ -247,7 +247,6 @@ class Note(AbstractNote):
             poll=poll
         )
 
-
     def emoji_count(self) -> int:
         """
         ノートの本文にemojiが何個含まれているかを返します

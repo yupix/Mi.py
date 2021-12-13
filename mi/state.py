@@ -151,9 +151,9 @@ class ConnectionState:
         res = api("/api/following/delete", json_data=data, auth=True)
         return bool(res.status_code == 204 or 200)
 
-    def get_i(self):
-        res = api("/api/i", auth=True)
-        return User(upper_to_lower(json.loads(res.text)), state=self)
+    async def get_i(self) -> User:
+        res = await self.http.request(Route('POST', '/api/i'), auth=True, lower=True)
+        return User(res, state=self)
 
     def get_users(self,
                   limit: int = 10,
