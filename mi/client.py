@@ -1,4 +1,5 @@
 from __future__ import annotations
+
 import asyncio
 import importlib
 import inspect
@@ -8,31 +9,39 @@ import traceback
 from functools import cache
 from typing import Any, Callable, Coroutine, Dict, Iterator, List, Optional, TYPE_CHECKING, Tuple, Union
 
-import requests
-from websockets.legacy.client import WebSocketClientProtocol
+import aiohttp
 
-from mi import config
+from mi import User, config
+from mi.chat import Chat
 from mi.exception import InvalidParameters
-from mi.http import WebSocket
+from mi.http import HTTPClient
 from mi.note import Note
 from mi.state import ConnectionState
+from mi.types import Note as NotePayload
 from mi.utils import api, get_module_logger, remove_dict_empty, upper_to_lower
+from .gateway import MisskeyWebSocket
 
 if TYPE_CHECKING:
-    from . import User, File, Poll
+    from . import File, Poll
 
 
 class Client:
-    def __init__(self, **options: Dict[Any, Any]):
+    def __init__(self, loop: Optional[asyncio.AbstractEventLoop] = None, **options: Dict[Any, Any]):
         super().__init__(**options)
         self.extra_events: Dict[str, Any] = {}
         self.special_events: Dict[str, Any] = {}
         self.token: Optional[str] = None
         self.origin_uri: Optional[str] = None
-        self._connection: ConnectionState = ConnectionState(self.dispatch)
+        self.loop = asyncio.get_event_loop() if loop is None else loop
+        connector: Optional[aiohttp.BaseConnector] = options.pop('connector', None)
+        self.http: HTTPClient = HTTPClient(connector=connector)
+        self._connection: ConnectionState = self._get_state(**options)
         self.i: User = None
         self.logger = get_module_logger(__name__)
-        self.loop = asyncio.get_event_loop()
+        self.ws: MisskeyWebSocket = None
+
+    def _get_state(self, **options: Any) -> ConnectionState:
+        return ConnectionState(dispatch=self.dispatch, http=self.http, loop=self.loop, **options)
 
     async def on_ready(self, ws: WebSocketClientProtocol):
         """
@@ -77,7 +86,7 @@ class Client:
         else:
             self.extra_events[name] = [func]
 
-    async def event_dispatch(self, event_name: str, *args: Tuple[Any], **kwargs: Dict[Any, Any]) -> bool:
+    def event_dispatch(self, event_name: str, *args: Tuple[Any], **kwargs: Dict[Any, Any]) -> bool:
         """on_ready等といった
 
         Parameters
@@ -94,12 +103,12 @@ class Client:
         for event in self.special_events.get(ev, []):
             foo = importlib.import_module(event.__module__)
             coro = getattr(foo, ev)
-            await self.schedule_event(coro, event, *args, **kwargs)
+            self.schedule_event(coro, event, *args, **kwargs)
         if ev in dir(self):
-            await self.schedule_event(getattr(self, ev), ev, *args, **kwargs)
+            self.schedule_event(getattr(self, ev), ev, *args, **kwargs)
         return ev in dir(self)
 
-    async def dispatch(self, event_name: str, *args: tuple[Any], **kwargs: Dict[Any, Any]):
+    def dispatch(self, event_name: str, *args: tuple[Any], **kwargs: Dict[Any, Any]):
         ev = "on_" + event_name
         for event in self.extra_events.get(ev, []):
             if inspect.ismethod(event):
@@ -108,18 +117,18 @@ class Client:
             else:
                 foo = importlib.import_module(event.__module__)
                 coro = getattr(foo, ev)
-            await self.schedule_event(coro, event, *args, **kwargs)
+            self.schedule_event(coro, event, *args, **kwargs)
         if ev in dir(self):
-            await self.schedule_event(getattr(self, ev), ev, *args, **kwargs)
+            self.schedule_event(getattr(self, ev), ev, *args, **kwargs)
 
-    async def schedule_event(
+    def schedule_event(
             self,
             coro: Callable[..., Coroutine[Any, Any, Any]],
             event_name: str,
             *args: tuple[Any],
             **kwargs: Dict[Any, Any],
     ) -> asyncio.Task[Any]:
-        return asyncio.create_task(
+        return self.loop.create_task(
             self._run_event(coro, event_name, *args, **kwargs),
             name=f"MI.py: {event_name}",
         )
@@ -154,17 +163,46 @@ class Client:
 
     # ここからクライアント操作
 
-    @staticmethod
-    async def delete_chat(message_id: str) -> requests.models.Response:
-        args = {"messageId": f"{message_id}"}
-        return api(
-            '/api/messaging/messages/delete',
-            json_data=args,
-            auth=True
-        )
+    async def post_chat(self, content: str, *, user_id: str = None, group_id: str = None, file_id: str = None) -> Chat:
+        """post_chat API
 
-    @staticmethod
+        チャットを送信します。
+
+        Parameters
+        ----------
+        content : str
+            テキスト
+        user_id : str, optional
+            送信対象のユーザーid, by default None
+        group_id : str, optional
+            送信対象のグループid, by default None
+        file_id : str, optional
+            添付するファイルid, by default None
+
+        Returns
+        -------
+        None
+        """
+        return await self._connection.post_chat(content, user_id=user_id, group_id=group_id, file_id=file_id)
+
+    async def delete_chat(self, message_id: str) -> bool:
+        """
+        指定されたIDのチャットを削除します。
+
+        Parameters
+        ----------
+        message_id : str
+            削除するメッセージのid
+
+        Returns
+        -------
+        bool
+            削除に成功したかどうか
+        """
+        return await self._connection.delete_chat(message_id=message_id)
+
     def get_user_notes(
+            self,
             user_id: str,
             *,
             since_id: Optional[str] = None,
@@ -175,7 +213,7 @@ class Client:
             limit: int = 10,
             get_all: bool = False,
             exclude_nsfw: bool = True,
-            file_type: list = None,
+            file_type: Optional[List[str]] = None,
             since_date: int = 0,
             until_data: int = 0
     ) -> Iterator[Note]:
@@ -201,21 +239,17 @@ class Client:
             loop = True
             while loop:
                 get_data = api("/api/users/notes", json_data=args,
-                               auth=True).json()
+                               auth=True, lower=True)
                 if len(get_data) <= 0:
                     break
                 args["untilId"] = get_data[-1]["id"]
                 for data in get_data:
-                    yield Note(upper_to_lower(data,
-                                                     replace_list={"user": "author",
-                                                                   "text": "content"}))
+                    yield Note(NotePayload(**data), state=self._connection)
         else:
             get_data = api("/api/users/notes", json_data=args,
                            auth=True).json()
             for data in get_data:
-                yield Note(upper_to_lower(data,
-                                                 replace_list={"user": "author",
-                                                               "text": "content"}))
+                yield Note(NotePayload(**upper_to_lower(data)), state=self._connection)
 
     @staticmethod
     @cache
@@ -243,9 +277,8 @@ class Client:
         Client.get_instance_meta.cache_clear()
         return api("/api/meta").json()
 
-    @cache
-    def get_user(self, user_id: Optional[str] = None, username: Optional[str] = None,
-                 host: Optional[str] = None) -> Dict[str, Tuple[str, List[Any], Dict[str, Any]]]:
+    async def get_user(self, user_id: Optional[str] = None, username: Optional[str] = None,
+                       host: Optional[str] = None) -> User:
         """
         ユーザーのプロフィールを取得します。一度のみサーバーにアクセスしキャッシュをその後は使います。
         fetch_userを使った場合はキャッシュが廃棄され再度サーバーにアクセスします。
@@ -264,10 +297,10 @@ class Client:
         dict:
             ユーザー情報
         """
-        return self._connection._get_user(user_id, username, host)
+        return await self._connection.get_user(user_id=user_id, username=username, host=host)
 
-    def fetch_user(self, user_id: Optional[str] = None, username: Optional[str] = None,
-                   host: Optional[str] = None) -> Dict[str, Tuple[str, List[Any], Dict[str, Any]]]:
+    async def fetch_user(self, user_id: Optional[str] = None, username: Optional[str] = None,
+                         host: Optional[str] = None) -> User:
         """
         サーバーにアクセスし、ユーザーのプロフィールを取得します。基本的には get_userをお使いください。
 
@@ -285,7 +318,7 @@ class Client:
         dict:
             ユーザー情報
         """
-        self._connection._fetch_user()
+        await self._connection._fetch_user(user_id=user_id, username=username, host=host)
 
     @staticmethod
     def file_upload(
@@ -334,37 +367,27 @@ class Client:
             raise InvalidParameters("path または url のどちらかは必須です")
         return res
 
-    def post_note(self,
-            content: str,
-            *,
-            visibility: str = "public",
-            visible_user_ids: Optional[List[str]] = None,
-            cw: Optional[str] = None,
-            local_only: bool = False,
-            no_extract_mentions: bool = False,
-            no_extract_hashtags: bool = False,
-            no_extract_emojis: bool = False,
-            reply_id: List[str] = [],
-            renote_id: Optional[str] = None,
-            channel_id: Optional[str] = None,
-            file_ids: List[File] = [],
-            poll: Optional[Poll] = None
-            ) -> Note:
-        return self._connection._post_note(
-            content,
-            visibility=visibility,
-            visible_user_ids=visible_user_ids,
-            cw=cw,
-            local_only=local_only,
-            no_extract_mentions=no_extract_mentions,
-            no_extract_hashtags=no_extract_hashtags,
-            no_extract_emojis=no_extract_emojis,
-            reply_id=reply_id,
-            renote_id=renote_id,
-            channel_id=channel_id,
-            file_ids=file_ids,
-            poll=poll
-            )
+    async def post_note(self,
+                        content: str,
+                        *,
+                        visibility: str = "public",
+                        visible_user_ids: Optional[List[str]] = None,
+                        cw: Optional[str] = None,
+                        local_only: bool = False,
+                        no_extract_mentions: bool = False,
+                        no_extract_hashtags: bool = False,
+                        no_extract_emojis: bool = False,
+                        reply_id: List[str] = [],
+                        renote_id: Optional[str] = None,
+                        channel_id: Optional[str] = None,
+                        file_ids: List[File] = [],
+                        poll: Optional[Poll] = None
+                        ) -> Note:
+        return await self._connection.post_note(content, visibility=visibility, visible_user_ids=visible_user_ids, cw=cw,
+                                                local_only=local_only, no_extract_mentions=no_extract_mentions,
+                                                no_extract_hashtags=no_extract_hashtags, no_extract_emojis=no_extract_emojis,
+                                                reply_id=reply_id, renote_id=renote_id, channel_id=channel_id, file_ids=file_ids,
+                                                poll=poll)
 
     @staticmethod
     def get_announcements(limit: int, with_unreads: bool, since_id: str,
@@ -396,6 +419,39 @@ class Client:
             "untilId": until_id,
         }
         return api("/api/announcements", args, auth=True)
+
+    async def login(self, token):
+        data = await self.http.static_login(token)
+        self.i = User(data, self._connection)
+
+    async def connect(self, *, reconnect: bool = True) -> None:
+
+        coro = MisskeyWebSocket.from_client(self)
+        self.ws = await asyncio.wait_for(coro, timeout=60)
+        while True:
+            await self.ws.poll_event()
+
+    async def start(self, url: str, token: str, *, debug: bool = False, recconect: bool = True):
+        self.token = token
+        if _origin_uri := re.search(r"wss?://(.*)/streaming", url):
+            origin_uri = (
+                _origin_uri.group(0)
+                .replace("wss", "https")
+                .replace("ws", "http")
+                .replace("/streaming", "")
+            )
+        else:
+            origin_uri = url
+        self.origin_uri = origin_uri[:-1] if url[-1] == "/" else origin_uri
+        self.url = url
+        auth_i: Dict[str, Any] = {
+            "token": self.token,
+            "origin_uri": self.origin_uri,
+        }
+        config.i = config.Config(**auth_i)
+        config.debug = debug
+        await self.login(token)
+        await self.connect(reconnect=recconect)
 
     def run(self, uri: str, token: str, debug: bool = False) -> None:
         """
@@ -438,9 +494,9 @@ class Client:
         if _origin_uri := re.search(r"wss?://(.*)/streaming", uri):
             origin_uri = (
                 _origin_uri.group(0)
-                    .replace("wss", "https")
-                    .replace("ws", "http")
-                    .replace("/streaming", "")
+                .replace("wss", "https")
+                .replace("ws", "http")
+                .replace("/streaming", "")
             )
         else:
             origin_uri = uri
@@ -455,6 +511,6 @@ class Client:
         auth_i["profile"] = self.i
         auth_i["instance"] = self.get_instance_meta()
         config.i = config.Config(**auth_i)
-        asyncio.get_event_loop().run_until_complete(
-            WebSocket(self).run(f"{uri}?i={token}")
-        )
+        # asyncio.get_event_loop().run_until_complete(
+        #     WebSocket(self).run(f"{uri}?i={token}")
+        # )

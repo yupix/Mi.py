@@ -66,3 +66,9 @@ UserDetails
 
 .. autoclass:: UserDetails()
    :members:
+
+
+.. attributetable::  Chat
+
+.. autoclass:: Chat()
+   :members:

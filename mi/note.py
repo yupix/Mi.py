@@ -1,84 +1,23 @@
 from __future__ import annotations
-import json
+
 from typing import Any, Dict, List, Optional, TYPE_CHECKING
 
-from pydantic import BaseModel, Field
 
-from mi import Emoji, User, utils
-from mi.exception import ContentRequired, NotExistRequiredParameters
+from mi import Emoji, utils
+from mi.exception import NotExistRequiredParameters
 from mi.user import User
-from mi.utils import api, check_multi_arg, remove_dict_empty
+from mi.utils import check_multi_arg
 from .abc.note import AbstractNote
 from .types.note import (Note as NotePayload,
                          Poll as PollPayload,
-                         Renote as RenotePayload)
+                         Renote as RenotePayload,
+                         Reaction as ReactionPayload
+                         )
 
 if TYPE_CHECKING:
     from mi import ConnectionState
 
 __all__ = ['Note', 'Poll']
-
-
-class NoteAction:
-
-    @staticmethod
-    async def send(
-            *,
-            visibility: str,
-            visible_user_ids: str,
-            text: str,
-            cw: str,
-            via_mobile: bool,
-            local_only: bool,
-            no_extract_mentions: bool,
-            no_extract_hashtags: bool,
-            no_extract_emojis: bool,
-            reply_id: str,
-            renote_id: str,
-            channel_id: str,
-            preview: bool,
-            geo: Any,
-            file_ids: List[str],
-            poll: Dict[str, Any]  # TODO:ここはもうちょい正確に type hint 定義したい
-    ) -> "Note":
-        """
-        既にあるnoteクラスを元にnoteを送信します
-
-        Returns
-        -------
-        msg: Note
-        """
-        field = {
-            "visibility": visibility,
-            "visibleUserIds": visible_user_ids,
-            "text": text,
-            "cw": cw,
-            "viaMobile": via_mobile,
-            "localOnly": local_only,
-            "noExtractMentions": no_extract_mentions,
-            "noExtractHashtags": no_extract_hashtags,
-            "noExtractEmojis": no_extract_emojis,
-            "replyId": reply_id,
-            "renoteId": renote_id,
-            "channelId": channel_id,
-            "preview": preview,
-            "geo": geo,
-        }
-        # field.update(other_field)
-        if poll and len(poll["choices"]) > 0:
-            field["poll"] = poll
-        if file_ids:
-            field["fileIds"] = file_ids
-        field = remove_dict_empty(field)
-        res = api("/api/notes/create", json_data=field, auth=True)
-        res_json = res.json()
-        if (
-                res_json.get("error")
-                and res_json.get("error", {}).get("code") == "CONTENT_REQUIRED"
-        ):
-            raise ContentRequired(
-                "ノートの送信にはtext, file, renote またはpollのいずれか1つが無くてはいけません")
-        return Note(res_json)
 
 
 class Follow:
@@ -139,28 +78,32 @@ class Header:
         self._state = state
 
 
-class Properties(BaseModel):
-    width: Optional[int]
-    height: Optional[int]
+class Properties:
+    def __init__(self, data, state: ConnectionState) -> None:
+        self.width: Optional[int] = data['width']
+        self.height: Optional[int] = data['height']
+        self.state: ConnectionState = state
 
 
-class File(BaseModel):
-    id: Optional[str] = Field(None, alias="id_")
-    created_at: Optional[str] = Field(None, alias="created_at")
-    name: Optional[str] = None
-    type: Optional[str] = None
-    md5: Optional[str] = None
-    size: Optional[int]
-    is_sensitive: Optional[bool] = False
-    blurhash: Optional[str] = None
-    properties: Properties
-    url: Optional[str] = None
-    thumbnail_url: Optional[str] = None
-    comment: Optional[str] = None
-    folder_id: Optional[str] = None
-    folder: Optional[str] = None
-    user_id: Optional[str] = None
-    user: Optional[str] = None
+class File:
+    def __init__(self, data, state: ConnectionState):
+        self.id: Optional[str] = data.get('id')
+        self.created_at: Optional[str] = data.get('create_at')
+        self.name: Optional[str] = data.get('name')
+        self.type: Optional[str] = data.get('type')
+        self.md5: Optional[str] = data.get('md5')
+        self.size: Optional[int] = data.get('size')
+        self.is_sensitive: Optional[bool] = bool(data.get('is_sensitive'))
+        self.blurhash: Optional[str] = data.get('blurhash')
+        self.properties: Optional[Properties] = Properties(
+            data.get('properties'), state=state) if data.get('properties') else None
+        self.url: Optional[str] = data.get('url')
+        self.thumbnail_url: Optional[str] = data.get('thumbnail_url')
+        self.comment: Optional[str] = data.get('comment')
+        self.folder_id: Optional[str] = data.get('folder_id')
+        self.folder: Optional[str] = data.get('folder')
+        self.user_id: Optional[str] = data.get('user_id')
+        self.user: Optional[str] = data.get('user')
 
 
 class Poll:
@@ -173,11 +116,11 @@ class Poll:
 
 class Renote(AbstractNote):
     def __init__(self, data: RenotePayload, state: ConnectionState):
-        self.id = data["id"]
+        self.id: str = data["id"]
         self.created_at = data["created_at"]
         self.user_id = data["user_id"]
-        self.user = User(data.get("user", {}), state)
-        self.content: Optional[str] = data.get("content", None)
+        self.user = User(data.get("user", {}), state=state)
+        self.content: Optional[str] = data.get("text", None)
         self.cw = data["cw"]
         self.visibility = data["visibility"]
         self.renote_count = data["renote_count"]
@@ -192,7 +135,6 @@ class Renote(AbstractNote):
         self.renote_id = data["renote_id"]
         self.uri = data.get("uri")
         self.poll = Poll(data["poll"]) if data.get("poll") else None
-        self.__note_action = NoteAction
         self._state = state
 
     def add_file(
@@ -203,13 +145,7 @@ class Renote(AbstractNote):
             is_sensitive: bool = False,
             url: Optional[str] = None,
     ):
-        self.file_ids.append(
-            self.__note_action.add_file(
-                path, name=name, force=force, is_sensitive=is_sensitive,
-                url=url
-            ).id
-        )
-        return self
+        pass
 
     def emoji_count(self) -> int:
         """
@@ -222,40 +158,20 @@ class Renote(AbstractNote):
         """
         return utils.emoji_count(self.content)
 
-    async def delete(self, note_id: str = None) -> bool:
-        """
-        指定したIDのノートを削除します
-
-        Parameters
-        ----------
-        note_id: str
-            削除するノートのid
-
-        returns
-        -------
-        bool
-            成功したか否か
-        """
-
-        if note_id is None:
-            note_id = self.id
-        return await self.__note_action.delete(note_id)
+    async def delete(self) -> bool:
+        return await self._state.delete_note(self.id)
 
 
-class ReactionContent:
-    def __init__(self, data):
+class Reaction:
+    def __init__(self, data: ReactionPayload, state: ConnectionState):
+        self.id: Optional[str] = data.get('id')
         self.created_at = data.get('created_at')
-        self.type = data.get('type')
-        self.is_read: bool = data['is_read']
-        self.user: User = User(data['user'])
-        self.note: Note = Note(data['note'])
-        self.reaction = data['reaction']
-
-
-class Reaction(BaseModel):
-    id: Optional[str] = Field(None, alias="id_")
-    reaction: Optional[str] = None
-    user_id: Optional[str] = None
+        self.type: Optional[str] = data.get('type')
+        self.is_read: bool = bool(data.get('is_read'))
+        self.user: Optional[User] = User(data['user'], state=state) if data.get('user') else None
+        self.note: Optional[Note] = Note(data['note'], state=state) if data.get('note') else None
+        self.reaction: str = data['reaction']
+        self._state: ConnectionState = state
 
 
 class Note(AbstractNote):
@@ -266,7 +182,7 @@ class Note(AbstractNote):
     created_at: str
     user_id: str
     author: User
-    content: Optiona[str]
+    content: Optional[str]
     cw: Optional[str]
     renote: Renote
     visibility: str
@@ -275,7 +191,7 @@ class Note(AbstractNote):
     reactions:Dict[str, Any]
     emojis:List[Emoji]
     file_ids:Optional[List[str]]
-    files: Optiona[List[str]]
+    files: Optional[List[str]]
     reply_id: Optional[str]
     renote_id: Optional[str]
     poll: Optional[Poll]
@@ -285,31 +201,25 @@ class Note(AbstractNote):
         self.id: str = data["id"]
         self.created_at: str = data["created_at"]
         self.user_id: str = data["user_id"]
-        self.author = User(data["user"], state)  #TODO: (Serarch) 自分自身が投稿したらNoneかも
+        self.author: User = User(data["user"], state)
         self.content: Optional[str] = data.get("text")
-        self.cw: Optional[str] = data["cw"]
-        self.renote: Renote = Renote(data["renote"], state) if data.get(
-            "renote") else None
+        self.cw: Optional[str] = data.get("cw")
+        self.renote: Optional[Renote] = Renote(data['renote'], state=state) if data.get('renote') else None
         self.visibility: str = data["visibility"]
         self.renote_count: int = data["renote_count"]
         self.replies_count: int = data["replies_count"]
         self.reactions: Dict[str, Any] = data["reactions"]
-        self.emojis: List[Emoji] = data["emojis"]
+        self.emojis: List[Emoji] = [Emoji(i) for i in data["emojis"]]
         self.file_ids: Optional[List[str]] = data["file_ids"]
-        self.files: Optional[List[File]] = data["files"]
+        self.files: List[File] = [File(i) for i in data["files"]]
         self.reply_id: Optional[str] = data["reply_id"]
         self.renote_id: Optional[str] = data["renote_id"]
-        self.poll: Optional[Poll] = Poll(data["poll"]) if data.get(
-            "poll") else None
-        self.visible_user_ids: Optional[List[str]] = data.get(
-            "visible_user_ids", [])
+        self.poll: Optional[Poll] = Poll(data["poll"]) if data.get("poll") else None
+        self.visible_user_ids: Optional[List[str]] = data.get("visible_user_ids", [])
         self.via_mobile: Optional[bool] = data.get("via_mobile", False)
-        self.local_only: Optional[bool] = data.get("local_only", False)
-        self.no_extract_mentions: Optional[bool] = data.get(
-            "no_extract_mentions", False
-        )
-        self.no_extract_hashtags: Optional[bool] = data.get(
-            "no_extract_hashtags")
+        self.local_only: bool = bool(data.get("local_only", False))
+        self.no_extract_mentions: Optional[bool] = data.get("no_extract_mentions", False)
+        self.no_extract_hashtags: Optional[bool] = data.get("no_extract_hashtags")
         self.no_extract_emojis: Optional[bool] = data.get("no_extract_emojis")
         self.preview: Optional[bool] = data.get("preview")
         self.media_ids: Optional[List[str]] = data.get("media_ids")
@@ -317,55 +227,51 @@ class Note(AbstractNote):
         self.tags: Optional[List[str]] = data.get("tags", [])
         self.channel_id: Optional[str] = data.get("channel_id")
         self._state = state
-        self.__note_action = NoteAction
 
-    def __poll_formatter(self) -> dict:
-        if self.poll:
-            poll = json.loads(self.poll.json(ensure_ascii=False))
-            poll["expiresAt"] = poll.pop("expired_after")
-            poll["expiredAfter"] = poll.pop("expires_at")
-            if poll["expiredAfter"] is None:
-                poll.pop("expiredAfter")
-        else:
-            poll = None
-        return poll
-
-    async def send(self) -> "Note":
-        poll = self.__poll_formatter()
-        return await self.__note_action.send(
+    async def reply(
+            self, content: str,
+            *,
+            cw: Optional[str] = None,
+            no_extract_mentions: bool = False,
+            no_extract_hashtags: bool = False,
+            no_extract_emojis: bool = False,
+            renote_id: Optional[str] = None,
+            channel_id: Optional[str] = None,
+            file_ids=None,
+            poll: Optional[Poll] = None
+    ) -> Note:
+        if file_ids is None:
+            file_ids = []
+        return await self._state.post_note(
+            content,
             visibility=self.visibility,
             visible_user_ids=self.visible_user_ids,
-            text=self.content,
-            cw=self.cw,
-            via_mobile=self.via_mobile,
+            cw=cw,
             local_only=self.local_only,
-            no_extract_mentions=self.no_extract_mentions,
-            no_extract_hashtags=self.no_extract_hashtags,
-            no_extract_emojis=self.no_extract_emojis,
-            preview=self.preview,
-            geo=self.geo,
-            file_ids=self.file_ids,
-            reply_id=self.reply_id,
-            renote_id=self.renote_id,
-            channel_id=self.channel_id,
-            poll=poll,
+            no_extract_mentions=no_extract_mentions,
+            no_extract_hashtags=no_extract_hashtags,
+            no_extract_emojis=no_extract_emojis,
+            reply_id=self.id,
+            renote_id=renote_id,
+            channel_id=channel_id,
+            file_ids=file_ids,
+            poll=poll
         )
 
     def add_file(
             self,
-            path: str = None,
-            name: str = None,
+            path: Optional[str] = None,
+            url: Optional[str] = None,
+            name: Optional[str] = None,
+            *,
             force: bool = False,
             is_sensitive: bool = False,
-            url: str = None,
     ):
-        self.file_ids.append(
-            self._state._add_file(
-                path, name=name, force=force, is_sensitive=is_sensitive,
-                url=url
-            ).id
-        )
-        return self
+        """
+        .. deprecated:: 0.2.7
+            :func:`send` のfile引数を使用するようにしてください
+        """
+        pass
 
     def add_poll(
             self,
@@ -374,17 +280,7 @@ class Note(AbstractNote):
             expired_after: Optional[int] = None,
             item_list: Optional[dict] = None,
     ) -> "Note":
-        poll = self.__poll_formatter()
-        self.poll = Poll(
-            **self._state._add_poll(
-                item,
-                poll=poll,
-                expires_at=expires_at,
-                expired_after=expired_after,
-                item_list=item_list,
-            )
-        )
-        return self
+        pass
 
     async def add_reaction(self, reaction: str, note_id: str = None) -> bool:
         if note_id is None:
@@ -403,7 +299,7 @@ class Note(AbstractNote):
 
         return utils.emoji_count(self.content)
 
-    async def delete(self) -> tuple[bool, int]:
+    async def delete(self) -> bool:
         """
         指定したIDのノートを削除します
 
@@ -415,4 +311,4 @@ class Note(AbstractNote):
             HTTP レスポンスステータスコード
         """
 
-        return await self._state._note_delete(self.id)
+        return await self._state.delete_note(self.id)

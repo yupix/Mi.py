@@ -5,7 +5,7 @@ import json
 import logging
 import re
 from inspect import isawaitable
-from typing import Any, Callable, Dict, Iterable, List, Optional, TypeVar
+from typing import Any, Callable, Dict, Iterable, List, Optional, TypeVar, Union
 
 import emoji
 import requests
@@ -13,6 +13,32 @@ import requests
 from mi import config, exception
 
 T = TypeVar("T")
+
+
+def get_cache_key(func):
+    async def decorator(self, *args, **kwargs):
+        ordered_kwargs = sorted(kwargs.items())
+        key = (
+            (func.__module__ or "")
+            + '.{0}'
+            + f'{self}'
+            + str(args)
+            + str(ordered_kwargs)
+        )
+        return await func(self, *args, **kwargs, cache_key=key)
+    return decorator
+
+
+def key_builder(func, cls, *args, **kwargs):
+    ordered_kwargs = sorted(kwargs.items())
+    key = (
+        (func.__module__ or "")
+        + f'.{func.__name__}'
+        + f'{cls}'
+        + str(args)
+        + str(ordered_kwargs)
+    )
+    return key
 
 
 def get_module_logger(module_name):
@@ -109,8 +135,12 @@ def api(
         origin_uri: Optional[str] = None,
         files: Any = None,
         auth: bool = False,
-) -> requests.models.Response:
+        lower: bool = False
+) -> Union[requests.models.Response, Dict[str, Union[str, List[Union[Dict[str, Any]]], Dict[str, Any]]]]:
     """
+    .. danger::
+        開発者に向けての注意事項です。今後この関数ではdict **のみ** を返します。そのため早いうちに json()を使ったものを修正してください
+
     Parameters
     ----------
     origin_uri : str
@@ -123,10 +153,11 @@ def api(
         認証情報を付与するか
     files : Any
         画像などのファイル
-
+    lower: bool
+        keyを小文字に変換するか
     Returns
     -------
-    requests.models.Response
+    requests.models.Response or Dict[str, Any]
     """
     if check_multi_arg(json_data, files) is False and auth:
         json_data = {}
@@ -154,9 +185,12 @@ def api(
             f"{error_base['description']} => {error_code['error']['message']}  \n {res.text}"
         )
         raise error
+    if lower:
+        return upper_to_lower(res.json())
     return res
 
-def remove_empty_object(data: Dict[str, Any]) -> Dict[str, Any]:
+
+def remove_list_empty(data: List[Any]) -> List[Any]:
     """
     Parameters
     ----------
@@ -168,23 +202,8 @@ def remove_empty_object(data: Dict[str, Any]) -> Dict[str, Any]:
     _data: Dict[str, Any]
         空のkeyがなくなったdict
     """
-    return remove_list_empty(remove_dict_empty(data))
-    
+    return [k for k in data if k]
 
-def remove_list_empty(data: Dict[str, Any]) -> Dict[str, Any]:
-    """
-    Parameters
-    ----------
-    data: dict
-        空のkeyを削除したいdict
-
-    Returns
-    -------
-    _data: Dict[str, Any]
-        空のkeyがなくなったdict
-    """
-    
-    return {k: v for k, v in data.items() if v}
 
 def remove_dict_empty(data: Dict[str, Any]) -> Dict[str, Any]:
     """
@@ -201,6 +220,7 @@ def remove_dict_empty(data: Dict[str, Any]) -> Dict[str, Any]:
 
     _data = {}
     _data = {k: v for k, v in data.items() if v is not None}
+    _data = {k: v for k, v in data.items() if v}
     return _data
 
 

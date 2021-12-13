@@ -6,7 +6,7 @@ from pydantic import BaseModel
 from mi import Instance
 from mi.drive import File
 from mi.exception import InvalidParameters, NotExistRequiredParameters
-from mi.types.user import (Author as UserPayload)
+from mi.types.user import (User as UserPayload)
 from mi.utils import api, check_multi_arg, remove_dict_empty, upper_to_lower
 
 if TYPE_CHECKING:
@@ -150,7 +150,7 @@ class User:
     birthday: str
         ユーザーの誕生日
     fields: list
-        謎
+        プロフィールのリンクフィールド
     followers_count: int
         フォロワーの数
     following_count: int
@@ -174,7 +174,7 @@ class User:
     blocked: bool
         ユーザーのことをブロックしているかどうか
     muted:bool
-        ユーアーのことをミュートしているかどうか
+        ユーザーのことをミュートしているかどうか
     instance: Any
         ユーザーのインスタンス
     details: UserDetails
@@ -187,12 +187,12 @@ class User:
         self.username: str = data["username"]
         self.host: Optional[str] = data.get("host")
         self.avatar_url: Optional[str] = data.get("avatar_url")
-        self.admin: bool = data.get("is_admin", False)
-        self.moderator: bool = data.get("is_moderator", False)
-        self.bot: bool = data.get("is_bot", False)
-        self.cat: bool = data.get("is_cat", False)
-        self.lady: bool = data.get('is_lady', False)
-        self.emojis: List[str] = data.get("emojis")
+        self.admin: bool = bool(data.get("is_admin"))
+        self.moderator: bool = bool(data.get("is_moderator"))
+        self.bot: bool = bool(data.get("is_bot"))
+        self.cat: bool = bool(data.get("is_cat", False))
+        self.lady: bool = bool(data.get('is_lady', False))
+        self.emojis: Optional[List[str]] = data.get("emojis")
         self.online_status = data.get("online_status", None)
         self.url: Optional[str] = data.get("url")
         self.uri: Optional[str] = data.get("uri")
@@ -212,12 +212,12 @@ class User:
         self.pinned_notes = data.get("pinned_notes", [])
         self.pinned_page_id = data.get("pinned_page_id")
         self.pinned_page = data.get("pinned_page")
-        self.ff_visibility = data.get("ff_visibility", 'public')
-        self.following = data.get("is_following", False)
-        self.followed = data.get("is_follow", False)
-        self.blocking = data.get("is_blocking", False)
-        self.blocked = data.get("is_blocked", False)
-        self.muted = data.get("is_muted", False)
+        self.ff_visibility:str = data.get("ff_visibility", 'public')
+        self.following:bool = bool(data.get("is_following", False))
+        self.followed:bool = bool(data.get("is_follow", False))
+        self.blocking:bool = bool(data.get("is_blocking", False))
+        self.blocked:bool = bool(data.get("is_blocked", False))
+        self.muted:bool = bool(data.get("is_muted", False))
         self.details = UserDetails(data)
         self._state = state
 
@@ -337,7 +337,7 @@ class User:
         return User(
             **upper_to_lower(
                 self._state._get_user(user_id=self.id, username=self.username,
-                                     host=self.host)
+                                      host=self.host)
             )
         )
 

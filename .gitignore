@@ -9,6 +9,7 @@ mi.py.egg-info
 build
 .pylintrc
 __pycache__
-dist
+dist/*
 main.py
 cogs
+.setup.py.swp

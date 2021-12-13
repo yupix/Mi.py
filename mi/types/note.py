@@ -1,13 +1,13 @@
 from typing import Any, Dict, List, Optional, TypedDict
 
-from .user import Author
+from .user import User
 from .emoji import Emoji
 from .drive import File
 
 
 class Geo(TypedDict):
     """
-    衛生情報
+    衛星情報
     """
     coordinates: Optional[List[Any]]
     altitude: Optional[int]
@@ -29,14 +29,14 @@ class Poll(TypedDict, total=False):
 
 
 class Renote(TypedDict):
-    id: Optional[str]
-    created_at: Optional[str]
-    user_id: Optional[str]
-    user: Optional[Author]
-    content: Optional[str]
-    cw: Optional[str]
-    visibility: Optional[str]
-    renote_count: Optional[int]
+    id: str
+    created_at: str
+    user_id: str
+    user: User
+    text: str
+    cw: str
+    visibility: str
+    renote_count: int
     replies_count: Optional[int]
     reactions: Dict[str, Any]
     emojis: Optional[List]
@@ -50,7 +50,16 @@ class Renote(TypedDict):
     channel_id: Optional[str]
 
 
-class Note(TypedDict):
+class _NoteOptional(TypedDict, total=False):
+    """
+    ノートに必ず存在すると限らない物
+    """
+    text: str
+    cw: str
+    geo: Geo
+
+
+class Note(_NoteOptional):
     """
     note object
     """
@@ -58,9 +67,7 @@ class Note(TypedDict):
     id: str
     created_at: str
     user_id: str
-    user: Author
-    text: Optional[str]
-    cw: Optional[str]
+    user: User
     visibility: Optional[str]
     renote_count: Optional[int]
     replies_count: Optional[int]
@@ -78,9 +85,21 @@ class Note(TypedDict):
     no_extract_hashtags: Optional[bool]
     no_extract_emojis: Optional[bool]
     preview: Optional[bool]
-    geo: Optional[Geo]
     media_ids: Optional[List[str]]
     renote: Optional[Renote]
     field: Optional[dict]
     tags: Optional[List[str]]
     channel_id: Optional[str]
+
+
+class OptionalReaction(TypedDict, total=False):
+    created_at: str
+    type: str
+    is_read: bool
+    user: User
+    note: Note
+    id: str
+
+
+class Reaction(OptionalReaction):
+    reaction: str

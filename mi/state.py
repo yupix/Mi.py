@@ -1,24 +1,38 @@
+from __future__ import annotations
+
 import asyncio
-from functools import cache
+import inspect
 import json
-from typing import Any, Callable, Dict, Iterator, List, Optional, Tuple
+from typing import Any, Callable, Dict, Iterator, List, Optional, TYPE_CHECKING
+
+from aiocache import cached
+from aiocache.factory import Cache
 
 from mi import User
-from mi.chat import ChatContent
-from mi.drive import Drive, File
-from mi.emoji import Emoji
+from mi.chat import Chat
+from mi.drive import Drive
 from mi.exception import ContentRequired, InvalidParameters, NotExistRequiredParameters
+from mi.http import Route
 from mi.iterators import InstanceIterator
-from mi.note import Note, ReactionContent, Poll
-from mi.utils import api, check_multi_arg, get_module_logger, remove_dict_empty, remove_empty_object, str_lower, upper_to_lower
+from mi.note import Note, Poll, Reaction
+from mi.utils import api, check_multi_arg, get_cache_key, get_module_logger, key_builder, remove_dict_empty, str_lower, upper_to_lower
+
+if TYPE_CHECKING:
+    from mi import HTTPClient
 
 
 class ConnectionState:
-    def __init__(self, dispatch: Callable[..., Any]):
+    def __init__(self, dispatch: Callable[..., Any], http: HTTPClient, loop: asyncio.AbstractEventLoop):
         self.dispatch = dispatch
+        self.http: HTTPClient = http
         self.logger = get_module_logger(__name__)
+        self.loop: asyncio.AbstractEventLoop = loop
+        self.parsers = parsers = {}
+        for attr, func in inspect.getmembers(self):
+            if attr.startswith('parse'):
+                parsers[attr[6:].upper()] = func
 
-    async def _parse_channel(self, message: Dict[str, Any]) -> None:
+    def parse_channel(self, message: Dict[str, Any]) -> None:
         """parse_channel is a function to parse channel event
 
         チャンネルタイプのデータを解析後適切なパーサーに移動させます
@@ -28,27 +42,34 @@ class ConnectionState:
         message : Dict[str, Any]
             Received message
         """
-        base_msg = message['body']
+        base_msg = upper_to_lower(message['body'])
         channel_type = str_lower(base_msg.get('type'))
         self.logger.debug(f'ChannelType: {channel_type}')
-        await getattr(self, f'_parse_{channel_type}')(base_msg['body'])
+        self.logger.debug(f'recv event type: {channel_type}')
+        getattr(self, f'parse_{channel_type}')(base_msg['body'])
 
-    async def _parse_messaging_message(self, message: Dict[str, Any]) -> None:
+    def parse_reply(self, message: Dict[str, Any]) -> None:
+        """
+        リプライ
+        """
+        self.dispatch('message', Note(message, state=self))
+
+    def parse_messaging_message(self, message: Dict[str, Any]) -> None:
         """
         チャットが来た際のデータを処理する関数
         """
-        await self.dispatch('message', ChatContent(message))
+        self.dispatch('message', Chat(message, state=self))
 
-    async def _parse_unread_messaging_message(self, message: Dict[str, Any]) -> None:
+    def parse_unread_messaging_message(self, message: Dict[str, Any]) -> None:
         """
         チャットが既読になっていない場合のデータを処理する関数
         """
-        await self.dispatch('message', ChatContent(message))
+        self.dispatch('message', Chat(message, state=self))
 
-    async def _parse_notification(self, message: Dict[str, Any]) -> None:
+    def parse_notification(self, message: Dict[str, Any]) -> None:
         """
         通知イベントを解析する関数
-        
+
         Parameters
         ----------
         message: Dict[str, Any]
@@ -59,9 +80,9 @@ class ConnectionState:
         None
         """
         notification_type = str_lower(message['type'])
-        await getattr(self, f'_parse_{notification_type}')(message)
+        getattr(self, f'parse_{notification_type}')(message)
 
-    async def _parse_unread_notification(self, message: Dict[str, Any]) -> None:
+    def parse_unread_notification(self, message: Dict[str, Any]) -> None:
         """
         未読の通知を解析する関数
 
@@ -71,135 +92,21 @@ class ConnectionState:
             Received message
         """
         notification_type = str_lower(message['type'])
-        await getattr(self, f'_parse_{notification_type}')(message)
+        getattr(self, f'parse_{notification_type}')(message)
 
-    async def _parse_reaction(self, message: Dict[str, Any]) -> None:
+    def parse_reaction(self, message: Dict[str, Any]) -> None:
         """
         リアクションに関する情報を解析する関数
         """
-        await self.dispatch('reaction', ReactionContent(message))
+        self.dispatch('reaction', Reaction(message, state=self))
 
-    async def _parse_note(self, message: Dict[str, Any]) -> None:
+    def parse_note(self, message: Dict[str, Any]) -> None:
         """
         ノートイベントを解析する関数
         """
-        await self.dispatch('message', Note(message, self))
-
-    async def on_emoji_add(self, message: dict):
-        """
-        emojiがインスタンスに追加された際のイベント
-
-        Parameters
-        ----------
-        message
-
-        Returns
-        -------
-
-        """
-        await asyncio.create_task(
-            self.dispatch("emoji_add", Emoji(
-                message['body']['emoji']
-            )))
-
-    async def on_message(self, message: Any) -> asyncio.Task:
-        """
-        タイムラインに来たノートに関するイベントを発生させる関数
-
-        Parameters
-        ----------
-        message:
-            Received message
-
-        Returns
-        -------
-        task: asyncio.Task
-        """
-        msg = message.get("body", {}).get("body", {})
-        message = Note(
-            upper_to_lower(msg,
-                           replace_list={"user": "author", "text": "content"})
-        )
-        await self.dispatch(message.id)
-        return asyncio.create_task(self.cls._on_message(message))
-
-    async def on_chat(self, ctx):
-        """
-        チャットイベント
-
-        Parameters
-        ----------
-        ctx
-
-        Returns
-        -------
-
-        """
-        msg = ctx.get("body", {}).get("body", {})
-        ctx = ChatContent(
-            upper_to_lower(msg,
-                           replace_list={"user": "author", "text": "content"})
-        )
-        return asyncio.create_task(self.dispatch("chat", ctx))
-
-    async def on_notification(self, message: dict):
-        """
-        通知イベント
-
-        Parameters
-        ----------
-        message
-
-        Returns
-        -------
-
-        """
-        pass
-
-    async def on_mention(self, ctx: dict) -> asyncio.Task:
-        """
-        メンションイベント
-
-        Parameters
-        ----------
-        ctx : dict
-
-        Returns
-        -------
-        asyncio.Task
-        """
-
-        base_ctx = ctx.get("body", {}).get("body")
-        base_ctx["content"] = base_ctx["text"]
-        base_ctx["text"] = (
-            base_ctx["text"].replace(f"@{config.i.profile.username}",
-                                     "").strip(" ")
-        )
-        return asyncio.create_task(
-            self.dispatch("mention", Note(**base_ctx))
-        )
-
-    async def on_follow(self, message: dict) -> asyncio.Task:
-        """
-        フォローイベント
-
-        Parameters
-        ----------
-        message
-
-        Returns
-        -------
-
-        """
-        return asyncio.create_task(
-            self.dispatch(
-                "follow",
-                Follow(
-                    **upper_to_lower(message.get("body"),
-                                     replace_list={"body": "user"})
-                ),
-            )
-        )
+        note = Note(message, state=self)
+        #Router(self.http.ws).capture_message(note.id) TODO: caputure message
+        self.dispatch('message', note)
 
     @staticmethod
     def follow_user(user_id: str) -> tuple[bool, Optional[str]]:
@@ -320,11 +227,10 @@ class ConnectionState:
         res = api("/api/notes/reactions/create", json_data=data, auth=True)
         return res.status_code == 204
 
-    @staticmethod
-    async def _note_delete(note_id: str) -> tuple[bool, int]:
+    async def delete_note(self, note_id: str) -> bool:
         data = {"noteId": note_id}
-        res = api("/api/notes/delete", json_data=data, auth=True)
-        return res.status_code == 204, res.status_code
+        res = await self.http.request(Route('POST', '/api/notes/delete'), json=data, auth=True)
+        return bool(res)
 
     @staticmethod
     def _add_file(
@@ -401,9 +307,9 @@ class ConnectionState:
 
         return poll
 
-    @cache
-    def _get_user(self, user_id: Optional[str] = None, username: Optional[str] = None,
-                  host: Optional[str] = None) -> Dict[str, Tuple[str, List[Any], Dict[str, Any]]]:
+    @cached(ttl=10, namespace='get_user', key_builder=key_builder)
+    async def get_user(self, user_id: Optional[str] = None, username: Optional[str] = None,
+                       host: Optional[str] = None) -> User:
         """
         ユーザーのプロフィールを取得します。一度のみサーバーにアクセスしキャッシュをその後は使います。
         fetch_userを使った場合はキャッシュが廃棄され再度サーバーにアクセスします。
@@ -422,10 +328,23 @@ class ConnectionState:
         dict:
             ユーザー情報
         """
-        return self._fetch_user(user_id, username, host)
+        field = remove_dict_empty({"userId": user_id, "username": username, "host": host})
+        data = await self.http.request(Route('POST', '/api/users/show'), json=field, auth=True)
+        return User(upper_to_lower(data), state=self)
 
-    def _fetch_user(self, user_id: Optional[str] = None, username: Optional[str] = None,
-                    host: Optional[str] = None) -> Dict[str, Tuple[str, List[Any], Dict[str, Any]]]:
+    async def post_chat(self, content: str, *, user_id: str = None, group_id: str = None, file_id=None) -> Chat:
+        args = remove_dict_empty({'userId': user_id, 'groupId': group_id, 'text': content, 'fileId': file_id})
+        return Chat(await self.http.request(Route('POST', '/api/messaging/messages/create'), json=args, auth=True, lower=True),
+                    state=self)
+
+    async def delete_chat(self, message_id: str) -> bool:
+        args = {'messageId': f'{message_id}'}
+        data = await self.http.request(Route('POST', '/api/messaging/messages/delete'), json=args, auth=True)
+        return bool(data)
+
+    @get_cache_key
+    async def _fetch_user(self, user_id: Optional[str] = None, username: Optional[str] = None,
+                          host: Optional[str] = None, **kwargs) -> User:
         """
         サーバーにアクセスし、ユーザーのプロフィールを取得します。基本的には get_userをお使いください。
 
@@ -446,27 +365,30 @@ class ConnectionState:
         if not check_multi_arg(user_id, username):
             raise NotExistRequiredParameters("user_id, usernameどちらかは必須です")
 
-        data = remove_dict_empty(
-            {"userId": user_id, "username": username, "host": host})
-        self._get_user.cache_clear()
-        return User(upper_to_lower(api("/api/users/show", json_data=data, auth=True).json()), state=self)
+        field = remove_dict_empty({"userId": user_id, "username": username, "host": host})
+        data = await self.http.request(Route('POST', '/api/users/show'), json=field, auth=True)
+        old_cache = Cache(namespace='get_user')
+        await old_cache.delete(kwargs['cache_key'].format('get_user'))
+        return User(upper_to_lower(data), state=self)
 
-    def _post_note(self,
-            content: str,
-            *,
-            visibility: str = "public",
-            visible_user_ids: Optional[List[str]] = None,
-            cw: Optional[str] = None,
-            local_only: bool = False,
-            no_extract_mentions: bool = False,
-            no_extract_hashtags: bool = False,
-            no_extract_emojis: bool = False,
-            reply_id: List[str] = [],
-            renote_id: Optional[str] = None,
-            channel_id: Optional[str] = None,
-            file_ids: List[File] = [],
-            poll: Optional[Poll] = None
-            ):
+    async def post_note(self,
+                        content: str,
+                        *,
+                        visibility: str = "public",
+                        visible_user_ids: Optional[List[str]] = None,
+                        cw: Optional[str] = None,
+                        local_only: bool = False,
+                        no_extract_mentions: bool = False,
+                        no_extract_hashtags: bool = False,
+                        no_extract_emojis: bool = False,
+                        reply_id: Optional[str] = None,
+                        renote_id: Optional[str] = None,
+                        channel_id: Optional[str] = None,
+                        file_ids=None,
+                        poll: Optional[Poll] = None
+                        ):
+        if file_ids is None:
+            file_ids = []
         field = {
             "visibility": visibility,
             "visibleUserIds": visible_user_ids,
@@ -480,25 +402,17 @@ class ConnectionState:
             "renoteId": renote_id,
             "channelId": channel_id
         }
+        if not check_multi_arg(content, file_ids, renote_id, poll):
+            raise ContentRequired("ノートの送信にはcontent, file_ids, renote_id またはpollのいずれか1つが無くてはいけません")
+
         if poll and len(poll.choices) > 0:
             field["poll"] = poll
         if file_ids:
             field["fileIds"] = file_ids
-        field = remove_empty_object(field)
-        print(field)
-        res = api("/api/notes/create", json_data=field, auth=True)
-        res_json = res.json()
-        if (
-                res_json.get("error")
-                and res_json.get("error", {}).get("code") == "CONTENT_REQUIRED"
-        ):
-            raise ContentRequired(
-                "ノートの送信にはtext, file, renote またはpollのいずれか1つが無くてはいけません")
-        return Note(
-            upper_to_lower(res_json["createdNote"],
-                           replace_list={"user": "author"})
-        ,state=self)
-        
+        field = remove_dict_empty(field)
+        res = await self.http.request(Route('POST', '/api/notes/create'), json=field, auth=True, lower=True)
+        return Note(res["created_note"], state=self)
+
     @staticmethod
     def _get_followers(
             user_id: Optional[str] = None,

@@ -3,7 +3,7 @@ import asyncio
 from types import ModuleType
 from typing import Any, Callable, Coroutine, Dict, Optional, Tuple
 
-from websockets.legacy.client import WebSocketClientProtocol
+from aiohttp.client_ws import ClientWebSocketResponse
 
 from mi.abc.ext.core import AbstractGroupMixin
 
@@ -32,7 +32,7 @@ class AbstractBotBase(AbstractGroupMixin):
         pass
 
     @abstractmethod
-    async def on_ready(self, ws: WebSocketClientProtocol):
+    async def on_ready(self, ws: ClientWebSocketResponse):
         pass
 
     @abstractmethod
@@ -102,8 +102,4 @@ class AbstractBotBase(AbstractGroupMixin):
 
     @abstractmethod
     async def on_error(self, err):
-        pass
-
-    @abstractmethod
-    def run(self, uri: str, token: str, debug: bool = False) -> None:
         pass

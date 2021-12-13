@@ -1,5 +1,5 @@
-requests
-websockets
+aiocache
+aiohttp
 pydantic
 emoji
 cython
