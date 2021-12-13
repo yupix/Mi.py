@@ -338,7 +338,7 @@ class Note(AbstractNote):
     ) -> Note:
         if file_ids is None:
             file_ids = []
-        return self._state.post_note(
+        return await self._state.post_note(
             content,
             visibility=self.visibility,
             visible_user_ids=self.visible_user_ids,
@@ -388,14 +388,8 @@ class Note(AbstractNote):
         .. deprecated:: 0.2.7
             :func:`send` のfile引数を使用するようにしてください
         """
-        self.file_ids.append(
-            self._state._add_file(
-                path, name=name, force=force, is_sensitive=is_sensitive,
-                url=url
-            ).id
-        )
-        return self
-
+        pass
+    
     def add_poll(
             self,
             item: Optional[str] = "",
@@ -403,17 +397,7 @@ class Note(AbstractNote):
             expired_after: Optional[int] = None,
             item_list: Optional[dict] = None,
     ) -> "Note":
-        poll = self.__poll_formatter()
-        self.poll = Poll(
-            self._state._add_poll(
-                item,
-                poll=poll,
-                expires_at=expires_at,
-                expired_after=expired_after,
-                item_list=item_list,
-            )
-        )
-        return self
+        pass
 
     async def add_reaction(self, reaction: str, note_id: str = None) -> bool:
         if note_id is None:
