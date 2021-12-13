@@ -19,24 +19,25 @@ def get_cache_key(func):
     async def decorator(self, *args, **kwargs):
         ordered_kwargs = sorted(kwargs.items())
         key = (
-            (func.__module__ or "")
-            + '.{0}'
-            + f'{self}'
-            + str(args)
-            + str(ordered_kwargs)
+                (func.__module__ or "")
+                + '.{0}'
+                + f'{self}'
+                + str(args)
+                + str(ordered_kwargs)
         )
         return await func(self, *args, **kwargs, cache_key=key)
+
     return decorator
 
 
 def key_builder(func, cls, *args, **kwargs):
     ordered_kwargs = sorted(kwargs.items())
     key = (
-        (func.__module__ or "")
-        + f'.{func.__name__}'
-        + f'{cls}'
-        + str(args)
-        + str(ordered_kwargs)
+            (func.__module__ or "")
+            + f'.{func.__name__}'
+            + f'{cls}'
+            + str(args)
+            + str(ordered_kwargs)
     )
     return key
 
@@ -264,7 +265,7 @@ def upper_to_lower(
         if replace_list.get(attr):
             default_key = default_key.replace(attr, replace_list.get(attr))
         field[default_key] = data[attr]
-        if type(field[default_key]) is dict and nest is True:
+        if type(field[default_key]) is dict and nest:
             field[default_key] = upper_to_lower(field[default_key])
     return field
 

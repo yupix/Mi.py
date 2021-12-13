@@ -85,7 +85,7 @@ class HTTPClient:
                 "description": "InternalServerError",
             },
         }
-        if res.status in errors.keys():
+        if res.status in errors:
             error_base: Dict[str, Any] = errors[res.status]
             error = error_base["raise"](
                 f"{error_base['description']} => {data['error']['message']}  \n {res.text}"
