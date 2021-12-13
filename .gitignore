@@ -12,3 +12,4 @@ __pycache__
 dist/*
 main.py
 cogs
+.setup.py.swp
