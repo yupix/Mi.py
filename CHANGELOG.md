@@ -65,8 +65,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Removed
 
-- **破壊的変更**: `WebSocket` クラスを削除しました
-- **破壊的変更**: `requests` ライブラリを削除しました
 - `Router` クラスから以下のメソッドを削除しました
     - main_channel
     - home_time_line
@@ -79,6 +77,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
     - `UserAction`
     - `UserProfile`
         - `UserProfile`にあったものは `User` に統合され、詳細な情報は `User` クラスの detailsオブジェクト(`UserDetails`) から取得可能です
+- **破壊的変更**: `WebSocket` クラスを削除しました
+    - 今後はaiohttpの `ws_connect` メソッドを使用します
+- **破壊的変更**: `requests` ライブラリを削除しました
+    - 今後はaiohttpの `request` メソッドを使用します
 
 ## [v0.2.5] 2021-10-07
 
