@@ -14,8 +14,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
     - MisskeyClientWebSocketResponse
     - Route
     - HTTPClient
-- `Client` に `post_chat` `delete_chat` メソッドを追加しました
-- `Client` に `post_note` メソッドを追加しました。今後のノート投稿はこちらを使用してください
+- Clientに以下のメソッドを追加
+    - post_chat
+    - delete_chat
+    - post_note
+        - 今後のノート投稿はこちらを使用してください 
+    - delete_note
+    - get_instance
+    - fetch_instance
+    - get_user
+    - fetch_user
 - `rich` を使ったデバッグ機能を追加しました
 - `file_upload` 関数を追加しました
 - `run` メソッドに `debug` 引数を追加しました
