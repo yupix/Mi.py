@@ -2,7 +2,6 @@ from __future__ import annotations
 
 from typing import Any, Dict, List, Optional, TYPE_CHECKING
 
-
 from mi import Emoji, utils
 from mi.exception import NotExistRequiredParameters
 from mi.user import User
@@ -209,7 +208,7 @@ class Note(AbstractNote):
         self.renote_count: int = data["renote_count"]
         self.replies_count: int = data["replies_count"]
         self.reactions: Dict[str, Any] = data["reactions"]
-        self.emojis: List[Emoji] = [Emoji(i) for i in data["emojis"]]
+        self.emojis: List[Emoji] = [Emoji(i, state=state) for i in data["emojis"]]
         self.file_ids: Optional[List[str]] = data["file_ids"]
         self.files: List[File] = [File(i, state=state) for i in data["files"]]
         self.reply_id: Optional[str] = data["reply_id"]
