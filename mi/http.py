@@ -69,14 +69,13 @@ class HTTPClient:
             data = await json_or_text(res)
             if is_lower:
                 data = upper_to_lower(data)
-            if res.status == 204:
-                return True
-            if 300 > res.status >= 200:
-                return data
-
         errors = {
             400: {"raise": exception.ClientError, "description": "Client Error"},
             401: {
+                "raise": exception.AuthenticationError,
+                "description": "AuthenticationError",
+            },
+            403: {
                 "raise": exception.AuthenticationError,
                 "description": "AuthenticationError",
             },
@@ -86,12 +85,18 @@ class HTTPClient:
                 "description": "InternalServerError",
             },
         }
-        if res.status in [400, 401, 418, 500]:
+        if res.status in errors.keys():
             error_base: Dict[str, Any] = errors[res.status]
             error = error_base["raise"](
                 f"{error_base['description']} => {data['error']['message']}  \n {res.text}"
             )
             raise error
+
+        if res.status == 204:
+            return True
+
+        if 300 > res.status >= 200:
+            return data
 
     async def static_login(self, token: str):
         self.token = token
