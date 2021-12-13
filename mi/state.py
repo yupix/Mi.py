@@ -49,6 +49,12 @@ class ConnectionState:
         self.logger.debug(f'recv event type: {channel_type}')
         getattr(self, f'parse_{channel_type}')(base_msg['body'])
 
+    def parse_reply(self, message: Dict[str, Any]) -> None:
+        """
+        リプライ
+        """
+        self.dispatch('message', Note(message, state=self))
+
     def parse_messaging_message(self, message: Dict[str, Any]) -> None:
         """
         チャットが来た際のデータを処理する関数
