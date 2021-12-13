@@ -15,8 +15,7 @@ from mi.exception import ContentRequired, InvalidParameters, NotExistRequiredPar
 from mi.http import Route
 from mi.iterators import InstanceIterator
 from mi.note import Note, Poll, Reaction
-from mi.utils import api, check_multi_arg, get_cache_key, get_module_logger, key_builder, remove_dict_empty, \
-    remove_empty_object, str_lower, upper_to_lower
+from mi.utils import api, check_multi_arg, get_cache_key, get_module_logger, key_builder, remove_dict_empty, str_lower, upper_to_lower
 
 if TYPE_CHECKING:
     from mi import HTTPClient
@@ -371,22 +370,22 @@ class ConnectionState:
         await old_cache.delete(kwargs['cache_key'].format('get_user'))
         return User(upper_to_lower(data), state=self)
 
-    def post_note(self,
-                  content: str,
-                  *,
-                  visibility: str = "public",
-                  visible_user_ids: Optional[List[str]] = None,
-                  cw: Optional[str] = None,
-                  local_only: bool = False,
-                  no_extract_mentions: bool = False,
-                  no_extract_hashtags: bool = False,
-                  no_extract_emojis: bool = False,
-                  reply_id: Optional[str] = None,
-                  renote_id: Optional[str] = None,
-                  channel_id: Optional[str] = None,
-                  file_ids=None,
-                  poll: Optional[Poll] = None
-                  ):
+    async def post_note(self,
+                        content: str,
+                        *,
+                        visibility: str = "public",
+                        visible_user_ids: Optional[List[str]] = None,
+                        cw: Optional[str] = None,
+                        local_only: bool = False,
+                        no_extract_mentions: bool = False,
+                        no_extract_hashtags: bool = False,
+                        no_extract_emojis: bool = False,
+                        reply_id: Optional[str] = None,
+                        renote_id: Optional[str] = None,
+                        channel_id: Optional[str] = None,
+                        file_ids=None,
+                        poll: Optional[Poll] = None
+                        ):
         if file_ids is None:
             file_ids = []
         field = {
