@@ -354,26 +354,6 @@ class Note(AbstractNote):
             poll=poll
         )
 
-    async def send(self) -> "Note":
-        poll = self.__poll_formatter()
-        return await self.__note_action.send(
-            visibility=self.visibility,
-            visible_user_ids=self.visible_user_ids,
-            text=self.content,
-            cw=self.cw,
-            via_mobile=self.via_mobile,
-            local_only=self.local_only,
-            no_extract_mentions=self.no_extract_mentions,
-            no_extract_hashtags=self.no_extract_hashtags,
-            no_extract_emojis=self.no_extract_emojis,
-            preview=self.preview,
-            geo=self.geo,
-            file_ids=self.file_ids,
-            reply_id=self.reply_id,
-            renote_id=self.renote_id,
-            channel_id=self.channel_id,
-            poll=poll,
-        )
 
     def add_file(
             self,
