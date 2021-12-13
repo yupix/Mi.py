@@ -100,7 +100,8 @@ class HTTPClient:
 
     async def static_login(self, token: str):
         self.token = token
-        self.__session = aiohttp.ClientSession(connector=self.connector, ws_response_class=MisskeyClientWebSocketResponse)
+        self.__session = aiohttp.ClientSession(
+            connector=self.connector, ws_response_class=MisskeyClientWebSocketResponse)
         data = await self.request(Route('POST', '/api/i'), auth=True)
         return data
 

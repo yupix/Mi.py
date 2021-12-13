@@ -10,7 +10,6 @@ from functools import cache
 from typing import Any, Callable, Coroutine, Dict, Iterator, List, Optional, TYPE_CHECKING, Tuple, Union
 
 import aiohttp
-from websockets.legacy.client import WebSocketClientProtocol
 
 from mi import User, config
 from mi.chat import Chat
@@ -129,7 +128,7 @@ class Client:
             *args: tuple[Any],
             **kwargs: Dict[Any, Any],
     ) -> asyncio.Task[Any]:
-        return asyncio.create_task(
+        return self.loop.create_task(
             self._run_event(coro, event_name, *args, **kwargs),
             name=f"MI.py: {event_name}",
         )

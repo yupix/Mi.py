@@ -1,14 +1,12 @@
 from __future__ import annotations
 
-import json
 from typing import Any, Dict, List, Optional, TYPE_CHECKING
 
-from pydantic import BaseModel
 
 from mi import Emoji, utils
-from mi.exception import ContentRequired, NotExistRequiredParameters
+from mi.exception import NotExistRequiredParameters
 from mi.user import User
-from mi.utils import api, check_multi_arg, remove_dict_empty
+from mi.utils import check_multi_arg
 from .abc.note import AbstractNote
 from .types.note import (Note as NotePayload,
                          Poll as PollPayload,

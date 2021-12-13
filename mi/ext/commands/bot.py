@@ -1,14 +1,13 @@
 """Commands FrameWork用のCore部分"""
 
+from __future__ import annotations
 import asyncio
 import importlib
 import inspect
 import sys
 import traceback
 from types import ModuleType
-from typing import Any, Callable, Coroutine, Dict, List, Optional, Tuple, Union
-
-from websockets.legacy.client import WebSocketClientProtocol
+from typing import TYPE_CHECKING, Any, Callable, Coroutine, Dict, List, Optional, Tuple, Union
 
 from mi import Client, User, utils
 from mi.abc.ext.bot import AbstractBotBase
@@ -25,10 +24,12 @@ from mi.exception import (
 from mi.ext.commands.context import Context
 from mi.ext.commands.core import GroupMixin
 from mi.ext.commands.view import StringView
+from mi.utils import get_module_logger
+
+if TYPE_CHECKING:
+    from aiohttp.client_ws import ClientWebSocketResponse
 
 __all__ = ["BotBase", "Bot"]
-
-from mi.utils import get_module_logger
 
 
 class BotBase(GroupMixin, AbstractBotBase):
@@ -99,13 +100,13 @@ class BotBase(GroupMixin, AbstractBotBase):
     async def _on_message(self, message):
         await self.process_commands(message)
 
-    async def on_ready(self, ws: WebSocketClientProtocol):
+    async def on_ready(self, ws: ClientWebSocketResponse):
         """
         on_readyのデフォルト処理
 
         Parameters
         ----------
-        ws : WebSocketClientProtocol
+        ws : ClientWebSocketResponse
         """
 
     def event(self, name: Optional[str] = None):

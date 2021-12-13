@@ -1,16 +1,19 @@
 """
 Misskeyのチャンネルへの接続や、メッセージのキャプチャ等のWebSocket関連
 """
-
-from typing import List
+from __future__ import annotations
+from typing import TYPE_CHECKING, List
 import uuid
+
+if TYPE_CHECKING:
+    from aiohttp.client_ws import ClientWebSocketResponse
 
 
 class Router:
     """
     Attributes
     ----------
-    web_socket : WebSocketClientProtocol
+    web_socket : ClientWebSocketResponse
         WebSocketクライアント
 
     Methods
@@ -29,8 +32,8 @@ class Router:
         与えられたメッセージを元にnote idを取得し、そのメッセージをon_message等の監視対象に追加します
     """
 
-    def __init__(self, web_socket):
-        self.web_socket = web_socket
+    def __init__(self, web_socket: ClientWebSocketResponse):
+        self.web_socket:ClientWebSocketResponse = web_socket
 
     async def connect_channel(self, channel_list: List[str]) -> None:
         """
@@ -78,6 +81,7 @@ class Router:
         -------
         None: None
         """
+        print('caputure')
         await self.web_socket.send_json(
             {"type": "subNote", "body": {"id": f"{message_id}"}}
         )

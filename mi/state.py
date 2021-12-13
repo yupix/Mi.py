@@ -104,7 +104,9 @@ class ConnectionState:
         """
         ノートイベントを解析する関数
         """
-        self.dispatch('message', Note(message, state=self))
+        note = Note(message, state=self)
+        #Router(self.http.ws).capture_message(note.id) TODO: caputure message
+        self.dispatch('message', note)
 
     @staticmethod
     def follow_user(user_id: str) -> tuple[bool, Optional[str]]:
