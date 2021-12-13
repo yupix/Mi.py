@@ -14,6 +14,7 @@ from mi import config, exception
 
 T = TypeVar("T")
 
+
 def get_cache_key(func):
     async def decorator(self, *args, **kwargs):
         ordered_kwargs = sorted(kwargs.items())
@@ -24,8 +25,9 @@ def get_cache_key(func):
             + str(args)
             + str(ordered_kwargs)
         )
-        return await func(self, *args, **kwargs, cache_key = key)
+        return await func(self, *args, **kwargs, cache_key=key)
     return decorator
+
 
 def key_builder(func, cls, *args, **kwargs):
     ordered_kwargs = sorted(kwargs.items())
@@ -37,6 +39,7 @@ def key_builder(func, cls, *args, **kwargs):
         + str(ordered_kwargs)
     )
     return key
+
 
 def get_module_logger(module_name):
     logger = logging.getLogger(module_name)
@@ -137,7 +140,7 @@ def api(
     """
     .. danger::
         開発者に向けての注意事項です。今後この関数ではdict **のみ** を返します。そのため早いうちに json()を使ったものを修正してください
-    
+
     Parameters
     ----------
     origin_uri : str
@@ -186,20 +189,6 @@ def api(
         return upper_to_lower(res.json())
     return res
 
-def remove_empty_object(data: Dict[str, Any]) -> Dict[str, Any]:
-    """
-    Parameters
-    ----------
-    data: dict
-        空のkeyを削除したいdict
-
-    Returns
-    -------
-    _data: Dict[str, Any]
-        空のkeyがなくなったdict
-    """
-    return remove_list_empty(remove_dict_empty(data))
-    
 
 def remove_list_empty(data: List[Any]) -> List[Any]:
     """
@@ -213,8 +202,8 @@ def remove_list_empty(data: List[Any]) -> List[Any]:
     _data: Dict[str, Any]
         空のkeyがなくなったdict
     """
-    
     return [k for k in data if k]
+
 
 def remove_dict_empty(data: Dict[str, Any]) -> Dict[str, Any]:
     """
@@ -231,6 +220,7 @@ def remove_dict_empty(data: Dict[str, Any]) -> Dict[str, Any]:
 
     _data = {}
     _data = {k: v for k, v in data.items() if v is not None}
+    _data = {k: v for k, v in data.items() if v}
     return _data
 
 
