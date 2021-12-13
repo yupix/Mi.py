@@ -3,12 +3,12 @@ from __future__ import annotations
 import asyncio
 import inspect
 import json
-from typing import Any, Callable, Dict, Iterator, List, Optional, TYPE_CHECKING
+from typing import Any, Callable, Dict, Iterator, List, Optional, TYPE_CHECKING, Union
 
 from aiocache import cached
 from aiocache.factory import Cache
 
-from mi import User
+from mi import Instance, InstanceMeta, User
 from mi.chat import Chat
 from mi.drive import Drive
 from mi.exception import ContentRequired, InvalidParameters, NotExistRequiredParameters
@@ -439,3 +439,21 @@ class ConnectionState:
             get_data = api("/api/users/followers", json_data=data,
                            auth=True).json()
             yield get_data
+
+    @cached(ttl=10, key_builder=key_builder, key='get_instance')
+    async def get_instance(self, host: Optional[str] = None, detail: bool = False) -> Union[InstanceMeta, Instance]:
+        if host is None:
+            data = await self.http.request(Route('POST', '/api/meta'), json={'detail': detail}, auth=True, lower=True)
+            return InstanceMeta(data, state=self)
+        data = await self.http.request(Route('POST', '/api/federation/show-instance'), json={'host': host}, auth=True,
+                                       lower=True)
+        return Instance(data, state=self)
+
+    @get_cache_key
+    async def fetch_instance(self, host: Optional[str] = None, **kwargs):
+        old_cache = Cache(namespace='get_instance')
+        await old_cache.delete(kwargs['cache_key'].format('get_instance'))
+        return await self.get_instance(host=host)
+
+    async def remove_emoji(self, emoji_id: str) -> bool:
+        return bool(await self.http.request(Route('POST', '/api/admin/emoji/remove'), json={'id': emoji_id}, auth=True))

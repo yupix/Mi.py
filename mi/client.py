@@ -6,12 +6,12 @@ import inspect
 import re
 import sys
 import traceback
-from functools import cache
 from typing import Any, Callable, Coroutine, Dict, Iterator, List, Optional, TYPE_CHECKING, Tuple, Union
 
 import aiohttp
+from aiohttp import ClientWebSocketResponse
 
-from mi import User, config
+from mi import Instance, InstanceMeta, User, config
 from mi.chat import Chat
 from mi.exception import InvalidParameters
 from mi.http import HTTPClient
@@ -43,7 +43,7 @@ class Client:
     def _get_state(self, **options: Any) -> ConnectionState:
         return ConnectionState(dispatch=self.dispatch, http=self.http, loop=self.loop, **options)
 
-    async def on_ready(self, ws: WebSocketClientProtocol):
+    async def on_ready(self, ws: ClientWebSocketResponse):
         """
         on_readyのデフォルト処理
 
@@ -251,31 +251,27 @@ class Client:
             for data in get_data:
                 yield Note(NotePayload(**upper_to_lower(data)), state=self._connection)
 
-    @staticmethod
-    @cache
-    def get_instance_meta() -> Dict[str, Tuple[str, List[str], Dict[str, Any]]]:
+    async def get_instance(self, host: Optional[str] = None) -> Union[Instance, InstanceMeta]:
         """
         BOTのアカウントがあるインスタンス情報をdictで返します。一度実行するとキャッシュされます。
 
         Returns
         -------
-        dict:
+        Union[Instance, InstanceMeta]:
             インスタンス情報
         """
-        return api("/api/meta").json()
+        return await self._connection.get_instance(host=host)
 
-    @staticmethod
-    def fetch_instance_meta() -> dict:
+    async def fetch_instance(self, host: Optional[str] = None) -> Union[Instance, InstanceMeta]:
         """
         BOTのアカウントがある最新のインスタンス情報をdictで返します
 
         Returns
         -------
-        dict:
+        Union[Instance, InstanceMeta]:
             インスタンス情報
         """
-        Client.get_instance_meta.cache_clear()
-        return api("/api/meta").json()
+        return await self._connection.fetch_instance(host=host)
 
     async def get_user(self, user_id: Optional[str] = None, username: Optional[str] = None,
                        host: Optional[str] = None) -> User:
@@ -288,8 +284,8 @@ class Client:
         user_id : str
             取得したいユーザーのユーザーID
         username : str
-            取得したいユーザーのユーザー名
         host : str, default=None
+            取得したいユーザーのユーザー名
             取得したいユーザーがいるインスタンスのhost
 
         Returns
@@ -386,7 +382,8 @@ class Client:
         return await self._connection.post_note(content, visibility=visibility, visible_user_ids=visible_user_ids, cw=cw,
                                                 local_only=local_only, no_extract_mentions=no_extract_mentions,
                                                 no_extract_hashtags=no_extract_hashtags, no_extract_emojis=no_extract_emojis,
-                                                reply_id=reply_id, renote_id=renote_id, channel_id=channel_id, file_ids=file_ids,
+                                                reply_id=reply_id, renote_id=renote_id, channel_id=channel_id,
+                                                file_ids=file_ids,
                                                 poll=poll)
 
     @staticmethod
@@ -436,9 +433,9 @@ class Client:
         if _origin_uri := re.search(r"wss?://(.*)/streaming", url):
             origin_uri = (
                 _origin_uri.group(0)
-                .replace("wss", "https")
-                .replace("ws", "http")
-                .replace("/streaming", "")
+                    .replace("wss", "https")
+                    .replace("ws", "http")
+                    .replace("/streaming", "")
             )
         else:
             origin_uri = url
@@ -494,9 +491,9 @@ class Client:
         if _origin_uri := re.search(r"wss?://(.*)/streaming", uri):
             origin_uri = (
                 _origin_uri.group(0)
-                .replace("wss", "https")
-                .replace("ws", "http")
-                .replace("/streaming", "")
+                    .replace("wss", "https")
+                    .replace("ws", "http")
+                    .replace("/streaming", "")
             )
         else:
             origin_uri = uri
@@ -509,7 +506,7 @@ class Client:
         config.debug = debug
         self.i = self._connection.get_i()
         auth_i["profile"] = self.i
-        auth_i["instance"] = self.get_instance_meta()
+        auth_i["instance"] = self.get_instance()
         config.i = config.Config(**auth_i)
         # asyncio.get_event_loop().run_until_complete(
         #     WebSocket(self).run(f"{uri}?i={token}")
