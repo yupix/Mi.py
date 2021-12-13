@@ -29,14 +29,14 @@ class Poll(TypedDict, total=False):
 
 
 class Renote(TypedDict):
-    id: Optional[str]
-    created_at: Optional[str]
-    user_id: Optional[str]
-    user: Optional[User]
-    content: Optional[str]
-    cw: Optional[str]
-    visibility: Optional[str]
-    renote_count: Optional[int]
+    id: str
+    created_at: str
+    user_id: str
+    user: User
+    text: str
+    cw: str
+    visibility: str
+    renote_count: int
     replies_count: Optional[int]
     reactions: Dict[str, Any]
     emojis: Optional[List]
