@@ -186,7 +186,7 @@
         <article role="main">
           <h1>mi.user のソースコード</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Iterator</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">TYPE_CHECKING</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">AsyncIterator</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Iterator</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">TYPE_CHECKING</span>
 
 <span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">BaseModel</span>
 
@@ -200,6 +200,16 @@
     <span class="kn">from</span> <span class="nn">mi</span> <span class="kn">import</span> <span class="n">ConnectionState</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'User'</span><span class="p">,</span> <span class="s1">'UserDetails'</span><span class="p">]</span>
+
+
+<span class="k">class</span> <span class="nc">Follower</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="n">ConnectionState</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">'id'</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">created_at</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">'created_at'</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">followee_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">'followee_id'</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">follower_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">'follower_id'</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="p">:</span> <span class="n">User</span> <span class="o">=</span> <span class="n">User</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">'follower'</span><span class="p">],</span> <span class="n">state</span><span class="o">=</span><span class="n">state</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_state</span> <span class="o">=</span> <span class="n">state</span>
 
 
 <span class="k">class</span> <span class="nc">Channel</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
@@ -370,7 +380,7 @@
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">UserPayload</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="n">ConnectionState</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">"id"</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">"name"</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"name"</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">username</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">"username"</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">host</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"host"</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">avatar_url</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"avatar_url"</span><span class="p">)</span>
@@ -399,12 +409,12 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">pinned_notes</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"pinned_notes"</span><span class="p">,</span> <span class="p">[])</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pinned_page_id</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"pinned_page_id"</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pinned_page</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"pinned_page"</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ff_visibility</span><span class="p">:</span><span class="nb">str</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"ff_visibility"</span><span class="p">,</span> <span class="s1">'public'</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">following</span><span class="p">:</span><span class="nb">bool</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"is_following"</span><span class="p">,</span> <span class="kc">False</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">followed</span><span class="p">:</span><span class="nb">bool</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"is_follow"</span><span class="p">,</span> <span class="kc">False</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">blocking</span><span class="p">:</span><span class="nb">bool</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"is_blocking"</span><span class="p">,</span> <span class="kc">False</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">blocked</span><span class="p">:</span><span class="nb">bool</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"is_blocked"</span><span class="p">,</span> <span class="kc">False</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">muted</span><span class="p">:</span><span class="nb">bool</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"is_muted"</span><span class="p">,</span> <span class="kc">False</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ff_visibility</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"ff_visibility"</span><span class="p">,</span> <span class="s1">'public'</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">following</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"is_following"</span><span class="p">,</span> <span class="kc">False</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">followed</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"is_follow"</span><span class="p">,</span> <span class="kc">False</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">blocking</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"is_blocking"</span><span class="p">,</span> <span class="kc">False</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">blocked</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"is_blocked"</span><span class="p">,</span> <span class="kc">False</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">muted</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"is_muted"</span><span class="p">,</span> <span class="kc">False</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">details</span> <span class="o">=</span> <span class="n">UserDetails</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_state</span> <span class="o">=</span> <span class="n">state</span>
 
@@ -412,11 +422,8 @@
             <span class="n">Instance</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">"instance"</span><span class="p">],</span> <span class="n">state</span><span class="p">)</span> <span class="k">if</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"instance"</span><span class="p">)</span> <span class="k">else</span> <span class="n">Instance</span><span class="p">({},</span> <span class="n">state</span><span class="p">)</span>
         <span class="p">)</span>
 
-    <span class="k">class</span> <span class="nc">Config</span><span class="p">:</span>
-        <span class="n">arbitrary_types_allowed</span> <span class="o">=</span> <span class="kc">True</span>
-
-    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">_get_followers</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
             <span class="n">user_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">username</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">host</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -455,36 +462,8 @@
 <span class="sd">        InvalidParameters</span>
 <span class="sd">            limit引数が不正な場合</span>
 <span class="sd">        """</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">check_multi_arg</span><span class="p">(</span><span class="n">user_id</span><span class="p">,</span> <span class="n">username</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="n">NotExistRequiredParameters</span><span class="p">(</span><span class="s2">"user_id, usernameどちらかは必須です"</span><span class="p">)</span>
-
-        <span class="k">if</span> <span class="n">limit</span> <span class="o">&gt;</span> <span class="mi">100</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">InvalidParameters</span><span class="p">(</span><span class="s2">"limit は100以上を受け付けません"</span><span class="p">)</span>
-
-        <span class="n">data</span> <span class="o">=</span> <span class="n">remove_dict_empty</span><span class="p">(</span>
-            <span class="p">{</span>
-                <span class="s2">"userId"</span><span class="p">:</span> <span class="n">user_id</span><span class="p">,</span>
-                <span class="s2">"username"</span><span class="p">:</span> <span class="n">username</span><span class="p">,</span>
-                <span class="s2">"host"</span><span class="p">:</span> <span class="n">host</span><span class="p">,</span>
-                <span class="s2">"sinceId"</span><span class="p">:</span> <span class="n">since_id</span><span class="p">,</span>
-                <span class="s2">"untilId"</span><span class="p">:</span> <span class="n">until_id</span><span class="p">,</span>
-                <span class="s2">"limit"</span><span class="p">:</span> <span class="n">limit</span><span class="p">,</span>
-            <span class="p">}</span>
-        <span class="p">)</span>
-        <span class="k">if</span> <span class="n">get_all</span><span class="p">:</span>
-            <span class="n">loop</span> <span class="o">=</span> <span class="kc">True</span>
-            <span class="k">while</span> <span class="n">loop</span><span class="p">:</span>
-                <span class="n">get_data</span> <span class="o">=</span> <span class="n">api</span><span class="p">(</span><span class="s2">"/api/users/followers"</span><span class="p">,</span> <span class="n">json_data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span>
-                               <span class="n">auth</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
-                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">get_data</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-                    <span class="n">data</span><span class="p">[</span><span class="s2">"untilId"</span><span class="p">]</span> <span class="o">=</span> <span class="n">get_data</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="s2">"id"</span><span class="p">]</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="k">break</span>
-                <span class="k">yield</span> <span class="n">get_data</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">get_data</span> <span class="o">=</span> <span class="n">api</span><span class="p">(</span><span class="s2">"/api/users/followers"</span><span class="p">,</span> <span class="n">json_data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span>
-                           <span class="n">auth</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
-            <span class="k">yield</span> <span class="n">get_data</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">get_followers</span><span class="p">(</span><span class="n">user_id</span><span class="o">=</span><span class="n">user_id</span><span class="p">,</span> <span class="n">username</span><span class="o">=</span><span class="n">username</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="n">host</span><span class="p">,</span> <span class="n">since_id</span><span class="o">=</span><span class="n">since_id</span><span class="p">,</span> <span class="n">until_id</span><span class="o">=</span><span class="n">until_id</span><span class="p">,</span>
+                                         <span class="n">limit</span><span class="o">=</span><span class="n">limit</span><span class="p">,</span> <span class="n">get_all</span><span class="o">=</span><span class="n">get_all</span><span class="p">)</span>
 
 <div class="viewcode-block" id="User.follow"><a class="viewcode-back" href="../../mi.html#mi.User.follow">[ドキュメント]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">follow</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
         <span class="sd">"""</span>
@@ -528,8 +507,7 @@
             <span class="p">)</span>
         <span class="p">)</span></div>
 
-<div class="viewcode-block" id="User.get_followers"><a class="viewcode-back" href="../../mi.html#mi.User.get_followers">[ドキュメント]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">get_followers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">until_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">limit</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="n">get_all</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span>
-        <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
+<div class="viewcode-block" id="User.get_followers"><a class="viewcode-back" href="../../mi.html#mi.User.get_followers">[ドキュメント]</a>    <span class="k">def</span> <span class="nf">get_followers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">until_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">limit</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="n">get_all</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncIterator</span><span class="p">[</span><span class="n">Follower</span><span class="p">]:</span>
         <span class="sd">"""</span>
 <span class="sd">        ユーザーのフォロワー一覧を取得します</span>
 <span class="sd">        Parameters</span>
@@ -545,14 +523,8 @@
 <span class="sd">        -------</span>
 
 <span class="sd">        """</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">_get_followers</span><span class="p">(</span>
-            <span class="n">user_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
-            <span class="n">username</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">username</span><span class="p">,</span>
-            <span class="n">host</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">host</span><span class="p">,</span>
-            <span class="n">limit</span><span class="o">=</span><span class="n">limit</span><span class="p">,</span>
-            <span class="n">until_id</span><span class="o">=</span><span class="n">until_id</span><span class="p">,</span>
-            <span class="n">get_all</span><span class="o">=</span><span class="n">get_all</span><span class="p">,</span>
-        <span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">get_followers</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">username</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">host</span><span class="p">,</span> <span class="n">until_id</span><span class="o">=</span><span class="n">until_id</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="n">limit</span><span class="p">,</span>
+                                         <span class="n">get_all</span><span class="o">=</span><span class="n">get_all</span><span class="p">)</span></div></div>
 </pre></div>
         </article>
       </div>

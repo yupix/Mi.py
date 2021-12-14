@@ -238,6 +238,7 @@
 
 
 <div class="viewcode-block" id="OptionalUser"><a class="viewcode-back" href="../../../mi.types.html#mi.types.user.OptionalUser">[ドキュメント]</a><span class="k">class</span> <span class="nc">OptionalUser</span><span class="p">(</span><span class="n">TypedDict</span><span class="p">,</span> <span class="n">total</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">host</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">is_admin</span><span class="p">:</span> <span class="nb">bool</span>
     <span class="n">is_moderator</span><span class="p">:</span> <span class="nb">bool</span>
@@ -249,7 +250,6 @@
 
 <div class="viewcode-block" id="User"><a class="viewcode-back" href="../../../mi.types.html#mi.types.user.User">[ドキュメント]</a><span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">OptionalUser</span><span class="p">):</span>
     <span class="nb">id</span><span class="p">:</span> <span class="nb">str</span>
-    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">username</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">avatar_url</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
     <span class="n">avatar_blurhash</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
