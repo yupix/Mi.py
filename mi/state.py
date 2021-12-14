@@ -194,48 +194,6 @@ class ConnectionState:
         res = await self.http.request(Route('POST', '/api/notes/delete'), json=data, auth=True)
         return bool(res)
 
-    @staticmethod
-    def _add_poll(
-            item: Optional[str] = None,
-            *,
-            poll: Optional[dict],
-            expires_at: Optional[int] = None,
-            expired_after: Optional[int] = None,
-            item_list: Optional[List] = None
-    ) -> dict:
-        """
-        アンケートを作成します
-
-        Parameters
-        ----------
-        poll : Optional[dict]
-            既にあるpollを使用する
-        item_list : Optional[List]
-            アンケート選択肢を配列にしたもの
-        item: Optional[str]
-            アンケートの選択肢(単体)
-        expires_at : Optional[int]
-            いつにアンケートを締め切るか 例:2021-09-02T15:00:00.000Z
-        expired_after : Optional[int]
-            投稿後何秒後にアンケートを締め切るか(秒)
-
-        Returns
-        -------
-        poll: dict
-        """
-        if poll is None:
-            poll = {
-                "choices": [],
-                "expiresAt": expires_at,
-                "expiredAfter": expired_after,
-            }
-        if item:
-            poll["choices"].append(item)
-        if item_list:
-            poll["choices"].extend(item_list)
-
-        return poll
-
     @cached(ttl=10, namespace='get_user', key_builder=key_builder)
     async def get_user(self, user_id: Optional[str] = None, username: Optional[str] = None,
                        host: Optional[str] = None) -> User:
@@ -272,8 +230,8 @@ class ConnectionState:
         return bool(data)
 
     @get_cache_key
-    async def _fetch_user(self, user_id: Optional[str] = None, username: Optional[str] = None,
-                          host: Optional[str] = None, **kwargs) -> User:
+    async def fetch_user(self, user_id: Optional[str] = None, username: Optional[str] = None,
+                         host: Optional[str] = None, **kwargs) -> User:
         """
         サーバーにアクセスし、ユーザーのプロフィールを取得します。基本的には get_userをお使いください。
 
