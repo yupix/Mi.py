@@ -61,14 +61,17 @@ class HTTPClient:
             kwargs['data'] = kwargs.pop('json')
         is_lower = kwargs.pop('lower') if kwargs.get('lower') else False
 
-        if kwargs.pop('auth'):
+        if kwargs.get('auth') and kwargs.pop('auth'):
             if kwargs.get('json') is None:
                 kwargs['json'] = {}
             kwargs['json']['i'] = self.token
         async with self.__session.request(route.method, route.url, **kwargs) as res:
             data = await json_or_text(res)
             if is_lower:
-                data = upper_to_lower(data)
+                if type(data) is list:
+                    data = [upper_to_lower(i) for i in data]
+                else:
+                    data = upper_to_lower(data)
         errors = {
             400: {"raise": exception.ClientError, "description": "Client Error"},
             401: {
@@ -78,6 +81,10 @@ class HTTPClient:
             403: {
                 "raise": exception.AuthenticationError,
                 "description": "AuthenticationError",
+            },
+            404: {
+                'raise': exception.NotFoundError,
+                'description': 'NotFoundError'
             },
             418: {"raise": exception.ImAi, "description": "I'm Ai"},
             500: {
