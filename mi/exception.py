@@ -17,9 +17,12 @@ __all__ = (
     "ClientError",
     "ImAi",
     "InternalServerError",
-    "TaskNotRunningError"
+    "TaskNotRunningError",
+    "NotFoundError"
 )
 
+class NotFoundError(Exception):
+    pass
 class TaskNotRunningError(Exception):
     pass
 
