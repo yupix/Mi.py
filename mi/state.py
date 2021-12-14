@@ -3,7 +3,7 @@ from __future__ import annotations
 import asyncio
 import inspect
 import json
-from typing import Any, Callable, Dict, Iterator, List, Optional, TYPE_CHECKING, Union
+from typing import Any, AsyncIterator, Callable, Dict, Iterator, List, Optional, TYPE_CHECKING, Union
 
 from aiocache import cached
 from aiocache.factory import Cache
@@ -15,6 +15,7 @@ from mi.exception import ContentRequired, InvalidParameters, NotExistRequiredPar
 from mi.http import Route
 from mi.iterators import InstanceIterator
 from mi.note import Note, Poll, Reaction
+from mi.user import Follower
 from mi.utils import api, check_multi_arg, get_cache_key, get_module_logger, key_builder, remove_dict_empty, str_lower, \
     upper_to_lower
 
@@ -55,6 +56,9 @@ class ConnectionState:
         """
         self.dispatch('message', Note(message, state=self))
 
+    def parse_read_all_notifications(self, message: Dict[str, Any]) -> None:
+        pass # TODO:実装
+
     def parse_messaging_message(self, message: Dict[str, Any]) -> None:
         """
         チャットが来た際のデータを処理する関数
@@ -82,6 +86,9 @@ class ConnectionState:
         """
         notification_type = str_lower(message['type'])
         getattr(self, f'parse_{notification_type}')(message)
+
+    def parse_poll_vote(self, message: Dict[str, Any]) -> None:
+        pass # TODO: 実装
 
     def parse_unread_notification(self, message: Dict[str, Any]) -> None:
         """
@@ -300,8 +307,8 @@ class ConnectionState:
         res = await self.http.request(Route('POST', '/api/notes/create'), json=field, auth=True, lower=True)
         return Note(res["created_note"], state=self)
 
-    @staticmethod
-    def _get_followers(
+    async def get_followers(
+            self,
             user_id: Optional[str] = None,
             username: Optional[str] = None,
             host: Optional[str] = None,
@@ -309,7 +316,7 @@ class ConnectionState:
             until_id: Optional[str] = None,
             limit: int = 10,
             get_all: bool = False,
-    ) -> Iterator[Dict[str, Any]]:
+    ) -> AsyncIterator[Follower]:
         """
         与えられたユーザーのフォロワーを取得します
         Parameters
@@ -355,17 +362,15 @@ class ConnectionState:
         if get_all:
             loop = True
             while loop:
-                get_data = api("/api/users/followers", json_data=data,
-                               auth=True).json()
+                get_data = await self.http.request(Route('POST', '/api/users/followers'), json=data, auth=True, lower=True)
                 if len(get_data) > 0:
                     data["untilId"] = get_data[-1]["id"]
                 else:
                     break
-                yield get_data
+                for i in [Follower(i, state=self) for i in get_data]: yield i
         else:
-            get_data = api("/api/users/followers", json_data=data,
-                           auth=True).json()
-            yield get_data
+            get_data = await self.http.request(Route('POST', '/api/users/followers'), json=data, auth=True, lower=True)
+            for i in [Follower(i, state=self) for i in get_data]: yield i
 
     @cached(ttl=10, key_builder=key_builder, key='get_instance')
     async def get_instance(self, host: Optional[str] = None, detail: bool = False) -> Union[InstanceMeta, Instance]:

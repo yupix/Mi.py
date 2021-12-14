@@ -1,5 +1,5 @@
 from __future__ import annotations
-from typing import Any, Dict, Iterator, List, Optional, TYPE_CHECKING
+from typing import Any, AsyncIterator, Dict, Iterator, List, Optional, TYPE_CHECKING
 
 from pydantic import BaseModel
 
@@ -13,6 +13,16 @@ if TYPE_CHECKING:
     from mi import ConnectionState
 
 __all__ = ['User', 'UserDetails']
+
+
+class Follower:
+    def __init__(self, data, state: ConnectionState):
+        self.id: str = data['id']
+        self.created_at: str = data['created_at']
+        self.followee_id: str = data['followee_id']
+        self.follower_id: str = data['follower_id']
+        self.user: User = User(data['follower'], state=state)
+        self._state = state
 
 
 class Channel(BaseModel):
@@ -183,7 +193,7 @@ class User:
 
     def __init__(self, data: UserPayload, state: ConnectionState):
         self.id: str = data["id"]
-        self.name: str = data["name"]
+        self.name: Optional[str] = data.get("name")
         self.username: str = data["username"]
         self.host: Optional[str] = data.get("host")
         self.avatar_url: Optional[str] = data.get("avatar_url")
@@ -212,12 +222,12 @@ class User:
         self.pinned_notes = data.get("pinned_notes", [])
         self.pinned_page_id = data.get("pinned_page_id")
         self.pinned_page = data.get("pinned_page")
-        self.ff_visibility:str = data.get("ff_visibility", 'public')
-        self.following:bool = bool(data.get("is_following", False))
-        self.followed:bool = bool(data.get("is_follow", False))
-        self.blocking:bool = bool(data.get("is_blocking", False))
-        self.blocked:bool = bool(data.get("is_blocked", False))
-        self.muted:bool = bool(data.get("is_muted", False))
+        self.ff_visibility: str = data.get("ff_visibility", 'public')
+        self.following: bool = bool(data.get("is_following", False))
+        self.followed: bool = bool(data.get("is_follow", False))
+        self.blocking: bool = bool(data.get("is_blocking", False))
+        self.blocked: bool = bool(data.get("is_blocked", False))
+        self.muted: bool = bool(data.get("is_muted", False))
         self.details = UserDetails(data)
         self._state = state
 
@@ -225,11 +235,8 @@ class User:
             Instance(data["instance"], state) if data.get("instance") else Instance({}, state)
         )
 
-    class Config:
-        arbitrary_types_allowed = True
-
-    @staticmethod
     def _get_followers(
+            self,
             user_id: Optional[str] = None,
             username: Optional[str] = None,
             host: Optional[str] = None,
@@ -268,36 +275,8 @@ class User:
         InvalidParameters
             limit引数が不正な場合
         """
-        if not check_multi_arg(user_id, username):
-            raise NotExistRequiredParameters("user_id, usernameどちらかは必須です")
-
-        if limit > 100:
-            raise InvalidParameters("limit は100以上を受け付けません")
-
-        data = remove_dict_empty(
-            {
-                "userId": user_id,
-                "username": username,
-                "host": host,
-                "sinceId": since_id,
-                "untilId": until_id,
-                "limit": limit,
-            }
-        )
-        if get_all:
-            loop = True
-            while loop:
-                get_data = api("/api/users/followers", json_data=data,
-                               auth=True).json()
-                if len(get_data) > 0:
-                    data["untilId"] = get_data[-1]["id"]
-                else:
-                    break
-                yield get_data
-        else:
-            get_data = api("/api/users/followers", json_data=data,
-                           auth=True).json()
-            yield get_data
+        return self._state.get_followers(user_id=user_id, username=username, host=host, since_id=since_id, until_id=until_id,
+                                         limit=limit, get_all=get_all)
 
     async def follow(self) -> tuple[bool, Optional[str]]:
         """
@@ -341,8 +320,7 @@ class User:
             )
         )
 
-    async def get_followers(self, until_id: Optional[str] = None, limit: int = 10, get_all: bool = False) -> Iterator[
-        Dict[str, Any]]:
+    def get_followers(self, until_id: Optional[str] = None, limit: int = 10, get_all: bool = False) -> AsyncIterator[Follower]:
         """
         ユーザーのフォロワー一覧を取得します
         Parameters
@@ -358,11 +336,5 @@ class User:
         -------
 
         """
-        return self._state._get_followers(
-            user_id=self.id,
-            username=self.username,
-            host=self.host,
-            limit=limit,
-            until_id=until_id,
-            get_all=get_all,
-        )
+        return self._state.get_followers(username=self.username, host=self.host, until_id=until_id, limit=limit,
+                                         get_all=get_all)

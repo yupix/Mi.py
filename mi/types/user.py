@@ -51,6 +51,7 @@ class PinnedPage(TypedDict):
 
 
 class OptionalUser(TypedDict, total=False):
+    name: str
     host: str
     is_admin: bool
     is_moderator: bool
@@ -62,7 +63,6 @@ class OptionalUser(TypedDict, total=False):
 
 class User(OptionalUser):
     id: str
-    name: str
     username: str
     avatar_url: Optional[str]
     avatar_blurhash: Optional[str]
