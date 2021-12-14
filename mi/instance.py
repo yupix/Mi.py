@@ -13,7 +13,6 @@ if TYPE_CHECKING:
 
 class InstanceMeta:
     def __init__(self, data: InstanceMetaPayload, state: ConnectionState):
-        print(data)
         self.maintainer_name: str = data['maintainer_name']
         self.maintainer_email: str = data['maintainer_email']
         self.version: str = data['version']
