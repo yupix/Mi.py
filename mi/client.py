@@ -370,6 +370,27 @@ class Client:
             raise InvalidParameters("path または url のどちらかは必須です")
         return res
 
+    async def show_file(self, file_id: Optional[str] = None, url: Optional[str] = None) -> Drive:
+        """
+        ファイルの情報を取得します。
+
+        Parameters
+        ----------
+        file_id : Optional[str], default=None
+            ファイルのID
+        url : Optional[str], default=None
+            ファイルのURL
+
+        Returns
+        -------
+        Drive
+            ファイルの情報
+        """        """"""
+        return await self._connection.show_file(file_id=file_id, url=url)
+
+    async def remove_file(self, file_id: str) -> bool:
+        return await self._connection.remove_file(file_id=file_id)
+
     async def post_note(self,
                         content: str,
                         *,

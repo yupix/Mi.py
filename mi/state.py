@@ -389,3 +389,10 @@ class ConnectionState:
 
     async def remove_emoji(self, emoji_id: str) -> bool:
         return bool(await self.http.request(Route('POST', '/api/admin/emoji/remove'), json={'id': emoji_id}, auth=True))
+
+    async def show_file(self, file_id: Optional[str], url:Optional[str]) -> Drive:
+        data = remove_dict_empty({"fileId": file_id, "url": url})
+        return Drive(await self.http.request(Route('POST', '/api/admin/drive/show-file'), json=data, auth=True, lower=True), state=self)
+    
+    async def remove_file(self, file_id: str) -> bool:
+        return bool(await self.http.request(Route('POST', '/api/drive/files/delete'), json={'fileId': file_id}, auth=True))
