@@ -1,7 +1,10 @@
-from typing import Any, Dict, Optional
+from __future__ import annotations
+from typing import TYPE_CHECKING, Any, Dict
 
 from pydantic import BaseModel
 
+if TYPE_CHECKING:
+    from .state import ConnectionState
 
 class Properties(BaseModel):
     width: int
@@ -38,15 +41,17 @@ class File(BaseModel):
     user: Dict[str, Any]
 
 
-class Drive(BaseModel):
-    id: Optional[str] = None
-    created_at: Optional[str] = None
-    name: Optional[str] = None
-    type: Optional[str] = None
-    md5: Optional[str] = None
-    size: Optional[int] = None
-    url: Optional[str] = None
-    folder_id: Optional[str] = None
-    is_sensitive: Optional[bool] = False
-    blurhash: Optional[str] = None
+class Drive:
+    def __init__(self, data, state: ConnectionState) -> None:
+        self.id: str = data['id']
+        self.created_at: str = data['created_at']
+        self.name: str = data['name']
+        self.type: str=  data['type']
+        self.md5: str = data['md5']
+        self.size: int = data['size']
+        self.url: str = data['url']
+        self.folder_id: str = data['folder_id']
+        self.is_sensitive: bool = data['is_sensitive']
+        self.blurhash: str = data['blurhash']
+        self._state = state
 
