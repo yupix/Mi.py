@@ -13,6 +13,7 @@ from aiohttp import ClientWebSocketResponse
 
 from mi import Instance, InstanceMeta, User, config
 from mi.chat import Chat
+from mi.drive import Drive
 from mi.exception import InvalidParameters
 from mi.http import HTTPClient
 from mi.note import Note
@@ -277,7 +278,7 @@ class Client:
         """
         BOTアカウントの情報を取得します
         """
-        
+
         return await self._connection.get_i()
 
     async def get_user(self, user_id: Optional[str] = None, username: Optional[str] = None,
@@ -461,9 +462,9 @@ class Client:
         if _origin_uri := re.search(r"wss?://(.*)/streaming", url):
             origin_uri = (
                 _origin_uri.group(0)
-                    .replace("wss", "https")
-                    .replace("ws", "http")
-                    .replace("/streaming", "")
+                .replace("wss", "https")
+                .replace("ws", "http")
+                .replace("/streaming", "")
             )
         else:
             origin_uri = url
