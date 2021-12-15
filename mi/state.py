@@ -50,14 +50,35 @@ class ConnectionState:
         self.logger.debug(f'recv event type: {channel_type}')
         getattr(self, f'parse_{channel_type}')(base_msg['body'])
 
+    def parse_read_all_announcements(self, message: Dict[str, Any]) -> None:
+        pass  # TODO: 実装
+
     def parse_reply(self, message: Dict[str, Any]) -> None:
         """
         リプライ
         """
         self.dispatch('message', Note(message, state=self))
 
+    def parse_followed(self, message: Dict[str, Any]) -> None:
+        """
+        フォローイベントを解析する関数
+        """
+        #self.dispatch('follow', Follower(message, state=self))
+
+    def parse_drive_file_created(self, message: Dict[str, Any]) -> None:
+        pass  # TODO: 実装
+
+    def parse_read_all_unread_mentions(self, message: Dict[str, Any]) -> None:
+        pass  # TODO:実装
+
+    def parse_read_all_unread_specified_notes(self, message: Dict[str, Any]) -> None:
+        pass  # TODO:実装
+
+    def parse_read_all_channels(self, message: Dict[str, Any]) -> None:
+        pass  # TODO:実装
+
     def parse_read_all_notifications(self, message: Dict[str, Any]) -> None:
-        pass # TODO:実装
+        pass  # TODO:実装
 
     def parse_messaging_message(self, message: Dict[str, Any]) -> None:
         """
@@ -88,7 +109,7 @@ class ConnectionState:
         getattr(self, f'parse_{notification_type}')(message)
 
     def parse_poll_vote(self, message: Dict[str, Any]) -> None:
-        pass # TODO: 実装
+        pass  # TODO: 実装
 
     def parse_unread_notification(self, message: Dict[str, Any]) -> None:
         """
@@ -367,10 +388,12 @@ class ConnectionState:
                     data["untilId"] = get_data[-1]["id"]
                 else:
                     break
-                for i in [Follower(i, state=self) for i in get_data]: yield i
+                for i in [Follower(i, state=self) for i in get_data]:
+                    yield i
         else:
             get_data = await self.http.request(Route('POST', '/api/users/followers'), json=data, auth=True, lower=True)
-            for i in [Follower(i, state=self) for i in get_data]: yield i
+            for i in [Follower(i, state=self) for i in get_data]:
+                yield i
 
     @cached(ttl=10, key_builder=key_builder, key='get_instance')
     async def get_instance(self, host: Optional[str] = None, detail: bool = False) -> Union[InstanceMeta, Instance]:
