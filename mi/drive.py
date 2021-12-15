@@ -55,3 +55,14 @@ class Drive:
         self.blurhash: str = data['blurhash']
         self._state = state
 
+    async def delete(self) -> bool:
+        """
+        ファイルを削除します。
+
+        Returns
+        -------
+        bool
+            削除に成功したかどうか
+        """
+        
+        return await self._state.remove_file(self.id)
