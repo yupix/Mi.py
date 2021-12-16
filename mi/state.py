@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import asyncio
 import inspect
-import json
 from typing import Any, AsyncIterator, Callable, Dict, Iterator, List, Optional, TYPE_CHECKING, Union
 
 from aiocache import cached
@@ -21,6 +20,7 @@ from mi.utils import api, check_multi_arg, get_cache_key, get_module_logger, key
 
 if TYPE_CHECKING:
     from mi import HTTPClient
+    from mi.types import (Note as NotePayload, Chat as ChatPayload)
 
 
 class ConnectionState:
@@ -53,7 +53,7 @@ class ConnectionState:
     def parse_read_all_announcements(self, message: Dict[str, Any]) -> None:
         pass  # TODO: 実装
 
-    def parse_reply(self, message: Dict[str, Any]) -> None:
+    def parse_reply(self, message: NotePayload) -> None:
         """
         リプライ
         """
@@ -92,7 +92,7 @@ class ConnectionState:
     def parse_read_all_notifications(self, message: Dict[str, Any]) -> None:
         pass  # TODO:実装
 
-    def parse_messaging_message(self, message: Dict[str, Any]) -> None:
+    def parse_messaging_message(self, message: ChatPayload) -> None:
         """
         チャットが来た際のデータを処理する関数
         """
@@ -425,9 +425,9 @@ class ConnectionState:
     async def remove_emoji(self, emoji_id: str) -> bool:
         return bool(await self.http.request(Route('POST', '/api/admin/emoji/remove'), json={'id': emoji_id}, auth=True))
 
-    async def show_file(self, file_id: Optional[str], url:Optional[str]) -> Drive:
+    async def show_file(self, file_id: Optional[str], url: Optional[str]) -> Drive:
         data = remove_dict_empty({"fileId": file_id, "url": url})
         return Drive(await self.http.request(Route('POST', '/api/admin/drive/show-file'), json=data, auth=True, lower=True), state=self)
-    
+
     async def remove_file(self, file_id: str) -> bool:
         return bool(await self.http.request(Route('POST', '/api/drive/files/delete'), json={'fileId': file_id}, auth=True))
