@@ -59,11 +59,23 @@ class ConnectionState:
         """
         self.dispatch('message', Note(message, state=self))
 
+    def parse_follow(self, message: Dict[str, Any]) -> None:
+        """
+        ユーザーをフォローした際のイベントを解析する関数
+        """
+
+        #self.dispatch('follow', Follower(message, state=self))
+
     def parse_followed(self, message: Dict[str, Any]) -> None:
         """
         フォローイベントを解析する関数
         """
         #self.dispatch('follow', Follower(message, state=self))
+
+    def parse_mention(self, message: Dict[str, Any]) -> None:
+        """
+        メンションイベントを解析する関数
+        """
 
     def parse_drive_file_created(self, message: Dict[str, Any]) -> None:
         pass  # TODO: 実装
