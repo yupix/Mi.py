@@ -235,49 +235,6 @@ class User:
             Instance(data["instance"], state) if data.get("instance") else Instance({}, state)
         )
 
-    def _get_followers(
-            self,
-            user_id: Optional[str] = None,
-            username: Optional[str] = None,
-            host: Optional[str] = None,
-            since_id: Optional[str] = None,
-            until_id: Optional[str] = None,
-            limit: int = 10,
-            get_all: bool = False,
-    ) -> Iterator[Dict[str, Any]]:
-        """
-        与えられたユーザーのフォロワーを取得します
-
-        Parameters
-        ----------
-        user_id : str, default=None
-            ユーザーのid
-        username : str, default=None
-            ユーザー名
-        host : str, default=None
-            ユーザーがいるインスタンスのhost名
-        since_id : str, default=None
-            謎
-        until_id : str, default=None
-            前回の最後の値を与える(既に実行し取得しきれない場合に使用)
-        limit : int, default=10
-            取得する情報の最大数 max: 100
-        get_all : bool, default=False
-            全てのフォロワーを取得する
-
-        Yields
-        ------
-        dict
-            フォロワーの情報
-
-        Raises
-        ------
-        InvalidParameters
-            limit引数が不正な場合
-        """
-        return self._state.get_followers(user_id=user_id, username=username, host=host, since_id=since_id, until_id=until_id,
-                                         limit=limit, get_all=get_all)
-
     async def follow(self) -> tuple[bool, Optional[str]]:
         """
         ユーザーをフォローします
