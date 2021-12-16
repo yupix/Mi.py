@@ -270,12 +270,7 @@ class User:
         User:
             ユーザーのプロフィールオブジェクト
         """
-        return User(
-            **upper_to_lower(
-                self._state._get_user(user_id=self.id, username=self.username,
-                                      host=self.host)
-            )
-        )
+        return await self._state.get_user(user_id=self.id, username=self.username, host=self.host)
 
     def get_followers(self, until_id: Optional[str] = None, limit: int = 10, get_all: bool = False) -> AsyncIterator[Follower]:
         """
