@@ -293,10 +293,10 @@ class ConnectionState:
             raise NotExistRequiredParameters("user_id, usernameどちらかは必須です")
 
         field = remove_dict_empty({"userId": user_id, "username": username, "host": host})
-        data = await self.http.request(Route('POST', '/api/users/show'), json=field, auth=True)
+        data = await self.http.request(Route('POST', '/api/users/show'), json=field, auth=True, lower=True)
         old_cache = Cache(namespace='get_user')
         await old_cache.delete(kwargs['cache_key'].format('get_user'))
-        return User(upper_to_lower(data), state=self)
+        return User(data, state=self)
 
     async def post_note(self,
                         content: str,
