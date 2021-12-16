@@ -422,49 +422,6 @@
             <span class="n">Instance</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">"instance"</span><span class="p">],</span> <span class="n">state</span><span class="p">)</span> <span class="k">if</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"instance"</span><span class="p">)</span> <span class="k">else</span> <span class="n">Instance</span><span class="p">({},</span> <span class="n">state</span><span class="p">)</span>
         <span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_get_followers</span><span class="p">(</span>
-            <span class="bp">self</span><span class="p">,</span>
-            <span class="n">user_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-            <span class="n">username</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-            <span class="n">host</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-            <span class="n">since_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-            <span class="n">until_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-            <span class="n">limit</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
-            <span class="n">get_all</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
-        <span class="sd">"""</span>
-<span class="sd">        与えられたユーザーのフォロワーを取得します</span>
-
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        user_id : str, default=None</span>
-<span class="sd">            ユーザーのid</span>
-<span class="sd">        username : str, default=None</span>
-<span class="sd">            ユーザー名</span>
-<span class="sd">        host : str, default=None</span>
-<span class="sd">            ユーザーがいるインスタンスのhost名</span>
-<span class="sd">        since_id : str, default=None</span>
-<span class="sd">            謎</span>
-<span class="sd">        until_id : str, default=None</span>
-<span class="sd">            前回の最後の値を与える(既に実行し取得しきれない場合に使用)</span>
-<span class="sd">        limit : int, default=10</span>
-<span class="sd">            取得する情報の最大数 max: 100</span>
-<span class="sd">        get_all : bool, default=False</span>
-<span class="sd">            全てのフォロワーを取得する</span>
-
-<span class="sd">        Yields</span>
-<span class="sd">        ------</span>
-<span class="sd">        dict</span>
-<span class="sd">            フォロワーの情報</span>
-
-<span class="sd">        Raises</span>
-<span class="sd">        ------</span>
-<span class="sd">        InvalidParameters</span>
-<span class="sd">            limit引数が不正な場合</span>
-<span class="sd">        """</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">get_followers</span><span class="p">(</span><span class="n">user_id</span><span class="o">=</span><span class="n">user_id</span><span class="p">,</span> <span class="n">username</span><span class="o">=</span><span class="n">username</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="n">host</span><span class="p">,</span> <span class="n">since_id</span><span class="o">=</span><span class="n">since_id</span><span class="p">,</span> <span class="n">until_id</span><span class="o">=</span><span class="n">until_id</span><span class="p">,</span>
-                                         <span class="n">limit</span><span class="o">=</span><span class="n">limit</span><span class="p">,</span> <span class="n">get_all</span><span class="o">=</span><span class="n">get_all</span><span class="p">)</span>
-
 <div class="viewcode-block" id="User.follow"><a class="viewcode-back" href="../../mi.html#mi.User.follow">[ドキュメント]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">follow</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
         <span class="sd">"""</span>
 <span class="sd">        ユーザーをフォローします</span>
@@ -500,12 +457,7 @@
 <span class="sd">        User:</span>
 <span class="sd">            ユーザーのプロフィールオブジェクト</span>
 <span class="sd">        """</span>
-        <span class="k">return</span> <span class="n">User</span><span class="p">(</span>
-            <span class="o">**</span><span class="n">upper_to_lower</span><span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">_get_user</span><span class="p">(</span><span class="n">user_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">username</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">username</span><span class="p">,</span>
-                                      <span class="n">host</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">host</span><span class="p">)</span>
-            <span class="p">)</span>
-        <span class="p">)</span></div>
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">get_user</span><span class="p">(</span><span class="n">user_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">username</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">username</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">host</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="User.get_followers"><a class="viewcode-back" href="../../mi.html#mi.User.get_followers">[ドキュメント]</a>    <span class="k">def</span> <span class="nf">get_followers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">until_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">limit</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="n">get_all</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncIterator</span><span class="p">[</span><span class="n">Follower</span><span class="p">]:</span>
         <span class="sd">"""</span>
@@ -521,7 +473,8 @@
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-
+<span class="sd">        AsyncIterator[Follower]:</span>
+<span class="sd">            ユーザーのフォロワー一覧</span>
 <span class="sd">        """</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">get_followers</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">username</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">host</span><span class="p">,</span> <span class="n">until_id</span><span class="o">=</span><span class="n">until_id</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="n">limit</span><span class="p">,</span>
                                          <span class="n">get_all</span><span class="o">=</span><span class="n">get_all</span><span class="p">)</span></div></div>
