@@ -286,7 +286,8 @@ class User:
 
         Returns
         -------
-
+        AsyncIterator[Follower]:
+            ユーザーのフォロワー一覧
         """
         return self._state.get_followers(username=self.username, host=self.host, until_id=until_id, limit=limit,
                                          get_all=get_all)
