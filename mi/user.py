@@ -1,13 +1,11 @@
 from __future__ import annotations
-from typing import Any, AsyncIterator, Dict, Iterator, List, Optional, TYPE_CHECKING
+from typing import Any, AsyncIterator, Dict, List, Optional, TYPE_CHECKING
 
 from pydantic import BaseModel
 
 from mi import Instance
 from mi.drive import File
-from mi.exception import InvalidParameters, NotExistRequiredParameters
 from mi.types.user import (User as UserPayload)
-from mi.utils import api, check_multi_arg, remove_dict_empty, upper_to_lower
 
 if TYPE_CHECKING:
     from mi import ConnectionState
@@ -91,7 +89,7 @@ class FieldContent(BaseModel):
 class UserDetails:
     """
     ユーザー情報だが、一般的に使うか怪しいもの
-    
+
     Attributes
     ----------
     avatar_blurhash: Optional[str]
