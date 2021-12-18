@@ -214,11 +214,11 @@
 <span class="n">MISSING</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="n">_MissingSentinel</span><span class="p">()</span>
 
 
-<div class="viewcode-block" id="Route"><a class="viewcode-back" href="../../mi.html#mi.Route">[ドキュメント]</a><span class="k">class</span> <span class="nc">Route</span><span class="p">:</span>
+<span class="k">class</span> <span class="nc">Route</span><span class="p">:</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">method</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">**</span><span class="n">parameters</span><span class="p">:</span> <span class="n">Any</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">path</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">method</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">method</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">i</span><span class="o">.</span><span class="n">origin_uri</span> <span class="o">+</span> <span class="n">path</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">i</span><span class="o">.</span><span class="n">origin_uri</span> <span class="o">+</span> <span class="n">path</span>
 
 
 <span class="k">async</span> <span class="k">def</span> <span class="nf">json_or_text</span><span class="p">(</span><span class="n">response</span><span class="p">:</span> <span class="n">aiohttp</span><span class="o">.</span><span class="n">ClientResponse</span><span class="p">):</span>
