@@ -1,11 +1,11 @@
 ---
-images:
-  - Ubuntu2004
+build_cloud: yupix-Docker
+image: yupix-linux
 
 environment:
   matrix:
-    -TOXENV: py39
-    -TOXENV: py310
+    - TOXENV: py39
+    - TOXENV: py310
 
 build: false
 
