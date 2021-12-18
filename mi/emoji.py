@@ -6,6 +6,8 @@ from mi.types.emoji import Emoji as EmojiPayload
 if TYPE_CHECKING:
     from mi import ConnectionState
 
+__all__ = ('Emoji',)
+
 
 class Emoji:
     def __init__(self, data: EmojiPayload, state: ConnectionState):

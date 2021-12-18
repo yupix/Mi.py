@@ -9,6 +9,9 @@ if TYPE_CHECKING:
     from . import ConnectionState
 
 
+__all__ = ('InstanceIterator',)
+
+
 class InstanceIterator:
     def __init__(self, state: ConnectionState):
         self._state = state

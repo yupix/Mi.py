@@ -40,5 +40,5 @@ class Chat(AbstractChatContent):
         bool:
             成功したか否か
         """
-        res = await self._state.delete_chat(self.id)
+        res = await self._state.delete_chat(message_id=self.id)
         return bool(res)
