@@ -1,0 +1,16 @@
+---
+images:
+  - Ubuntu2004
+
+environment:
+  matrix:
+    -TOXENV: py39
+    -TOXENV: py310
+
+build: false
+
+install:
+  - py -m pip install -r requirements.txt
+
+test_script:
+  - py setup.py install
