@@ -186,15 +186,13 @@
         <article role="main">
           <h1>mi.user のソースコード</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">AsyncIterator</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Iterator</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">TYPE_CHECKING</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">AsyncIterator</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">TYPE_CHECKING</span>
 
 <span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">BaseModel</span>
 
 <span class="kn">from</span> <span class="nn">mi</span> <span class="kn">import</span> <span class="n">Instance</span>
 <span class="kn">from</span> <span class="nn">mi.drive</span> <span class="kn">import</span> <span class="n">File</span>
-<span class="kn">from</span> <span class="nn">mi.exception</span> <span class="kn">import</span> <span class="n">InvalidParameters</span><span class="p">,</span> <span class="n">NotExistRequiredParameters</span>
 <span class="kn">from</span> <span class="nn">mi.types.user</span> <span class="kn">import</span> <span class="p">(</span><span class="n">User</span> <span class="k">as</span> <span class="n">UserPayload</span><span class="p">)</span>
-<span class="kn">from</span> <span class="nn">mi.utils</span> <span class="kn">import</span> <span class="n">api</span><span class="p">,</span> <span class="n">check_multi_arg</span><span class="p">,</span> <span class="n">remove_dict_empty</span><span class="p">,</span> <span class="n">upper_to_lower</span>
 
 <span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
     <span class="kn">from</span> <span class="nn">mi</span> <span class="kn">import</span> <span class="n">ConnectionState</span>
@@ -278,7 +276,7 @@
 <div class="viewcode-block" id="UserDetails"><a class="viewcode-back" href="../../mi.html#mi.UserDetails">[ドキュメント]</a><span class="k">class</span> <span class="nc">UserDetails</span><span class="p">:</span>
     <span class="sd">"""</span>
 <span class="sd">    ユーザー情報だが、一般的に使うか怪しいもの</span>
-<span class="sd">    </span>
+
 <span class="sd">    Attributes</span>
 <span class="sd">    ----------</span>
 <span class="sd">    avatar_blurhash: Optional[str]</span>

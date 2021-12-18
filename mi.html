@@ -362,7 +362,7 @@ def</span><a class="reference internal" href="#mi.Note.emoji_count">emoji_count<
 <span class="sig-name descname"><span class="pre">emojis</span></span><a class="headerlink" href="#mi.Note.emojis" title="この定義へのパーマリンク">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>List[<a class="reference internal" href="mi.types.html#mi.types.emoji.Emoji" title="mi.types.emoji.Emoji">Emoji</a>]</p>
+<dd class="field-odd"><p>List[<a class="reference internal" href="#mi.Emoji" title="mi.Emoji">Emoji</a>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -965,6 +965,136 @@ async</span><a class="reference internal" href="#mi.Chat.delete">delete</a></li>
 </dd></dl>
 </dd></dl>
 </div>
+<div class="section" id="drive">
+<h3>Drive<a class="headerlink" href="#drive" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="py-attribute-table" data-move-to-id="mi.Drive"><div class="py-attribute-table-column">
+<span>
+Methods</span><ul>
+<li class="py-attribute-table-entry">
+<span class="py-attribute-table-badge" title="coroutine">
+async</span><a class="reference internal" href="#mi.Drive.delete">delete</a></li></ul>
+</div></div><dl class="py class">
+<dt class="sig sig-object py" id="mi.Drive">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.</span></span><span class="sig-name descname"><span class="pre">Drive</span></span><a class="reference internal" href="_modules/mi/drive.html#Drive"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#mi.Drive" title="この定義へのパーマリンク">¶</a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="mi.Drive.delete">
+<em class="property"><span class="pre">await</span> </em><span class="sig-name descname"><span class="pre">delete</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/drive.html#Drive.delete"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#mi.Drive.delete" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>ファイルを削除します。</p>
+<dl class="field-list simple">
+<dt class="field-odd">戻り値</dt>
+<dd class="field-odd"><p>削除に成功したかどうか</p>
+</dd>
+<dt class="field-even">戻り値の型</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+</dd></dl>
+</div>
+<div class="section" id="emoji">
+<h3>Emoji<a class="headerlink" href="#emoji" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="py-attribute-table" data-move-to-id="mi.Emoji"></div><dl class="py class">
+<dt class="sig sig-object py" id="mi.Emoji">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.</span></span><span class="sig-name descname"><span class="pre">Emoji</span></span><a class="reference internal" href="_modules/mi/emoji.html#Emoji"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#mi.Emoji" title="この定義へのパーマリンク">¶</a></dt>
+<dd></dd></dl>
+</div>
+</div>
+<div class="section" id="id3">
+<h2>例外処理<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="notfounderror">
+<h3>NotFoundError<a class="headerlink" href="#notfounderror" title="このヘッドラインへのパーマリンク">¶</a></h3>
+</div>
+<div class="section" id="tasknotrunningerror">
+<h3>TaskNotRunningError<a class="headerlink" href="#tasknotrunningerror" title="このヘッドラインへのパーマリンク">¶</a></h3>
+</div>
+<div class="section" id="imai">
+<h3>ImAi<a class="headerlink" href="#imai" title="このヘッドラインへのパーマリンク">¶</a></h3>
+</div>
+<div class="section" id="internalservererror">
+<h3>InternalServerError<a class="headerlink" href="#internalservererror" title="このヘッドラインへのパーマリンク">¶</a></h3>
+</div>
+<div class="section" id="clienterror">
+<h3>ClientError<a class="headerlink" href="#clienterror" title="このヘッドラインへのパーマリンク">¶</a></h3>
+</div>
+<div class="section" id="authenticationerror">
+<h3>AuthenticationError<a class="headerlink" href="#authenticationerror" title="このヘッドラインへのパーマリンク">¶</a></h3>
+</div>
+<div class="section" id="notexistrequiredparameters">
+<h3>NotExistRequiredParameters<a class="headerlink" href="#notexistrequiredparameters" title="このヘッドラインへのパーマリンク">¶</a></h3>
+</div>
+<div class="section" id="invalidparameters">
+<h3>InvalidParameters<a class="headerlink" href="#invalidparameters" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="mi.InvalidParameters">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.</span></span><span class="sig-name descname"><span class="pre">InvalidParameters</span></span><a class="reference internal" href="_modules/mi/exception.html#InvalidParameters"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#mi.InvalidParameters" title="この定義へのパーマリンク">¶</a></dt>
+<dd></dd></dl>
+</div>
+<div class="section" id="credentialrequired">
+<h3>CredentialRequired<a class="headerlink" href="#credentialrequired" title="このヘッドラインへのパーマリンク">¶</a></h3>
+</div>
+<div class="section" id="contentrequired">
+<h3>ContentRequired<a class="headerlink" href="#contentrequired" title="このヘッドラインへのパーマリンク">¶</a></h3>
+</div>
+<div class="section" id="cognameduplicate">
+<h3>CogNameDuplicate<a class="headerlink" href="#cognameduplicate" title="このヘッドラインへのパーマリンク">¶</a></h3>
+</div>
+<div class="section" id="extensionalreadyloaded">
+<h3>ExtensionAlreadyLoaded<a class="headerlink" href="#extensionalreadyloaded" title="このヘッドラインへのパーマリンク">¶</a></h3>
+</div>
+<div class="section" id="extensionfailed">
+<h3>ExtensionFailed<a class="headerlink" href="#extensionfailed" title="このヘッドラインへのパーマリンク">¶</a></h3>
+</div>
+<div class="section" id="noentrypointerror">
+<h3>NoEntryPointError<a class="headerlink" href="#noentrypointerror" title="このヘッドラインへのパーマリンク">¶</a></h3>
+</div>
+<div class="section" id="extensionnotfound">
+<h3>ExtensionNotFound<a class="headerlink" href="#extensionnotfound" title="このヘッドラインへのパーマリンク">¶</a></h3>
+</div>
+<div class="section" id="commandregistrationerror">
+<h3>CommandRegistrationError<a class="headerlink" href="#commandregistrationerror" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="mi.CommandRegistrationError">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.</span></span><span class="sig-name descname"><span class="pre">CommandRegistrationError</span></span><a class="reference internal" href="_modules/mi/exception.html#CommandRegistrationError"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#mi.CommandRegistrationError" title="この定義へのパーマリンク">¶</a></dt>
+<dd></dd></dl>
+</div>
+<div class="section" id="commanderror">
+<h3>CommandError<a class="headerlink" href="#commanderror" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="mi.CommandError">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.</span></span><span class="sig-name descname"><span class="pre">CommandError</span></span><a class="reference internal" href="_modules/mi/exception.html#CommandError"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#mi.CommandError" title="この定義へのパーマリンク">¶</a></dt>
+<dd></dd></dl>
+</div>
+<div class="section" id="commandinvokeerror">
+<h3>CommandInvokeError<a class="headerlink" href="#commandinvokeerror" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="mi.CommandInvokeError">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.</span></span><span class="sig-name descname"><span class="pre">CommandInvokeError</span></span><a class="reference internal" href="_modules/mi/exception.html#CommandInvokeError"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#mi.CommandInvokeError" title="この定義へのパーマリンク">¶</a></dt>
+<dd></dd></dl>
+</div>
+<div class="section" id="checkfailure">
+<h3>CheckFailure<a class="headerlink" href="#checkfailure" title="このヘッドラインへのパーマリンク">¶</a></h3>
+</div>
+<div class="section" id="invalidcogpath">
+<h3>InvalidCogPath<a class="headerlink" href="#invalidcogpath" title="このヘッドラインへのパーマリンク">¶</a></h3>
+</div>
+</div>
+<div class="section" id="low-level-api">
+<h2>Low-Level API<a class="headerlink" href="#low-level-api" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="mi.HTTPClient">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.</span></span><span class="sig-name descname"><span class="pre">HTTPClient</span></span><a class="reference internal" href="_modules/mi/http.html#HTTPClient"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#mi.HTTPClient" title="この定義へのパーマリンク">¶</a></dt>
+<dd></dd></dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="mi.ConnectionState">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.</span></span><span class="sig-name descname"><span class="pre">ConnectionState</span></span><a class="reference internal" href="_modules/mi/state.html#ConnectionState"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#mi.ConnectionState" title="この定義へのパーマリンク">¶</a></dt>
+<dd></dd></dl>
+</div>
+<div class="section" id="low-layer-api">
+<h2>Low-Layer API<a class="headerlink" href="#low-layer-api" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="mi.MisskeyWebSocket">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.</span></span><span class="sig-name descname"><span class="pre">MisskeyWebSocket</span></span><a class="reference internal" href="_modules/mi/gateway.html#MisskeyWebSocket"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#mi.MisskeyWebSocket" title="この定義へのパーマリンク">¶</a></dt>
+<dd></dd></dl>
 </div>
 </div>
 
@@ -1012,8 +1142,35 @@ async</span><a class="reference internal" href="#mi.Chat.delete">delete</a></li>
 <li><a class="reference internal" href="#note">Note</a></li>
 <li><a class="reference internal" href="#user">User</a></li>
 <li><a class="reference internal" href="#userdetails">UserDetails</a></li>
+<li><a class="reference internal" href="#drive">Drive</a></li>
+<li><a class="reference internal" href="#emoji">Emoji</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#id3">例外処理</a><ul>
+<li><a class="reference internal" href="#notfounderror">NotFoundError</a></li>
+<li><a class="reference internal" href="#tasknotrunningerror">TaskNotRunningError</a></li>
+<li><a class="reference internal" href="#imai">ImAi</a></li>
+<li><a class="reference internal" href="#internalservererror">InternalServerError</a></li>
+<li><a class="reference internal" href="#clienterror">ClientError</a></li>
+<li><a class="reference internal" href="#authenticationerror">AuthenticationError</a></li>
+<li><a class="reference internal" href="#notexistrequiredparameters">NotExistRequiredParameters</a></li>
+<li><a class="reference internal" href="#invalidparameters">InvalidParameters</a></li>
+<li><a class="reference internal" href="#credentialrequired">CredentialRequired</a></li>
+<li><a class="reference internal" href="#contentrequired">ContentRequired</a></li>
+<li><a class="reference internal" href="#cognameduplicate">CogNameDuplicate</a></li>
+<li><a class="reference internal" href="#extensionalreadyloaded">ExtensionAlreadyLoaded</a></li>
+<li><a class="reference internal" href="#extensionfailed">ExtensionFailed</a></li>
+<li><a class="reference internal" href="#noentrypointerror">NoEntryPointError</a></li>
+<li><a class="reference internal" href="#extensionnotfound">ExtensionNotFound</a></li>
+<li><a class="reference internal" href="#commandregistrationerror">CommandRegistrationError</a></li>
+<li><a class="reference internal" href="#commanderror">CommandError</a></li>
+<li><a class="reference internal" href="#commandinvokeerror">CommandInvokeError</a></li>
+<li><a class="reference internal" href="#checkfailure">CheckFailure</a></li>
+<li><a class="reference internal" href="#invalidcogpath">InvalidCogPath</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#low-level-api">Low-Level API</a></li>
+<li><a class="reference internal" href="#low-layer-api">Low-Layer API</a></li>
 </ul>
 </li>
 </ul>

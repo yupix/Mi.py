@@ -72,3 +72,125 @@ UserDetails
 
 .. autoclass:: Chat()
    :members:
+
+Drive
+~~~~~
+
+.. attributetable:: Drive
+
+.. autoclass:: Drive()
+   :members:
+
+Emoji
+~~~~~
+
+.. attributetable:: Emoji
+
+.. autoclass:: Emoji()
+   :members:
+
+例外処理
+--------
+
+NotFoundError
+~~~~~~~~~~~~~
+.. autoclass:: NotFoundError()
+
+TaskNotRunningError
+~~~~~~~~~~~~~~~~~~~
+.. autoclass:: TaskNotRunningError()
+
+ImAi
+~~~~
+.. autoclass:: ImAi()
+
+InternalServerError
+~~~~~~~~~~~~~~~~~~~
+.. autoclass:: InternalServerError()
+
+ClientError
+~~~~~~~~~~~
+
+.. autoclass:: ClientError()
+
+AuthenticationError
+~~~~~~~~~~~~~~~~~~~
+.. autoclass:: AuthenticationError()
+
+NotExistRequiredParameters
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. autoclass:: NotExistRequiredParameters()
+
+InvalidParameters
+~~~~~~~~~~~~~~~~~
+.. autoclass:: InvalidParameters()
+
+CredentialRequired
+~~~~~~~~~~~~~~~~~~
+.. autoclass:: CredentialRequired()
+
+ContentRequired
+~~~~~~~~~~~~~~~
+
+.. autoclass:: ContentRequired()
+
+
+CogNameDuplicate
+~~~~~~~~~~~~~~~~
+.. autoclass:: CogNameDuplicate()
+
+ExtensionAlreadyLoaded
+~~~~~~~~~~~~~~~~~~~~~~
+.. autoclass:: ExtensionAlreadyLoaded()
+
+ExtensionFailed
+~~~~~~~~~~~~~~~
+.. autoclass:: ExtensionFailed()
+
+NoEntryPointError
+~~~~~~~~~~~~~~~~~
+.. autoclass:: NoEntryPointError()
+
+ExtensionNotFound
+~~~~~~~~~~~~~~~~~
+.. autoclass:: ExtensionNotFound()
+
+CommandRegistrationError
+~~~~~~~~~~~~~~~~~~~~~~~~
+.. autoclass:: CommandRegistrationError()
+
+CommandError
+~~~~~~~~~~~~
+.. autoclass:: CommandError()
+
+CommandInvokeError
+~~~~~~~~~~~~~~~~~~
+.. autoclass:: CommandInvokeError()
+
+CheckFailure
+~~~~~~~~~~~~
+.. autoclass:: CheckFailure()
+
+InvalidCogPath
+~~~~~~~~~~~~~~
+
+.. autoclass:: InvalidCogPath()
+
+
+Low-Level API
+-------------
+
+.. autoclass:: Route()
+
+.. autoclass:: HTTPClient()
+
+.. autoclass:: ConnectionState()
+
+Low-Layer API
+-------------
+
+.. autoclass:: MisskeyClientWebSocketResponse()
+
+.. autoclass:: MisskeyWebSocket()
+
+.. autoclass:: InstanceIterator()
