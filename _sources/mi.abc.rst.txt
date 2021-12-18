@@ -1,0 +1,37 @@
+mi.abc package
+==============
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   mi.abc.ext
+
+Submodules
+----------
+
+mi.abc.chat module
+------------------
+
+.. automodule:: mi.abc.chat
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+mi.abc.note module
+------------------
+
+.. automodule:: mi.abc.note
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: mi.abc
+   :members:
+   :undoc-members:
+   :show-inheritance:

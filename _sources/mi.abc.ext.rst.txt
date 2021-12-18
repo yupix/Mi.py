@@ -1,0 +1,37 @@
+mi.abc.ext package
+==================
+
+Submodules
+----------
+
+mi.abc.ext.bot module
+---------------------
+
+.. automodule:: mi.abc.ext.bot
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+mi.abc.ext.context module
+-------------------------
+
+.. automodule:: mi.abc.ext.context
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+mi.abc.ext.core module
+----------------------
+
+.. automodule:: mi.abc.ext.core
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: mi.abc.ext
+   :members:
+   :undoc-members:
+   :show-inheritance:
