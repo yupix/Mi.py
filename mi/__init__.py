@@ -19,3 +19,7 @@ from .router import *
 from .chat import *
 from .client import *
 from .ext import *
+from .gateway import *
+from .http import *
+from .iterators import *
+from .exception import *
