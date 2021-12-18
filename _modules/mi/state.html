@@ -417,6 +417,19 @@
         <span class="k">return</span> <span class="n">res</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">204</span>
 
     <span class="k">async</span> <span class="k">def</span> <span class="nf">delete_note</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">note_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">"""</span>
+<span class="sd">        指定したidのノートを削除します。</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        note_id : str</span>
+<span class="sd">            ノートid</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        bool</span>
+<span class="sd">            成功したか否か</span>
+<span class="sd">        """</span>
         <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"noteId"</span><span class="p">:</span> <span class="n">note_id</span><span class="p">}</span>
         <span class="n">res</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">Route</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">,</span> <span class="s1">'/api/notes/delete'</span><span class="p">),</span> <span class="n">json</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
@@ -443,15 +456,47 @@
 <span class="sd">            ユーザー情報</span>
 <span class="sd">        """</span>
         <span class="n">field</span> <span class="o">=</span> <span class="n">remove_dict_empty</span><span class="p">({</span><span class="s2">"userId"</span><span class="p">:</span> <span class="n">user_id</span><span class="p">,</span> <span class="s2">"username"</span><span class="p">:</span> <span class="n">username</span><span class="p">,</span> <span class="s2">"host"</span><span class="p">:</span> <span class="n">host</span><span class="p">})</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">Route</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">,</span> <span class="s1">'/api/users/show'</span><span class="p">),</span> <span class="n">json</span><span class="o">=</span><span class="n">field</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">User</span><span class="p">(</span><span class="n">upper_to_lower</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">state</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">Route</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">,</span> <span class="s1">'/api/users/show'</span><span class="p">),</span> <span class="n">json</span><span class="o">=</span><span class="n">field</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">User</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
 
     <span class="k">async</span> <span class="k">def</span> <span class="nf">post_chat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">content</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">user_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">group_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">file_id</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Chat</span><span class="p">:</span>
+        <span class="sd">"""</span>
+<span class="sd">        チャットを送信します。</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        content : str</span>
+<span class="sd">            送信する内容</span>
+<span class="sd">        user_id : str, optional</span>
+<span class="sd">            ユーザーid, default=None</span>
+<span class="sd">        group_id : str, optional</span>
+<span class="sd">            グループid, default=None</span>
+<span class="sd">        file_id : str, optional</span>
+<span class="sd">            添付するファイルid, efault=None</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        Chat</span>
+<span class="sd">            チャットの内容</span>
+<span class="sd">        """</span>        
         <span class="n">args</span> <span class="o">=</span> <span class="n">remove_dict_empty</span><span class="p">({</span><span class="s1">'userId'</span><span class="p">:</span> <span class="n">user_id</span><span class="p">,</span> <span class="s1">'groupId'</span><span class="p">:</span> <span class="n">group_id</span><span class="p">,</span> <span class="s1">'text'</span><span class="p">:</span> <span class="n">content</span><span class="p">,</span> <span class="s1">'fileId'</span><span class="p">:</span> <span class="n">file_id</span><span class="p">})</span>
-        <span class="k">return</span> <span class="n">Chat</span><span class="p">(</span><span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">Route</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">,</span> <span class="s1">'/api/messaging/messages/create'</span><span class="p">),</span> <span class="n">json</span><span class="o">=</span><span class="n">args</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
-                    <span class="n">state</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">Route</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">,</span> <span class="s1">'/api/messaging/messages/create'</span><span class="p">),</span> <span class="n">json</span><span class="o">=</span><span class="n">args</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Chat</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
 
     <span class="k">async</span> <span class="k">def</span> <span class="nf">delete_chat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">"""</span>
+<span class="sd">        指定したidのメッセージを削除します。</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        message_id : str</span>
+<span class="sd">            メッセージid</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        bool</span>
+<span class="sd">            成功したか否か</span>
+<span class="sd">        """</span>
         <span class="n">args</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'messageId'</span><span class="p">:</span> <span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">message_id</span><span class="si">}</span><span class="s1">'</span><span class="p">}</span>
         <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">Route</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">,</span> <span class="s1">'/api/messaging/messages/delete'</span><span class="p">),</span> <span class="n">json</span><span class="o">=</span><span class="n">args</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
@@ -501,6 +546,49 @@
                         <span class="n">file_ids</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                         <span class="n">poll</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Poll</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
                         <span class="p">):</span>
+        <span class="sd">"""</span>
+
+<span class="sd">        ノートを投稿します。</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        content : str</span>
+<span class="sd">            投稿する内容</span>
+<span class="sd">        visibility : str, optional</span>
+<span class="sd">            公開範囲, by default "public"</span>
+<span class="sd">        visible_user_ids : Optional[List[str]], optional</span>
+<span class="sd">            公開するユーザー, by default None</span>
+<span class="sd">        cw : Optional[str], optional</span>
+<span class="sd">            閲覧注意の文字, by default None</span>
+<span class="sd">        local_only : bool, optional</span>
+<span class="sd">            ローカルにのみ表示するか, by default False</span>
+<span class="sd">        no_extract_mentions : bool, optional</span>
+<span class="sd">            メンションを展開するか, by default False</span>
+<span class="sd">        no_extract_hashtags : bool, optional</span>
+<span class="sd">            ハッシュタグを展開するか, by default False</span>
+<span class="sd">        no_extract_emojis : bool, optional</span>
+<span class="sd">            絵文字を展開するか, by default False</span>
+<span class="sd">        reply_id : Optional[str], optional</span>
+<span class="sd">            リプライ先のid, by default None</span>
+<span class="sd">        renote_id : Optional[str], optional</span>
+<span class="sd">            リノート先のid, by default None</span>
+<span class="sd">        channel_id : Optional[str], optional</span>
+<span class="sd">            チャンネルid, by default None</span>
+<span class="sd">        file_ids : [type], optional</span>
+<span class="sd">            添付するファイルのid, by default None</span>
+<span class="sd">        poll : Optional[Poll], optional</span>
+<span class="sd">            アンケート, by default None</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        [type]</span>
+<span class="sd">            [description]</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        ContentRequired</span>
+<span class="sd">            [description]</span>
+<span class="sd">        """</span>
         <span class="k">if</span> <span class="n">file_ids</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">file_ids</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">field</span> <span class="o">=</span> <span class="p">{</span>
