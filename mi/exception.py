@@ -21,78 +21,122 @@ __all__ = (
     "NotFoundError"
 )
 
+
 class NotFoundError(Exception):
-    pass
+    """
+    http アクセス時に404が帰ってきた際の例外
+    """
+
+
 class TaskNotRunningError(Exception):
-    pass
+    """
+    タスクを停止しようとした際、タスクが起動していない場合に発生する例外
+    """
+
 
 class ImAi(Exception):
-    pass
+    """
+    私は藍です
+    """
 
 
 class InternalServerError(Exception):
-    pass
+    """
+    http アクセス時に500が帰ってきた際の例外
+    """
 
 
 class ClientError(Exception):
-    pass
+    """
+    http アクセス時に400が帰ってきた際の例外
+    """
 
 
 class AuthenticationError(Exception):
-    pass
+    """
+    認証で問題が発生した際の例外
+    """
 
 
 class NotExistRequiredParameters(Exception):
-    pass
+    """
+    必須のパラメーターが存在しない場合の例外
+    """
 
 
 class InvalidParameters(Exception):
-    pass
+    """
+    パラメーターが無効
+    """
 
 
 class CredentialRequired(Exception):
-    pass
+    """
+    認証情報が不足している
+    """
 
 
 class ContentRequired(Exception):
-    pass
+    """
+    送信するコンテンツが不足している
+    """
 
 
 class CogNameDuplicate(Exception):
-    pass
+    """
+    cogの名前が重複している
+    """
 
 
 class ExtensionAlreadyLoaded(Exception):
-    pass
+    """
+    cogがすでに読み込まれている
+    """
 
 
 class ExtensionFailed(Exception):
-    pass
+    """
+    cog周りのエラー
+    """
 
 
 class NoEntryPointError(Exception):
-    pass
+    """
+    cogにsetup関数が無い場合の例外
+    """
 
 
 class ExtensionNotFound(Exception):
-    pass
+    """
+    指定されたパスにcogが存在しない場合の例外
+    """
 
 
 class CommandRegistrationError(Exception):
-    pass
+    """
+    コマンド登録時のエラー
+    """
 
 
 class CommandError(Exception):
-    pass
+    """
+    コマンドで問題が発生した際の例外
+    """
 
 
 class CommandInvokeError(Exception):
-    pass
+    """
+    コマンドの実行に問題が発生した際の例外
+    """
 
 
 class CheckFailure(Exception):
-    pass
+    """
+    コマンドの実行可能かのチェックに失敗した際の例外
+    """
 
 
 class InvalidCogPath(Exception):
-    pass
+    """
+    cogのパスが不正
+    """
