@@ -230,6 +230,19 @@ class ConnectionState:
         return res.status_code == 204
 
     async def delete_note(self, note_id: str) -> bool:
+        """
+        指定したidのノートを削除します。
+
+        Parameters
+        ----------
+        note_id : str
+            ノートid
+
+        Returns
+        -------
+        bool
+            成功したか否か
+        """
         data = {"noteId": note_id}
         res = await self.http.request(Route('POST', '/api/notes/delete'), json=data, auth=True)
         return bool(res)
@@ -256,15 +269,47 @@ class ConnectionState:
             ユーザー情報
         """
         field = remove_dict_empty({"userId": user_id, "username": username, "host": host})
-        data = await self.http.request(Route('POST', '/api/users/show'), json=field, auth=True)
-        return User(upper_to_lower(data), state=self)
+        data = await self.http.request(Route('POST', '/api/users/show'), json=field, auth=True, lower=True)
+        return User(data, state=self)
 
     async def post_chat(self, content: str, *, user_id: str = None, group_id: str = None, file_id=None) -> Chat:
+        """
+        チャットを送信します。
+
+        Parameters
+        ----------
+        content : str
+            送信する内容
+        user_id : str, optional
+            ユーザーid, default=None
+        group_id : str, optional
+            グループid, default=None
+        file_id : str, optional
+            添付するファイルid, efault=None
+
+        Returns
+        -------
+        Chat
+            チャットの内容
+        """        
         args = remove_dict_empty({'userId': user_id, 'groupId': group_id, 'text': content, 'fileId': file_id})
-        return Chat(await self.http.request(Route('POST', '/api/messaging/messages/create'), json=args, auth=True, lower=True),
-                    state=self)
+        data = await self.http.request(Route('POST', '/api/messaging/messages/create'), json=args, auth=True, lower=True)
+        return Chat(data, state=self)
 
     async def delete_chat(self, message_id: str) -> bool:
+        """
+        指定したidのメッセージを削除します。
+
+        Parameters
+        ----------
+        message_id : str
+            メッセージid
+
+        Returns
+        -------
+        bool
+            成功したか否か
+        """
         args = {'messageId': f'{message_id}'}
         data = await self.http.request(Route('POST', '/api/messaging/messages/delete'), json=args, auth=True)
         return bool(data)
@@ -314,6 +359,49 @@ class ConnectionState:
                         file_ids=None,
                         poll: Optional[Poll] = None
                         ):
+        """
+
+        ノートを投稿します。
+
+        Parameters
+        ----------
+        content : str
+            投稿する内容
+        visibility : str, optional
+            公開範囲, by default "public"
+        visible_user_ids : Optional[List[str]], optional
+            公開するユーザー, by default None
+        cw : Optional[str], optional
+            閲覧注意の文字, by default None
+        local_only : bool, optional
+            ローカルにのみ表示するか, by default False
+        no_extract_mentions : bool, optional
+            メンションを展開するか, by default False
+        no_extract_hashtags : bool, optional
+            ハッシュタグを展開するか, by default False
+        no_extract_emojis : bool, optional
+            絵文字を展開するか, by default False
+        reply_id : Optional[str], optional
+            リプライ先のid, by default None
+        renote_id : Optional[str], optional
+            リノート先のid, by default None
+        channel_id : Optional[str], optional
+            チャンネルid, by default None
+        file_ids : [type], optional
+            添付するファイルのid, by default None
+        poll : Optional[Poll], optional
+            アンケート, by default None
+
+        Returns
+        -------
+        [type]
+            [description]
+
+        Raises
+        ------
+        ContentRequired
+            [description]
+        """
         if file_ids is None:
             file_ids = []
         field = {
