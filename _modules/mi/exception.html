@@ -208,81 +208,125 @@
     <span class="s2">"NotFoundError"</span>
 <span class="p">)</span>
 
-<span class="k">class</span> <span class="nc">NotFoundError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
-    <span class="k">pass</span>
-<span class="k">class</span> <span class="nc">TaskNotRunningError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
-    <span class="k">pass</span>
 
-<span class="k">class</span> <span class="nc">ImAi</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
-    <span class="k">pass</span>
+<div class="viewcode-block" id="NotFoundError"><a class="viewcode-back" href="../../mi.html#mi.NotFoundError">[ドキュメント]</a><span class="k">class</span> <span class="nc">NotFoundError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    http アクセス時に404が帰ってきた際の例外</span>
+<span class="sd">    """</span></div>
 
 
-<span class="k">class</span> <span class="nc">InternalServerError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
-    <span class="k">pass</span>
+<div class="viewcode-block" id="TaskNotRunningError"><a class="viewcode-back" href="../../mi.html#mi.TaskNotRunningError">[ドキュメント]</a><span class="k">class</span> <span class="nc">TaskNotRunningError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    タスクを停止しようとした際、タスクが起動していない場合に発生する例外</span>
+<span class="sd">    """</span></div>
 
 
-<span class="k">class</span> <span class="nc">ClientError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
-    <span class="k">pass</span>
+<div class="viewcode-block" id="ImAi"><a class="viewcode-back" href="../../mi.html#mi.ImAi">[ドキュメント]</a><span class="k">class</span> <span class="nc">ImAi</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    私は藍です</span>
+<span class="sd">    """</span></div>
 
 
-<span class="k">class</span> <span class="nc">AuthenticationError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
-    <span class="k">pass</span>
+<div class="viewcode-block" id="InternalServerError"><a class="viewcode-back" href="../../mi.html#mi.InternalServerError">[ドキュメント]</a><span class="k">class</span> <span class="nc">InternalServerError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    http アクセス時に500が帰ってきた際の例外</span>
+<span class="sd">    """</span></div>
 
 
-<span class="k">class</span> <span class="nc">NotExistRequiredParameters</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
-    <span class="k">pass</span>
+<div class="viewcode-block" id="ClientError"><a class="viewcode-back" href="../../mi.html#mi.ClientError">[ドキュメント]</a><span class="k">class</span> <span class="nc">ClientError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    http アクセス時に400が帰ってきた際の例外</span>
+<span class="sd">    """</span></div>
+
+
+<div class="viewcode-block" id="AuthenticationError"><a class="viewcode-back" href="../../mi.html#mi.AuthenticationError">[ドキュメント]</a><span class="k">class</span> <span class="nc">AuthenticationError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    認証で問題が発生した際の例外</span>
+<span class="sd">    """</span></div>
+
+
+<div class="viewcode-block" id="NotExistRequiredParameters"><a class="viewcode-back" href="../../mi.html#mi.NotExistRequiredParameters">[ドキュメント]</a><span class="k">class</span> <span class="nc">NotExistRequiredParameters</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    必須のパラメーターが存在しない場合の例外</span>
+<span class="sd">    """</span></div>
 
 
 <div class="viewcode-block" id="InvalidParameters"><a class="viewcode-back" href="../../mi.html#mi.InvalidParameters">[ドキュメント]</a><span class="k">class</span> <span class="nc">InvalidParameters</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
-    <span class="k">pass</span></div>
+    <span class="sd">"""</span>
+<span class="sd">    パラメーターが無効</span>
+<span class="sd">    """</span></div>
 
 
-<span class="k">class</span> <span class="nc">CredentialRequired</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
-    <span class="k">pass</span>
+<div class="viewcode-block" id="CredentialRequired"><a class="viewcode-back" href="../../mi.html#mi.CredentialRequired">[ドキュメント]</a><span class="k">class</span> <span class="nc">CredentialRequired</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    認証情報が不足している</span>
+<span class="sd">    """</span></div>
 
 
-<span class="k">class</span> <span class="nc">ContentRequired</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
-    <span class="k">pass</span>
+<div class="viewcode-block" id="ContentRequired"><a class="viewcode-back" href="../../mi.html#mi.ContentRequired">[ドキュメント]</a><span class="k">class</span> <span class="nc">ContentRequired</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    送信するコンテンツが不足している</span>
+<span class="sd">    """</span></div>
 
 
-<span class="k">class</span> <span class="nc">CogNameDuplicate</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
-    <span class="k">pass</span>
+<div class="viewcode-block" id="CogNameDuplicate"><a class="viewcode-back" href="../../mi.html#mi.CogNameDuplicate">[ドキュメント]</a><span class="k">class</span> <span class="nc">CogNameDuplicate</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    cogの名前が重複している</span>
+<span class="sd">    """</span></div>
 
 
-<span class="k">class</span> <span class="nc">ExtensionAlreadyLoaded</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
-    <span class="k">pass</span>
+<div class="viewcode-block" id="ExtensionAlreadyLoaded"><a class="viewcode-back" href="../../mi.html#mi.ExtensionAlreadyLoaded">[ドキュメント]</a><span class="k">class</span> <span class="nc">ExtensionAlreadyLoaded</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    cogがすでに読み込まれている</span>
+<span class="sd">    """</span></div>
 
 
-<span class="k">class</span> <span class="nc">ExtensionFailed</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
-    <span class="k">pass</span>
+<div class="viewcode-block" id="ExtensionFailed"><a class="viewcode-back" href="../../mi.html#mi.ExtensionFailed">[ドキュメント]</a><span class="k">class</span> <span class="nc">ExtensionFailed</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    cog周りのエラー</span>
+<span class="sd">    """</span></div>
 
 
-<span class="k">class</span> <span class="nc">NoEntryPointError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
-    <span class="k">pass</span>
+<div class="viewcode-block" id="NoEntryPointError"><a class="viewcode-back" href="../../mi.html#mi.NoEntryPointError">[ドキュメント]</a><span class="k">class</span> <span class="nc">NoEntryPointError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    cogにsetup関数が無い場合の例外</span>
+<span class="sd">    """</span></div>
 
 
-<span class="k">class</span> <span class="nc">ExtensionNotFound</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
-    <span class="k">pass</span>
+<div class="viewcode-block" id="ExtensionNotFound"><a class="viewcode-back" href="../../mi.html#mi.ExtensionNotFound">[ドキュメント]</a><span class="k">class</span> <span class="nc">ExtensionNotFound</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    指定されたパスにcogが存在しない場合の例外</span>
+<span class="sd">    """</span></div>
 
 
 <div class="viewcode-block" id="CommandRegistrationError"><a class="viewcode-back" href="../../mi.html#mi.CommandRegistrationError">[ドキュメント]</a><span class="k">class</span> <span class="nc">CommandRegistrationError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
-    <span class="k">pass</span></div>
+    <span class="sd">"""</span>
+<span class="sd">    コマンド登録時のエラー</span>
+<span class="sd">    """</span></div>
 
 
 <div class="viewcode-block" id="CommandError"><a class="viewcode-back" href="../../mi.html#mi.CommandError">[ドキュメント]</a><span class="k">class</span> <span class="nc">CommandError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
-    <span class="k">pass</span></div>
+    <span class="sd">"""</span>
+<span class="sd">    コマンドで問題が発生した際の例外</span>
+<span class="sd">    """</span></div>
 
 
 <div class="viewcode-block" id="CommandInvokeError"><a class="viewcode-back" href="../../mi.html#mi.CommandInvokeError">[ドキュメント]</a><span class="k">class</span> <span class="nc">CommandInvokeError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
-    <span class="k">pass</span></div>
+    <span class="sd">"""</span>
+<span class="sd">    コマンドの実行に問題が発生した際の例外</span>
+<span class="sd">    """</span></div>
 
 
-<span class="k">class</span> <span class="nc">CheckFailure</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
-    <span class="k">pass</span>
+<div class="viewcode-block" id="CheckFailure"><a class="viewcode-back" href="../../mi.html#mi.CheckFailure">[ドキュメント]</a><span class="k">class</span> <span class="nc">CheckFailure</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    コマンドの実行可能かのチェックに失敗した際の例外</span>
+<span class="sd">    """</span></div>
 
 
-<span class="k">class</span> <span class="nc">InvalidCogPath</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
-    <span class="k">pass</span>
+<div class="viewcode-block" id="InvalidCogPath"><a class="viewcode-back" href="../../mi.html#mi.InvalidCogPath">[ドキュメント]</a><span class="k">class</span> <span class="nc">InvalidCogPath</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    cogのパスが不正</span>
+<span class="sd">    """</span></div>
 </pre></div>
         </article>
       </div>
