@@ -336,8 +336,7 @@
         <span class="c1"># Router(self.http.ws).capture_message(note.id) TODO: capture message</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">'message'</span><span class="p">,</span> <span class="n">note</span><span class="p">)</span>
 
-    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">follow_user</span><span class="p">(</span><span class="n">user_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">follow_user</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
         <span class="sd">"""</span>
 <span class="sd">        与えられたIDのユーザーをフォローします</span>
 
@@ -352,17 +351,16 @@
 <span class="sd">            成功ならTrue, 失敗ならFalse</span>
 <span class="sd">        """</span>
         <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"userId"</span><span class="p">:</span> <span class="n">user_id</span><span class="p">}</span>
-        <span class="n">res</span> <span class="o">=</span> <span class="n">api</span><span class="p">(</span><span class="s2">"/api/following/create"</span><span class="p">,</span> <span class="n">json_data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">res</span><span class="o">.</span><span class="n">json</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"error"</span><span class="p">):</span>
-            <span class="n">code</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">"error"</span><span class="p">][</span><span class="s2">"code"</span><span class="p">]</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">Route</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">,</span> <span class="s1">'/api/following/create'</span><span class="p">),</span> <span class="n">json</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">res</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"error"</span><span class="p">):</span>
+            <span class="n">code</span> <span class="o">=</span> <span class="n">res</span><span class="p">[</span><span class="s2">"error"</span><span class="p">][</span><span class="s2">"code"</span><span class="p">]</span>
             <span class="n">status</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">code</span> <span class="o">=</span> <span class="kc">None</span>
             <span class="n">status</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">return</span> <span class="n">status</span><span class="p">,</span> <span class="n">code</span>
 
-    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">unfollow_user</span><span class="p">(</span><span class="n">user_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">unfollow_user</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="sd">"""</span>
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -375,7 +373,7 @@
 <span class="sd">            成功したならTrue, 失敗したならFalse</span>
 <span class="sd">        """</span>
         <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"userId"</span><span class="p">:</span> <span class="n">user_id</span><span class="p">}</span>
-        <span class="n">res</span> <span class="o">=</span> <span class="n">api</span><span class="p">(</span><span class="s2">"/api/following/delete"</span><span class="p">,</span> <span class="n">json_data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">Route</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">,</span> <span class="s1">'/api/following/delete'</span><span class="p">),</span> <span class="n">json</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">204</span> <span class="ow">or</span> <span class="mi">200</span><span class="p">)</span>
 
     <span class="k">async</span> <span class="k">def</span> <span class="nf">get_i</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">User</span><span class="p">:</span>

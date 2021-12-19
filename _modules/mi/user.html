@@ -432,7 +432,7 @@
 <span class="sd">            実行に失敗した際のエラーコード</span>
 <span class="sd">        """</span>
 
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">follow_user</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">follow_user</span><span class="p">(</span><span class="n">user_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="User.unfollow"><a class="viewcode-back" href="../../mi.html#mi.User.unfollow">[ドキュメント]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">unfollow</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="sd">"""</span>
@@ -444,7 +444,7 @@
 <span class="sd">            成功ならTrue, 失敗ならFalse</span>
 <span class="sd">        """</span>
 
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">unfollow_user</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">unfollow_user</span><span class="p">(</span><span class="n">user_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="User.get_profile"><a class="viewcode-back" href="../../mi.html#mi.User.get_profile">[ドキュメント]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">get_profile</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">"User"</span><span class="p">:</span>
         <span class="sd">"""</span>

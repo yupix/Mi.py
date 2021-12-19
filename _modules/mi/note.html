@@ -214,15 +214,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">User</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'user'</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_state</span> <span class="o">=</span> <span class="n">state</span>
 
-    <span class="k">def</span> <span class="nf">follow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">follow</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
         <span class="sd">"""</span>
-<span class="sd">        与えられたIDのユーザーをフォローします</span>
-
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        user_id : Optional[str] = None</span>
-<span class="sd">            フォローしたいユーザーのID</span>
-
+<span class="sd">        ユーザーをフォローします</span>
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        bool = False</span>
@@ -230,15 +224,11 @@
 <span class="sd">        str</span>
 <span class="sd">            実行に失敗した際のエラーコード</span>
 <span class="sd">        """</span>
-        <span class="k">if</span> <span class="n">check_multi_arg</span><span class="p">(</span><span class="n">user_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">id</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="n">NotExistRequiredParameters</span><span class="p">(</span><span class="s2">"user_idが存在しません"</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">NotExistRequiredData</span><span class="p">(</span><span class="s1">'user_idがありません'</span><span class="p">)</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">follow_user</span><span class="p">(</span><span class="n">user_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="n">user_id</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">user_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">id</span>
-
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">follow_user</span><span class="p">(</span><span class="n">user_id</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">unfollow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">unfollow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="sd">"""</span>
 <span class="sd">        与えられたIDのユーザーのフォローを解除します</span>
 
@@ -254,7 +244,7 @@
 <span class="sd">        """</span>
         <span class="k">if</span> <span class="n">user_id</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">user_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">id</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">unfollow_user</span><span class="p">(</span><span class="n">user_id</span><span class="p">)</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">unfollow_user</span><span class="p">(</span><span class="n">user_id</span><span class="p">)</span>
 
 
 <span class="k">class</span> <span class="nc">Header</span><span class="p">:</span>
