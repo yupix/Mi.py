@@ -1,4 +1,4 @@
-from websockets.legacy.client import WebSocketClientProtocol
+import asyncio
 from mi import Client, Drive, Note, Router
 from mi.ext import tasks
 
@@ -13,9 +13,9 @@ async def task():
 
 
 @bot.listen()
-async def on_message(ctx: Note):
+async def on_message(note: Note):
     print(
-        f"{ctx.author.instance.name} | {ctx.author.username}さんがノートしました: {ctx.content}"
+        f"{note.author.instance.name} | {note.author.username}さんがノートしました: {note.content}"
     )
 
 
@@ -27,15 +27,14 @@ async def on_reaction(ctx: Note):
 
 
 @bot.event()
-async def on_ready(ws: WebSocketClientProtocol):
+async def on_ready(ws):
     print("work on my machine")
-    await Router(ws).channels(["global", "main"])  # globalとmainチャンネルに接続
+    await Router(ws).connect_channel(["global", "main"])  # globalとmainチャンネルに接続
     task.start()  # タスクを起動
-    res = bot.post_note("Hello World")  # ノートを投稿
+    res = await bot.post_note("Hello World")  # ノートを投稿
     print(res.content)
     task.stop()  # タスクを止める
-    res = Drive().upload("/home/example/example.png", "example.png")  # ドライブに画像をアップロード
-    print(res.url)
 
 
-bot.run(uri, token)
+if __name__ == "__main__":
+    asyncio.run(bot.start(uri, token))
