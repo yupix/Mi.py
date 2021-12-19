@@ -291,7 +291,7 @@ class ConnectionState:
         -------
         Chat
             チャットの内容
-        """        
+        """
         args = remove_dict_empty({'userId': user_id, 'groupId': group_id, 'text': content, 'fileId': file_id})
         data = await self.http.request(Route('POST', '/api/messaging/messages/create'), json=args, auth=True, lower=True)
         return Chat(data, state=self)
@@ -519,3 +519,51 @@ class ConnectionState:
 
     async def remove_file(self, file_id: str) -> bool:
         return bool(await self.http.request(Route('POST', '/api/drive/files/delete'), json={'fileId': file_id}, auth=True))
+
+    async def get_user_notes(
+        self,
+        user_id: str,
+        *,
+        since_id: Optional[str] = None,
+        include_my_renotes: bool = True,
+        include_replies: bool = True,
+        with_files: bool = False,
+        until_id: Optional[str] = None,
+        limit: int = 10,
+        get_all: bool = False,
+        exclude_nsfw: bool = True,
+        file_type: Optional[List[str]] = None,
+        since_date: int = 0,
+        until_data: int = 0
+    ) -> AsyncIterator[Note]:
+        if limit > 100:
+            raise InvalidParameters("limit は100以上を受け付けません")
+
+        args = remove_dict_empty(
+            {
+                "userId": user_id,
+                "includeReplies": include_replies,
+                "limit": limit,
+                "sinceId": since_id,
+                "untilId": until_id,
+                "sinceDate": since_date,
+                "untilDate": until_data,
+                "includeMyRenotes": include_my_renotes,
+                "withFiles": with_files,
+                "fileType": file_type,
+                "excludeNsfw": exclude_nsfw
+            }
+        )
+        if get_all:
+            loop = True
+            while loop:
+                get_data = await self.http.request(Route('POST', '/api/users/notes'), json=args, auth=True, lower=True)
+                if len(list(get_data)) <= 0:
+                    break
+                args["untilId"] = get_data[-1]["id"]
+                for data in get_data:
+                    yield Note(NotePayload(**data), state=self)
+        else:
+            get_data = await self.http.request(Route('POST', '/api/users/notes'), json=args, auth=True, lower=True)
+            for data in get_data:
+                yield Note(NotePayload(**upper_to_lower(data)), state=self)
