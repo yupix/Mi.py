@@ -384,36 +384,8 @@ class Client:
                                                 file_ids=file_ids,
                                                 poll=poll)
 
-    @staticmethod
-    def get_announcements(limit: int, with_unreads: bool, since_id: str,
-                          until_id: str):
-        """
-
-        Parameters
-        ----------
-        limit: int
-            最大取得数
-        with_unreads: bool
-            既読済みか否か
-        since_id: str
-        until_id: str
-            前回の最後の値を与える(既に実行し取得しきれない場合に使用)
-
-        Returns
-        -------
-
-        """
-
-        if limit > 100:
-            raise InvalidParameters("limit は100以上を受け付けません")
-
-        args = {
-            "limit": limit,
-            "withUnreads": with_unreads,
-            "sinceId": since_id,
-            "untilId": until_id,
-        }
-        return api("/api/announcements", args, auth=True)
+    async def get_announcements(self, limit: int, with_unreads: bool, since_id: str, until_id: str):
+        return await self._connection.get_announcements(limit=limit, with_unreads=with_unreads, since_id=since_id, until_id=until_id)
 
     async def login(self, token):
         data = await self.http.static_login(token)

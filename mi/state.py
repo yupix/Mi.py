@@ -64,13 +64,13 @@ class ConnectionState:
         ユーザーをフォローした際のイベントを解析する関数
         """
 
-        #self.dispatch('follow', Follower(message, state=self))
+        # self.dispatch('follow', Follower(message, state=self))
 
     def parse_followed(self, message: Dict[str, Any]) -> None:
         """
         フォローイベントを解析する関数
         """
-        #self.dispatch('follow', Follower(message, state=self))
+        # self.dispatch('follow', Follower(message, state=self))
 
     def parse_mention(self, message: Dict[str, Any]) -> None:
         """
@@ -206,8 +206,7 @@ class ConnectionState:
         return InstanceIterator(self).get_users(limit=limit, offset=offset, sort=sort, state=state, origin=origin,
                                                 username=username, hostname=hostname, get_all=get_all)
 
-    @staticmethod
-    async def add_reaction(reaction: str, note_id: Optional[str] = None) -> bool:
+    async def add_reaction(self, reaction: str, note_id: Optional[str] = None) -> bool:
         """
         指定したnoteに指定したリアクションを付与します（内部用
 
@@ -224,8 +223,7 @@ class ConnectionState:
             成功したならTrue,失敗ならFalse
         """
         data = remove_dict_empty({"noteId": note_id, "reaction": reaction})
-        res = api("/api/notes/reactions/create", json_data=data, auth=True)
-        return res.status_code == 204
+        return await self.http.request(Route('POST', '/api/notes/reactions/create'), json=data, auth=True, lower=True)
 
     async def delete_note(self, note_id: str) -> bool:
         """
@@ -565,3 +563,31 @@ class ConnectionState:
             get_data = await self.http.request(Route('POST', '/api/users/notes'), json=args, auth=True, lower=True)
             for data in get_data:
                 yield Note(NotePayload(**upper_to_lower(data)), state=self)
+
+    async def get_announcements(self, limit: int, with_unreads: bool, since_id: str, until_id: str):
+        """
+        Parameters
+        ----------
+        limit: int
+            最大取得数
+        with_unreads: bool
+            既読済みか否か
+        since_id: str
+        until_id: str
+            前回の最後の値を与える(既に実行し取得しきれない場合に使用)
+
+        Returns
+        -------
+
+        """
+
+        if limit > 100:
+            raise InvalidParameters("limit は100以上を受け付けません")
+
+        args = {
+            "limit": limit,
+            "withUnreads": with_unreads,
+            "sinceId": since_id,
+            "untilId": until_id,
+        }
+        return await self.http.request(Route('POST', '/api/announcements'), json=args, auth=True, lower=True)
