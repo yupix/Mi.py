@@ -190,7 +190,7 @@
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">TYPE_CHECKING</span>
 
 <span class="kn">from</span> <span class="nn">mi</span> <span class="kn">import</span> <span class="n">Emoji</span><span class="p">,</span> <span class="n">utils</span>
-<span class="kn">from</span> <span class="nn">mi.exception</span> <span class="kn">import</span> <span class="n">NotExistRequiredParameters</span>
+<span class="kn">from</span> <span class="nn">mi.exception</span> <span class="kn">import</span> <span class="n">NotExistRequiredData</span>
 <span class="kn">from</span> <span class="nn">mi.user</span> <span class="kn">import</span> <span class="n">User</span>
 <span class="kn">from</span> <span class="nn">mi.utils</span> <span class="kn">import</span> <span class="n">check_multi_arg</span>
 <span class="kn">from</span> <span class="nn">.abc.note</span> <span class="kn">import</span> <span class="n">AbstractNote</span>
@@ -224,6 +224,7 @@
 <span class="sd">        str</span>
 <span class="sd">            実行に失敗した際のエラーコード</span>
 <span class="sd">        """</span>
+        
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">NotExistRequiredData</span><span class="p">(</span><span class="s1">'user_idがありません'</span><span class="p">)</span>
         <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">follow_user</span><span class="p">(</span><span class="n">user_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
@@ -242,6 +243,7 @@
 <span class="sd">        status: bool = False</span>
 <span class="sd">            成功ならTrue, 失敗ならFalse</span>
 <span class="sd">        """</span>
+        
         <span class="k">if</span> <span class="n">user_id</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">user_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">id</span>
         <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">unfollow_user</span><span class="p">(</span><span class="n">user_id</span><span class="p">)</span>
@@ -322,6 +324,7 @@
 <span class="sd">        int</span>
 <span class="sd">            含まれている絵文字の数</span>
 <span class="sd">        """</span>
+        
         <span class="k">return</span> <span class="n">utils</span><span class="o">.</span><span class="n">emoji_count</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
 
     <span class="k">async</span> <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
