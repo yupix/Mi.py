@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import Any, Dict, List, Optional, TYPE_CHECKING
 
 from mi import Emoji, utils
-from mi.exception import NotExistRequiredParameters
+from mi.exception import NotExistRequiredData, NotExistRequiredParameters
 from mi.user import User
 from mi.utils import check_multi_arg
 from .abc.note import AbstractNote
