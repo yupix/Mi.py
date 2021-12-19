@@ -27,15 +27,9 @@ class Follow:
         self.user: Optional[User] = data.get('user')
         self._state = state
 
-    def follow(self, user_id: Optional[str] = None) -> tuple[bool, Optional[str]]:
+    async def follow(self) -> tuple[bool, Optional[str]]:
         """
-        与えられたIDのユーザーをフォローします
-
-        Parameters
-        ----------
-        user_id : Optional[str] = None
-            フォローしたいユーザーのID
-
+        ユーザーをフォローします
         Returns
         -------
         bool = False
@@ -43,15 +37,11 @@ class Follow:
         str
             実行に失敗した際のエラーコード
         """
-        if check_multi_arg(user_id, self.user.id):
-            raise NotExistRequiredParameters("user_idが存在しません")
+        if self.id:
+            raise NotExistRequiredData('user_idがありません')
+        return await self._state.follow_user(user_id=self.id)
 
-        if user_id is None:
-            user_id = self.user.id
-
-        return self._state.follow_user(user_id)
-
-    def unfollow(self, user_id: Optional[str] = None) -> bool:
+    async def unfollow(self, user_id: Optional[str] = None) -> bool:
         """
         与えられたIDのユーザーのフォローを解除します
 
@@ -67,7 +57,7 @@ class Follow:
         """
         if user_id is None:
             user_id = self.user.id
-        return self._state.unfollow_user(user_id)
+        return await self._state.unfollow_user(user_id)
 
 
 class Header:

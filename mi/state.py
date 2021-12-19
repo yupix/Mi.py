@@ -149,8 +149,7 @@ class ConnectionState:
         # Router(self.http.ws).capture_message(note.id) TODO: capture message
         self.dispatch('message', note)
 
-    @staticmethod
-    def follow_user(user_id: str) -> tuple[bool, Optional[str]]:
+    async def follow_user(self, user_id: str) -> tuple[bool, Optional[str]]:
         """
         与えられたIDのユーザーをフォローします
 
@@ -165,17 +164,16 @@ class ConnectionState:
             成功ならTrue, 失敗ならFalse
         """
         data = {"userId": user_id}
-        res = api("/api/following/create", json_data=data, auth=True)
-        if res.json().get("error"):
-            code = res.json()["error"]["code"]
+        res = await self.http.request(Route('POST', '/api/following/create'), json=data, auth=True, lower=True)
+        if res.get("error"):
+            code = res["error"]["code"]
             status = False
         else:
             code = None
             status = True
         return status, code
 
-    @staticmethod
-    def unfollow_user(user_id: str) -> bool:
+    async def unfollow_user(self, user_id: str) -> bool:
         """
         Parameters
         ----------
@@ -188,7 +186,7 @@ class ConnectionState:
             成功したならTrue, 失敗したならFalse
         """
         data = {"userId": user_id}
-        res = api("/api/following/delete", json_data=data, auth=True)
+        res = await self.http.request(Route('POST', '/api/following/delete'), json=data, auth=True)
         return bool(res.status_code == 204 or 200)
 
     async def get_i(self) -> User:

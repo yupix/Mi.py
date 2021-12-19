@@ -245,7 +245,7 @@ class User:
             実行に失敗した際のエラーコード
         """
 
-        return self._state.follow_user(self.id)
+        return await self._state.follow_user(user_id=self.id)
 
     async def unfollow(self) -> bool:
         """
@@ -257,7 +257,7 @@ class User:
             成功ならTrue, 失敗ならFalse
         """
 
-        return self._state.unfollow_user(self.id)
+        return await self._state.unfollow_user(user_id=self.id)
 
     async def get_profile(self) -> "User":
         """
