@@ -878,19 +878,20 @@ async</span><a class="reference internal" href="#mi.User.unfollow">unfollow</a><
 <dl class="py method">
 <dt class="sig sig-object py" id="mi.User.get_followers">
 <span class="sig-name descname"><span class="pre">get_followers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">until_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">get_all</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/user.html#User.get_followers"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#mi.User.get_followers" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>ユーザーのフォロワー一覧を取得します
-:param until_id: 前回のフォロワーの続きを取得する場合の起点とするユーザーid
-:type until_id: str, default=None
-:param limit: 最大何人取得するか, max=100
-:type limit: int, default=10
-:param get_all: 全てのフォロワーを取得するか否か
-:type get_all: bool, default=False</p>
+<dd><p>ユーザーのフォロワー一覧を取得します</p>
 <dl class="field-list simple">
-<dt class="field-odd">戻り値</dt>
-<dd class="field-odd"><p>ユーザーのフォロワー一覧</p>
+<dt class="field-odd">パラメータ</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>until_id</strong> (<em>str</em><em>, </em><em>default=None</em>) -- 前回のフォロワーの続きを取得する場合の起点とするユーザーid</p></li>
+<li><p><strong>limit</strong> (<em>int</em><em>, </em><em>default=10</em>) -- 最大何人取得するか, max=100</p></li>
+<li><p><strong>get_all</strong> (<em>bool</em><em>, </em><em>default=False</em>) -- 全てのフォロワーを取得するか否か</p></li>
+</ul>
 </dd>
-<dt class="field-even">戻り値の型</dt>
-<dd class="field-even"><p>AsyncIterator[Follower]</p>
+<dt class="field-even">戻り値</dt>
+<dd class="field-even"><p>ユーザーのフォロワー一覧</p>
+</dd>
+<dt class="field-odd">戻り値の型</dt>
+<dd class="field-odd"><p>AsyncIterator[Follower]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1420,27 +1421,24 @@ fetch_userを使った場合はキャッシュが廃棄され再度サーバー�
 <dl class="py method">
 <dt class="sig sig-object py" id="mi.ConnectionState.get_followers">
 <em class="property"><span class="pre">async</span> <span class="pre">for</span> <span class="pre">...</span> <span class="pre">in</span> </em><span class="sig-name descname"><span class="pre">get_followers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">host</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">since_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">until_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">get_all</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/state.html#ConnectionState.get_followers"><span class="viewcode-link"><span class="pre">[ソース]</span></span></a><a class="headerlink" href="#mi.ConnectionState.get_followers" title="この定義へのパーマリンク">¶</a></dt>
-<dd><p>与えられたユーザーのフォロワーを取得します
-:param user_id: ユーザーのid
-:type user_id: str, default=None
-:param username: ユーザー名
-:type username: str, default=None
-:param host: ユーザーがいるインスタンスのhost名
-:type host: str, default=None
-:param since_id:
-:type since_id: str, default=None
-:param until_id: 前回の最後の値を与える(既に実行し取得しきれない場合に使用)
-:type until_id: str, default=None
-:param limit: 取得する情報の最大数 max: 100
-:type limit: int, default=10
-:param get_all: 全てのフォロワーを取得する
-:type get_all: bool, default=False</p>
+<dd><p>与えられたユーザーのフォロワーを取得します</p>
 <dl class="field-list simple">
-<dt class="field-odd">列挙</dt>
-<dd class="field-odd"><p><em>dict</em> -- フォロワーの情報</p>
+<dt class="field-odd">パラメータ</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>user_id</strong> (<em>str</em><em>, </em><em>default=None</em>) -- ユーザーのid</p></li>
+<li><p><strong>username</strong> (<em>str</em><em>, </em><em>default=None</em>) -- ユーザー名</p></li>
+<li><p><strong>host</strong> (<em>str</em><em>, </em><em>default=None</em>) -- ユーザーがいるインスタンスのhost名</p></li>
+<li><p><strong>since_id</strong> (<em>str</em><em>, </em><em>default=None</em>) -- </p></li>
+<li><p><strong>until_id</strong> (<em>str</em><em>, </em><em>default=None</em>) -- 前回の最後の値を与える(既に実行し取得しきれない場合に使用)</p></li>
+<li><p><strong>limit</strong> (<em>int</em><em>, </em><em>default=10</em>) -- 取得する情報の最大数 max: 100</p></li>
+<li><p><strong>get_all</strong> (<em>bool</em><em>, </em><em>default=False</em>) -- 全てのフォロワーを取得する</p></li>
+</ul>
 </dd>
-<dt class="field-even">例外</dt>
-<dd class="field-even"><p><a class="reference internal" href="#mi.InvalidParameters" title="mi.InvalidParameters"><strong>InvalidParameters</strong></a> -- limit引数が不正な場合</p>
+<dt class="field-even">列挙</dt>
+<dd class="field-even"><p><em>dict</em> -- フォロワーの情報</p>
+</dd>
+<dt class="field-odd">例外</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#mi.InvalidParameters" title="mi.InvalidParameters"><strong>InvalidParameters</strong></a> -- limit引数が不正な場合</p>
 </dd>
 </dl>
 </dd></dl>
