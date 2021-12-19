@@ -18,9 +18,14 @@ __all__ = (
     "ImAi",
     "InternalServerError",
     "TaskNotRunningError",
-    "NotFoundError"
+    "NotFoundError",
+    "NotExistRequiredData"
 )
 
+class NotExistRequiredData(Exception):
+    """
+    必要なデータが存在しない場合に発生する例外
+    """
 
 class NotFoundError(Exception):
     """
