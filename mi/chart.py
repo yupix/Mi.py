@@ -1,23 +1,27 @@
 from typing import List, Optional
+from mi.state import ConnectionState
 
-from pydantic import BaseModel
-
-from mi.utils import api, json_dump
 
 __all__ = ['Chart', 'Local', 'Remote']
 
 
-class Local(BaseModel):
-    users: Optional[List[int]] = None
+class Local:
+    def __init__(self, data, state: ConnectionState):
+        self.users: Optional[List[int]] = data['users']
+        self._state = state
 
 
-class Remote(BaseModel):
-    users: Optional[List[int]] = None
+class Remote:
+    def __init__(self, data, state: ConnectionState):
+        self.users: Optional[List[int]] = data['users']
+        self._state = state
 
 
-class Chart(BaseModel):
-    span: Optional[str] = None
-    limit: Optional[int] = None
-    offset: Optional[int] = None
-    local: Optional[Local] = None
-    remote: Optional[Remote] = None
+class Chart:
+    def __init__(self, data, state: ConnectionState):
+        self.span: str = data['span']
+        self.limit: int = data['limit']
+        self.offset: int = data['offset']
+        self.local: Local = Local(data['local'], state=state)
+        self.remote: Remote = Remote(data['remote'], state=state)
+        self._state = state
