@@ -45,8 +45,13 @@ await Router(ws).channels(['home', 'global'])
     <tr>
         <td align="center"><a href="https://github.com/Uraking-Github">Adviser | @Uraking</a></td>
     </tr>
+        <tr>
+        <td><img src="https://s3.akarinext.org/misskey/*/thumbnail-64775133-569b-4ec8-b7aa-ca3766d3d583.png"></img></td>
+    </tr>
+    <tr>
+        <td align="center"><a href="https://github.com/sousuke0422">Document | @sousuke0422</a></td>
+    </tr>
 </table>
-
 ### Libraries
 
 - [Discord.py](https://github.com/Rapptz/discord.py)
