@@ -4,23 +4,7 @@ from pydantic import BaseModel
 
 from mi.utils import api, json_dump
 
-__all__ = ['ChartAction', 'Chart', 'Local', 'Remote']
-
-
-class ChartAction:
-    def get_active_users(self) -> "Chart":
-        """
-        Chartクラスをもとにアクティブなユーザーの統計を取得します
-
-        Returns
-        -------
-        Chart: Chart
-        """
-        data = json_dump(
-            {"span": self.span, "limit": self.limit, "offset": self.offset}
-        )
-        res = api("/api/charts/active-users", data=data).json()
-        return Chart(**res)
+__all__ = ['Chart', 'Local', 'Remote']
 
 
 class Local(BaseModel):
@@ -31,7 +15,7 @@ class Remote(BaseModel):
     users: Optional[List[int]] = None
 
 
-class Chart(BaseModel, ChartAction):
+class Chart(BaseModel):
     span: Optional[str] = None
     limit: Optional[int] = None
     offset: Optional[int] = None
