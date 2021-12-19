@@ -8,12 +8,14 @@ from inspect import isawaitable
 from typing import Any, Callable, Dict, Iterable, List, Optional, TypeVar, Union
 
 import emoji
-import requests
 
 from mi import config, exception
 
 T = TypeVar("T")
 
+def deprecated_func(func):
+    print('deprecated function:' + func.__name__)
+    
 
 def get_cache_key(func):
     async def decorator(self, *args, **kwargs):
@@ -128,67 +130,13 @@ def find(predicate: Callable[[T], Any], seq: Iterable[T]) -> Optional[T]:
 def json_dump(data, *args, **kwargs):
     return json.dumps(data, ensure_ascii=False, *args, **kwargs)
 
-
-def api(
-        endpoint: str,
-        json_data: Dict[str, str] = {},
-        *,
-        origin_uri: Optional[str] = None,
-        files: Any = None,
-        auth: bool = False,
-        lower: bool = False
-) -> Union[requests.models.Response, Dict[str, Union[str, List[Union[Dict[str, Any]]], Dict[str, Any]]]]:
+@deprecated_func
+def api(*args, **kwargs) -> None:
     """
-    .. danger::
-        開発者に向けての注意事項です。今後この関数ではdict **のみ** を返します。そのため早いうちに json()を使ったものを修正してください
-
-    Parameters
-    ----------
-    origin_uri : str
-        起点となるURL
-    endpoint : Optional[str]
-        エンドポイント
-    json_data : Dict[str, str]
-        dict形式のデータ
-    auth: bool
-        認証情報を付与するか
-    files : Any
-        画像などのファイル
-    lower: bool
-        keyを小文字に変換するか
-    Returns
-    -------
-    requests.models.Response or Dict[str, Any]
+    .. deprecated:: 1.0.1
+        この関数は廃止され、現在は使用できません。互換性のため名前空間のみが提供されています。
+        今後は :func:`request` を使用してください
     """
-    if check_multi_arg(json_data, files) is False and auth:
-        json_data = {}
-    if auth:
-        json_data["i"] = config.i.token
-    base_url = origin_uri or config.i.origin_uri
-    res = requests.post(base_url + endpoint, files=files, json=json_data)
-    status_code = res.status_code
-    errors = {
-        400: {"raise": exception.ClientError, "description": "Client Error"},
-        401: {
-            "raise": exception.AuthenticationError,
-            "description": "AuthenticationError",
-        },
-        418: {"raise": exception.ImAi, "description": "I'm Ai"},
-        500: {
-            "raise": exception.InternalServerError,
-            "description": "InternalServerError",
-        },
-    }
-    if status_code in [400, 401, 418, 500]:
-        error_base: Dict[str, Any] = errors[(status_code)]
-        error_code = json.loads(res.text)
-        error = error_base["raise"](
-            f"{error_base['description']} => {error_code['error']['message']}  \n {res.text}"
-        )
-        raise error
-    if lower:
-        return upper_to_lower(res.json())
-    return res
 
 
 def remove_list_empty(data: List[Any]) -> List[Any]:
