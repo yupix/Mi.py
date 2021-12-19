@@ -6,7 +6,7 @@ import inspect
 import re
 import sys
 import traceback
-from typing import Any, Callable, Coroutine, Dict, Iterator, List, Optional, TYPE_CHECKING, Tuple, Union
+from typing import Any, AsyncIterator, Callable, Coroutine, Dict, List, Optional, TYPE_CHECKING, Tuple, Union
 
 import aiohttp
 from aiohttp import ClientWebSocketResponse
@@ -202,7 +202,7 @@ class Client:
         """
         return await self._connection.delete_chat(message_id=message_id)
 
-    def get_user_notes(
+    async def get_user_notes(
             self,
             user_id: str,
             *,
@@ -217,40 +217,9 @@ class Client:
             file_type: Optional[List[str]] = None,
             since_date: int = 0,
             until_data: int = 0
-    ) -> Iterator[Note]:
-        if limit > 100:
-            raise InvalidParameters("limit は100以上を受け付けません")
-
-        args = remove_dict_empty(
-            {
-                "userId": user_id,
-                "includeReplies": include_replies,
-                "limit": limit,
-                "sinceId": since_id,
-                "untilId": until_id,
-                "sinceDate": since_date,
-                "untilDate": until_data,
-                "includeMyRenotes": include_my_renotes,
-                "withFiles": with_files,
-                "fileType": file_type,
-                "excludeNsfw": exclude_nsfw
-            }
-        )
-        if get_all:
-            loop = True
-            while loop:
-                get_data = api("/api/users/notes", json_data=args,
-                               auth=True, lower=True)
-                if len(get_data) <= 0:
-                    break
-                args["untilId"] = get_data[-1]["id"]
-                for data in get_data:
-                    yield Note(NotePayload(**data), state=self._connection)
-        else:
-            get_data = api("/api/users/notes", json_data=args,
-                           auth=True).json()
-            for data in get_data:
-                yield Note(NotePayload(**upper_to_lower(data)), state=self._connection)
+    ) -> AsyncIterator[Note]:
+        return self._connection.get_user_notes(user_id=user_id, since_id=since_id, include_my_renotes=include_my_renotes, include_replies=include_replies, with_files=with_files,
+                                               until_id=until_id, limit=limit, get_all=get_all, exclude_nsfw=exclude_nsfw, file_type=file_type, since_date=since_date, until_data=until_data)
 
     async def get_instance(self, host: Optional[str] = None) -> Union[Instance, InstanceMeta]:
         """
