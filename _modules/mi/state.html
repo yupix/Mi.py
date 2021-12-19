@@ -478,7 +478,7 @@
 <span class="sd">        -------</span>
 <span class="sd">        Chat</span>
 <span class="sd">            チャットの内容</span>
-<span class="sd">        """</span>        
+<span class="sd">        """</span>
         <span class="n">args</span> <span class="o">=</span> <span class="n">remove_dict_empty</span><span class="p">({</span><span class="s1">'userId'</span><span class="p">:</span> <span class="n">user_id</span><span class="p">,</span> <span class="s1">'groupId'</span><span class="p">:</span> <span class="n">group_id</span><span class="p">,</span> <span class="s1">'text'</span><span class="p">:</span> <span class="n">content</span><span class="p">,</span> <span class="s1">'fileId'</span><span class="p">:</span> <span class="n">file_id</span><span class="p">})</span>
         <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">Route</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">,</span> <span class="s1">'/api/messaging/messages/create'</span><span class="p">),</span> <span class="n">json</span><span class="o">=</span><span class="n">args</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">Chat</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
@@ -705,7 +705,55 @@
         <span class="k">return</span> <span class="n">Drive</span><span class="p">(</span><span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">Route</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">,</span> <span class="s1">'/api/admin/drive/show-file'</span><span class="p">),</span> <span class="n">json</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">state</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
 
     <span class="k">async</span> <span class="k">def</span> <span class="nf">remove_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">Route</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">,</span> <span class="s1">'/api/drive/files/delete'</span><span class="p">),</span> <span class="n">json</span><span class="o">=</span><span class="p">{</span><span class="s1">'fileId'</span><span class="p">:</span> <span class="n">file_id</span><span class="p">},</span> <span class="n">auth</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span></div>
+        <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">Route</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">,</span> <span class="s1">'/api/drive/files/delete'</span><span class="p">),</span> <span class="n">json</span><span class="o">=</span><span class="p">{</span><span class="s1">'fileId'</span><span class="p">:</span> <span class="n">file_id</span><span class="p">},</span> <span class="n">auth</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">get_user_notes</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">user_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">since_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">include_my_renotes</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">include_replies</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">with_files</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">until_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">limit</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
+        <span class="n">get_all</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">exclude_nsfw</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">file_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">since_date</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="n">until_data</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncIterator</span><span class="p">[</span><span class="n">Note</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="n">limit</span> <span class="o">&gt;</span> <span class="mi">100</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">InvalidParameters</span><span class="p">(</span><span class="s2">"limit は100以上を受け付けません"</span><span class="p">)</span>
+
+        <span class="n">args</span> <span class="o">=</span> <span class="n">remove_dict_empty</span><span class="p">(</span>
+            <span class="p">{</span>
+                <span class="s2">"userId"</span><span class="p">:</span> <span class="n">user_id</span><span class="p">,</span>
+                <span class="s2">"includeReplies"</span><span class="p">:</span> <span class="n">include_replies</span><span class="p">,</span>
+                <span class="s2">"limit"</span><span class="p">:</span> <span class="n">limit</span><span class="p">,</span>
+                <span class="s2">"sinceId"</span><span class="p">:</span> <span class="n">since_id</span><span class="p">,</span>
+                <span class="s2">"untilId"</span><span class="p">:</span> <span class="n">until_id</span><span class="p">,</span>
+                <span class="s2">"sinceDate"</span><span class="p">:</span> <span class="n">since_date</span><span class="p">,</span>
+                <span class="s2">"untilDate"</span><span class="p">:</span> <span class="n">until_data</span><span class="p">,</span>
+                <span class="s2">"includeMyRenotes"</span><span class="p">:</span> <span class="n">include_my_renotes</span><span class="p">,</span>
+                <span class="s2">"withFiles"</span><span class="p">:</span> <span class="n">with_files</span><span class="p">,</span>
+                <span class="s2">"fileType"</span><span class="p">:</span> <span class="n">file_type</span><span class="p">,</span>
+                <span class="s2">"excludeNsfw"</span><span class="p">:</span> <span class="n">exclude_nsfw</span>
+            <span class="p">}</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">get_all</span><span class="p">:</span>
+            <span class="n">loop</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">while</span> <span class="n">loop</span><span class="p">:</span>
+                <span class="n">get_data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">Route</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">,</span> <span class="s1">'/api/users/notes'</span><span class="p">),</span> <span class="n">json</span><span class="o">=</span><span class="n">args</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">get_data</span><span class="p">))</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="k">break</span>
+                <span class="n">args</span><span class="p">[</span><span class="s2">"untilId"</span><span class="p">]</span> <span class="o">=</span> <span class="n">get_data</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="s2">"id"</span><span class="p">]</span>
+                <span class="k">for</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">get_data</span><span class="p">:</span>
+                    <span class="k">yield</span> <span class="n">Note</span><span class="p">(</span><span class="n">NotePayload</span><span class="p">(</span><span class="o">**</span><span class="n">data</span><span class="p">),</span> <span class="n">state</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">get_data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">Route</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">,</span> <span class="s1">'/api/users/notes'</span><span class="p">),</span> <span class="n">json</span><span class="o">=</span><span class="n">args</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">get_data</span><span class="p">:</span>
+                <span class="k">yield</span> <span class="n">Note</span><span class="p">(</span><span class="n">NotePayload</span><span class="p">(</span><span class="o">**</span><span class="n">upper_to_lower</span><span class="p">(</span><span class="n">data</span><span class="p">)),</span> <span class="n">state</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span></div>
 </pre></div>
         </article>
       </div>
