@@ -176,21 +176,31 @@ InvalidCogPath
 
 .. autoclass:: InvalidCogPath()
 
+NotExistRequiredData
+~~~~~~~~~~~~~~~~~~~~
+
+.. autoclass:: NotExistRequiredData()
 
 Low-Level API
 -------------
 
 .. autoclass:: Route()
-
+   :members:
+   
 .. autoclass:: HTTPClient()
+   :members:
 
 .. autoclass:: ConnectionState()
+   :members:
 
 Low-Layer API
 -------------
 
 .. autoclass:: MisskeyClientWebSocketResponse()
+   :members:
 
 .. autoclass:: MisskeyWebSocket()
+   :members:
 
 .. autoclass:: InstanceIterator()
+   :members:
