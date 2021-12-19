@@ -4,7 +4,7 @@ Mi.pyのWebSocket部分
 
 import json
 import sys
-from typing import Any, Dict, Optional, Union
+from typing import Any, Dict, Optional
 
 import aiohttp
 
@@ -51,7 +51,7 @@ class HTTPClient:
         self.__session: aiohttp.ClientSession = MISSING
         self.token: Optional[str] = None
 
-    async def request(self, route: Route, *, files=None, form=None, **kwargs) -> Union[Union[bool, dict[str, Any]], Any]:
+    async def request(self, route: Route, *, files=None, form=None, **kwargs) -> Any:
         headers: Dict[str, str] = {
             'User-Agent': self.user_agent,
         }
