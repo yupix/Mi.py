@@ -1,6 +1,5 @@
-"""
-Misskeyのチャンネルへの接続や、メッセージのキャプチャ等のWebSocket関連
-"""
+"""Misskeyのチャンネルへの接続や、メッセージのキャプチャ等のWebSocket関連"""
+
 from __future__ import annotations
 from typing import TYPE_CHECKING, List
 import uuid

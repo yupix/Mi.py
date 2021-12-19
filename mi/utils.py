@@ -78,7 +78,8 @@ def emoji_count(text: Optional[str] = None, emojis: Optional[List[str]] = None):
 
 
 def check_multi_arg(*args: Any) -> bool:
-    """複数の値を受け取り値が存在するかをboolで返します
+    """
+    複数の値を受け取り値が存在するかをboolで返します
 
     Parameters
     ----------
@@ -178,7 +179,6 @@ def upper_to_lower(
         replace_list: Optional[Dict[str, Any]] = None
 ) -> Dict[str, Any]:
     """
-
     Parameters
     ----------
     data: dict

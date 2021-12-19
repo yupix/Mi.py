@@ -29,7 +29,6 @@ class InstanceIterator:
                         get_all: bool = False
                         ) -> AsyncIterator[User]:
         """
-
         Parameters
         ----------
         limit: int

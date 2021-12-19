@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import Any, Dict, List, Optional, TYPE_CHECKING
 
 from mi import Emoji, utils
-from mi.exception import NotExistRequiredData, NotExistRequiredParameters
+from mi.exception import NotExistRequiredData
 from mi.user import User
 from mi.utils import check_multi_arg
 from .abc.note import AbstractNote
@@ -37,6 +37,7 @@ class Follow:
         str
             実行に失敗した際のエラーコード
         """
+        
         if self.id:
             raise NotExistRequiredData('user_idがありません')
         return await self._state.follow_user(user_id=self.id)
@@ -55,6 +56,7 @@ class Follow:
         status: bool = False
             成功ならTrue, 失敗ならFalse
         """
+        
         if user_id is None:
             user_id = self.user.id
         return await self._state.unfollow_user(user_id)
@@ -135,6 +137,7 @@ class Renote(AbstractNote):
         int
             含まれている絵文字の数
         """
+        
         return utils.emoji_count(self.content)
 
     async def delete(self) -> bool:

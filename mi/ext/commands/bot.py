@@ -144,7 +144,8 @@ class BotBase(GroupMixin, AbstractBotBase):
             self.extra_events[name] = [func]
 
     async def event_dispatch(self, event_name: str, *args: Tuple[Any], **kwargs: Dict[Any, Any]) -> bool:
-        """on_ready等といった
+        """
+        on_ready等といった
 
         Parameters
         ----------

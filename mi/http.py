@@ -1,6 +1,4 @@
-"""
-Mi.pyのWebSocket部分
-"""
+"""Mi.pyのWebSocket部分"""
 
 import json
 import sys
