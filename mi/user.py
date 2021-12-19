@@ -273,6 +273,7 @@ class User:
     def get_followers(self, until_id: Optional[str] = None, limit: int = 10, get_all: bool = False) -> AsyncIterator[Follower]:
         """
         ユーザーのフォロワー一覧を取得します
+        
         Parameters
         ----------
         until_id : str, default=None

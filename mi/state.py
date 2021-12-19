@@ -436,6 +436,7 @@ class ConnectionState:
     ) -> AsyncIterator[Follower]:
         """
         与えられたユーザーのフォロワーを取得します
+        
         Parameters
         ----------
         user_id : str, default=None

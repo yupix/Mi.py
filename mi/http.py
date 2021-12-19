@@ -11,6 +11,8 @@ from mi.utils import upper_to_lower
 from . import __version__, config, exception
 
 
+__all__ = ('Route', 'HTTPClient')
+
 class _MissingSentinel:
     def __eq__(self, other):
         return False

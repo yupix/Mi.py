@@ -18,8 +18,7 @@ from mi.exception import InvalidParameters
 from mi.http import HTTPClient
 from mi.note import Note
 from mi.state import ConnectionState
-from mi.types import Note as NotePayload
-from mi.utils import api, get_module_logger, remove_dict_empty, upper_to_lower
+from mi.utils import api, get_module_logger
 from .gateway import MisskeyWebSocket
 
 if TYPE_CHECKING:

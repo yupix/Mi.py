@@ -8,6 +8,8 @@ if TYPE_CHECKING:
     from aiohttp.client_ws import ClientWebSocketResponse
 
 
+__all__ = ['Router']
+
 class Router:
     """
     Attributes

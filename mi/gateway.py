@@ -11,6 +11,8 @@ if TYPE_CHECKING:
     from .client import Client
 
 
+__all__ = ('MisskeyWebSocket', 'MisskeyClientWebSocketResponse')
+
 class MisskeyClientWebSocketResponse(aiohttp.ClientWebSocketResponse):
     async def close(self, *, code: int = 4000, message: bytes = b'') -> bool:
         return await super().close(code=code, message=message)
