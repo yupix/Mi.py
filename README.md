@@ -67,5 +67,3 @@ await Router(ws).channels(['home', 'global'])
 [Third party](https://github.com/yupix/Mi.py/blob/master/LICENSE/ThirdPartyLicense.md)
 
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fyupix%2FMi.py.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fyupix%2FMi.py?ref=badge_large)
-
-[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/F2F36AA7M)
