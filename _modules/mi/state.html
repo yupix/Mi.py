@@ -251,13 +251,13 @@
 <span class="sd">        ユーザーをフォローした際のイベントを解析する関数</span>
 <span class="sd">        """</span>
 
-        <span class="c1">#self.dispatch('follow', Follower(message, state=self))</span>
+        <span class="c1"># self.dispatch('follow', Follower(message, state=self))</span>
 
     <span class="k">def</span> <span class="nf">parse_followed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">"""</span>
 <span class="sd">        フォローイベントを解析する関数</span>
 <span class="sd">        """</span>
-        <span class="c1">#self.dispatch('follow', Follower(message, state=self))</span>
+        <span class="c1"># self.dispatch('follow', Follower(message, state=self))</span>
 
     <span class="k">def</span> <span class="nf">parse_mention</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">"""</span>
@@ -393,8 +393,7 @@
         <span class="k">return</span> <span class="n">InstanceIterator</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">get_users</span><span class="p">(</span><span class="n">limit</span><span class="o">=</span><span class="n">limit</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="n">offset</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="n">sort</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="n">state</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="n">origin</span><span class="p">,</span>
                                                 <span class="n">username</span><span class="o">=</span><span class="n">username</span><span class="p">,</span> <span class="n">hostname</span><span class="o">=</span><span class="n">hostname</span><span class="p">,</span> <span class="n">get_all</span><span class="o">=</span><span class="n">get_all</span><span class="p">)</span>
 
-    <span class="nd">@staticmethod</span>
-    <span class="k">async</span> <span class="k">def</span> <span class="nf">add_reaction</span><span class="p">(</span><span class="n">reaction</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">note_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">add_reaction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">reaction</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">note_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="sd">"""</span>
 <span class="sd">        指定したnoteに指定したリアクションを付与します（内部用</span>
 
@@ -411,8 +410,7 @@
 <span class="sd">            成功したならTrue,失敗ならFalse</span>
 <span class="sd">        """</span>
         <span class="n">data</span> <span class="o">=</span> <span class="n">remove_dict_empty</span><span class="p">({</span><span class="s2">"noteId"</span><span class="p">:</span> <span class="n">note_id</span><span class="p">,</span> <span class="s2">"reaction"</span><span class="p">:</span> <span class="n">reaction</span><span class="p">})</span>
-        <span class="n">res</span> <span class="o">=</span> <span class="n">api</span><span class="p">(</span><span class="s2">"/api/notes/reactions/create"</span><span class="p">,</span> <span class="n">json_data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">res</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">204</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">Route</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">,</span> <span class="s1">'/api/notes/reactions/create'</span><span class="p">),</span> <span class="n">json</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
     <span class="k">async</span> <span class="k">def</span> <span class="nf">delete_note</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">note_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="sd">"""</span>
@@ -751,7 +749,35 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="n">get_data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">Route</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">,</span> <span class="s1">'/api/users/notes'</span><span class="p">),</span> <span class="n">json</span><span class="o">=</span><span class="n">args</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">get_data</span><span class="p">:</span>
-                <span class="k">yield</span> <span class="n">Note</span><span class="p">(</span><span class="n">NotePayload</span><span class="p">(</span><span class="o">**</span><span class="n">upper_to_lower</span><span class="p">(</span><span class="n">data</span><span class="p">)),</span> <span class="n">state</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span></div>
+                <span class="k">yield</span> <span class="n">Note</span><span class="p">(</span><span class="n">NotePayload</span><span class="p">(</span><span class="o">**</span><span class="n">upper_to_lower</span><span class="p">(</span><span class="n">data</span><span class="p">)),</span> <span class="n">state</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">get_announcements</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">limit</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">with_unreads</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">since_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">until_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="sd">"""</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        limit: int</span>
+<span class="sd">            最大取得数</span>
+<span class="sd">        with_unreads: bool</span>
+<span class="sd">            既読済みか否か</span>
+<span class="sd">        since_id: str</span>
+<span class="sd">        until_id: str</span>
+<span class="sd">            前回の最後の値を与える(既に実行し取得しきれない場合に使用)</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+
+<span class="sd">        """</span>
+
+        <span class="k">if</span> <span class="n">limit</span> <span class="o">&gt;</span> <span class="mi">100</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">InvalidParameters</span><span class="p">(</span><span class="s2">"limit は100以上を受け付けません"</span><span class="p">)</span>
+
+        <span class="n">args</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">"limit"</span><span class="p">:</span> <span class="n">limit</span><span class="p">,</span>
+            <span class="s2">"withUnreads"</span><span class="p">:</span> <span class="n">with_unreads</span><span class="p">,</span>
+            <span class="s2">"sinceId"</span><span class="p">:</span> <span class="n">since_id</span><span class="p">,</span>
+            <span class="s2">"untilId"</span><span class="p">:</span> <span class="n">until_id</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">Route</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">,</span> <span class="s1">'/api/announcements'</span><span class="p">),</span> <span class="n">json</span><span class="o">=</span><span class="n">args</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
 </pre></div>
         </article>
       </div>
