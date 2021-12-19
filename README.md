@@ -3,7 +3,8 @@
 [![CodeFactor](https://www.codefactor.io/repository/github/yupix/mi.py/badge)](https://www.codefactor.io/repository/github/yupix/mi.py)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/f5acd9da804d4a11b031d36dbd398067)](https://www.codacy.com/gh/yupix/Mi.py/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=yupix/Mi.py&amp;utm_campaign=Badge_Grade)
 [![buddy pipeline](https://app.buddy.works/yupi0982/mi-py/pipelines/pipeline/345007/badge.svg?token=b304dd68d3eeb7917d453a2d2102621123ae4f05e0b659dde59cad486e2984b3 "buddy pipeline")](https://app.buddy.works/yupi0982/mi-py/pipelines/pipeline/345007)
-[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fyupix%2FMi.py.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fyupix%2FMi.py?ref=badge_shield)  
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fyupix%2FMi.py.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fyupix%2FMi.py?ref=badge_shield)
+[![Build Status](https://ci.akarinext.org/api/badges/yupix/Mi.py/status.svg)](https://ci.akarinext.org/yupix/Mi.py)
 
 ## 概要
 
@@ -46,7 +47,7 @@ await Router(ws).channels(['home', 'global'])
         <td align="center"><a href="https://github.com/Uraking-Github">Adviser | @Uraking</a></td>
     </tr>
         <tr>
-        <td><img src="https://s3.akarinext.org/misskey/*/thumbnail-64775133-569b-4ec8-b7aa-ca3766d3d583.png"></img></td>
+        <td><img src="https://s3.akarinext.org/misskey/*/thumbnail-64775133-569b-4ec8-b7aa-ca3766d3d583.png", height=124px></img></td>
     </tr>
     <tr>
         <td align="center"><a href="https://github.com/sousuke0422">Document | @sousuke0422</a></td>
