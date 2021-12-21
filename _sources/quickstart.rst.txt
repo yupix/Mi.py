@@ -3,6 +3,12 @@ QuickStart
 
 このページでは Mi.pyの簡単な使い方をご紹介します
 
+ubuntuなどのoperating systemでは以下のパッケージがビルドに必要です。
+
+.. code-block:: bash
+    
+    sudo apt install python3.x-dev
+
 .. tip::
     Mi.pyはリリースが遅いため、githubからインストールすることを推奨します
 
