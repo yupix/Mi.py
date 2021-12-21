@@ -49,7 +49,6 @@ extensions = [
 ]
 autodoc_member_order = 'bysource'
 autodoc_typehints = 'none'
-panels_add_bootstrap_css = False
 autodoc_mock_imports = ["matplotlib"]
 autoclass_content = "both"
 autosummary_generate = True
