@@ -11,14 +11,22 @@ API Reference
 イベントリファレンス
 --------------------
 
-.. function:: on_message()
+.. function:: on_ready(ws)
+
+   botがwebsocketに接続し終えた時点で呼び出されます。
+
+.. function:: on_message(note: Note)
    
-   :class:`Note` が作成された際に呼び出されます
+   ノートが接続しているチャンネル内に投稿された際に呼び出されます 
+
+.. function:: on_emoji_add(emoji: Emoji)
+
+   絵文字がインスタンスに追加された際に呼び出されます
 
 抽象基底クラス
 ----------------
 
-[abstract base class](https://docs.python.org/ja/3/glossary.html#term-abstract-base-class)はメソッドなどの一覧を取得するために継承することが可能なクラスです。抽象基底クラスはインスタンス化することはできません。
+`abstract base class <https://docs.python.org/ja/3/glossary.html#term-abstract-base-class>`_ はメソッドなどの一覧を取得するために継承することが可能なクラスです。抽象基底クラスはインスタンス化することはできません。
 
 AbstractBotBase
 ~~~~~~~~~~~~~~~~
