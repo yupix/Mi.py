@@ -15,7 +15,8 @@ from mi.http import Route
 from mi.iterators import InstanceIterator
 from mi.note import Note, Poll, Reaction
 from mi.user import Follower
-from mi.utils import api, check_multi_arg, get_cache_key, get_module_logger, key_builder, remove_dict_empty, str_lower, \
+from mi.emoji import Emoji
+from mi.utils import check_multi_arg, get_cache_key, get_module_logger, key_builder, remove_dict_empty, str_lower, \
     upper_to_lower
 
 if TYPE_CHECKING:
@@ -33,6 +34,10 @@ class ConnectionState:
         for attr, func in inspect.getmembers(self):
             if attr.startswith('parse'):
                 parsers[attr[6:].upper()] = func
+
+    def parse_emoji_added(self, message: Dict[str, Any]):
+        print(message)
+        self.dispatch('emoji_add', Emoji(message['body']['emoji'], state=self))
 
     def parse_channel(self, message: Dict[str, Any]) -> None:
         """parse_channel is a function to parse channel event
