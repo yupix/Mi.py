@@ -397,9 +397,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">channel_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"channel_id"</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_state</span> <span class="o">=</span> <span class="n">state</span>
 
-    <span class="k">async</span> <span class="k">def</span> <span class="nf">reply</span><span class="p">(</span>
-            <span class="bp">self</span><span class="p">,</span> <span class="n">content</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-            <span class="o">*</span><span class="p">,</span>
+<div class="viewcode-block" id="Note.reply"><a class="viewcode-back" href="../../mi.html#mi.Note.reply">[ドキュメント]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">reply</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span> <span class="n">content</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
             <span class="n">cw</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
             <span class="n">no_extract_mentions</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
             <span class="n">no_extract_hashtags</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
@@ -409,6 +408,30 @@
             <span class="n">file_ids</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
             <span class="n">poll</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Poll</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Note</span><span class="p">:</span>
+        <span class="sd">"""</span>
+<span class="sd">        ノートに対して返信を送信します</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        content: Optional[str]</span>
+<span class="sd">            返信内容</span>
+<span class="sd">        cw: Optional[str]</span>
+<span class="sd">            閲覧注意</span>
+<span class="sd">        no_extract_mentions : bool, optional</span>
+<span class="sd">            メンションを展開するか, by default False</span>
+<span class="sd">        no_extract_hashtags : bool, optional</span>
+<span class="sd">            ハッシュタグを展開するか, by default False</span>
+<span class="sd">        no_extract_emojis : bool, optional</span>
+<span class="sd">            絵文字を展開するか, by default False</span>
+<span class="sd">        renote_id : Optional[str], optional</span>
+<span class="sd">            リノート先のid, by default None</span>
+<span class="sd">        channel_id : Optional[str], optional</span>
+<span class="sd">            チャンネルid, by default None</span>
+<span class="sd">        file_ids : [type], optional</span>
+<span class="sd">            添付するファイルのid, by default None</span>
+<span class="sd">        poll : Optional[Poll], optional</span>
+<span class="sd">            アンケート, by default None</span>
+<span class="sd">        """</span>
         <span class="k">if</span> <span class="n">file_ids</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">file_ids</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">post_note</span><span class="p">(</span>
@@ -425,7 +448,7 @@
             <span class="n">channel_id</span><span class="o">=</span><span class="n">channel_id</span><span class="p">,</span>
             <span class="n">file_ids</span><span class="o">=</span><span class="n">file_ids</span><span class="p">,</span>
             <span class="n">poll</span><span class="o">=</span><span class="n">poll</span>
-        <span class="p">)</span>
+        <span class="p">)</span></div>
 
 <div class="viewcode-block" id="Note.emoji_count"><a class="viewcode-back" href="../../mi.html#mi.Note.emoji_count">[ドキュメント]</a>    <span class="k">def</span> <span class="nf">emoji_count</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
         <span class="sd">"""</span>

@@ -527,8 +527,7 @@
         <span class="k">return</span> <span class="n">User</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
 
 <div class="viewcode-block" id="ConnectionState.post_note"><a class="viewcode-back" href="../../mi.html#mi.ConnectionState.post_note">[ドキュメント]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">post_note</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
-                        <span class="n">content</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-                        <span class="o">*</span><span class="p">,</span>
+                        <span class="n">content</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
                         <span class="n">visibility</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"public"</span><span class="p">,</span>
                         <span class="n">visible_user_ids</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
                         <span class="n">cw</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
