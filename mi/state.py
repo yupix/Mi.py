@@ -92,6 +92,9 @@ class ConnectionState:
     def parse_read_all_notifications(self, message: Dict[str, Any]) -> None:
         pass  # TODO:実装
 
+    def parse_unread_mention(self, message: Dict[str, Any]) -> None:
+        pass
+
     def parse_messaging_message(self, message: ChatPayload) -> None:
         """
         チャットが来た際のデータを処理する関数
