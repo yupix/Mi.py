@@ -323,6 +323,9 @@
         <span class="n">notification_type</span> <span class="o">=</span> <span class="n">str_lower</span><span class="p">(</span><span class="n">message</span><span class="p">[</span><span class="s1">'type'</span><span class="p">])</span>
         <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">f</span><span class="s1">'parse_</span><span class="si">{</span><span class="n">notification_type</span><span class="si">}</span><span class="s1">'</span><span class="p">)(</span><span class="n">message</span><span class="p">)</span></div>
 
+    <span class="k">def</span> <span class="nf">parse_follow_request_accepted</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">pass</span>
+
     <span class="k">def</span> <span class="nf">parse_poll_vote</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">pass</span>  <span class="c1"># TODO: 実装</span>
 
