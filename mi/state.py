@@ -135,6 +135,9 @@ class ConnectionState:
         notification_type = str_lower(message['type'])
         getattr(self, f'parse_{notification_type}')(message)
 
+    def parse_follow_request_accepted(self, message: Dict[str, Any]) -> None:
+        pass
+
     def parse_poll_vote(self, message: Dict[str, Any]) -> None:
         pass  # TODO: 実装
 
