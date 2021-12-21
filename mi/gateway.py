@@ -5,6 +5,8 @@ from typing import Any, Callable, Dict, Optional, TYPE_CHECKING
 
 import aiohttp
 
+from mi.utils import str_lower
+
 from . import config
 
 if TYPE_CHECKING:
@@ -40,7 +42,10 @@ class MisskeyWebSocket:
         if type(msg) is bytes:
             msg = msg.decode()
         # print(self._misskey_parsers)
-        self._misskey_parsers[msg['type'].upper()](msg)
+        
+        self._misskey_parsers[str_lower(msg['type']).upper()](msg)
+            
+            
 
     async def poll_event(self):
         msg = await self.socket.receive(timeout=60)  # TODO: いつか変数に
