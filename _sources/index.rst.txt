@@ -19,7 +19,7 @@ Mi.pyはDiscord.pyライクな書き方ができるように作成されてい�
 
 .. panels::
     :card: + intro-card text-center
-    :column: col-lg-12 p-3
+    :column: col-lg-6 p-3
 
     ---
     :img-top: _static/api.svg
@@ -36,6 +36,23 @@ Mi.pyはDiscord.pyライクな書き方ができるように作成されてい�
             :type: ref
             :text: To the reference guide
             :classes: btn-block btn-secondary stretched-link
+
+    ---
+    :img-top: _static/api.svg
+    :img-top-cls: + w-25 mx-auto
+
+    QuickStart
+    ^^^^^^^^^^^^^
+
+    Mi.pyを簡単に試してみましょう
+
+    +++
+
+    .. link-button:: quickstart
+            :type: ref
+            :text: To the quickstart guide
+            :classes: btn-block btn-secondary stretched-link
+
 
 Recent Changes
 --------------
