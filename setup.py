@@ -26,6 +26,7 @@ ext_modules = [Extension("mi.next_utils", sources=["mi/next_utils" + ext])]
 packages = [
     'mi',
     'mi.abc',
+    'mi.abc.ext',
     'mi.types',
     'mi.ext.commands',
     'mi.ext.tasks'
