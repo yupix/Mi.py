@@ -55,6 +55,10 @@ class ConnectionState:
         self.logger.debug(f'recv event type: {channel_type}')
         getattr(self, f'parse_{channel_type}')(base_msg['body'])
 
+    def parse_renote(self, message: Dict[str, Any]):
+        pass
+
+
     def parse_read_all_announcements(self, message: Dict[str, Any]) -> None:
         pass  # TODO: 実装
 
