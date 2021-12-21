@@ -14,7 +14,7 @@ Mi.pyは[Discord.py](https://github.com/Rapptz/discord.py)
 
 ## 使い方
 
-様々な使い方を書くにあたってREADMEから変更しました。[こちら](examples)からご覧ください。 その他のメソッドなどについては[ドキュメント](https://mipy.readthedocs.io/) をご覧ください
+様々な使い方を書くにあたってREADMEから変更しました。[こちら](examples)からご覧ください。 その他のメソッドなどについては[ドキュメント](https://yupix.github.io/Mi.py) をご覧ください
 
 ## 注意点
 
