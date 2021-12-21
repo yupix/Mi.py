@@ -211,8 +211,7 @@ class Note(AbstractNote):
         self._state = state
 
     async def reply(
-            self, content: str,
-            *,
+            self, content: Optional[str],
             cw: Optional[str] = None,
             no_extract_mentions: bool = False,
             no_extract_hashtags: bool = False,
@@ -222,6 +221,30 @@ class Note(AbstractNote):
             file_ids=None,
             poll: Optional[Poll] = None
     ) -> Note:
+        """
+        ノートに対して返信を送信します
+        
+        Parameters
+        ----------
+        content: Optional[str]
+            返信内容
+        cw: Optional[str]
+            閲覧注意
+        no_extract_mentions : bool, optional
+            メンションを展開するか, by default False
+        no_extract_hashtags : bool, optional
+            ハッシュタグを展開するか, by default False
+        no_extract_emojis : bool, optional
+            絵文字を展開するか, by default False
+        renote_id : Optional[str], optional
+            リノート先のid, by default None
+        channel_id : Optional[str], optional
+            チャンネルid, by default None
+        file_ids : [type], optional
+            添付するファイルのid, by default None
+        poll : Optional[Poll], optional
+            アンケート, by default None
+        """
         if file_ids is None:
             file_ids = []
         return await self._state.post_note(

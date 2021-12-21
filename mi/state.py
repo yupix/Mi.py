@@ -340,8 +340,7 @@ class ConnectionState:
         return User(data, state=self)
 
     async def post_note(self,
-                        content: str,
-                        *,
+                        content: Optional[str],
                         visibility: str = "public",
                         visible_user_ids: Optional[List[str]] = None,
                         cw: Optional[str] = None,

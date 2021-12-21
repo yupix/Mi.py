@@ -354,7 +354,7 @@ class Client:
         -------
         Drive
             ファイルの情報
-        """        """"""
+        """
         return await self._connection.show_file(file_id=file_id, url=url)
 
     async def remove_file(self, file_id: str) -> bool:
@@ -387,6 +387,7 @@ class Client:
         return await self._connection.get_announcements(limit=limit, with_unreads=with_unreads, since_id=since_id, until_id=until_id)
 
     async def login(self, token):
+        
         data = await self.http.static_login(token)
         self.i = User(data, self._connection)
 
