@@ -9,9 +9,9 @@ msgstr ""
 "Project-Id-Version: Mi.py \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-12-22 17:23+0900\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"PO-Revision-Date: 2021-12-22 17:38+0900\n"
+"Last-Translator: yupix <yupi0982@outlook.jp>\n"
+"Language-Team: TeamPimcserver\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -19,7 +19,7 @@ msgstr ""
 
 #: ../../mi.rst:4
 msgid "API Reference"
-msgstr ""
+msgstr "API Reference"
 
 #: ../../mi.rst:6
 msgid "このセクションではMi.pyのAPIについて説明します"
@@ -33,7 +33,7 @@ msgstr ""
 
 #: ../../mi.rst:12
 msgid "イベントリファレンス"
-msgstr ""
+msgstr "Event Reference"
 
 #: ../../mi.rst:16
 msgid "botがwebsocketに接続し終えた時点で呼び出されます。"
@@ -41,15 +41,15 @@ msgstr ""
 
 #: ../../mi.rst:20
 msgid "ノートが接続しているチャンネル内に投稿された際に呼び出されます"
-msgstr ""
+msgstr "Called when a note is posted in the connected channel"
 
 #: ../../mi.rst:24
 msgid "絵文字がインスタンスに追加された際に呼び出されます"
-msgstr ""
+msgstr "Called when an emoji is added to an instance"
 
 #: ../../mi.rst:27
 msgid "抽象基底クラス"
-msgstr ""
+msgstr "Abstract Base Classes"
 
 #: ../../mi.rst:29
 msgid ""
@@ -60,15 +60,15 @@ msgstr ""
 
 #: ../../mi.rst:32
 msgid "AbstractBotBase"
-msgstr ""
+msgstr "AbstractBotBase"
 
 #: ../../mi.rst:40
 msgid "AbstractChatContent"
-msgstr ""
+msgstr "AbstractChatContent"
 
 #: ../../mi.rst:48
 msgid "Misskey モデル"
-msgstr ""
+msgstr "Misskey Models"
 
 #: ../../mi.rst:51
 msgid ""
@@ -78,11 +78,11 @@ msgstr ""
 
 #: ../../mi.rst:55
 msgid "Note"
-msgstr ""
+msgstr "Note"
 
 #: mi.note.Note mi.user.User mi.user.UserDetails of
 msgid "type"
-msgstr ""
+msgstr "type"
 
 #: mi.note.Note:4 mi.note.Note:8 mi.note.Note:12 mi.note.Note:32 mi.user.User:6
 #: mi.user.User:12 mi.user.User:18 mi.user.User:60 mi.user.User:66

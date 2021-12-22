@@ -27,19 +27,19 @@ msgstr ""
 
 #: ../../index.rst:9
 msgid "Mi.pyはDiscord.pyライクな書き方ができるように作成されているMisskey API Wrapeprです"
-msgstr ""
+msgstr "Mi.py is a Misskey API Wrapper designed for Discord.py-like writing."
 
 #: ../../index.rst:13
 msgid "Mi.pyは現在Preview VersionなのでPiPyではなくgithubの方を使用することを推奨します"
-msgstr ""
+msgstr "Mi.py is currently in preview version. for that reason github not pypi it is reccomended use."
 
 #: ../../index.rst
 msgid "img-top"
-msgstr ""
+msgstr "img-top"
 
 #: ../../index.rst:28
 msgid "API reference"
-msgstr ""
+msgstr "API reference"
 
 #: ../../index.rst:31
 msgid "どのようにクラスやメソッドを使うのかここで探検しましょう"
@@ -47,7 +47,7 @@ msgstr ""
 
 #: ../../index.rst:44
 msgid "QuickStart"
-msgstr ""
+msgstr "QuickStart"
 
 #: ../../index.rst:47
 msgid "Mi.pyを簡単に試してみましょう"
@@ -55,7 +55,7 @@ msgstr ""
 
 #: ../../index.rst:58
 msgid "Recent Changes"
-msgstr ""
+msgstr "Recent Changes"
 
 #: ../../index.rst:63
 msgid "Indices and tables"
@@ -71,5 +71,5 @@ msgstr ""
 
 #: ../../index.rst:67
 msgid ":ref:`search`"
-msgstr ""
+msgstr ":ref: search"
 
