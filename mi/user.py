@@ -69,7 +69,7 @@ class PinnedNote(BaseModel):
 
 
 class PinnedPage(BaseModel):
-    id_: Optional[str] = None
+    id: Optional[str] = None
     created_at: Optional[str] = None
     updated_at: Optional[str] = None
     title: Optional[str] = None
