@@ -97,6 +97,60 @@ Emoji
 .. autoclass:: Emoji()
    :members:
 
+Renote
+~~~~~~
+
+.. attributetable:: Renote
+
+.. autoclass:: Renote()
+   :members:
+
+Follow
+~~~~~~
+
+.. attributetable:: Follow
+
+.. autoclass:: Follow()
+   :members:
+
+
+
+データクラス
+------------
+
+Header
+~~~~~~
+
+.. attributetable:: Header
+
+.. autoclass:: Header()
+   :members:
+
+Properties
+~~~~~~~~~~
+
+.. attributetable:: Properties
+
+.. autoclass:: Properties()
+   :members:
+
+File
+~~~~
+
+.. attributetable:: Header
+
+.. autoclass:: Header()
+   :members:
+
+Reaction
+~~~~
+
+.. attributetable:: Reaction
+
+.. autoclass:: Reaction()
+   :members:
+
+
 例外処理
 --------
 

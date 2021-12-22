@@ -330,7 +330,7 @@ async</span><a class="reference internal" href="#mi.Note.reply">reply</a></li></
 <span class="sig-name descname"><span class="pre">renote</span></span><a class="headerlink" href="#mi.Note.renote" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>Renote</p>
+<dd class="field-odd"><p><a class="reference internal" href="#mi.Renote" title="mi.Renote">Renote</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1032,9 +1032,124 @@ async</span><a class="reference internal" href="#mi.Drive.delete">delete</a></li
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.</span></span><span class="sig-name descname"><span class="pre">Emoji</span></span><a class="reference internal" href="_modules/mi/emoji.html#Emoji"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mi.Emoji" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 </div>
+<div class="section" id="renote">
+<h3>Renote<a class="headerlink" href="#renote" title="Permalink to this headline">¶</a></h3>
+<div class="py-attribute-table" data-move-to-id="mi.Renote"><div class="py-attribute-table-column">
+<span>
+Methods</span><ul>
+<li class="py-attribute-table-entry">
+<span class="py-attribute-table-badge" title="coroutine">
+async</span><a class="reference internal" href="#mi.Renote.delete">delete</a></li><li class="py-attribute-table-entry">
+<span class="py-attribute-table-badge" title="method">
+def</span><a class="reference internal" href="#mi.Renote.emoji_count">emoji_count</a></li></ul>
+</div></div><dl class="py class">
+<dt class="sig sig-object py" id="mi.Renote">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.</span></span><span class="sig-name descname"><span class="pre">Renote</span></span><a class="reference internal" href="_modules/mi/note.html#Renote"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mi.Renote" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="mi.Renote.emoji_count">
+<span class="sig-name descname"><span class="pre">emoji_count</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/note.html#Renote.emoji_count"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mi.Renote.emoji_count" title="Permalink to this definition">¶</a></dt>
+<dd><p>ノートの本文にemojiが何個含まれているかを返します</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>含まれている絵文字の数</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="mi.Renote.delete">
+<em class="property"><span class="pre">await</span> </em><span class="sig-name descname"><span class="pre">delete</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/note.html#Renote.delete"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mi.Renote.delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>指定したIDのノートを削除します</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><strong>is_success</strong> (<em>bool</em>) – 成功したか否か</p></li>
+<li><p><strong>status_code</strong> (<em>int</em>) – HTTP レスポンスステータスコード</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+</dd></dl>
+</div>
+<div class="section" id="follow">
+<h3>Follow<a class="headerlink" href="#follow" title="Permalink to this headline">¶</a></h3>
+<div class="py-attribute-table" data-move-to-id="mi.Follow"><div class="py-attribute-table-column">
+<span>
+Methods</span><ul>
+<li class="py-attribute-table-entry">
+<span class="py-attribute-table-badge" title="coroutine">
+async</span><a class="reference internal" href="#mi.Follow.follow">follow</a></li><li class="py-attribute-table-entry">
+<span class="py-attribute-table-badge" title="coroutine">
+async</span><a class="reference internal" href="#mi.Follow.unfollow">unfollow</a></li></ul>
+</div></div><dl class="py class">
+<dt class="sig sig-object py" id="mi.Follow">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.</span></span><span class="sig-name descname"><span class="pre">Follow</span></span><a class="reference internal" href="_modules/mi/note.html#Follow"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mi.Follow" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="mi.Follow.follow">
+<em class="property"><span class="pre">await</span> </em><span class="sig-name descname"><span class="pre">follow</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/note.html#Follow.follow"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mi.Follow.follow" title="Permalink to this definition">¶</a></dt>
+<dd><p>ユーザーをフォローします
+:returns: * <em>bool = False</em> – 成功ならTrue, 失敗ならFalse</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><em>str</em> – 実行に失敗した際のエラーコード</p></li>
+</ul>
+</div></blockquote>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="mi.Follow.unfollow">
+<em class="property"><span class="pre">await</span> </em><span class="sig-name descname"><span class="pre">unfollow</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/note.html#Follow.unfollow"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mi.Follow.unfollow" title="Permalink to this definition">¶</a></dt>
+<dd><p>与えられたIDのユーザーのフォローを解除します</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>user_id</strong> (<em>Optional</em><em>[</em><em>str</em><em>] </em><em>= None</em>) – フォローを解除したいユーザーのID</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>status</strong> – 成功ならTrue, 失敗ならFalse</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool = False</p>
+</dd>
+</dl>
+</dd></dl>
+</dd></dl>
+</div>
 </div>
 <div class="section" id="id3">
-<h2>例外処理<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<h2>データクラス<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="header">
+<h3>Header<a class="headerlink" href="#header" title="Permalink to this headline">¶</a></h3>
+<div class="py-attribute-table" data-move-to-id="mi.Header"></div><dl class="py class">
+<dt class="sig sig-object py" id="mi.Header">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.</span></span><span class="sig-name descname"><span class="pre">Header</span></span><a class="reference internal" href="_modules/mi/note.html#Header"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mi.Header" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+</div>
+<div class="section" id="properties">
+<h3>Properties<a class="headerlink" href="#properties" title="Permalink to this headline">¶</a></h3>
+<div class="py-attribute-table" data-move-to-id="mi.Properties"></div><dl class="py class">
+<dt class="sig sig-object py" id="mi.Properties">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.</span></span><span class="sig-name descname"><span class="pre">Properties</span></span><a class="reference internal" href="_modules/mi/note.html#Properties"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mi.Properties" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+</div>
+<div class="section" id="file">
+<h3>File<a class="headerlink" href="#file" title="Permalink to this headline">¶</a></h3>
+<div class="py-attribute-table" data-move-to-id="mi.Header"></div><dl class="py class">
+<dt class="sig sig-object py" id="id0">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.</span></span><span class="sig-name descname"><span class="pre">Header</span></span><a class="reference internal" href="_modules/mi/note.html#Header"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id0" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+</div>
+<div class="section" id="reaction">
+<h3>Reaction<a class="headerlink" href="#reaction" title="Permalink to this headline">¶</a></h3>
+<div class="py-attribute-table" data-move-to-id="mi.Reaction"></div><dl class="py class">
+<dt class="sig sig-object py" id="mi.Reaction">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.</span></span><span class="sig-name descname"><span class="pre">Reaction</span></span><a class="reference internal" href="_modules/mi/note.html#Reaction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mi.Reaction" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+</div>
+</div>
+<div class="section" id="id4">
+<h2>例外処理<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="notfounderror">
 <h3>NotFoundError<a class="headerlink" href="#notfounderror" title="Permalink to this headline">¶</a></h3>
 <dl class="py class">
@@ -1578,9 +1693,18 @@ fetch_userを使った場合はキャッシュが廃棄され再度サーバー�
 <li><a class="reference internal" href="#userdetails">UserDetails</a></li>
 <li><a class="reference internal" href="#drive">Drive</a></li>
 <li><a class="reference internal" href="#emoji">Emoji</a></li>
+<li><a class="reference internal" href="#renote">Renote</a></li>
+<li><a class="reference internal" href="#follow">Follow</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id3">例外処理</a><ul>
+<li><a class="reference internal" href="#id3">データクラス</a><ul>
+<li><a class="reference internal" href="#header">Header</a></li>
+<li><a class="reference internal" href="#properties">Properties</a></li>
+<li><a class="reference internal" href="#file">File</a></li>
+<li><a class="reference internal" href="#reaction">Reaction</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id4">例外処理</a><ul>
 <li><a class="reference internal" href="#notfounderror">NotFoundError</a></li>
 <li><a class="reference internal" href="#tasknotrunningerror">TaskNotRunningError</a></li>
 <li><a class="reference internal" href="#imai">ImAi</a></li>
