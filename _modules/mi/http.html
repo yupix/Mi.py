@@ -1,11 +1,11 @@
 <!doctype html>
-<html class="no-js" lang="ja">
+<html class="no-js">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
-    <meta name="color-scheme" content="light dark"><link rel="index" title="索引" href="../../genindex.html" /><link rel="search" title="検索" href="../../search.html" />
+    <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" />
 
     <meta name="generator" content="sphinx-4.3.2, furo 2021.11.23"/>
-        <title>mi.http - Mi.py 0.5.0 ドキュメント</title>
+        <title>mi.http - Mi.py 0.5.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?digest=7f0192ddeb2adecfbaa87ffbcf67d16358b30bc1" />
     <link rel="stylesheet" type="text/css" href="../../_static/panels-bootstrap.5fd3999ee7762ccc51105388f4a9d115.css" />
@@ -126,7 +126,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../index.html"><div class="brand">Mi.py 0.5.0 ドキュメント</div></a>
+      <a href="../../index.html"><div class="brand">Mi.py 0.5.0 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -152,10 +152,10 @@
     <img class="sidebar-logo" src="../../_static/mi.py.svg" alt="Logo"/>
   </div>
   
-  <span class="sidebar-brand-text">Mi.py 0.5.0 ドキュメント</span>
+  <span class="sidebar-brand-text">Mi.py 0.5.0 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
-  <input class="sidebar-search" placeholder=検索 name="q" aria-label="検索">
+  <input class="sidebar-search" placeholder=Search name="q" aria-label="Search">
   <input type="hidden" name="check_keywords" value="yes">
   <input type="hidden" name="area" value="default">
 </form>
@@ -185,7 +185,7 @@
           </label>
         </div>
         <article role="main">
-          <h1>mi.http のソースコード</h1><div class="highlight"><pre>
+          <h1>Source code for mi.http</h1><div class="highlight"><pre>
 <span></span><span class="sd">"""Mi.pyのWebSocket部分"""</span>
 
 <span class="kn">import</span> <span class="nn">json</span>
@@ -215,7 +215,7 @@
 <span class="n">MISSING</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="n">_MissingSentinel</span><span class="p">()</span>
 
 
-<div class="viewcode-block" id="Route"><a class="viewcode-back" href="../../mi.html#mi.Route">[ドキュメント]</a><span class="k">class</span> <span class="nc">Route</span><span class="p">:</span>
+<div class="viewcode-block" id="Route"><a class="viewcode-back" href="../../mi.html#mi.Route">[docs]</a><span class="k">class</span> <span class="nc">Route</span><span class="p">:</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">method</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">**</span><span class="n">parameters</span><span class="p">:</span> <span class="n">Any</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">path</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">method</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">method</span>
@@ -231,7 +231,7 @@
         <span class="k">pass</span>
 
 
-<div class="viewcode-block" id="HTTPClient"><a class="viewcode-back" href="../../mi.html#mi.HTTPClient">[ドキュメント]</a><span class="k">class</span> <span class="nc">HTTPClient</span><span class="p">:</span>
+<div class="viewcode-block" id="HTTPClient"><a class="viewcode-back" href="../../mi.html#mi.HTTPClient">[docs]</a><span class="k">class</span> <span class="nc">HTTPClient</span><span class="p">:</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connector</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">aiohttp</span><span class="o">.</span><span class="n">BaseConnector</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">connector</span> <span class="o">=</span> <span class="n">connector</span>
         <span class="n">user_agent</span> <span class="o">=</span> <span class="s1">'Misskey Bot (https://github.com/yupix/Mi.py </span><span class="si">{0}</span><span class="s1">) Python/</span><span class="si">{1[0]}</span><span class="s1">.</span><span class="si">{1[1]}</span><span class="s1"> aiohttp/</span><span class="si">{2}</span><span class="s1">'</span>
@@ -340,6 +340,5 @@
     <script src="../../_static/underscore.js"></script>
     <script src="../../_static/doctools.js"></script>
     <script src="../../_static/scripts/furo.js"></script>
-    <script src="../../_static/translations.js"></script>
     </body>
 </html>

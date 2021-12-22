@@ -1,11 +1,11 @@
 <!doctype html>
-<html class="no-js" lang="ja">
+<html class="no-js">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
-    <meta name="color-scheme" content="light dark"><link rel="index" title="索引" href="../../genindex.html" /><link rel="search" title="検索" href="../../search.html" />
+    <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" />
 
     <meta name="generator" content="sphinx-4.3.2, furo 2021.11.23"/>
-        <title>mi.user - Mi.py 0.5.0 ドキュメント</title>
+        <title>mi.user - Mi.py 0.5.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?digest=7f0192ddeb2adecfbaa87ffbcf67d16358b30bc1" />
     <link rel="stylesheet" type="text/css" href="../../_static/panels-bootstrap.5fd3999ee7762ccc51105388f4a9d115.css" />
@@ -126,7 +126,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../index.html"><div class="brand">Mi.py 0.5.0 ドキュメント</div></a>
+      <a href="../../index.html"><div class="brand">Mi.py 0.5.0 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -152,10 +152,10 @@
     <img class="sidebar-logo" src="../../_static/mi.py.svg" alt="Logo"/>
   </div>
   
-  <span class="sidebar-brand-text">Mi.py 0.5.0 ドキュメント</span>
+  <span class="sidebar-brand-text">Mi.py 0.5.0 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
-  <input class="sidebar-search" placeholder=検索 name="q" aria-label="検索">
+  <input class="sidebar-search" placeholder=Search name="q" aria-label="Search">
   <input type="hidden" name="check_keywords" value="yes">
   <input type="hidden" name="area" value="default">
 </form>
@@ -185,7 +185,7 @@
           </label>
         </div>
         <article role="main">
-          <h1>mi.user のソースコード</h1><div class="highlight"><pre>
+          <h1>Source code for mi.user</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">AsyncIterator</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">TYPE_CHECKING</span>
 
@@ -274,7 +274,7 @@
     <span class="n">value</span><span class="p">:</span> <span class="nb">str</span>
 
 
-<div class="viewcode-block" id="UserDetails"><a class="viewcode-back" href="../../mi.html#mi.UserDetails">[ドキュメント]</a><span class="k">class</span> <span class="nc">UserDetails</span><span class="p">:</span>
+<div class="viewcode-block" id="UserDetails"><a class="viewcode-back" href="../../mi.html#mi.UserDetails">[docs]</a><span class="k">class</span> <span class="nc">UserDetails</span><span class="p">:</span>
     <span class="sd">"""</span>
 <span class="sd">    ユーザー情報だが、一般的に使うか怪しいもの</span>
 
@@ -303,7 +303,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">lang</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"lang"</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="User"><a class="viewcode-back" href="../../mi.html#mi.User">[ドキュメント]</a><span class="k">class</span> <span class="nc">User</span><span class="p">:</span>
+<div class="viewcode-block" id="User"><a class="viewcode-back" href="../../mi.html#mi.User">[docs]</a><span class="k">class</span> <span class="nc">User</span><span class="p">:</span>
     <span class="sd">"""</span>
 <span class="sd">    Attributes</span>
 <span class="sd">    ----------</span>
@@ -421,7 +421,7 @@
             <span class="n">Instance</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">"instance"</span><span class="p">],</span> <span class="n">state</span><span class="p">)</span> <span class="k">if</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"instance"</span><span class="p">)</span> <span class="k">else</span> <span class="n">Instance</span><span class="p">({},</span> <span class="n">state</span><span class="p">)</span>
         <span class="p">)</span>
 
-<div class="viewcode-block" id="User.follow"><a class="viewcode-back" href="../../mi.html#mi.User.follow">[ドキュメント]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">follow</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
+<div class="viewcode-block" id="User.follow"><a class="viewcode-back" href="../../mi.html#mi.User.follow">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">follow</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
         <span class="sd">"""</span>
 <span class="sd">        ユーザーをフォローします</span>
 
@@ -435,7 +435,7 @@
 
         <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">follow_user</span><span class="p">(</span><span class="n">user_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="User.unfollow"><a class="viewcode-back" href="../../mi.html#mi.User.unfollow">[ドキュメント]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">unfollow</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<div class="viewcode-block" id="User.unfollow"><a class="viewcode-back" href="../../mi.html#mi.User.unfollow">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">unfollow</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="sd">"""</span>
 <span class="sd">        ユーザーのフォローを解除します</span>
 
@@ -447,7 +447,7 @@
 
         <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">unfollow_user</span><span class="p">(</span><span class="n">user_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="User.get_profile"><a class="viewcode-back" href="../../mi.html#mi.User.get_profile">[ドキュメント]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">get_profile</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">"User"</span><span class="p">:</span>
+<div class="viewcode-block" id="User.get_profile"><a class="viewcode-back" href="../../mi.html#mi.User.get_profile">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">get_profile</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">"User"</span><span class="p">:</span>
         <span class="sd">"""</span>
 <span class="sd">        ユーザーのプロフィールを取得します</span>
 
@@ -458,7 +458,7 @@
 <span class="sd">        """</span>
         <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">get_user</span><span class="p">(</span><span class="n">user_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">username</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">username</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">host</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="User.get_followers"><a class="viewcode-back" href="../../mi.html#mi.User.get_followers">[ドキュメント]</a>    <span class="k">def</span> <span class="nf">get_followers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">until_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">limit</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="n">get_all</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncIterator</span><span class="p">[</span><span class="n">Follower</span><span class="p">]:</span>
+<div class="viewcode-block" id="User.get_followers"><a class="viewcode-back" href="../../mi.html#mi.User.get_followers">[docs]</a>    <span class="k">def</span> <span class="nf">get_followers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">until_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">limit</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="n">get_all</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncIterator</span><span class="p">[</span><span class="n">Follower</span><span class="p">]:</span>
         <span class="sd">"""</span>
 <span class="sd">        ユーザーのフォロワー一覧を取得します</span>
 <span class="sd">        </span>
@@ -507,6 +507,5 @@
     <script src="../../_static/underscore.js"></script>
     <script src="../../_static/doctools.js"></script>
     <script src="../../_static/scripts/furo.js"></script>
-    <script src="../../_static/translations.js"></script>
     </body>
 </html>
