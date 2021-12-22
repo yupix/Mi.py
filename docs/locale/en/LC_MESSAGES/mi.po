@@ -3,33 +3,36 @@
 # This file is distributed under the same license as the Mi.py package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Mi.py \n"
+"Project-Id-Version: Mi.py\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-12-22 17:23+0900\n"
-"PO-Revision-Date: 2021-12-22 17:38+0900\n"
+"PO-Revision-Date: 2021-12-22 23:03+0900\n"
 "Last-Translator: yupix <yupi0982@outlook.jp>\n"
 "Language-Team: TeamPimcserver\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.9.1\n"
+"Language: en\n"
+"X-Generator: Poedit 3.0\n"
 
 #: ../../mi.rst:4
 msgid "API Reference"
-msgstr "API Reference"
+msgstr "API reference"
 
 #: ../../mi.rst:6
 msgid "このセクションではMi.pyのAPIについて説明します"
-msgstr ""
+msgstr "This section describes the API of Mi.py"
 
 #: ../../mi.rst:9
 msgid ""
-"このライブラリではloggingを用いてdebug出力が可能です。標準設定では出ないため、起動時の引数として `debug` "
-"を渡すようにしてください"
+"このライブラリではloggingを用いてdebug出力が可能です。標準設定では出ないた"
+"め、起動時の引数として `debug` を渡すようにしてください"
 msgstr ""
+"This library allows debug output using logging. It is not out of the "
+"standard settings, so please pass 'debug' as the start-up argument"
 
 #: ../../mi.rst:12
 msgid "イベントリファレンス"
@@ -37,7 +40,7 @@ msgstr "Event Reference"
 
 #: ../../mi.rst:16
 msgid "botがwebsocketに接続し終えた時点で呼び出されます。"
-msgstr ""
+msgstr "It is called when the bot finishes connecting to the websocket"
 
 #: ../../mi.rst:20
 msgid "ノートが接続しているチャンネル内に投稿された際に呼び出されます"
@@ -54,9 +57,12 @@ msgstr "Abstract Base Classes"
 #: ../../mi.rst:29
 msgid ""
 "`abstract base class <https://docs.python.org/ja/3/glossary.html#term-"
-"abstract-base-class>`_ "
-"はメソッドなどの一覧を取得するために継承することが可能なクラスです。抽象基底クラスはインスタンス化することはできません。"
+"abstract-base-class>`_ はメソッドなどの一覧を取得するために継承することが可能"
+"なクラスです。抽象基底クラスはインスタンス化することはできません。"
 msgstr ""
+"'abstract base class <https://docs.python.org/ja/3/glossary.html#term-"
+"abstract-base-class>'_ is a class that can be inherited to retrieve a list "
+"of methods, etc. Abstract base classes cannot be instantiated"
 
 #: ../../mi.rst:32
 msgid "AbstractBotBase"
@@ -72,9 +78,12 @@ msgstr "Misskey Models"
 
 #: ../../mi.rst:51
 msgid ""
-"下記のクラスは、 **ユーザーによって作成されることを考慮していません** 。 "
-"独自のインスタンスは作成するべきではなく、値を変更するべきではありません。"
+"下記のクラスは、 **ユーザーによって作成されることを考慮していません** 。 独自"
+"のインスタンスは作成するべきではなく、値を変更するべきではありません。"
 msgstr ""
+"The following classes do not take into account that they are created by the "
+"user** . You should not create your own instances, and you should not change "
+"the value"
 
 #: ../../mi.rst:55
 msgid "Note"
@@ -90,16 +99,16 @@ msgstr "type"
 #: mi.user.User:114 mi.user.User:150 mi.user.User:156 mi.user.User:162
 #: mi.user.UserDetails:14 mi.user.UserDetails:20 of
 msgid "str"
-msgstr ""
+msgstr "Optional[str]"
 
 #: ../../mi.rst:63 mi.note.Note:16 of
 msgid "User"
-msgstr ""
+msgstr "User"
 
 #: mi.note.Note:20 mi.note.Note:24 mi.note.Note:60 mi.note.Note:64
 #: mi.user.User:24 mi.user.User:30 mi.user.UserDetails:8 of
 msgid "Optional[str]"
-msgstr ""
+msgstr "Optional[str]"
 
 #: mi.note.Note:28 of
 msgid "Renote"
@@ -112,7 +121,7 @@ msgstr ""
 
 #: mi.note.Note:44 of
 msgid "Dict[str, Any]"
-msgstr ""
+msgstr "Dict[str, Any]"
 
 #: mi.note.Note:48 of
 msgid "List[Emoji]"
@@ -120,11 +129,11 @@ msgstr ""
 
 #: mi.note.Note:52 mi.note.Note:56 of
 msgid "Optional[List[str]]"
-msgstr ""
+msgstr "Optional[List[str]]"
 
 #: mi.note.Note:68 of
 msgid "Optional[Poll]"
-msgstr ""
+msgstr "Optional[Poll]"
 
 #: mi.note.Note.reply:2 of
 msgid "ノートに対して返信を送信します"
@@ -209,7 +218,7 @@ msgstr ""
 #: mi.state.ConnectionState.unfollow_user mi.user.User.get_followers
 #: mi.user.User.get_profile mi.user.User.unfollow of
 msgid "Return type"
-msgstr ""
+msgstr "Return type"
 
 #: mi.note.Note.delete:2 of
 msgid "指定したIDのノートを削除します"
@@ -217,8 +226,8 @@ msgstr ""
 
 #: mi.note.Note.delete:4 of
 msgid ""
-"* **is_success** (*bool*) -- 成功したか否か * **status_code** (*int*) -- HTTP "
-"レスポンスステータスコード"
+"* **is_success** (*bool*) -- 成功したか否か * **status_code** (*int*) -- "
+"HTTP レスポンスステータスコード"
 msgstr ""
 
 #: mi.note.Note.delete:4 of
@@ -388,7 +397,9 @@ msgid "ユーザーをフォローします"
 msgstr ""
 
 #: mi.user.User.follow:4 of
-msgid "* *bool = False* -- 成功ならTrue, 失敗ならFalse * *str* -- 実行に失敗した際のエラーコード"
+msgid ""
+"* *bool = False* -- 成功ならTrue, 失敗ならFalse * *str* -- 実行に失敗した際の"
+"エラーコード"
 msgstr ""
 
 #: mi.user.User.follow:4 of
@@ -654,7 +665,7 @@ msgstr ""
 
 #: ../../mi.rst:193
 msgid "Low-Level API"
-msgstr ""
+msgstr "Low-Level API"
 
 #: mi.state.ConnectionState.parse_channel:2 of
 msgid "parse_channel is a function to parse channel event"
@@ -752,8 +763,9 @@ msgstr ""
 
 #: mi.state.ConnectionState.get_user:2 of
 msgid ""
-"ユーザーのプロフィールを取得します。一度のみサーバーにアクセスしキャッシュをその後は使います。 "
-"fetch_userを使った場合はキャッシュが廃棄され再度サーバーにアクセスします。"
+"ユーザーのプロフィールを取得します。一度のみサーバーにアクセスしキャッシュを"
+"その後は使います。 fetch_userを使った場合はキャッシュが廃棄され再度サーバーに"
+"アクセスします。"
 msgstr ""
 
 #: mi.state.ConnectionState.get_user:5 of
@@ -888,5 +900,4 @@ msgstr ""
 
 #: ../../mi.rst:205
 msgid "Low-Layer API"
-msgstr ""
-
+msgstr "Low-Layer API"
