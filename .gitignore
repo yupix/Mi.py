@@ -13,3 +13,4 @@ dist/*
 main.py
 cogs
 .setup.py.swp
+*.mo
