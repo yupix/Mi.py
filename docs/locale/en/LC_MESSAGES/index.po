@@ -3,19 +3,20 @@
 # This file is distributed under the same license as the Mi.py package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Mi.py \n"
+"Project-Id-Version: Mi.py\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-12-22 17:23+0900\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"PO-Revision-Date: 2021-12-22 17:49+0900\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.9.1\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: en\n"
+"X-Generator: Poedit 3.0\n"
 
 #: ../../index.rst:16
 msgid "Contents:"
@@ -27,11 +28,11 @@ msgstr ""
 
 #: ../../index.rst:9
 msgid "Mi.pyはDiscord.pyライクな書き方ができるように作成されているMisskey API Wrapeprです"
-msgstr "Mi.py is a Misskey API Wrapper designed for Discord.py-like writing."
+msgstr "Mi.py is a Misskey API Wrapper designed for Discord.py-like writing"
 
 #: ../../index.rst:13
 msgid "Mi.pyは現在Preview VersionなのでPiPyではなくgithubの方を使用することを推奨します"
-msgstr "Mi.py is currently in preview version. for that reason github not pypi it is reccomended use."
+msgstr "Mi.py is currently in preview version. for that reason github not pypi it is reccomended use"
 
 #: ../../index.rst
 msgid "img-top"
@@ -43,7 +44,7 @@ msgstr "API reference"
 
 #: ../../index.rst:31
 msgid "どのようにクラスやメソッドを使うのかここで探検しましょう"
-msgstr ""
+msgstr "Explore how to use classes and methods here"
 
 #: ../../index.rst:44
 msgid "QuickStart"
@@ -51,7 +52,7 @@ msgstr "QuickStart"
 
 #: ../../index.rst:47
 msgid "Mi.pyを簡単に試してみましょう"
-msgstr ""
+msgstr "Let's try Mi.py easily"
 
 #: ../../index.rst:58
 msgid "Recent Changes"
@@ -59,17 +60,16 @@ msgstr "Recent Changes"
 
 #: ../../index.rst:63
 msgid "Indices and tables"
-msgstr ""
+msgstr "Indices and tables"
 
 #: ../../index.rst:65
 msgid ":ref:`genindex`"
-msgstr ""
+msgstr ":ref:`genindex`"
 
 #: ../../index.rst:66
 msgid ":ref:`modindex`"
-msgstr ""
+msgstr ":ref:`modindex`"
 
 #: ../../index.rst:67
 msgid ":ref:`search`"
 msgstr ":ref: search"
-
