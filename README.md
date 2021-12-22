@@ -6,22 +6,21 @@
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fyupix%2FMi.py.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fyupix%2FMi.py?ref=badge_shield)
 [![Build Status](https://ci.akarinext.org/api/badges/yupix/Mi.py/status.svg)](https://ci.akarinext.org/yupix/Mi.py)
 
-## 概要
+## Overview
 
-Mi.pyは[Discord.py](https://github.com/Rapptz/discord.py)
-ライクな書き方ができるように作っているMisskeyApi wrapperです 現在動作を確認しているMisskeyは本家Misskey v12の最新です。
-`Ayuskey` での動作確認も一応行っていますが、 11/5時点でAyuskeyそのものの動作が怪しいため現在はテストを行っていません。
+Mi.py is a Misskey API Wrapper that is designed to be written in a [Discord.py](https://github.com/Rapptz/discord.py)-like way. The only Misskey currently tested is the latest version of Misskey v12. We have also tested it with `Ayuskey`, but as of 11/5, Ayuskey itself is not working properly, so we are not testing it now.
 
-## 使い方
+## How to use
 
-様々な使い方を書くにあたってREADMEから変更しました。[こちら](examples)からご覧ください。 その他のメソッドなどについては[ドキュメント](https://yupix.github.io/Mi.py) をご覧ください
+Changed from README to [here](examples) in writing various usages. For other methods, etc., please see [Documentation](https://yupix.github.io/Mi.py).
 
-## 注意点
 
-グローバルタイムラインに接続したりする際に使う以下の様なコードがあるとホームタイムラインとグローバルタイムラインの2つを受信したことになりon_messageが2回動作します。 これは接続するチャンネルを増やすごとに増えていく形になります
+## warning
+
+If you connect to the home timeline while connected to the global timeline, the `on_message` event will work twice for one message, because the same message is received on two channels. This is not a bug, but normal behavior.
 
 ```python
-await Router(ws).channels(['home', 'global'])
+await Router(ws).connect_channel(['home', 'global'])
 ```
 
 ### Collaborators
@@ -37,7 +36,7 @@ await Router(ws).channels(['home', 'global'])
 
 ### SpecialThanks
 
-開発を手伝ってくれている方々です。
+These are the people who contributed to the development
 
 <table>
     <tr>
@@ -53,12 +52,13 @@ await Router(ws).channels(['home', 'global'])
         <td align="center"><a href="https://github.com/sousuke0422">Document | @sousuke0422</a></td>
     </tr>
 </table>
+
 ### Libraries
 
 - [Discord.py](https://github.com/Rapptz/discord.py)
-    - 一部や仕組みを参考にさせてもらっています。実際にコードも利用しています 
+    - I am using some of the mechanisms as a reference. We also use the actual code. 
 
-最後にこのプロジェクトを作るきっかけになり、一部のコードを使用させていただいているDiscord.pyがArchivedになりました。 作者であるDannyさんや全てのコラボレーターに最大限の感謝申し上げます。
+Finally, Discord.py, which inspired me to create this project and for which I use some of the code, is now Archived. Many thanks to Danny and all the collaborators.
 
 # LICENSE
 
