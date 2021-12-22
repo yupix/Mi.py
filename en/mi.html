@@ -5,7 +5,7 @@
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" />
 
     <meta name="generator" content="sphinx-4.3.2, furo 2021.11.23"/>
-        <title>API Reference - Mi.py 0.5.0 documentation</title>
+        <title>API reference - Mi.py 0.5.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?digest=7f0192ddeb2adecfbaa87ffbcf67d16358b30bc1" />
     <link rel="stylesheet" type="text/css" href="_static/panels-bootstrap.5fd3999ee7762ccc51105388f4a9d115.css" />
@@ -186,18 +186,18 @@
         </div>
         <article role="main">
           <div class="section" id="api-reference">
-<h1>API Reference<a class="headerlink" href="#api-reference" title="Permalink to this headline">¶</a></h1>
-<p>このセクションではMi.pyのAPIについて説明します</p>
+<h1>API reference<a class="headerlink" href="#api-reference" title="Permalink to this headline">¶</a></h1>
+<p>This section describes the API of Mi.py</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>このライブラリではloggingを用いてdebug出力が可能です。標準設定では出ないため、起動時の引数として <cite>debug</cite> を渡すようにしてください</p>
+<p>This library allows debug output using logging. It is not out of the standard settings, so please pass ‘debug’ as the start-up argument</p>
 </div>
 <div class="section" id="id1">
 <h2>Event Reference<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <dl class="py function">
 <dt class="sig sig-object py" id="mi.on_ready">
 <span class="sig-prename descclassname"><span class="pre">mi.</span></span><span class="sig-name descname"><span class="pre">on_ready</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ws</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mi.on_ready" title="Permalink to this definition">¶</a></dt>
-<dd><p>botがwebsocketに接続し終えた時点で呼び出されます。</p>
+<dd><p>It is called when the bot finishes connecting to the websocket</p>
 </dd></dl>
 <dl class="py function">
 <dt class="sig sig-object py" id="mi.on_message">
@@ -212,7 +212,7 @@
 </div>
 <div class="section" id="id2">
 <h2>Abstract Base Classes<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
-<p><a class="reference external" href="https://docs.python.org/ja/3/glossary.html#term-abstract-base-class">abstract base class</a> はメソッドなどの一覧を取得するために継承することが可能なクラスです。抽象基底クラスはインスタンス化することはできません。</p>
+<p>‘abstract base class &lt;<a class="reference external" href="https://docs.python.org/ja/3/glossary.html#term-abstract-base-class">https://docs.python.org/ja/3/glossary.html#term-abstract-base-class</a>&gt;’_ is a class that can be inherited to retrieve a list of methods, etc. Abstract base classes cannot be instantiated</p>
 <div class="section" id="abstractbotbase">
 <h3>AbstractBotBase<a class="headerlink" href="#abstractbotbase" title="Permalink to this headline">¶</a></h3>
 <div class="py-attribute-table" data-move-to-id="mi.abc.AbstractChat"></div><dl class="py class">
@@ -232,8 +232,7 @@
 <h2>Misskey Models<a class="headerlink" href="#misskey" title="Permalink to this headline">¶</a></h2>
 <div class="admonition danger">
 <p class="admonition-title">Danger</p>
-<p>下記のクラスは、 <strong>ユーザーによって作成されることを考慮していません</strong> 。
-独自のインスタンスは作成するべきではなく、値を変更するべきではありません。</p>
+<p>The following classes do not take into account that they are created by the user** . You should not create your own instances, and you should not change the value</p>
 </div>
 <div class="section" id="note">
 <h3>Note<a class="headerlink" href="#note" title="Permalink to this headline">¶</a></h3>
@@ -276,7 +275,7 @@ async</span><a class="reference internal" href="#mi.Note.reply">reply</a></li></
 <span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#mi.Note.id" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>str</p>
+<dd class="field-odd"><p>Optional[str]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -285,7 +284,7 @@ async</span><a class="reference internal" href="#mi.Note.reply">reply</a></li></
 <span class="sig-name descname"><span class="pre">created_at</span></span><a class="headerlink" href="#mi.Note.created_at" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>str</p>
+<dd class="field-odd"><p>Optional[str]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -294,7 +293,7 @@ async</span><a class="reference internal" href="#mi.Note.reply">reply</a></li></
 <span class="sig-name descname"><span class="pre">user_id</span></span><a class="headerlink" href="#mi.Note.user_id" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>str</p>
+<dd class="field-odd"><p>Optional[str]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -339,7 +338,7 @@ async</span><a class="reference internal" href="#mi.Note.reply">reply</a></li></
 <span class="sig-name descname"><span class="pre">visibility</span></span><a class="headerlink" href="#mi.Note.visibility" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>str</p>
+<dd class="field-odd"><p>Optional[str]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -534,7 +533,7 @@ async</span><a class="reference internal" href="#mi.User.unfollow">unfollow</a><
 <dd><p>ユーザーのid</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>str</p>
+<dd class="field-odd"><p>Optional[str]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -544,7 +543,7 @@ async</span><a class="reference internal" href="#mi.User.unfollow">unfollow</a><
 <dd><p>ユーザーのニックネーム</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>str</p>
+<dd class="field-odd"><p>Optional[str]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -554,7 +553,7 @@ async</span><a class="reference internal" href="#mi.User.unfollow">unfollow</a><
 <dd><p>ユーザーのアカウント名</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>str</p>
+<dd class="field-odd"><p>Optional[str]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -624,7 +623,7 @@ async</span><a class="reference internal" href="#mi.User.unfollow">unfollow</a><
 <dd><p>ユーザーのプロフィールへのURL</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>str</p>
+<dd class="field-odd"><p>Optional[str]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -634,7 +633,7 @@ async</span><a class="reference internal" href="#mi.User.unfollow">unfollow</a><
 <dd><p>謎</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>str</p>
+<dd class="field-odd"><p>Optional[str]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -644,7 +643,7 @@ async</span><a class="reference internal" href="#mi.User.unfollow">unfollow</a><
 <dd><p>アカウントの作成日</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>str</p>
+<dd class="field-odd"><p>Optional[str]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -654,7 +653,7 @@ async</span><a class="reference internal" href="#mi.User.unfollow">unfollow</a><
 <dd><p>アカウントの更新日(ノートを投稿するなど)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>str</p>
+<dd class="field-odd"><p>Optional[str]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -694,7 +693,7 @@ async</span><a class="reference internal" href="#mi.User.unfollow">unfollow</a><
 <dd><p>アカウントの概要</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>str</p>
+<dd class="field-odd"><p>Optional[str]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -704,7 +703,7 @@ async</span><a class="reference internal" href="#mi.User.unfollow">unfollow</a><
 <dd><p>ユーザーが住んでいる場所</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>str</p>
+<dd class="field-odd"><p>Optional[str]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -714,7 +713,7 @@ async</span><a class="reference internal" href="#mi.User.unfollow">unfollow</a><
 <dd><p>ユーザーの誕生日</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>str</p>
+<dd class="field-odd"><p>Optional[str]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -774,7 +773,7 @@ async</span><a class="reference internal" href="#mi.User.unfollow">unfollow</a><
 <dd><p>ピン留めされたページのid</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>str</p>
+<dd class="field-odd"><p>Optional[str]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -784,7 +783,7 @@ async</span><a class="reference internal" href="#mi.User.unfollow">unfollow</a><
 <dd><p>ピン留めされたページ</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>str</p>
+<dd class="field-odd"><p>Optional[str]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -794,7 +793,7 @@ async</span><a class="reference internal" href="#mi.User.unfollow">unfollow</a><
 <dd><p>ノートの投稿範囲</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>str</p>
+<dd class="field-odd"><p>Optional[str]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -959,7 +958,7 @@ Attributes</span><ul>
 <dd><p>ユーザーのアバターの色</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>str</p>
+<dd class="field-odd"><p>Optional[str]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -969,7 +968,7 @@ Attributes</span><ul>
 <dd><p>ユーザーの言語</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>str</p>
+<dd class="field-odd"><p>Optional[str]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1565,7 +1564,7 @@ fetch_userを使った場合はキャッシュが廃棄され再度サーバー�
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#">API Reference</a><ul>
+<li><a class="reference internal" href="#">API reference</a><ul>
 <li><a class="reference internal" href="#id1">Event Reference</a></li>
 <li><a class="reference internal" href="#id2">Abstract Base Classes</a><ul>
 <li><a class="reference internal" href="#abstractbotbase">AbstractBotBase</a></li>
