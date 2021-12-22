@@ -9,3 +9,11 @@ sphinx-panels
 sphinx-git
 furo
 sphinxcontrib-trio
+
+
+# Mi.py depencies
+aiocache
+aiohttp
+pydantic
+emoji
+cython
