@@ -391,14 +391,31 @@ class Client:
         data = await self.http.static_login(token)
         self.i = User(data, self._connection)
 
-    async def connect(self, *, reconnect: bool = True) -> None:
+    async def connect(self, *, reconnect: bool = True, timeout:int=60) -> None:
 
-        coro = MisskeyWebSocket.from_client(self)
+        coro = MisskeyWebSocket.from_client(self, timeout=timeout)
         self.ws = await asyncio.wait_for(coro, timeout=60)
         while True:
             await self.ws.poll_event()
 
-    async def start(self, url: str, token: str, *, debug: bool = False, recconect: bool = True):
+    async def start(self, url: str, token: str, *, debug: bool = False, recconect: bool = True, timeout:int = 60):
+        """
+        Starting Bot
+        
+        Parameters
+        ----------
+        url: str
+            Misskey Instance Websocket URL (wss://example.com)
+        token: str
+            User Token
+        debug: bool, default False
+            debugging mode
+        recconect: bool, default True
+            coming soon...
+        timeout: int, default 60
+            Time until websocket times out
+        """
+        
         self.token = token
         if _origin_uri := re.search(r"wss?://(.*)/streaming", url):
             origin_uri = (
@@ -418,4 +435,4 @@ class Client:
         config.i = config.Config(**auth_i)
         config.debug = debug
         await self.login(token)
-        await self.connect(reconnect=recconect)
+        await self.connect(reconnect=recconect, timeout=timeout)
