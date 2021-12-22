@@ -187,7 +187,7 @@ class Note(AbstractNote):
         self.content: Optional[str] = data.get("text")
         self.cw: Optional[str] = data.get("cw")
         self.renote: Optional[Renote] = Renote(data['renote'], state=state) if data.get('renote') else None
-        self.visibility: str = data["visibility"]
+        self.visibility: Optional[str] = data.get("visibility") # This may be an optional
         self.renote_count: int = data["renote_count"]
         self.replies_count: int = data["replies_count"]
         self.reactions: Dict[str, Any] = data["reactions"]
