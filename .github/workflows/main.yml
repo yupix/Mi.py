@@ -30,7 +30,7 @@ jobs:
       working-directory: ./docs
 
     - name: Build
-      run: sh ./doc_builder.sh
+      run: ./doc_builder.sh
       working-directory: ./docs
 
     - name: Deploy
