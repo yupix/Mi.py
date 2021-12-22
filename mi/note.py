@@ -16,7 +16,7 @@ from .types.note import (Note as NotePayload,
 if TYPE_CHECKING:
     from mi import ConnectionState
 
-__all__ = ['Note', 'Poll', 'Reaction']
+__all__ = ['Note', 'Poll', 'Reaction', 'Follow', 'Header', 'Properties', 'File', 'Renote']
 
 
 class Follow:
