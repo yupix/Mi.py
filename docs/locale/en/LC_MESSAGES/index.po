@@ -1,0 +1,75 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2021, yupix
+# This file is distributed under the same license as the Mi.py package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Mi.py \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-12-22 17:23+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../index.rst:16
+msgid "Contents:"
+msgstr ""
+
+#: ../../index.rst:7
+msgid "Welcome to Mi.py's documentation!"
+msgstr ""
+
+#: ../../index.rst:9
+msgid "Mi.pyはDiscord.pyライクな書き方ができるように作成されているMisskey API Wrapeprです"
+msgstr ""
+
+#: ../../index.rst:13
+msgid "Mi.pyは現在Preview VersionなのでPiPyではなくgithubの方を使用することを推奨します"
+msgstr ""
+
+#: ../../index.rst
+msgid "img-top"
+msgstr ""
+
+#: ../../index.rst:28
+msgid "API reference"
+msgstr ""
+
+#: ../../index.rst:31
+msgid "どのようにクラスやメソッドを使うのかここで探検しましょう"
+msgstr ""
+
+#: ../../index.rst:44
+msgid "QuickStart"
+msgstr ""
+
+#: ../../index.rst:47
+msgid "Mi.pyを簡単に試してみましょう"
+msgstr ""
+
+#: ../../index.rst:58
+msgid "Recent Changes"
+msgstr ""
+
+#: ../../index.rst:63
+msgid "Indices and tables"
+msgstr ""
+
+#: ../../index.rst:65
+msgid ":ref:`genindex`"
+msgstr ""
+
+#: ../../index.rst:66
+msgid ":ref:`modindex`"
+msgstr ""
+
+#: ../../index.rst:67
+msgid ":ref:`search`"
+msgstr ""
+

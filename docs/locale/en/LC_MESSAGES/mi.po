@@ -1,0 +1,892 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2021, yupix
+# This file is distributed under the same license as the Mi.py package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Mi.py \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-12-22 17:23+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../mi.rst:4
+msgid "API Reference"
+msgstr ""
+
+#: ../../mi.rst:6
+msgid "このセクションではMi.pyのAPIについて説明します"
+msgstr ""
+
+#: ../../mi.rst:9
+msgid ""
+"このライブラリではloggingを用いてdebug出力が可能です。標準設定では出ないため、起動時の引数として `debug` "
+"を渡すようにしてください"
+msgstr ""
+
+#: ../../mi.rst:12
+msgid "イベントリファレンス"
+msgstr ""
+
+#: ../../mi.rst:16
+msgid "botがwebsocketに接続し終えた時点で呼び出されます。"
+msgstr ""
+
+#: ../../mi.rst:20
+msgid "ノートが接続しているチャンネル内に投稿された際に呼び出されます"
+msgstr ""
+
+#: ../../mi.rst:24
+msgid "絵文字がインスタンスに追加された際に呼び出されます"
+msgstr ""
+
+#: ../../mi.rst:27
+msgid "抽象基底クラス"
+msgstr ""
+
+#: ../../mi.rst:29
+msgid ""
+"`abstract base class <https://docs.python.org/ja/3/glossary.html#term-"
+"abstract-base-class>`_ "
+"はメソッドなどの一覧を取得するために継承することが可能なクラスです。抽象基底クラスはインスタンス化することはできません。"
+msgstr ""
+
+#: ../../mi.rst:32
+msgid "AbstractBotBase"
+msgstr ""
+
+#: ../../mi.rst:40
+msgid "AbstractChatContent"
+msgstr ""
+
+#: ../../mi.rst:48
+msgid "Misskey モデル"
+msgstr ""
+
+#: ../../mi.rst:51
+msgid ""
+"下記のクラスは、 **ユーザーによって作成されることを考慮していません** 。 "
+"独自のインスタンスは作成するべきではなく、値を変更するべきではありません。"
+msgstr ""
+
+#: ../../mi.rst:55
+msgid "Note"
+msgstr ""
+
+#: mi.note.Note mi.user.User mi.user.UserDetails of
+msgid "type"
+msgstr ""
+
+#: mi.note.Note:4 mi.note.Note:8 mi.note.Note:12 mi.note.Note:32 mi.user.User:6
+#: mi.user.User:12 mi.user.User:18 mi.user.User:60 mi.user.User:66
+#: mi.user.User:72 mi.user.User:78 mi.user.User:102 mi.user.User:108
+#: mi.user.User:114 mi.user.User:150 mi.user.User:156 mi.user.User:162
+#: mi.user.UserDetails:14 mi.user.UserDetails:20 of
+msgid "str"
+msgstr ""
+
+#: ../../mi.rst:63 mi.note.Note:16 of
+msgid "User"
+msgstr ""
+
+#: mi.note.Note:20 mi.note.Note:24 mi.note.Note:60 mi.note.Note:64
+#: mi.user.User:24 mi.user.User:30 mi.user.UserDetails:8 of
+msgid "Optional[str]"
+msgstr ""
+
+#: mi.note.Note:28 of
+msgid "Renote"
+msgstr ""
+
+#: mi.note.Note:36 mi.note.Note:40 mi.user.User:126 mi.user.User:132
+#: mi.user.User:138 of
+msgid "int"
+msgstr ""
+
+#: mi.note.Note:44 of
+msgid "Dict[str, Any]"
+msgstr ""
+
+#: mi.note.Note:48 of
+msgid "List[Emoji]"
+msgstr ""
+
+#: mi.note.Note:52 mi.note.Note:56 of
+msgid "Optional[List[str]]"
+msgstr ""
+
+#: mi.note.Note:68 of
+msgid "Optional[Poll]"
+msgstr ""
+
+#: mi.note.Note.reply:2 of
+msgid "ノートに対して返信を送信します"
+msgstr ""
+
+#: mi.iterators.InstanceIterator.get_users mi.note.Note.reply
+#: mi.state.ConnectionState.add_reaction mi.state.ConnectionState.delete_chat
+#: mi.state.ConnectionState.delete_note mi.state.ConnectionState.follow_user
+#: mi.state.ConnectionState.get_announcements
+#: mi.state.ConnectionState.get_followers mi.state.ConnectionState.get_user
+#: mi.state.ConnectionState.parse_channel
+#: mi.state.ConnectionState.parse_notification
+#: mi.state.ConnectionState.parse_unread_notification
+#: mi.state.ConnectionState.post_chat mi.state.ConnectionState.post_note
+#: mi.state.ConnectionState.unfollow_user mi.user.User.get_followers of
+msgid "Parameters"
+msgstr ""
+
+#: mi.note.Note.reply:4 of
+msgid "返信内容"
+msgstr ""
+
+#: mi.note.Note.reply:6 of
+msgid "閲覧注意"
+msgstr ""
+
+#: mi.note.Note.reply:8 mi.state.ConnectionState.post_note:14 of
+msgid "メンションを展開するか, by default False"
+msgstr ""
+
+#: mi.note.Note.reply:10 mi.state.ConnectionState.post_note:16 of
+msgid "ハッシュタグを展開するか, by default False"
+msgstr ""
+
+#: mi.note.Note.reply:12 mi.state.ConnectionState.post_note:18 of
+msgid "絵文字を展開するか, by default False"
+msgstr ""
+
+#: mi.note.Note.reply:14 mi.state.ConnectionState.post_note:22 of
+msgid "リノート先のid, by default None"
+msgstr ""
+
+#: mi.note.Note.reply:16 mi.state.ConnectionState.post_note:24 of
+msgid "チャンネルid, by default None"
+msgstr ""
+
+#: mi.note.Note.reply:18 mi.state.ConnectionState.post_note:26 of
+msgid "添付するファイルのid, by default None"
+msgstr ""
+
+#: mi.note.Note.reply:20 mi.state.ConnectionState.post_note:28 of
+msgid "アンケート, by default None"
+msgstr ""
+
+#: mi.note.Note.emoji_count:2 of
+msgid "ノートの本文にemojiが何個含まれているかを返します"
+msgstr ""
+
+#: mi.chat.Chat.delete mi.drive.Drive.delete
+#: mi.iterators.InstanceIterator.get_users mi.note.Note.delete
+#: mi.note.Note.emoji_count mi.state.ConnectionState.add_reaction
+#: mi.state.ConnectionState.delete_chat mi.state.ConnectionState.delete_note
+#: mi.state.ConnectionState.follow_user mi.state.ConnectionState.get_user
+#: mi.state.ConnectionState.parse_notification
+#: mi.state.ConnectionState.post_chat mi.state.ConnectionState.post_note
+#: mi.state.ConnectionState.unfollow_user mi.user.User.follow
+#: mi.user.User.get_followers mi.user.User.get_profile mi.user.User.unfollow of
+msgid "Returns"
+msgstr ""
+
+#: mi.note.Note.emoji_count:4 of
+msgid "含まれている絵文字の数"
+msgstr ""
+
+#: mi.chat.Chat.delete mi.drive.Drive.delete
+#: mi.iterators.InstanceIterator.get_users mi.note.Note.emoji_count
+#: mi.state.ConnectionState.add_reaction mi.state.ConnectionState.delete_chat
+#: mi.state.ConnectionState.delete_note mi.state.ConnectionState.follow_user
+#: mi.state.ConnectionState.get_user
+#: mi.state.ConnectionState.parse_notification
+#: mi.state.ConnectionState.post_chat mi.state.ConnectionState.post_note
+#: mi.state.ConnectionState.unfollow_user mi.user.User.get_followers
+#: mi.user.User.get_profile mi.user.User.unfollow of
+msgid "Return type"
+msgstr ""
+
+#: mi.note.Note.delete:2 of
+msgid "指定したIDのノートを削除します"
+msgstr ""
+
+#: mi.note.Note.delete:4 of
+msgid ""
+"* **is_success** (*bool*) -- 成功したか否か * **status_code** (*int*) -- HTTP "
+"レスポンスステータスコード"
+msgstr ""
+
+#: mi.note.Note.delete:4 of
+msgid "**is_success** (*bool*) -- 成功したか否か"
+msgstr ""
+
+#: mi.note.Note.delete:5 of
+msgid "**status_code** (*int*) -- HTTP レスポンスステータスコード"
+msgstr ""
+
+#: mi.state.ConnectionState.get_followers:4 mi.user.User:4 of
+msgid "ユーザーのid"
+msgstr ""
+
+#: mi.user.User:10 of
+msgid "ユーザーのニックネーム"
+msgstr ""
+
+#: mi.user.User:16 of
+msgid "ユーザーのアカウント名"
+msgstr ""
+
+#: mi.user.User:22 of
+msgid "ユーザーのホスト名"
+msgstr ""
+
+#: mi.user.User:28 of
+msgid "ユーザーのアバターのURL"
+msgstr ""
+
+#: mi.user.User:34 of
+msgid "ユーザーが管理者かどうか"
+msgstr ""
+
+#: mi.user.User:36 mi.user.User:42 mi.user.User:84 mi.user.User:90
+#: mi.user.User:96 mi.user.User:168 mi.user.User:174 mi.user.User:180
+#: mi.user.User:186 mi.user.User:192 of
+msgid "bool"
+msgstr ""
+
+#: mi.user.User:40 of
+msgid "ユーザーがbotかどうか"
+msgstr ""
+
+#: mi.user.User:46 of
+msgid "ユーザーが使用しているemoji"
+msgstr ""
+
+#: mi.user.User:48 mi.user.User:120 mi.user.User:144 of
+msgid "list"
+msgstr ""
+
+#: mi.user.User:52 of
+msgid "ユーザーのオンライン状況"
+msgstr ""
+
+#: mi.user.User:54 mi.user.User:198 of
+msgid "Any"
+msgstr ""
+
+#: mi.user.User:58 of
+msgid "ユーザーのプロフィールへのURL"
+msgstr ""
+
+#: mi.user.User:64 of
+msgid "謎"
+msgstr ""
+
+#: mi.user.User:70 of
+msgid "アカウントの作成日"
+msgstr ""
+
+#: mi.user.User:76 of
+msgid "アカウントの更新日(ノートを投稿するなど)"
+msgstr ""
+
+#: mi.user.User:82 of
+msgid "アカウントがロックされているか"
+msgstr ""
+
+#: mi.user.User:88 of
+msgid "アカウントがミュートされているか"
+msgstr ""
+
+#: mi.user.User:94 of
+msgid "アカウントが凍結されているか"
+msgstr ""
+
+#: mi.user.User:100 of
+msgid "アカウントの概要"
+msgstr ""
+
+#: mi.user.User:106 of
+msgid "ユーザーが住んでいる場所"
+msgstr ""
+
+#: mi.user.User:112 of
+msgid "ユーザーの誕生日"
+msgstr ""
+
+#: mi.user.User:118 of
+msgid "プロフィールのリンクフィールド"
+msgstr ""
+
+#: mi.user.User:124 of
+msgid "フォロワーの数"
+msgstr ""
+
+#: mi.user.User:130 of
+msgid "フォローしている人の数"
+msgstr ""
+
+#: mi.user.User:136 of
+msgid "投稿したノートの数"
+msgstr ""
+
+#: mi.user.User:142 of
+msgid "ピン留めされたノートのidリスト"
+msgstr ""
+
+#: mi.user.User:148 of
+msgid "ピン留めされたページのid"
+msgstr ""
+
+#: mi.user.User:154 of
+msgid "ピン留めされたページ"
+msgstr ""
+
+#: mi.user.User:160 of
+msgid "ノートの投稿範囲"
+msgstr ""
+
+#: mi.user.User:166 of
+msgid "ユーザーがフォローしているかどうか"
+msgstr ""
+
+#: mi.user.User:172 of
+msgid "ユーザーのことをフォローしているかどうか"
+msgstr ""
+
+#: mi.user.User:178 of
+msgid "ユーザーが自分のことをブロックしているかどうか"
+msgstr ""
+
+#: mi.user.User:184 of
+msgid "ユーザーのことをブロックしているかどうか"
+msgstr ""
+
+#: mi.user.User:190 of
+msgid "ユーザーのことをミュートしているかどうか"
+msgstr ""
+
+#: mi.user.User:196 of
+msgid "ユーザーのインスタンス"
+msgstr ""
+
+#: mi.user.User:202 of
+msgid "ユーザーの詳細な情報"
+msgstr ""
+
+#: ../../mi.rst:71 mi.user.User:204 of
+msgid "UserDetails"
+msgstr ""
+
+#: mi.user.User.follow:2 of
+msgid "ユーザーをフォローします"
+msgstr ""
+
+#: mi.user.User.follow:4 of
+msgid "* *bool = False* -- 成功ならTrue, 失敗ならFalse * *str* -- 実行に失敗した際のエラーコード"
+msgstr ""
+
+#: mi.user.User.follow:4 of
+msgid "*bool = False* -- 成功ならTrue, 失敗ならFalse"
+msgstr ""
+
+#: mi.user.User.follow:5 of
+msgid "*str* -- 実行に失敗した際のエラーコード"
+msgstr ""
+
+#: mi.user.User.unfollow:2 of
+msgid "ユーザーのフォローを解除します"
+msgstr ""
+
+#: mi.state.ConnectionState.follow_user:7 mi.user.User.unfollow:4 of
+msgid "**status** -- 成功ならTrue, 失敗ならFalse"
+msgstr ""
+
+#: mi.user.User.get_profile:2 of
+msgid "ユーザーのプロフィールを取得します"
+msgstr ""
+
+#: mi.user.User.get_profile:4 of
+msgid "ユーザーのプロフィールオブジェクト"
+msgstr ""
+
+#: mi.user.User.get_followers:2 of
+msgid "ユーザーのフォロワー一覧を取得します"
+msgstr ""
+
+#: mi.user.User.get_followers:4 of
+msgid "前回のフォロワーの続きを取得する場合の起点とするユーザーid"
+msgstr ""
+
+#: mi.user.User.get_followers:6 of
+msgid "最大何人取得するか, max=100"
+msgstr ""
+
+#: mi.user.User.get_followers:8 of
+msgid "全てのフォロワーを取得するか否か"
+msgstr ""
+
+#: mi.user.User.get_followers:11 of
+msgid "ユーザーのフォロワー一覧"
+msgstr ""
+
+#: mi.user.UserDetails:2 of
+msgid "ユーザー情報だが、一般的に使うか怪しいもの"
+msgstr ""
+
+#: mi.user.UserDetails:6 of
+msgid "ユーザーのアバターのblurhash"
+msgstr ""
+
+#: mi.user.UserDetails:12 of
+msgid "ユーザーのアバターの色"
+msgstr ""
+
+#: mi.user.UserDetails:18 of
+msgid "ユーザーの言語"
+msgstr ""
+
+#: mi.chat.Chat:2 of
+msgid "チャットオブジェクト"
+msgstr ""
+
+#: mi.chat.Chat.delete:2 of
+msgid "チャットを削除します（チャットの作者である必要があります）"
+msgstr ""
+
+#: mi.chat.Chat.delete:4 mi.state.ConnectionState.delete_chat:7
+#: mi.state.ConnectionState.delete_note:7 of
+msgid "成功したか否か"
+msgstr ""
+
+#: ../../mi.rst:85
+msgid "Drive"
+msgstr ""
+
+#: mi.drive.Drive.delete:2 of
+msgid "ファイルを削除します。"
+msgstr ""
+
+#: mi.drive.Drive.delete:4 of
+msgid "削除に成功したかどうか"
+msgstr ""
+
+#: ../../mi.rst:93
+msgid "Emoji"
+msgstr ""
+
+#: ../../mi.rst:101
+msgid "例外処理"
+msgstr ""
+
+#: ../../mi.rst:104
+msgid "NotFoundError"
+msgstr ""
+
+#: mi.exception.NotFoundError:2 of
+msgid "http アクセス時に404が帰ってきた際の例外"
+msgstr ""
+
+#: ../../mi.rst:108
+msgid "TaskNotRunningError"
+msgstr ""
+
+#: mi.exception.TaskNotRunningError:2 of
+msgid "タスクを停止しようとした際、タスクが起動していない場合に発生する例外"
+msgstr ""
+
+#: ../../mi.rst:112
+msgid "ImAi"
+msgstr ""
+
+#: mi.exception.ImAi:2 of
+msgid "私は藍です"
+msgstr ""
+
+#: ../../mi.rst:116
+msgid "InternalServerError"
+msgstr ""
+
+#: mi.exception.InternalServerError:2 of
+msgid "http アクセス時に500が帰ってきた際の例外"
+msgstr ""
+
+#: ../../mi.rst:120
+msgid "ClientError"
+msgstr ""
+
+#: mi.exception.ClientError:2 of
+msgid "http アクセス時に400が帰ってきた際の例外"
+msgstr ""
+
+#: ../../mi.rst:125
+msgid "AuthenticationError"
+msgstr ""
+
+#: mi.exception.AuthenticationError:2 of
+msgid "認証で問題が発生した際の例外"
+msgstr ""
+
+#: ../../mi.rst:129
+msgid "NotExistRequiredParameters"
+msgstr ""
+
+#: mi.exception.NotExistRequiredParameters:2 of
+msgid "必須のパラメーターが存在しない場合の例外"
+msgstr ""
+
+#: ../../mi.rst:133
+msgid "InvalidParameters"
+msgstr ""
+
+#: mi.exception.InvalidParameters:2 of
+msgid "パラメーターが無効"
+msgstr ""
+
+#: ../../mi.rst:137
+msgid "CredentialRequired"
+msgstr ""
+
+#: mi.exception.CredentialRequired:2 of
+msgid "認証情報が不足している"
+msgstr ""
+
+#: ../../mi.rst:141
+msgid "ContentRequired"
+msgstr ""
+
+#: mi.exception.ContentRequired:2 of
+msgid "送信するコンテンツが不足している"
+msgstr ""
+
+#: ../../mi.rst:147
+msgid "CogNameDuplicate"
+msgstr ""
+
+#: mi.exception.CogNameDuplicate:2 of
+msgid "cogの名前が重複している"
+msgstr ""
+
+#: ../../mi.rst:151
+msgid "ExtensionAlreadyLoaded"
+msgstr ""
+
+#: mi.exception.ExtensionAlreadyLoaded:2 of
+msgid "cogがすでに読み込まれている"
+msgstr ""
+
+#: ../../mi.rst:155
+msgid "ExtensionFailed"
+msgstr ""
+
+#: mi.exception.ExtensionFailed:2 of
+msgid "cog周りのエラー"
+msgstr ""
+
+#: ../../mi.rst:159
+msgid "NoEntryPointError"
+msgstr ""
+
+#: mi.exception.NoEntryPointError:2 of
+msgid "cogにsetup関数が無い場合の例外"
+msgstr ""
+
+#: ../../mi.rst:163
+msgid "ExtensionNotFound"
+msgstr ""
+
+#: mi.exception.ExtensionNotFound:2 of
+msgid "指定されたパスにcogが存在しない場合の例外"
+msgstr ""
+
+#: ../../mi.rst:167
+msgid "CommandRegistrationError"
+msgstr ""
+
+#: mi.exception.CommandRegistrationError:2 of
+msgid "コマンド登録時のエラー"
+msgstr ""
+
+#: ../../mi.rst:171
+msgid "CommandError"
+msgstr ""
+
+#: mi.exception.CommandError:2 of
+msgid "コマンドで問題が発生した際の例外"
+msgstr ""
+
+#: ../../mi.rst:175
+msgid "CommandInvokeError"
+msgstr ""
+
+#: mi.exception.CommandInvokeError:2 of
+msgid "コマンドの実行に問題が発生した際の例外"
+msgstr ""
+
+#: ../../mi.rst:179
+msgid "CheckFailure"
+msgstr ""
+
+#: mi.exception.CheckFailure:2 of
+msgid "コマンドの実行可能かのチェックに失敗した際の例外"
+msgstr ""
+
+#: ../../mi.rst:183
+msgid "InvalidCogPath"
+msgstr ""
+
+#: mi.exception.InvalidCogPath:2 of
+msgid "cogのパスが不正"
+msgstr ""
+
+#: ../../mi.rst:188
+msgid "NotExistRequiredData"
+msgstr ""
+
+#: mi.exception.NotExistRequiredData:2 of
+msgid "必要なデータが存在しない場合に発生する例外"
+msgstr ""
+
+#: ../../mi.rst:193
+msgid "Low-Level API"
+msgstr ""
+
+#: mi.state.ConnectionState.parse_channel:2 of
+msgid "parse_channel is a function to parse channel event"
+msgstr ""
+
+#: mi.state.ConnectionState.parse_channel:4 of
+msgid "チャンネルタイプのデータを解析後適切なパーサーに移動させます"
+msgstr ""
+
+#: mi.state.ConnectionState.parse_channel:6
+#: mi.state.ConnectionState.parse_notification:4
+#: mi.state.ConnectionState.parse_unread_notification:4 of
+msgid "Received message"
+msgstr ""
+
+#: mi.state.ConnectionState.parse_reply:2 of
+msgid "リプライ"
+msgstr ""
+
+#: mi.state.ConnectionState.parse_follow:2 of
+msgid "ユーザーをフォローした際のイベントを解析する関数"
+msgstr ""
+
+#: mi.state.ConnectionState.parse_followed:2 of
+msgid "フォローイベントを解析する関数"
+msgstr ""
+
+#: mi.state.ConnectionState.parse_mention:2 of
+msgid "メンションイベントを解析する関数"
+msgstr ""
+
+#: mi.state.ConnectionState.parse_messaging_message:2 of
+msgid "チャットが来た際のデータを処理する関数"
+msgstr ""
+
+#: mi.state.ConnectionState.parse_unread_messaging_message:2 of
+msgid "チャットが既読になっていない場合のデータを処理する関数"
+msgstr ""
+
+#: mi.state.ConnectionState.parse_notification:2 of
+msgid "通知イベントを解析する関数"
+msgstr ""
+
+#: mi.state.ConnectionState.parse_unread_notification:2 of
+msgid "未読の通知を解析する関数"
+msgstr ""
+
+#: mi.state.ConnectionState.parse_reaction:2 of
+msgid "リアクションに関する情報を解析する関数"
+msgstr ""
+
+#: mi.state.ConnectionState.parse_note:2 of
+msgid "ノートイベントを解析する関数"
+msgstr ""
+
+#: mi.state.ConnectionState.follow_user:2 of
+msgid "与えられたIDのユーザーをフォローします"
+msgstr ""
+
+#: mi.state.ConnectionState.follow_user:4 of
+msgid "フォローしたいユーザーのID"
+msgstr ""
+
+#: mi.state.ConnectionState.unfollow_user:2 of
+msgid "フォローを解除したいユーザーのID"
+msgstr ""
+
+#: mi.state.ConnectionState.unfollow_user:4 of
+msgid "**status** -- 成功したならTrue, 失敗したならFalse"
+msgstr ""
+
+#: mi.state.ConnectionState.add_reaction:2 of
+msgid "指定したnoteに指定したリアクションを付与します（内部用"
+msgstr ""
+
+#: mi.state.ConnectionState.add_reaction:4 of
+msgid "付与するリアクション名"
+msgstr ""
+
+#: mi.state.ConnectionState.add_reaction:6 of
+msgid "付与対象のノートID"
+msgstr ""
+
+#: mi.state.ConnectionState.add_reaction:9 of
+msgid "**status** -- 成功したならTrue,失敗ならFalse"
+msgstr ""
+
+#: mi.state.ConnectionState.delete_note:2 of
+msgid "指定したidのノートを削除します。"
+msgstr ""
+
+#: mi.state.ConnectionState.delete_note:4 of
+msgid "ノートid"
+msgstr ""
+
+#: mi.state.ConnectionState.get_user:2 of
+msgid ""
+"ユーザーのプロフィールを取得します。一度のみサーバーにアクセスしキャッシュをその後は使います。 "
+"fetch_userを使った場合はキャッシュが廃棄され再度サーバーにアクセスします。"
+msgstr ""
+
+#: mi.state.ConnectionState.get_user:5 of
+msgid "取得したいユーザーのユーザーID"
+msgstr ""
+
+#: mi.state.ConnectionState.get_user:7 of
+msgid "取得したいユーザーのユーザー名"
+msgstr ""
+
+#: mi.state.ConnectionState.get_user:9 of
+msgid "取得したいユーザーがいるインスタンスのhost"
+msgstr ""
+
+#: mi.state.ConnectionState.get_user:12 of
+msgid "ユーザー情報"
+msgstr ""
+
+#: mi.state.ConnectionState.post_chat:2 of
+msgid "チャットを送信します。"
+msgstr ""
+
+#: mi.state.ConnectionState.post_chat:4 of
+msgid "送信する内容"
+msgstr ""
+
+#: mi.state.ConnectionState.post_chat:6 of
+msgid "ユーザーid, default=None"
+msgstr ""
+
+#: mi.state.ConnectionState.post_chat:8 of
+msgid "グループid, default=None"
+msgstr ""
+
+#: mi.state.ConnectionState.post_chat:10 of
+msgid "添付するファイルid, efault=None"
+msgstr ""
+
+#: mi.state.ConnectionState.post_chat:13 of
+msgid "チャットの内容"
+msgstr ""
+
+#: mi.state.ConnectionState.delete_chat:2 of
+msgid "指定したidのメッセージを削除します。"
+msgstr ""
+
+#: mi.state.ConnectionState.delete_chat:4 of
+msgid "メッセージid"
+msgstr ""
+
+#: mi.state.ConnectionState.post_note:2 of
+msgid "ノートを投稿します。"
+msgstr ""
+
+#: mi.state.ConnectionState.post_note:4 of
+msgid "投稿する内容"
+msgstr ""
+
+#: mi.state.ConnectionState.post_note:6 of
+msgid "公開範囲, by default \"public\""
+msgstr ""
+
+#: mi.state.ConnectionState.post_note:8 of
+msgid "公開するユーザー, by default None"
+msgstr ""
+
+#: mi.state.ConnectionState.post_note:10 of
+msgid "閲覧注意の文字, by default None"
+msgstr ""
+
+#: mi.state.ConnectionState.post_note:12 of
+msgid "ローカルにのみ表示するか, by default False"
+msgstr ""
+
+#: mi.state.ConnectionState.post_note:20 of
+msgid "リプライ先のid, by default None"
+msgstr ""
+
+#: mi.state.ConnectionState.post_note:31 mi.state.ConnectionState.post_note:34
+#: of
+msgid "[description]"
+msgstr ""
+
+#: mi.state.ConnectionState.get_followers mi.state.ConnectionState.post_note of
+msgid "Raises"
+msgstr ""
+
+#: mi.state.ConnectionState.get_followers:2 of
+msgid "与えられたユーザーのフォロワーを取得します"
+msgstr ""
+
+#: mi.state.ConnectionState.get_followers:6 of
+msgid "ユーザー名"
+msgstr ""
+
+#: mi.state.ConnectionState.get_followers:8 of
+msgid "ユーザーがいるインスタンスのhost名"
+msgstr ""
+
+#: mi.state.ConnectionState.get_announcements:8
+#: mi.state.ConnectionState.get_followers:12 of
+msgid "前回の最後の値を与える(既に実行し取得しきれない場合に使用)"
+msgstr ""
+
+#: mi.state.ConnectionState.get_followers:14 of
+msgid "取得する情報の最大数 max: 100"
+msgstr ""
+
+#: mi.state.ConnectionState.get_followers:16 of
+msgid "全てのフォロワーを取得する"
+msgstr ""
+
+#: mi.state.ConnectionState.get_followers of
+msgid "Yields"
+msgstr ""
+
+#: mi.state.ConnectionState.get_followers:19 of
+msgid "*dict* -- フォロワーの情報"
+msgstr ""
+
+#: mi.state.ConnectionState.get_followers:21 of
+msgid "limit引数が不正な場合"
+msgstr ""
+
+#: mi.state.ConnectionState.get_announcements:2 of
+msgid "最大取得数"
+msgstr ""
+
+#: mi.state.ConnectionState.get_announcements:4 of
+msgid "既読済みか否か"
+msgstr ""
+
+#: ../../mi.rst:205
+msgid "Low-Layer API"
+msgstr ""
+
