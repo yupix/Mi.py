@@ -193,11 +193,11 @@
 <p>Diese Bibliothek kann <cite>debug</cite> mittels <cite>logging</cite> ausgeben. Sie sollten <cite>debug</cite> als Startargument übergeben, da es in der Standardkonfiguration nicht verfügbar ist.</p>
 </div>
 <div class="section" id="id1">
-<h2>Referenz der Veranstaltung<a class="headerlink" href="#id1" title="Link zu dieser Überschrift">¶</a></h2>
+<h2>Referenz des Ereignisses<a class="headerlink" href="#id1" title="Link zu dieser Überschrift">¶</a></h2>
 <dl class="py function">
 <dt class="sig sig-object py" id="mi.on_ready">
 <span class="sig-prename descclassname"><span class="pre">mi.</span></span><span class="sig-name descname"><span class="pre">on_ready</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ws</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mi.on_ready" title="Link zu dieser Definition">¶</a></dt>
-<dd><p>Er wird aufgerufen, wenn der Bot die Verbindung zum Websocket beendet hat.</p>
+<dd><p>Er wird aufgerufen, wenn der Bot die Verbindung zum Websocket aufgebaut hat.</p>
 </dd></dl>
 <dl class="py function">
 <dt class="sig sig-object py" id="mi.on_message">
@@ -221,7 +221,7 @@
 <dd></dd></dl>
 </div>
 <div class="section" id="abstractchatcontent">
-<h3>AbstraktChatInhalt<a class="headerlink" href="#abstractchatcontent" title="Link zu dieser Überschrift">¶</a></h3>
+<h3>AbstractChatContent<a class="headerlink" href="#abstractchatcontent" title="Link zu dieser Überschrift">¶</a></h3>
 <div class="py-attribute-table" data-move-to-id="mi.abc.AbstractChatContent"></div><dl class="py class">
 <dt class="sig sig-object py" id="mi.abc.AbstractChatContent">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.abc.</span></span><span class="sig-name descname"><span class="pre">AbstractChatContent</span></span><a class="reference internal" href="_modules/mi/abc/chat.html#AbstractChatContent"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.abc.AbstractChatContent" title="Link zu dieser Definition">¶</a></dt>
@@ -311,7 +311,7 @@ async</span><a class="reference internal" href="#mi.Note.reply">reply</a></li></
 <span class="sig-name descname"><span class="pre">content</span></span><a class="headerlink" href="#mi.Note.content" title="Link zu dieser Definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Typ</dt>
-<dd class="field-odd"><p>Optional[str].</p>
+<dd class="field-odd"><p>Optional[str]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -320,7 +320,7 @@ async</span><a class="reference internal" href="#mi.Note.reply">reply</a></li></
 <span class="sig-name descname"><span class="pre">cw</span></span><a class="headerlink" href="#mi.Note.cw" title="Link zu dieser Definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Typ</dt>
-<dd class="field-odd"><p>Optional[str].</p>
+<dd class="field-odd"><p>Optional[str]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -374,7 +374,7 @@ async</span><a class="reference internal" href="#mi.Note.reply">reply</a></li></
 <span class="sig-name descname"><span class="pre">emojis</span></span><a class="headerlink" href="#mi.Note.emojis" title="Link zu dieser Definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Typ</dt>
-<dd class="field-odd"><p>Liste[Emoji].</p>
+<dd class="field-odd"><p>Liste[Emoji]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -401,7 +401,7 @@ async</span><a class="reference internal" href="#mi.Note.reply">reply</a></li></
 <span class="sig-name descname"><span class="pre">reply_id</span></span><a class="headerlink" href="#mi.Note.reply_id" title="Link zu dieser Definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Typ</dt>
-<dd class="field-odd"><p>Optional[str].</p>
+<dd class="field-odd"><p>Optional[str]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -410,7 +410,7 @@ async</span><a class="reference internal" href="#mi.Note.reply">reply</a></li></
 <span class="sig-name descname"><span class="pre">renote_id</span></span><a class="headerlink" href="#mi.Note.renote_id" title="Link zu dieser Definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Typ</dt>
-<dd class="field-odd"><p>Optional[str].</p>
+<dd class="field-odd"><p>Optional[str]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -419,7 +419,7 @@ async</span><a class="reference internal" href="#mi.Note.reply">reply</a></li></
 <span class="sig-name descname"><span class="pre">poll</span></span><a class="headerlink" href="#mi.Note.poll" title="Link zu dieser Definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Typ</dt>
-<dd class="field-odd"><p>Fakultativ[Umfrage].</p>
+<dd class="field-odd"><p>Optional[Umfrage]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -437,8 +437,8 @@ async</span><a class="reference internal" href="#mi.Note.reply">reply</a></li></
 <li><p><strong>no_extract_emojis</strong> (<em>bool</em><em>, </em><em>optional</em>) – Ob Emoji erweitert werden sollen, standardmäßig False</p></li>
 <li><p><strong>renote_id</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – Die ID des Renote-Ziels, standardmäßig Keine</p></li>
 <li><p><strong>channel_id</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – Kanal-ID, standardmäßig Keine</p></li>
-<li><p><strong>file_ids</strong> (<em>[</em><em>type</em><em>]</em><em>, </em><em>optional</em>) – Die ID der anzuhängenden Datei, standardmäßig Keine</p></li>
-<li><p><strong>poll</strong> (<em>Optional</em><em>[</em><em>Poll</em><em>]</em><em>, </em><em>optional</em>) – Umfrage, standardmäßig Keine</p></li>
+<li><p><strong>file_ids</strong> (<em>[</em><em>type</em><em>]</em><em>, </em><em>optional</em>) – Die ID der anzuhängenden Datei, standardmäßig None</p></li>
+<li><p><strong>poll</strong> (<em>Optional</em><em>[</em><em>Poll</em><em>]</em><em>, </em><em>optional</em>) – Umfrage, standardmäßig None</p></li>
 </ul>
 </dd>
 </dl>
@@ -563,7 +563,7 @@ async</span><a class="reference internal" href="#mi.User.unfollow">unfollow</a><
 <dd><p>Der Hostname des Benutzers</p>
 <dl class="field-list simple">
 <dt class="field-odd">Typ</dt>
-<dd class="field-odd"><p>Optional[str].</p>
+<dd class="field-odd"><p>Optional[str]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -573,7 +573,7 @@ async</span><a class="reference internal" href="#mi.User.unfollow">unfollow</a><
 <dd><p>Die URL des Avatars des Benutzers</p>
 <dl class="field-list simple">
 <dt class="field-odd">Typ</dt>
-<dd class="field-odd"><p>Optional[str].</p>
+<dd class="field-odd"><p>Optional[str]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -650,7 +650,7 @@ async</span><a class="reference internal" href="#mi.User.unfollow">unfollow</a><
 <dl class="py attribute">
 <dt class="sig sig-object py" id="mi.User.updated_at">
 <span class="sig-name descname"><span class="pre">updated_at</span></span><a class="headerlink" href="#mi.User.updated_at" title="Link zu dieser Definition">¶</a></dt>
-<dd><p>Das Datum, an dem Ihr Konto aktualisiert wurde (z. B. durch die Buchung einer Notiz)</p>
+<dd><p>Das Datum, an dem Ihr Konto aktualisiert wurde (z. B. durch das Posten einer Notiz)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Typ</dt>
 <dd class="field-odd"><p>str</p>
@@ -700,7 +700,7 @@ async</span><a class="reference internal" href="#mi.User.unfollow">unfollow</a><
 <dl class="py attribute">
 <dt class="sig sig-object py" id="mi.User.location">
 <span class="sig-name descname"><span class="pre">location</span></span><a class="headerlink" href="#mi.User.location" title="Link zu dieser Definition">¶</a></dt>
-<dd><p>Wohnsitz des Nutzers</p>
+<dd><p>Wohnort des Nutzers</p>
 <dl class="field-list simple">
 <dt class="field-odd">Typ</dt>
 <dd class="field-odd"><p>str</p>
@@ -948,7 +948,7 @@ Attributes</span><ul>
 <dd><p>Benutzer-Avatar blurhash</p>
 <dl class="field-list simple">
 <dt class="field-odd">Typ</dt>
-<dd class="field-odd"><p>Optional[str].</p>
+<dd class="field-odd"><p>Optional[str]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -999,7 +999,7 @@ async</span><a class="reference internal" href="#mi.Chat.delete">delete</a></li>
 </dd></dl>
 </div>
 <div class="section" id="drive">
-<h3>Antrieb<a class="headerlink" href="#drive" title="Link zu dieser Überschrift">¶</a></h3>
+<h3>Drive<a class="headerlink" href="#drive" title="Link zu dieser Überschrift">¶</a></h3>
 <div class="py-attribute-table" data-move-to-id="mi.Drive"><div class="py-attribute-table-column">
 <span>
 Methods</span><ul>
@@ -1221,7 +1221,7 @@ async</span><a class="reference internal" href="#mi.Follow.unfollow">unfollow</a
 </dd></dl>
 </div>
 <div class="section" id="contentrequired">
-<h3>InhaltBedarf<a class="headerlink" href="#contentrequired" title="Link zu dieser Überschrift">¶</a></h3>
+<h3>ContentRequired<a class="headerlink" href="#contentrequired" title="Link zu dieser Überschrift">¶</a></h3>
 <dl class="py class">
 <dt class="sig sig-object py" id="mi.ContentRequired">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.</span></span><span class="sig-name descname"><span class="pre">ContentRequired</span></span><a class="reference internal" href="_modules/mi/exception.html#ContentRequired"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.ContentRequired" title="Link zu dieser Definition">¶</a></dt>
@@ -1233,7 +1233,7 @@ async</span><a class="reference internal" href="#mi.Follow.unfollow">unfollow</a
 <dl class="py class">
 <dt class="sig sig-object py" id="mi.CogNameDuplicate">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.</span></span><span class="sig-name descname"><span class="pre">CogNameDuplicate</span></span><a class="reference internal" href="_modules/mi/exception.html#CogNameDuplicate"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.CogNameDuplicate" title="Link zu dieser Definition">¶</a></dt>
-<dd><p>Doppelte Zahnradnamen</p>
+<dd><p>Doppelte Cog-Namen</p>
 </dd></dl>
 </div>
 <div class="section" id="extensionalreadyloaded">
@@ -1241,7 +1241,7 @@ async</span><a class="reference internal" href="#mi.Follow.unfollow">unfollow</a
 <dl class="py class">
 <dt class="sig sig-object py" id="mi.ExtensionAlreadyLoaded">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.</span></span><span class="sig-name descname"><span class="pre">ExtensionAlreadyLoaded</span></span><a class="reference internal" href="_modules/mi/exception.html#ExtensionAlreadyLoaded"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.ExtensionAlreadyLoaded" title="Link zu dieser Definition">¶</a></dt>
-<dd><p>Die Kogge ist bereits geladen</p>
+<dd><p>Cog ist bereits geladen</p>
 </dd></dl>
 </div>
 <div class="section" id="extensionfailed">
@@ -1249,7 +1249,7 @@ async</span><a class="reference internal" href="#mi.Follow.unfollow">unfollow</a
 <dl class="py class">
 <dt class="sig sig-object py" id="mi.ExtensionFailed">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.</span></span><span class="sig-name descname"><span class="pre">ExtensionFailed</span></span><a class="reference internal" href="_modules/mi/exception.html#ExtensionFailed"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.ExtensionFailed" title="Link zu dieser Definition">¶</a></dt>
-<dd><p>Fehler um das Zahnrad</p>
+<dd><p>Fehler im Cog</p>
 </dd></dl>
 </div>
 <div class="section" id="noentrypointerror">
@@ -1257,7 +1257,7 @@ async</span><a class="reference internal" href="#mi.Follow.unfollow">unfollow</a
 <dl class="py class">
 <dt class="sig sig-object py" id="mi.NoEntryPointError">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.</span></span><span class="sig-name descname"><span class="pre">NoEntryPointError</span></span><a class="reference internal" href="_modules/mi/exception.html#NoEntryPointError"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.NoEntryPointError" title="Link zu dieser Definition">¶</a></dt>
-<dd><p>Ausnahme, wenn das Zahnrad keine Einrichtungsfunktion hat</p>
+<dd><p>Ausnahme, wenn Cog keine Einrichtungsfunktion hat</p>
 </dd></dl>
 </div>
 <div class="section" id="extensionnotfound">
@@ -1265,7 +1265,7 @@ async</span><a class="reference internal" href="#mi.Follow.unfollow">unfollow</a
 <dl class="py class">
 <dt class="sig sig-object py" id="mi.ExtensionNotFound">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.</span></span><span class="sig-name descname"><span class="pre">ExtensionNotFound</span></span><a class="reference internal" href="_modules/mi/exception.html#ExtensionNotFound"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.ExtensionNotFound" title="Link zu dieser Definition">¶</a></dt>
-<dd><p>Ausnahme, wenn die Kogge im angegebenen Pfad nicht existiert</p>
+<dd><p>Ausnahme, wenn Cog im angegebenen Pfad nicht existiert</p>
 </dd></dl>
 </div>
 <div class="section" id="commandregistrationerror">
@@ -1305,7 +1305,7 @@ async</span><a class="reference internal" href="#mi.Follow.unfollow">unfollow</a
 <dl class="py class">
 <dt class="sig sig-object py" id="mi.InvalidCogPath">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.</span></span><span class="sig-name descname"><span class="pre">InvalidCogPath</span></span><a class="reference internal" href="_modules/mi/exception.html#InvalidCogPath"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.InvalidCogPath" title="Link zu dieser Definition">¶</a></dt>
-<dd><p>Falscher Pfad zum Zahnrad</p>
+<dd><p>Falscher Pfad zu Cog</p>
 </dd></dl>
 </div>
 <div class="section" id="notexistrequireddata">
@@ -1405,7 +1405,7 @@ async</span><a class="reference internal" href="#mi.Follow.unfollow">unfollow</a
 <dl class="py method">
 <dt class="sig sig-object py" id="mi.ConnectionState.parse_note">
 <span class="sig-name descname"><span class="pre">parse_note</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/state.html#ConnectionState.parse_note"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.ConnectionState.parse_note" title="Link zu dieser Definition">¶</a></dt>
-<dd><p>Funktionen zum Parsen von Notenereignissen</p>
+<dd><p>Funktionen zum Parsen von Notizereignissen</p>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="mi.ConnectionState.follow_user">
@@ -1446,7 +1446,7 @@ async</span><a class="reference internal" href="#mi.Follow.unfollow">unfollow</a
 <dt class="field-odd">Parameter</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>reaction</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – Bezeichnung der zu gewährenden Reaktion</p></li>
-<li><p><strong>note_id</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – Hinweis Zu erteilende ID</p></li>
+<li><p><strong>note_id</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – Hinweis zu erteilende ID</p></li>
 </ul>
 </dd>
 <dt class="field-even">Rückgabe</dt>
@@ -1460,7 +1460,7 @@ async</span><a class="reference internal" href="#mi.Follow.unfollow">unfollow</a
 <dl class="py method">
 <dt class="sig sig-object py" id="mi.ConnectionState.delete_note">
 <em class="property"><span class="pre">await</span> </em><span class="sig-name descname"><span class="pre">delete_note</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">note_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/state.html#ConnectionState.delete_note"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.ConnectionState.delete_note" title="Link zu dieser Definition">¶</a></dt>
-<dd><p>Löscht die Notiz mit der angegebenen ID.</p>
+<dd><p>Löscht die Notiz mit der angegebenen ID</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameter</dt>
 <dd class="field-odd"><p><strong>note_id</strong> (<em>str</em>) – Anmerkung id</p>
@@ -1486,7 +1486,7 @@ async</span><a class="reference internal" href="#mi.Follow.unfollow">unfollow</a
 </ul>
 </dd>
 <dt class="field-even">Rückgabe</dt>
-<dd class="field-even"><p>Informationen für den Benutzer</p>
+<dd class="field-even"><p>Benutzerinformationen</p>
 </dd>
 <dt class="field-odd">Rückgabetyp</dt>
 <dd class="field-odd"><p>dict</p>
@@ -1548,8 +1548,8 @@ async</span><a class="reference internal" href="#mi.Follow.unfollow">unfollow</a
 <li><p><strong>reply_id</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – Reply-to id, standardmäßig Keine</p></li>
 <li><p><strong>renote_id</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – Die ID des Renote-Ziels, standardmäßig Keine</p></li>
 <li><p><strong>channel_id</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – Kanal-ID, standardmäßig Keine</p></li>
-<li><p><strong>file_ids</strong> (<em>[</em><em>type</em><em>]</em><em>, </em><em>optional</em>) – Die ID der anzuhängenden Datei, standardmäßig Keine</p></li>
-<li><p><strong>poll</strong> (<em>Optional</em><em>[</em><em>Poll</em><em>]</em><em>, </em><em>optional</em>) – Umfrage, standardmäßig Keine</p></li>
+<li><p><strong>file_ids</strong> (<em>[</em><em>type</em><em>]</em><em>, </em><em>optional</em>) – Die ID der anzuhängenden Datei, standardmäßig None</p></li>
+<li><p><strong>poll</strong> (<em>Optional</em><em>[</em><em>Poll</em><em>]</em><em>, </em><em>optional</em>) – Umfrage, standardmäßig None</p></li>
 </ul>
 </dd>
 <dt class="field-even">Rückgabe</dt>
@@ -1575,15 +1575,15 @@ async</span><a class="reference internal" href="#mi.Follow.unfollow">unfollow</a
 <li><p><strong>host</strong> (<em>str</em><em>, </em><em>default=None</em>) – Der Hostname der Instanz, in der sich der Benutzer befindet</p></li>
 <li><p><strong>since_id</strong> (<em>str</em><em>, </em><em>default=None</em>) – </p></li>
 <li><p><strong>until_id</strong> (<em>str</em><em>, </em><em>default=None</em>) – Gibt den letzten Wert des vorherigen Laufs an (wird verwendet, wenn der Lauf bereits abgeschlossen wurde und nicht abgerufen werden kann)</p></li>
-<li><p><strong>limit</strong> (<em>int</em><em>, </em><em>default=10</em>) – Maximale Anzahl der abzurufenden Informationen: 100</p></li>
+<li><p><strong>limit</strong> (<em>int</em><em>, </em><em>default=10</em>) – Anzahl der abzurufenden Informationen, max=100</p></li>
 <li><p><strong>get_all</strong> (<em>bool</em><em>, </em><em>default=False</em>) – Alle Follower erhalten</p></li>
 </ul>
 </dd>
-<dt class="field-even">Ausbeute</dt>
+<dt class="field-even">Treffer</dt>
 <dd class="field-even"><p><em>dict</em> – Follower-Informationen</p>
 </dd>
 <dt class="field-odd">Verursacht</dt>
-<dd class="field-odd"><p><a class="reference internal" href="#mi.InvalidParameters" title="mi.InvalidParameters"><strong>InvalidParameters</strong></a> – Wenn das Grenzwertargument ungültig ist</p>
+<dd class="field-odd"><p><a class="reference internal" href="#mi.InvalidParameters" title="mi.InvalidParameters"><strong>InvalidParameters</strong></a> – Wenn das limit-Argument ungültig ist</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1678,17 +1678,17 @@ async</span><a class="reference internal" href="#mi.Follow.unfollow">unfollow</a
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">API-Referenz</a><ul>
-<li><a class="reference internal" href="#id1">Referenz der Veranstaltung</a></li>
+<li><a class="reference internal" href="#id1">Referenz des Ereignisses</a></li>
 <li><a class="reference internal" href="#id2">Abstrakte Basisklasse</a><ul>
 <li><a class="reference internal" href="#abstractbotbase">AbstractBotBase</a></li>
-<li><a class="reference internal" href="#abstractchatcontent">AbstraktChatInhalt</a></li>
+<li><a class="reference internal" href="#abstractchatcontent">AbstractChatContent</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#misskey">Misskey Modelle</a><ul>
 <li><a class="reference internal" href="#note">Hinweis</a></li>
 <li><a class="reference internal" href="#user">Benutzer</a></li>
 <li><a class="reference internal" href="#userdetails">UserDetails</a></li>
-<li><a class="reference internal" href="#drive">Antrieb</a></li>
+<li><a class="reference internal" href="#drive">Drive</a></li>
 <li><a class="reference internal" href="#emoji">Emoji</a></li>
 <li><a class="reference internal" href="#renote">Renote</a></li>
 <li><a class="reference internal" href="#follow">Folgen Sie</a></li>
@@ -1711,7 +1711,7 @@ async</span><a class="reference internal" href="#mi.Follow.unfollow">unfollow</a
 <li><a class="reference internal" href="#notexistrequiredparameters">NotExistRequiredParameters</a></li>
 <li><a class="reference internal" href="#invalidparameters">InvalidParameters</a></li>
 <li><a class="reference internal" href="#credentialrequired">CredentialRequired</a></li>
-<li><a class="reference internal" href="#contentrequired">InhaltBedarf</a></li>
+<li><a class="reference internal" href="#contentrequired">ContentRequired</a></li>
 <li><a class="reference internal" href="#cognameduplicate">CogNameDuplicate</a></li>
 <li><a class="reference internal" href="#extensionalreadyloaded">ExtensionAlreadyLoaded</a></li>
 <li><a class="reference internal" href="#extensionfailed">ExtensionFailed</a></li>
