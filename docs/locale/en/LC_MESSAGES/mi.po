@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Mi.py\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-12-22 23:40+0900\n"
-"PO-Revision-Date: 2021-12-22 23:43+0900\n"
+"PO-Revision-Date: 2021-12-23 00:17+0900\n"
 "Last-Translator: yupix <yupi0982@outlook.jp>\n"
 "Language: en\n"
 "Language-Team: TeamPimcserver\n"
@@ -138,7 +138,7 @@ msgstr "Optional[Poll]"
 
 #: mi.note.Note.reply:2 of
 msgid "ノートに対して返信を送信します"
-msgstr ""
+msgstr "Send a reply to a note"
 
 #: mi.iterators.InstanceIterator.get_users mi.note.Follow.unfollow
 #: mi.note.Note.reply mi.state.ConnectionState.add_reaction
@@ -156,35 +156,35 @@ msgstr "Parameters"
 
 #: mi.note.Note.reply:4 of
 msgid "返信内容"
-msgstr ""
+msgstr "What to reply to"
 
 #: mi.note.Note.reply:6 of
 msgid "閲覧注意"
-msgstr ""
+msgstr "Browsing Attention"
 
 #: mi.note.Note.reply:8 mi.state.ConnectionState.post_note:14 of
 msgid "メンションを展開するか, by default False"
-msgstr ""
+msgstr "Expand mentions or by default False"
 
 #: mi.note.Note.reply:10 mi.state.ConnectionState.post_note:16 of
 msgid "ハッシュタグを展開するか, by default False"
-msgstr ""
+msgstr "Expand the hashtag or by default False"
 
 #: mi.note.Note.reply:12 mi.state.ConnectionState.post_note:18 of
 msgid "絵文字を展開するか, by default False"
-msgstr ""
+msgstr "Expand emoji or by default False"
 
 #: mi.note.Note.reply:14 mi.state.ConnectionState.post_note:22 of
 msgid "リノート先のid, by default None"
-msgstr ""
+msgstr "Renouted id, by default None"
 
 #: mi.note.Note.reply:16 mi.state.ConnectionState.post_note:24 of
 msgid "チャンネルid, by default None"
-msgstr ""
+msgstr "Channel id, by default None"
 
 #: mi.note.Note.reply:18 mi.state.ConnectionState.post_note:26 of
 msgid "添付するファイルのid, by default None"
-msgstr ""
+msgstr "Id of the file to be attached, by default None"
 
 #: mi.note.Note.reply:20 mi.state.ConnectionState.post_note:28 of
 msgid "アンケート, by default None"
