@@ -93,11 +93,11 @@ msgstr ""
 
 #: ../../mi.rst:59
 msgid "Note"
-msgstr "Hinweis"
+msgstr "Note"
 
 #: mi.note.Note mi.user.User mi.user.UserDetails of
 msgid "type"
-msgstr "Typ"
+msgstr "type"
 
 #: mi.note.Note:4 mi.note.Note:8 mi.note.Note:12 mi.note.Note:32 mi.user.User:6
 #: mi.user.User:12 mi.user.User:18 mi.user.User:60 mi.user.User:66
@@ -109,7 +109,7 @@ msgstr "str"
 
 #: ../../mi.rst:67 mi.note.Note:16 of
 msgid "User"
-msgstr "Benutzer"
+msgstr "User"
 
 #: mi.note.Note:20 mi.note.Note:24 mi.note.Note:60 mi.note.Note:64
 #: mi.user.User:24 mi.user.User:30 mi.user.UserDetails:8 of
@@ -544,7 +544,7 @@ msgstr "**status_code** (*int*) -- HTTP-Antwortstatuscode"
 
 #: ../../mi.rst:113
 msgid "Follow"
-msgstr "Folgen Sie"
+msgstr "Follow"
 
 #: mi.note.Follow.follow:2 of
 msgid "ユーザーをフォローします :returns: * *bool = False* -- 成功ならTrue, 失敗ならFalse"
@@ -566,19 +566,19 @@ msgstr "Datenklassen"
 
 #: ../../mi.rst:126
 msgid "Header"
-msgstr "Kopfzeile"
+msgstr "Header"
 
 #: ../../mi.rst:134
 msgid "Properties"
-msgstr "Eigenschaften"
+msgstr "Properties"
 
 #: ../../mi.rst:142
 msgid "File"
-msgstr "Datei"
+msgstr "File"
 
 #: ../../mi.rst:150
 msgid "Reaction"
-msgstr "Reaktion"
+msgstr "Reaction"
 
 #: ../../mi.rst:159
 msgid "例外処理"
