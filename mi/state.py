@@ -35,6 +35,10 @@ class NoteActions:
     async def remove_favorite(self, note_id:str) ->bool:
         data = {'noteId': note_id}
         return bool(await self.http.request(Route('POST', '/api/notes/favorites/delete'), json=data, auth=True))
+    
+    async def add_note_to_clips(self, clip_id:str, note_id:str) -> bool:
+        data = {'noteId': note_id, 'clipId': clip_id}
+        return bool(await self.http.request(Route('POST', '/api/clips/add-note'), json=data, auth=True))
 
 class ClientAction(NoteActions):
     pass

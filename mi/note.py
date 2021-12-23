@@ -304,3 +304,11 @@ class Note(AbstractNote):
         """
         
         return await self._state.remove_favorite(note_id=self.id)
+
+    async def add_to_clips(self, clip_id:str) -> bool:
+        """
+        指定したクリップにノートを追加します
+        """
+        
+        return await self._state.add_note_to_clips(clip_id=clip_id, note_id=self.id)
+    
