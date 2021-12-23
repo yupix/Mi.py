@@ -1,907 +1,750 @@
+
 msgid ""
 msgstr ""
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"X-Generator: POEditor.com\n"
-"Project-Id-Version: Mi.py\n"
+"Project-Id-Version:  Mi.py\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2021-12-24 07:51+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
+"Language-Team: de <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../quickstart.rst:2
+msgid "QuickStart"
+msgstr ""
+
+#: ../../quickstart.rst:4
+msgid "このページでは Mi.pyの簡単な使い方をご紹介します"
+msgstr ""
+
+#: ../../quickstart.rst:6
+msgid "ubuntuなどのoperating systemでは以下のパッケージがビルドに必要です。"
+msgstr ""
+
+#: ../../quickstart.rst:13
+msgid "Mi.pyはリリースが遅いため、githubからインストールすることを推奨します"
+msgstr ""
+
+#: ../../quickstart.rst:22
+msgid "簡単なコードを書いてみると以下のようになります"
+msgstr ""
+
+#~ msgid "API Reference"
+#~ msgstr "API-Referenz"
+
+#~ msgid "このセクションではMi.pyのAPIについて説明します"
+#~ msgstr "In diesem Abschnitt beschreiben wir die API von Mi.py"
+
+#~ msgid ""
+#~ "このライブラリではloggingを用いてdebug出力が可能です。標準設定では出ないため、起動時の引数として `debug`"
+#~ " を渡すようにしてください"
+#~ msgstr ""
+#~ "Diese Bibliothek kann `debug` mittels "
+#~ "`logging` ausgeben. Sie sollten `debug` "
+#~ "als Startargument übergeben, da es in"
+#~ " der Standardkonfiguration nicht verfügbar "
+#~ "ist."
+
+#~ msgid "イベントリファレンス"
+#~ msgstr "Referenz der Veranstaltung"
+
+#~ msgid "botがwebsocketに接続し終えた時点で呼び出されます。"
+#~ msgstr ""
+#~ "Er wird aufgerufen, wenn der Bot "
+#~ "die Verbindung zum Websocket beendet "
+#~ "hat."
+
+#~ msgid "ノートが接続しているチャンネル内に投稿された際に呼び出されます"
+#~ msgstr ""
+#~ "Wird aufgerufen, wenn in dem Kanal, "
+#~ "mit dem Sie verbunden sind, eine "
+#~ "Notiz veröffentlicht wird"
+
+#~ msgid "絵文字がインスタンスに追加された際に呼び出されます"
+#~ msgstr "Wird aufgerufen, wenn ein Piktogramm zu einer Instanz hinzugefügt wird"
 
-#: ../../mi.rst:4
-msgid "API Reference"
-msgstr "API-Referenz"
-
-#: ../../mi.rst:6
-msgid "このセクションではMi.pyのAPIについて説明します"
-msgstr "In diesem Abschnitt beschreiben wir die API von Mi.py"
-
-#: ../../mi.rst:9
-msgid "このライブラリではloggingを用いてdebug出力が可能です。標準設定では出ないため、起動時の引数として `debug` を渡すようにしてください"
-msgstr "Diese Bibliothek kann `debug` mittels `logging` ausgeben. Sie sollten `debug` als Startargument übergeben, da es in der Standardkonfiguration nicht verfügbar ist."
-
-#: ../../mi.rst:12
-msgid "イベントリファレンス"
-msgstr "Referenz der Veranstaltung"
-
-#: ../../mi.rst:16
-msgid "botがwebsocketに接続し終えた時点で呼び出されます。"
-msgstr "Er wird aufgerufen, wenn der Bot die Verbindung zum Websocket beendet hat."
-
-#: ../../mi.rst:20
-msgid "ノートが接続しているチャンネル内に投稿された際に呼び出されます"
-msgstr "Wird aufgerufen, wenn in dem Kanal, mit dem Sie verbunden sind, eine Notiz veröffentlicht wird"
-
-#: ../../mi.rst:24
-msgid "絵文字がインスタンスに追加された際に呼び出されます"
-msgstr "Wird aufgerufen, wenn ein Piktogramm zu einer Instanz hinzugefügt wird"
-
-#: ../../mi.rst:27
-msgid "抽象基底クラス"
-msgstr "Abstrakte Basisklasse"
-
-#: ../../mi.rst:29
-msgid "`abstract base class <https://docs.python.org/ja/3/glossary.html#term-abstract-base-class>`_ はメソッドなどの一覧を取得するために継承することが可能なクラスです。抽象基底クラスはインスタンス化することはできません。"
-msgstr "Abstrakte Basisklasse <https://docs.python.org/ja/3/glossary.html#term-abstract-base-class>`_ ist eine Klasse, die geerbt werden kann, um eine Liste von Methoden usw. zu erhalten. Abstrakte Basisklassen können nicht instanziiert werden."
-
-#: ../../mi.rst:32
-msgid "AbstractBotBase"
-msgstr "AbstractBotBase"
-
-#: ../../mi.rst:40
-msgid "AbstractChatContent"
-msgstr "AbstraktChatInhalt"
-
-#: ../../mi.rst:48
-msgid "Misskey モデル"
-msgstr "Misskey Modelle"
-
-#: ../../mi.rst:51
-msgid "下記のクラスは、 **ユーザーによって作成されることを考慮していません** 。 独自のインスタンスは作成するべきではなく、値を変更するべきではありません。"
-msgstr "Die folgenden Klassen sind **nicht dazu bestimmt, vom Benutzer erstellt zu werden**. Sie sollten keine eigenen Instanzen erstellen und die Werte nicht ändern."
-
-#: ../../mi.rst:55
-msgid "Note"
-msgstr "Hinweis"
-
-#: mi.note.Note mi.user.User mi.user.UserDetails of
-msgid "type"
-msgstr "Typ"
-
-#: mi.note.Note:4 mi.note.Note:8 mi.note.Note:12 mi.note.Note:32 mi.user.User:6
-#: mi.user.User:12 mi.user.User:18 mi.user.User:60 mi.user.User:66
-#: mi.user.User:72 mi.user.User:78 mi.user.User:102 mi.user.User:108
-#: mi.user.User:114 mi.user.User:150 mi.user.User:156 mi.user.User:162
-#: mi.user.UserDetails:14 mi.user.UserDetails:20 of
-msgid "str"
-msgstr "str"
-
-#: ../../mi.rst:63 mi.note.Note:16 of
-msgid "User"
-msgstr "Benutzer"
-
-#: mi.note.Note:20 mi.note.Note:24 mi.note.Note:60 mi.note.Note:64
-#: mi.user.User:24 mi.user.User:30 mi.user.UserDetails:8 of
-msgid "Optional[str]"
-msgstr "Optional[str]."
-
-#: ../../mi.rst:101 mi.note.Note:28 of
-msgid "Renote"
-msgstr "Renote"
-
-#: mi.note.Note:36 mi.note.Note:40 mi.user.User:126 mi.user.User:132
-#: mi.user.User:138 of
-msgid "int"
-msgstr "int"
-
-#: mi.note.Note:44 of
-msgid "Dict[str, Any]"
-msgstr "Dict[str, Any]."
-
-#: mi.note.Note:48 of
-msgid "List[Emoji]"
-msgstr "Liste[Emoji]."
-
-#: mi.note.Note:52 mi.note.Note:56 of
-msgid "Optional[List[str]]"
-msgstr "Optional[Liste[str]]]"
-
-#: mi.note.Note:68 of
-msgid "Optional[Poll]"
-msgstr "Fakultativ[Umfrage]."
-
-#: mi.note.Note.reply:2 of
-msgid "ノートに対して返信を送信します"
-msgstr "Senden Sie eine Antwort auf die Notiz"
-
-#: mi.iterators.InstanceIterator.get_users mi.note.Follow.unfollow
-#: mi.note.Note.reply mi.state.ConnectionState.add_reaction
-#: mi.state.ConnectionState.delete_chat mi.state.ConnectionState.delete_note
-#: mi.state.ConnectionState.follow_user
-#: mi.state.ConnectionState.get_announcements
-#: mi.state.ConnectionState.get_followers mi.state.ConnectionState.get_user
-#: mi.state.ConnectionState.parse_channel
-#: mi.state.ConnectionState.parse_notification
-#: mi.state.ConnectionState.parse_unread_notification
-#: mi.state.ConnectionState.post_chat mi.state.ConnectionState.post_note
-#: mi.state.ConnectionState.unfollow_user mi.user.User.get_followers of
-msgid "Parameters"
-msgstr "Parameter"
-
-#: mi.note.Note.reply:4 of
-msgid "返信内容"
-msgstr "Inhalt der Antwort"
-
-#: mi.note.Note.reply:6 of
-msgid "閲覧注意"
-msgstr "Warnung"
-
-#: mi.note.Note.reply:8 mi.state.ConnectionState.post_note:14 of
-msgid "メンションを展開するか, by default False"
-msgstr "Ob die Erwähnung erweitert werden soll, standardmäßig False"
-
-#: mi.note.Note.reply:10 mi.state.ConnectionState.post_note:16 of
-msgid "ハッシュタグを展開するか, by default False"
-msgstr "Hashtags erweitern, standardmäßig False"
-
-#: mi.note.Note.reply:12 mi.state.ConnectionState.post_note:18 of
-msgid "絵文字を展開するか, by default False"
-msgstr "Ob Emoji erweitert werden sollen, standardmäßig False"
-
-#: mi.note.Note.reply:14 mi.state.ConnectionState.post_note:22 of
-msgid "リノート先のid, by default None"
-msgstr "Die ID des Renote-Ziels, standardmäßig Keine"
-
-#: mi.note.Note.reply:16 mi.state.ConnectionState.post_note:24 of
-msgid "チャンネルid, by default None"
-msgstr "Kanal-ID, standardmäßig Keine"
-
-#: mi.note.Note.reply:18 mi.state.ConnectionState.post_note:26 of
-msgid "添付するファイルのid, by default None"
-msgstr "Die ID der anzuhängenden Datei, standardmäßig Keine"
-
-#: mi.note.Note.reply:20 mi.state.ConnectionState.post_note:28 of
-msgid "アンケート, by default None"
-msgstr "Umfrage, standardmäßig Keine"
-
-#: mi.note.Note.emoji_count:2 mi.note.Renote.emoji_count:2 of
-msgid "ノートの本文にemojiが何個含まれているかを返します"
-msgstr "Gibt die Anzahl der Emoji im Text der Notiz zurück"
-
-#: mi.chat.Chat.delete mi.drive.Drive.delete
-#: mi.iterators.InstanceIterator.get_users mi.note.Follow.unfollow
-#: mi.note.Note.delete mi.note.Note.emoji_count mi.note.Renote.delete
-#: mi.note.Renote.emoji_count mi.state.ConnectionState.add_reaction
-#: mi.state.ConnectionState.delete_chat mi.state.ConnectionState.delete_note
-#: mi.state.ConnectionState.follow_user mi.state.ConnectionState.get_user
-#: mi.state.ConnectionState.parse_notification
-#: mi.state.ConnectionState.post_chat mi.state.ConnectionState.post_note
-#: mi.state.ConnectionState.unfollow_user mi.user.User.follow
-#: mi.user.User.get_followers mi.user.User.get_profile mi.user.User.unfollow of
-msgid "Returns"
-msgstr "Rückgabe"
-
-#: mi.note.Note.emoji_count:4 mi.note.Renote.emoji_count:4 of
-msgid "含まれている絵文字の数"
-msgstr "Anzahl der enthaltenen Emoji"
-
-#: mi.chat.Chat.delete mi.drive.Drive.delete
-#: mi.iterators.InstanceIterator.get_users mi.note.Follow.unfollow
-#: mi.note.Note.emoji_count mi.note.Renote.emoji_count
-#: mi.state.ConnectionState.add_reaction mi.state.ConnectionState.delete_chat
-#: mi.state.ConnectionState.delete_note mi.state.ConnectionState.follow_user
-#: mi.state.ConnectionState.get_user
-#: mi.state.ConnectionState.parse_notification
-#: mi.state.ConnectionState.post_chat mi.state.ConnectionState.post_note
-#: mi.state.ConnectionState.unfollow_user mi.user.User.get_followers
-#: mi.user.User.get_profile mi.user.User.unfollow of
-msgid "Return type"
-msgstr "Art der Rückgabe"
-
-#: mi.note.Note.delete:2 mi.note.Renote.delete:2 of
-msgid "指定したIDのノートを削除します"
-msgstr "Löscht die Notiz mit der angegebenen ID"
-
-#: mi.note.Note.delete:4 mi.note.Renote.delete:4 of
-msgid "* **is_success** (*bool*) -- 成功したか否か * **status_code** (*int*) -- HTTP レスポンスステータスコード"
-msgstr "* **is_success** (*bool*) -- Erfolg oder Fehlschlag * **status_code** (*int*) -- HTTP-Antwortstatuscode"
-
-#: mi.note.Note.delete:4 mi.note.Renote.delete:4 of
-msgid "**is_success** (*bool*) -- 成功したか否か"
-msgstr "**is_success** (*bool*) -- Erfolg oder Misserfolg"
-
-#: mi.note.Note.delete:5 mi.note.Renote.delete:5 of
-msgid "**status_code** (*int*) -- HTTP レスポンスステータスコード"
-msgstr "**status_code** (*int*) -- HTTP-Antwortstatuscode"
-
-#: mi.state.ConnectionState.get_followers:4 mi.user.User:4 of
-msgid "ユーザーのid"
-msgstr "Benutzer-ID"
-
-#: mi.user.User:10 of
-msgid "ユーザーのニックネーム"
-msgstr "Spitzname des Benutzers"
-
-#: mi.user.User:16 of
-msgid "ユーザーのアカウント名"
-msgstr "Name des Benutzerkontos"
-
-#: mi.user.User:22 of
-msgid "ユーザーのホスト名"
-msgstr "Der Hostname des Benutzers"
-
-#: mi.user.User:28 of
-msgid "ユーザーのアバターのURL"
-msgstr "Die URL des Avatars des Benutzers"
-
-#: mi.user.User:34 of
-msgid "ユーザーが管理者かどうか"
-msgstr "ob der Benutzer ein Administrator ist oder nicht"
-
-#: mi.user.User:36 mi.user.User:42 mi.user.User:84 mi.user.User:90
-#: mi.user.User:96 mi.user.User:168 mi.user.User:174 mi.user.User:180
-#: mi.user.User:186 mi.user.User:192 of
-msgid "bool"
-msgstr "bool"
-
-#: mi.user.User:40 of
-msgid "ユーザーがbotかどうか"
-msgstr "Ob der Benutzer ein Bot ist oder nicht"
-
-#: mi.user.User:46 of
-msgid "ユーザーが使用しているemoji"
-msgstr "Das vom Benutzer verwendete Emoji"
-
-#: mi.user.User:48 mi.user.User:120 mi.user.User:144 of
-msgid "list"
-msgstr "Liste"
-
-#: mi.user.User:52 of
-msgid "ユーザーのオンライン状況"
-msgstr "Online-Status des Benutzers"
-
-#: mi.user.User:54 mi.user.User:198 of
-msgid "Any"
-msgstr "Jede"
-
-#: mi.user.User:58 of
-msgid "ユーザーのプロフィールへのURL"
-msgstr "URL zum Profil des Benutzers"
-
-#: mi.user.User:64 of
-msgid "謎"
-msgstr "Geheimnisvoll"
-
-#: mi.user.User:70 of
-msgid "アカウントの作成日"
-msgstr "Datum der Kontoeröffnung"
-
-#: mi.user.User:76 of
-msgid "アカウントの更新日(ノートを投稿するなど)"
-msgstr "Das Datum, an dem Ihr Konto aktualisiert wurde (z. B. durch die Buchung einer Notiz)"
-
-#: mi.user.User:82 of
-msgid "アカウントがロックされているか"
-msgstr "Ist Ihr Konto gesperrt?"
-
-#: mi.user.User:88 of
-msgid "アカウントがミュートされているか"
-msgstr "Ist Ihr Konto stummgeschaltet?"
-
-#: mi.user.User:94 of
-msgid "アカウントが凍結されているか"
-msgstr "Wurde Ihr Konto eingefroren?"
-
-#: mi.user.User:100 of
-msgid "アカウントの概要"
-msgstr "Kontoübersicht"
-
-#: mi.user.User:106 of
-msgid "ユーザーが住んでいる場所"
-msgstr "Wohnsitz des Nutzers"
-
-#: mi.user.User:112 of
-msgid "ユーザーの誕生日"
-msgstr "Geburtstag des Benutzers"
-
-#: mi.user.User:118 of
-msgid "プロフィールのリンクフィールド"
-msgstr "Link-Feld im Profil"
-
-#: mi.user.User:124 of
-msgid "フォロワーの数"
-msgstr "Anzahl der Follower"
-
-#: mi.user.User:130 of
-msgid "フォローしている人の数"
-msgstr "Anzahl der Personen, die Ihnen folgen"
-
-#: mi.user.User:136 of
-msgid "投稿したノートの数"
-msgstr "Anzahl der veröffentlichten Notizen"
-
-#: mi.user.User:142 of
-msgid "ピン留めされたノートのidリスト"
-msgstr "Angepinnte Notizen id Liste"
-
-#: mi.user.User:148 of
-msgid "ピン留めされたページのid"
-msgstr "Die ID der angehefteten Seite"
-
-#: mi.user.User:154 of
-msgid "ピン留めされたページ"
-msgstr "Angepinnte Seiten"
-
-#: mi.user.User:160 of
-msgid "ノートの投稿範囲"
-msgstr "Umfang der Note Einreichungen"
-
-#: mi.user.User:166 of
-msgid "ユーザーがフォローしているかどうか"
-msgstr "Ob der Benutzer Ihnen folgt oder nicht"
-
-#: mi.user.User:172 of
-msgid "ユーザーのことをフォローしているかどうか"
-msgstr "Ob Sie dem Benutzer folgen oder nicht"
-
-#: mi.user.User:178 of
-msgid "ユーザーが自分のことをブロックしているかどうか"
-msgstr "Ob ein Benutzer Sie blockiert hat oder nicht"
-
-#: mi.user.User:184 of
-msgid "ユーザーのことをブロックしているかどうか"
-msgstr "ob der Benutzer gesperrt ist oder nicht"
-
-#: mi.user.User:190 of
-msgid "ユーザーのことをミュートしているかどうか"
-msgstr "Ob der Benutzer stummgeschaltet ist oder nicht."
-
-#: mi.user.User:196 of
-msgid "ユーザーのインスタンス"
-msgstr "Benutzer-Instanzen"
-
-#: mi.user.User:202 of
-msgid "ユーザーの詳細な情報"
-msgstr "Weitere Informationen über den Benutzer"
-
-#: ../../mi.rst:71 mi.user.User:204 of
-msgid "UserDetails"
-msgstr "UserDetails"
-
-#: mi.user.User.follow:2 of
-msgid "ユーザーをフォローします"
-msgstr "Folgen Sie dem Benutzer"
-
-#: mi.user.User.follow:4 of
-msgid "* *bool = False* -- 成功ならTrue, 失敗ならFalse * *str* -- 実行に失敗した際のエラーコード"
-msgstr "* *bool = False* -- True für Erfolg, False für Misserfolg * *str* -- Fehlercode für fehlgeschlagene Ausführung"
-
-#: mi.user.User.follow:4 of
-msgid "*bool = False* -- 成功ならTrue, 失敗ならFalse"
-msgstr "*bool = False* -- True für Erfolg, False für Misserfolg"
-
-#: mi.note.Follow.follow:4 mi.user.User.follow:5 of
-msgid "*str* -- 実行に失敗した際のエラーコード"
-msgstr "*str* -- Fehlercode im Falle eines Ausführungsfehlers"
-
-#: mi.user.User.unfollow:2 of
-msgid "ユーザーのフォローを解除します"
-msgstr "Einem Benutzer nicht mehr folgen"
-
-#: mi.note.Follow.unfollow:7 mi.state.ConnectionState.follow_user:7
-#: mi.user.User.unfollow:4 of
-msgid "**status** -- 成功ならTrue, 失敗ならFalse"
-msgstr "**status** -- True für Erfolg, False für Misserfolg"
-
-#: mi.user.User.get_profile:2 of
-msgid "ユーザーのプロフィールを取得します"
-msgstr "Das Profil eines Benutzers abrufen"
-
-#: mi.user.User.get_profile:4 of
-msgid "ユーザーのプロフィールオブジェクト"
-msgstr "Das Profilobjekt des Benutzers"
-
-#: mi.user.User.get_followers:2 of
-msgid "ユーザーのフォロワー一覧を取得します"
-msgstr "Eine Liste der Follower des Benutzers erhalten"
-
-#: mi.user.User.get_followers:4 of
-msgid "前回のフォロワーの続きを取得する場合の起点とするユーザーid"
-msgstr "Die Benutzerkennung, die beim Abrufen der Fortsetzung des letzten Followers als Ausgangspunkt verwendet werden soll."
-
-#: mi.user.User.get_followers:6 of
-msgid "最大何人取得するか, max=100"
-msgstr "Maximale Anzahl der abzurufenden Personen, max=100"
-
-#: mi.user.User.get_followers:8 of
-msgid "全てのフォロワーを取得するか否か"
-msgstr "Ob alle Follower abgerufen werden sollen oder nicht"
-
-#: mi.user.User.get_followers:11 of
-msgid "ユーザーのフォロワー一覧"
-msgstr "Liste der Follower des Benutzers"
-
-#: mi.user.UserDetails:2 of
-msgid "ユーザー情報だが、一般的に使うか怪しいもの"
-msgstr "Benutzerinformationen, aber von zweifelhaftem allgemeinem Nutzen"
-
-#: mi.user.UserDetails:6 of
-msgid "ユーザーのアバターのblurhash"
-msgstr "Benutzer-Avatar blurhash"
-
-#: mi.user.UserDetails:12 of
-msgid "ユーザーのアバターの色"
-msgstr "Farbe des Avatars des Benutzers"
-
-#: mi.user.UserDetails:18 of
-msgid "ユーザーの言語"
-msgstr "Sprache des Benutzers"
-
-#: mi.chat.Chat:2 of
-msgid "チャットオブジェクト"
-msgstr "Chat-Objekte"
-
-#: mi.chat.Chat.delete:2 of
-msgid "チャットを削除します（チャットの作者である必要があります）"
-msgstr "Einen Chat löschen (Sie müssen der Autor des Chats sein)"
-
-#: mi.chat.Chat.delete:4 mi.state.ConnectionState.delete_chat:7
-#: mi.state.ConnectionState.delete_note:7 of
-msgid "成功したか否か"
-msgstr "Erfolg oder Misserfolg"
-
-#: ../../mi.rst:85
-msgid "Drive"
-msgstr "Antrieb"
-
-#: mi.drive.Drive.delete:2 of
-msgid "ファイルを削除します。"
-msgstr "Löschen Sie die Datei."
-
-#: mi.drive.Drive.delete:4 of
-msgid "削除に成功したかどうか"
-msgstr "ob die Löschung erfolgreich war oder nicht"
-
-#: ../../mi.rst:93
-msgid "Emoji"
-msgstr "Emoji"
-
-#: ../../mi.rst:109
-msgid "Follow"
-msgstr "Folgen Sie"
-
-#: mi.note.Follow.follow:2 of
-msgid "ユーザーをフォローします :returns: * *bool = False* -- 成功ならTrue, 失敗ならFalse"
-msgstr "Folge dem Benutzer :returns: * *bool = False* -- True für Erfolg, False für Misserfolg"
-
-#: mi.note.Follow.unfollow:2 of
-msgid "与えられたIDのユーザーのフォローを解除します"
-msgstr "Dem Benutzer mit der angegebenen ID nicht mehr folgen"
-
-#: mi.note.Follow.unfollow:4 mi.state.ConnectionState.unfollow_user:2 of
-msgid "フォローを解除したいユーザーのID"
-msgstr "ID des Benutzers, dem Sie nicht mehr folgen möchten"
-
-#: ../../mi.rst:119
-msgid "データクラス"
-msgstr "Datenklassen"
-
-#: ../../mi.rst:122
-msgid "Header"
-msgstr "Kopfzeile"
-
-#: ../../mi.rst:130
-msgid "Properties"
-msgstr "Eigenschaften"
-
-#: ../../mi.rst:138
-msgid "File"
-msgstr "Datei"
-
-#: ../../mi.rst:146
-msgid "Reaction"
-msgstr "Reaktion"
-
-#: ../../mi.rst:155
-msgid "例外処理"
-msgstr "Behandlung von Ausnahmen"
-
-#: ../../mi.rst:158
-msgid "NotFoundError"
-msgstr "NotFoundError"
-
-#: mi.exception.NotFoundError:2 of
-msgid "http アクセス時に404が帰ってきた際の例外"
-msgstr "Ausnahme für 404-Rückgaben bei http-Zugriff"
-
-#: ../../mi.rst:162
-msgid "TaskNotRunningError"
-msgstr "TaskNotRunningError"
-
-#: mi.exception.TaskNotRunningError:2 of
-msgid "タスクを停止しようとした際、タスクが起動していない場合に発生する例外"
-msgstr "Ausnahme, die beim Versuch, eine Aufgabe anzuhalten, ausgelöst wird, wenn die Aufgabe nicht gestartet wurde"
-
-#: ../../mi.rst:166
-msgid "ImAi"
-msgstr "ImAi"
-
-#: mi.exception.ImAi:2 of
-msgid "私は藍です"
-msgstr "Ich bin Indigo."
-
-#: ../../mi.rst:170
-msgid "InternalServerError"
-msgstr "InternalServerError"
-
-#: mi.exception.InternalServerError:2 of
-msgid "http アクセス時に500が帰ってきた際の例外"
-msgstr "Ausnahme, wenn der http-Zugang 500 zurückgibt"
-
-#: ../../mi.rst:174
-msgid "ClientError"
-msgstr "ClientFehler"
-
-#: mi.exception.ClientError:2 of
-msgid "http アクセス時に400が帰ってきた際の例外"
-msgstr "Ausnahme, wenn der http-Zugang 400 zurückgibt"
-
-#: ../../mi.rst:179
-msgid "AuthenticationError"
-msgstr "AuthenticationError"
-
-#: mi.exception.AuthenticationError:2 of
-msgid "認証で問題が発生した際の例外"
-msgstr "Ausnahmen im Falle von Authentifizierungsproblemen"
-
-#: ../../mi.rst:183
-msgid "NotExistRequiredParameters"
-msgstr "NotExistRequiredParameters"
-
-#: mi.exception.NotExistRequiredParameters:2 of
-msgid "必須のパラメーターが存在しない場合の例外"
-msgstr "Ausnahmen, wenn die erforderlichen Parameter nicht vorhanden sind"
-
-#: ../../mi.rst:187
-msgid "InvalidParameters"
-msgstr "InvalidParameters"
-
-#: mi.exception.InvalidParameters:2 of
-msgid "パラメーターが無効"
-msgstr "Ungültiger Parameter"
-
-#: ../../mi.rst:191
-msgid "CredentialRequired"
-msgstr "CredentialRequired"
-
-#: mi.exception.CredentialRequired:2 of
-msgid "認証情報が不足している"
-msgstr "Authentifizierungsinformationen fehlen"
-
-#: ../../mi.rst:195
-msgid "ContentRequired"
-msgstr "InhaltBedarf"
-
-#: mi.exception.ContentRequired:2 of
-msgid "送信するコンテンツが不足している"
-msgstr "Es gibt nicht genügend Inhalt zum Senden"
-
-#: ../../mi.rst:201
-msgid "CogNameDuplicate"
-msgstr "CogNameDuplicate"
-
-#: mi.exception.CogNameDuplicate:2 of
-msgid "cogの名前が重複している"
-msgstr "Doppelte Zahnradnamen"
-
-#: ../../mi.rst:205
-msgid "ExtensionAlreadyLoaded"
-msgstr "ExtensionAlreadyLoaded"
-
-#: mi.exception.ExtensionAlreadyLoaded:2 of
-msgid "cogがすでに読み込まれている"
-msgstr "Die Kogge ist bereits geladen"
-
-#: ../../mi.rst:209
-msgid "ExtensionFailed"
-msgstr "ExtensionFailed"
-
-#: mi.exception.ExtensionFailed:2 of
-msgid "cog周りのエラー"
-msgstr "Fehler um das Zahnrad"
-
-#: ../../mi.rst:213
-msgid "NoEntryPointError"
-msgstr "NoEntryPointError"
-
-#: mi.exception.NoEntryPointError:2 of
-msgid "cogにsetup関数が無い場合の例外"
-msgstr "Ausnahme, wenn das Zahnrad keine Einrichtungsfunktion hat"
-
-#: ../../mi.rst:217
-msgid "ExtensionNotFound"
-msgstr "ExtensionNotFound"
-
-#: mi.exception.ExtensionNotFound:2 of
-msgid "指定されたパスにcogが存在しない場合の例外"
-msgstr "Ausnahme, wenn die Kogge im angegebenen Pfad nicht existiert"
-
-#: ../../mi.rst:221
-msgid "CommandRegistrationError"
-msgstr "CommandRegistrationError"
-
-#: mi.exception.CommandRegistrationError:2 of
-msgid "コマンド登録時のエラー"
-msgstr "Fehler bei der Registrierung von Befehlen"
-
-#: ../../mi.rst:225
-msgid "CommandError"
-msgstr "CommandError"
-
-#: mi.exception.CommandError:2 of
-msgid "コマンドで問題が発生した際の例外"
-msgstr "Ausnahmen, wenn ein Problem mit einem Befehl auftritt"
-
-#: ../../mi.rst:229
-msgid "CommandInvokeError"
-msgstr "CommandInvokeError"
-
-#: mi.exception.CommandInvokeError:2 of
-msgid "コマンドの実行に問題が発生した際の例外"
-msgstr "Ausnahmen, wenn ein Problem bei der Ausführung eines Befehls auftritt"
-
-#: ../../mi.rst:233
-msgid "CheckFailure"
-msgstr "CheckFailure"
-
-#: mi.exception.CheckFailure:2 of
-msgid "コマンドの実行可能かのチェックに失敗した際の例外"
-msgstr "Ausnahme, wenn der Befehl nicht prüfen kann, ob er ausführbar ist"
-
-#: ../../mi.rst:237
-msgid "InvalidCogPath"
-msgstr "InvalidCogPath"
-
-#: mi.exception.InvalidCogPath:2 of
-msgid "cogのパスが不正"
-msgstr "Falscher Pfad zum Zahnrad"
-
-#: ../../mi.rst:242
-msgid "NotExistRequiredData"
-msgstr "NotExistRequiredData"
-
-#: mi.exception.NotExistRequiredData:2 of
-msgid "必要なデータが存在しない場合に発生する例外"
-msgstr "Ausnahme, die ausgelöst wird, wenn die erforderlichen Daten nicht vorhanden sind"
-
-#: ../../mi.rst:247
-msgid "Low-Level API"
-msgstr "Niederschwellige API"
-
-#: mi.state.ConnectionState.parse_channel:2 of
-msgid "parse_channel is a function to parse channel event"
-msgstr "parse_channel ist eine Funktion zum Analysieren von Kanalereignissen"
-
-#: mi.state.ConnectionState.parse_channel:4 of
-msgid "チャンネルタイプのデータを解析後適切なパーサーに移動させます"
-msgstr "Die Daten des Kanaltyps werden analysiert und an den entsprechenden Parser weitergeleitet"
-
-#: mi.state.ConnectionState.parse_channel:6
-#: mi.state.ConnectionState.parse_notification:4
-#: mi.state.ConnectionState.parse_unread_notification:4 of
-msgid "Received message"
-msgstr "Empfangene Nachricht"
-
-#: mi.state.ConnectionState.parse_reply:2 of
-msgid "リプライ"
-msgstr "Antwort"
-
-#: mi.state.ConnectionState.parse_follow:2 of
-msgid "ユーザーをフォローした際のイベントを解析する関数"
-msgstr "Funktion zur Analyse des Ereignisses der Verfolgung eines Benutzers"
-
-#: mi.state.ConnectionState.parse_followed:2 of
-msgid "フォローイベントを解析する関数"
-msgstr "Funktion zum Parsen von Folgeereignissen"
-
-#: mi.state.ConnectionState.parse_mention:2 of
-msgid "メンションイベントを解析する関数"
-msgstr "Funktion zum Parsen eines Erwähnungsereignisses"
-
-#: mi.state.ConnectionState.parse_messaging_message:2 of
-msgid "チャットが来た際のデータを処理する関数"
-msgstr "Funktion zur Verarbeitung von Daten, wenn ein Chat empfangen wird"
-
-#: mi.state.ConnectionState.parse_unread_messaging_message:2 of
-msgid "チャットが既読になっていない場合のデータを処理する関数"
-msgstr "Funktion zur Verarbeitung von Daten, wenn der Chat nicht gelesen wurde"
-
-#: mi.state.ConnectionState.parse_notification:2 of
-msgid "通知イベントを解析する関数"
-msgstr "Funktion zum Parsen von Benachrichtigungsereignissen"
-
-#: mi.state.ConnectionState.parse_unread_notification:2 of
-msgid "未読の通知を解析する関数"
-msgstr "Funktion zum Parsen ungelesener Benachrichtigungen"
-
-#: mi.state.ConnectionState.parse_reaction:2 of
-msgid "リアクションに関する情報を解析する関数"
-msgstr "Funktion zur Analyse von Informationen über Reaktionen"
-
-#: mi.state.ConnectionState.parse_note:2 of
-msgid "ノートイベントを解析する関数"
-msgstr "Funktionen zum Parsen von Notenereignissen"
-
-#: mi.state.ConnectionState.follow_user:2 of
-msgid "与えられたIDのユーザーをフォローします"
-msgstr "Dem Benutzer mit der angegebenen ID folgen"
-
-#: mi.state.ConnectionState.follow_user:4 of
-msgid "フォローしたいユーザーのID"
-msgstr "ID des Benutzers, dem Sie folgen möchten"
-
-#: mi.state.ConnectionState.unfollow_user:4 of
-msgid "**status** -- 成功したならTrue, 失敗したならFalse"
-msgstr "**status** -- True für Erfolg, False für Misserfolg"
-
-#: mi.state.ConnectionState.add_reaction:2 of
-msgid "指定したnoteに指定したリアクションを付与します（内部用"
-msgstr "Gibt die angegebene Reaktion auf die angegebene Notiz (für den internen Gebrauch)."
-
-#: mi.state.ConnectionState.add_reaction:4 of
-msgid "付与するリアクション名"
-msgstr "Bezeichnung der zu gewährenden Reaktion"
-
-#: mi.state.ConnectionState.add_reaction:6 of
-msgid "付与対象のノートID"
-msgstr "Hinweis Zu erteilende ID"
-
-#: mi.state.ConnectionState.add_reaction:9 of
-msgid "**status** -- 成功したならTrue,失敗ならFalse"
-msgstr "**status** -- True für Erfolg, False für Misserfolg"
-
-#: mi.state.ConnectionState.delete_note:2 of
-msgid "指定したidのノートを削除します。"
-msgstr "Löscht die Notiz mit der angegebenen ID."
-
-#: mi.state.ConnectionState.delete_note:4 of
-msgid "ノートid"
-msgstr "Anmerkung id"
-
-#: mi.state.ConnectionState.get_user:2 of
-msgid "ユーザーのプロフィールを取得します。一度のみサーバーにアクセスしキャッシュをその後は使います。 fetch_userを使った場合はキャッシュが廃棄され再度サーバーにアクセスします。"
-msgstr "Ruft das Profil des Benutzers ab. Er greift nur einmal auf den Server zu und nutzt danach den Cache. Wenn Sie fetch_user verwenden, wird der Cache verworfen und der Zugriff auf den Server erfolgt erneut."
-
-#: mi.state.ConnectionState.get_user:5 of
-msgid "取得したいユーザーのユーザーID"
-msgstr "Benutzer-ID des Benutzers, den Sie abrufen möchten"
-
-#: mi.state.ConnectionState.get_user:7 of
-msgid "取得したいユーザーのユーザー名"
-msgstr "Der Benutzername des Benutzers, den Sie abrufen möchten"
-
-#: mi.state.ConnectionState.get_user:9 of
-msgid "取得したいユーザーがいるインスタンスのhost"
-msgstr "Der Host der Instanz, in der sich der abzurufende Benutzer befindet"
-
-#: mi.state.ConnectionState.get_user:12 of
-msgid "ユーザー情報"
-msgstr "Informationen für den Benutzer"
-
-#: mi.state.ConnectionState.post_chat:2 of
-msgid "チャットを送信します。"
-msgstr "Senden Sie einen Chat."
-
-#: mi.state.ConnectionState.post_chat:4 of
-msgid "送信する内容"
-msgstr "Was zu senden ist"
-
-#: mi.state.ConnectionState.post_chat:6 of
-msgid "ユーザーid, default=None"
-msgstr "Benutzerkennung, default=None"
-
-#: mi.state.ConnectionState.post_chat:8 of
-msgid "グループid, default=None"
-msgstr "Gruppen-ID, Standard=None"
-
-#: mi.state.ConnectionState.post_chat:10 of
-msgid "添付するファイルid, efault=None"
-msgstr "Datei-ID zum Anhängen, efault=None"
-
-#: mi.state.ConnectionState.post_chat:13 of
-msgid "チャットの内容"
-msgstr "Inhalt des Chats"
-
-#: mi.state.ConnectionState.delete_chat:2 of
-msgid "指定したidのメッセージを削除します。"
-msgstr "Löscht die Nachricht mit der angegebenen ID."
-
-#: mi.state.ConnectionState.delete_chat:4 of
-msgid "メッセージid"
-msgstr "Nachrichten-ID"
-
-#: mi.state.ConnectionState.post_note:2 of
-msgid "ノートを投稿します。"
-msgstr "Schreiben Sie eine Notiz."
-
-#: mi.state.ConnectionState.post_note:4 of
-msgid "投稿する内容"
-msgstr "Was zu veröffentlichen ist"
-
-#: mi.state.ConnectionState.post_note:6 of
-msgid "公開範囲, by default \"public\""
-msgstr "Öffentlicher Bereich, standardmäßig \"öffentlich\""
-
-#: mi.state.ConnectionState.post_note:8 of
-msgid "公開するユーザー, by default None"
-msgstr "Zu veröffentlichende Benutzer, standardmäßig Keine"
-
-#: mi.state.ConnectionState.post_note:10 of
-msgid "閲覧注意の文字, by default None"
-msgstr "Warntext, standardmäßig Keine"
-
-#: mi.state.ConnectionState.post_note:12 of
-msgid "ローカルにのみ表示するか, by default False"
-msgstr "Nur lokal anzeigen, standardmäßig False"
-
-#: mi.state.ConnectionState.post_note:20 of
-msgid "リプライ先のid, by default None"
-msgstr "Reply-to id, standardmäßig Keine"
-
-#: mi.state.ConnectionState.post_note:31 mi.state.ConnectionState.post_note:34
-#: of
-msgid "[description]"
-msgstr "[Beschreibung]."
-
-#: mi.state.ConnectionState.get_followers mi.state.ConnectionState.post_note of
-msgid "Raises"
-msgstr "Erhöht"
-
-#: mi.state.ConnectionState.get_followers:2 of
-msgid "与えられたユーザーのフォロワーを取得します"
-msgstr "Ruft die Follower eines bestimmten Benutzers ab"
-
-#: mi.state.ConnectionState.get_followers:6 of
-msgid "ユーザー名"
-msgstr "Name des Benutzers"
-
-#: mi.state.ConnectionState.get_followers:8 of
-msgid "ユーザーがいるインスタンスのhost名"
-msgstr "Der Hostname der Instanz, in der sich der Benutzer befindet"
-
-#: mi.state.ConnectionState.get_announcements:8
-#: mi.state.ConnectionState.get_followers:12 of
-msgid "前回の最後の値を与える(既に実行し取得しきれない場合に使用)"
-msgstr "Gibt den letzten Wert des vorherigen Laufs an (wird verwendet, wenn der Lauf bereits abgeschlossen wurde und nicht abgerufen werden kann)"
-
-#: mi.state.ConnectionState.get_followers:14 of
-msgid "取得する情報の最大数 max: 100"
-msgstr "Maximale Anzahl der abzurufenden Informationen: 100"
-
-#: mi.state.ConnectionState.get_followers:16 of
-msgid "全てのフォロワーを取得する"
-msgstr "Alle Follower erhalten"
-
-#: mi.state.ConnectionState.get_followers of
-msgid "Yields"
-msgstr "Ausbeute"
-
-#: mi.state.ConnectionState.get_followers:19 of
-msgid "*dict* -- フォロワーの情報"
-msgstr "*dict* -- Follower-Informationen"
-
-#: mi.state.ConnectionState.get_followers:21 of
-msgid "limit引数が不正な場合"
-msgstr "Wenn das Grenzwertargument ungültig ist"
-
-#: mi.state.ConnectionState.get_announcements:2 of
-msgid "最大取得数"
-msgstr "Maximale Anzahl von Abrufen"
-
-#: mi.state.ConnectionState.get_announcements:4 of
-msgid "既読済みか否か"
-msgstr "Schon gelesen oder nicht?"
-
-#: ../../mi.rst:259
-msgid "Low-Layer API"
-msgstr "Low-Layer-API"
+#~ msgid "抽象基底クラス"
+#~ msgstr "Abstrakte Basisklasse"
+
+#~ msgid ""
+#~ "`abstract base class "
+#~ "<https://docs.python.org/ja/3/glossary.html#term-abstract-"
+#~ "base-class>`_ "
+#~ "はメソッドなどの一覧を取得するために継承することが可能なクラスです。抽象基底クラスはインスタンス化することはできません。"
+#~ msgstr ""
+#~ "Abstrakte Basisklasse "
+#~ "<https://docs.python.org/ja/3/glossary.html#term-abstract-"
+#~ "base-class>`_ ist eine Klasse, die "
+#~ "geerbt werden kann, um eine Liste "
+#~ "von Methoden usw. zu erhalten. Abstrakte"
+#~ " Basisklassen können nicht instanziiert "
+#~ "werden."
+
+#~ msgid "AbstractBotBase"
+#~ msgstr "AbstractBotBase"
+
+#~ msgid "AbstractChatContent"
+#~ msgstr "AbstraktChatInhalt"
+
+#~ msgid "Misskey モデル"
+#~ msgstr "Misskey Modelle"
+
+#~ msgid ""
+#~ "下記のクラスは、 **ユーザーによって作成されることを考慮していません** 。 "
+#~ "独自のインスタンスは作成するべきではなく、値を変更するべきではありません。"
+#~ msgstr ""
+#~ "Die folgenden Klassen sind **nicht dazu"
+#~ " bestimmt, vom Benutzer erstellt zu "
+#~ "werden**. Sie sollten keine eigenen "
+#~ "Instanzen erstellen und die Werte nicht"
+#~ " ändern."
+
+#~ msgid "Note"
+#~ msgstr "Hinweis"
+
+#~ msgid "type"
+#~ msgstr "Typ"
+
+#~ msgid "str"
+#~ msgstr "str"
+
+#~ msgid "User"
+#~ msgstr "Benutzer"
+
+#~ msgid "Optional[str]"
+#~ msgstr "Optional[str]."
+
+#~ msgid "Renote"
+#~ msgstr "Renote"
+
+#~ msgid "int"
+#~ msgstr "int"
+
+#~ msgid "Dict[str, Any]"
+#~ msgstr "Dict[str, Any]."
+
+#~ msgid "List[Emoji]"
+#~ msgstr "Liste[Emoji]."
+
+#~ msgid "Optional[List[str]]"
+#~ msgstr "Optional[Liste[str]]]"
+
+#~ msgid "Optional[Poll]"
+#~ msgstr "Fakultativ[Umfrage]."
+
+#~ msgid "ノートに対して返信を送信します"
+#~ msgstr "Senden Sie eine Antwort auf die Notiz"
+
+#~ msgid "Parameters"
+#~ msgstr "Parameter"
+
+#~ msgid "返信内容"
+#~ msgstr "Inhalt der Antwort"
+
+#~ msgid "閲覧注意"
+#~ msgstr "Warnung"
+
+#~ msgid "メンションを展開するか, by default False"
+#~ msgstr "Ob die Erwähnung erweitert werden soll, standardmäßig False"
+
+#~ msgid "ハッシュタグを展開するか, by default False"
+#~ msgstr "Hashtags erweitern, standardmäßig False"
+
+#~ msgid "絵文字を展開するか, by default False"
+#~ msgstr "Ob Emoji erweitert werden sollen, standardmäßig False"
+
+#~ msgid "リノート先のid, by default None"
+#~ msgstr "Die ID des Renote-Ziels, standardmäßig Keine"
+
+#~ msgid "チャンネルid, by default None"
+#~ msgstr "Kanal-ID, standardmäßig Keine"
+
+#~ msgid "添付するファイルのid, by default None"
+#~ msgstr "Die ID der anzuhängenden Datei, standardmäßig Keine"
+
+#~ msgid "アンケート, by default None"
+#~ msgstr "Umfrage, standardmäßig Keine"
+
+#~ msgid "ノートの本文にemojiが何個含まれているかを返します"
+#~ msgstr "Gibt die Anzahl der Emoji im Text der Notiz zurück"
+
+#~ msgid "Returns"
+#~ msgstr "Rückgabe"
+
+#~ msgid "含まれている絵文字の数"
+#~ msgstr "Anzahl der enthaltenen Emoji"
+
+#~ msgid "Return type"
+#~ msgstr "Art der Rückgabe"
+
+#~ msgid "指定したIDのノートを削除します"
+#~ msgstr "Löscht die Notiz mit der angegebenen ID"
+
+#~ msgid ""
+#~ "* **is_success** (*bool*) -- 成功したか否か *"
+#~ " **status_code** (*int*) -- HTTP "
+#~ "レスポンスステータスコード"
+#~ msgstr ""
+#~ "* **is_success** (*bool*) -- Erfolg oder"
+#~ " Fehlschlag * **status_code** (*int*) --"
+#~ " HTTP-Antwortstatuscode"
+
+#~ msgid "**is_success** (*bool*) -- 成功したか否か"
+#~ msgstr "**is_success** (*bool*) -- Erfolg oder Misserfolg"
+
+#~ msgid "**status_code** (*int*) -- HTTP レスポンスステータスコード"
+#~ msgstr "**status_code** (*int*) -- HTTP-Antwortstatuscode"
+
+#~ msgid "ユーザーのid"
+#~ msgstr "Benutzer-ID"
+
+#~ msgid "ユーザーのニックネーム"
+#~ msgstr "Spitzname des Benutzers"
+
+#~ msgid "ユーザーのアカウント名"
+#~ msgstr "Name des Benutzerkontos"
+
+#~ msgid "ユーザーのホスト名"
+#~ msgstr "Der Hostname des Benutzers"
+
+#~ msgid "ユーザーのアバターのURL"
+#~ msgstr "Die URL des Avatars des Benutzers"
+
+#~ msgid "ユーザーが管理者かどうか"
+#~ msgstr "ob der Benutzer ein Administrator ist oder nicht"
+
+#~ msgid "bool"
+#~ msgstr "bool"
+
+#~ msgid "ユーザーがbotかどうか"
+#~ msgstr "Ob der Benutzer ein Bot ist oder nicht"
+
+#~ msgid "ユーザーが使用しているemoji"
+#~ msgstr "Das vom Benutzer verwendete Emoji"
+
+#~ msgid "list"
+#~ msgstr "Liste"
+
+#~ msgid "ユーザーのオンライン状況"
+#~ msgstr "Online-Status des Benutzers"
+
+#~ msgid "Any"
+#~ msgstr "Jede"
+
+#~ msgid "ユーザーのプロフィールへのURL"
+#~ msgstr "URL zum Profil des Benutzers"
+
+#~ msgid "謎"
+#~ msgstr "Geheimnisvoll"
+
+#~ msgid "アカウントの作成日"
+#~ msgstr "Datum der Kontoeröffnung"
+
+#~ msgid "アカウントの更新日(ノートを投稿するなど)"
+#~ msgstr ""
+#~ "Das Datum, an dem Ihr Konto "
+#~ "aktualisiert wurde (z. B. durch die "
+#~ "Buchung einer Notiz)"
+
+#~ msgid "アカウントがロックされているか"
+#~ msgstr "Ist Ihr Konto gesperrt?"
+
+#~ msgid "アカウントがミュートされているか"
+#~ msgstr "Ist Ihr Konto stummgeschaltet?"
+
+#~ msgid "アカウントが凍結されているか"
+#~ msgstr "Wurde Ihr Konto eingefroren?"
+
+#~ msgid "アカウントの概要"
+#~ msgstr "Kontoübersicht"
+
+#~ msgid "ユーザーが住んでいる場所"
+#~ msgstr "Wohnsitz des Nutzers"
+
+#~ msgid "ユーザーの誕生日"
+#~ msgstr "Geburtstag des Benutzers"
+
+#~ msgid "プロフィールのリンクフィールド"
+#~ msgstr "Link-Feld im Profil"
+
+#~ msgid "フォロワーの数"
+#~ msgstr "Anzahl der Follower"
+
+#~ msgid "フォローしている人の数"
+#~ msgstr "Anzahl der Personen, die Ihnen folgen"
+
+#~ msgid "投稿したノートの数"
+#~ msgstr "Anzahl der veröffentlichten Notizen"
+
+#~ msgid "ピン留めされたノートのidリスト"
+#~ msgstr "Angepinnte Notizen id Liste"
+
+#~ msgid "ピン留めされたページのid"
+#~ msgstr "Die ID der angehefteten Seite"
+
+#~ msgid "ピン留めされたページ"
+#~ msgstr "Angepinnte Seiten"
+
+#~ msgid "ノートの投稿範囲"
+#~ msgstr "Umfang der Note Einreichungen"
+
+#~ msgid "ユーザーがフォローしているかどうか"
+#~ msgstr "Ob der Benutzer Ihnen folgt oder nicht"
+
+#~ msgid "ユーザーのことをフォローしているかどうか"
+#~ msgstr "Ob Sie dem Benutzer folgen oder nicht"
+
+#~ msgid "ユーザーが自分のことをブロックしているかどうか"
+#~ msgstr "Ob ein Benutzer Sie blockiert hat oder nicht"
+
+#~ msgid "ユーザーのことをブロックしているかどうか"
+#~ msgstr "ob der Benutzer gesperrt ist oder nicht"
+
+#~ msgid "ユーザーのことをミュートしているかどうか"
+#~ msgstr "Ob der Benutzer stummgeschaltet ist oder nicht."
+
+#~ msgid "ユーザーのインスタンス"
+#~ msgstr "Benutzer-Instanzen"
+
+#~ msgid "ユーザーの詳細な情報"
+#~ msgstr "Weitere Informationen über den Benutzer"
+
+#~ msgid "UserDetails"
+#~ msgstr "UserDetails"
+
+#~ msgid "ユーザーをフォローします"
+#~ msgstr "Folgen Sie dem Benutzer"
+
+#~ msgid "* *bool = False* -- 成功ならTrue, 失敗ならFalse * *str* -- 実行に失敗した際のエラーコード"
+#~ msgstr ""
+#~ "* *bool = False* -- True für "
+#~ "Erfolg, False für Misserfolg * *str* "
+#~ "-- Fehlercode für fehlgeschlagene Ausführung"
+
+#~ msgid "*bool = False* -- 成功ならTrue, 失敗ならFalse"
+#~ msgstr "*bool = False* -- True für Erfolg, False für Misserfolg"
+
+#~ msgid "*str* -- 実行に失敗した際のエラーコード"
+#~ msgstr "*str* -- Fehlercode im Falle eines Ausführungsfehlers"
+
+#~ msgid "ユーザーのフォローを解除します"
+#~ msgstr "Einem Benutzer nicht mehr folgen"
+
+#~ msgid "**status** -- 成功ならTrue, 失敗ならFalse"
+#~ msgstr "**status** -- True für Erfolg, False für Misserfolg"
+
+#~ msgid "ユーザーのプロフィールを取得します"
+#~ msgstr "Das Profil eines Benutzers abrufen"
+
+#~ msgid "ユーザーのプロフィールオブジェクト"
+#~ msgstr "Das Profilobjekt des Benutzers"
+
+#~ msgid "ユーザーのフォロワー一覧を取得します"
+#~ msgstr "Eine Liste der Follower des Benutzers erhalten"
+
+#~ msgid "前回のフォロワーの続きを取得する場合の起点とするユーザーid"
+#~ msgstr ""
+#~ "Die Benutzerkennung, die beim Abrufen "
+#~ "der Fortsetzung des letzten Followers "
+#~ "als Ausgangspunkt verwendet werden soll."
+
+#~ msgid "最大何人取得するか, max=100"
+#~ msgstr "Maximale Anzahl der abzurufenden Personen, max=100"
+
+#~ msgid "全てのフォロワーを取得するか否か"
+#~ msgstr "Ob alle Follower abgerufen werden sollen oder nicht"
+
+#~ msgid "ユーザーのフォロワー一覧"
+#~ msgstr "Liste der Follower des Benutzers"
+
+#~ msgid "ユーザー情報だが、一般的に使うか怪しいもの"
+#~ msgstr "Benutzerinformationen, aber von zweifelhaftem allgemeinem Nutzen"
+
+#~ msgid "ユーザーのアバターのblurhash"
+#~ msgstr "Benutzer-Avatar blurhash"
+
+#~ msgid "ユーザーのアバターの色"
+#~ msgstr "Farbe des Avatars des Benutzers"
+
+#~ msgid "ユーザーの言語"
+#~ msgstr "Sprache des Benutzers"
+
+#~ msgid "チャットオブジェクト"
+#~ msgstr "Chat-Objekte"
+
+#~ msgid "チャットを削除します（チャットの作者である必要があります）"
+#~ msgstr "Einen Chat löschen (Sie müssen der Autor des Chats sein)"
+
+#~ msgid "成功したか否か"
+#~ msgstr "Erfolg oder Misserfolg"
+
+#~ msgid "Drive"
+#~ msgstr "Antrieb"
+
+#~ msgid "ファイルを削除します。"
+#~ msgstr "Löschen Sie die Datei."
+
+#~ msgid "削除に成功したかどうか"
+#~ msgstr "ob die Löschung erfolgreich war oder nicht"
+
+#~ msgid "Emoji"
+#~ msgstr "Emoji"
+
+#~ msgid "Follow"
+#~ msgstr "Folgen Sie"
+
+#~ msgid "ユーザーをフォローします :returns: * *bool = False* -- 成功ならTrue, 失敗ならFalse"
+#~ msgstr ""
+#~ "Folge dem Benutzer :returns: * *bool "
+#~ "= False* -- True für Erfolg, False"
+#~ " für Misserfolg"
+
+#~ msgid "与えられたIDのユーザーのフォローを解除します"
+#~ msgstr "Dem Benutzer mit der angegebenen ID nicht mehr folgen"
+
+#~ msgid "フォローを解除したいユーザーのID"
+#~ msgstr "ID des Benutzers, dem Sie nicht mehr folgen möchten"
+
+#~ msgid "データクラス"
+#~ msgstr "Datenklassen"
+
+#~ msgid "Header"
+#~ msgstr "Kopfzeile"
+
+#~ msgid "Properties"
+#~ msgstr "Eigenschaften"
+
+#~ msgid "File"
+#~ msgstr "Datei"
+
+#~ msgid "Reaction"
+#~ msgstr "Reaktion"
+
+#~ msgid "例外処理"
+#~ msgstr "Behandlung von Ausnahmen"
+
+#~ msgid "NotFoundError"
+#~ msgstr "NotFoundError"
+
+#~ msgid "http アクセス時に404が帰ってきた際の例外"
+#~ msgstr "Ausnahme für 404-Rückgaben bei http-Zugriff"
+
+#~ msgid "TaskNotRunningError"
+#~ msgstr "TaskNotRunningError"
+
+#~ msgid "タスクを停止しようとした際、タスクが起動していない場合に発生する例外"
+#~ msgstr ""
+#~ "Ausnahme, die beim Versuch, eine Aufgabe"
+#~ " anzuhalten, ausgelöst wird, wenn die "
+#~ "Aufgabe nicht gestartet wurde"
+
+#~ msgid "ImAi"
+#~ msgstr "ImAi"
+
+#~ msgid "私は藍です"
+#~ msgstr "Ich bin Indigo."
+
+#~ msgid "InternalServerError"
+#~ msgstr "InternalServerError"
+
+#~ msgid "http アクセス時に500が帰ってきた際の例外"
+#~ msgstr "Ausnahme, wenn der http-Zugang 500 zurückgibt"
+
+#~ msgid "ClientError"
+#~ msgstr "ClientFehler"
+
+#~ msgid "http アクセス時に400が帰ってきた際の例外"
+#~ msgstr "Ausnahme, wenn der http-Zugang 400 zurückgibt"
+
+#~ msgid "AuthenticationError"
+#~ msgstr "AuthenticationError"
+
+#~ msgid "認証で問題が発生した際の例外"
+#~ msgstr "Ausnahmen im Falle von Authentifizierungsproblemen"
+
+#~ msgid "NotExistRequiredParameters"
+#~ msgstr "NotExistRequiredParameters"
+
+#~ msgid "必須のパラメーターが存在しない場合の例外"
+#~ msgstr "Ausnahmen, wenn die erforderlichen Parameter nicht vorhanden sind"
+
+#~ msgid "InvalidParameters"
+#~ msgstr "InvalidParameters"
+
+#~ msgid "パラメーターが無効"
+#~ msgstr "Ungültiger Parameter"
+
+#~ msgid "CredentialRequired"
+#~ msgstr "CredentialRequired"
+
+#~ msgid "認証情報が不足している"
+#~ msgstr "Authentifizierungsinformationen fehlen"
+
+#~ msgid "ContentRequired"
+#~ msgstr "InhaltBedarf"
+
+#~ msgid "送信するコンテンツが不足している"
+#~ msgstr "Es gibt nicht genügend Inhalt zum Senden"
+
+#~ msgid "CogNameDuplicate"
+#~ msgstr "CogNameDuplicate"
+
+#~ msgid "cogの名前が重複している"
+#~ msgstr "Doppelte Zahnradnamen"
+
+#~ msgid "ExtensionAlreadyLoaded"
+#~ msgstr "ExtensionAlreadyLoaded"
+
+#~ msgid "cogがすでに読み込まれている"
+#~ msgstr "Die Kogge ist bereits geladen"
+
+#~ msgid "ExtensionFailed"
+#~ msgstr "ExtensionFailed"
+
+#~ msgid "cog周りのエラー"
+#~ msgstr "Fehler um das Zahnrad"
+
+#~ msgid "NoEntryPointError"
+#~ msgstr "NoEntryPointError"
+
+#~ msgid "cogにsetup関数が無い場合の例外"
+#~ msgstr "Ausnahme, wenn das Zahnrad keine Einrichtungsfunktion hat"
+
+#~ msgid "ExtensionNotFound"
+#~ msgstr "ExtensionNotFound"
+
+#~ msgid "指定されたパスにcogが存在しない場合の例外"
+#~ msgstr "Ausnahme, wenn die Kogge im angegebenen Pfad nicht existiert"
+
+#~ msgid "CommandRegistrationError"
+#~ msgstr "CommandRegistrationError"
+
+#~ msgid "コマンド登録時のエラー"
+#~ msgstr "Fehler bei der Registrierung von Befehlen"
+
+#~ msgid "CommandError"
+#~ msgstr "CommandError"
+
+#~ msgid "コマンドで問題が発生した際の例外"
+#~ msgstr "Ausnahmen, wenn ein Problem mit einem Befehl auftritt"
+
+#~ msgid "CommandInvokeError"
+#~ msgstr "CommandInvokeError"
+
+#~ msgid "コマンドの実行に問題が発生した際の例外"
+#~ msgstr "Ausnahmen, wenn ein Problem bei der Ausführung eines Befehls auftritt"
+
+#~ msgid "CheckFailure"
+#~ msgstr "CheckFailure"
+
+#~ msgid "コマンドの実行可能かのチェックに失敗した際の例外"
+#~ msgstr "Ausnahme, wenn der Befehl nicht prüfen kann, ob er ausführbar ist"
+
+#~ msgid "InvalidCogPath"
+#~ msgstr "InvalidCogPath"
+
+#~ msgid "cogのパスが不正"
+#~ msgstr "Falscher Pfad zum Zahnrad"
+
+#~ msgid "NotExistRequiredData"
+#~ msgstr "NotExistRequiredData"
+
+#~ msgid "必要なデータが存在しない場合に発生する例外"
+#~ msgstr ""
+#~ "Ausnahme, die ausgelöst wird, wenn die"
+#~ " erforderlichen Daten nicht vorhanden sind"
+
+#~ msgid "Low-Level API"
+#~ msgstr "Niederschwellige API"
+
+#~ msgid "parse_channel is a function to parse channel event"
+#~ msgstr "parse_channel ist eine Funktion zum Analysieren von Kanalereignissen"
+
+#~ msgid "チャンネルタイプのデータを解析後適切なパーサーに移動させます"
+#~ msgstr ""
+#~ "Die Daten des Kanaltyps werden "
+#~ "analysiert und an den entsprechenden "
+#~ "Parser weitergeleitet"
+
+#~ msgid "Received message"
+#~ msgstr "Empfangene Nachricht"
+
+#~ msgid "リプライ"
+#~ msgstr "Antwort"
+
+#~ msgid "ユーザーをフォローした際のイベントを解析する関数"
+#~ msgstr "Funktion zur Analyse des Ereignisses der Verfolgung eines Benutzers"
+
+#~ msgid "フォローイベントを解析する関数"
+#~ msgstr "Funktion zum Parsen von Folgeereignissen"
+
+#~ msgid "メンションイベントを解析する関数"
+#~ msgstr "Funktion zum Parsen eines Erwähnungsereignisses"
+
+#~ msgid "チャットが来た際のデータを処理する関数"
+#~ msgstr "Funktion zur Verarbeitung von Daten, wenn ein Chat empfangen wird"
+
+#~ msgid "チャットが既読になっていない場合のデータを処理する関数"
+#~ msgstr "Funktion zur Verarbeitung von Daten, wenn der Chat nicht gelesen wurde"
+
+#~ msgid "通知イベントを解析する関数"
+#~ msgstr "Funktion zum Parsen von Benachrichtigungsereignissen"
+
+#~ msgid "未読の通知を解析する関数"
+#~ msgstr "Funktion zum Parsen ungelesener Benachrichtigungen"
+
+#~ msgid "リアクションに関する情報を解析する関数"
+#~ msgstr "Funktion zur Analyse von Informationen über Reaktionen"
+
+#~ msgid "ノートイベントを解析する関数"
+#~ msgstr "Funktionen zum Parsen von Notenereignissen"
+
+#~ msgid "与えられたIDのユーザーをフォローします"
+#~ msgstr "Dem Benutzer mit der angegebenen ID folgen"
+
+#~ msgid "フォローしたいユーザーのID"
+#~ msgstr "ID des Benutzers, dem Sie folgen möchten"
+
+#~ msgid "**status** -- 成功したならTrue, 失敗したならFalse"
+#~ msgstr "**status** -- True für Erfolg, False für Misserfolg"
+
+#~ msgid "指定したnoteに指定したリアクションを付与します（内部用"
+#~ msgstr ""
+#~ "Gibt die angegebene Reaktion auf die "
+#~ "angegebene Notiz (für den internen "
+#~ "Gebrauch)."
+
+#~ msgid "付与するリアクション名"
+#~ msgstr "Bezeichnung der zu gewährenden Reaktion"
+
+#~ msgid "付与対象のノートID"
+#~ msgstr "Hinweis Zu erteilende ID"
+
+#~ msgid "**status** -- 成功したならTrue,失敗ならFalse"
+#~ msgstr "**status** -- True für Erfolg, False für Misserfolg"
+
+#~ msgid "指定したidのノートを削除します。"
+#~ msgstr "Löscht die Notiz mit der angegebenen ID."
+
+#~ msgid "ノートid"
+#~ msgstr "Anmerkung id"
+
+#~ msgid ""
+#~ "ユーザーのプロフィールを取得します。一度のみサーバーにアクセスしキャッシュをその後は使います。 "
+#~ "fetch_userを使った場合はキャッシュが廃棄され再度サーバーにアクセスします。"
+#~ msgstr ""
+#~ "Ruft das Profil des Benutzers ab. "
+#~ "Er greift nur einmal auf den "
+#~ "Server zu und nutzt danach den "
+#~ "Cache. Wenn Sie fetch_user verwenden, "
+#~ "wird der Cache verworfen und der "
+#~ "Zugriff auf den Server erfolgt erneut."
+
+#~ msgid "取得したいユーザーのユーザーID"
+#~ msgstr "Benutzer-ID des Benutzers, den Sie abrufen möchten"
+
+#~ msgid "取得したいユーザーのユーザー名"
+#~ msgstr "Der Benutzername des Benutzers, den Sie abrufen möchten"
+
+#~ msgid "取得したいユーザーがいるインスタンスのhost"
+#~ msgstr "Der Host der Instanz, in der sich der abzurufende Benutzer befindet"
+
+#~ msgid "ユーザー情報"
+#~ msgstr "Informationen für den Benutzer"
+
+#~ msgid "チャットを送信します。"
+#~ msgstr "Senden Sie einen Chat."
+
+#~ msgid "送信する内容"
+#~ msgstr "Was zu senden ist"
+
+#~ msgid "ユーザーid, default=None"
+#~ msgstr "Benutzerkennung, default=None"
+
+#~ msgid "グループid, default=None"
+#~ msgstr "Gruppen-ID, Standard=None"
+
+#~ msgid "添付するファイルid, efault=None"
+#~ msgstr "Datei-ID zum Anhängen, efault=None"
+
+#~ msgid "チャットの内容"
+#~ msgstr "Inhalt des Chats"
+
+#~ msgid "指定したidのメッセージを削除します。"
+#~ msgstr "Löscht die Nachricht mit der angegebenen ID."
+
+#~ msgid "メッセージid"
+#~ msgstr "Nachrichten-ID"
+
+#~ msgid "ノートを投稿します。"
+#~ msgstr "Schreiben Sie eine Notiz."
+
+#~ msgid "投稿する内容"
+#~ msgstr "Was zu veröffentlichen ist"
+
+#~ msgid "公開範囲, by default \"public\""
+#~ msgstr "Öffentlicher Bereich, standardmäßig \"öffentlich\""
+
+#~ msgid "公開するユーザー, by default None"
+#~ msgstr "Zu veröffentlichende Benutzer, standardmäßig Keine"
+
+#~ msgid "閲覧注意の文字, by default None"
+#~ msgstr "Warntext, standardmäßig Keine"
+
+#~ msgid "ローカルにのみ表示するか, by default False"
+#~ msgstr "Nur lokal anzeigen, standardmäßig False"
+
+#~ msgid "リプライ先のid, by default None"
+#~ msgstr "Reply-to id, standardmäßig Keine"
+
+#~ msgid "[description]"
+#~ msgstr "[Beschreibung]."
+
+#~ msgid "Raises"
+#~ msgstr "Erhöht"
+
+#~ msgid "与えられたユーザーのフォロワーを取得します"
+#~ msgstr "Ruft die Follower eines bestimmten Benutzers ab"
+
+#~ msgid "ユーザー名"
+#~ msgstr "Name des Benutzers"
+
+#~ msgid "ユーザーがいるインスタンスのhost名"
+#~ msgstr "Der Hostname der Instanz, in der sich der Benutzer befindet"
+
+#~ msgid "前回の最後の値を与える(既に実行し取得しきれない場合に使用)"
+#~ msgstr ""
+#~ "Gibt den letzten Wert des vorherigen "
+#~ "Laufs an (wird verwendet, wenn der "
+#~ "Lauf bereits abgeschlossen wurde und "
+#~ "nicht abgerufen werden kann)"
+
+#~ msgid "取得する情報の最大数 max: 100"
+#~ msgstr "Maximale Anzahl der abzurufenden Informationen: 100"
+
+#~ msgid "全てのフォロワーを取得する"
+#~ msgstr "Alle Follower erhalten"
+
+#~ msgid "Yields"
+#~ msgstr "Ausbeute"
+
+#~ msgid "*dict* -- フォロワーの情報"
+#~ msgstr "*dict* -- Follower-Informationen"
+
+#~ msgid "limit引数が不正な場合"
+#~ msgstr "Wenn das Grenzwertargument ungültig ist"
+
+#~ msgid "最大取得数"
+#~ msgstr "Maximale Anzahl von Abrufen"
+
+#~ msgid "既読済みか否か"
+#~ msgstr "Schon gelesen oder nicht?"
+
+#~ msgid "Low-Layer API"
+#~ msgstr "Low-Layer-API"
 

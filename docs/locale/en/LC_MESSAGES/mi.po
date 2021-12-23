@@ -1,11 +1,18 @@
+
 msgid ""
 msgstr ""
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"X-Generator: POEditor.com\n"
-"Project-Id-Version: Mi.py\n"
+"Project-Id-Version:  Mi.py\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2021-12-24 07:51+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
+"Language-Team: en <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
 
 #: ../../mi.rst:4
 msgid "API Reference"
@@ -16,8 +23,13 @@ msgid "このセクションではMi.pyのAPIについて説明します"
 msgstr "This section describes the API of Mi.py"
 
 #: ../../mi.rst:9
-msgid "このライブラリではloggingを用いてdebug出力が可能です。標準設定では出ないため、起動時の引数として `debug` を渡すようにしてください"
-msgstr "This library can output `debug` using `logging`. Because it doesn't appear in the standard configuration, you should pass `debug` as an argument at startup."
+msgid ""
+"このライブラリではloggingを用いてdebug出力が可能です。標準設定では出ないため、起動時の引数として `debug` "
+"を渡すようにしてください"
+msgstr ""
+"This library can output `debug` using `logging`. Because it doesn't "
+"appear in the standard configuration, you should pass `debug` as an "
+"argument at startup."
 
 #: ../../mi.rst:12
 msgid "イベントリファレンス"
@@ -35,31 +47,46 @@ msgstr "Called when a note is posted in the channel you are connected to"
 msgid "絵文字がインスタンスに追加された際に呼び出されます"
 msgstr "Called when a pictogram is added to an instance"
 
-#: ../../mi.rst:27
+#: ../../mi.rst:28
+msgid "メンションが含まれたノートなどが投稿された際に呼び出されます"
+msgstr ""
+
+#: ../../mi.rst:31
 msgid "抽象基底クラス"
 msgstr "abstract base class"
 
-#: ../../mi.rst:29
-msgid "`abstract base class <https://docs.python.org/ja/3/glossary.html#term-abstract-base-class>`_ はメソッドなどの一覧を取得するために継承することが可能なクラスです。抽象基底クラスはインスタンス化することはできません。"
-msgstr "`abstract base class <https://docs.python.org/ja/3/glossary.html#term-abstract-base-class>`_ is a class that can be inherited to get a list of methods etc. Abstract base class can not be instantiated."
+#: ../../mi.rst:33
+msgid ""
+"`abstract base class <https://docs.python.org/ja/3/glossary.html#term-"
+"abstract-base-class>`_ "
+"はメソッドなどの一覧を取得するために継承することが可能なクラスです。抽象基底クラスはインスタンス化することはできません。"
+msgstr ""
+"`abstract base class <https://docs.python.org/ja/3/glossary.html#term-"
+"abstract-base-class>`_ is a class that can be inherited to get a list of "
+"methods etc. Abstract base class can not be instantiated."
 
-#: ../../mi.rst:32
+#: ../../mi.rst:36
 msgid "AbstractBotBase"
 msgstr "AbstractBotBase"
 
-#: ../../mi.rst:40
+#: ../../mi.rst:44
 msgid "AbstractChatContent"
 msgstr "AbstractChatContent"
 
-#: ../../mi.rst:48
+#: ../../mi.rst:52
 msgid "Misskey モデル"
 msgstr "Misskey Models"
 
-#: ../../mi.rst:51
-msgid "下記のクラスは、 **ユーザーによって作成されることを考慮していません** 。 独自のインスタンスは作成するべきではなく、値を変更するべきではありません。"
-msgstr "The following classes are **not intended to be created by the user**. You should not create your own instances, and you should not modify the values."
-
 #: ../../mi.rst:55
+msgid ""
+"下記のクラスは、 **ユーザーによって作成されることを考慮していません** 。 "
+"独自のインスタンスは作成するべきではなく、値を変更するべきではありません。"
+msgstr ""
+"The following classes are **not intended to be created by the user**. You"
+" should not create your own instances, and you should not modify the "
+"values."
+
+#: ../../mi.rst:59
 msgid "Note"
 msgstr "note"
 
@@ -75,7 +102,7 @@ msgstr "type"
 msgid "str"
 msgstr "str"
 
-#: ../../mi.rst:63 mi.note.Note:16 of
+#: ../../mi.rst:67 mi.note.Note:16 of
 msgid "User"
 msgstr "user"
 
@@ -84,7 +111,7 @@ msgstr "user"
 msgid "Optional[str]"
 msgstr "Optional[str]."
 
-#: ../../mi.rst:101 mi.note.Note:28 of
+#: ../../mi.rst:105 mi.note.Note:28 of
 msgid "Renote"
 msgstr "Renote"
 
@@ -114,9 +141,9 @@ msgid "ノートに対して返信を送信します"
 msgstr "Sends a reply to the note"
 
 #: mi.iterators.InstanceIterator.get_users mi.note.Follow.unfollow
-#: mi.note.Note.reply mi.state.ConnectionState.add_reaction
-#: mi.state.ConnectionState.delete_chat mi.state.ConnectionState.delete_note
-#: mi.state.ConnectionState.follow_user
+#: mi.note.Note.add_reaction mi.note.Note.reply
+#: mi.state.ConnectionState.add_reaction mi.state.ConnectionState.delete_chat
+#: mi.state.ConnectionState.delete_note mi.state.ConnectionState.follow_user
 #: mi.state.ConnectionState.get_announcements
 #: mi.state.ConnectionState.get_followers mi.state.ConnectionState.get_user
 #: mi.state.ConnectionState.parse_channel
@@ -169,10 +196,11 @@ msgstr "Returns the number of emoji in the body of the note."
 
 #: mi.chat.Chat.delete mi.drive.Drive.delete
 #: mi.iterators.InstanceIterator.get_users mi.note.Follow.unfollow
-#: mi.note.Note.delete mi.note.Note.emoji_count mi.note.Renote.delete
-#: mi.note.Renote.emoji_count mi.state.ConnectionState.add_reaction
-#: mi.state.ConnectionState.delete_chat mi.state.ConnectionState.delete_note
-#: mi.state.ConnectionState.follow_user mi.state.ConnectionState.get_user
+#: mi.note.Note.add_reaction mi.note.Note.delete mi.note.Note.emoji_count
+#: mi.note.Note.favorite mi.note.Renote.delete mi.note.Renote.emoji_count
+#: mi.state.ConnectionState.add_reaction mi.state.ConnectionState.delete_chat
+#: mi.state.ConnectionState.delete_note mi.state.ConnectionState.follow_user
+#: mi.state.ConnectionState.get_user
 #: mi.state.ConnectionState.parse_notification
 #: mi.state.ConnectionState.post_chat mi.state.ConnectionState.post_note
 #: mi.state.ConnectionState.unfollow_user mi.user.User.follow
@@ -186,7 +214,8 @@ msgstr "Number of emoji included"
 
 #: mi.chat.Chat.delete mi.drive.Drive.delete
 #: mi.iterators.InstanceIterator.get_users mi.note.Follow.unfollow
-#: mi.note.Note.emoji_count mi.note.Renote.emoji_count
+#: mi.note.Note.add_reaction mi.note.Note.delete mi.note.Note.emoji_count
+#: mi.note.Note.favorite mi.note.Renote.emoji_count
 #: mi.state.ConnectionState.add_reaction mi.state.ConnectionState.delete_chat
 #: mi.state.ConnectionState.delete_note mi.state.ConnectionState.follow_user
 #: mi.state.ConnectionState.get_user
@@ -197,21 +226,43 @@ msgstr "Number of emoji included"
 msgid "Return type"
 msgstr "Return type"
 
-#: mi.note.Note.delete:2 mi.note.Renote.delete:2 of
-msgid "指定したIDのノートを削除します"
+#: mi.note.Note.add_reaction:2 of
+msgid "ノートにリアクションを追加します"
+msgstr ""
+
+#: mi.note.Note.add_reaction:4 of
+#, fuzzy
+msgid "つけるリアクション"
+msgstr "Reaction name to be granted"
+
+#: mi.note.Note.add_reaction:7 of
+#, fuzzy
+msgid "成功したかどうか"
+msgstr "Whether the deletion was successful or not."
+
+#: mi.note.Note.delete:2 of
+#, fuzzy
+msgid "ノートを削除します"
+msgstr "Post Notes."
+
+#: mi.chat.Chat.delete:4 mi.note.Note.delete:4 mi.note.Note.favorite:4
+#: mi.state.ConnectionState.delete_chat:7
+#: mi.state.ConnectionState.delete_note:7 of
+msgid "成功したか否か"
+msgstr "Successful or not."
+
+#: mi.note.Note.favorite:2 of
+msgid "ノートをお気に入り登録します"
+msgstr ""
+
+#: mi.note.Note.remove_favorite:2 of
+msgid "お気に入りから解除します"
+msgstr ""
+
+#: mi.note.Note.add_to_clips:2 of
+#, fuzzy
+msgid "指定したクリップにノートを追加します"
 msgstr "Deletes the note with the specified ID"
-
-#: mi.note.Note.delete:4 mi.note.Renote.delete:4 of
-msgid "* **is_success** (*bool*) -- 成功したか否か * **status_code** (*int*) -- HTTP レスポンスステータスコード"
-msgstr "* **is_success** (*bool*) -- success or failure * **status_code** (*int*) -- HTTP response status code"
-
-#: mi.note.Note.delete:4 mi.note.Renote.delete:4 of
-msgid "**is_success** (*bool*) -- 成功したか否か"
-msgstr "**is_success** (*bool*) -- success or failure"
-
-#: mi.note.Note.delete:5 mi.note.Renote.delete:5 of
-msgid "**status_code** (*int*) -- HTTP レスポンスステータスコード"
-msgstr "**status_code** (*int*) -- HTTP response status code"
 
 #: mi.state.ConnectionState.get_followers:4 mi.user.User:4 of
 msgid "ユーザーのid"
@@ -363,7 +414,7 @@ msgstr "User Instances"
 msgid "ユーザーの詳細な情報"
 msgstr "More information about the user"
 
-#: ../../mi.rst:71 mi.user.User:204 of
+#: ../../mi.rst:75 mi.user.User:204 of
 msgid "UserDetails"
 msgstr "UserDetails"
 
@@ -373,7 +424,9 @@ msgstr "Follow users"
 
 #: mi.user.User.follow:4 of
 msgid "* *bool = False* -- 成功ならTrue, 失敗ならFalse * *str* -- 実行に失敗した際のエラーコード"
-msgstr "* *bool = False* -- True for success, False for failure * *str* -- Error code for failure to execute."
+msgstr ""
+"* *bool = False* -- True for success, False for failure * *str* -- Error "
+"code for failure to execute."
 
 #: mi.user.User.follow:4 of
 msgid "*bool = False* -- 成功ならTrue, 失敗ならFalse"
@@ -406,7 +459,9 @@ msgstr "Gets a list of the user's followers"
 
 #: mi.user.User.get_followers:4 of
 msgid "前回のフォロワーの続きを取得する場合の起点とするユーザーid"
-msgstr "The user id to use as the starting point when retrieving the continuation of the previous follower."
+msgstr ""
+"The user id to use as the starting point when retrieving the continuation"
+" of the previous follower."
 
 #: mi.user.User.get_followers:6 of
 msgid "最大何人取得するか, max=100"
@@ -444,12 +499,7 @@ msgstr "chat object"
 msgid "チャットを削除します（チャットの作者である必要があります）"
 msgstr "Delete the chat (you must be the author of the chat)"
 
-#: mi.chat.Chat.delete:4 mi.state.ConnectionState.delete_chat:7
-#: mi.state.ConnectionState.delete_note:7 of
-msgid "成功したか否か"
-msgstr "Successful or not."
-
-#: ../../mi.rst:85
+#: ../../mi.rst:89
 msgid "Drive"
 msgstr "drive"
 
@@ -461,17 +511,39 @@ msgstr "Deletes the file."
 msgid "削除に成功したかどうか"
 msgstr "Whether the deletion was successful or not."
 
-#: ../../mi.rst:93
+#: ../../mi.rst:97
 msgid "Emoji"
 msgstr "emoji"
 
-#: ../../mi.rst:109
+#: mi.note.Renote.delete:2 of
+msgid "指定したIDのノートを削除します"
+msgstr "Deletes the note with the specified ID"
+
+#: mi.note.Renote.delete:4 of
+msgid ""
+"* **is_success** (*bool*) -- 成功したか否か * **status_code** (*int*) -- HTTP "
+"レスポンスステータスコード"
+msgstr ""
+"* **is_success** (*bool*) -- success or failure * **status_code** (*int*)"
+" -- HTTP response status code"
+
+#: mi.note.Renote.delete:4 of
+msgid "**is_success** (*bool*) -- 成功したか否か"
+msgstr "**is_success** (*bool*) -- success or failure"
+
+#: mi.note.Renote.delete:5 of
+msgid "**status_code** (*int*) -- HTTP レスポンスステータスコード"
+msgstr "**status_code** (*int*) -- HTTP response status code"
+
+#: ../../mi.rst:113
 msgid "Follow"
 msgstr "follow"
 
 #: mi.note.Follow.follow:2 of
 msgid "ユーザーをフォローします :returns: * *bool = False* -- 成功ならTrue, 失敗ならFalse"
-msgstr "Follow the user :returns: * *bool = False* -- True for success, False for failure."
+msgstr ""
+"Follow the user :returns: * *bool = False* -- True for success, False for"
+" failure."
 
 #: mi.note.Follow.unfollow:2 of
 msgid "与えられたIDのユーザーのフォローを解除します"
@@ -481,31 +553,31 @@ msgstr "Unfollows the user with the given ID"
 msgid "フォローを解除したいユーザーのID"
 msgstr "ID of the user you want to unfollow"
 
-#: ../../mi.rst:119
+#: ../../mi.rst:123
 msgid "データクラス"
 msgstr "data class"
 
-#: ../../mi.rst:122
+#: ../../mi.rst:126
 msgid "Header"
 msgstr "Header"
 
-#: ../../mi.rst:130
+#: ../../mi.rst:134
 msgid "Properties"
 msgstr "Properties"
 
-#: ../../mi.rst:138
+#: ../../mi.rst:142
 msgid "File"
 msgstr "file"
 
-#: ../../mi.rst:146
+#: ../../mi.rst:150
 msgid "Reaction"
 msgstr "reaction"
 
-#: ../../mi.rst:155
+#: ../../mi.rst:159
 msgid "例外処理"
 msgstr "exception handling"
 
-#: ../../mi.rst:158
+#: ../../mi.rst:162
 msgid "NotFoundError"
 msgstr "NotFoundError"
 
@@ -513,15 +585,17 @@ msgstr "NotFoundError"
 msgid "http アクセス時に404が帰ってきた際の例外"
 msgstr "Exception when a 404 is returned on http access"
 
-#: ../../mi.rst:162
+#: ../../mi.rst:166
 msgid "TaskNotRunningError"
 msgstr "TaskNotRunningError"
 
 #: mi.exception.TaskNotRunningError:2 of
 msgid "タスクを停止しようとした際、タスクが起動していない場合に発生する例外"
-msgstr "Exception thrown when attempting to stop a task and the task is not started."
+msgstr ""
+"Exception thrown when attempting to stop a task and the task is not "
+"started."
 
-#: ../../mi.rst:166
+#: ../../mi.rst:170
 msgid "ImAi"
 msgstr "ImAi"
 
@@ -529,7 +603,7 @@ msgstr "ImAi"
 msgid "私は藍です"
 msgstr "I'm Indigo."
 
-#: ../../mi.rst:170
+#: ../../mi.rst:174
 msgid "InternalServerError"
 msgstr "InternalServerError"
 
@@ -537,7 +611,7 @@ msgstr "InternalServerError"
 msgid "http アクセス時に500が帰ってきた際の例外"
 msgstr "Exception when 500 is returned on http access"
 
-#: ../../mi.rst:174
+#: ../../mi.rst:178
 msgid "ClientError"
 msgstr "ClientError"
 
@@ -545,7 +619,7 @@ msgstr "ClientError"
 msgid "http アクセス時に400が帰ってきた際の例外"
 msgstr "Exception when http access returns 400"
 
-#: ../../mi.rst:179
+#: ../../mi.rst:183
 msgid "AuthenticationError"
 msgstr "AuthenticationError"
 
@@ -553,7 +627,7 @@ msgstr "AuthenticationError"
 msgid "認証で問題が発生した際の例外"
 msgstr "Exceptions in case of authentication problems"
 
-#: ../../mi.rst:183
+#: ../../mi.rst:187
 msgid "NotExistRequiredParameters"
 msgstr "NotExistRequiredParameters"
 
@@ -561,7 +635,7 @@ msgstr "NotExistRequiredParameters"
 msgid "必須のパラメーターが存在しない場合の例外"
 msgstr "Exception when a required parameter does not exist"
 
-#: ../../mi.rst:187
+#: ../../mi.rst:191
 msgid "InvalidParameters"
 msgstr "InvalidParameters"
 
@@ -569,7 +643,7 @@ msgstr "InvalidParameters"
 msgid "パラメーターが無効"
 msgstr "Parameter is invalid"
 
-#: ../../mi.rst:191
+#: ../../mi.rst:195
 msgid "CredentialRequired"
 msgstr "CredentialRequired"
 
@@ -577,7 +651,7 @@ msgstr "CredentialRequired"
 msgid "認証情報が不足している"
 msgstr "Authentication information is missing."
 
-#: ../../mi.rst:195
+#: ../../mi.rst:199
 msgid "ContentRequired"
 msgstr "ContentRequired"
 
@@ -585,7 +659,7 @@ msgstr "ContentRequired"
 msgid "送信するコンテンツが不足している"
 msgstr "Not enough content to send"
 
-#: ../../mi.rst:201
+#: ../../mi.rst:205
 msgid "CogNameDuplicate"
 msgstr "CogNameDuplicate"
 
@@ -593,7 +667,7 @@ msgstr "CogNameDuplicate"
 msgid "cogの名前が重複している"
 msgstr "Duplicate cog names."
 
-#: ../../mi.rst:205
+#: ../../mi.rst:209
 msgid "ExtensionAlreadyLoaded"
 msgstr "ExtensionAlreadyLoaded"
 
@@ -601,7 +675,7 @@ msgstr "ExtensionAlreadyLoaded"
 msgid "cogがすでに読み込まれている"
 msgstr "cog is already loaded."
 
-#: ../../mi.rst:209
+#: ../../mi.rst:213
 msgid "ExtensionFailed"
 msgstr "ExtensionFailed"
 
@@ -609,7 +683,7 @@ msgstr "ExtensionFailed"
 msgid "cog周りのエラー"
 msgstr "Errors around cog"
 
-#: ../../mi.rst:213
+#: ../../mi.rst:217
 msgid "NoEntryPointError"
 msgstr "NoEntryPointError"
 
@@ -617,7 +691,7 @@ msgstr "NoEntryPointError"
 msgid "cogにsetup関数が無い場合の例外"
 msgstr "Exception when cog does not have a setup function"
 
-#: ../../mi.rst:217
+#: ../../mi.rst:221
 msgid "ExtensionNotFound"
 msgstr "ExtensionNotFound"
 
@@ -625,7 +699,7 @@ msgstr "ExtensionNotFound"
 msgid "指定されたパスにcogが存在しない場合の例外"
 msgstr "Exception if cog does not exist in the specified path"
 
-#: ../../mi.rst:221
+#: ../../mi.rst:225
 msgid "CommandRegistrationError"
 msgstr "CommandRegistrationError"
 
@@ -633,7 +707,7 @@ msgstr "CommandRegistrationError"
 msgid "コマンド登録時のエラー"
 msgstr "Error in command registration"
 
-#: ../../mi.rst:225
+#: ../../mi.rst:229
 msgid "CommandError"
 msgstr "CommandError"
 
@@ -641,7 +715,7 @@ msgstr "CommandError"
 msgid "コマンドで問題が発生した際の例外"
 msgstr "Exception when a problem occurs with the command"
 
-#: ../../mi.rst:229
+#: ../../mi.rst:233
 msgid "CommandInvokeError"
 msgstr "CommandInvokeError"
 
@@ -649,7 +723,7 @@ msgstr "CommandInvokeError"
 msgid "コマンドの実行に問題が発生した際の例外"
 msgstr "Exceptions when there is a problem executing the command"
 
-#: ../../mi.rst:233
+#: ../../mi.rst:237
 msgid "CheckFailure"
 msgstr "CheckFailure"
 
@@ -657,7 +731,7 @@ msgstr "CheckFailure"
 msgid "コマンドの実行可能かのチェックに失敗した際の例外"
 msgstr "Exception when the command fails to check if it is executable"
 
-#: ../../mi.rst:237
+#: ../../mi.rst:241
 msgid "InvalidCogPath"
 msgstr "InvalidCogPath"
 
@@ -665,7 +739,7 @@ msgstr "InvalidCogPath"
 msgid "cogのパスが不正"
 msgstr "Incorrect path for cog"
 
-#: ../../mi.rst:242
+#: ../../mi.rst:246
 msgid "NotExistRequiredData"
 msgstr "NotExistRequiredData"
 
@@ -673,7 +747,7 @@ msgstr "NotExistRequiredData"
 msgid "必要なデータが存在しない場合に発生する例外"
 msgstr "Exception raised when the required data does not exist."
 
-#: ../../mi.rst:247
+#: ../../mi.rst:251
 msgid "Low-Level API"
 msgstr "Low-Level API"
 
@@ -768,8 +842,13 @@ msgid "ノートid"
 msgstr "note id"
 
 #: mi.state.ConnectionState.get_user:2 of
-msgid "ユーザーのプロフィールを取得します。一度のみサーバーにアクセスしキャッシュをその後は使います。 fetch_userを使った場合はキャッシュが廃棄され再度サーバーにアクセスします。"
-msgstr "Retrieves the user's profile. It accesses the server only once and uses the cache afterwards. If you use fetch_user, the cache is discarded and the server is accessed again."
+msgid ""
+"ユーザーのプロフィールを取得します。一度のみサーバーにアクセスしキャッシュをその後は使います。 "
+"fetch_userを使った場合はキャッシュが廃棄され再度サーバーにアクセスします。"
+msgstr ""
+"Retrieves the user's profile. It accesses the server only once and uses "
+"the cache afterwards. If you use fetch_user, the cache is discarded and "
+"the server is accessed again."
 
 #: mi.state.ConnectionState.get_user:5 of
 msgid "取得したいユーザーのユーザーID"
@@ -871,7 +950,9 @@ msgstr "The host name of the instance the user is in"
 #: mi.state.ConnectionState.get_announcements:8
 #: mi.state.ConnectionState.get_followers:12 of
 msgid "前回の最後の値を与える(既に実行し取得しきれない場合に使用)"
-msgstr "Give the last value of the last time (use this if you've already done it and can't get it)"
+msgstr ""
+"Give the last value of the last time (use this if you've already done it "
+"and can't get it)"
 
 #: mi.state.ConnectionState.get_followers:14 of
 msgid "取得する情報の最大数 max: 100"
@@ -901,7 +982,7 @@ msgstr "Maximum number of acquisitions"
 msgid "既読済みか否か"
 msgstr "read or unread"
 
-#: ../../mi.rst:259
+#: ../../mi.rst:263
 msgid "Low-Layer API"
 msgstr "Low-Layer API"
 
