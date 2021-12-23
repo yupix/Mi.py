@@ -5,7 +5,7 @@
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" />
 
     <meta name="generator" content="sphinx-4.3.2, furo 2021.11.23"/>
-        <title>API reference - Mi.py 0.5.0 documentation</title>
+        <title>API Reference - Mi.py 0.5.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?digest=7f0192ddeb2adecfbaa87ffbcf67d16358b30bc1" />
     <link rel="stylesheet" type="text/css" href="_static/panels-bootstrap.5fd3999ee7762ccc51105388f4a9d115.css" />
@@ -186,33 +186,33 @@
         </div>
         <article role="main">
           <div class="section" id="api-reference">
-<h1>API reference<a class="headerlink" href="#api-reference" title="Permalink to this headline">¶</a></h1>
+<h1>API Reference<a class="headerlink" href="#api-reference" title="Permalink to this headline">¶</a></h1>
 <p>This section describes the API of Mi.py</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>This library allows debug output using logging. It is not out of the standard settings, so please pass ‘debug’ as the start-up argument</p>
+<p>This library can output <cite>debug</cite> using <cite>logging</cite>. Because it doesn’t appear in the standard configuration, you should pass <cite>debug</cite> as an argument at startup.</p>
 </div>
 <div class="section" id="id1">
-<h2>Event Reference<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<h2>event reference<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <dl class="py function">
 <dt class="sig sig-object py" id="mi.on_ready">
 <span class="sig-prename descclassname"><span class="pre">mi.</span></span><span class="sig-name descname"><span class="pre">on_ready</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ws</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mi.on_ready" title="Permalink to this definition">¶</a></dt>
-<dd><p>It is called when the bot finishes connecting to the websocket</p>
+<dd><p>It is called when the bot has finished connecting to the websocket.</p>
 </dd></dl>
 <dl class="py function">
 <dt class="sig sig-object py" id="mi.on_message">
 <span class="sig-prename descclassname"><span class="pre">mi.</span></span><span class="sig-name descname"><span class="pre">on_message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">note</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#mi.Note" title="mi.Note"><span class="pre">Note</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mi.on_message" title="Permalink to this definition">¶</a></dt>
-<dd><p>Called when a note is posted in the connected channel</p>
+<dd><p>Called when a note is posted in the channel you are connected to</p>
 </dd></dl>
 <dl class="py function">
 <dt class="sig sig-object py" id="mi.on_emoji_add">
 <span class="sig-prename descclassname"><span class="pre">mi.</span></span><span class="sig-name descname"><span class="pre">on_emoji_add</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">emoji</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#mi.Emoji" title="mi.Emoji"><span class="pre">Emoji</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mi.on_emoji_add" title="Permalink to this definition">¶</a></dt>
-<dd><p>Called when an emoji is added to an instance</p>
+<dd><p>Called when a pictogram is added to an instance</p>
 </dd></dl>
 </div>
 <div class="section" id="id2">
-<h2>Abstract Base Classes<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
-<p><a class="reference external" href="https://docs.python.org/ja/3/glossary.html#term-abstract-base-class">abstract base class</a> is a class that can be inherited to retrieve a list of methods, etc. Abstract base classes cannot be instantiated</p>
+<h2>abstract base class<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://docs.python.org/ja/3/glossary.html#term-abstract-base-class">abstract base class</a> is a class that can be inherited to get a list of methods etc. Abstract base class can not be instantiated.</p>
 <div class="section" id="abstractbotbase">
 <h3>AbstractBotBase<a class="headerlink" href="#abstractbotbase" title="Permalink to this headline">¶</a></h3>
 <div class="py-attribute-table" data-move-to-id="mi.abc.AbstractChat"></div><dl class="py class">
@@ -232,10 +232,10 @@
 <h2>Misskey Models<a class="headerlink" href="#misskey" title="Permalink to this headline">¶</a></h2>
 <div class="admonition danger">
 <p class="admonition-title">Danger</p>
-<p>The following classes do not take into account that they are created by the user** . You should not create your own instances, and you should not change the value</p>
+<p>The following classes are <strong>not intended to be created by the user</strong>. You should not create your own instances, and you should not modify the values.</p>
 </div>
 <div class="section" id="note">
-<h3>Note<a class="headerlink" href="#note" title="Permalink to this headline">¶</a></h3>
+<h3>note<a class="headerlink" href="#note" title="Permalink to this headline">¶</a></h3>
 <div class="py-attribute-table" data-move-to-id="mi.Note"><div class="py-attribute-table-column">
 <span>
 Attributes</span><ul>
@@ -275,7 +275,7 @@ async</span><a class="reference internal" href="#mi.Note.reply">reply</a></li></
 <span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#mi.Note.id" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>Optional[str]</p>
+<dd class="field-odd"><p>str</p>
 </dd>
 </dl>
 </dd></dl>
@@ -284,7 +284,7 @@ async</span><a class="reference internal" href="#mi.Note.reply">reply</a></li></
 <span class="sig-name descname"><span class="pre">created_at</span></span><a class="headerlink" href="#mi.Note.created_at" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>Optional[str]</p>
+<dd class="field-odd"><p>str</p>
 </dd>
 </dl>
 </dd></dl>
@@ -293,7 +293,7 @@ async</span><a class="reference internal" href="#mi.Note.reply">reply</a></li></
 <span class="sig-name descname"><span class="pre">user_id</span></span><a class="headerlink" href="#mi.Note.user_id" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>Optional[str]</p>
+<dd class="field-odd"><p>str</p>
 </dd>
 </dl>
 </dd></dl>
@@ -302,7 +302,7 @@ async</span><a class="reference internal" href="#mi.Note.reply">reply</a></li></
 <span class="sig-name descname"><span class="pre">author</span></span><a class="headerlink" href="#mi.Note.author" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference internal" href="#mi.User" title="mi.User">User</a></p>
+<dd class="field-odd"><p>user</p>
 </dd>
 </dl>
 </dd></dl>
@@ -311,7 +311,7 @@ async</span><a class="reference internal" href="#mi.Note.reply">reply</a></li></
 <span class="sig-name descname"><span class="pre">content</span></span><a class="headerlink" href="#mi.Note.content" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>Optional[str]</p>
+<dd class="field-odd"><p>Optional[str].</p>
 </dd>
 </dl>
 </dd></dl>
@@ -320,7 +320,7 @@ async</span><a class="reference internal" href="#mi.Note.reply">reply</a></li></
 <span class="sig-name descname"><span class="pre">cw</span></span><a class="headerlink" href="#mi.Note.cw" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>Optional[str]</p>
+<dd class="field-odd"><p>Optional[str].</p>
 </dd>
 </dl>
 </dd></dl>
@@ -338,7 +338,7 @@ async</span><a class="reference internal" href="#mi.Note.reply">reply</a></li></
 <span class="sig-name descname"><span class="pre">visibility</span></span><a class="headerlink" href="#mi.Note.visibility" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>Optional[str]</p>
+<dd class="field-odd"><p>str</p>
 </dd>
 </dl>
 </dd></dl>
@@ -365,7 +365,7 @@ async</span><a class="reference internal" href="#mi.Note.reply">reply</a></li></
 <span class="sig-name descname"><span class="pre">reactions</span></span><a class="headerlink" href="#mi.Note.reactions" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>Dict[str, Any]</p>
+<dd class="field-odd"><p>Dict[str, Any].</p>
 </dd>
 </dl>
 </dd></dl>
@@ -374,7 +374,7 @@ async</span><a class="reference internal" href="#mi.Note.reply">reply</a></li></
 <span class="sig-name descname"><span class="pre">emojis</span></span><a class="headerlink" href="#mi.Note.emojis" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>List[<a class="reference internal" href="#mi.Emoji" title="mi.Emoji">Emoji</a>]</p>
+<dd class="field-odd"><p>List[Emoji].</p>
 </dd>
 </dl>
 </dd></dl>
@@ -401,7 +401,7 @@ async</span><a class="reference internal" href="#mi.Note.reply">reply</a></li></
 <span class="sig-name descname"><span class="pre">reply_id</span></span><a class="headerlink" href="#mi.Note.reply_id" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>Optional[str]</p>
+<dd class="field-odd"><p>Optional[str].</p>
 </dd>
 </dl>
 </dd></dl>
@@ -410,7 +410,7 @@ async</span><a class="reference internal" href="#mi.Note.reply">reply</a></li></
 <span class="sig-name descname"><span class="pre">renote_id</span></span><a class="headerlink" href="#mi.Note.renote_id" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>Optional[str]</p>
+<dd class="field-odd"><p>Optional[str].</p>
 </dd>
 </dl>
 </dd></dl>
@@ -419,26 +419,26 @@ async</span><a class="reference internal" href="#mi.Note.reply">reply</a></li></
 <span class="sig-name descname"><span class="pre">poll</span></span><a class="headerlink" href="#mi.Note.poll" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>Optional[Poll]</p>
+<dd class="field-odd"><p>Optional[Poll].</p>
 </dd>
 </dl>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="mi.Note.reply">
 <em class="property"><span class="pre">await</span> </em><span class="sig-name descname"><span class="pre">reply</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cw</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">no_extract_mentions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">no_extract_hashtags</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">no_extract_emojis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">renote_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">poll</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/note.html#Note.reply"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mi.Note.reply" title="Permalink to this definition">¶</a></dt>
-<dd><p>Send a reply to a note</p>
+<dd><p>Sends a reply to the note</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>content</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – What to reply to</p></li>
-<li><p><strong>cw</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – Browsing Attention</p></li>
-<li><p><strong>no_extract_mentions</strong> (<em>bool</em><em>, </em><em>optional</em>) – Expand mentions or by default False</p></li>
-<li><p><strong>no_extract_hashtags</strong> (<em>bool</em><em>, </em><em>optional</em>) – Expand the hashtag or by default False</p></li>
-<li><p><strong>no_extract_emojis</strong> (<em>bool</em><em>, </em><em>optional</em>) – Expand emoji or by default False</p></li>
-<li><p><strong>renote_id</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – Renouted id, by default None</p></li>
+<li><p><strong>content</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – reply content</p></li>
+<li><p><strong>cw</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – Warning.</p></li>
+<li><p><strong>no_extract_mentions</strong> (<em>bool</em><em>, </em><em>optional</em>) – whether to expand the mention, by default False</p></li>
+<li><p><strong>no_extract_hashtags</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to expand hashtags, by default False</p></li>
+<li><p><strong>no_extract_emojis</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to expand pictograms, by default False</p></li>
+<li><p><strong>renote_id</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – The id of the renote destination, by default None</p></li>
 <li><p><strong>channel_id</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – Channel id, by default None</p></li>
-<li><p><strong>file_ids</strong> (<em>[</em><em>type</em><em>]</em><em>, </em><em>optional</em>) – Id of the file to be attached, by default None</p></li>
-<li><p><strong>poll</strong> (<em>Optional</em><em>[</em><em>Poll</em><em>]</em><em>, </em><em>optional</em>) – アンケート, by default None</p></li>
+<li><p><strong>file_ids</strong> (<em>[</em><em>type</em><em>]</em><em>, </em><em>optional</em>) – The id of the file to attach, by default None</p></li>
+<li><p><strong>poll</strong> (<em>Optional</em><em>[</em><em>Poll</em><em>]</em><em>, </em><em>optional</em>) – Survey, by default None</p></li>
 </ul>
 </dd>
 </dl>
@@ -446,10 +446,10 @@ async</span><a class="reference internal" href="#mi.Note.reply">reply</a></li></
 <dl class="py method">
 <dt class="sig sig-object py" id="mi.Note.emoji_count">
 <span class="sig-name descname"><span class="pre">emoji_count</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/note.html#Note.emoji_count"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mi.Note.emoji_count" title="Permalink to this definition">¶</a></dt>
-<dd><p>ノートの本文にemojiが何個含まれているかを返します</p>
+<dd><p>Returns the number of emoji in the body of the note.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>含まれている絵文字の数</p>
+<dd class="field-odd"><p>Number of emoji included</p>
 </dd>
 <dt class="field-even">Return type</dt>
 <dd class="field-even"><p>int</p>
@@ -459,12 +459,12 @@ async</span><a class="reference internal" href="#mi.Note.reply">reply</a></li></
 <dl class="py method">
 <dt class="sig sig-object py" id="mi.Note.delete">
 <em class="property"><span class="pre">await</span> </em><span class="sig-name descname"><span class="pre">delete</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/note.html#Note.delete"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mi.Note.delete" title="Permalink to this definition">¶</a></dt>
-<dd><p>指定したIDのノートを削除します</p>
+<dd><p>Deletes the note with the specified ID</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p><ul class="simple">
-<li><p><strong>is_success</strong> (<em>bool</em>) – 成功したか否か</p></li>
-<li><p><strong>status_code</strong> (<em>int</em>) – HTTP レスポンスステータスコード</p></li>
+<li><p><strong>is_success</strong> (<em>bool</em>) – success or failure</p></li>
+<li><p><strong>status_code</strong> (<em>int</em>) – HTTP response status code</p></li>
 </ul>
 </p>
 </dd>
@@ -473,7 +473,7 @@ async</span><a class="reference internal" href="#mi.Note.reply">reply</a></li></
 </dd></dl>
 </div>
 <div class="section" id="user">
-<h3>User<a class="headerlink" href="#user" title="Permalink to this headline">¶</a></h3>
+<h3>user<a class="headerlink" href="#user" title="Permalink to this headline">¶</a></h3>
 <div class="py-attribute-table" data-move-to-id="mi.User"><div class="py-attribute-table-column">
 <span>
 Attributes</span><ul>
@@ -530,57 +530,57 @@ async</span><a class="reference internal" href="#mi.User.unfollow">unfollow</a><
 <dd><dl class="py attribute">
 <dt class="sig sig-object py" id="mi.User.id">
 <span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#mi.User.id" title="Permalink to this definition">¶</a></dt>
-<dd><p>ユーザーのid</p>
+<dd><p>The id of the user</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>Optional[str]</p>
+<dd class="field-odd"><p>str</p>
 </dd>
 </dl>
 </dd></dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="mi.User.name">
 <span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#mi.User.name" title="Permalink to this definition">¶</a></dt>
-<dd><p>ユーザーのニックネーム</p>
+<dd><p>User’s nickname</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>Optional[str]</p>
+<dd class="field-odd"><p>str</p>
 </dd>
 </dl>
 </dd></dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="mi.User.username">
 <span class="sig-name descname"><span class="pre">username</span></span><a class="headerlink" href="#mi.User.username" title="Permalink to this definition">¶</a></dt>
-<dd><p>ユーザーのアカウント名</p>
+<dd><p>User’s account name</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>Optional[str]</p>
+<dd class="field-odd"><p>str</p>
 </dd>
 </dl>
 </dd></dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="mi.User.host">
 <span class="sig-name descname"><span class="pre">host</span></span><a class="headerlink" href="#mi.User.host" title="Permalink to this definition">¶</a></dt>
-<dd><p>ユーザーのホスト名</p>
+<dd><p>User’s hostname</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>Optional[str]</p>
+<dd class="field-odd"><p>Optional[str].</p>
 </dd>
 </dl>
 </dd></dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="mi.User.avatar_url">
 <span class="sig-name descname"><span class="pre">avatar_url</span></span><a class="headerlink" href="#mi.User.avatar_url" title="Permalink to this definition">¶</a></dt>
-<dd><p>ユーザーのアバターのURL</p>
+<dd><p>The URL of the user’s avatar</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>Optional[str]</p>
+<dd class="field-odd"><p>Optional[str].</p>
 </dd>
 </dl>
 </dd></dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="mi.User.admin">
 <span class="sig-name descname"><span class="pre">admin</span></span><a class="headerlink" href="#mi.User.admin" title="Permalink to this definition">¶</a></dt>
-<dd><p>ユーザーが管理者かどうか</p>
+<dd><p>Whether the user is an administrator or not</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>bool</p>
@@ -590,7 +590,7 @@ async</span><a class="reference internal" href="#mi.User.unfollow">unfollow</a><
 <dl class="py attribute">
 <dt class="sig sig-object py" id="mi.User.bot">
 <span class="sig-name descname"><span class="pre">bot</span></span><a class="headerlink" href="#mi.User.bot" title="Permalink to this definition">¶</a></dt>
-<dd><p>ユーザーがbotかどうか</p>
+<dd><p>Whether the user is a bot or not</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>bool</p>
@@ -600,7 +600,7 @@ async</span><a class="reference internal" href="#mi.User.unfollow">unfollow</a><
 <dl class="py attribute">
 <dt class="sig sig-object py" id="mi.User.emojis">
 <span class="sig-name descname"><span class="pre">emojis</span></span><a class="headerlink" href="#mi.User.emojis" title="Permalink to this definition">¶</a></dt>
-<dd><p>ユーザーが使用しているemoji</p>
+<dd><p>The emoji the user is using</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>list</p>
@@ -610,57 +610,57 @@ async</span><a class="reference internal" href="#mi.User.unfollow">unfollow</a><
 <dl class="py attribute">
 <dt class="sig sig-object py" id="mi.User.online_status">
 <span class="sig-name descname"><span class="pre">online_status</span></span><a class="headerlink" href="#mi.User.online_status" title="Permalink to this definition">¶</a></dt>
-<dd><p>ユーザーのオンライン状況</p>
+<dd><p>User’s online status</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>Any</p>
+<dd class="field-odd"><p>any</p>
 </dd>
 </dl>
 </dd></dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="mi.User.url">
 <span class="sig-name descname"><span class="pre">url</span></span><a class="headerlink" href="#mi.User.url" title="Permalink to this definition">¶</a></dt>
-<dd><p>ユーザーのプロフィールへのURL</p>
+<dd><p>URL to the user’s profile</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>Optional[str]</p>
+<dd class="field-odd"><p>str</p>
 </dd>
 </dl>
 </dd></dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="mi.User.uri">
 <span class="sig-name descname"><span class="pre">uri</span></span><a class="headerlink" href="#mi.User.uri" title="Permalink to this definition">¶</a></dt>
-<dd><p>謎</p>
+<dd><p>enigma</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>Optional[str]</p>
+<dd class="field-odd"><p>str</p>
 </dd>
 </dl>
 </dd></dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="mi.User.created_at">
 <span class="sig-name descname"><span class="pre">created_at</span></span><a class="headerlink" href="#mi.User.created_at" title="Permalink to this definition">¶</a></dt>
-<dd><p>アカウントの作成日</p>
+<dd><p>Account creation date</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>Optional[str]</p>
+<dd class="field-odd"><p>str</p>
 </dd>
 </dl>
 </dd></dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="mi.User.updated_at">
 <span class="sig-name descname"><span class="pre">updated_at</span></span><a class="headerlink" href="#mi.User.updated_at" title="Permalink to this definition">¶</a></dt>
-<dd><p>アカウントの更新日(ノートを投稿するなど)</p>
+<dd><p>The date your account was updated (e.g. posting a note)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>Optional[str]</p>
+<dd class="field-odd"><p>str</p>
 </dd>
 </dl>
 </dd></dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="mi.User.locked">
 <span class="sig-name descname"><span class="pre">locked</span></span><a class="headerlink" href="#mi.User.locked" title="Permalink to this definition">¶</a></dt>
-<dd><p>アカウントがロックされているか</p>
+<dd><p>Is your account locked?</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>bool</p>
@@ -670,7 +670,7 @@ async</span><a class="reference internal" href="#mi.User.unfollow">unfollow</a><
 <dl class="py attribute">
 <dt class="sig sig-object py" id="mi.User.silienced">
 <span class="sig-name descname"><span class="pre">silienced</span></span><a class="headerlink" href="#mi.User.silienced" title="Permalink to this definition">¶</a></dt>
-<dd><p>アカウントがミュートされているか</p>
+<dd><p>Is your account muted?</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>bool</p>
@@ -680,7 +680,7 @@ async</span><a class="reference internal" href="#mi.User.unfollow">unfollow</a><
 <dl class="py attribute">
 <dt class="sig sig-object py" id="mi.User.suspended">
 <span class="sig-name descname"><span class="pre">suspended</span></span><a class="headerlink" href="#mi.User.suspended" title="Permalink to this definition">¶</a></dt>
-<dd><p>アカウントが凍結されているか</p>
+<dd><p>Has your account been frozen?</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>bool</p>
@@ -690,37 +690,37 @@ async</span><a class="reference internal" href="#mi.User.unfollow">unfollow</a><
 <dl class="py attribute">
 <dt class="sig sig-object py" id="mi.User.description">
 <span class="sig-name descname"><span class="pre">description</span></span><a class="headerlink" href="#mi.User.description" title="Permalink to this definition">¶</a></dt>
-<dd><p>アカウントの概要</p>
+<dd><p>Account Overview</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>Optional[str]</p>
+<dd class="field-odd"><p>str</p>
 </dd>
 </dl>
 </dd></dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="mi.User.location">
 <span class="sig-name descname"><span class="pre">location</span></span><a class="headerlink" href="#mi.User.location" title="Permalink to this definition">¶</a></dt>
-<dd><p>ユーザーが住んでいる場所</p>
+<dd><p>Where the user lives</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>Optional[str]</p>
+<dd class="field-odd"><p>str</p>
 </dd>
 </dl>
 </dd></dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="mi.User.birthday">
 <span class="sig-name descname"><span class="pre">birthday</span></span><a class="headerlink" href="#mi.User.birthday" title="Permalink to this definition">¶</a></dt>
-<dd><p>ユーザーの誕生日</p>
+<dd><p>User’s birthday</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>Optional[str]</p>
+<dd class="field-odd"><p>str</p>
 </dd>
 </dl>
 </dd></dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="mi.User.fields">
 <span class="sig-name descname"><span class="pre">fields</span></span><a class="headerlink" href="#mi.User.fields" title="Permalink to this definition">¶</a></dt>
-<dd><p>プロフィールのリンクフィールド</p>
+<dd><p>Link field in profile</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>list</p>
@@ -730,7 +730,7 @@ async</span><a class="reference internal" href="#mi.User.unfollow">unfollow</a><
 <dl class="py attribute">
 <dt class="sig sig-object py" id="mi.User.followers_count">
 <span class="sig-name descname"><span class="pre">followers_count</span></span><a class="headerlink" href="#mi.User.followers_count" title="Permalink to this definition">¶</a></dt>
-<dd><p>フォロワーの数</p>
+<dd><p>Number of Followers</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>int</p>
@@ -740,7 +740,7 @@ async</span><a class="reference internal" href="#mi.User.unfollow">unfollow</a><
 <dl class="py attribute">
 <dt class="sig sig-object py" id="mi.User.following_count">
 <span class="sig-name descname"><span class="pre">following_count</span></span><a class="headerlink" href="#mi.User.following_count" title="Permalink to this definition">¶</a></dt>
-<dd><p>フォローしている人の数</p>
+<dd><p>Number of people following you</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>int</p>
@@ -750,7 +750,7 @@ async</span><a class="reference internal" href="#mi.User.unfollow">unfollow</a><
 <dl class="py attribute">
 <dt class="sig sig-object py" id="mi.User.notes_count">
 <span class="sig-name descname"><span class="pre">notes_count</span></span><a class="headerlink" href="#mi.User.notes_count" title="Permalink to this definition">¶</a></dt>
-<dd><p>投稿したノートの数</p>
+<dd><p>Number of notes you have posted</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>int</p>
@@ -760,7 +760,7 @@ async</span><a class="reference internal" href="#mi.User.unfollow">unfollow</a><
 <dl class="py attribute">
 <dt class="sig sig-object py" id="mi.User.pinned_note_ids">
 <span class="sig-name descname"><span class="pre">pinned_note_ids</span></span><a class="headerlink" href="#mi.User.pinned_note_ids" title="Permalink to this definition">¶</a></dt>
-<dd><p>ピン留めされたノートのidリスト</p>
+<dd><p>id list of pinned notes</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>list</p>
@@ -770,37 +770,37 @@ async</span><a class="reference internal" href="#mi.User.unfollow">unfollow</a><
 <dl class="py attribute">
 <dt class="sig sig-object py" id="mi.User.pinned_page_id">
 <span class="sig-name descname"><span class="pre">pinned_page_id</span></span><a class="headerlink" href="#mi.User.pinned_page_id" title="Permalink to this definition">¶</a></dt>
-<dd><p>ピン留めされたページのid</p>
+<dd><p>The id of the pinned page</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>Optional[str]</p>
+<dd class="field-odd"><p>str</p>
 </dd>
 </dl>
 </dd></dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="mi.User.pinned_page">
 <span class="sig-name descname"><span class="pre">pinned_page</span></span><a class="headerlink" href="#mi.User.pinned_page" title="Permalink to this definition">¶</a></dt>
-<dd><p>ピン留めされたページ</p>
+<dd><p>pinned page</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>Optional[str]</p>
+<dd class="field-odd"><p>str</p>
 </dd>
 </dl>
 </dd></dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="mi.User.ff_visibility">
 <span class="sig-name descname"><span class="pre">ff_visibility</span></span><a class="headerlink" href="#mi.User.ff_visibility" title="Permalink to this definition">¶</a></dt>
-<dd><p>ノートの投稿範囲</p>
+<dd><p>Scope of note submissions</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>Optional[str]</p>
+<dd class="field-odd"><p>str</p>
 </dd>
 </dl>
 </dd></dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="mi.User.following">
 <span class="sig-name descname"><span class="pre">following</span></span><a class="headerlink" href="#mi.User.following" title="Permalink to this definition">¶</a></dt>
-<dd><p>ユーザーがフォローしているかどうか</p>
+<dd><p>Whether the user is following you or not</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>bool</p>
@@ -810,7 +810,7 @@ async</span><a class="reference internal" href="#mi.User.unfollow">unfollow</a><
 <dl class="py attribute">
 <dt class="sig sig-object py" id="mi.User.followed">
 <span class="sig-name descname"><span class="pre">followed</span></span><a class="headerlink" href="#mi.User.followed" title="Permalink to this definition">¶</a></dt>
-<dd><p>ユーザーのことをフォローしているかどうか</p>
+<dd><p>Whether you are following your users or not.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>bool</p>
@@ -820,7 +820,7 @@ async</span><a class="reference internal" href="#mi.User.unfollow">unfollow</a><
 <dl class="py attribute">
 <dt class="sig sig-object py" id="mi.User.blocking">
 <span class="sig-name descname"><span class="pre">blocking</span></span><a class="headerlink" href="#mi.User.blocking" title="Permalink to this definition">¶</a></dt>
-<dd><p>ユーザーが自分のことをブロックしているかどうか</p>
+<dd><p>Whether a user is blocking you or not.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>bool</p>
@@ -830,7 +830,7 @@ async</span><a class="reference internal" href="#mi.User.unfollow">unfollow</a><
 <dl class="py attribute">
 <dt class="sig sig-object py" id="mi.User.blocked">
 <span class="sig-name descname"><span class="pre">blocked</span></span><a class="headerlink" href="#mi.User.blocked" title="Permalink to this definition">¶</a></dt>
-<dd><p>ユーザーのことをブロックしているかどうか</p>
+<dd><p>Whether the user is being blocked or not.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>bool</p>
@@ -840,7 +840,7 @@ async</span><a class="reference internal" href="#mi.User.unfollow">unfollow</a><
 <dl class="py attribute">
 <dt class="sig sig-object py" id="mi.User.muted">
 <span class="sig-name descname"><span class="pre">muted</span></span><a class="headerlink" href="#mi.User.muted" title="Permalink to this definition">¶</a></dt>
-<dd><p>ユーザーのことをミュートしているかどうか</p>
+<dd><p>Whether the user is muted or not.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
 <dd class="field-odd"><p>bool</p>
@@ -850,17 +850,17 @@ async</span><a class="reference internal" href="#mi.User.unfollow">unfollow</a><
 <dl class="py attribute">
 <dt class="sig sig-object py" id="mi.User.instance">
 <span class="sig-name descname"><span class="pre">instance</span></span><a class="headerlink" href="#mi.User.instance" title="Permalink to this definition">¶</a></dt>
-<dd><p>ユーザーのインスタンス</p>
+<dd><p>User Instances</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>Any</p>
+<dd class="field-odd"><p>any</p>
 </dd>
 </dl>
 </dd></dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="mi.User.details">
 <span class="sig-name descname"><span class="pre">details</span></span><a class="headerlink" href="#mi.User.details" title="Permalink to this definition">¶</a></dt>
-<dd><p>ユーザーの詳細な情報</p>
+<dd><p>More information about the user</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
 <dd class="field-odd"><p><a class="reference internal" href="#mi.UserDetails" title="mi.UserDetails">UserDetails</a></p>
@@ -870,12 +870,12 @@ async</span><a class="reference internal" href="#mi.User.unfollow">unfollow</a><
 <dl class="py method">
 <dt class="sig sig-object py" id="mi.User.follow">
 <em class="property"><span class="pre">await</span> </em><span class="sig-name descname"><span class="pre">follow</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/user.html#User.follow"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mi.User.follow" title="Permalink to this definition">¶</a></dt>
-<dd><p>ユーザーをフォローします</p>
+<dd><p>Follow users</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p><ul class="simple">
-<li><p><em>bool = False</em> – 成功ならTrue, 失敗ならFalse</p></li>
-<li><p><em>str</em> – 実行に失敗した際のエラーコード</p></li>
+<li><p><em>bool = False</em> – True for success, False for failure</p></li>
+<li><p><em>str</em> – Error code when execution fails.</p></li>
 </ul>
 </p>
 </dd>
@@ -884,10 +884,10 @@ async</span><a class="reference internal" href="#mi.User.unfollow">unfollow</a><
 <dl class="py method">
 <dt class="sig sig-object py" id="mi.User.unfollow">
 <em class="property"><span class="pre">await</span> </em><span class="sig-name descname"><span class="pre">unfollow</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/user.html#User.unfollow"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mi.User.unfollow" title="Permalink to this definition">¶</a></dt>
-<dd><p>ユーザーのフォローを解除します</p>
+<dd><p>Unfollow a user</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><strong>status</strong> – 成功ならTrue, 失敗ならFalse</p>
+<dd class="field-odd"><p><strong>status</strong> – True for success, False for failure</p>
 </dd>
 <dt class="field-even">Return type</dt>
 <dd class="field-even"><p>bool = False</p>
@@ -897,10 +897,10 @@ async</span><a class="reference internal" href="#mi.User.unfollow">unfollow</a><
 <dl class="py method">
 <dt class="sig sig-object py" id="mi.User.get_profile">
 <em class="property"><span class="pre">await</span> </em><span class="sig-name descname"><span class="pre">get_profile</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/user.html#User.get_profile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mi.User.get_profile" title="Permalink to this definition">¶</a></dt>
-<dd><p>ユーザーのプロフィールを取得します</p>
+<dd><p>Retrieves a user’s profile</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>ユーザーのプロフィールオブジェクト</p>
+<dd class="field-odd"><p>The user’s profile object</p>
 </dd>
 <dt class="field-even">Return type</dt>
 <dd class="field-even"><p><a class="reference internal" href="#mi.User" title="mi.User">User</a></p>
@@ -910,17 +910,17 @@ async</span><a class="reference internal" href="#mi.User.unfollow">unfollow</a><
 <dl class="py method">
 <dt class="sig sig-object py" id="mi.User.get_followers">
 <span class="sig-name descname"><span class="pre">get_followers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">until_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">get_all</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/user.html#User.get_followers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mi.User.get_followers" title="Permalink to this definition">¶</a></dt>
-<dd><p>ユーザーのフォロワー一覧を取得します</p>
+<dd><p>Gets a list of the user’s followers</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>until_id</strong> (<em>str</em><em>, </em><em>default=None</em>) – 前回のフォロワーの続きを取得する場合の起点とするユーザーid</p></li>
-<li><p><strong>limit</strong> (<em>int</em><em>, </em><em>default=10</em>) – 最大何人取得するか, max=100</p></li>
-<li><p><strong>get_all</strong> (<em>bool</em><em>, </em><em>default=False</em>) – 全てのフォロワーを取得するか否か</p></li>
+<li><p><strong>until_id</strong> (<em>str</em><em>, </em><em>default=None</em>) – The user id to use as the starting point when retrieving the continuation of the previous follower.</p></li>
+<li><p><strong>limit</strong> (<em>int</em><em>, </em><em>default=10</em>) – Maximum number of people to retrieve, max=100</p></li>
+<li><p><strong>get_all</strong> (<em>bool</em><em>, </em><em>default=False</em>) – Whether to retrieve all followers or not</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>ユーザーのフォロワー一覧</p>
+<dd class="field-even"><p>User’s Followers List</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>AsyncIterator[Follower]</p>
@@ -941,34 +941,34 @@ Attributes</span><ul>
 </div></div><dl class="py class">
 <dt class="sig sig-object py" id="mi.UserDetails">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.</span></span><span class="sig-name descname"><span class="pre">UserDetails</span></span><a class="reference internal" href="_modules/mi/user.html#UserDetails"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mi.UserDetails" title="Permalink to this definition">¶</a></dt>
-<dd><p>ユーザー情報だが、一般的に使うか怪しいもの</p>
+<dd><p>User information, but of dubious general use.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="mi.UserDetails.avatar_blurhash">
 <span class="sig-name descname"><span class="pre">avatar_blurhash</span></span><a class="headerlink" href="#mi.UserDetails.avatar_blurhash" title="Permalink to this definition">¶</a></dt>
-<dd><p>ユーザーのアバターのblurhash</p>
+<dd><p>User avatar blurhash</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>Optional[str]</p>
+<dd class="field-odd"><p>Optional[str].</p>
 </dd>
 </dl>
 </dd></dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="mi.UserDetails.avatar_color">
 <span class="sig-name descname"><span class="pre">avatar_color</span></span><a class="headerlink" href="#mi.UserDetails.avatar_color" title="Permalink to this definition">¶</a></dt>
-<dd><p>ユーザーのアバターの色</p>
+<dd><p>The color of the user’s avatar</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>Optional[str]</p>
+<dd class="field-odd"><p>str</p>
 </dd>
 </dl>
 </dd></dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="mi.UserDetails.lang">
 <span class="sig-name descname"><span class="pre">lang</span></span><a class="headerlink" href="#mi.UserDetails.lang" title="Permalink to this definition">¶</a></dt>
-<dd><p>ユーザーの言語</p>
+<dd><p>User’s language</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>Optional[str]</p>
+<dd class="field-odd"><p>str</p>
 </dd>
 </dl>
 </dd></dl>
@@ -982,14 +982,14 @@ async</span><a class="reference internal" href="#mi.Chat.delete">delete</a></li>
 </div></div><dl class="py class">
 <dt class="sig sig-object py" id="mi.Chat">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.</span></span><span class="sig-name descname"><span class="pre">Chat</span></span><a class="reference internal" href="_modules/mi/chat.html#Chat"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mi.Chat" title="Permalink to this definition">¶</a></dt>
-<dd><p>チャットオブジェクト</p>
+<dd><p>chat object</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="mi.Chat.delete">
 <em class="property"><span class="pre">await</span> </em><span class="sig-name descname"><span class="pre">delete</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/chat.html#Chat.delete"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mi.Chat.delete" title="Permalink to this definition">¶</a></dt>
-<dd><p>チャットを削除します（チャットの作者である必要があります）</p>
+<dd><p>Delete the chat (you must be the author of the chat)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>成功したか否か</p>
+<dd class="field-odd"><p>Successful or not.</p>
 </dd>
 <dt class="field-even">Return type</dt>
 <dd class="field-even"><p>bool</p>
@@ -999,7 +999,7 @@ async</span><a class="reference internal" href="#mi.Chat.delete">delete</a></li>
 </dd></dl>
 </div>
 <div class="section" id="drive">
-<h3>Drive<a class="headerlink" href="#drive" title="Permalink to this headline">¶</a></h3>
+<h3>drive<a class="headerlink" href="#drive" title="Permalink to this headline">¶</a></h3>
 <div class="py-attribute-table" data-move-to-id="mi.Drive"><div class="py-attribute-table-column">
 <span>
 Methods</span><ul>
@@ -1012,10 +1012,10 @@ async</span><a class="reference internal" href="#mi.Drive.delete">delete</a></li
 <dd><dl class="py method">
 <dt class="sig sig-object py" id="mi.Drive.delete">
 <em class="property"><span class="pre">await</span> </em><span class="sig-name descname"><span class="pre">delete</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/drive.html#Drive.delete"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mi.Drive.delete" title="Permalink to this definition">¶</a></dt>
-<dd><p>ファイルを削除します。</p>
+<dd><p>Deletes the file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>削除に成功したかどうか</p>
+<dd class="field-odd"><p>Whether the deletion was successful or not.</p>
 </dd>
 <dt class="field-even">Return type</dt>
 <dd class="field-even"><p>bool</p>
@@ -1025,7 +1025,7 @@ async</span><a class="reference internal" href="#mi.Drive.delete">delete</a></li
 </dd></dl>
 </div>
 <div class="section" id="emoji">
-<h3>Emoji<a class="headerlink" href="#emoji" title="Permalink to this headline">¶</a></h3>
+<h3>emoji<a class="headerlink" href="#emoji" title="Permalink to this headline">¶</a></h3>
 <div class="py-attribute-table" data-move-to-id="mi.Emoji"></div><dl class="py class">
 <dt class="sig sig-object py" id="mi.Emoji">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.</span></span><span class="sig-name descname"><span class="pre">Emoji</span></span><a class="reference internal" href="_modules/mi/emoji.html#Emoji"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mi.Emoji" title="Permalink to this definition">¶</a></dt>
@@ -1047,10 +1047,10 @@ def</span><a class="reference internal" href="#mi.Renote.emoji_count">emoji_coun
 <dd><dl class="py method">
 <dt class="sig sig-object py" id="mi.Renote.emoji_count">
 <span class="sig-name descname"><span class="pre">emoji_count</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/note.html#Renote.emoji_count"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mi.Renote.emoji_count" title="Permalink to this definition">¶</a></dt>
-<dd><p>ノートの本文にemojiが何個含まれているかを返します</p>
+<dd><p>Returns the number of emoji in the body of the note.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>含まれている絵文字の数</p>
+<dd class="field-odd"><p>Number of emoji included</p>
 </dd>
 <dt class="field-even">Return type</dt>
 <dd class="field-even"><p>int</p>
@@ -1060,12 +1060,12 @@ def</span><a class="reference internal" href="#mi.Renote.emoji_count">emoji_coun
 <dl class="py method">
 <dt class="sig sig-object py" id="mi.Renote.delete">
 <em class="property"><span class="pre">await</span> </em><span class="sig-name descname"><span class="pre">delete</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/note.html#Renote.delete"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mi.Renote.delete" title="Permalink to this definition">¶</a></dt>
-<dd><p>指定したIDのノートを削除します</p>
+<dd><p>Deletes the note with the specified ID</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p><ul class="simple">
-<li><p><strong>is_success</strong> (<em>bool</em>) – 成功したか否か</p></li>
-<li><p><strong>status_code</strong> (<em>int</em>) – HTTP レスポンスステータスコード</p></li>
+<li><p><strong>is_success</strong> (<em>bool</em>) – success or failure</p></li>
+<li><p><strong>status_code</strong> (<em>int</em>) – HTTP response status code</p></li>
 </ul>
 </p>
 </dd>
@@ -1074,7 +1074,7 @@ def</span><a class="reference internal" href="#mi.Renote.emoji_count">emoji_coun
 </dd></dl>
 </div>
 <div class="section" id="follow">
-<h3>Follow<a class="headerlink" href="#follow" title="Permalink to this headline">¶</a></h3>
+<h3>follow<a class="headerlink" href="#follow" title="Permalink to this headline">¶</a></h3>
 <div class="py-attribute-table" data-move-to-id="mi.Follow"><div class="py-attribute-table-column">
 <span>
 Methods</span><ul>
@@ -1089,24 +1089,23 @@ async</span><a class="reference internal" href="#mi.Follow.unfollow">unfollow</a
 <dd><dl class="py method">
 <dt class="sig sig-object py" id="mi.Follow.follow">
 <em class="property"><span class="pre">await</span> </em><span class="sig-name descname"><span class="pre">follow</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/note.html#Follow.follow"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mi.Follow.follow" title="Permalink to this definition">¶</a></dt>
-<dd><p>ユーザーをフォローします
-:returns: * <em>bool = False</em> – 成功ならTrue, 失敗ならFalse</p>
+<dd><p>Follow the user :returns: * <em>bool = False</em> – True for success, False for failure.</p>
 <blockquote>
 <div><ul class="simple">
-<li><p><em>str</em> – 実行に失敗した際のエラーコード</p></li>
+<li><p><em>str</em> – Error code when execution fails.</p></li>
 </ul>
 </div></blockquote>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="mi.Follow.unfollow">
 <em class="property"><span class="pre">await</span> </em><span class="sig-name descname"><span class="pre">unfollow</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/note.html#Follow.unfollow"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mi.Follow.unfollow" title="Permalink to this definition">¶</a></dt>
-<dd><p>与えられたIDのユーザーのフォローを解除します</p>
+<dd><p>Unfollows the user with the given ID</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>user_id</strong> (<em>Optional</em><em>[</em><em>str</em><em>] </em><em>= None</em>) – フォローを解除したいユーザーのID</p>
+<dd class="field-odd"><p><strong>user_id</strong> (<em>Optional</em><em>[</em><em>str</em><em>] </em><em>= None</em>) – ID of the user you want to unfollow</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>status</strong> – 成功ならTrue, 失敗ならFalse</p>
+<dd class="field-even"><p><strong>status</strong> – True for success, False for failure</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>bool = False</p>
@@ -1117,7 +1116,7 @@ async</span><a class="reference internal" href="#mi.Follow.unfollow">unfollow</a
 </div>
 </div>
 <div class="section" id="id3">
-<h2>データクラス<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<h2>data class<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="header">
 <h3>Header<a class="headerlink" href="#header" title="Permalink to this headline">¶</a></h3>
 <div class="py-attribute-table" data-move-to-id="mi.Header"></div><dl class="py class">
@@ -1133,14 +1132,14 @@ async</span><a class="reference internal" href="#mi.Follow.unfollow">unfollow</a
 <dd></dd></dl>
 </div>
 <div class="section" id="file">
-<h3>File<a class="headerlink" href="#file" title="Permalink to this headline">¶</a></h3>
+<h3>file<a class="headerlink" href="#file" title="Permalink to this headline">¶</a></h3>
 <div class="py-attribute-table" data-move-to-id="mi.Header"></div><dl class="py class">
 <dt class="sig sig-object py" id="id0">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.</span></span><span class="sig-name descname"><span class="pre">Header</span></span><a class="reference internal" href="_modules/mi/note.html#Header"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#id0" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 </div>
 <div class="section" id="reaction">
-<h3>Reaction<a class="headerlink" href="#reaction" title="Permalink to this headline">¶</a></h3>
+<h3>reaction<a class="headerlink" href="#reaction" title="Permalink to this headline">¶</a></h3>
 <div class="py-attribute-table" data-move-to-id="mi.Reaction"></div><dl class="py class">
 <dt class="sig sig-object py" id="mi.Reaction">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.</span></span><span class="sig-name descname"><span class="pre">Reaction</span></span><a class="reference internal" href="_modules/mi/note.html#Reaction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mi.Reaction" title="Permalink to this definition">¶</a></dt>
@@ -1148,13 +1147,13 @@ async</span><a class="reference internal" href="#mi.Follow.unfollow">unfollow</a
 </div>
 </div>
 <div class="section" id="id4">
-<h2>例外処理<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<h2>exception handling<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="notfounderror">
 <h3>NotFoundError<a class="headerlink" href="#notfounderror" title="Permalink to this headline">¶</a></h3>
 <dl class="py class">
 <dt class="sig sig-object py" id="mi.NotFoundError">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.</span></span><span class="sig-name descname"><span class="pre">NotFoundError</span></span><a class="reference internal" href="_modules/mi/exception.html#NotFoundError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mi.NotFoundError" title="Permalink to this definition">¶</a></dt>
-<dd><p>http アクセス時に404が帰ってきた際の例外</p>
+<dd><p>Exception when a 404 is returned on http access</p>
 </dd></dl>
 </div>
 <div class="section" id="tasknotrunningerror">
@@ -1162,7 +1161,7 @@ async</span><a class="reference internal" href="#mi.Follow.unfollow">unfollow</a
 <dl class="py class">
 <dt class="sig sig-object py" id="mi.TaskNotRunningError">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.</span></span><span class="sig-name descname"><span class="pre">TaskNotRunningError</span></span><a class="reference internal" href="_modules/mi/exception.html#TaskNotRunningError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mi.TaskNotRunningError" title="Permalink to this definition">¶</a></dt>
-<dd><p>タスクを停止しようとした際、タスクが起動していない場合に発生する例外</p>
+<dd><p>Exception thrown when attempting to stop a task and the task is not started.</p>
 </dd></dl>
 </div>
 <div class="section" id="imai">
@@ -1170,7 +1169,7 @@ async</span><a class="reference internal" href="#mi.Follow.unfollow">unfollow</a
 <dl class="py class">
 <dt class="sig sig-object py" id="mi.ImAi">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.</span></span><span class="sig-name descname"><span class="pre">ImAi</span></span><a class="reference internal" href="_modules/mi/exception.html#ImAi"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mi.ImAi" title="Permalink to this definition">¶</a></dt>
-<dd><p>ImAi</p>
+<dd><p>I’m Indigo.</p>
 </dd></dl>
 </div>
 <div class="section" id="internalservererror">
@@ -1178,7 +1177,7 @@ async</span><a class="reference internal" href="#mi.Follow.unfollow">unfollow</a
 <dl class="py class">
 <dt class="sig sig-object py" id="mi.InternalServerError">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.</span></span><span class="sig-name descname"><span class="pre">InternalServerError</span></span><a class="reference internal" href="_modules/mi/exception.html#InternalServerError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mi.InternalServerError" title="Permalink to this definition">¶</a></dt>
-<dd><p>http アクセス時に500が帰ってきた際の例外</p>
+<dd><p>Exception when 500 is returned on http access</p>
 </dd></dl>
 </div>
 <div class="section" id="clienterror">
@@ -1186,7 +1185,7 @@ async</span><a class="reference internal" href="#mi.Follow.unfollow">unfollow</a
 <dl class="py class">
 <dt class="sig sig-object py" id="mi.ClientError">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.</span></span><span class="sig-name descname"><span class="pre">ClientError</span></span><a class="reference internal" href="_modules/mi/exception.html#ClientError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mi.ClientError" title="Permalink to this definition">¶</a></dt>
-<dd><p>http アクセス時に400が帰ってきた際の例外</p>
+<dd><p>Exception when http access returns 400</p>
 </dd></dl>
 </div>
 <div class="section" id="authenticationerror">
@@ -1194,7 +1193,7 @@ async</span><a class="reference internal" href="#mi.Follow.unfollow">unfollow</a
 <dl class="py class">
 <dt class="sig sig-object py" id="mi.AuthenticationError">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.</span></span><span class="sig-name descname"><span class="pre">AuthenticationError</span></span><a class="reference internal" href="_modules/mi/exception.html#AuthenticationError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mi.AuthenticationError" title="Permalink to this definition">¶</a></dt>
-<dd><p>認証で問題が発生した際の例外</p>
+<dd><p>Exceptions in case of authentication problems</p>
 </dd></dl>
 </div>
 <div class="section" id="notexistrequiredparameters">
@@ -1202,7 +1201,7 @@ async</span><a class="reference internal" href="#mi.Follow.unfollow">unfollow</a
 <dl class="py class">
 <dt class="sig sig-object py" id="mi.NotExistRequiredParameters">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.</span></span><span class="sig-name descname"><span class="pre">NotExistRequiredParameters</span></span><a class="reference internal" href="_modules/mi/exception.html#NotExistRequiredParameters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mi.NotExistRequiredParameters" title="Permalink to this definition">¶</a></dt>
-<dd><p>必須のパラメーターが存在しない場合の例外</p>
+<dd><p>Exception when a required parameter does not exist</p>
 </dd></dl>
 </div>
 <div class="section" id="invalidparameters">
@@ -1210,7 +1209,7 @@ async</span><a class="reference internal" href="#mi.Follow.unfollow">unfollow</a
 <dl class="py class">
 <dt class="sig sig-object py" id="mi.InvalidParameters">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.</span></span><span class="sig-name descname"><span class="pre">InvalidParameters</span></span><a class="reference internal" href="_modules/mi/exception.html#InvalidParameters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mi.InvalidParameters" title="Permalink to this definition">¶</a></dt>
-<dd><p>パラメーターが無効</p>
+<dd><p>Parameter is invalid</p>
 </dd></dl>
 </div>
 <div class="section" id="credentialrequired">
@@ -1218,7 +1217,7 @@ async</span><a class="reference internal" href="#mi.Follow.unfollow">unfollow</a
 <dl class="py class">
 <dt class="sig sig-object py" id="mi.CredentialRequired">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.</span></span><span class="sig-name descname"><span class="pre">CredentialRequired</span></span><a class="reference internal" href="_modules/mi/exception.html#CredentialRequired"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mi.CredentialRequired" title="Permalink to this definition">¶</a></dt>
-<dd><p>認証情報が不足している</p>
+<dd><p>Authentication information is missing.</p>
 </dd></dl>
 </div>
 <div class="section" id="contentrequired">
@@ -1226,7 +1225,7 @@ async</span><a class="reference internal" href="#mi.Follow.unfollow">unfollow</a
 <dl class="py class">
 <dt class="sig sig-object py" id="mi.ContentRequired">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.</span></span><span class="sig-name descname"><span class="pre">ContentRequired</span></span><a class="reference internal" href="_modules/mi/exception.html#ContentRequired"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mi.ContentRequired" title="Permalink to this definition">¶</a></dt>
-<dd><p>送信するコンテンツが不足している</p>
+<dd><p>Not enough content to send</p>
 </dd></dl>
 </div>
 <div class="section" id="cognameduplicate">
@@ -1234,7 +1233,7 @@ async</span><a class="reference internal" href="#mi.Follow.unfollow">unfollow</a
 <dl class="py class">
 <dt class="sig sig-object py" id="mi.CogNameDuplicate">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.</span></span><span class="sig-name descname"><span class="pre">CogNameDuplicate</span></span><a class="reference internal" href="_modules/mi/exception.html#CogNameDuplicate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mi.CogNameDuplicate" title="Permalink to this definition">¶</a></dt>
-<dd><p>cogの名前が重複している</p>
+<dd><p>Duplicate cog names.</p>
 </dd></dl>
 </div>
 <div class="section" id="extensionalreadyloaded">
@@ -1242,7 +1241,7 @@ async</span><a class="reference internal" href="#mi.Follow.unfollow">unfollow</a
 <dl class="py class">
 <dt class="sig sig-object py" id="mi.ExtensionAlreadyLoaded">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.</span></span><span class="sig-name descname"><span class="pre">ExtensionAlreadyLoaded</span></span><a class="reference internal" href="_modules/mi/exception.html#ExtensionAlreadyLoaded"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mi.ExtensionAlreadyLoaded" title="Permalink to this definition">¶</a></dt>
-<dd><p>cogがすでに読み込まれている</p>
+<dd><p>cog is already loaded.</p>
 </dd></dl>
 </div>
 <div class="section" id="extensionfailed">
@@ -1250,7 +1249,7 @@ async</span><a class="reference internal" href="#mi.Follow.unfollow">unfollow</a
 <dl class="py class">
 <dt class="sig sig-object py" id="mi.ExtensionFailed">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.</span></span><span class="sig-name descname"><span class="pre">ExtensionFailed</span></span><a class="reference internal" href="_modules/mi/exception.html#ExtensionFailed"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mi.ExtensionFailed" title="Permalink to this definition">¶</a></dt>
-<dd><p>cog周りのエラー</p>
+<dd><p>Errors around cog</p>
 </dd></dl>
 </div>
 <div class="section" id="noentrypointerror">
@@ -1258,7 +1257,7 @@ async</span><a class="reference internal" href="#mi.Follow.unfollow">unfollow</a
 <dl class="py class">
 <dt class="sig sig-object py" id="mi.NoEntryPointError">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.</span></span><span class="sig-name descname"><span class="pre">NoEntryPointError</span></span><a class="reference internal" href="_modules/mi/exception.html#NoEntryPointError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mi.NoEntryPointError" title="Permalink to this definition">¶</a></dt>
-<dd><p>cogにsetup関数が無い場合の例外</p>
+<dd><p>Exception when cog does not have a setup function</p>
 </dd></dl>
 </div>
 <div class="section" id="extensionnotfound">
@@ -1266,7 +1265,7 @@ async</span><a class="reference internal" href="#mi.Follow.unfollow">unfollow</a
 <dl class="py class">
 <dt class="sig sig-object py" id="mi.ExtensionNotFound">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.</span></span><span class="sig-name descname"><span class="pre">ExtensionNotFound</span></span><a class="reference internal" href="_modules/mi/exception.html#ExtensionNotFound"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mi.ExtensionNotFound" title="Permalink to this definition">¶</a></dt>
-<dd><p>指定されたパスにcogが存在しない場合の例外</p>
+<dd><p>Exception if cog does not exist in the specified path</p>
 </dd></dl>
 </div>
 <div class="section" id="commandregistrationerror">
@@ -1274,7 +1273,7 @@ async</span><a class="reference internal" href="#mi.Follow.unfollow">unfollow</a
 <dl class="py class">
 <dt class="sig sig-object py" id="mi.CommandRegistrationError">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.</span></span><span class="sig-name descname"><span class="pre">CommandRegistrationError</span></span><a class="reference internal" href="_modules/mi/exception.html#CommandRegistrationError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mi.CommandRegistrationError" title="Permalink to this definition">¶</a></dt>
-<dd><p>コマンド登録時のエラー</p>
+<dd><p>Error in command registration</p>
 </dd></dl>
 </div>
 <div class="section" id="commanderror">
@@ -1282,7 +1281,7 @@ async</span><a class="reference internal" href="#mi.Follow.unfollow">unfollow</a
 <dl class="py class">
 <dt class="sig sig-object py" id="mi.CommandError">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.</span></span><span class="sig-name descname"><span class="pre">CommandError</span></span><a class="reference internal" href="_modules/mi/exception.html#CommandError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mi.CommandError" title="Permalink to this definition">¶</a></dt>
-<dd><p>コマンドで問題が発生した際の例外</p>
+<dd><p>Exception when a problem occurs with the command</p>
 </dd></dl>
 </div>
 <div class="section" id="commandinvokeerror">
@@ -1290,7 +1289,7 @@ async</span><a class="reference internal" href="#mi.Follow.unfollow">unfollow</a
 <dl class="py class">
 <dt class="sig sig-object py" id="mi.CommandInvokeError">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.</span></span><span class="sig-name descname"><span class="pre">CommandInvokeError</span></span><a class="reference internal" href="_modules/mi/exception.html#CommandInvokeError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mi.CommandInvokeError" title="Permalink to this definition">¶</a></dt>
-<dd><p>コマンドの実行に問題が発生した際の例外</p>
+<dd><p>Exceptions when there is a problem executing the command</p>
 </dd></dl>
 </div>
 <div class="section" id="checkfailure">
@@ -1298,7 +1297,7 @@ async</span><a class="reference internal" href="#mi.Follow.unfollow">unfollow</a
 <dl class="py class">
 <dt class="sig sig-object py" id="mi.CheckFailure">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.</span></span><span class="sig-name descname"><span class="pre">CheckFailure</span></span><a class="reference internal" href="_modules/mi/exception.html#CheckFailure"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mi.CheckFailure" title="Permalink to this definition">¶</a></dt>
-<dd><p>コマンドの実行可能かのチェックに失敗した際の例外</p>
+<dd><p>Exception when the command fails to check if it is executable</p>
 </dd></dl>
 </div>
 <div class="section" id="invalidcogpath">
@@ -1306,7 +1305,7 @@ async</span><a class="reference internal" href="#mi.Follow.unfollow">unfollow</a
 <dl class="py class">
 <dt class="sig sig-object py" id="mi.InvalidCogPath">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.</span></span><span class="sig-name descname"><span class="pre">InvalidCogPath</span></span><a class="reference internal" href="_modules/mi/exception.html#InvalidCogPath"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mi.InvalidCogPath" title="Permalink to this definition">¶</a></dt>
-<dd><p>cogのパスが不正</p>
+<dd><p>Incorrect path for cog</p>
 </dd></dl>
 </div>
 <div class="section" id="notexistrequireddata">
@@ -1314,7 +1313,7 @@ async</span><a class="reference internal" href="#mi.Follow.unfollow">unfollow</a
 <dl class="py class">
 <dt class="sig sig-object py" id="mi.NotExistRequiredData">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.</span></span><span class="sig-name descname"><span class="pre">NotExistRequiredData</span></span><a class="reference internal" href="_modules/mi/exception.html#NotExistRequiredData"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mi.NotExistRequiredData" title="Permalink to this definition">¶</a></dt>
-<dd><p>必要なデータが存在しない場合に発生する例外</p>
+<dd><p>Exception raised when the required data does not exist.</p>
 </dd></dl>
 </div>
 </div>
@@ -1335,7 +1334,7 @@ async</span><a class="reference internal" href="#mi.Follow.unfollow">unfollow</a
 <dt class="sig sig-object py" id="mi.ConnectionState.parse_channel">
 <span class="sig-name descname"><span class="pre">parse_channel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/state.html#ConnectionState.parse_channel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mi.ConnectionState.parse_channel" title="Permalink to this definition">¶</a></dt>
 <dd><p>parse_channel is a function to parse channel event</p>
-<p>チャンネルタイプのデータを解析後適切なパーサーに移動させます</p>
+<p>Move the channel type data to the appropriate parser after analysis</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>message</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – Received message</p>
@@ -1345,37 +1344,37 @@ async</span><a class="reference internal" href="#mi.Follow.unfollow">unfollow</a
 <dl class="py method">
 <dt class="sig sig-object py" id="mi.ConnectionState.parse_reply">
 <span class="sig-name descname"><span class="pre">parse_reply</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/state.html#ConnectionState.parse_reply"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mi.ConnectionState.parse_reply" title="Permalink to this definition">¶</a></dt>
-<dd><p>リプライ</p>
+<dd><p>reply</p>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="mi.ConnectionState.parse_follow">
 <span class="sig-name descname"><span class="pre">parse_follow</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/state.html#ConnectionState.parse_follow"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mi.ConnectionState.parse_follow" title="Permalink to this definition">¶</a></dt>
-<dd><p>ユーザーをフォローした際のイベントを解析する関数</p>
+<dd><p>Function to analyze the event when following a user.</p>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="mi.ConnectionState.parse_followed">
 <span class="sig-name descname"><span class="pre">parse_followed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/state.html#ConnectionState.parse_followed"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mi.ConnectionState.parse_followed" title="Permalink to this definition">¶</a></dt>
-<dd><p>フォローイベントを解析する関数</p>
+<dd><p>Function to parse follow events</p>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="mi.ConnectionState.parse_mention">
 <span class="sig-name descname"><span class="pre">parse_mention</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/state.html#ConnectionState.parse_mention"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mi.ConnectionState.parse_mention" title="Permalink to this definition">¶</a></dt>
-<dd><p>メンションイベントを解析する関数</p>
+<dd><p>Function to parse a mention event</p>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="mi.ConnectionState.parse_messaging_message">
 <span class="sig-name descname"><span class="pre">parse_messaging_message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/state.html#ConnectionState.parse_messaging_message"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mi.ConnectionState.parse_messaging_message" title="Permalink to this definition">¶</a></dt>
-<dd><p>チャットが来た際のデータを処理する関数</p>
+<dd><p>Function to process data when a chat comes in</p>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="mi.ConnectionState.parse_unread_messaging_message">
 <span class="sig-name descname"><span class="pre">parse_unread_messaging_message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/state.html#ConnectionState.parse_unread_messaging_message"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mi.ConnectionState.parse_unread_messaging_message" title="Permalink to this definition">¶</a></dt>
-<dd><p>チャットが既読になっていない場合のデータを処理する関数</p>
+<dd><p>Function to process data when chat has not been read</p>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="mi.ConnectionState.parse_notification">
 <span class="sig-name descname"><span class="pre">parse_notification</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/state.html#ConnectionState.parse_notification"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mi.ConnectionState.parse_notification" title="Permalink to this definition">¶</a></dt>
-<dd><p>通知イベントを解析する関数</p>
+<dd><p>Function to parse notification events</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>message</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – Received message</p>
@@ -1391,7 +1390,7 @@ async</span><a class="reference internal" href="#mi.Follow.unfollow">unfollow</a
 <dl class="py method">
 <dt class="sig sig-object py" id="mi.ConnectionState.parse_unread_notification">
 <span class="sig-name descname"><span class="pre">parse_unread_notification</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/state.html#ConnectionState.parse_unread_notification"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mi.ConnectionState.parse_unread_notification" title="Permalink to this definition">¶</a></dt>
-<dd><p>未読の通知を解析する関数</p>
+<dd><p>Function to parse unread notifications</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>message</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – Received message</p>
@@ -1401,23 +1400,23 @@ async</span><a class="reference internal" href="#mi.Follow.unfollow">unfollow</a
 <dl class="py method">
 <dt class="sig sig-object py" id="mi.ConnectionState.parse_reaction">
 <span class="sig-name descname"><span class="pre">parse_reaction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/state.html#ConnectionState.parse_reaction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mi.ConnectionState.parse_reaction" title="Permalink to this definition">¶</a></dt>
-<dd><p>リアクションに関する情報を解析する関数</p>
+<dd><p>Function to analyze information about reactions</p>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="mi.ConnectionState.parse_note">
 <span class="sig-name descname"><span class="pre">parse_note</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/state.html#ConnectionState.parse_note"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mi.ConnectionState.parse_note" title="Permalink to this definition">¶</a></dt>
-<dd><p>ノートイベントを解析する関数</p>
+<dd><p>Function to parse note events</p>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="mi.ConnectionState.follow_user">
 <em class="property"><span class="pre">await</span> </em><span class="sig-name descname"><span class="pre">follow_user</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/state.html#ConnectionState.follow_user"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mi.ConnectionState.follow_user" title="Permalink to this definition">¶</a></dt>
-<dd><p>与えられたIDのユーザーをフォローします</p>
+<dd><p>Follow the user with the given ID</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>user_id</strong> (<em>Optional</em><em>[</em><em>str</em><em>] </em><em>= None</em>) – フォローしたいユーザーのID</p>
+<dd class="field-odd"><p><strong>user_id</strong> (<em>Optional</em><em>[</em><em>str</em><em>] </em><em>= None</em>) – ID of the user you want to follow</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>status</strong> – 成功ならTrue, 失敗ならFalse</p>
+<dd class="field-even"><p><strong>status</strong> – True for success, False for failure</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>bool = False</p>
@@ -1429,10 +1428,10 @@ async</span><a class="reference internal" href="#mi.Follow.unfollow">unfollow</a
 <em class="property"><span class="pre">await</span> </em><span class="sig-name descname"><span class="pre">unfollow_user</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/state.html#ConnectionState.unfollow_user"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mi.ConnectionState.unfollow_user" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>user_id</strong> – フォローを解除したいユーザーのID</p>
+<dd class="field-odd"><p><strong>user_id</strong> – ID of the user you want to unfollow</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>status</strong> – 成功したならTrue, 失敗したならFalse</p>
+<dd class="field-even"><p><strong>status</strong> – True for success, False for failure</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>bool = False</p>
@@ -1442,16 +1441,16 @@ async</span><a class="reference internal" href="#mi.Follow.unfollow">unfollow</a
 <dl class="py method">
 <dt class="sig sig-object py" id="mi.ConnectionState.add_reaction">
 <em class="property"><span class="pre">await</span> </em><span class="sig-name descname"><span class="pre">add_reaction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reaction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">note_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/state.html#ConnectionState.add_reaction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mi.ConnectionState.add_reaction" title="Permalink to this definition">¶</a></dt>
-<dd><p>指定したnoteに指定したリアクションを付与します（内部用</p>
+<dd><p>Give the specified reaction to the specified note (for internal use).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>reaction</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – 付与するリアクション名</p></li>
-<li><p><strong>note_id</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – 付与対象のノートID</p></li>
+<li><p><strong>reaction</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – Reaction name to be granted</p></li>
+<li><p><strong>note_id</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – Note ID to be granted</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>status</strong> – 成功したならTrue,失敗ならFalse</p>
+<dd class="field-even"><p><strong>status</strong> – True for success, False for failure</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>bool</p>
@@ -1461,13 +1460,13 @@ async</span><a class="reference internal" href="#mi.Follow.unfollow">unfollow</a
 <dl class="py method">
 <dt class="sig sig-object py" id="mi.ConnectionState.delete_note">
 <em class="property"><span class="pre">await</span> </em><span class="sig-name descname"><span class="pre">delete_note</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">note_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/state.html#ConnectionState.delete_note"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mi.ConnectionState.delete_note" title="Permalink to this definition">¶</a></dt>
-<dd><p>指定したidのノートを削除します。</p>
+<dd><p>Deletes the note with the specified id.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>note_id</strong> (<em>str</em>) – ノートid</p>
+<dd class="field-odd"><p><strong>note_id</strong> (<em>str</em>) – note id</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>成功したか否か</p>
+<dd class="field-even"><p>Successful or not.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>bool</p>
@@ -1477,18 +1476,17 @@ async</span><a class="reference internal" href="#mi.Follow.unfollow">unfollow</a
 <dl class="py method">
 <dt class="sig sig-object py" id="mi.ConnectionState.get_user">
 <em class="property"><span class="pre">await</span> </em><span class="sig-name descname"><span class="pre">get_user</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">host</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/state.html#ConnectionState.get_user"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mi.ConnectionState.get_user" title="Permalink to this definition">¶</a></dt>
-<dd><p>ユーザーのプロフィールを取得します。一度のみサーバーにアクセスしキャッシュをその後は使います。
-fetch_userを使った場合はキャッシュが廃棄され再度サーバーにアクセスします。</p>
+<dd><p>Retrieves the user’s profile. It accesses the server only once and uses the cache afterwards. If you use fetch_user, the cache is discarded and the server is accessed again.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>user_id</strong> (<em>str</em>) – 取得したいユーザーのユーザーID</p></li>
-<li><p><strong>username</strong> (<em>str</em>) – 取得したいユーザーのユーザー名</p></li>
-<li><p><strong>host</strong> (<em>str</em><em>, </em><em>default=None</em>) – 取得したいユーザーがいるインスタンスのhost</p></li>
+<li><p><strong>user_id</strong> (<em>str</em>) – User ID of the user you want to retrieve</p></li>
+<li><p><strong>username</strong> (<em>str</em>) – User name of the user you want to retrieve</p></li>
+<li><p><strong>host</strong> (<em>str</em><em>, </em><em>default=None</em>) – The host of the instance where the user you want to retrieve is located</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>ユーザー情報</p>
+<dd class="field-even"><p>user information</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>dict</p>
@@ -1498,18 +1496,18 @@ fetch_userを使った場合はキャッシュが廃棄され再度サーバー�
 <dl class="py method">
 <dt class="sig sig-object py" id="mi.ConnectionState.post_chat">
 <em class="property"><span class="pre">await</span> </em><span class="sig-name descname"><span class="pre">post_chat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">group_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/state.html#ConnectionState.post_chat"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mi.ConnectionState.post_chat" title="Permalink to this definition">¶</a></dt>
-<dd><p>チャットを送信します。</p>
+<dd><p>Send a chat.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>content</strong> (<em>str</em>) – 送信する内容</p></li>
-<li><p><strong>user_id</strong> (<em>str</em><em>, </em><em>optional</em>) – ユーザーid, default=None</p></li>
-<li><p><strong>group_id</strong> (<em>str</em><em>, </em><em>optional</em>) – グループid, default=None</p></li>
-<li><p><strong>file_id</strong> (<em>str</em><em>, </em><em>optional</em>) – 添付するファイルid, efault=None</p></li>
+<li><p><strong>content</strong> (<em>str</em>) – What to send</p></li>
+<li><p><strong>user_id</strong> (<em>str</em><em>, </em><em>optional</em>) – User id, default=None</p></li>
+<li><p><strong>group_id</strong> (<em>str</em><em>, </em><em>optional</em>) – Group id, default=None</p></li>
+<li><p><strong>file_id</strong> (<em>str</em><em>, </em><em>optional</em>) – File id to attach, efault=None</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>チャットの内容</p>
+<dd class="field-even"><p>Content of the chat</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><a class="reference internal" href="#mi.Chat" title="mi.Chat">Chat</a></p>
@@ -1519,13 +1517,13 @@ fetch_userを使った場合はキャッシュが廃棄され再度サーバー�
 <dl class="py method">
 <dt class="sig sig-object py" id="mi.ConnectionState.delete_chat">
 <em class="property"><span class="pre">await</span> </em><span class="sig-name descname"><span class="pre">delete_chat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/state.html#ConnectionState.delete_chat"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mi.ConnectionState.delete_chat" title="Permalink to this definition">¶</a></dt>
-<dd><p>指定したidのメッセージを削除します。</p>
+<dd><p>Deletes the message with the specified id.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>message_id</strong> (<em>str</em>) – メッセージid</p>
+<dd class="field-odd"><p><strong>message_id</strong> (<em>str</em>) – message-id</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>成功したか否か</p>
+<dd class="field-even"><p>Successful or not.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>bool</p>
@@ -1535,23 +1533,23 @@ fetch_userを使った場合はキャッシュが廃棄され再度サーバー�
 <dl class="py method">
 <dt class="sig sig-object py" id="mi.ConnectionState.post_note">
 <em class="property"><span class="pre">await</span> </em><span class="sig-name descname"><span class="pre">post_note</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visibility</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'public'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visible_user_ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cw</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">local_only</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">no_extract_mentions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">no_extract_hashtags</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">no_extract_emojis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reply_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">renote_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">poll</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/state.html#ConnectionState.post_note"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mi.ConnectionState.post_note" title="Permalink to this definition">¶</a></dt>
-<dd><p>ノートを投稿します。</p>
+<dd><p>Post Notes.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>content</strong> (<em>str</em>) – 投稿する内容</p></li>
-<li><p><strong>visibility</strong> (<em>str</em><em>, </em><em>optional</em>) – 公開範囲, by default “public”</p></li>
-<li><p><strong>visible_user_ids</strong> (<em>Optional</em><em>[</em><em>List</em><em>[</em><em>str</em><em>]</em><em>]</em><em>, </em><em>optional</em>) – 公開するユーザー, by default None</p></li>
-<li><p><strong>cw</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – 閲覧注意の文字, by default None</p></li>
-<li><p><strong>local_only</strong> (<em>bool</em><em>, </em><em>optional</em>) – ローカルにのみ表示するか, by default False</p></li>
-<li><p><strong>no_extract_mentions</strong> (<em>bool</em><em>, </em><em>optional</em>) – Expand mentions or by default False</p></li>
-<li><p><strong>no_extract_hashtags</strong> (<em>bool</em><em>, </em><em>optional</em>) – Expand the hashtag or by default False</p></li>
-<li><p><strong>no_extract_emojis</strong> (<em>bool</em><em>, </em><em>optional</em>) – Expand emoji or by default False</p></li>
-<li><p><strong>reply_id</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – リプライ先のid, by default None</p></li>
-<li><p><strong>renote_id</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – Renouted id, by default None</p></li>
+<li><p><strong>content</strong> (<em>str</em>) – What to post</p></li>
+<li><p><strong>visibility</strong> (<em>str</em><em>, </em><em>optional</em>) – Public range, by default “public”</p></li>
+<li><p><strong>visible_user_ids</strong> (<em>Optional</em><em>[</em><em>List</em><em>[</em><em>str</em><em>]</em><em>]</em><em>, </em><em>optional</em>) – User to publish, by default None</p></li>
+<li><p><strong>cw</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – Warning text, by default None</p></li>
+<li><p><strong>local_only</strong> (<em>bool</em><em>, </em><em>optional</em>) – Show only locally, by default False</p></li>
+<li><p><strong>no_extract_mentions</strong> (<em>bool</em><em>, </em><em>optional</em>) – whether to expand the mention, by default False</p></li>
+<li><p><strong>no_extract_hashtags</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to expand hashtags, by default False</p></li>
+<li><p><strong>no_extract_emojis</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to expand pictograms, by default False</p></li>
+<li><p><strong>reply_id</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – The id of the reply destination, by default None</p></li>
+<li><p><strong>renote_id</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – The id of the renote destination, by default None</p></li>
 <li><p><strong>channel_id</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – Channel id, by default None</p></li>
-<li><p><strong>file_ids</strong> (<em>[</em><em>type</em><em>]</em><em>, </em><em>optional</em>) – Id of the file to be attached, by default None</p></li>
-<li><p><strong>poll</strong> (<em>Optional</em><em>[</em><em>Poll</em><em>]</em><em>, </em><em>optional</em>) – アンケート, by default None</p></li>
+<li><p><strong>file_ids</strong> (<em>[</em><em>type</em><em>]</em><em>, </em><em>optional</em>) – The id of the file to attach, by default None</p></li>
+<li><p><strong>poll</strong> (<em>Optional</em><em>[</em><em>Poll</em><em>]</em><em>, </em><em>optional</em>) – Survey, by default None</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -1560,7 +1558,7 @@ fetch_userを使った場合はキャッシュが廃棄され再度サーバー�
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>[type]</p>
 </dd>
-<dt class="field-even">Raises</dt>
+<dt class="field-even">raises</dt>
 <dd class="field-even"><p><a class="reference internal" href="#mi.ContentRequired" title="mi.ContentRequired"><strong>ContentRequired</strong></a> – [description]</p>
 </dd>
 </dl>
@@ -1568,24 +1566,24 @@ fetch_userを使った場合はキャッシュが廃棄され再度サーバー�
 <dl class="py method">
 <dt class="sig sig-object py" id="mi.ConnectionState.get_followers">
 <em class="property"><span class="pre">async</span> <span class="pre">for</span> <span class="pre">...</span> <span class="pre">in</span> </em><span class="sig-name descname"><span class="pre">get_followers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">host</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">since_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">until_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">get_all</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/state.html#ConnectionState.get_followers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mi.ConnectionState.get_followers" title="Permalink to this definition">¶</a></dt>
-<dd><p>与えられたユーザーのフォロワーを取得します</p>
+<dd><p>Gets the followers for a given user</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>user_id</strong> (<em>str</em><em>, </em><em>default=None</em>) – ユーザーのid</p></li>
-<li><p><strong>username</strong> (<em>str</em><em>, </em><em>default=None</em>) – ユーザー名</p></li>
-<li><p><strong>host</strong> (<em>str</em><em>, </em><em>default=None</em>) – ユーザーがいるインスタンスのhost名</p></li>
+<li><p><strong>user_id</strong> (<em>str</em><em>, </em><em>default=None</em>) – The id of the user</p></li>
+<li><p><strong>username</strong> (<em>str</em><em>, </em><em>default=None</em>) – username</p></li>
+<li><p><strong>host</strong> (<em>str</em><em>, </em><em>default=None</em>) – The host name of the instance the user is in</p></li>
 <li><p><strong>since_id</strong> (<em>str</em><em>, </em><em>default=None</em>) – </p></li>
-<li><p><strong>until_id</strong> (<em>str</em><em>, </em><em>default=None</em>) – 前回の最後の値を与える(既に実行し取得しきれない場合に使用)</p></li>
-<li><p><strong>limit</strong> (<em>int</em><em>, </em><em>default=10</em>) – 取得する情報の最大数 max: 100</p></li>
-<li><p><strong>get_all</strong> (<em>bool</em><em>, </em><em>default=False</em>) – 全てのフォロワーを取得する</p></li>
+<li><p><strong>until_id</strong> (<em>str</em><em>, </em><em>default=None</em>) – Give the last value of the last time (use this if you’ve already done it and can’t get it)</p></li>
+<li><p><strong>limit</strong> (<em>int</em><em>, </em><em>default=10</em>) – Maximum number of information to retrieve max: 100</p></li>
+<li><p><strong>get_all</strong> (<em>bool</em><em>, </em><em>default=False</em>) – Get All Followers</p></li>
 </ul>
 </dd>
 <dt class="field-even">Yields</dt>
-<dd class="field-even"><p><em>dict</em> – フォロワーの情報</p>
+<dd class="field-even"><p><em>dict</em> – Follower information</p>
 </dd>
-<dt class="field-odd">Raises</dt>
-<dd class="field-odd"><p><a class="reference internal" href="#mi.InvalidParameters" title="mi.InvalidParameters"><strong>InvalidParameters</strong></a> – limit引数が不正な場合</p>
+<dt class="field-odd">raises</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#mi.InvalidParameters" title="mi.InvalidParameters"><strong>InvalidParameters</strong></a> – If the limit argument is invalid</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1595,10 +1593,10 @@ fetch_userを使った場合はキャッシュが廃棄され再度サーバー�
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>limit</strong> (<em>int</em>) – 最大取得数</p></li>
-<li><p><strong>with_unreads</strong> (<em>bool</em>) – 既読済みか否か</p></li>
+<li><p><strong>limit</strong> (<em>int</em>) – Maximum number of acquisitions</p></li>
+<li><p><strong>with_unreads</strong> (<em>bool</em>) – read or unread</p></li>
 <li><p><strong>since_id</strong> (<em>str</em>) – </p></li>
-<li><p><strong>until_id</strong> (<em>str</em>) – 前回の最後の値を与える(既に実行し取得しきれない場合に使用)</p></li>
+<li><p><strong>until_id</strong> (<em>str</em>) – Give the last value of the last time (use this if you’ve already done it and can’t get it)</p></li>
 </ul>
 </dd>
 </dl>
@@ -1679,31 +1677,31 @@ fetch_userを使った場合はキャッシュが廃棄され再度サーバー�
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#">API reference</a><ul>
-<li><a class="reference internal" href="#id1">Event Reference</a></li>
-<li><a class="reference internal" href="#id2">Abstract Base Classes</a><ul>
+<li><a class="reference internal" href="#">API Reference</a><ul>
+<li><a class="reference internal" href="#id1">event reference</a></li>
+<li><a class="reference internal" href="#id2">abstract base class</a><ul>
 <li><a class="reference internal" href="#abstractbotbase">AbstractBotBase</a></li>
 <li><a class="reference internal" href="#abstractchatcontent">AbstractChatContent</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#misskey">Misskey Models</a><ul>
-<li><a class="reference internal" href="#note">Note</a></li>
-<li><a class="reference internal" href="#user">User</a></li>
+<li><a class="reference internal" href="#note">note</a></li>
+<li><a class="reference internal" href="#user">user</a></li>
 <li><a class="reference internal" href="#userdetails">UserDetails</a></li>
-<li><a class="reference internal" href="#drive">Drive</a></li>
-<li><a class="reference internal" href="#emoji">Emoji</a></li>
+<li><a class="reference internal" href="#drive">drive</a></li>
+<li><a class="reference internal" href="#emoji">emoji</a></li>
 <li><a class="reference internal" href="#renote">Renote</a></li>
-<li><a class="reference internal" href="#follow">Follow</a></li>
+<li><a class="reference internal" href="#follow">follow</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id3">データクラス</a><ul>
+<li><a class="reference internal" href="#id3">data class</a><ul>
 <li><a class="reference internal" href="#header">Header</a></li>
 <li><a class="reference internal" href="#properties">Properties</a></li>
-<li><a class="reference internal" href="#file">File</a></li>
-<li><a class="reference internal" href="#reaction">Reaction</a></li>
+<li><a class="reference internal" href="#file">file</a></li>
+<li><a class="reference internal" href="#reaction">reaction</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id4">例外処理</a><ul>
+<li><a class="reference internal" href="#id4">exception handling</a><ul>
 <li><a class="reference internal" href="#notfounderror">NotFoundError</a></li>
 <li><a class="reference internal" href="#tasknotrunningerror">TaskNotRunningError</a></li>
 <li><a class="reference internal" href="#imai">ImAi</a></li>
