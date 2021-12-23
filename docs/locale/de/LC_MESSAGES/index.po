@@ -21,11 +21,11 @@ msgstr "Diese Bibliothek kann `debug` mittels `logging` ausgeben. Sie sollten `d
 
 #: ../../mi.rst:12
 msgid "イベントリファレンス"
-msgstr "Referenz der Veranstaltung"
+msgstr "Referenz des Ereignisses"
 
 #: ../../mi.rst:16
 msgid "botがwebsocketに接続し終えた時点で呼び出されます。"
-msgstr "Er wird aufgerufen, wenn der Bot die Verbindung zum Websocket beendet hat."
+msgstr "Er wird aufgerufen, wenn der Bot die Verbindung zum Websocket aufgebaut hat."
 
 #: ../../mi.rst:20
 msgid "ノートが接続しているチャンネル内に投稿された際に呼び出されます"
@@ -49,7 +49,7 @@ msgstr "AbstractBotBase"
 
 #: ../../mi.rst:40
 msgid "AbstractChatContent"
-msgstr "AbstraktChatInhalt"
+msgstr "AbstractChatContent"
 
 #: ../../mi.rst:48
 msgid "Misskey モデル"
@@ -82,7 +82,7 @@ msgstr "Benutzer"
 #: mi.note.Note:20 mi.note.Note:24 mi.note.Note:60 mi.note.Note:64
 #: mi.user.User:24 mi.user.User:30 mi.user.UserDetails:8 of
 msgid "Optional[str]"
-msgstr "Optional[str]."
+msgstr "Optional[str]"
 
 #: ../../mi.rst:101 mi.note.Note:28 of
 msgid "Renote"
@@ -99,7 +99,7 @@ msgstr "Dict[str, Any]."
 
 #: mi.note.Note:48 of
 msgid "List[Emoji]"
-msgstr "Liste[Emoji]."
+msgstr "Liste[Emoji]"
 
 #: mi.note.Note:52 mi.note.Note:56 of
 msgid "Optional[List[str]]"
@@ -107,7 +107,7 @@ msgstr "Optional[Liste[str]]]"
 
 #: mi.note.Note:68 of
 msgid "Optional[Poll]"
-msgstr "Fakultativ[Umfrage]."
+msgstr "Optional[Umfrage]"
 
 #: mi.note.Note.reply:2 of
 msgid "ノートに対して返信を送信します"
@@ -157,11 +157,11 @@ msgstr "Kanal-ID, standardmäßig Keine"
 
 #: mi.note.Note.reply:18 mi.state.ConnectionState.post_note:26 of
 msgid "添付するファイルのid, by default None"
-msgstr "Die ID der anzuhängenden Datei, standardmäßig Keine"
+msgstr "Die ID der anzuhängenden Datei, standardmäßig None"
 
 #: mi.note.Note.reply:20 mi.state.ConnectionState.post_note:28 of
 msgid "アンケート, by default None"
-msgstr "Umfrage, standardmäßig Keine"
+msgstr "Umfrage, standardmäßig None"
 
 #: mi.note.Note.emoji_count:2 mi.note.Renote.emoji_count:2 of
 msgid "ノートの本文にemojiが何個含まれているかを返します"
@@ -277,7 +277,7 @@ msgstr "Datum der Kontoeröffnung"
 
 #: mi.user.User:76 of
 msgid "アカウントの更新日(ノートを投稿するなど)"
-msgstr "Das Datum, an dem Ihr Konto aktualisiert wurde (z. B. durch die Buchung einer Notiz)"
+msgstr "Das Datum, an dem Ihr Konto aktualisiert wurde (z. B. durch das Posten einer Notiz)"
 
 #: mi.user.User:82 of
 msgid "アカウントがロックされているか"
@@ -297,7 +297,7 @@ msgstr "Kontoübersicht"
 
 #: mi.user.User:106 of
 msgid "ユーザーが住んでいる場所"
-msgstr "Wohnsitz des Nutzers"
+msgstr "Wohnort des Nutzers"
 
 #: mi.user.User:112 of
 msgid "ユーザーの誕生日"
@@ -451,7 +451,7 @@ msgstr "Erfolg oder Misserfolg"
 
 #: ../../mi.rst:85
 msgid "Drive"
-msgstr "Antrieb"
+msgstr "Drive"
 
 #: mi.drive.Drive.delete:2 of
 msgid "ファイルを削除します。"
@@ -579,7 +579,7 @@ msgstr "Authentifizierungsinformationen fehlen"
 
 #: ../../mi.rst:195
 msgid "ContentRequired"
-msgstr "InhaltBedarf"
+msgstr "ContentRequired"
 
 #: mi.exception.ContentRequired:2 of
 msgid "送信するコンテンツが不足している"
@@ -591,7 +591,7 @@ msgstr "CogNameDuplicate"
 
 #: mi.exception.CogNameDuplicate:2 of
 msgid "cogの名前が重複している"
-msgstr "Doppelte Zahnradnamen"
+msgstr "Doppelte Cog-Namen"
 
 #: ../../mi.rst:205
 msgid "ExtensionAlreadyLoaded"
@@ -599,7 +599,7 @@ msgstr "ExtensionAlreadyLoaded"
 
 #: mi.exception.ExtensionAlreadyLoaded:2 of
 msgid "cogがすでに読み込まれている"
-msgstr "Die Kogge ist bereits geladen"
+msgstr "Cog ist bereits geladen"
 
 #: ../../mi.rst:209
 msgid "ExtensionFailed"
@@ -607,7 +607,7 @@ msgstr "ExtensionFailed"
 
 #: mi.exception.ExtensionFailed:2 of
 msgid "cog周りのエラー"
-msgstr "Fehler um das Zahnrad"
+msgstr "Fehler im Cog"
 
 #: ../../mi.rst:213
 msgid "NoEntryPointError"
@@ -615,7 +615,7 @@ msgstr "NoEntryPointError"
 
 #: mi.exception.NoEntryPointError:2 of
 msgid "cogにsetup関数が無い場合の例外"
-msgstr "Ausnahme, wenn das Zahnrad keine Einrichtungsfunktion hat"
+msgstr "Ausnahme, wenn Cog keine Einrichtungsfunktion hat"
 
 #: ../../mi.rst:217
 msgid "ExtensionNotFound"
@@ -623,7 +623,7 @@ msgstr "ExtensionNotFound"
 
 #: mi.exception.ExtensionNotFound:2 of
 msgid "指定されたパスにcogが存在しない場合の例外"
-msgstr "Ausnahme, wenn die Kogge im angegebenen Pfad nicht existiert"
+msgstr "Ausnahme, wenn Cog im angegebenen Pfad nicht existiert"
 
 #: ../../mi.rst:221
 msgid "CommandRegistrationError"
@@ -663,7 +663,7 @@ msgstr "InvalidCogPath"
 
 #: mi.exception.InvalidCogPath:2 of
 msgid "cogのパスが不正"
-msgstr "Falscher Pfad zum Zahnrad"
+msgstr "Falscher Pfad zu Cog"
 
 #: ../../mi.rst:242
 msgid "NotExistRequiredData"
@@ -729,7 +729,7 @@ msgstr "Funktion zur Analyse von Informationen über Reaktionen"
 
 #: mi.state.ConnectionState.parse_note:2 of
 msgid "ノートイベントを解析する関数"
-msgstr "Funktionen zum Parsen von Notenereignissen"
+msgstr "Funktionen zum Parsen von Notizereignissen"
 
 #: mi.state.ConnectionState.follow_user:2 of
 msgid "与えられたIDのユーザーをフォローします"
@@ -753,7 +753,7 @@ msgstr "Bezeichnung der zu gewährenden Reaktion"
 
 #: mi.state.ConnectionState.add_reaction:6 of
 msgid "付与対象のノートID"
-msgstr "Hinweis Zu erteilende ID"
+msgstr "Hinweis zu erteilende ID"
 
 #: mi.state.ConnectionState.add_reaction:9 of
 msgid "**status** -- 成功したならTrue,失敗ならFalse"
@@ -761,7 +761,7 @@ msgstr "**status** -- True für Erfolg, False für Misserfolg"
 
 #: mi.state.ConnectionState.delete_note:2 of
 msgid "指定したidのノートを削除します。"
-msgstr "Löscht die Notiz mit der angegebenen ID."
+msgstr "Löscht die Notiz mit der angegebenen ID"
 
 #: mi.state.ConnectionState.delete_note:4 of
 msgid "ノートid"
@@ -785,7 +785,7 @@ msgstr "Der Host der Instanz, in der sich der abzurufende Benutzer befindet"
 
 #: mi.state.ConnectionState.get_user:12 of
 msgid "ユーザー情報"
-msgstr "Informationen für den Benutzer"
+msgstr "Benutzerinformationen"
 
 #: mi.state.ConnectionState.post_chat:2 of
 msgid "チャットを送信します。"
@@ -875,7 +875,7 @@ msgstr "Gibt den letzten Wert des vorherigen Laufs an (wird verwendet, wenn der 
 
 #: mi.state.ConnectionState.get_followers:14 of
 msgid "取得する情報の最大数 max: 100"
-msgstr "Maximale Anzahl der abzurufenden Informationen: 100"
+msgstr "Anzahl der abzurufenden Informationen, max=100"
 
 #: mi.state.ConnectionState.get_followers:16 of
 msgid "全てのフォロワーを取得する"
@@ -883,7 +883,7 @@ msgstr "Alle Follower erhalten"
 
 #: mi.state.ConnectionState.get_followers of
 msgid "Yields"
-msgstr "Ausbeute"
+msgstr "Treffer"
 
 #: mi.state.ConnectionState.get_followers:19 of
 msgid "*dict* -- フォロワーの情報"
@@ -891,7 +891,7 @@ msgstr "*dict* -- Follower-Informationen"
 
 #: mi.state.ConnectionState.get_followers:21 of
 msgid "limit引数が不正な場合"
-msgstr "Wenn das Grenzwertargument ungültig ist"
+msgstr "Wenn das limit-Argument ungültig ist"
 
 #: mi.state.ConnectionState.get_announcements:2 of
 msgid "最大取得数"
