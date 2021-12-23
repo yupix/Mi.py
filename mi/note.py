@@ -5,7 +5,6 @@ from typing import Any, Dict, List, Optional, TYPE_CHECKING
 from mi import Emoji, utils
 from mi.exception import NotExistRequiredData
 from mi.user import User
-from mi.utils import check_multi_arg
 from .abc.note import AbstractNote
 from .types.note import (Note as NotePayload,
                          Poll as PollPayload,
@@ -277,14 +276,24 @@ class Note(AbstractNote):
 
     async def delete(self) -> bool:
         """
-        指定したIDのノートを削除します
+        ノートを削除します
 
         Returns
         -------
-        is_success: bool
+        bool:
             成功したか否か
-        status_code: int
-            HTTP レスポンスステータスコード
         """
 
         return await self._state.delete_note(self.id)
+
+    async def favorite(self) -> bool:
+        """
+        ノートをお気に入り登録します
+        
+        Returns
+        -------
+        bool: 
+            成功したか否か
+        """
+        
+        return await self._state.favorite(note_id=self.id)
