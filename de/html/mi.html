@@ -152,7 +152,6 @@
     <img class="sidebar-logo" src="_static/mi.py.svg" alt="Logo"/>
   </div>
   
-  <span class="sidebar-brand-text">Mi.py 0.5.0 Dokumentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="search.html" role="search">
   <input class="sidebar-search" placeholder=Suche name="q" aria-label="Suche">
@@ -209,6 +208,11 @@
 <span class="sig-prename descclassname"><span class="pre">mi.</span></span><span class="sig-name descname"><span class="pre">on_emoji_add</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">emoji</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#mi.Emoji" title="mi.Emoji"><span class="pre">Emoji</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mi.on_emoji_add" title="Link zu dieser Definition">¶</a></dt>
 <dd><p>Wird aufgerufen, wenn ein Piktogramm zu einer Instanz hinzugefügt wird</p>
 </dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="mi.on_mention">
+<span class="sig-prename descclassname"><span class="pre">mi.</span></span><span class="sig-name descname"><span class="pre">on_mention</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mention</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#mi.Note" title="mi.Note"><span class="pre">Note</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mi.on_mention" title="Link zu dieser Definition">¶</a></dt>
+<dd><p>メンションが含まれたノートなどが投稿された際に呼び出されます</p>
+</dd></dl>
 </div>
 <div class="section" id="id2">
 <h2>Abstrakte Basisklasse<a class="headerlink" href="#id2" title="Link zu dieser Überschrift">¶</a></h2>
@@ -262,9 +266,17 @@ Attributes</span><ul>
 Methods</span><ul>
 <li class="py-attribute-table-entry">
 <span class="py-attribute-table-badge" title="coroutine">
+async</span><a class="reference internal" href="#mi.Note.add_reaction">add_reaction</a></li><li class="py-attribute-table-entry">
+<span class="py-attribute-table-badge" title="coroutine">
+async</span><a class="reference internal" href="#mi.Note.add_to_clips">add_to_clips</a></li><li class="py-attribute-table-entry">
+<span class="py-attribute-table-badge" title="coroutine">
 async</span><a class="reference internal" href="#mi.Note.delete">delete</a></li><li class="py-attribute-table-entry">
 <span class="py-attribute-table-badge" title="Methode">
 def</span><a class="reference internal" href="#mi.Note.emoji_count">emoji_count</a></li><li class="py-attribute-table-entry">
+<span class="py-attribute-table-badge" title="coroutine">
+async</span><a class="reference internal" href="#mi.Note.favorite">favorite</a></li><li class="py-attribute-table-entry">
+<span class="py-attribute-table-badge" title="coroutine">
+async</span><a class="reference internal" href="#mi.Note.remove_favorite">remove_favorite</a></li><li class="py-attribute-table-entry">
 <span class="py-attribute-table-badge" title="coroutine">
 async</span><a class="reference internal" href="#mi.Note.reply">reply</a></li></ul>
 </div></div><dl class="py class">
@@ -457,18 +469,56 @@ async</span><a class="reference internal" href="#mi.Note.reply">reply</a></li></
 </dl>
 </dd></dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="mi.Note.delete">
-<em class="property"><span class="pre">await</span> </em><span class="sig-name descname"><span class="pre">delete</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/note.html#Note.delete"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.Note.delete" title="Link zu dieser Definition">¶</a></dt>
-<dd><p>Löscht die Notiz mit der angegebenen ID</p>
+<dt class="sig sig-object py" id="mi.Note.add_reaction">
+<em class="property"><span class="pre">await</span> </em><span class="sig-name descname"><span class="pre">add_reaction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reaction</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/note.html#Note.add_reaction"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.Note.add_reaction" title="Link zu dieser Definition">¶</a></dt>
+<dd><p>ノートにリアクションを追加します</p>
 <dl class="field-list simple">
-<dt class="field-odd">Rückgabe</dt>
-<dd class="field-odd"><p><ul class="simple">
-<li><p><strong>is_success</strong> (<em>bool</em>) – Erfolg oder Misserfolg</p></li>
-<li><p><strong>status_code</strong> (<em>int</em>) – HTTP-Antwortstatuscode</p></li>
-</ul>
-</p>
+<dt class="field-odd">Parameter</dt>
+<dd class="field-odd"><p><strong>reaction</strong> (<em>str</em>) – つけるリアクション</p>
+</dd>
+<dt class="field-even">Rückgabe</dt>
+<dd class="field-even"><p>成功したかどうか</p>
+</dd>
+<dt class="field-odd">Rückgabetyp</dt>
+<dd class="field-odd"><p>bool</p>
 </dd>
 </dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="mi.Note.delete">
+<em class="property"><span class="pre">await</span> </em><span class="sig-name descname"><span class="pre">delete</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/note.html#Note.delete"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.Note.delete" title="Link zu dieser Definition">¶</a></dt>
+<dd><p>ノートを削除します</p>
+<dl class="field-list simple">
+<dt class="field-odd">Rückgabe</dt>
+<dd class="field-odd"><p>Erfolg oder Misserfolg</p>
+</dd>
+<dt class="field-even">Rückgabetyp</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="mi.Note.favorite">
+<em class="property"><span class="pre">await</span> </em><span class="sig-name descname"><span class="pre">favorite</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/note.html#Note.favorite"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.Note.favorite" title="Link zu dieser Definition">¶</a></dt>
+<dd><p>ノートをお気に入り登録します</p>
+<dl class="field-list simple">
+<dt class="field-odd">Rückgabe</dt>
+<dd class="field-odd"><p>Erfolg oder Misserfolg</p>
+</dd>
+<dt class="field-even">Rückgabetyp</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="mi.Note.remove_favorite">
+<em class="property"><span class="pre">await</span> </em><span class="sig-name descname"><span class="pre">remove_favorite</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/note.html#Note.remove_favorite"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.Note.remove_favorite" title="Link zu dieser Definition">¶</a></dt>
+<dd><p>お気に入りから解除します</p>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="mi.Note.add_to_clips">
+<em class="property"><span class="pre">await</span> </em><span class="sig-name descname"><span class="pre">add_to_clips</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">clip_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/note.html#Note.add_to_clips"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.Note.add_to_clips" title="Link zu dieser Definition">¶</a></dt>
+<dd><p>指定したクリップにノートを追加します</p>
 </dd></dl>
 </dd></dl>
 </div>

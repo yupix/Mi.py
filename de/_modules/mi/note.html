@@ -152,7 +152,6 @@
     <img class="sidebar-logo" src="../../_static/mi.py.svg" alt="Logo"/>
   </div>
   
-  <span class="sidebar-brand-text">Mi.py 0.5.0 Dokumentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
   <input class="sidebar-search" placeholder=Suche name="q" aria-label="Suche">
@@ -193,7 +192,6 @@
 <span class="kn">from</span> <span class="nn">mi</span> <span class="kn">import</span> <span class="n">Emoji</span><span class="p">,</span> <span class="n">utils</span>
 <span class="kn">from</span> <span class="nn">mi.exception</span> <span class="kn">import</span> <span class="n">NotExistRequiredData</span>
 <span class="kn">from</span> <span class="nn">mi.user</span> <span class="kn">import</span> <span class="n">User</span>
-<span class="kn">from</span> <span class="nn">mi.utils</span> <span class="kn">import</span> <span class="n">check_multi_arg</span>
 <span class="kn">from</span> <span class="nn">.abc.note</span> <span class="kn">import</span> <span class="n">AbstractNote</span>
 <span class="kn">from</span> <span class="nn">.types.note</span> <span class="kn">import</span> <span class="p">(</span><span class="n">Note</span> <span class="k">as</span> <span class="n">NotePayload</span><span class="p">,</span>
                          <span class="n">Poll</span> <span class="k">as</span> <span class="n">PollPayload</span><span class="p">,</span>
@@ -225,7 +223,7 @@
 <span class="sd">        str</span>
 <span class="sd">            実行に失敗した際のエラーコード</span>
 <span class="sd">        """</span>
-        
+
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">NotExistRequiredData</span><span class="p">(</span><span class="s1">'user_idがありません'</span><span class="p">)</span>
         <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">follow_user</span><span class="p">(</span><span class="n">user_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span></div>
@@ -244,7 +242,7 @@
 <span class="sd">        status: bool = False</span>
 <span class="sd">            成功ならTrue, 失敗ならFalse</span>
 <span class="sd">        """</span>
-        
+
         <span class="k">if</span> <span class="n">user_id</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">user_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">id</span>
         <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">unfollow_user</span><span class="p">(</span><span class="n">user_id</span><span class="p">)</span></div></div>
@@ -325,7 +323,7 @@
 <span class="sd">        int</span>
 <span class="sd">            含まれている絵文字の数</span>
 <span class="sd">        """</span>
-        
+
         <span class="k">return</span> <span class="n">utils</span><span class="o">.</span><span class="n">emoji_count</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">content</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Renote.delete"><a class="viewcode-back" href="../../mi.html#mi.Renote.delete">[Doku]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
@@ -375,7 +373,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">content</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"text"</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cw</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"cw"</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">renote</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Renote</span><span class="p">]</span> <span class="o">=</span> <span class="n">Renote</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">'renote'</span><span class="p">],</span> <span class="n">state</span><span class="o">=</span><span class="n">state</span><span class="p">)</span> <span class="k">if</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'renote'</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">visibility</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"visibility"</span><span class="p">)</span> <span class="c1"># This may be an optional</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">visibility</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"visibility"</span><span class="p">)</span>  <span class="c1"># This may be an optional</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">renote_count</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">"renote_count"</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">replies_count</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">"replies_count"</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">reactions</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">"reactions"</span><span class="p">]</span>
@@ -411,7 +409,7 @@
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Note</span><span class="p">:</span>
         <span class="sd">"""</span>
 <span class="sd">        ノートに対して返信を送信します</span>
-<span class="sd">        </span>
+
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        content: Optional[str]</span>
@@ -463,19 +461,62 @@
 
         <span class="k">return</span> <span class="n">utils</span><span class="o">.</span><span class="n">emoji_count</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">content</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Note.delete"><a class="viewcode-back" href="../../mi.html#mi.Note.delete">[Doku]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<div class="viewcode-block" id="Note.add_reaction"><a class="viewcode-back" href="../../mi.html#mi.Note.add_reaction">[Doku]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">add_reaction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">reaction</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="sd">"""</span>
-<span class="sd">        指定したIDのノートを削除します</span>
+<span class="sd">        ノートにリアクションを追加します</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        reaction: str</span>
+<span class="sd">            つけるリアクション</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        is_success: bool</span>
-<span class="sd">            成功したか否か</span>
-<span class="sd">        status_code: int</span>
-<span class="sd">            HTTP レスポンスステータスコード</span>
+<span class="sd">        bool</span>
+<span class="sd">            成功したかどうか</span>
+
+
 <span class="sd">        """</span>
 
-        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">delete_note</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">add_reaction_to_note</span><span class="p">(</span><span class="n">note_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">reaction</span><span class="o">=</span><span class="n">reaction</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Note.delete"><a class="viewcode-back" href="../../mi.html#mi.Note.delete">[Doku]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">"""</span>
+<span class="sd">        ノートを削除します</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        bool</span>
+<span class="sd">            成功したか否か</span>
+<span class="sd">        """</span>
+
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">delete_note</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Note.favorite"><a class="viewcode-back" href="../../mi.html#mi.Note.favorite">[Doku]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">favorite</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">"""</span>
+<span class="sd">        ノートをお気に入り登録します</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        bool</span>
+<span class="sd">            成功したか否か</span>
+<span class="sd">        """</span>
+
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">favorite</span><span class="p">(</span><span class="n">note_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Note.remove_favorite"><a class="viewcode-back" href="../../mi.html#mi.Note.remove_favorite">[Doku]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">remove_favorite</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">"""</span>
+<span class="sd">        お気に入りから解除します</span>
+<span class="sd">        """</span>
+
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">remove_favorite</span><span class="p">(</span><span class="n">note_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Note.add_to_clips"><a class="viewcode-back" href="../../mi.html#mi.Note.add_to_clips">[Doku]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">add_to_clips</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">clip_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">"""</span>
+<span class="sd">        指定したクリップにノートを追加します</span>
+<span class="sd">        """</span>
+
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">add_note_to_clips</span><span class="p">(</span><span class="n">clip_id</span><span class="o">=</span><span class="n">clip_id</span><span class="p">,</span> <span class="n">note_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span></div></div>
 </pre></div>
         </article>
       </div>

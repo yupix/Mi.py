@@ -152,7 +152,6 @@
     <img class="sidebar-logo" src="../../_static/mi.py.svg" alt="Logo"/>
   </div>
   
-  <span class="sidebar-brand-text">Mi.py 0.5.0 Dokumentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
   <input class="sidebar-search" placeholder=Suche name="q" aria-label="Suche">
@@ -249,8 +248,8 @@
 
         <span class="k">if</span> <span class="s1">'json'</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
             <span class="n">headers</span><span class="p">[</span><span class="s1">'Content-Type'</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'application/json'</span>
-            <span class="n">kwargs</span><span class="p">[</span><span class="s1">'data'</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">'json'</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s1">'json'</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">'json'</span><span class="p">)</span>
+
         <span class="k">if</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'auth'</span><span class="p">)</span> <span class="ow">and</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">'auth'</span><span class="p">):</span>
             <span class="k">if</span> <span class="s1">'json'</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
                 <span class="n">key</span> <span class="o">=</span> <span class="s1">'json'</span>
