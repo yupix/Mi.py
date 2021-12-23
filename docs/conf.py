@@ -90,6 +90,10 @@ html_static_path = ["_static"]
 html_css_files = ["css/custom.css"]
 html_logo = "_static/mi.py.svg"
 
+html_theme_options = {
+    "sidebar_hide_name": True
+}
+
 numpydoc_show_class_members = False
 
 html_context = {

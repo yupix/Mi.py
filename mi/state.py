@@ -24,8 +24,35 @@ if TYPE_CHECKING:
     from mi.types import (Note as NotePayload, Chat as ChatPayload)
 
 
-class ConnectionState:
+class NoteActions:
+    def __init__(self, http: HTTPClient, loop: asyncio.AbstractEventLoop):
+        self.http = http
+        self.loop = loop
+
+    async def favorite(self, note_id: str) -> bool:
+        data = {'noteId': note_id}
+        return bool(await self.http.request(Route('POST', '/api/notes/favorites/create'), json=data, auth=True))
+
+    async def remove_favorite(self, note_id: str) -> bool:
+        data = {'noteId': note_id}
+        return bool(await self.http.request(Route('POST', '/api/notes/favorites/delete'), json=data, auth=True))
+
+    async def add_note_to_clips(self, clip_id: str, note_id: str) -> bool:
+        data = {'noteId': note_id, 'clipId': clip_id}
+        return bool(await self.http.request(Route('POST', '/api/clips/add-note'), json=data, auth=True))
+
+    async def add_reaction_to_note(self, note_id: str, reaction: str) -> bool:
+        data = {'noteId': note_id, 'reaction': reaction}
+        return bool(await self.http.request(Route('POST', '/api/reactions/create', json=data, auth=True)))
+
+
+class ClientAction(NoteActions):
+    pass
+
+
+class ConnectionState(ClientAction):
     def __init__(self, dispatch: Callable[..., Any], http: HTTPClient, loop: asyncio.AbstractEventLoop):
+        super().__init__(http, loop)
         self.dispatch = dispatch
         self.http: HTTPClient = http
         self.logger = get_module_logger(__name__)
@@ -84,6 +111,7 @@ class ConnectionState:
         """
         メンションイベントを解析する関数
         """
+        self.dispatch('mention', Note(message, state=self))
 
     def parse_drive_file_created(self, message: Dict[str, Any]) -> None:
         pass  # TODO: 実装
@@ -625,7 +653,7 @@ class ConnectionState:
                 res = await self.http.request(Route('POST', '/api/drive/files/create'), data=args, auth=True, lower=True)
         elif to_file is None and to_url:  # URLからアップロードする
             args = {"url": to_url, "force": force, "isSensitive": is_sensitive}
-            res = await self.http.request(Route('POST', '/api/drive/files/upload-from-url'), json=args, auth=True,lower=True)
+            res = await self.http.request(Route('POST', '/api/drive/files/upload-from-url'), json=args, auth=True, lower=True)
         else:
             raise InvalidParameters("path または url のどちらかは必須です")
         return Drive(res, state=self)

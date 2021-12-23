@@ -5,7 +5,6 @@ from typing import Any, Dict, List, Optional, TYPE_CHECKING
 from mi import Emoji, utils
 from mi.exception import NotExistRequiredData
 from mi.user import User
-from mi.utils import check_multi_arg
 from .abc.note import AbstractNote
 from .types.note import (Note as NotePayload,
                          Poll as PollPayload,
@@ -37,7 +36,7 @@ class Follow:
         str
             実行に失敗した際のエラーコード
         """
-        
+
         if self.id:
             raise NotExistRequiredData('user_idがありません')
         return await self._state.follow_user(user_id=self.id)
@@ -56,7 +55,7 @@ class Follow:
         status: bool = False
             成功ならTrue, 失敗ならFalse
         """
-        
+
         if user_id is None:
             user_id = self.user.id
         return await self._state.unfollow_user(user_id)
@@ -137,7 +136,7 @@ class Renote(AbstractNote):
         int
             含まれている絵文字の数
         """
-        
+
         return utils.emoji_count(self.content)
 
     async def delete(self) -> bool:
@@ -187,7 +186,7 @@ class Note(AbstractNote):
         self.content: Optional[str] = data.get("text")
         self.cw: Optional[str] = data.get("cw")
         self.renote: Optional[Renote] = Renote(data['renote'], state=state) if data.get('renote') else None
-        self.visibility: Optional[str] = data.get("visibility") # This may be an optional
+        self.visibility: Optional[str] = data.get("visibility")  # This may be an optional
         self.renote_count: int = data["renote_count"]
         self.replies_count: int = data["replies_count"]
         self.reactions: Dict[str, Any] = data["reactions"]
@@ -223,7 +222,7 @@ class Note(AbstractNote):
     ) -> Note:
         """
         ノートに対して返信を送信します
-        
+
         Parameters
         ----------
         content: Optional[str]
@@ -275,16 +274,59 @@ class Note(AbstractNote):
 
         return utils.emoji_count(self.content)
 
-    async def delete(self) -> bool:
+    async def add_reaction(self, reaction: str) -> bool:
         """
-        指定したIDのノートを削除します
+        ノートにリアクションを追加します
+
+        Parameters
+        ----------
+        reaction: str
+            つけるリアクション
 
         Returns
         -------
-        is_success: bool
+        bool
+            成功したかどうか
+
+
+        """
+
+        return await self._state.add_reaction_to_note(note_id=self.id, reaction=reaction)
+
+    async def delete(self) -> bool:
+        """
+        ノートを削除します
+
+        Returns
+        -------
+        bool
             成功したか否か
-        status_code: int
-            HTTP レスポンスステータスコード
         """
 
         return await self._state.delete_note(self.id)
+
+    async def favorite(self) -> bool:
+        """
+        ノートをお気に入り登録します
+
+        Returns
+        -------
+        bool
+            成功したか否か
+        """
+
+        return await self._state.favorite(note_id=self.id)
+
+    async def remove_favorite(self) -> bool:
+        """
+        お気に入りから解除します
+        """
+
+        return await self._state.remove_favorite(note_id=self.id)
+
+    async def add_to_clips(self, clip_id: str) -> bool:
+        """
+        指定したクリップにノートを追加します
+        """
+
+        return await self._state.add_note_to_clips(clip_id=clip_id, note_id=self.id)

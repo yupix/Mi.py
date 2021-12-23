@@ -61,8 +61,8 @@ class HTTPClient:
 
         if 'json' in kwargs:
             headers['Content-Type'] = 'application/json'
-            kwargs['data'] = kwargs.pop('json')
-        print(kwargs)
+            kwargs['json'] = kwargs.pop('json')
+
         if kwargs.get('auth') and kwargs.pop('auth'):
             if 'json' in kwargs:
                 key = 'json'
