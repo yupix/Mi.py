@@ -23,9 +23,21 @@ if TYPE_CHECKING:
     from mi import HTTPClient
     from mi.types import (Note as NotePayload, Chat as ChatPayload)
 
+class NoteActions:
+    def __init__(self, http:HTTPClient, loop:asyncio.AbstractEventLoop):
+        self.http = http
+        self.loop = loop
+    
+    async def favorite(self, note_id:str) -> bool:
+        data = {'noteId': note_id}
+        return bool(await self.http.request(Route('POST', '/api/notes/favorites/create'), json=data, auth=True))
 
-class ConnectionState:
+class ClientAction(NoteActions):
+    pass
+
+class ConnectionState(ClientAction):
     def __init__(self, dispatch: Callable[..., Any], http: HTTPClient, loop: asyncio.AbstractEventLoop):
+        super().__init__(http, loop)
         self.dispatch = dispatch
         self.http: HTTPClient = http
         self.logger = get_module_logger(__name__)
