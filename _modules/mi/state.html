@@ -190,7 +190,7 @@
 
 <span class="kn">import</span> <span class="nn">asyncio</span>
 <span class="kn">import</span> <span class="nn">inspect</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">AsyncIterator</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Iterator</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">AsyncIterator</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Union</span>
 
 <span class="kn">from</span> <span class="nn">aiocache</span> <span class="kn">import</span> <span class="n">cached</span>
 <span class="kn">from</span> <span class="nn">aiocache.factory</span> <span class="kn">import</span> <span class="n">Cache</span>
@@ -245,7 +245,6 @@
 
     <span class="k">def</span> <span class="nf">parse_renote</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]):</span>
         <span class="k">pass</span>
-
 
     <span class="k">def</span> <span class="nf">parse_read_all_announcements</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">pass</span>  <span class="c1"># TODO: 実装</span>
@@ -408,7 +407,7 @@
                   <span class="n">origin</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">'local'</span><span class="p">,</span>
                   <span class="n">username</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
                   <span class="n">hostname</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                  <span class="n">get_all</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">User</span><span class="p">]:</span>
+                  <span class="n">get_all</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncIterator</span><span class="p">[</span><span class="n">User</span><span class="p">]:</span>
         <span class="k">return</span> <span class="n">InstanceIterator</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">get_users</span><span class="p">(</span><span class="n">limit</span><span class="o">=</span><span class="n">limit</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="n">offset</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="n">sort</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="n">state</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="n">origin</span><span class="p">,</span>
                                                 <span class="n">username</span><span class="o">=</span><span class="n">username</span><span class="p">,</span> <span class="n">hostname</span><span class="o">=</span><span class="n">hostname</span><span class="p">,</span> <span class="n">get_all</span><span class="o">=</span><span class="n">get_all</span><span class="p">)</span>
 
@@ -641,7 +640,7 @@
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncIterator</span><span class="p">[</span><span class="n">Follower</span><span class="p">]:</span>
         <span class="sd">"""</span>
 <span class="sd">        与えられたユーザーのフォロワーを取得します</span>
-<span class="sd">        </span>
+
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        user_id : str, default=None</span>
@@ -796,7 +795,28 @@
             <span class="s2">"sinceId"</span><span class="p">:</span> <span class="n">since_id</span><span class="p">,</span>
             <span class="s2">"untilId"</span><span class="p">:</span> <span class="n">until_id</span><span class="p">,</span>
         <span class="p">}</span>
-        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">Route</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">,</span> <span class="s1">'/api/announcements'</span><span class="p">),</span> <span class="n">json</span><span class="o">=</span><span class="n">args</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">Route</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">,</span> <span class="s1">'/api/announcements'</span><span class="p">),</span> <span class="n">json</span><span class="o">=</span><span class="n">args</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">file_upload</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">to_file</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">to_url</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="o">*</span><span class="p">,</span>
+            <span class="n">force</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="n">is_sensitive</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Drive</span><span class="p">:</span>
+
+        <span class="k">if</span> <span class="n">to_file</span> <span class="ow">and</span> <span class="n">to_url</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># ローカルからアップロードする</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">to_file</span><span class="p">,</span> <span class="s2">"rb"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                <span class="n">args</span> <span class="o">=</span> <span class="n">remove_dict_empty</span><span class="p">({</span><span class="s2">"isSensitive"</span><span class="p">:</span> <span class="n">is_sensitive</span><span class="p">,</span> <span class="s2">"force"</span><span class="p">:</span> <span class="n">force</span><span class="p">,</span> <span class="s2">"name"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span> <span class="s1">'file'</span><span class="p">:</span> <span class="n">f</span><span class="p">})</span>
+                <span class="n">res</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">Route</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">,</span> <span class="s1">'/api/drive/files/create'</span><span class="p">),</span> <span class="n">data</span><span class="o">=</span><span class="n">args</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">to_file</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">to_url</span><span class="p">:</span>  <span class="c1"># URLからアップロードする</span>
+            <span class="n">args</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"url"</span><span class="p">:</span> <span class="n">to_url</span><span class="p">,</span> <span class="s2">"force"</span><span class="p">:</span> <span class="n">force</span><span class="p">,</span> <span class="s2">"isSensitive"</span><span class="p">:</span> <span class="n">is_sensitive</span><span class="p">}</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">Route</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">,</span> <span class="s1">'/api/drive/files/upload-from-url'</span><span class="p">),</span> <span class="n">json</span><span class="o">=</span><span class="n">args</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">lower</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">InvalidParameters</span><span class="p">(</span><span class="s2">"path または url のどちらかは必須です"</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Drive</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span></div>
 </pre></div>
         </article>
       </div>
