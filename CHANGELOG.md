@@ -20,91 +20,107 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - fixed a bug where json arguments were replaced with data in requests.
 
+## [v1.0.1] 2021-12-24
+
+### Added
+
+- add event `on_mention`
+- add `favorite`, `add_to_clips`, `add_reaction` and `remove_favorite` method to `Note` class
+- add `favorite`, `add_note_to_clips`, `add_reaction_to_note` and `remove_favorite` method to `NoteAction` class
+- add class
+  - NoteActions
+  - ClientAction
+
+### Fixed
+
+- fixed a bug where json arguments were replaced with data in requests.
+
 ## [v1.0.0] 2021-12-23
 
 ### Added
+
 - `Note` クラスに `reply` メソッドを追加しました
 - 以下のクラスを追加
-    - MisskeyWebSocket
-    - MisskeyClientWebSocketResponse
-    - Route
-    - HTTPClient
-- Clientに以下のメソッドを追加
-    - post_chat
-    - delete_chat
-    - post_note
-        - 今後のノート投稿はこちらを使用してください 
-    - delete_note
-    - get_instance
-    - fetch_instance
-    - get_user
-    - fetch_user
-    - upload_file
+  - MisskeyWebSocket
+  - MisskeyClientWebSocketResponse
+  - Route
+  - HTTPClient
+- Client に以下のメソッドを追加
+  - post_chat
+  - delete_chat
+  - post_note
+    - 今後のノート投稿はこちらを使用してください
+  - delete_note
+  - get_instance
+  - fetch_instance
+  - get_user
+  - fetch_user
+  - upload_file
 - `rich` を使ったデバッグ機能を追加しました
 - `file_upload` 関数を追加しました
 - `run` メソッドに `debug` 引数を追加しました
-- DocStringを一部追加しました
+- DocString を一部追加しました
 - 抽象基底クラスを追加しました
-- TypedDictを追加しました
+- TypedDict を追加しました
 - チャットをする際に用いる `Chat` `ChatContent` クラスを追加しました
 - `on_chat` イベントを追加しました
 - ~~`NoteContent` クラスを追加しました~~
-    ~~- ノートの受信イベントでは基本このクラスが使用されます。~~
+  ~~- ノートの受信イベントでは基本このクラスが使用されます。~~
 - `Instance` クラスに `get_users` メソッドを追加しました
 
 ### Changed
 
-- api周りでのエラー出力が分かりやすくなりました
+- api 周りでのエラー出力が分かりやすくなりました
 - ~~今までの `Note` クラスに当たるものを `NoteContent` に変更し別途 `Note` クラスを作成させるようにしました~~
-    - ~~これは不要なデータなどを生成しないようにすることが目的です。~~
-- 部分的にPydanticを廃止
-    - 素直に使わないほうが部分的に楽だから
+  - ~~これは不要なデータなどを生成しないようにすることが目的です。~~
+- 部分的に Pydantic を廃止
+  - 素直に使わないほうが部分的に楽だから
 - `Drive` クラスの `upload` メソッドで例外 `InvalidParameters` を発生させるようにしました
-    - これは`to_file`, `to_url` の両方がないと変数が定義されず、`Drive`クラスの生成に失敗する可能性があるからです。
+  - これは`to_file`, `to_url` の両方がないと変数が定義されず、`Drive`クラスの生成に失敗する可能性があるからです。
 - `get_user` メソッドが 非同期になりました。
 - 内部変更: `utils.py` の一部を Cython を用いたものに変更
 - 内部変更: `DriveAction` を廃止し, `file_upload` を使用するように
 - 内部変更: `event_dispatch` でクラスにイベントがある場合呼び出すようにしました
 - 内部変更: シングルクォーテーションをダブルクォーテーションに変更しました
-- 内部変更: cogシステムを作り直しました
-- 内部変更: websocketに関連する部分を作り直しました
+- 内部変更: cog システムを作り直しました
+- 内部変更: websocket に関連する部分を作り直しました
 - 内部変更: イベントの発火部分を作り直しました
 - 内部的変更: `dispatch` に関連する物を非同期から同期に変更しました
 - **破壊的変更**: 使用しているライブラリを `websockets` から `aiohttp` に変更しました
 - **破壊的変更**: `Router` クラスの `channels` メソッドを `connect_channel` に変更しました
-- **破壊的変更**: taskをtasksに変更しました
-- **破壊的変更**: `on_ready` を除きwebsocketを引数で渡さないようになりました
+- **破壊的変更**: task を tasks に変更しました
+- **破壊的変更**: `on_ready` を除き websocket を引数で渡さないようになりました
 - **破壊的変更**: `Note` クラスの `text` 変数を `content` と統合しました
 - **破壊的変更**: `Reaction` クラスと `ReactionContent` を結合させました
 - **破壊的変更**: `Chat` クラスと `ChatContent` を結合させました
 - **破壊的変更**: `Drive` クラスの `upload` メソッドで使用できる引数名を変更、キーワード引数を強制するようにしました。
-    - 引数名の変更は次の通りです `url` => `to_url`, `path` => `to_file`
-    - 強制されるキーワード引数は次の通りです `force`, `is_sensitive`
+  - 引数名の変更は次の通りです `url` => `to_url`, `path` => `to_file`
+  - 強制されるキーワード引数は次の通りです `force`, `is_sensitive`
 
 ### Fixed
 
-- __on_error が動かない不具合を修正しました
-- 一部の誤った typing hintを修正
+- \_\_on_error が動かない不具合を修正しました
+- 一部の誤った typing hint を修正
 - バグの原因になるコードを修正
 
 ### Removed
 
 - `Router` クラスから以下のメソッドを削除しました
-    - main_channel
-    - home_time_line
-    - local_time_line
-    - global_time_line
+  - main_channel
+  - home_time_line
+  - local_time_line
+  - global_time_line
 - クラスの削除について
-    - `ChatContent`
-    - `ReactionContent`
-    - `NoteContent`
-    - `UserAction`
-    - `UserProfile`
-        - `UserProfile`にあったものは `User` に統合され、詳細な情報は `User` クラスの detailsオブジェクト(`UserDetails`) から取得可能です
+  - `ChatContent`
+  - `ReactionContent`
+  - `NoteContent`
+  - `UserAction`
+  - `UserProfile`
+    - `UserProfile`にあったものは `User` に統合され、詳細な情報は `User` クラスの details オブジェクト(`UserDetails`) から取得可能です
 - **破壊的変更**: `WebSocket` クラスを削除しました
-    - 今後はaiohttpの `ws_connect` メソッドを使用します
+  - 今後は aiohttp の `ws_connect` メソッドを使用します
 - **破壊的変更**: `requests` ライブラリを削除しました
-    - 今後はaiohttpの `request` メソッドを使用します
+  - 今後は aiohttp の `request` メソッドを使用します
 
 ## [v0.2.5] 2021-10-07
 
@@ -113,7 +129,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - `conn.py` に `get_followers` `get_user` `fetch_user` 関数が追加されました
 - `commandFrameWork` に関する多くのものを追加
 - `commandFrameWork` に `listener` `commands` デコレーターを追加
-- `Drive` クラスの `upload` メソッドでurlから画像をアップロードできるように `url` 引数を追加
+- `Drive` クラスの `upload` メソッドで url から画像をアップロードできるように `url` 引数を追加
 - `utils.py` に `check_multi_arg` `remove_dict_empty` 関数を追加
 - `upper_to_lower` 関数に `replace_list` 引数を追加
 - `Follow` イベント時のユーザーに `follow` `unfollow` メソッドを追加しました
@@ -124,13 +140,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 
 - **破壊的変更**: `commandFrameWork` を使用しない場合の bot モジュールの名前を client に変更しました
-    - 主にこれはDiscord.pyに近づけるためと `commandFrameWork` の bot モジュールとの差別化を目的としています
+  - 主にこれは Discord.py に近づけるためと `commandFrameWork` の bot モジュールとの差別化を目的としています
 - `on_mention` イベントの `.text` に自分自身のメンションを含まないように、必要な場合は `content` をご利用ください
 - デフォルトで接続するチャンネルを `globalTimeline` から `main` に変更しました。グローバルタイムラインを見る場合は `Router` をご利用ください
 - `add_poll` の引数位置が変更されています。ご注意ください
 - `delete` メソッドの引数を `_id` -> `note_id` に変更しました
 - 内部変更: `api` 関数で使用されている `data` 引数は非推奨(Deprecated)に代わりに `json_data` を受け取るように
-- 内部変更: `NoteAction` `UserAction` クラスのメソッドを大半をstaticmethodに置き換えしました
+- 内部変更: `NoteAction` `UserAction` クラスのメソッドを大半を staticmethod に置き換えしました
 - 内部変更: `Note` クラスのメソッドの依存性を下げました
 - 内部変更: `Follow` をモデルに変更しました
 - 内部変更: イベントの発火に `dispatch` を用いるようになりました。 これにより `bot.py` から各イベントが削除されています
@@ -142,8 +158,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 
-- チャンネルに接続する際にfoobarを使用していたのをuuid4動的に生成するように修正しました
-- emojiライブラリがrequirementsに不足していた
+- チャンネルに接続する際に foobar を使用していたのを uuid4 動的に生成するように修正しました
+- emoji ライブラリが requirements に不足していた
 - 循環インポートを修正しました
 - `on_follow` イベントで `user` にアクセスできない不具合を修正
 
@@ -153,22 +169,22 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - `on_follow` イベントを追加しました
 - `utils.py` に `add_auth_i` 関数を追加しました
-- `upper_to_lower` 関数でネストされたdictのkeyを全て小文字化できるようになりました
+- `upper_to_lower` 関数でネストされた dict の key を全て小文字化できるようになりました
 - `NoteAction` クラスに `emoji_count` メソッドを追加
-- `config.py` を追加、auth_i等は全てここに保存するように
+- `config.py` を追加、auth_i 等は全てここに保存するように
 - `chart.py` を追加しました。
 - `Drive` モデルに `DriveAction` クラスを継承させるように
 - `DriveAction` クラスの `upload` メソッドの引数に `is_sensitive` と `force` を追加
-- `utils.py` の `api` 関数で `files`  を受け取るように
+- `utils.py` の `api` 関数で `files` を受け取るように
 
 ### Changed
 
-- 内部変更:  `delete` `send` 等のメソッドを別のクラスに分けました
-- 内部変更: on_messageへの送信部分の条件式をres使わないように
-- 内部変更: auth_iの共有方法を共通化
-- 内部変更: auth_iの部分をconfig.iに置き換え
+- 内部変更: `delete` `send` 等のメソッドを別のクラスに分けました
+- 内部変更: on_message への送信部分の条件式を res 使わないように
+- 内部変更: auth_i の共有方法を共通化
+- 内部変更: auth_i の部分を config.i に置き換え
 - `upload`メソッドの引数変更に伴う`add_file`の引数に`is_sensitive`と`force` を追加
-- ほぼすべてのデータ格納用クラスをPydanticに置き換え( `Note`や`File` など)
+- ほぼすべてのデータ格納用クラスを Pydantic に置き換え( `Note`や`File` など)
 - `get_i`を`UserAction` に移動
 
 ### Removed
@@ -182,46 +198,46 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 
 - `add_reaction` の認証情報周りの不具合が修正されました
-- ドキュメントでPydanticのモデルが表示できるようになりました
+- ドキュメントで Pydantic のモデルが表示できるようになりました
 - `on_deleted` イベントが正常に動作しない既知の不具合を修正しました
-- `api` 関数でデータがunicodeだと正常に動作しない場合があるのを修正
+- `api` 関数でデータが unicode だと正常に動作しない場合があるのを修正
 
 ## [v0.1.0-1a] 2021-09-06
 
 ### Added
 
 - `Note` `Message`クラスに`add_reaction` メソッドを追加
-- `Note` , `Router` クラスにDocStringを追加
+- `Note` , `Router` クラスに DocString を追加
 - `Note` クラスに `add_poll` メソッドを追加 (アンケート)
 - `utils.py` に `upper_to_lower` `set_auth_i` `api` 関数を追加
 - `Note` `Message` クラスに `delete` メソッドを追加
-- README.mdにドキュメントのURLを追加
+- README.md にドキュメントの URL を追加
 - `user.py` に `UserProfile` クラスを追加
-- `bot` クラスに `i` 変数を追加(BOT自身のプロフィール)
-- README.mdにcodacyのバッヂを追加
+- `bot` クラスに `i` 変数を追加(BOT 自身のプロフィール)
+- README.md に codacy のバッヂを追加
 
 ### Removed
 
-- 一部でテスト用のprintが残っていたので削除
-- `Note` クラスでwebsocketを受け取らないように
-- `codecov.yml` はcodecovをサポートする予定がなくなったので削除
+- 一部でテスト用の print が残っていたので削除
+- `Note` クラスで websocket を受け取らないように
+- `codecov.yml` は codecov をサポートする予定がなくなったので削除
 
 ### Changed
 
-- 内部的にon_messageとon_responseを切り替えるのに使用していた `res` はデフォルト値が出来たので判断方法を変更
-- 内部的に `Note` `Message` `User` `Instance` 等のクラスの引数をdictから詳細な物に変更
-- `BotBase` クラスに `API` クラスをMixinする事でコネクションを別途用意する必要がなくなる様に
+- 内部的に on_message と on_response を切り替えるのに使用していた `res` はデフォルト値が出来たので判断方法を変更
+- 内部的に `Note` `Message` `User` `Instance` 等のクラスの引数を dict から詳細な物に変更
+- `BotBase` クラスに `API` クラスを Mixin する事でコネクションを別途用意する必要がなくなる様に
 - `API` クラスから `note` メソッドを削除、代わりに `Note` クラスを追加
-- `bool_to_string` をmiネームスペースから削除、今後は `mi.utils` で提供
+- `bool_to_string` を mi ネームスペースから削除、今後は `mi.utils` で提供
 - `note` から`User` や `Intance` 等を個別のファイルに変更
 
 ### Fixed
 
-- pypiからだとLICENSE等の相対リンクが動かないので絶対リンクに変更
-- `Note` クラスのadd_filesで誤ってDeprecatedのmediaIdsを使っていたので `fileIds` に変更
-- 多すぎるため詳細は書かないが、v12とayuskeyの差異を無くすために引数周りを大幅に修正
-- Noteを送るだけなのに画像などのファイルが絶対に必要になっていたので修正
-- Noteで画像だけを送ったりする際、文章が無いと送れないのを修正
+- pypi からだと LICENSE 等の相対リンクが動かないので絶対リンクに変更
+- `Note` クラスの add_files で誤って Deprecated の mediaIds を使っていたので `fileIds` に変更
+- 多すぎるため詳細は書かないが、v12 と ayuskey の差異を無くすために引数周りを大幅に修正
+- Note を送るだけなのに画像などのファイルが絶対に必要になっていたので修正
+- Note で画像だけを送ったりする際、文章が無いと送れないのを修正
 - `upper_to_lower` で文字列に複数の大文字が含まれると一番最初の文字に置き換えてしまうのを修正 from [@uraking](https://github.com/Uraking-Github)
 - `v12` だと多くの引数が足りずにメッセージが作成できないことを修正
 
@@ -231,30 +247,30 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - `API` クラスを追加しました
 - `API`クラスに`note`, `drive` メソッドを追加しました
-- util.pyに `bool_to_string` 関数を追加しました
+- util.py に `bool_to_string` 関数を追加しました
 - `task`に`stop` メソッドを追加しました
 - `Drive` クラスを追加しました
 - `Drive`クラスに`upload` メソッドを追加しました
-- 一部のメソッドや関数にDocStringを追加しました
-- Noteクラスに `add_file` メソッドを追加しました
+- 一部のメソッドや関数に DocString を追加しました
+- Note クラスに `add_file` メソッドを追加しました
 
 ### Removed
 
-- note classからcontentとreply メソッドを削除しました
+- note class から content と reply メソッドを削除しました
 
 ### Fixed
 
-- setup.pyのrepositoryURLが間違っていたので修正
-- __all__ に存在しなかった関数やクラスを追加しました
+- setup.py の repositoryURL が間違っていたので修正
+- **all** に存在しなかった関数やクラスを追加しました
 
 ### Changed
 
-- Tokenをbot classで保存するように
-- Note classのsend メソッドの送信方法をwebsocketsからrequestsに変更
-- CHANGELOG.mdの言語を今回から日本語に（CHANGELOGを書く時間が増すためです）
-- README.mdからExampleを削除してExampleフォルダ内に移動しました
-- **!BREAKING CHANGE**: noteに関する物を一つのファイルに纏めました、これによりインポートの変更が必要です。
-- **!BREAKING CHANGE**: パッケージのファイル名をmisskeyからmi.pyに変更しました。これにより全てのインポートの変更が必要です。
+- Token を bot class で保存するように
+- Note class の send メソッドの送信方法を websockets から requests に変更
+- CHANGELOG.md の言語を今回から日本語に（CHANGELOG を書く時間が増すためです）
+- README.md から Example を削除して Example フォルダ内に移動しました
+- **!BREAKING CHANGE**: note に関する物を一つのファイルに纏めました、これによりインポートの変更が必要です。
+- **!BREAKING CHANGE**: パッケージのファイル名を misskey から mi.py に変更しました。これにより全てのインポートの変更が必要です。
 
 ## [v0.0.1a] 2021-08-27
 
@@ -266,13 +282,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Added Each event method.
 
 [v0.2.5]: https://github.com/yupix/mi.py/compare/v0.1.0-5...v0.2.5
-
 [v0.1.5]: https://github.com/yupix/mi.py/compare/v0.1.0-1a...v0.1.0-5
-
 [v0.1.0-1a]: https://github.com/yupix/mi.py/compare/v0.1.0a...v0.1.0-1a
-
 [v0.1.0a]: https://github.com/yupix/mi.py/compare/v0.0.1a...v0.1.0a
-
 [v0.0.1a]: https://github.com/yupix/Mi.py/releases
-
-[Unreleased]: https://github.com/yupix/mi.py/compare/master...HEAD
+[unreleased]: https://github.com/yupix/mi.py/compare/master...HEAD
