@@ -8,6 +8,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 
 ### Added
+
+- None
+
+## [v1.0.0] 2021-12-23
+
+### Added
 - `Note` クラスに `reply` メソッドを追加しました
 - 以下のクラスを追加
     - MisskeyWebSocket
@@ -24,6 +30,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
     - fetch_instance
     - get_user
     - fetch_user
+    - upload_file
 - `rich` を使ったデバッグ機能を追加しました
 - `file_upload` 関数を追加しました
 - `run` メソッドに `debug` 引数を追加しました
