@@ -1,3 +1,4 @@
+# document
 pydata-sphinx-theme
 Click>=6.0
 boto3>=1.5.0
@@ -10,6 +11,8 @@ sphinx-git
 furo
 sphinxcontrib-trio
 
+# i18n
+sphinx-intl
 
 # Mi.py depencies
 aiocache
