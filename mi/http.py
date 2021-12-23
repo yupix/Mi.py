@@ -13,6 +13,7 @@ from . import __version__, config, exception
 
 __all__ = ('Route', 'HTTPClient')
 
+
 class _MissingSentinel:
     def __eq__(self, other):
         return False
@@ -56,15 +57,24 @@ class HTTPClient:
             'User-Agent': self.user_agent,
         }
 
-        if json in kwargs:
-            headers['Content-Type'] = 'application/json'
-            kwargs['data'] = kwargs.pop('json')
         is_lower = kwargs.pop('lower') if kwargs.get('lower') else False
 
+        if 'json' in kwargs:
+            headers['Content-Type'] = 'application/json'
+            kwargs['data'] = kwargs.pop('json')
+        print(kwargs)
         if kwargs.get('auth') and kwargs.pop('auth'):
-            if kwargs.get('json') is None:
-                kwargs['json'] = {}
-            kwargs['json']['i'] = self.token
+            if 'json' in kwargs:
+                key = 'json'
+            elif 'data' in kwargs:
+                key = 'data'
+            else:
+                key = 'json'
+
+            if not kwargs.get(key):
+                kwargs[key] = {}
+            kwargs[key]['i'] = self.token
+
         async with self.__session.request(route.method, route.url, **kwargs) as res:
             data = await json_or_text(res)
             if is_lower:
