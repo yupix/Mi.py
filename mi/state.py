@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import asyncio
 import inspect
-from typing import Any, AsyncIterator, Callable, Dict, Iterator, List, Optional, TYPE_CHECKING, Union
+from typing import Any, AsyncIterator, Callable, Dict, List, Optional, TYPE_CHECKING, Union
 
 from aiocache import cached
 from aiocache.factory import Cache
@@ -57,7 +57,6 @@ class ConnectionState:
 
     def parse_renote(self, message: Dict[str, Any]):
         pass
-
 
     def parse_read_all_announcements(self, message: Dict[str, Any]) -> None:
         pass  # TODO: 実装
@@ -220,7 +219,7 @@ class ConnectionState:
                   origin: str = 'local',
                   username: Optional[str] = None,
                   hostname: Optional[str] = None,
-                  get_all: bool = False) -> Iterator[User]:
+                  get_all: bool = False) -> AsyncIterator[User]:
         return InstanceIterator(self).get_users(limit=limit, offset=offset, sort=sort, state=state, origin=origin,
                                                 username=username, hostname=hostname, get_all=get_all)
 
@@ -453,7 +452,7 @@ class ConnectionState:
     ) -> AsyncIterator[Follower]:
         """
         与えられたユーザーのフォロワーを取得します
-        
+
         Parameters
         ----------
         user_id : str, default=None
@@ -609,3 +608,24 @@ class ConnectionState:
             "untilId": until_id,
         }
         return await self.http.request(Route('POST', '/api/announcements'), json=args, auth=True, lower=True)
+
+    async def file_upload(
+            self,
+            name: Optional[str] = None,
+            to_file: Optional[str] = None,
+            to_url: Optional[str] = None,
+            *,
+            force: bool = False,
+            is_sensitive: bool = False,
+    ) -> Drive:
+
+        if to_file and to_url is None:  # ローカルからアップロードする
+            with open(to_file, "rb") as f:
+                args = remove_dict_empty({"isSensitive": is_sensitive, "force": force, "name": f"{name}", 'file': f})
+                res = await self.http.request(Route('POST', '/api/drive/files/create'), data=args, auth=True, lower=True)
+        elif to_file is None and to_url:  # URLからアップロードする
+            args = {"url": to_url, "force": force, "isSensitive": is_sensitive}
+            res = await self.http.request(Route('POST', '/api/drive/files/upload-from-url'), json=args, auth=True,lower=True)
+        else:
+            raise InvalidParameters("path または url のどちらかは必須です")
+        return Drive(res, state=self)

@@ -292,15 +292,15 @@ class Client:
         """
         await self._connection.fetch_user(user_id=user_id, username=username, host=host)
 
-    @staticmethod
-    def file_upload(
+    async def file_upload(
+        self,
             name: Optional[str] = None,
             to_file: Optional[str] = None,
             to_url: Optional[str] = None,
             *,
             force: bool = False,
             is_sensitive: bool = False,
-    ) -> dict:
+    ) -> Drive:
         """
         Parameters
         ----------
@@ -321,23 +321,7 @@ class Client:
             upload後のレスポンスをDrive型に変更して返します
         """
 
-        if to_file and to_url is None:  # ローカルからアップロードする
-            with open(to_file, "rb") as f:
-                file = f.read()
-            args = {"isSensitive": is_sensitive, "force": force,
-                    "name": f"{name}"}
-            file = {"file": file}
-            res = api(
-                "/api/drive/files/create", json_data=args, files=file,
-                auth=True
-            ).json()
-        elif to_file is None and to_url:  # URLからアップロードする
-            args = {"url": to_url, "force": force, "isSensitive": is_sensitive}
-            res = api("/api/drive/files/upload-from-url", json_data=args,
-                      auth=True).json()
-        else:
-            raise InvalidParameters("path または url のどちらかは必須です")
-        return res
+        return await self._connection.file_upload(name=name, to_file=to_file, to_url=to_url, force=force, is_sensitive=is_sensitive)
 
     async def show_file(self, file_id: Optional[str] = None, url: Optional[str] = None) -> Drive:
         """
@@ -387,21 +371,21 @@ class Client:
         return await self._connection.get_announcements(limit=limit, with_unreads=with_unreads, since_id=since_id, until_id=until_id)
 
     async def login(self, token):
-        
+
         data = await self.http.static_login(token)
         self.i = User(data, self._connection)
 
-    async def connect(self, *, reconnect: bool = True, timeout:int=60) -> None:
+    async def connect(self, *, reconnect: bool = True, timeout: int = 60) -> None:
 
         coro = MisskeyWebSocket.from_client(self, timeout=timeout)
         self.ws = await asyncio.wait_for(coro, timeout=60)
         while True:
             await self.ws.poll_event()
 
-    async def start(self, url: str, token: str, *, debug: bool = False, recconect: bool = True, timeout:int = 60):
+    async def start(self, url: str, token: str, *, debug: bool = False, recconect: bool = True, timeout: int = 60):
         """
         Starting Bot
-        
+
         Parameters
         ----------
         url: str
@@ -415,7 +399,7 @@ class Client:
         timeout: int, default 60
             Time until websocket times out
         """
-        
+
         self.token = token
         if _origin_uri := re.search(r"wss?://(.*)/streaming", url):
             origin_uri = (
