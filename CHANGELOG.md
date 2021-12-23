@@ -9,11 +9,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
-- add `favorite`, `add_to_clips` and `remove_favorite` method to `Note` class
-- add `favorite`, `add_note_to_clips` and `remove_favorite` method to `NoteAction` class
+- add event `on_mention`
+- add `favorite`, `add_to_clips`, `add_reaction` and `remove_favorite` method to `Note` class
+- add `favorite`, `add_note_to_clips`, `add_reaction_to_note` and `remove_favorite` method to `NoteAction` class
 - add class
     - NoteActions
     - ClientAction
+
+### Fixed
+
+- fixed a bug where json arguments were replaced with data in requests.
 
 ## [v1.0.0] 2021-12-23
 
