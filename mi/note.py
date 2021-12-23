@@ -274,13 +274,32 @@ class Note(AbstractNote):
 
         return utils.emoji_count(self.content)
 
+    async def add_reaction(self, reaction:str) -> bool:
+        """
+        ノートにリアクションを追加します
+        
+        Parameters
+        ----------
+        reaction: str
+            つけるリアクション
+        
+        Returns
+        -------
+        bool
+            成功したかどうか
+
+        
+        """
+        
+        return await self._state.add_reaction_to_note(note_id=self.id, reaction=reaction)
+
     async def delete(self) -> bool:
         """
         ノートを削除します
 
         Returns
         -------
-        bool:
+        bool
             成功したか否か
         """
 
@@ -292,7 +311,7 @@ class Note(AbstractNote):
         
         Returns
         -------
-        bool: 
+        bool
             成功したか否か
         """
         
