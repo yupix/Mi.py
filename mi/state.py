@@ -32,6 +32,10 @@ class NoteActions:
         data = {'noteId': note_id}
         return bool(await self.http.request(Route('POST', '/api/notes/favorites/create'), json=data, auth=True))
 
+    async def remove_favorite(self, note_id:str) ->bool:
+        data = {'noteId': note_id}
+        return bool(await self.http.request(Route('POST', '/api/notes/favorites/delete'), json=data, auth=True))
+
 class ClientAction(NoteActions):
     pass
 

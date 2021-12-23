@@ -297,3 +297,10 @@ class Note(AbstractNote):
         """
         
         return await self._state.favorite(note_id=self.id)
+
+    async def remove_favorite(self) -> bool:
+        """
+        お気に入りから解除します
+        """
+        
+        return await self._state.remove_favorite(note_id=self.id)
