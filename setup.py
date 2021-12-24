@@ -34,7 +34,7 @@ packages = [
 
 setup(
     name="mi.py",
-    version="1.0.1",
+    version="1.0.2",
     install_requires=["pydantic", "emoji", 'aiocache', 'aiohttp'],
     url="https://github.com/yupix/mi.py",
     author="yupix",
