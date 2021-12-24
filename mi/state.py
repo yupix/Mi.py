@@ -105,7 +105,8 @@ class ConnectionState(ClientAction):
         """
         フォローイベントを解析する関数
         """
-        # self.dispatch('follow', Follower(message, state=self))
+
+        self.dispatch('follow', User(message, state=self))
 
     def parse_mention(self, message: Dict[str, Any]) -> None:
         """
@@ -159,8 +160,8 @@ class ConnectionState(ClientAction):
         -------
         None
         """
-        notification_type = str_lower(message['type'])
-        getattr(self, f'parse_{notification_type}')(message)
+        #notification_type = str_lower(message['type'])
+        #getattr(self, f'parse_{notification_type}')(message)
 
     def parse_follow_request_accepted(self, message: Dict[str, Any]) -> None:
         pass
@@ -177,8 +178,8 @@ class ConnectionState(ClientAction):
         message : Dict[str, Any]
             Received message
         """
-        notification_type = str_lower(message['type'])
-        getattr(self, f'parse_{notification_type}')(message)
+        #notification_type = str_lower(message['type'])
+        #getattr(self, f'parse_{notification_type}')(message)
 
     def parse_reaction(self, message: Dict[str, Any]) -> None:
         """
