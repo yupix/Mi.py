@@ -10,7 +10,7 @@ from mi.types.user import (User as UserPayload)
 if TYPE_CHECKING:
     from mi import ConnectionState
 
-__all__ = ['User', 'UserDetails']
+__all__ = ['User', 'UserDetails', 'Following']
 
 
 class Follower:
@@ -22,6 +22,28 @@ class Follower:
         self.user: User = User(data['follower'], state=state)
         self._state = state
 
+class Following:
+    def __init__(self, data, state:ConnectionState):
+        self.id = data['id']
+        self.name = data['name']
+        self.username = data['username']
+        self.host = data['host']
+        self.avatar_url = data['avatar_url']
+        self.avatar_blurhash = data['avatar_blurhash']
+        self.avatar_color = data['avatar_color']
+        self.emojis = data['emojis']
+        self.online_status = data['online_status']
+        self.is_admin = bool(data['is_admin'])
+        self.is_bot = bool(data['is_bot'])
+        self.is_cat = bool(data['is_cat'])
+        self._state = state
+    
+    async def accept_request(self) -> bool:
+        return await self._state.accept_following_request(self.id)
+    
+    async def reject_request(self) -> bool:
+        return await self._state.reject_following_request(self.id)
+    
 
 class Channel(BaseModel):
     id: Optional[str] = None

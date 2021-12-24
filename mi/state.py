@@ -14,7 +14,7 @@ from mi.exception import ContentRequired, InvalidParameters, NotExistRequiredPar
 from mi.http import Route
 from mi.iterators import InstanceIterator
 from mi.note import Note, Poll, Reaction
-from mi.user import Follower
+from mi.user import Follower, Following
 from mi.emoji import Emoji
 from mi.utils import check_multi_arg, get_cache_key, get_module_logger, key_builder, remove_dict_empty, str_lower, \
     upper_to_lower
@@ -46,7 +46,21 @@ class NoteActions:
         return bool(await self.http.request(Route('POST', '/api/reactions/create', json=data, auth=True)))
 
 
-class ClientAction(NoteActions):
+class UserAction:
+    def __init__(self, http: HTTPClient, loop: asyncio.AbstractEventLoop):
+        self.http = http
+        self.loop = loop
+
+    async def accept_following_request(self, user_id: str) -> bool:
+        data = {'userId': user_id}
+        return bool(await self.http.request(Route('POST', '/api/following/requests/accept'), json=data, auth=True))
+
+    async def reject_following_request(self, user_id: str) -> bool:
+        data = {'userId': user_id}
+        return bool(await self.http.request(Route('POST', '/api/following/requests/reject'), json=data, auth=True))
+
+
+class ClientAction(NoteActions, UserAction):
     pass
 
 
@@ -85,6 +99,21 @@ class ConnectionState(ClientAction):
     def parse_renote(self, message: Dict[str, Any]):
         pass
 
+    def parse_unfollow(self, message: Dict[str, Any]):
+        """
+        フォローを解除した際のイベントを解析する関数
+        """
+
+    def parse_receive_follow_request(self, message: Dict[str, Any]):
+        """
+        フォローリクエストを受け取った際のイベントを解析する関数
+        """
+
+        self.dispatch('follow_request', Following(message, state=self))
+
+    def parse_me_updated(self, message: Dict[str, Any]):
+        pass
+
     def parse_read_all_announcements(self, message: Dict[str, Any]) -> None:
         pass  # TODO: 実装
 
@@ -105,7 +134,8 @@ class ConnectionState(ClientAction):
         """
         フォローイベントを解析する関数
         """
-        # self.dispatch('follow', Follower(message, state=self))
+
+        self.dispatch('follow', User(message, state=self))
 
     def parse_mention(self, message: Dict[str, Any]) -> None:
         """
@@ -159,8 +189,8 @@ class ConnectionState(ClientAction):
         -------
         None
         """
-        notification_type = str_lower(message['type'])
-        getattr(self, f'parse_{notification_type}')(message)
+        #notification_type = str_lower(message['type'])
+        #getattr(self, f'parse_{notification_type}')(message)
 
     def parse_follow_request_accepted(self, message: Dict[str, Any]) -> None:
         pass
@@ -177,8 +207,8 @@ class ConnectionState(ClientAction):
         message : Dict[str, Any]
             Received message
         """
-        notification_type = str_lower(message['type'])
-        getattr(self, f'parse_{notification_type}')(message)
+        #notification_type = str_lower(message['type'])
+        #getattr(self, f'parse_{notification_type}')(message)
 
     def parse_reaction(self, message: Dict[str, Any]) -> None:
         """
@@ -385,7 +415,7 @@ class ConnectionState(ClientAction):
         return User(data, state=self)
 
     async def post_note(self,
-                        content: Optional[str],
+                        content: Optional[str] = None,
                         visibility: str = "public",
                         visible_user_ids: Optional[List[str]] = None,
                         cw: Optional[str] = None,

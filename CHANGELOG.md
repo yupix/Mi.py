@@ -7,18 +7,18 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [v1.0.2] 2021-12-24
+
 ### Added
 
-- add event `on_mention`
-- add `favorite`, `add_to_clips`, `add_reaction` and `remove_favorite` method to `Note` class
-- add `favorite`, `add_note_to_clips`, `add_reaction_to_note` and `remove_favorite` method to `NoteAction` class
-- add class
-    - NoteActions
-    - ClientAction
+- add event `on_follow` and `follow_request`
+- add a new `Following` and `UserAction` class
+- add `accept_request` and `reject_request` method to `Following` class
+- add `accept_following_request` and `reject_following_request` method to `UserAction` class
 
 ### Fixed
 
-- fixed a bug where json arguments were replaced with data in requests.
+- Fixed a problem where renote would say the key was missing.
 
 ## [v1.0.1] 2021-12-24
 

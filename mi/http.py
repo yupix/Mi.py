@@ -7,7 +7,7 @@ from typing import Any, Dict, Optional
 import aiohttp
 
 from mi.gateway import MisskeyClientWebSocketResponse
-from mi.utils import upper_to_lower
+from mi.utils import remove_dict_empty, upper_to_lower
 from . import __version__, config, exception
 
 
@@ -74,6 +74,10 @@ class HTTPClient:
             if not kwargs.get(key):
                 kwargs[key] = {}
             kwargs[key]['i'] = self.token
+
+        for i in ('json', 'data'):
+            if kwargs.get(i):
+                kwargs[i] = remove_dict_empty(kwargs[i])
 
         async with self.__session.request(route.method, route.url, **kwargs) as res:
             data = await json_or_text(res)
