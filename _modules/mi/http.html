@@ -194,7 +194,7 @@
 <span class="kn">import</span> <span class="nn">aiohttp</span>
 
 <span class="kn">from</span> <span class="nn">mi.gateway</span> <span class="kn">import</span> <span class="n">MisskeyClientWebSocketResponse</span>
-<span class="kn">from</span> <span class="nn">mi.utils</span> <span class="kn">import</span> <span class="n">upper_to_lower</span>
+<span class="kn">from</span> <span class="nn">mi.utils</span> <span class="kn">import</span> <span class="n">remove_dict_empty</span><span class="p">,</span> <span class="n">upper_to_lower</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">__version__</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">exception</span>
 
 
@@ -261,6 +261,10 @@
             <span class="k">if</span> <span class="ow">not</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
                 <span class="n">kwargs</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
             <span class="n">kwargs</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="s1">'i'</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">token</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">'json'</span><span class="p">,</span> <span class="s1">'data'</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
+                <span class="n">kwargs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">remove_dict_empty</span><span class="p">(</span><span class="n">kwargs</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
 
         <span class="k">async</span> <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">__session</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">route</span><span class="o">.</span><span class="n">method</span><span class="p">,</span> <span class="n">route</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="k">as</span> <span class="n">res</span><span class="p">:</span>
             <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="n">json_or_text</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>

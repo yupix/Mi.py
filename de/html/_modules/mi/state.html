@@ -201,7 +201,7 @@
 <span class="kn">from</span> <span class="nn">mi.http</span> <span class="kn">import</span> <span class="n">Route</span>
 <span class="kn">from</span> <span class="nn">mi.iterators</span> <span class="kn">import</span> <span class="n">InstanceIterator</span>
 <span class="kn">from</span> <span class="nn">mi.note</span> <span class="kn">import</span> <span class="n">Note</span><span class="p">,</span> <span class="n">Poll</span><span class="p">,</span> <span class="n">Reaction</span>
-<span class="kn">from</span> <span class="nn">mi.user</span> <span class="kn">import</span> <span class="n">Follower</span>
+<span class="kn">from</span> <span class="nn">mi.user</span> <span class="kn">import</span> <span class="n">Follower</span><span class="p">,</span> <span class="n">Following</span>
 <span class="kn">from</span> <span class="nn">mi.emoji</span> <span class="kn">import</span> <span class="n">Emoji</span>
 <span class="kn">from</span> <span class="nn">mi.utils</span> <span class="kn">import</span> <span class="n">check_multi_arg</span><span class="p">,</span> <span class="n">get_cache_key</span><span class="p">,</span> <span class="n">get_module_logger</span><span class="p">,</span> <span class="n">key_builder</span><span class="p">,</span> <span class="n">remove_dict_empty</span><span class="p">,</span> <span class="n">str_lower</span><span class="p">,</span> \
     <span class="n">upper_to_lower</span>
@@ -233,7 +233,21 @@
         <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">Route</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">,</span> <span class="s1">'/api/reactions/create'</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="kc">True</span><span class="p">)))</span>
 
 
-<span class="k">class</span> <span class="nc">ClientAction</span><span class="p">(</span><span class="n">NoteActions</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">UserAction</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http</span><span class="p">:</span> <span class="n">HTTPClient</span><span class="p">,</span> <span class="n">loop</span><span class="p">:</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">AbstractEventLoop</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">http</span> <span class="o">=</span> <span class="n">http</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">loop</span> <span class="o">=</span> <span class="n">loop</span>
+
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">accept_following_request</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'userId'</span><span class="p">:</span> <span class="n">user_id</span><span class="p">}</span>
+        <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">Route</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">,</span> <span class="s1">'/api/following/requests/accept'</span><span class="p">),</span> <span class="n">json</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">reject_following_request</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'userId'</span><span class="p">:</span> <span class="n">user_id</span><span class="p">}</span>
+        <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">Route</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">,</span> <span class="s1">'/api/following/requests/reject'</span><span class="p">),</span> <span class="n">json</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+
+
+<span class="k">class</span> <span class="nc">ClientAction</span><span class="p">(</span><span class="n">NoteActions</span><span class="p">,</span> <span class="n">UserAction</span><span class="p">):</span>
     <span class="k">pass</span>
 
 
@@ -272,6 +286,21 @@
     <span class="k">def</span> <span class="nf">parse_renote</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]):</span>
         <span class="k">pass</span>
 
+<div class="viewcode-block" id="ConnectionState.parse_unfollow"><a class="viewcode-back" href="../../mi.html#mi.ConnectionState.parse_unfollow">[Doku]</a>    <span class="k">def</span> <span class="nf">parse_unfollow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]):</span>
+        <span class="sd">"""</span>
+<span class="sd">        フォローを解除した際のイベントを解析する関数</span>
+<span class="sd">        """</span></div>
+
+<div class="viewcode-block" id="ConnectionState.parse_receive_follow_request"><a class="viewcode-back" href="../../mi.html#mi.ConnectionState.parse_receive_follow_request">[Doku]</a>    <span class="k">def</span> <span class="nf">parse_receive_follow_request</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]):</span>
+        <span class="sd">"""</span>
+<span class="sd">        フォローリクエストを受け取った際のイベントを解析する関数</span>
+<span class="sd">        """</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">'follow_request'</span><span class="p">,</span> <span class="n">Following</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="bp">self</span><span class="p">))</span></div>
+
+    <span class="k">def</span> <span class="nf">parse_me_updated</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]):</span>
+        <span class="k">pass</span>
+
     <span class="k">def</span> <span class="nf">parse_read_all_announcements</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">pass</span>  <span class="c1"># TODO: 実装</span>
 
@@ -291,8 +320,9 @@
 <div class="viewcode-block" id="ConnectionState.parse_followed"><a class="viewcode-back" href="../../mi.html#mi.ConnectionState.parse_followed">[Doku]</a>    <span class="k">def</span> <span class="nf">parse_followed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">"""</span>
 <span class="sd">        フォローイベントを解析する関数</span>
-<span class="sd">        """</span></div>
-        <span class="c1"># self.dispatch('follow', Follower(message, state=self))</span>
+<span class="sd">        """</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">'follow'</span><span class="p">,</span> <span class="n">User</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="bp">self</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="ConnectionState.parse_mention"><a class="viewcode-back" href="../../mi.html#mi.ConnectionState.parse_mention">[Doku]</a>    <span class="k">def</span> <span class="nf">parse_mention</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">"""</span>
@@ -345,9 +375,9 @@
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        None</span>
-<span class="sd">        """</span>
-        <span class="n">notification_type</span> <span class="o">=</span> <span class="n">str_lower</span><span class="p">(</span><span class="n">message</span><span class="p">[</span><span class="s1">'type'</span><span class="p">])</span>
-        <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">f</span><span class="s1">'parse_</span><span class="si">{</span><span class="n">notification_type</span><span class="si">}</span><span class="s1">'</span><span class="p">)(</span><span class="n">message</span><span class="p">)</span></div>
+<span class="sd">        """</span></div>
+        <span class="c1">#notification_type = str_lower(message['type'])</span>
+        <span class="c1">#getattr(self, f'parse_{notification_type}')(message)</span>
 
     <span class="k">def</span> <span class="nf">parse_follow_request_accepted</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">pass</span>
@@ -363,9 +393,9 @@
 <span class="sd">        ----------</span>
 <span class="sd">        message : Dict[str, Any]</span>
 <span class="sd">            Received message</span>
-<span class="sd">        """</span>
-        <span class="n">notification_type</span> <span class="o">=</span> <span class="n">str_lower</span><span class="p">(</span><span class="n">message</span><span class="p">[</span><span class="s1">'type'</span><span class="p">])</span>
-        <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">f</span><span class="s1">'parse_</span><span class="si">{</span><span class="n">notification_type</span><span class="si">}</span><span class="s1">'</span><span class="p">)(</span><span class="n">message</span><span class="p">)</span></div>
+<span class="sd">        """</span></div>
+        <span class="c1">#notification_type = str_lower(message['type'])</span>
+        <span class="c1">#getattr(self, f'parse_{notification_type}')(message)</span>
 
 <div class="viewcode-block" id="ConnectionState.parse_reaction"><a class="viewcode-back" href="../../mi.html#mi.ConnectionState.parse_reaction">[Doku]</a>    <span class="k">def</span> <span class="nf">parse_reaction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">"""</span>
@@ -572,7 +602,7 @@
         <span class="k">return</span> <span class="n">User</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
 
 <div class="viewcode-block" id="ConnectionState.post_note"><a class="viewcode-back" href="../../mi.html#mi.ConnectionState.post_note">[Doku]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">post_note</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
-                        <span class="n">content</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+                        <span class="n">content</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
                         <span class="n">visibility</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"public"</span><span class="p">,</span>
                         <span class="n">visible_user_ids</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
                         <span class="n">cw</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
