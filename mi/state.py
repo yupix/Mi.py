@@ -55,7 +55,7 @@ class UserAction:
         data = {'userId': user_id}
         return bool(await self.http.request(Route('POST', '/api/following/requests/accept'), json=data, auth=True))
 
-    async def reject_following_request(self, user_id:str) -> bool:
+    async def reject_following_request(self, user_id: str) -> bool:
         data = {'userId': user_id}
         return bool(await self.http.request(Route('POST', '/api/following/requests/reject'), json=data, auth=True))
 
@@ -415,7 +415,7 @@ class ConnectionState(ClientAction):
         return User(data, state=self)
 
     async def post_note(self,
-                        content: Optional[str],
+                        content: Optional[str] = None,
                         visibility: str = "public",
                         visible_user_ids: Optional[List[str]] = None,
                         cw: Optional[str] = None,
