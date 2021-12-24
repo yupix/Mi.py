@@ -14,7 +14,7 @@ from mi.exception import ContentRequired, InvalidParameters, NotExistRequiredPar
 from mi.http import Route
 from mi.iterators import InstanceIterator
 from mi.note import Note, Poll, Reaction
-from mi.user import Follower
+from mi.user import Follower, Following
 from mi.emoji import Emoji
 from mi.utils import check_multi_arg, get_cache_key, get_module_logger, key_builder, remove_dict_empty, str_lower, \
     upper_to_lower
@@ -97,6 +97,21 @@ class ConnectionState(ClientAction):
         getattr(self, f'parse_{channel_type}')(base_msg['body'])
 
     def parse_renote(self, message: Dict[str, Any]):
+        pass
+
+    def parse_unfollow(self, message: Dict[str, Any]):
+        """
+        フォローを解除した際のイベントを解析する関数
+        """
+
+    def parse_receive_follow_request(self, message: Dict[str, Any]):
+        """
+        フォローリクエストを受け取った際のイベントを解析する関数
+        """
+
+        self.dispatch('follow_request', Following(message, state=self))
+
+    def parse_me_updated(self, message: Dict[str, Any]):
         pass
 
     def parse_read_all_announcements(self, message: Dict[str, Any]) -> None:
