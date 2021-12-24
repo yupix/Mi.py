@@ -189,8 +189,10 @@ class ConnectionState(ClientAction):
         -------
         None
         """
-        #notification_type = str_lower(message['type'])
-        #getattr(self, f'parse_{notification_type}')(message)
+        accept_type = ['reaction']
+        notification_type = str_lower(message['type'])
+        if notification_type in accept_type:
+            getattr(self, f'parse_{notification_type}')(message)
 
     def parse_follow_request_accepted(self, message: Dict[str, Any]) -> None:
         pass
