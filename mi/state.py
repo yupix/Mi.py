@@ -46,7 +46,21 @@ class NoteActions:
         return bool(await self.http.request(Route('POST', '/api/reactions/create', json=data, auth=True)))
 
 
-class ClientAction(NoteActions):
+class UserAction:
+    def __init__(self, http: HTTPClient, loop: asyncio.AbstractEventLoop):
+        self.http = http
+        self.loop = loop
+
+    async def accept_following_request(self, user_id: str) -> bool:
+        data = {'userId': user_id}
+        return bool(await self.http.request(Route('POST', '/api/following/requests/accept'), json=data, auth=True))
+
+    async def reject_following_request(self, user_id:str) -> bool:
+        data = {'userId': user_id}
+        return bool(await self.http.request(Route('POST', '/api/following/requests/reject'), json=data, auth=True))
+
+
+class ClientAction(NoteActions, UserAction):
     pass
 
 
