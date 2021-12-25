@@ -6,6 +6,8 @@
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fyupix%2FMi.py.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fyupix%2FMi.py?ref=badge_shield)
 [![Build Status](https://ci.akarinext.org/api/badges/yupix/Mi.py/status.svg)](https://ci.akarinext.org/yupix/Mi.py)
 
+[日本語](./README-ja.md)
+
 ## Overview
 
 Mi.py is a Misskey API Wrapper that is designed to be written in a [Discord.py](https://github.com/Rapptz/discord.py)-like way. The only Misskey currently tested is the latest version of Misskey v12. We have also tested it with `Ayuskey`, but as of 11/5, Ayuskey itself is not working properly, so we are not testing it now.
