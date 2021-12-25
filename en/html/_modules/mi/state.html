@@ -1,0 +1,909 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" />
+
+    <meta name="generator" content="sphinx-4.3.2, furo 2021.11.23"/>
+        <title>mi.state - Mi.py 0.5.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?digest=7f0192ddeb2adecfbaa87ffbcf67d16358b30bc1" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-bootstrap.5fd3999ee7762ccc51105388f4a9d115.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?digest=0af69da206d614734f649b27d4cdc2dd6c31f41d" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  body[data-theme="dark"] {
+    --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+  }
+  @media (prefers-color-scheme: dark) {
+    body:not([data-theme="light"]) {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+  }
+</style></head>
+  <body>
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path stroke="none" d="M0 0h24v24H0z" />
+      <line x1="4" y1="6" x2="20" y2="6" />
+      <line x1="10" y1="12" x2="20" y2="12" />
+      <line x1="6" y1="18" x2="20" y2="18" />
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../../index.html"><div class="brand">Mi.py 0.5.0 documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand centered" href="../../index.html">
+  
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo" src="../../_static/mi.py.svg" alt="Logo"/>
+  </div>
+  
+  
+</a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
+  <input class="sidebar-search" placeholder=Search name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  
+</div>
+</div>
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <div class="content-icon-container">
+          <div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <h1>Source code for mi.state</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">import</span> <span class="nn">asyncio</span>
+<span class="kn">import</span> <span class="nn">inspect</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">AsyncIterator</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="kn">from</span> <span class="nn">aiocache</span> <span class="kn">import</span> <span class="n">cached</span>
+<span class="kn">from</span> <span class="nn">aiocache.factory</span> <span class="kn">import</span> <span class="n">Cache</span>
+
+<span class="kn">from</span> <span class="nn">mi</span> <span class="kn">import</span> <span class="n">Instance</span><span class="p">,</span> <span class="n">InstanceMeta</span><span class="p">,</span> <span class="n">User</span>
+<span class="kn">from</span> <span class="nn">mi.chat</span> <span class="kn">import</span> <span class="n">Chat</span>
+<span class="kn">from</span> <span class="nn">mi.drive</span> <span class="kn">import</span> <span class="n">Drive</span>
+<span class="kn">from</span> <span class="nn">mi.exception</span> <span class="kn">import</span> <span class="n">ContentRequired</span><span class="p">,</span> <span class="n">InvalidParameters</span><span class="p">,</span> <span class="n">NotExistRequiredParameters</span>
+<span class="kn">from</span> <span class="nn">mi.http</span> <span class="kn">import</span> <span class="n">Route</span>
+<span class="kn">from</span> <span class="nn">mi.iterators</span> <span class="kn">import</span> <span class="n">InstanceIterator</span>
+<span class="kn">from</span> <span class="nn">mi.note</span> <span class="kn">import</span> <span class="n">Note</span><span class="p">,</span> <span class="n">Poll</span><span class="p">,</span> <span class="n">Reaction</span>
+<span class="kn">from</span> <span class="nn">mi.user</span> <span class="kn">import</span> <span class="n">Follower</span><span class="p">,</span> <span class="n">Following</span>
+<span class="kn">from</span> <span class="nn">mi.emoji</span> <span class="kn">import</span> <span class="n">Emoji</span>
+<span class="kn">from</span> <span class="nn">mi.utils</span> <span class="kn">import</span> <span class="n">check_multi_arg</span><span class="p">,</span> <span class="n">get_cache_key</span><span class="p">,</span> <span class="n">get_module_logger</span><span class="p">,</span> <span class="n">key_builder</span><span class="p">,</span> <span class="n">remove_dict_empty</span><span class="p">,</span> <span class="n">str_lower</span><span class="p">,</span> \
+    <span class="n">upper_to_lower</span>
+
+<span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">mi</span> <span class="kn">import</span> <span class="n">HTTPClient</span>
+    <span class="kn">from</span> <span class="nn">mi.types</span> <span class="kn">import</span> <span class="p">(</span><span class="n">Note</span> <span class="k">as</span> <span class="n">NotePayload</span><span class="p">,</span> <span class="n">Chat</span> <span class="k">as</span> <span class="n">ChatPayload</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">NoteActions</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http</span><span class="p">:</span> <span class="n">HTTPClient</span><span class="p">,</span> <span class="n">loop</span><span class="p">:</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">AbstractEventLoop</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">http</span> <span class="o">=</span> <span class="n">http</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">loop</span> <span class="o">=</span> <span class="n">loop</span>
+
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">favorite</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">note_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'noteId'</span><span class="p">:</span> <span class="n">note_id</span><span class="p">}</span>
+        <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">Route</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">,</span> <span class="s1">'/api/notes/favorites/create'</span><span class="p">),</span> <span class="n">json</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">remove_favorite</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">note_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'noteId'</span><span class="p">:</span> <span class="n">note_id</span><span class="p">}</span>
+        <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">Route</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">,</span> <span class="s1">'/api/notes/favorites/delete'</span><span class="p">),</span> <span class="n">json</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">add_note_to_clips</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">clip_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">note_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'noteId'</span><span class="p">:</span> <span class="n">note_id</span><span class="p">,</span> <span class="s1">'clipId'</span><span class="p">:</span> <span class="n">clip_id</span><span class="p">}</span>
+        <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">Route</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">,</span> <span class="s1">'/api/clips/add-note'</span><span class="p">),</span> <span class="n">json</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">add_reaction_to_note</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">note_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">reaction</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'noteId'</span><span class="p">:</span> <span class="n">note_id</span><span class="p">,</span> <span class="s1">'reaction'</span><span class="p">:</span> <span class="n">reaction</span><span class="p">}</span>
+        <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">Route</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">,</span> <span class="s1">'/api/reactions/create'</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="kc">True</span><span class="p">)))</span>
+
+
+<span class="k">class</span> <span class="nc">UserAction</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">http</span><span class="p">:</span> <span class="n">HTTPClient</span><span class="p">,</span> <span class="n">loop</span><span class="p">:</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">AbstractEventLoop</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">http</span> <span class="o">=</span> <span class="n">http</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">loop</span> <span class="o">=</span> <span class="n">loop</span>
+
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">accept_following_request</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'userId'</span><span class="p">:</span> <span class="n">user_id</span><span class="p">}</span>
+        <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">Route</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">,</span> <span class="s1">'/api/following/requests/accept'</span><span class="p">),</span> <span class="n">json</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">reject_following_request</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'userId'</span><span class="p">:</span> <span class="n">user_id</span><span class="p">}</span>
+        <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">Route</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">,</span> <span class="s1">'/api/following/requests/reject'</span><span class="p">),</span> <span class="n">json</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+
+
+<span class="k">class</span> <span class="nc">ClientAction</span><span class="p">(</span><span class="n">NoteActions</span><span class="p">,</span> <span class="n">UserAction</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+
+<div class="viewcode-block" id="ConnectionState"><a class="viewcode-back" href="../../mi.html#mi.ConnectionState">[docs]</a><span class="k">class</span> <span class="nc">ConnectionState</span><span class="p">(</span><span class="n">ClientAction</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dispatch</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">http</span><span class="p">:</span> <span class="n">HTTPClient</span><span class="p">,</span> <span class="n">loop</span><span class="p">:</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">AbstractEventLoop</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">http</span><span class="p">,</span> <span class="n">loop</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span> <span class="o">=</span> <span class="n">dispatch</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">http</span><span class="p">:</span> <span class="n">HTTPClient</span> <span class="o">=</span> <span class="n">http</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">get_module_logger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">loop</span><span class="p">:</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">AbstractEventLoop</span> <span class="o">=</span> <span class="n">loop</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parsers</span> <span class="o">=</span> <span class="n">parsers</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">attr</span><span class="p">,</span> <span class="n">func</span> <span class="ow">in</span> <span class="n">inspect</span><span class="o">.</span><span class="n">getmembers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">attr</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">'parse'</span><span class="p">):</span>
+                <span class="n">parsers</span><span class="p">[</span><span class="n">attr</span><span class="p">[</span><span class="mi">6</span><span class="p">:]</span><span class="o">.</span><span class="n">upper</span><span class="p">()]</span> <span class="o">=</span> <span class="n">func</span>
+
+    <span class="k">def</span> <span class="nf">parse_emoji_added</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">'emoji_add'</span><span class="p">,</span> <span class="n">Emoji</span><span class="p">(</span><span class="n">message</span><span class="p">[</span><span class="s1">'body'</span><span class="p">][</span><span class="s1">'emoji'</span><span class="p">],</span> <span class="n">state</span><span class="o">=</span><span class="bp">self</span><span class="p">))</span>
+
+<div class="viewcode-block" id="ConnectionState.parse_channel"><a class="viewcode-back" href="../../mi.html#mi.ConnectionState.parse_channel">[docs]</a>    <span class="k">def</span> <span class="nf">parse_channel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">"""parse_channel is a function to parse channel event</span>
+
+<span class="sd">        チャンネルタイプのデータを解析後適切なパーサーに移動させます</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        message : Dict[str, Any]</span>
+<span class="sd">            Received message</span>
+<span class="sd">        """</span>
+        <span class="n">base_msg</span> <span class="o">=</span> <span class="n">upper_to_lower</span><span class="p">(</span><span class="n">message</span><span class="p">[</span><span class="s1">'body'</span><span class="p">])</span>
+        <span class="n">channel_type</span> <span class="o">=</span> <span class="n">str_lower</span><span class="p">(</span><span class="n">base_msg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'type'</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">'ChannelType: </span><span class="si">{</span><span class="n">channel_type</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">'recv event type: </span><span class="si">{</span><span class="n">channel_type</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
+        <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">f</span><span class="s1">'parse_</span><span class="si">{</span><span class="n">channel_type</span><span class="si">}</span><span class="s1">'</span><span class="p">)(</span><span class="n">base_msg</span><span class="p">[</span><span class="s1">'body'</span><span class="p">])</span></div>
+
+    <span class="k">def</span> <span class="nf">parse_renote</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]):</span>
+        <span class="k">pass</span>
+
+<div class="viewcode-block" id="ConnectionState.parse_unfollow"><a class="viewcode-back" href="../../mi.html#mi.ConnectionState.parse_unfollow">[docs]</a>    <span class="k">def</span> <span class="nf">parse_unfollow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]):</span>
+        <span class="sd">"""</span>
+<span class="sd">        フォローを解除した際のイベントを解析する関数</span>
+<span class="sd">        """</span></div>
+
+<div class="viewcode-block" id="ConnectionState.parse_receive_follow_request"><a class="viewcode-back" href="../../mi.html#mi.ConnectionState.parse_receive_follow_request">[docs]</a>    <span class="k">def</span> <span class="nf">parse_receive_follow_request</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]):</span>
+        <span class="sd">"""</span>
+<span class="sd">        フォローリクエストを受け取った際のイベントを解析する関数</span>
+<span class="sd">        """</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">'follow_request'</span><span class="p">,</span> <span class="n">Following</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="bp">self</span><span class="p">))</span></div>
+
+    <span class="k">def</span> <span class="nf">parse_me_updated</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]):</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">parse_read_all_announcements</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">pass</span>  <span class="c1"># TODO: 実装</span>
+
+<div class="viewcode-block" id="ConnectionState.parse_reply"><a class="viewcode-back" href="../../mi.html#mi.ConnectionState.parse_reply">[docs]</a>    <span class="k">def</span> <span class="nf">parse_reply</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="n">NotePayload</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">"""</span>
+<span class="sd">        リプライ</span>
+<span class="sd">        """</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">'message'</span><span class="p">,</span> <span class="n">Note</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="bp">self</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="ConnectionState.parse_follow"><a class="viewcode-back" href="../../mi.html#mi.ConnectionState.parse_follow">[docs]</a>    <span class="k">def</span> <span class="nf">parse_follow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">"""</span>
+<span class="sd">        ユーザーをフォローした際のイベントを解析する関数</span>
+<span class="sd">        """</span></div>
+
+        <span class="c1"># self.dispatch('follow', Follower(message, state=self))</span>
+
+<div class="viewcode-block" id="ConnectionState.parse_followed"><a class="viewcode-back" href="../../mi.html#mi.ConnectionState.parse_followed">[docs]</a>    <span class="k">def</span> <span class="nf">parse_followed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">"""</span>
+<span class="sd">        フォローイベントを解析する関数</span>
+<span class="sd">        """</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">'follow'</span><span class="p">,</span> <span class="n">User</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="bp">self</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="ConnectionState.parse_mention"><a class="viewcode-back" href="../../mi.html#mi.ConnectionState.parse_mention">[docs]</a>    <span class="k">def</span> <span class="nf">parse_mention</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">"""</span>
+<span class="sd">        メンションイベントを解析する関数</span>
+<span class="sd">        """</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">'mention'</span><span class="p">,</span> <span class="n">Note</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="bp">self</span><span class="p">))</span></div>
+
+    <span class="k">def</span> <span class="nf">parse_drive_file_created</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">pass</span>  <span class="c1"># TODO: 実装</span>
+
+    <span class="k">def</span> <span class="nf">parse_read_all_unread_mentions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">pass</span>  <span class="c1"># TODO:実装</span>
+
+    <span class="k">def</span> <span class="nf">parse_read_all_unread_specified_notes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">pass</span>  <span class="c1"># TODO:実装</span>
+
+    <span class="k">def</span> <span class="nf">parse_read_all_channels</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">pass</span>  <span class="c1"># TODO:実装</span>
+
+    <span class="k">def</span> <span class="nf">parse_read_all_notifications</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">pass</span>  <span class="c1"># TODO:実装</span>
+
+    <span class="k">def</span> <span class="nf">parse_unread_mention</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">parse_read_all_messaging_messages</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">pass</span>
+
+<div class="viewcode-block" id="ConnectionState.parse_messaging_message"><a class="viewcode-back" href="../../mi.html#mi.ConnectionState.parse_messaging_message">[docs]</a>    <span class="k">def</span> <span class="nf">parse_messaging_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="n">ChatPayload</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">"""</span>
+<span class="sd">        チャットが来た際のデータを処理する関数</span>
+<span class="sd">        """</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">'message'</span><span class="p">,</span> <span class="n">Chat</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="bp">self</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="ConnectionState.parse_unread_messaging_message"><a class="viewcode-back" href="../../mi.html#mi.ConnectionState.parse_unread_messaging_message">[docs]</a>    <span class="k">def</span> <span class="nf">parse_unread_messaging_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">"""</span>
+<span class="sd">        チャットが既読になっていない場合のデータを処理する関数</span>
+<span class="sd">        """</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">'message'</span><span class="p">,</span> <span class="n">Chat</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="bp">self</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="ConnectionState.parse_notification"><a class="viewcode-back" href="../../mi.html#mi.ConnectionState.parse_notification">[docs]</a>    <span class="k">def</span> <span class="nf">parse_notification</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">"""</span>
+<span class="sd">        通知イベントを解析する関数</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        message: Dict[str, Any]</span>
+<span class="sd">            Received message</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+<span class="sd">        """</span>
+        <span class="n">accept_type</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'reaction'</span><span class="p">]</span>
+        <span class="n">notification_type</span> <span class="o">=</span> <span class="n">str_lower</span><span class="p">(</span><span class="n">message</span><span class="p">[</span><span class="s1">'type'</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">notification_type</span> <span class="ow">in</span> <span class="n">accept_type</span><span class="p">:</span>
+            <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">f</span><span class="s1">'parse_</span><span class="si">{</span><span class="n">notification_type</span><span class="si">}</span><span class="s1">'</span><span class="p">)(</span><span class="n">message</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">parse_follow_request_accepted</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">parse_poll_vote</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">pass</span>  <span class="c1"># TODO: 実装</span>
+
+<div class="viewcode-block" id="ConnectionState.parse_unread_notification"><a class="viewcode-back" href="../../mi.html#mi.ConnectionState.parse_unread_notification">[docs]</a>    <span class="k">def</span> <span class="nf">parse_unread_notification</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">"""</span>
+<span class="sd">        未読の通知を解析する関数</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        message : Dict[str, Any]</span>
+<span class="sd">            Received message</span>
+<span class="sd">        """</span></div>
+        <span class="c1">#notification_type = str_lower(message['type'])</span>
+        <span class="c1">#getattr(self, f'parse_{notification_type}')(message)</span>
+
+<div class="viewcode-block" id="ConnectionState.parse_reaction"><a class="viewcode-back" href="../../mi.html#mi.ConnectionState.parse_reaction">[docs]</a>    <span class="k">def</span> <span class="nf">parse_reaction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">"""</span>
+<span class="sd">        リアクションに関する情報を解析する関数</span>
+<span class="sd">        """</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">'reaction'</span><span class="p">,</span> <span class="n">Reaction</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="bp">self</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="ConnectionState.parse_note"><a class="viewcode-back" href="../../mi.html#mi.ConnectionState.parse_note">[docs]</a>    <span class="k">def</span> <span class="nf">parse_note</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">"""</span>
+<span class="sd">        ノートイベントを解析する関数</span>
+<span class="sd">        """</span>
+        <span class="n">note</span> <span class="o">=</span> <span class="n">Note</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+        <span class="c1"># Router(self.http.ws).capture_message(note.id) TODO: capture message</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">'message'</span><span class="p">,</span> <span class="n">note</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ConnectionState.follow_user"><a class="viewcode-back" href="../../mi.html#mi.ConnectionState.follow_user">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">follow_user</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
+        <span class="sd">"""</span>
+<span class="sd">        与えられたIDのユーザーをフォローします</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        user_id : Optional[str] = None</span>
+<span class="sd">            フォローしたいユーザーのID</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        status: bool = False</span>
+<span class="sd">            成功ならTrue, 失敗ならFalse</span>
+<span class="sd">        """</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"userId"</span><span class="p">:</span> <span class="n">user_id</span><span class="p">}</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">Route</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">,</span> <span class="s1">'/api/following/create'</span><span class="p">),</span> <span class="n">json</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">res</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"error"</span><span class="p">):</span>
+            <span class="n">code</span> <span class="o">=</span> <span class="n">res</span><span class="p">[</span><span class="s2">"error"</span><span class="p">][</span><span class="s2">"code"</span><span class="p">]</span>
+            <span class="n">status</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">code</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="n">status</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="n">status</span><span class="p">,</span> <span class="n">code</span></div>
+
+<div class="viewcode-block" id="ConnectionState.unfollow_user"><a class="viewcode-back" href="../../mi.html#mi.ConnectionState.unfollow_user">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">unfollow_user</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">"""</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        user_id :</span>
+<span class="sd">            フォローを解除したいユーザーのID</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        status: bool = False</span>
+<span class="sd">            成功したならTrue, 失敗したならFalse</span>
+<span class="sd">        """</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"userId"</span><span class="p">:</span> <span class="n">user_id</span><span class="p">}</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">Route</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">,</span> <span class="s1">'/api/following/delete'</span><span class="p">),</span> <span class="n">json</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">204</span> <span class="ow">or</span> <span class="mi">200</span><span class="p">)</span></div>
+
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">get_i</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">User</span><span class="p">:</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">Route</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">,</span> <span class="s1">'/api/i'</span><span class="p">),</span> <span class="n">auth</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">User</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">get_users</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                  <span class="n">limit</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
+                  <span class="o">*</span><span class="p">,</span>
+                  <span class="n">offset</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+                  <span class="n">sort</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                  <span class="n">state</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">'all'</span><span class="p">,</span>
+                  <span class="n">origin</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">'local'</span><span class="p">,</span>
+                  <span class="n">username</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                  <span class="n">hostname</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                  <span class="n">get_all</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncIterator</span><span class="p">[</span><span class="n">User</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="n">InstanceIterator</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">get_users</span><span class="p">(</span><span class="n">limit</span><span class="o">=</span><span class="n">limit</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="n">offset</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="n">sort</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="n">state</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="n">origin</span><span class="p">,</span>
+                                                <span class="n">username</span><span class="o">=</span><span class="n">username</span><span class="p">,</span> <span class="n">hostname</span><span class="o">=</span><span class="n">hostname</span><span class="p">,</span> <span class="n">get_all</span><span class="o">=</span><span class="n">get_all</span><span class="p">)</span>
+
+<div class="viewcode-block" id="ConnectionState.add_reaction"><a class="viewcode-back" href="../../mi.html#mi.ConnectionState.add_reaction">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">add_reaction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">reaction</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">note_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">"""</span>
+<span class="sd">        指定したnoteに指定したリアクションを付与します（内部用</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        reaction : Optional[str]</span>
+<span class="sd">            付与するリアクション名</span>
+<span class="sd">        note_id : Optional[str]</span>
+<span class="sd">            付与対象のノートID</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        status: bool</span>
+<span class="sd">            成功したならTrue,失敗ならFalse</span>
+<span class="sd">        """</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">remove_dict_empty</span><span class="p">({</span><span class="s2">"noteId"</span><span class="p">:</span> <span class="n">note_id</span><span class="p">,</span> <span class="s2">"reaction"</span><span class="p">:</span> <span class="n">reaction</span><span class="p">})</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">Route</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">,</span> <span class="s1">'/api/notes/reactions/create'</span><span class="p">),</span> <span class="n">json</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ConnectionState.delete_note"><a class="viewcode-back" href="../../mi.html#mi.ConnectionState.delete_note">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">delete_note</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">note_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">"""</span>
+<span class="sd">        指定したidのノートを削除します。</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        note_id : str</span>
+<span class="sd">            ノートid</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        bool</span>
+<span class="sd">            成功したか否か</span>
+<span class="sd">        """</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"noteId"</span><span class="p">:</span> <span class="n">note_id</span><span class="p">}</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">Route</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">,</span> <span class="s1">'/api/notes/delete'</span><span class="p">),</span> <span class="n">json</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="n">res</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ConnectionState.get_user"><a class="viewcode-back" href="../../mi.html#mi.ConnectionState.get_user">[docs]</a>    <span class="nd">@cached</span><span class="p">(</span><span class="n">ttl</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">namespace</span><span class="o">=</span><span class="s1">'get_user'</span><span class="p">,</span> <span class="n">key_builder</span><span class="o">=</span><span class="n">key_builder</span><span class="p">)</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">get_user</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">username</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                       <span class="n">host</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">User</span><span class="p">:</span>
+        <span class="sd">"""</span>
+<span class="sd">        ユーザーのプロフィールを取得します。一度のみサーバーにアクセスしキャッシュをその後は使います。</span>
+<span class="sd">        fetch_userを使った場合はキャッシュが廃棄され再度サーバーにアクセスします。</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        user_id : str</span>
+<span class="sd">            取得したいユーザーのユーザーID</span>
+<span class="sd">        username : str</span>
+<span class="sd">            取得したいユーザーのユーザー名</span>
+<span class="sd">        host : str, default=None</span>
+<span class="sd">            取得したいユーザーがいるインスタンスのhost</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict:</span>
+<span class="sd">            ユーザー情報</span>
+<span class="sd">        """</span>
+        <span class="n">field</span> <span class="o">=</span> <span class="n">remove_dict_empty</span><span class="p">({</span><span class="s2">"userId"</span><span class="p">:</span> <span class="n">user_id</span><span class="p">,</span> <span class="s2">"username"</span><span class="p">:</span> <span class="n">username</span><span class="p">,</span> <span class="s2">"host"</span><span class="p">:</span> <span class="n">host</span><span class="p">})</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">Route</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">,</span> <span class="s1">'/api/users/show'</span><span class="p">),</span> <span class="n">json</span><span class="o">=</span><span class="n">field</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">User</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ConnectionState.post_chat"><a class="viewcode-back" href="../../mi.html#mi.ConnectionState.post_chat">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">post_chat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">content</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">user_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">group_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">file_id</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Chat</span><span class="p">:</span>
+        <span class="sd">"""</span>
+<span class="sd">        チャットを送信します。</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        content : str</span>
+<span class="sd">            送信する内容</span>
+<span class="sd">        user_id : str, optional</span>
+<span class="sd">            ユーザーid, default=None</span>
+<span class="sd">        group_id : str, optional</span>
+<span class="sd">            グループid, default=None</span>
+<span class="sd">        file_id : str, optional</span>
+<span class="sd">            添付するファイルid, efault=None</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        Chat</span>
+<span class="sd">            チャットの内容</span>
+<span class="sd">        """</span>
+        <span class="n">args</span> <span class="o">=</span> <span class="n">remove_dict_empty</span><span class="p">({</span><span class="s1">'userId'</span><span class="p">:</span> <span class="n">user_id</span><span class="p">,</span> <span class="s1">'groupId'</span><span class="p">:</span> <span class="n">group_id</span><span class="p">,</span> <span class="s1">'text'</span><span class="p">:</span> <span class="n">content</span><span class="p">,</span> <span class="s1">'fileId'</span><span class="p">:</span> <span class="n">file_id</span><span class="p">})</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">Route</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">,</span> <span class="s1">'/api/messaging/messages/create'</span><span class="p">),</span> <span class="n">json</span><span class="o">=</span><span class="n">args</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Chat</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ConnectionState.delete_chat"><a class="viewcode-back" href="../../mi.html#mi.ConnectionState.delete_chat">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">delete_chat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">"""</span>
+<span class="sd">        指定したidのメッセージを削除します。</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        message_id : str</span>
+<span class="sd">            メッセージid</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        bool</span>
+<span class="sd">            成功したか否か</span>
+<span class="sd">        """</span>
+        <span class="n">args</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'messageId'</span><span class="p">:</span> <span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">message_id</span><span class="si">}</span><span class="s1">'</span><span class="p">}</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">Route</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">,</span> <span class="s1">'/api/messaging/messages/delete'</span><span class="p">),</span> <span class="n">json</span><span class="o">=</span><span class="n">args</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div>
+
+    <span class="nd">@get_cache_key</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">fetch_user</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">username</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                         <span class="n">host</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">User</span><span class="p">:</span>
+        <span class="sd">"""</span>
+<span class="sd">        サーバーにアクセスし、ユーザーのプロフィールを取得します。基本的には get_userをお使いください。</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        user_id : str</span>
+<span class="sd">            取得したいユーザーのユーザーID</span>
+<span class="sd">        username : str</span>
+<span class="sd">            取得したいユーザーのユーザー名</span>
+<span class="sd">        host : str, default=None</span>
+<span class="sd">            取得したいユーザーがいるインスタンスのhost</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict:</span>
+<span class="sd">            ユーザー情報</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">check_multi_arg</span><span class="p">(</span><span class="n">user_id</span><span class="p">,</span> <span class="n">username</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">NotExistRequiredParameters</span><span class="p">(</span><span class="s2">"user_id, usernameどちらかは必須です"</span><span class="p">)</span>
+
+        <span class="n">field</span> <span class="o">=</span> <span class="n">remove_dict_empty</span><span class="p">({</span><span class="s2">"userId"</span><span class="p">:</span> <span class="n">user_id</span><span class="p">,</span> <span class="s2">"username"</span><span class="p">:</span> <span class="n">username</span><span class="p">,</span> <span class="s2">"host"</span><span class="p">:</span> <span class="n">host</span><span class="p">})</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">Route</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">,</span> <span class="s1">'/api/users/show'</span><span class="p">),</span> <span class="n">json</span><span class="o">=</span><span class="n">field</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">old_cache</span> <span class="o">=</span> <span class="n">Cache</span><span class="p">(</span><span class="n">namespace</span><span class="o">=</span><span class="s1">'get_user'</span><span class="p">)</span>
+        <span class="k">await</span> <span class="n">old_cache</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">'cache_key'</span><span class="p">]</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">'get_user'</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">User</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+
+<div class="viewcode-block" id="ConnectionState.post_note"><a class="viewcode-back" href="../../mi.html#mi.ConnectionState.post_note">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">post_note</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                        <span class="n">content</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                        <span class="n">visibility</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"public"</span><span class="p">,</span>
+                        <span class="n">visible_user_ids</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                        <span class="n">cw</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                        <span class="n">local_only</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+                        <span class="n">no_extract_mentions</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+                        <span class="n">no_extract_hashtags</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+                        <span class="n">no_extract_emojis</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+                        <span class="n">reply_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                        <span class="n">renote_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                        <span class="n">channel_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                        <span class="n">file_ids</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">poll</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Poll</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+                        <span class="p">):</span>
+        <span class="sd">"""</span>
+
+<span class="sd">        ノートを投稿します。</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        content : str</span>
+<span class="sd">            投稿する内容</span>
+<span class="sd">        visibility : str, optional</span>
+<span class="sd">            公開範囲, by default "public"</span>
+<span class="sd">        visible_user_ids : Optional[List[str]], optional</span>
+<span class="sd">            公開するユーザー, by default None</span>
+<span class="sd">        cw : Optional[str], optional</span>
+<span class="sd">            閲覧注意の文字, by default None</span>
+<span class="sd">        local_only : bool, optional</span>
+<span class="sd">            ローカルにのみ表示するか, by default False</span>
+<span class="sd">        no_extract_mentions : bool, optional</span>
+<span class="sd">            メンションを展開するか, by default False</span>
+<span class="sd">        no_extract_hashtags : bool, optional</span>
+<span class="sd">            ハッシュタグを展開するか, by default False</span>
+<span class="sd">        no_extract_emojis : bool, optional</span>
+<span class="sd">            絵文字を展開するか, by default False</span>
+<span class="sd">        reply_id : Optional[str], optional</span>
+<span class="sd">            リプライ先のid, by default None</span>
+<span class="sd">        renote_id : Optional[str], optional</span>
+<span class="sd">            リノート先のid, by default None</span>
+<span class="sd">        channel_id : Optional[str], optional</span>
+<span class="sd">            チャンネルid, by default None</span>
+<span class="sd">        file_ids : [type], optional</span>
+<span class="sd">            添付するファイルのid, by default None</span>
+<span class="sd">        poll : Optional[Poll], optional</span>
+<span class="sd">            アンケート, by default None</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        [type]</span>
+<span class="sd">            [description]</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        ContentRequired</span>
+<span class="sd">            [description]</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="n">file_ids</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">file_ids</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">field</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">"visibility"</span><span class="p">:</span> <span class="n">visibility</span><span class="p">,</span>
+            <span class="s2">"visibleUserIds"</span><span class="p">:</span> <span class="n">visible_user_ids</span><span class="p">,</span>
+            <span class="s2">"text"</span><span class="p">:</span> <span class="n">content</span><span class="p">,</span>
+            <span class="s2">"cw"</span><span class="p">:</span> <span class="n">cw</span><span class="p">,</span>
+            <span class="s2">"localOnly"</span><span class="p">:</span> <span class="n">local_only</span><span class="p">,</span>
+            <span class="s2">"noExtractMentions"</span><span class="p">:</span> <span class="n">no_extract_mentions</span><span class="p">,</span>
+            <span class="s2">"noExtractHashtags"</span><span class="p">:</span> <span class="n">no_extract_hashtags</span><span class="p">,</span>
+            <span class="s2">"noExtractEmojis"</span><span class="p">:</span> <span class="n">no_extract_emojis</span><span class="p">,</span>
+            <span class="s2">"replyId"</span><span class="p">:</span> <span class="n">reply_id</span><span class="p">,</span>
+            <span class="s2">"renoteId"</span><span class="p">:</span> <span class="n">renote_id</span><span class="p">,</span>
+            <span class="s2">"channelId"</span><span class="p">:</span> <span class="n">channel_id</span>
+        <span class="p">}</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">check_multi_arg</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="n">file_ids</span><span class="p">,</span> <span class="n">renote_id</span><span class="p">,</span> <span class="n">poll</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">ContentRequired</span><span class="p">(</span><span class="s2">"ノートの送信にはcontent, file_ids, renote_id またはpollのいずれか1つが無くてはいけません"</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">poll</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">poll</span><span class="o">.</span><span class="n">choices</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">field</span><span class="p">[</span><span class="s2">"poll"</span><span class="p">]</span> <span class="o">=</span> <span class="n">poll</span>
+        <span class="k">if</span> <span class="n">file_ids</span><span class="p">:</span>
+            <span class="n">field</span><span class="p">[</span><span class="s2">"fileIds"</span><span class="p">]</span> <span class="o">=</span> <span class="n">file_ids</span>
+        <span class="n">field</span> <span class="o">=</span> <span class="n">remove_dict_empty</span><span class="p">(</span><span class="n">field</span><span class="p">)</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">Route</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">,</span> <span class="s1">'/api/notes/create'</span><span class="p">),</span> <span class="n">json</span><span class="o">=</span><span class="n">field</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Note</span><span class="p">(</span><span class="n">res</span><span class="p">[</span><span class="s2">"created_note"</span><span class="p">],</span> <span class="n">state</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ConnectionState.get_followers"><a class="viewcode-back" href="../../mi.html#mi.ConnectionState.get_followers">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">get_followers</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">user_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">username</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">host</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">since_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">until_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">limit</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
+            <span class="n">get_all</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncIterator</span><span class="p">[</span><span class="n">Follower</span><span class="p">]:</span>
+        <span class="sd">"""</span>
+<span class="sd">        与えられたユーザーのフォロワーを取得します</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        user_id : str, default=None</span>
+<span class="sd">            ユーザーのid</span>
+<span class="sd">        username : str, default=None</span>
+<span class="sd">            ユーザー名</span>
+<span class="sd">        host : str, default=None</span>
+<span class="sd">            ユーザーがいるインスタンスのhost名</span>
+<span class="sd">        since_id : str, default=None</span>
+<span class="sd">        until_id : str, default=None</span>
+<span class="sd">            前回の最後の値を与える(既に実行し取得しきれない場合に使用)</span>
+<span class="sd">        limit : int, default=10</span>
+<span class="sd">            取得する情報の最大数 max: 100</span>
+<span class="sd">        get_all : bool, default=False</span>
+<span class="sd">            全てのフォロワーを取得する</span>
+<span class="sd">        Yields</span>
+<span class="sd">        ------</span>
+<span class="sd">        dict</span>
+<span class="sd">            フォロワーの情報</span>
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        InvalidParameters</span>
+<span class="sd">            limit引数が不正な場合</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">check_multi_arg</span><span class="p">(</span><span class="n">user_id</span><span class="p">,</span> <span class="n">username</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">NotExistRequiredParameters</span><span class="p">(</span><span class="s2">"user_id, usernameどちらかは必須です"</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">limit</span> <span class="o">&gt;</span> <span class="mi">100</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">InvalidParameters</span><span class="p">(</span><span class="s2">"limit は100以上を受け付けません"</span><span class="p">)</span>
+
+        <span class="n">data</span> <span class="o">=</span> <span class="n">remove_dict_empty</span><span class="p">(</span>
+            <span class="p">{</span>
+                <span class="s2">"userId"</span><span class="p">:</span> <span class="n">user_id</span><span class="p">,</span>
+                <span class="s2">"username"</span><span class="p">:</span> <span class="n">username</span><span class="p">,</span>
+                <span class="s2">"host"</span><span class="p">:</span> <span class="n">host</span><span class="p">,</span>
+                <span class="s2">"sinceId"</span><span class="p">:</span> <span class="n">since_id</span><span class="p">,</span>
+                <span class="s2">"untilId"</span><span class="p">:</span> <span class="n">until_id</span><span class="p">,</span>
+                <span class="s2">"limit"</span><span class="p">:</span> <span class="n">limit</span><span class="p">,</span>
+            <span class="p">}</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">get_all</span><span class="p">:</span>
+            <span class="n">loop</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">while</span> <span class="n">loop</span><span class="p">:</span>
+                <span class="n">get_data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">Route</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">,</span> <span class="s1">'/api/users/followers'</span><span class="p">),</span> <span class="n">json</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">get_data</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">data</span><span class="p">[</span><span class="s2">"untilId"</span><span class="p">]</span> <span class="o">=</span> <span class="n">get_data</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="s2">"id"</span><span class="p">]</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">break</span>
+                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">[</span><span class="n">Follower</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">get_data</span><span class="p">]:</span>
+                    <span class="k">yield</span> <span class="n">i</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">get_data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">Route</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">,</span> <span class="s1">'/api/users/followers'</span><span class="p">),</span> <span class="n">json</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">[</span><span class="n">Follower</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">get_data</span><span class="p">]:</span>
+                <span class="k">yield</span> <span class="n">i</span></div>
+
+    <span class="nd">@cached</span><span class="p">(</span><span class="n">ttl</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">key_builder</span><span class="o">=</span><span class="n">key_builder</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="s1">'get_instance'</span><span class="p">)</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">get_instance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">host</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">detail</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">InstanceMeta</span><span class="p">,</span> <span class="n">Instance</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="n">host</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">Route</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">,</span> <span class="s1">'/api/meta'</span><span class="p">),</span> <span class="n">json</span><span class="o">=</span><span class="p">{</span><span class="s1">'detail'</span><span class="p">:</span> <span class="n">detail</span><span class="p">},</span> <span class="n">auth</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">InstanceMeta</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">Route</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">,</span> <span class="s1">'/api/federation/show-instance'</span><span class="p">),</span> <span class="n">json</span><span class="o">=</span><span class="p">{</span><span class="s1">'host'</span><span class="p">:</span> <span class="n">host</span><span class="p">},</span> <span class="n">auth</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                       <span class="n">lower</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Instance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+
+    <span class="nd">@get_cache_key</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">fetch_instance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">host</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">old_cache</span> <span class="o">=</span> <span class="n">Cache</span><span class="p">(</span><span class="n">namespace</span><span class="o">=</span><span class="s1">'get_instance'</span><span class="p">)</span>
+        <span class="k">await</span> <span class="n">old_cache</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">'cache_key'</span><span class="p">]</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">'get_instance'</span><span class="p">))</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_instance</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="n">host</span><span class="p">)</span>
+
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">remove_emoji</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">emoji_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">Route</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">,</span> <span class="s1">'/api/admin/emoji/remove'</span><span class="p">),</span> <span class="n">json</span><span class="o">=</span><span class="p">{</span><span class="s1">'id'</span><span class="p">:</span> <span class="n">emoji_id</span><span class="p">},</span> <span class="n">auth</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">show_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">url</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Drive</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">remove_dict_empty</span><span class="p">({</span><span class="s2">"fileId"</span><span class="p">:</span> <span class="n">file_id</span><span class="p">,</span> <span class="s2">"url"</span><span class="p">:</span> <span class="n">url</span><span class="p">})</span>
+        <span class="k">return</span> <span class="n">Drive</span><span class="p">(</span><span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">Route</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">,</span> <span class="s1">'/api/admin/drive/show-file'</span><span class="p">),</span> <span class="n">json</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">state</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">remove_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">Route</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">,</span> <span class="s1">'/api/drive/files/delete'</span><span class="p">),</span> <span class="n">json</span><span class="o">=</span><span class="p">{</span><span class="s1">'fileId'</span><span class="p">:</span> <span class="n">file_id</span><span class="p">},</span> <span class="n">auth</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">get_user_notes</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">user_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">since_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">include_my_renotes</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">include_replies</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">with_files</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">until_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">limit</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
+        <span class="n">get_all</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">exclude_nsfw</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">file_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">since_date</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="n">until_data</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncIterator</span><span class="p">[</span><span class="n">Note</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="n">limit</span> <span class="o">&gt;</span> <span class="mi">100</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">InvalidParameters</span><span class="p">(</span><span class="s2">"limit は100以上を受け付けません"</span><span class="p">)</span>
+
+        <span class="n">args</span> <span class="o">=</span> <span class="n">remove_dict_empty</span><span class="p">(</span>
+            <span class="p">{</span>
+                <span class="s2">"userId"</span><span class="p">:</span> <span class="n">user_id</span><span class="p">,</span>
+                <span class="s2">"includeReplies"</span><span class="p">:</span> <span class="n">include_replies</span><span class="p">,</span>
+                <span class="s2">"limit"</span><span class="p">:</span> <span class="n">limit</span><span class="p">,</span>
+                <span class="s2">"sinceId"</span><span class="p">:</span> <span class="n">since_id</span><span class="p">,</span>
+                <span class="s2">"untilId"</span><span class="p">:</span> <span class="n">until_id</span><span class="p">,</span>
+                <span class="s2">"sinceDate"</span><span class="p">:</span> <span class="n">since_date</span><span class="p">,</span>
+                <span class="s2">"untilDate"</span><span class="p">:</span> <span class="n">until_data</span><span class="p">,</span>
+                <span class="s2">"includeMyRenotes"</span><span class="p">:</span> <span class="n">include_my_renotes</span><span class="p">,</span>
+                <span class="s2">"withFiles"</span><span class="p">:</span> <span class="n">with_files</span><span class="p">,</span>
+                <span class="s2">"fileType"</span><span class="p">:</span> <span class="n">file_type</span><span class="p">,</span>
+                <span class="s2">"excludeNsfw"</span><span class="p">:</span> <span class="n">exclude_nsfw</span>
+            <span class="p">}</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">get_all</span><span class="p">:</span>
+            <span class="n">loop</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">while</span> <span class="n">loop</span><span class="p">:</span>
+                <span class="n">get_data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">Route</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">,</span> <span class="s1">'/api/users/notes'</span><span class="p">),</span> <span class="n">json</span><span class="o">=</span><span class="n">args</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">get_data</span><span class="p">))</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="k">break</span>
+                <span class="n">args</span><span class="p">[</span><span class="s2">"untilId"</span><span class="p">]</span> <span class="o">=</span> <span class="n">get_data</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="s2">"id"</span><span class="p">]</span>
+                <span class="k">for</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">get_data</span><span class="p">:</span>
+                    <span class="k">yield</span> <span class="n">Note</span><span class="p">(</span><span class="n">NotePayload</span><span class="p">(</span><span class="o">**</span><span class="n">data</span><span class="p">),</span> <span class="n">state</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">get_data</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">Route</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">,</span> <span class="s1">'/api/users/notes'</span><span class="p">),</span> <span class="n">json</span><span class="o">=</span><span class="n">args</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">get_data</span><span class="p">:</span>
+                <span class="k">yield</span> <span class="n">Note</span><span class="p">(</span><span class="n">NotePayload</span><span class="p">(</span><span class="o">**</span><span class="n">upper_to_lower</span><span class="p">(</span><span class="n">data</span><span class="p">)),</span> <span class="n">state</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+
+<div class="viewcode-block" id="ConnectionState.get_announcements"><a class="viewcode-back" href="../../mi.html#mi.ConnectionState.get_announcements">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">get_announcements</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">limit</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">with_unreads</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">since_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">until_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="sd">"""</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        limit: int</span>
+<span class="sd">            最大取得数</span>
+<span class="sd">        with_unreads: bool</span>
+<span class="sd">            既読済みか否か</span>
+<span class="sd">        since_id: str</span>
+<span class="sd">        until_id: str</span>
+<span class="sd">            前回の最後の値を与える(既に実行し取得しきれない場合に使用)</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+
+<span class="sd">        """</span>
+
+        <span class="k">if</span> <span class="n">limit</span> <span class="o">&gt;</span> <span class="mi">100</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">InvalidParameters</span><span class="p">(</span><span class="s2">"limit は100以上を受け付けません"</span><span class="p">)</span>
+
+        <span class="n">args</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">"limit"</span><span class="p">:</span> <span class="n">limit</span><span class="p">,</span>
+            <span class="s2">"withUnreads"</span><span class="p">:</span> <span class="n">with_unreads</span><span class="p">,</span>
+            <span class="s2">"sinceId"</span><span class="p">:</span> <span class="n">since_id</span><span class="p">,</span>
+            <span class="s2">"untilId"</span><span class="p">:</span> <span class="n">until_id</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">Route</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">,</span> <span class="s1">'/api/announcements'</span><span class="p">),</span> <span class="n">json</span><span class="o">=</span><span class="n">args</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">file_upload</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">to_file</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">to_url</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="o">*</span><span class="p">,</span>
+            <span class="n">force</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="n">is_sensitive</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Drive</span><span class="p">:</span>
+
+        <span class="k">if</span> <span class="n">to_file</span> <span class="ow">and</span> <span class="n">to_url</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># ローカルからアップロードする</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">to_file</span><span class="p">,</span> <span class="s2">"rb"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                <span class="n">args</span> <span class="o">=</span> <span class="n">remove_dict_empty</span><span class="p">({</span><span class="s2">"isSensitive"</span><span class="p">:</span> <span class="n">is_sensitive</span><span class="p">,</span> <span class="s2">"force"</span><span class="p">:</span> <span class="n">force</span><span class="p">,</span> <span class="s2">"name"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span> <span class="s1">'file'</span><span class="p">:</span> <span class="n">f</span><span class="p">})</span>
+                <span class="n">res</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">Route</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">,</span> <span class="s1">'/api/drive/files/create'</span><span class="p">),</span> <span class="n">data</span><span class="o">=</span><span class="n">args</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">to_file</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">to_url</span><span class="p">:</span>  <span class="c1"># URLからアップロードする</span>
+            <span class="n">args</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"url"</span><span class="p">:</span> <span class="n">to_url</span><span class="p">,</span> <span class="s2">"force"</span><span class="p">:</span> <span class="n">force</span><span class="p">,</span> <span class="s2">"isSensitive"</span><span class="p">:</span> <span class="n">is_sensitive</span><span class="p">}</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">Route</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">,</span> <span class="s1">'/api/drive/files/upload-from-url'</span><span class="p">),</span> <span class="n">json</span><span class="o">=</span><span class="n">args</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">InvalidParameters</span><span class="p">(</span><span class="s2">"path または url のどちらかは必須です"</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Drive</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span></div>
+</pre></div>
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          
+          
+        </div>
+
+        <div class="related-information">
+              Copyright &#169; 2021, yupix |
+          Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+          <a href="https://github.com/pradyunsg/furo">Furo theme</a>.
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer no-toc">
+      
+      
+      
+    </aside>
+  </div>
+</div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/scripts/furo.js"></script>
+    </body>
+</html>
