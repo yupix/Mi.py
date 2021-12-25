@@ -23,4 +23,5 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ${{ runner.temp }}/qodana/results/report
+          publish_branch: cloudflare-pages
           destination_dir: ./
