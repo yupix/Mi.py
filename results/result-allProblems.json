@@ -1,0 +1,1457 @@
+{"version":"3","listProblem":[{
+  "tool": "Code Inspection",
+  "category": "Python",
+  "type": "Class must implement all abstract methods",
+  "severity": "Moderate",
+  "comment": "Class AbstractBotBase must implement all abstract methods",
+  "detailsInfo": "Reports cases when not all abstract properties or methods are defined in\na subclass.\n\n**Example:**\n\n```\nfrom abc import abstractmethod, ABC\n\n\nclass Figure(ABC):\n\n    @abstractmethod\n    def do_figure(self):\n        pass\n\n\nclass Triangle(Figure):\n    def do_triangle(self):\n        pass\n```\n\nWhen the quick-fix is applied, the IDE implements an abstract method for the `Triangle` class:\n\n```\nfrom abc import abstractmethod, ABC\n\n\nclass Figure(ABC):\n\n    @abstractmethod\n    def do_figure(self):\n        pass\n\n\nclass Triangle(Figure):\n    def do_figure(self):\n        pass\n\n    def do_triangle(self):\n        pass\n```",
+  "sources": [
+    {
+      "type": "file",
+      "path": "mi/abc/ext/bot.py",
+      "language": "Python",
+      "line": 13,
+      "offset": 7,
+      "length": 15,
+      "code": {
+        "startLine": 11,
+        "length": 15,
+        "offset": 8,
+        "surroundingCode": "\n\nclass AbstractBotBase(AbstractGroupMixin):\n    @abstractmethod\n    async def can_run(self, ctx: AbstractContext, *, call_once: bool = False) -> bool:"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "project",
+    "inspectionName": "PyAbstractClassInspection"
+  },
+  "hash": "2d75350d1843bda4876d594cfc59fb27c4ce3a4422724c6a85526eef71eb4c8e"
+},{
+  "tool": "Code Inspection",
+  "category": "Python",
+  "type": "Unbound local variables",
+  "severity": "High",
+  "comment": "Local variable 'checks' might be referenced before assignment",
+  "detailsInfo": "Reports local variables referenced before assignment.\n\n**Example:**\n\n```\nx = 0\nif x > 10:\n    b = 3\nprint(b)\n```\n\nThe IDE reports a problem for `print(b)`. A possible fix is:\n\n```\nx = 0\nif x > 10:\n    b = 3\n    print(b)\n```",
+  "sources": [
+    {
+      "type": "file",
+      "path": "mi/ext/commands/core.py",
+      "language": "Python",
+      "line": 110,
+      "offset": 27,
+      "length": 6,
+      "code": {
+        "startLine": 108,
+        "length": 6,
+        "offset": 89,
+        "surroundingCode": "            checks = kwargs.get('checks', [])\n        finally:\n            self.checks = checks\n        self.cog = None\n        parent = kwargs.get('parent')"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "project",
+    "inspectionName": "PyUnboundLocalVariableInspection"
+  },
+  "hash": "700ed11e6b7503b94dac0473dc24a4a94ab7415a90622df66c77c125683ff296"
+},{
+  "tool": "Code Inspection",
+  "category": "Python",
+  "type": "Unbound local variables",
+  "severity": "High",
+  "comment": "Name '__path__' can be undefined",
+  "detailsInfo": "Reports local variables referenced before assignment.\n\n**Example:**\n\n```\nx = 0\nif x > 10:\n    b = 3\nprint(b)\n```\n\nThe IDE reports a problem for `print(b)`. A possible fix is:\n\n```\nx = 0\nif x > 10:\n    b = 3\n    print(b)\n```",
+  "sources": [
+    {
+      "type": "file",
+      "path": "mi/__init__.py",
+      "language": "Python",
+      "line": 9,
+      "offset": 46,
+      "length": 8,
+      "code": {
+        "startLine": 7,
+        "length": 8,
+        "offset": 68,
+        "surroundingCode": "__version__ = \"1.0.2\"\n\n__path__ = __import__(\"pkgutil\").extend_path(__path__, __name__)\n\nfrom .abc import *"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "project",
+    "inspectionName": "PyUnboundLocalVariableInspection"
+  },
+  "hash": "368933ae998ff9fe0a40ff90b4c8e550cae7e82a07f3105ba5baa1b11d6d2bc0"
+},{
+  "tool": "Code Inspection",
+  "category": "Python",
+  "type": "Incorrect property definition",
+  "severity": "High",
+  "comment": "Getter should return or yield something",
+  "detailsInfo": "Reports problems with the arguments of `property()` and functions\nannotated with `@property`.\n\n```\nclass C:\n    @property\n    def abc(self):  # Getter should return or yield something\n        pass\n\n    @abc.setter\n    def foo(self, value):  # Names of function and decorator don't match\n        pass\n\n    @abc.setter\n    def abc(self, v1, v2):  # Setter signature should be (self, value)\n        pass\n\n    @abc.deleter\n    def abc(self, v1):  # Delete signature should be (self)\n        pass\n```\n\nA quick-fix offers to update parameters.",
+  "sources": [
+    {
+      "type": "file",
+      "path": "mi/abc/ext/core.py",
+      "language": "Python",
+      "line": 8,
+      "offset": 9,
+      "length": 7,
+      "code": {
+        "startLine": 6,
+        "length": 7,
+        "offset": 42,
+        "surroundingCode": "    @property\n    @abstractmethod\n    def command(self):\n        pass\n"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "project",
+    "inspectionName": "PyPropertyDefinitionInspection"
+  },
+  "hash": "6074b423ef2dfdb9eb0bf9b3f7e0ae0184a047737f4ce554fcaf5c58b57c8cc8"
+},{
+  "tool": "Code Inspection",
+  "category": "Python",
+  "type": "Incorrect property definition",
+  "severity": "High",
+  "comment": "Getter should return or yield something",
+  "detailsInfo": "Reports problems with the arguments of `property()` and functions\nannotated with `@property`.\n\n```\nclass C:\n    @property\n    def abc(self):  # Getter should return or yield something\n        pass\n\n    @abc.setter\n    def foo(self, value):  # Names of function and decorator don't match\n        pass\n\n    @abc.setter\n    def abc(self, v1, v2):  # Setter signature should be (self, value)\n        pass\n\n    @abc.deleter\n    def abc(self, v1):  # Delete signature should be (self)\n        pass\n```\n\nA quick-fix offers to update parameters.",
+  "sources": [
+    {
+      "type": "file",
+      "path": "mi/abc/ext/core.py",
+      "language": "Python",
+      "line": 22,
+      "offset": 9,
+      "length": 16,
+      "code": {
+        "startLine": 20,
+        "length": 16,
+        "offset": 42,
+        "surroundingCode": "    @property\n    @abstractmethod\n    def full_parent_name(self) -> str:\n        pass\n"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "project",
+    "inspectionName": "PyPropertyDefinitionInspection"
+  },
+  "hash": "705effab0aeadd43418cb698d250e5e6d04732bcb73877d09d2c2474d882a265"
+},{
+  "tool": "Code Inspection",
+  "category": "Python",
+  "type": "Incorrect property definition",
+  "severity": "High",
+  "comment": "Getter should return or yield something",
+  "detailsInfo": "Reports problems with the arguments of `property()` and functions\nannotated with `@property`.\n\n```\nclass C:\n    @property\n    def abc(self):  # Getter should return or yield something\n        pass\n\n    @abc.setter\n    def foo(self, value):  # Names of function and decorator don't match\n        pass\n\n    @abc.setter\n    def abc(self, v1, v2):  # Setter signature should be (self, value)\n        pass\n\n    @abc.deleter\n    def abc(self, v1):  # Delete signature should be (self)\n        pass\n```\n\nA quick-fix offers to update parameters.",
+  "sources": [
+    {
+      "type": "file",
+      "path": "mi/abc/ext/core.py",
+      "language": "Python",
+      "line": 27,
+      "offset": 9,
+      "length": 14,
+      "code": {
+        "startLine": 25,
+        "length": 14,
+        "offset": 42,
+        "surroundingCode": "    @property\n    @abstractmethod\n    def qualified_name(self) -> str:\n        pass\n"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "project",
+    "inspectionName": "PyPropertyDefinitionInspection"
+  },
+  "hash": "6c02442ca3c628dc985c982318f6a82f89bde5610c771c796758757bcaac80de"
+},{
+  "tool": "Code Inspection",
+  "category": "Python",
+  "type": "Attempt to call a non-callable object",
+  "severity": "High",
+  "comment": "'Command' object is not callable",
+  "detailsInfo": "Reports a problem when you are trying\nto call objects that are not callable, like, for example, properties:\n\n```\nclass Record:\n    @property\n    def as_json(self):\n\njson = Record().as_json()\n```",
+  "sources": [
+    {
+      "type": "file",
+      "path": "mi/ext/commands/core.py",
+      "language": "Python",
+      "line": 64,
+      "offset": 22,
+      "length": 50,
+      "code": {
+        "startLine": 62,
+        "length": 50,
+        "offset": 129,
+        "surroundingCode": "        def decorator(func: Callable[..., Any]):  # TODO:????\n            kwargs.setdefault('parent', self)\n            result = command(name=name, cls=cls, *args, **kwargs)(func)\n            return result\n"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "project",
+    "inspectionName": "PyCallingNonCallableInspection"
+  },
+  "hash": "55df491bb7c00e35aa8c3ace7a9a9353262ccc20ca723cb4ece3a776b10b34da"
+},{
+  "tool": "Code Inspection",
+  "category": "Python",
+  "type": "Method is not declared static",
+  "severity": "Moderate",
+  "comment": "Method `call_after_hooks` may be 'static'",
+  "detailsInfo": "Reports any methods that do not require a class instance creation and can be\nmade static.\n\n**Example:**\n\n```\nclass MyClass(object):\n    def my_method(self, x):\n        print(x)\n```\n\nIf a **Make function from method** quick-fix is applied, the code changes to:\n\n```\ndef my_method(x):\n    print(x)\n\n\nclass MyClass(object):\n    pass\n```\n\nIf you select the **Make method static** quick-fix, the `@staticmethod` decorator is added:\n\n```\nclass MyClass(object):\n    @staticmethod\n    def my_method(x):\n        print(x)\n```",
+  "sources": [
+    {
+      "type": "file",
+      "path": "mi/ext/commands/core.py",
+      "language": "Python",
+      "line": 131,
+      "offset": 15,
+      "length": 16,
+      "code": {
+        "startLine": 129,
+        "length": 16,
+        "offset": 40,
+        "surroundingCode": "        return self.name\n\n    async def call_after_hooks(self, ctx):\n        hook = ctx.bot._after_invoke\n        if hook is not None:"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "project",
+    "inspectionName": "PyMethodMayBeStaticInspection"
+  },
+  "hash": "aa3e5abee9d369f09026f654616ecebccf331be5be4eedbef2a3b42e052aaf52"
+},{
+  "tool": "Code Inspection",
+  "category": "Python",
+  "type": "Method is not declared static",
+  "severity": "Moderate",
+  "comment": "Method `on_message` may be 'static'",
+  "detailsInfo": "Reports any methods that do not require a class instance creation and can be\nmade static.\n\n**Example:**\n\n```\nclass MyClass(object):\n    def my_method(self, x):\n        print(x)\n```\n\nIf a **Make function from method** quick-fix is applied, the code changes to:\n\n```\ndef my_method(x):\n    print(x)\n\n\nclass MyClass(object):\n    pass\n```\n\nIf you select the **Make method static** quick-fix, the `@staticmethod` decorator is added:\n\n```\nclass MyClass(object):\n    @staticmethod\n    def my_method(x):\n        print(x)\n```",
+  "sources": [
+    {
+      "type": "file",
+      "path": "examples/use_class.py",
+      "language": "Python",
+      "line": 28,
+      "offset": 15,
+      "length": 10,
+      "code": {
+        "startLine": 26,
+        "length": 10,
+        "offset": 51,
+        "surroundingCode": "        self.task.stop()  # ???????\n\n    async def on_message(self, note: Note):\n        print(\n            f\"{note.author.instance.name} | {note.author.username}??????????: {note.content}\""
+      }
+    }
+  ],
+  "attributes": {
+    "module": "project",
+    "inspectionName": "PyMethodMayBeStaticInspection"
+  },
+  "hash": "8c53e9edfe0562802e59493d89444a0e584f03caf097ba4b36c49ca2c0f3c571"
+},{
+  "tool": "Code Inspection",
+  "category": "Python",
+  "type": "Incorrect call arguments",
+  "severity": "High",
+  "comment": "Unexpected argument",
+  "detailsInfo": "Reports discrepancies between declared parameters and actual arguments, as well as\nincorrect arguments, for example, duplicate named arguments, and incorrect argument order.\n\n**Example:**\n\n```\nclass Foo:\n    def __call__(self, p1: int, *, p2: str = \"%\"):\n        return p2 * p1\n\n\nbar = Foo()\nbar.__call__() # unfilled parameter\nbar(5, \"#\") # unexpected argument\n```\n\nThe correct code fragment looks at follows:\n\n```\nclass Foo:\n    def __call__(self, p1: int, *, p2: str = \"%\"):\n        return p2 * p1\n\n\nbar = Foo()\nbar.__call__(5)\nbar(5, p2=\"#\")\n```",
+  "sources": [
+    {
+      "type": "file",
+      "path": "mi/ext/commands/core.py",
+      "language": "Python",
+      "line": 64,
+      "offset": 50,
+      "length": 5,
+      "code": {
+        "startLine": 62,
+        "length": 5,
+        "offset": 157,
+        "surroundingCode": "        def decorator(func: Callable[..., Any]):  # TODO:????\n            kwargs.setdefault('parent', self)\n            result = command(name=name, cls=cls, *args, **kwargs)(func)\n            return result\n"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "project",
+    "inspectionName": "PyArgumentListInspection"
+  },
+  "hash": "b9e6a3a9675b6f03d38cf1798eb54561db2ec3a19e55d6fc75a2fb0572c02d86"
+},{
+  "tool": "Code Inspection",
+  "category": "Python",
+  "type": "Incorrect call arguments",
+  "severity": "High",
+  "comment": "Unexpected argument",
+  "detailsInfo": "Reports discrepancies between declared parameters and actual arguments, as well as\nincorrect arguments, for example, duplicate named arguments, and incorrect argument order.\n\n**Example:**\n\n```\nclass Foo:\n    def __call__(self, p1: int, *, p2: str = \"%\"):\n        return p2 * p1\n\n\nbar = Foo()\nbar.__call__() # unfilled parameter\nbar(5, \"#\") # unexpected argument\n```\n\nThe correct code fragment looks at follows:\n\n```\nclass Foo:\n    def __call__(self, p1: int, *, p2: str = \"%\"):\n        return p2 * p1\n\n\nbar = Foo()\nbar.__call__(5)\nbar(5, p2=\"#\")\n```",
+  "sources": [
+    {
+      "type": "file",
+      "path": "mi/client.py",
+      "language": "Python",
+      "line": 44,
+      "offset": 88,
+      "length": 9,
+      "code": {
+        "startLine": 42,
+        "length": 9,
+        "offset": 149,
+        "surroundingCode": "\n    def _get_state(self, **options: Any) -> ConnectionState:\n        return ConnectionState(dispatch=self.dispatch, http=self.http, loop=self.loop, **options)\n\n    async def on_ready(self, ws: ClientWebSocketResponse):"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "project",
+    "inspectionName": "PyArgumentListInspection"
+  },
+  "hash": "4bae700cf3b1c32b86f96d9b64f2b2b827cddf9dc23f06d13912247bd9e65401"
+},{
+  "tool": "Code Inspection",
+  "category": "Python",
+  "type": "Unused local symbols",
+  "severity": "Moderate",
+  "comment": "Local variable 'cls' value is not used",
+  "detailsInfo": "Reports local variables, parameters, and functions that are locally defined, but not used name in a function.",
+  "sources": [
+    {
+      "type": "file",
+      "path": "mi/ext/commands/cog.py",
+      "language": "Python",
+      "line": 109,
+      "offset": 9,
+      "length": 3,
+      "code": {
+        "startLine": 107,
+        "length": 3,
+        "offset": 54,
+        "surroundingCode": "\n    def _inject(self, bot: AbstractBotBase):\n        cls = self.__class__\n        for index, command in enumerate(self.__cog_commands__):\n            if command.parent is None:"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "project",
+    "inspectionName": "PyUnusedLocalInspection"
+  },
+  "hash": "13aabbeda2ff2fa1be5ab0340ca272ea491711781919c308b0679bb339d79f45"
+},{
+  "tool": "Code Inspection",
+  "category": "Python",
+  "type": "Unused local symbols",
+  "severity": "Moderate",
+  "comment": "Parameter 'parameters' value is not used",
+  "detailsInfo": "Reports local variables, parameters, and functions that are locally defined, but not used name in a function.",
+  "sources": [
+    {
+      "type": "file",
+      "path": "mi/http.py",
+      "language": "Python",
+      "line": 32,
+      "offset": 48,
+      "length": 17,
+      "code": {
+        "startLine": 30,
+        "length": 17,
+        "offset": 61,
+        "surroundingCode": "\nclass Route:\n    def __init__(self, method: str, path: str, **parameters: Any):\n        self.path: str = path\n        self.method: str = method"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "project",
+    "inspectionName": "PyUnusedLocalInspection"
+  },
+  "hash": "8eb881c2132dc99d00f8624bbf1148926eec9273da1e50ebd9a56a235fae180e"
+},{
+  "tool": "Code Inspection",
+  "category": "Python",
+  "type": "Unused local symbols",
+  "severity": "Moderate",
+  "comment": "Parameter 'files' value is not used",
+  "detailsInfo": "Reports local variables, parameters, and functions that are locally defined, but not used name in a function.",
+  "sources": [
+    {
+      "type": "file",
+      "path": "mi/http.py",
+      "language": "Python",
+      "line": 55,
+      "offset": 46,
+      "length": 10,
+      "code": {
+        "startLine": 53,
+        "length": 10,
+        "offset": 87,
+        "surroundingCode": "        self.token: Optional[str] = None\n\n    async def request(self, route: Route, *, files=None, form=None, **kwargs) -> Any:\n        headers: Dict[str, str] = {\n            'User-Agent': self.user_agent,"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "project",
+    "inspectionName": "PyUnusedLocalInspection"
+  },
+  "hash": "2e4ac46d673b657ab949eb8ea2d9f4775692df25467b4bc967becf60f9605946"
+},{
+  "tool": "Code Inspection",
+  "category": "Python",
+  "type": "Unused local symbols",
+  "severity": "Moderate",
+  "comment": "Parameter 'form' value is not used",
+  "detailsInfo": "Reports local variables, parameters, and functions that are locally defined, but not used name in a function.",
+  "sources": [
+    {
+      "type": "file",
+      "path": "mi/http.py",
+      "language": "Python",
+      "line": 55,
+      "offset": 58,
+      "length": 9,
+      "code": {
+        "startLine": 53,
+        "length": 9,
+        "offset": 99,
+        "surroundingCode": "        self.token: Optional[str] = None\n\n    async def request(self, route: Route, *, files=None, form=None, **kwargs) -> Any:\n        headers: Dict[str, str] = {\n            'User-Agent': self.user_agent,"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "project",
+    "inspectionName": "PyUnusedLocalInspection"
+  },
+  "hash": "f9eabdaf7c49be4d3cd01d8b988427b61d8ab0ab1e716441dff16807c38868cb"
+},{
+  "tool": "Code Inspection",
+  "category": "Python",
+  "type": "Unused local symbols",
+  "severity": "Moderate",
+  "comment": "Parameter 'args' value is not used",
+  "detailsInfo": "Reports local variables, parameters, and functions that are locally defined, but not used name in a function.",
+  "sources": [
+    {
+      "type": "file",
+      "path": "mi/utils.py",
+      "language": "Python",
+      "line": 135,
+      "offset": 9,
+      "length": 5,
+      "code": {
+        "startLine": 133,
+        "length": 5,
+        "offset": 26,
+        "surroundingCode": "\n@deprecated_func\ndef api(*args, **kwargs) -> None:\n    \"\"\"\n    .. deprecated:: 1.0.1"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "project",
+    "inspectionName": "PyUnusedLocalInspection"
+  },
+  "hash": "5c060f9a89884e57958ed3f1396efb7a0e08d219e0a6898f2d210ac3955dd80f"
+},{
+  "tool": "Code Inspection",
+  "category": "Python",
+  "type": "Unused local symbols",
+  "severity": "Moderate",
+  "comment": "Parameter 'kwargs' value is not used",
+  "detailsInfo": "Reports local variables, parameters, and functions that are locally defined, but not used name in a function.",
+  "sources": [
+    {
+      "type": "file",
+      "path": "mi/utils.py",
+      "language": "Python",
+      "line": 135,
+      "offset": 16,
+      "length": 8,
+      "code": {
+        "startLine": 133,
+        "length": 8,
+        "offset": 33,
+        "surroundingCode": "\n@deprecated_func\ndef api(*args, **kwargs) -> None:\n    \"\"\"\n    .. deprecated:: 1.0.1"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "project",
+    "inspectionName": "PyUnusedLocalInspection"
+  },
+  "hash": "55cd574bb6c82f795a412ea6768c18c2adcf6955ea0abf1e516ed4c5fbdc9efa"
+},{
+  "tool": "Code Inspection",
+  "category": "Python",
+  "type": "Unused local symbols",
+  "severity": "Moderate",
+  "comment": "Parameter 'reconnect' value is not used",
+  "detailsInfo": "Reports local variables, parameters, and functions that are locally defined, but not used name in a function.",
+  "sources": [
+    {
+      "type": "file",
+      "path": "mi/client.py",
+      "language": "Python",
+      "line": 378,
+      "offset": 32,
+      "length": 22,
+      "code": {
+        "startLine": 376,
+        "length": 22,
+        "offset": 78,
+        "surroundingCode": "        self.i = User(data, self._connection)\n\n    async def connect(self, *, reconnect: bool = True, timeout: int = 60) -> None:\n\n        coro = MisskeyWebSocket.from_client(self, timeout=timeout)"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "project",
+    "inspectionName": "PyUnusedLocalInspection"
+  },
+  "hash": "279515fce32ddd12f5584e3b37c899b7b5a41b5640e7bf49ab7c520527b44456"
+},{
+  "tool": "Code Inspection",
+  "category": "Python",
+  "type": "Unused local symbols",
+  "severity": "Moderate",
+  "comment": "Parameter 'node' value is not used",
+  "detailsInfo": "Reports local variables, parameters, and functions that are locally defined, but not used name in a function.",
+  "sources": [
+    {
+      "type": "file",
+      "path": "docs/extensions/attributetable.py",
+      "language": "Python",
+      "line": 64,
+      "offset": 38,
+      "length": 4,
+      "code": {
+        "startLine": 62,
+        "length": 4,
+        "offset": 39,
+        "surroundingCode": "\n\ndef depart_attributetable_node(self, node):\n    self.body.append('</div>')\n"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "project",
+    "inspectionName": "PyUnusedLocalInspection"
+  },
+  "hash": "c2783c30b39c7803d6b306a324dc75470ecd2c43010974e1255a541f02bd66c7"
+},{
+  "tool": "Code Inspection",
+  "category": "Python",
+  "type": "Unused local symbols",
+  "severity": "Moderate",
+  "comment": "Parameter 'node' value is not used",
+  "detailsInfo": "Reports local variables, parameters, and functions that are locally defined, but not used name in a function.",
+  "sources": [
+    {
+      "type": "file",
+      "path": "docs/extensions/attributetable.py",
+      "language": "Python",
+      "line": 68,
+      "offset": 44,
+      "length": 4,
+      "code": {
+        "startLine": 66,
+        "length": 4,
+        "offset": 45,
+        "surroundingCode": "\n\ndef depart_attributetablecolumn_node(self, node):\n    self.body.append('</div>')\n"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "project",
+    "inspectionName": "PyUnusedLocalInspection"
+  },
+  "hash": "c0259b8a9d9ede31374c99ce5cde5b08e498fd8bffb7a3c6c49cf23b479e1435"
+},{
+  "tool": "Code Inspection",
+  "category": "Python",
+  "type": "Unused local symbols",
+  "severity": "Moderate",
+  "comment": "Parameter 'node' value is not used",
+  "detailsInfo": "Reports local variables, parameters, and functions that are locally defined, but not used name in a function.",
+  "sources": [
+    {
+      "type": "file",
+      "path": "docs/extensions/attributetable.py",
+      "language": "Python",
+      "line": 72,
+      "offset": 43,
+      "length": 4,
+      "code": {
+        "startLine": 70,
+        "length": 4,
+        "offset": 44,
+        "surroundingCode": "\n\ndef depart_attributetabletitle_node(self, node):\n    self.body.append('</span>')\n"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "project",
+    "inspectionName": "PyUnusedLocalInspection"
+  },
+  "hash": "f1ba68d3e3cf22827c0089314d3801ff5f436e64e7691ac872cd842cd9ddc9c9"
+},{
+  "tool": "Code Inspection",
+  "category": "Python",
+  "type": "Unused local symbols",
+  "severity": "Moderate",
+  "comment": "Parameter 'node' value is not used",
+  "detailsInfo": "Reports local variables, parameters, and functions that are locally defined, but not used name in a function.",
+  "sources": [
+    {
+      "type": "file",
+      "path": "docs/extensions/attributetable.py",
+      "language": "Python",
+      "line": 76,
+      "offset": 43,
+      "length": 4,
+      "code": {
+        "startLine": 74,
+        "length": 4,
+        "offset": 44,
+        "surroundingCode": "\n\ndef depart_attributetablebadge_node(self, node):\n    self.body.append('</span>')\n"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "project",
+    "inspectionName": "PyUnusedLocalInspection"
+  },
+  "hash": "8bfdbb91e0b2d3edac3af7876b27f24741b310c30acabdc5bf9968f78033810c"
+},{
+  "tool": "Code Inspection",
+  "category": "Python",
+  "type": "Unused local symbols",
+  "severity": "Moderate",
+  "comment": "Parameter 'node' value is not used",
+  "detailsInfo": "Reports local variables, parameters, and functions that are locally defined, but not used name in a function.",
+  "sources": [
+    {
+      "type": "file",
+      "path": "docs/extensions/attributetable.py",
+      "language": "Python",
+      "line": 80,
+      "offset": 43,
+      "length": 4,
+      "code": {
+        "startLine": 78,
+        "length": 4,
+        "offset": 44,
+        "surroundingCode": "\n\ndef depart_attributetable_item_node(self, node):\n    self.body.append('</li>')\n"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "project",
+    "inspectionName": "PyUnusedLocalInspection"
+  },
+  "hash": "f75f0f54a460710801f1f0f91151b48653daa46c27bb5353ec80f6035762dde6"
+},{
+  "tool": "Code Inspection",
+  "category": "Python",
+  "type": "Unused local symbols",
+  "severity": "Moderate",
+  "comment": "Parameter 'fromdocname' value is not used",
+  "detailsInfo": "Reports local variables, parameters, and functions that are locally defined, but not used name in a function.",
+  "sources": [
+    {
+      "type": "file",
+      "path": "docs/extensions/attributetable.py",
+      "language": "Python",
+      "line": 170,
+      "offset": 62,
+      "length": 16,
+      "code": {
+        "startLine": 168,
+        "length": 16,
+        "offset": 63,
+        "surroundingCode": "\n\ndef process_attributetable(app: application.Sphinx, doctree, fromdocname: str):\n    env = app.builder.env\n    lookup = build_lookup_table(env)"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "project",
+    "inspectionName": "PyUnusedLocalInspection"
+  },
+  "hash": "26e407b636c2a5b80976ded6e8fea8a6919ebaa54eaaf350cc984b9224f26842"
+},{
+  "tool": "Code Inspection",
+  "category": "Python",
+  "type": "Shadowing names from outer scopes",
+  "severity": "Moderate",
+  "comment": "Shadows name 'command' from outer scope",
+  "detailsInfo": "Reports shadowing names defined in outer scopes.\n\n**Example:**\n\n```\ndef outer(p):\n    def inner(p):\n        pass\n```\n\nAs a quick-fix, the IDE offers to remove a parameter or rename it.",
+  "sources": [
+    {
+      "type": "file",
+      "path": "mi/ext/commands/core.py",
+      "language": "Python",
+      "line": 25,
+      "offset": 13,
+      "length": 7,
+      "code": {
+        "startLine": 23,
+        "length": 7,
+        "offset": 60,
+        "surroundingCode": "\n    def recursively_remove_all_commands(self):\n        for command in self.all_commands.copy().values():\n            if isinstance(command, GroupMixin):\n                command.recursively_remove_all_commands()"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "project",
+    "inspectionName": "PyShadowingNamesInspection"
+  },
+  "hash": "06e0c86f194a4ea91936709ec6b759e3831044936ba32a0695acd5cc4bfadde7"
+},{
+  "tool": "Code Inspection",
+  "category": "Python",
+  "type": "Shadowing names from outer scopes",
+  "severity": "Moderate",
+  "comment": "Shadows name 'command' from outer scope",
+  "detailsInfo": "Reports shadowing names defined in outer scopes.\n\n**Example:**\n\n```\ndef outer(p):\n    def inner(p):\n        pass\n```\n\nAs a quick-fix, the IDE offers to remove a parameter or rename it.",
+  "sources": [
+    {
+      "type": "file",
+      "path": "mi/ext/commands/core.py",
+      "language": "Python",
+      "line": 30,
+      "offset": 27,
+      "length": 7,
+      "code": {
+        "startLine": 28,
+        "length": 7,
+        "offset": 73,
+        "surroundingCode": "            self.remove_command(command.name)\n\n    def add_command(self, command: AbstractCommand):\n        if not isinstance(command, Command):\n            raise TypeError(f'{command} passed must be a subclass of Command')"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "project",
+    "inspectionName": "PyShadowingNamesInspection"
+  },
+  "hash": "5348ea9a723e2053303cd5ca52a019701e2ed9a70da6514c7f82287c99864651"
+},{
+  "tool": "Code Inspection",
+  "category": "Python",
+  "type": "Shadowing names from outer scopes",
+  "severity": "Moderate",
+  "comment": "Shadows name 'command' from outer scope",
+  "detailsInfo": "Reports shadowing names defined in outer scopes.\n\n**Example:**\n\n```\ndef outer(p):\n    def inner(p):\n        pass\n```\n\nAs a quick-fix, the IDE offers to remove a parameter or rename it.",
+  "sources": [
+    {
+      "type": "file",
+      "path": "mi/ext/commands/core.py",
+      "language": "Python",
+      "line": 48,
+      "offset": 9,
+      "length": 7,
+      "code": {
+        "startLine": 46,
+        "length": 7,
+        "offset": 50,
+        "surroundingCode": "\n    def remove_command(self, name: str):\n        command = self.all_commands.pop(name, None)\n        if command is None:\n            return None"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "project",
+    "inspectionName": "PyShadowingNamesInspection"
+  },
+  "hash": "c586fd04ba76c49c8c33445f8e22874dcaf26aa523b0d0f0a19b81db7a2607d6"
+},{
+  "tool": "Code Inspection",
+  "category": "Python",
+  "type": "Shadowing names from outer scopes",
+  "severity": "Moderate",
+  "comment": "Shadows name 'command' from outer scope",
+  "detailsInfo": "Reports shadowing names defined in outer scopes.\n\n**Example:**\n\n```\ndef outer(p):\n    def inner(p):\n        pass\n```\n\nAs a quick-fix, the IDE offers to remove a parameter or rename it.",
+  "sources": [
+    {
+      "type": "file",
+      "path": "mi/ext/commands/core.py",
+      "language": "Python",
+      "line": 70,
+      "offset": 29,
+      "length": 7,
+      "code": {
+        "startLine": 68,
+        "length": 7,
+        "offset": 30,
+        "surroundingCode": "\n\ndef hooked_wrapped_callback(command: 'Command', ctx, coro):\n    @functools.wraps(coro)\n    async def wrapped(*args: Tuple[Any], **kwargs: Dict[Any, Any]):"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "project",
+    "inspectionName": "PyShadowingNamesInspection"
+  },
+  "hash": "14a2d4e0b2b14e06202c78eabc8ed1cfd9b2fac61aee2a880df583468ffb685e"
+},{
+  "tool": "Code Inspection",
+  "category": "Python",
+  "type": "Shadowing names from outer scopes",
+  "severity": "Moderate",
+  "comment": "Shadows name 'command' from outer scope",
+  "detailsInfo": "Reports shadowing names defined in outer scopes.\n\n**Example:**\n\n```\ndef outer(p):\n    def inner(p):\n        pass\n```\n\nAs a quick-fix, the IDE offers to remove a parameter or rename it.",
+  "sources": [
+    {
+      "type": "file",
+      "path": "mi/ext/commands/core.py",
+      "language": "Python",
+      "line": 118,
+      "offset": 9,
+      "length": 7,
+      "code": {
+        "startLine": 116,
+        "length": 7,
+        "offset": 68,
+        "surroundingCode": "    def full_parent_name(self) -> str:\n        entries = []\n        command = self\n        while command.parent is not None:\n            command = command.parent"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "project",
+    "inspectionName": "PyShadowingNamesInspection"
+  },
+  "hash": "a8e200358f7f59af13c7bc3c4002656082226a60377fd30cf44c054748e41a79"
+},{
+  "tool": "Code Inspection",
+  "category": "Python",
+  "type": "Shadowing names from outer scopes",
+  "severity": "Moderate",
+  "comment": "Shadows name 'command' from outer scope",
+  "detailsInfo": "Reports shadowing names defined in outer scopes.\n\n**Example:**\n\n```\ndef outer(p):\n    def inner(p):\n        pass\n```\n\nAs a quick-fix, the IDE offers to remove a parameter or rename it.",
+  "sources": [
+    {
+      "type": "file",
+      "path": "mi/ext/commands/core.py",
+      "language": "Python",
+      "line": 120,
+      "offset": 13,
+      "length": 7,
+      "code": {
+        "startLine": 118,
+        "length": 7,
+        "offset": 77,
+        "surroundingCode": "        command = self\n        while command.parent is not None:\n            command = command.parent\n            entries.append(command.name)\n        return ' '.join(reversed(entries))"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "project",
+    "inspectionName": "PyShadowingNamesInspection"
+  },
+  "hash": "cd67717360425ff0d9f78c1e1c019444128567876721f1b9778e6bc40279fe99"
+},{
+  "tool": "Code Inspection",
+  "category": "Python",
+  "type": "Class has no `__init__` method",
+  "severity": "Moderate",
+  "comment": "Class has no __init__ method",
+  "detailsInfo": "Reports cases in Python 2 when a class has no `__init__` method, neither its parent\nclasses.\n\n**Example:**\n\n```\nclass Book():\n    pass\n```\n\nThe quick-fix adds the `__init__` method:\n\n```\nclass Book():\n    def __init__(self):\n        pass\n```",
+  "sources": [
+    {
+      "type": "file",
+      "path": "mi/ext/commands/_types.py",
+      "language": "Python",
+      "line": 1,
+      "offset": 7,
+      "length": 12,
+      "code": {
+        "startLine": 1,
+        "length": 12,
+        "offset": 6,
+        "surroundingCode": "class _BaseCommand:\n    __slots__ = ()\n"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "project",
+    "inspectionName": "PyClassHasNoInitInspection"
+  },
+  "hash": "eb206ac918f84fd8ed9c011967448fef19ebd652d2ec18b85cb042869c5a0287"
+},{
+  "tool": "Code Inspection",
+  "category": "Python",
+  "type": "Class has no `__init__` method",
+  "severity": "Moderate",
+  "comment": "Class has no __init__ method",
+  "detailsInfo": "Reports cases in Python 2 when a class has no `__init__` method, neither its parent\nclasses.\n\n**Example:**\n\n```\nclass Book():\n    pass\n```\n\nThe quick-fix adds the `__init__` method:\n\n```\nclass Book():\n    def __init__(self):\n        pass\n```",
+  "sources": [
+    {
+      "type": "file",
+      "path": "mi/types/instance.py",
+      "language": "Python",
+      "line": 8,
+      "offset": 7,
+      "length": 8,
+      "code": {
+        "startLine": 6,
+        "length": 8,
+        "offset": 8,
+        "surroundingCode": "\n\nclass Features:\n    registration: bool\n    local_time_line: bool"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "project",
+    "inspectionName": "PyClassHasNoInitInspection"
+  },
+  "hash": "6c6acb6fa8fe5cb0ca6077c2088f79ae73a37c9313b7ecd842a659e6cea6da2d"
+},{
+  "tool": "Code Inspection",
+  "category": "Python",
+  "type": "Class has no `__init__` method",
+  "severity": "Moderate",
+  "comment": "Class has no __init__ method",
+  "detailsInfo": "Reports cases in Python 2 when a class has no `__init__` method, neither its parent\nclasses.\n\n**Example:**\n\n```\nclass Book():\n    pass\n```\n\nThe quick-fix adds the `__init__` method:\n\n```\nclass Book():\n    def __init__(self):\n        pass\n```",
+  "sources": [
+    {
+      "type": "file",
+      "path": "mi/http.py",
+      "language": "Python",
+      "line": 17,
+      "offset": 7,
+      "length": 16,
+      "code": {
+        "startLine": 15,
+        "length": 16,
+        "offset": 8,
+        "surroundingCode": "\n\nclass _MissingSentinel:\n    def __eq__(self, other):\n        return False"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "project",
+    "inspectionName": "PyClassHasNoInitInspection"
+  },
+  "hash": "60c0e4c58eb42646a277e30c7ba5b474747474509c3095062e37e415efbce5fa"
+},{
+  "tool": "Code Inspection",
+  "category": "Python",
+  "type": "PEP 8 naming convention violation",
+  "severity": "Moderate",
+  "comment": "Class names should use CamelCase convention",
+  "detailsInfo": "Reports violations of the\n[PEP8](https://www.python.org/dev/peps/pep-0008/) naming conventions.\n\n**Example:**\n\n```\nclass mammalia(object):\n    extremities = 4\n\n    def feeds(self):\n        print(\"milk\")\n```\n\nIn this code fragment, IDE offers to rename `mammalia` to `Mammalia`.\nWhen the quick-fix is applied, the code change to:\n\n```\nclass Mammalia(object):\n    extremities = 4\n\n    def feeds(self):\n        print(\"milk\")\n```",
+  "sources": [
+    {
+      "type": "file",
+      "path": "docs/extensions/attributetable.py",
+      "language": "Python",
+      "line": 15,
+      "offset": 7,
+      "length": 14,
+      "code": {
+        "startLine": 13,
+        "length": 14,
+        "offset": 8,
+        "surroundingCode": "\n\nclass attributetable(nodes.General, nodes.Element):\n    pass\n"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "project",
+    "inspectionName": "PyPep8NamingInspection"
+  },
+  "hash": "864af21adf92daee912befdfe8f40cfa477ac9bf7c187b09be85aaf18b2f8a01"
+},{
+  "tool": "Code Inspection",
+  "category": "Python",
+  "type": "PEP 8 naming convention violation",
+  "severity": "Moderate",
+  "comment": "Class names should use CamelCase convention",
+  "detailsInfo": "Reports violations of the\n[PEP8](https://www.python.org/dev/peps/pep-0008/) naming conventions.\n\n**Example:**\n\n```\nclass mammalia(object):\n    extremities = 4\n\n    def feeds(self):\n        print(\"milk\")\n```\n\nIn this code fragment, IDE offers to rename `mammalia` to `Mammalia`.\nWhen the quick-fix is applied, the code change to:\n\n```\nclass Mammalia(object):\n    extremities = 4\n\n    def feeds(self):\n        print(\"milk\")\n```",
+  "sources": [
+    {
+      "type": "file",
+      "path": "docs/extensions/attributetable.py",
+      "language": "Python",
+      "line": 19,
+      "offset": 7,
+      "length": 20,
+      "code": {
+        "startLine": 17,
+        "length": 20,
+        "offset": 8,
+        "surroundingCode": "\n\nclass attributetablecolumn(nodes.General, nodes.Element):\n    pass\n"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "project",
+    "inspectionName": "PyPep8NamingInspection"
+  },
+  "hash": "73d0b2a4abb082fe0874fde273575ff2420d4985fff7d7d9ab649c69dc5bad41"
+},{
+  "tool": "Code Inspection",
+  "category": "Python",
+  "type": "PEP 8 naming convention violation",
+  "severity": "Moderate",
+  "comment": "Class names should use CamelCase convention",
+  "detailsInfo": "Reports violations of the\n[PEP8](https://www.python.org/dev/peps/pep-0008/) naming conventions.\n\n**Example:**\n\n```\nclass mammalia(object):\n    extremities = 4\n\n    def feeds(self):\n        print(\"milk\")\n```\n\nIn this code fragment, IDE offers to rename `mammalia` to `Mammalia`.\nWhen the quick-fix is applied, the code change to:\n\n```\nclass Mammalia(object):\n    extremities = 4\n\n    def feeds(self):\n        print(\"milk\")\n```",
+  "sources": [
+    {
+      "type": "file",
+      "path": "docs/extensions/attributetable.py",
+      "language": "Python",
+      "line": 23,
+      "offset": 7,
+      "length": 19,
+      "code": {
+        "startLine": 21,
+        "length": 19,
+        "offset": 8,
+        "surroundingCode": "\n\nclass attributetabletitle(nodes.TextElement):\n    pass\n"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "project",
+    "inspectionName": "PyPep8NamingInspection"
+  },
+  "hash": "073e0b2a7f7627abb0424f2a5bd62947f3ae3c6f744626b99321a86ae796cc1b"
+},{
+  "tool": "Code Inspection",
+  "category": "Python",
+  "type": "PEP 8 naming convention violation",
+  "severity": "Moderate",
+  "comment": "Class names should use CamelCase convention",
+  "detailsInfo": "Reports violations of the\n[PEP8](https://www.python.org/dev/peps/pep-0008/) naming conventions.\n\n**Example:**\n\n```\nclass mammalia(object):\n    extremities = 4\n\n    def feeds(self):\n        print(\"milk\")\n```\n\nIn this code fragment, IDE offers to rename `mammalia` to `Mammalia`.\nWhen the quick-fix is applied, the code change to:\n\n```\nclass Mammalia(object):\n    extremities = 4\n\n    def feeds(self):\n        print(\"milk\")\n```",
+  "sources": [
+    {
+      "type": "file",
+      "path": "docs/extensions/attributetable.py",
+      "language": "Python",
+      "line": 27,
+      "offset": 7,
+      "length": 25,
+      "code": {
+        "startLine": 25,
+        "length": 25,
+        "offset": 8,
+        "surroundingCode": "\n\nclass attributetableplaceholder(nodes.General, nodes.Element):\n    pass\n"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "project",
+    "inspectionName": "PyPep8NamingInspection"
+  },
+  "hash": "2c6dd13b6676bf62a49ec1f5bc57bc44c5b0edf019532032837c286bc69ea817"
+},{
+  "tool": "Code Inspection",
+  "category": "Python",
+  "type": "PEP 8 naming convention violation",
+  "severity": "Moderate",
+  "comment": "Class names should use CamelCase convention",
+  "detailsInfo": "Reports violations of the\n[PEP8](https://www.python.org/dev/peps/pep-0008/) naming conventions.\n\n**Example:**\n\n```\nclass mammalia(object):\n    extremities = 4\n\n    def feeds(self):\n        print(\"milk\")\n```\n\nIn this code fragment, IDE offers to rename `mammalia` to `Mammalia`.\nWhen the quick-fix is applied, the code change to:\n\n```\nclass Mammalia(object):\n    extremities = 4\n\n    def feeds(self):\n        print(\"milk\")\n```",
+  "sources": [
+    {
+      "type": "file",
+      "path": "docs/extensions/attributetable.py",
+      "language": "Python",
+      "line": 31,
+      "offset": 7,
+      "length": 19,
+      "code": {
+        "startLine": 29,
+        "length": 19,
+        "offset": 8,
+        "surroundingCode": "\n\nclass attributetablebadge(nodes.TextElement):\n    pass\n"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "project",
+    "inspectionName": "PyPep8NamingInspection"
+  },
+  "hash": "7bb23b02ec5ff0f3d57b5e25ca91326a0f4e262100664c05154fd27b8276f6a5"
+},{
+  "tool": "Code Inspection",
+  "category": "Python",
+  "type": "PEP 8 naming convention violation",
+  "severity": "Moderate",
+  "comment": "Class names should use CamelCase convention",
+  "detailsInfo": "Reports violations of the\n[PEP8](https://www.python.org/dev/peps/pep-0008/) naming conventions.\n\n**Example:**\n\n```\nclass mammalia(object):\n    extremities = 4\n\n    def feeds(self):\n        print(\"milk\")\n```\n\nIn this code fragment, IDE offers to rename `mammalia` to `Mammalia`.\nWhen the quick-fix is applied, the code change to:\n\n```\nclass Mammalia(object):\n    extremities = 4\n\n    def feeds(self):\n        print(\"milk\")\n```",
+  "sources": [
+    {
+      "type": "file",
+      "path": "docs/extensions/attributetable.py",
+      "language": "Python",
+      "line": 35,
+      "offset": 7,
+      "length": 19,
+      "code": {
+        "startLine": 33,
+        "length": 19,
+        "offset": 8,
+        "surroundingCode": "\n\nclass attributetable_item(nodes.Part, nodes.Element):\n    pass\n"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "project",
+    "inspectionName": "PyPep8NamingInspection"
+  },
+  "hash": "acdd07f0f692222f4a4e65e7f56ebb34d1462eb9a94d73321ed345a55e6fb59c"
+},{
+  "tool": "Code Inspection",
+  "category": "Python",
+  "type": "An instance attribute is defined outside `__init__`",
+  "severity": "Moderate",
+  "comment": "Instance attribute url defined outside __init__",
+  "detailsInfo": "Reports a problem when instance attribute definition is outside `__init__` method.\n\n**Example:**\n\n```\n    class Book:\n    def __init__(self):\n        self.author = 'Mark Twain'\n\n    def release(self):\n        self.year = '1889'\n```\n\n\nWhen the quick-fix is applied, the code sample changes to:\n\n```\n    class Book:\n    def __init__(self):\n        self.year = '1889'\n        self.author = 'Mark Twain'\n\n    def release(self):\n        pass\n```",
+  "sources": [
+    {
+      "type": "file",
+      "path": "mi/client.py",
+      "language": "Python",
+      "line": 414,
+      "offset": 9,
+      "length": 8,
+      "code": {
+        "startLine": 412,
+        "length": 8,
+        "offset": 113,
+        "surroundingCode": "            origin_uri = url\n        self.origin_uri = origin_uri[:-1] if url[-1] == \"/\" else origin_uri\n        self.url = url\n        auth_i: Dict[str, Any] = {\n            \"token\": self.token,"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "project",
+    "inspectionName": "PyAttributeOutsideInitInspection"
+  },
+  "hash": "d6713b6c0d05e141ef633a2a618f84b8af03e90d9a4837be571466efa737f1cb"
+},{
+  "tool": "Code Inspection",
+  "category": "Python",
+  "type": "Accessing a protected member of a class or a module",
+  "severity": "Moderate",
+  "comment": "Access to a protected member _inject of a class",
+  "detailsInfo": "Reports cases when a protected member is accessed outside the class,\na descendant of the class where it is defined, or a module.\n\n```\nclass Foo:\n    def _protected_method(self):\n        pass\n\n\nclass Bar(Foo):\n    def public_method(self):\n        self._protected_method()\n\n\nfoo = Foo()\nfoo._protected_method() # Access to a protected method\n```",
+  "sources": [
+    {
+      "type": "file",
+      "path": "mi/ext/commands/bot.py",
+      "language": "Python",
+      "line": 190,
+      "offset": 15,
+      "length": 11,
+      "code": {
+        "startLine": 188,
+        "length": 11,
+        "offset": 65,
+        "surroundingCode": "            self.remove_cog(cog_name)  # TODO: ??\n\n        cog = cog._inject(self)\n        self.__cogs[cog_name] = cog\n"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "project",
+    "inspectionName": "PyProtectedMemberInspection"
+  },
+  "hash": "a9684903fd9dbc7051adbf50596aa5418d9568831505e0a3c36add88d518bdc2"
+},{
+  "tool": "Code Inspection",
+  "category": "Python",
+  "type": "Accessing a protected member of a class or a module",
+  "severity": "Moderate",
+  "comment": "Access to a protected member _eject of a class",
+  "detailsInfo": "Reports cases when a protected member is accessed outside the class,\na descendant of the class where it is defined, or a module.\n\n```\nclass Foo:\n    def _protected_method(self):\n        pass\n\n\nclass Bar(Foo):\n    def public_method(self):\n        self._protected_method()\n\n\nfoo = Foo()\nfoo._protected_method() # Access to a protected method\n```",
+  "sources": [
+    {
+      "type": "file",
+      "path": "mi/ext/commands/bot.py",
+      "language": "Python",
+      "line": 199,
+      "offset": 9,
+      "length": 10,
+      "code": {
+        "startLine": 197,
+        "length": 10,
+        "offset": 28,
+        "surroundingCode": "            return\n\n        cog._eject(self)\n\n        return cog"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "project",
+    "inspectionName": "PyProtectedMemberInspection"
+  },
+  "hash": "2ec22f7b5a7dbf978f2d30d5110e6ae6f48cfc2396116fcadb295ccb4db17585"
+},{
+  "tool": "Code Inspection",
+  "category": "Python",
+  "type": "Accessing a protected member of a class or a module",
+  "severity": "Moderate",
+  "comment": "Access to a protected member _update_copy of a class",
+  "detailsInfo": "Reports cases when a protected member is accessed outside the class,\na descendant of the class where it is defined, or a module.\n\n```\nclass Foo:\n    def _protected_method(self):\n        pass\n\n\nclass Bar(Foo):\n    def public_method(self):\n        self._protected_method()\n\n\nfoo = Foo()\nfoo._protected_method() # Access to a protected method\n```",
+  "sources": [
+    {
+      "type": "file",
+      "path": "mi/ext/commands/cog.py",
+      "language": "Python",
+      "line": 73,
+      "offset": 39,
+      "length": 14,
+      "code": {
+        "startLine": 71,
+        "length": 14,
+        "offset": 115,
+        "surroundingCode": "        self = super().__new__(cls)\n        cmd_attrs = cls.__cog_settings__\n        self.__cog_commands__ = tuple(c._update_copy(cmd_attrs) for c in cls.__cog_commands__)\n\n        lookup = {cmd.qualified_name: cmd for cmd in self.__cog_commands__}"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "project",
+    "inspectionName": "PyProtectedMemberInspection"
+  },
+  "hash": "2e0c02feb301e695e10509320fba4167ef0849d523f72af6a5e6ab8ce75c1594"
+},{
+  "tool": "Code Inspection",
+  "category": "Python",
+  "type": "Accessing a protected member of a class or a module",
+  "severity": "Moderate",
+  "comment": "Access to a protected member _after_invoke of a class",
+  "detailsInfo": "Reports cases when a protected member is accessed outside the class,\na descendant of the class where it is defined, or a module.\n\n```\nclass Foo:\n    def _protected_method(self):\n        pass\n\n\nclass Bar(Foo):\n    def public_method(self):\n        self._protected_method()\n\n\nfoo = Foo()\nfoo._protected_method() # Access to a protected method\n```",
+  "sources": [
+    {
+      "type": "file",
+      "path": "mi/ext/commands/core.py",
+      "language": "Python",
+      "line": 132,
+      "offset": 16,
+      "length": 21,
+      "code": {
+        "startLine": 130,
+        "length": 21,
+        "offset": 59,
+        "surroundingCode": "\n    async def call_after_hooks(self, ctx):\n        hook = ctx.bot._after_invoke\n        if hook is not None:\n            await hook(ctx)"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "project",
+    "inspectionName": "PyProtectedMemberInspection"
+  },
+  "hash": "03e5d989e0dd57bdce9be8028180e92cfcbfb1a67a78d73f075166bd7ef2a01a"
+},{
+  "tool": "Code Inspection",
+  "category": "Python",
+  "type": "Accessing a protected member of a class or a module",
+  "severity": "Moderate",
+  "comment": "'Follower' is not declared in __all__",
+  "detailsInfo": "Reports cases when a protected member is accessed outside the class,\na descendant of the class where it is defined, or a module.\n\n```\nclass Foo:\n    def _protected_method(self):\n        pass\n\n\nclass Bar(Foo):\n    def public_method(self):\n        self._protected_method()\n\n\nfoo = Foo()\nfoo._protected_method() # Access to a protected method\n```",
+  "sources": [
+    {
+      "type": "file",
+      "path": "mi/state.py",
+      "language": "Python",
+      "line": 17,
+      "offset": 21,
+      "length": 8,
+      "code": {
+        "startLine": 15,
+        "length": 8,
+        "offset": 103,
+        "surroundingCode": "from mi.iterators import InstanceIterator\nfrom mi.note import Note, Poll, Reaction\nfrom mi.user import Follower, Following\nfrom mi.emoji import Emoji\nfrom mi.utils import check_multi_arg, get_cache_key, get_module_logger, key_builder, remove_dict_empty, str_lower, \\"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "project",
+    "inspectionName": "PyProtectedMemberInspection"
+  },
+  "hash": "38573b1da7791a5053d99871ea63005f23154294e6c2d52f837738c4a05ce593"
+},{
+  "tool": "Code Inspection",
+  "category": "Python",
+  "type": "Accessing a protected member of a class or a module",
+  "severity": "Moderate",
+  "comment": "Access to a protected member _connection of a class",
+  "detailsInfo": "Reports cases when a protected member is accessed outside the class,\na descendant of the class where it is defined, or a module.\n\n```\nclass Foo:\n    def _protected_method(self):\n        pass\n\n\nclass Bar(Foo):\n    def public_method(self):\n        self._protected_method()\n\n\nfoo = Foo()\nfoo._protected_method() # Access to a protected method\n```",
+  "sources": [
+    {
+      "type": "file",
+      "path": "mi/gateway.py",
+      "language": "Python",
+      "line": 36,
+      "offset": 26,
+      "length": 18,
+      "code": {
+        "startLine": 34,
+        "length": 18,
+        "offset": 89,
+        "surroundingCode": "        ws = cls(socket)\n        ws._dispatch = client.dispatch\n        ws._connection = client._connection\n        ws._misskey_parsers = client._connection.parsers\n        client.dispatch('ready', socket)"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "project",
+    "inspectionName": "PyProtectedMemberInspection"
+  },
+  "hash": "ac044ba627ec97a0f5b2c56d443c426b144b990be36c92c5f49a919346cf8d82"
+},{
+  "tool": "Code Inspection",
+  "category": "Python",
+  "type": "Accessing a protected member of a class or a module",
+  "severity": "Moderate",
+  "comment": "Access to a protected member _connection of a class",
+  "detailsInfo": "Reports cases when a protected member is accessed outside the class,\na descendant of the class where it is defined, or a module.\n\n```\nclass Foo:\n    def _protected_method(self):\n        pass\n\n\nclass Bar(Foo):\n    def public_method(self):\n        self._protected_method()\n\n\nfoo = Foo()\nfoo._protected_method() # Access to a protected method\n```",
+  "sources": [
+    {
+      "type": "file",
+      "path": "mi/gateway.py",
+      "language": "Python",
+      "line": 37,
+      "offset": 31,
+      "length": 18,
+      "code": {
+        "startLine": 35,
+        "length": 18,
+        "offset": 113,
+        "surroundingCode": "        ws._dispatch = client.dispatch\n        ws._connection = client._connection\n        ws._misskey_parsers = client._connection.parsers\n        client.dispatch('ready', socket)\n        await ws.poll_event(timeout=timeout)"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "project",
+    "inspectionName": "PyProtectedMemberInspection"
+  },
+  "hash": "1dd952e2b7529215fe299ca4bf0a83a4f0b4233191b49b242c413877f4cb160a"
+},{
+  "tool": "Code Inspection",
+  "category": "Python",
+  "type": "Accessing a protected member of a class or a module",
+  "severity": "Moderate",
+  "comment": "Access to a protected member _ of a class",
+  "detailsInfo": "Reports cases when a protected member is accessed outside the class,\na descendant of the class where it is defined, or a module.\n\n```\nclass Foo:\n    def _protected_method(self):\n        pass\n\n\nclass Bar(Foo):\n    def public_method(self):\n        self._protected_method()\n\n\nfoo = Foo()\nfoo._protected_method() # Access to a protected method\n```",
+  "sources": [
+    {
+      "type": "file",
+      "path": "docs/extensions/attributetable.py",
+      "language": "Python",
+      "line": 11,
+      "offset": 27,
+      "length": 1,
+      "code": {
+        "startLine": 9,
+        "length": 1,
+        "offset": 94,
+        "surroundingCode": "from docutils import nodes\nfrom sphinx import addnodes, application\nfrom sphinx.locale import _\nfrom sphinx.util.docutils import SphinxDirective\n"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "project",
+    "inspectionName": "PyProtectedMemberInspection"
+  },
+  "hash": "506378a3f289ce1cd91921b47d91df63e0b2ce0a3fd0bc7a74c2b53bb19a6619"
+},{
+  "tool": "Code Inspection",
+  "category": "Python",
+  "type": "Incorrect type",
+  "severity": "High",
+  "comment": "Expected type 'User', got 'None' instead",
+  "detailsInfo": "Reports type errors in function call expressions, targets, and return values. In a dynamically typed language, this is possible in a limited number of cases.\n\nTypes of function parameters can be specified in\ndocstrings or in Python 3 function annotations.\n\n**Example:**\n\n```\ndef foo() -> int:\n    return \"abc\" # Expected int, got str\n\n\na: str\na = foo() # Expected str, got int\n```\n\nWith the quick-fix, you can modify the problematic types:\n\n```\ndef foo() -> str:\n    return \"abc\"\n\n\na: str\na = foo()\n```",
+  "sources": [
+    {
+      "type": "file",
+      "path": "mi/ext/commands/bot.py",
+      "language": "Python",
+      "line": 47,
+      "offset": 24,
+      "length": 4,
+      "code": {
+        "startLine": 45,
+        "length": 4,
+        "offset": 116,
+        "surroundingCode": "        self.origin_uri: Optional[str] = None\n        self.__extensions: Dict[str, Any] = {}\n        self.i: User = None\n        self.__cogs: Dict[str, str] = {}\n        self.strip_after_prefix = options.get(\"strip_after_prefix\", False)"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "project",
+    "inspectionName": "PyTypeCheckerInspection"
+  },
+  "hash": "2c05eb18bdd66a4abf17f53c8e10882ca92f0279d32989b14567f49988b10993"
+},{
+  "tool": "Code Inspection",
+  "category": "Python",
+  "type": "Incorrect type",
+  "severity": "High",
+  "comment": "Type 'User' doesn't have expected attribute 'get'",
+  "detailsInfo": "Reports type errors in function call expressions, targets, and return values. In a dynamically typed language, this is possible in a limited number of cases.\n\nTypes of function parameters can be specified in\ndocstrings or in Python 3 function annotations.\n\n**Example:**\n\n```\ndef foo() -> int:\n    return \"abc\" # Expected int, got str\n\n\na: str\na = foo() # Expected str, got int\n```\n\nWith the quick-fix, you can modify the problematic types:\n\n```\ndef foo() -> str:\n    return \"abc\"\n\n\na: str\na = foo()\n```",
+  "sources": [
+    {
+      "type": "file",
+      "path": "mi/user.py",
+      "language": "Python",
+      "line": 251,
+      "offset": 36,
+      "length": 4,
+      "code": {
+        "startLine": 249,
+        "length": 4,
+        "offset": 161,
+        "surroundingCode": "        self.blocked: bool = bool(data.get(\"is_blocked\", False))\n        self.muted: bool = bool(data.get(\"is_muted\", False))\n        self.details = UserDetails(data)\n        self._state = state\n"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "project",
+    "inspectionName": "PyTypeCheckerInspection"
+  },
+  "hash": "30f5221d674281db6f6f4641f29068f671c0dc2ef8b805aec6b24821787b7a71"
+},{
+  "tool": "Code Inspection",
+  "category": "Python",
+  "type": "Incorrect type",
+  "severity": "High",
+  "comment": "Expected type 'User', got 'None' instead",
+  "detailsInfo": "Reports type errors in function call expressions, targets, and return values. In a dynamically typed language, this is possible in a limited number of cases.\n\nTypes of function parameters can be specified in\ndocstrings or in Python 3 function annotations.\n\n**Example:**\n\n```\ndef foo() -> int:\n    return \"abc\" # Expected int, got str\n\n\na: str\na = foo() # Expected str, got int\n```\n\nWith the quick-fix, you can modify the problematic types:\n\n```\ndef foo() -> str:\n    return \"abc\"\n\n\na: str\na = foo()\n```",
+  "sources": [
+    {
+      "type": "file",
+      "path": "mi/client.py",
+      "language": "Python",
+      "line": 39,
+      "offset": 24,
+      "length": 4,
+      "code": {
+        "startLine": 37,
+        "length": 4,
+        "offset": 158,
+        "surroundingCode": "        self.http: HTTPClient = HTTPClient(connector=connector)\n        self._connection: ConnectionState = self._get_state(**options)\n        self.i: User = None\n        self.logger = get_module_logger(__name__)\n        self.ws: MisskeyWebSocket = None"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "project",
+    "inspectionName": "PyTypeCheckerInspection"
+  },
+  "hash": "64d0fd5222b4f2d2e9d467e2a0aa809dbadf0d3242794e349919c6a15b9cb7e8"
+},{
+  "tool": "Code Inspection",
+  "category": "Python",
+  "type": "Incorrect type",
+  "severity": "High",
+  "comment": "Expected type 'MisskeyWebSocket', got 'None' instead",
+  "detailsInfo": "Reports type errors in function call expressions, targets, and return values. In a dynamically typed language, this is possible in a limited number of cases.\n\nTypes of function parameters can be specified in\ndocstrings or in Python 3 function annotations.\n\n**Example:**\n\n```\ndef foo() -> int:\n    return \"abc\" # Expected int, got str\n\n\na: str\na = foo() # Expected str, got int\n```\n\nWith the quick-fix, you can modify the problematic types:\n\n```\ndef foo() -> str:\n    return \"abc\"\n\n\na: str\na = foo()\n```",
+  "sources": [
+    {
+      "type": "file",
+      "path": "mi/client.py",
+      "language": "Python",
+      "line": 41,
+      "offset": 37,
+      "length": 4,
+      "code": {
+        "startLine": 39,
+        "length": 4,
+        "offset": 114,
+        "surroundingCode": "        self.i: User = None\n        self.logger = get_module_logger(__name__)\n        self.ws: MisskeyWebSocket = None\n\n    def _get_state(self, **options: Any) -> ConnectionState:"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "project",
+    "inspectionName": "PyTypeCheckerInspection"
+  },
+  "hash": "bb4ac983729ff1fe054879d4702fe1cd2dd46e5eac52fc4c7ee8404b0407e7cc"
+}]}

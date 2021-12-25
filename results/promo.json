@@ -1,0 +1,188 @@
+{"version":"3","listProblem":[{
+  "tool": "Code Inspection",
+  "category": "Python",
+  "type": "An invalid interpreter",
+  "tags": [
+    "Python"
+  ],
+  "severity": "High",
+  "comment": "No Python interpreter configured for the project",
+  "detailsInfo": "Reports problems if there is no Python interpreter configured for the project or if the interpreter is invalid. Without a properly\nconfigured interpreter, you cannot execute your Python scripts and benefit from some Python code insight features.\n\nThe IDE provides quick access to the interpreter settings.",
+  "sources": [
+    {
+      "type": "file",
+      "path": "mi/ext/commands/core.py",
+      "language": "Python",
+      "line": 1,
+      "offset": 0,
+      "length": 6938
+    }
+  ],
+  "attributes": {
+    "module": "project",
+    "inspectionName": "PyInterpreterInspection"
+  },
+  "hash": "421196031704983785"
+},{
+  "tool": "Code Inspection",
+  "category": "Python",
+  "type": "An invalid interpreter",
+  "tags": [
+    "Python"
+  ],
+  "severity": "High",
+  "comment": "No Python interpreter configured for the project",
+  "detailsInfo": "Reports problems if there is no Python interpreter configured for the project or if the interpreter is invalid. Without a properly\nconfigured interpreter, you cannot execute your Python scripts and benefit from some Python code insight features.\n\nThe IDE provides quick access to the interpreter settings.",
+  "sources": [
+    {
+      "type": "file",
+      "path": "mi/http.py",
+      "language": "Python",
+      "line": 1,
+      "offset": 0,
+      "length": 4350
+    }
+  ],
+  "attributes": {
+    "module": "project",
+    "inspectionName": "PyInterpreterInspection"
+  },
+  "hash": "1040901159832466181"
+},{
+  "tool": "Code Inspection",
+  "category": "Python",
+  "type": "An invalid interpreter",
+  "tags": [
+    "Python"
+  ],
+  "severity": "High",
+  "comment": "No Python interpreter configured for the project",
+  "detailsInfo": "Reports problems if there is no Python interpreter configured for the project or if the interpreter is invalid. Without a properly\nconfigured interpreter, you cannot execute your Python scripts and benefit from some Python code insight features.\n\nThe IDE provides quick access to the interpreter settings.",
+  "sources": [
+    {
+      "type": "file",
+      "path": "mi/state.py",
+      "language": "Python",
+      "line": 1,
+      "offset": 0,
+      "length": 23732
+    }
+  ],
+  "attributes": {
+    "module": "project",
+    "inspectionName": "PyInterpreterInspection"
+  },
+  "hash": "-4566392177224058233"
+},{
+  "tool": "Code Inspection",
+  "category": "Python",
+  "type": "An invalid interpreter",
+  "tags": [
+    "Python"
+  ],
+  "severity": "High",
+  "comment": "No Python interpreter configured for the project",
+  "detailsInfo": "Reports problems if there is no Python interpreter configured for the project or if the interpreter is invalid. Without a properly\nconfigured interpreter, you cannot execute your Python scripts and benefit from some Python code insight features.\n\nThe IDE provides quick access to the interpreter settings.",
+  "sources": [
+    {
+      "type": "file",
+      "path": "mi/config.py",
+      "language": "Python",
+      "line": 1,
+      "offset": 0,
+      "length": 492,
+      "code": {
+        "startLine": 1,
+        "length": 492,
+        "offset": 0,
+        "surroundingCode": "from typing import Any, Optional\n\n\nclass Config:\n    \"\"\"\n    Bot?????????Config\n    \"\"\"\n\n    def __init__(\n            self,\n            token: Optional[str],\n            origin_uri: Optional[str],\n            profile: Any = None,\n            instance: dict = None,\n    ):\n        self.token: str = token\n        self.origin_uri: str = origin_uri\n        self.profile: Any = profile\n        self.instance: dict = instance\n\n\ni: Config = Config(token=None, origin_uri=None)\ndebug: bool = False"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "project",
+    "inspectionName": "PyInterpreterInspection"
+  },
+  "hash": "-4013073490581476328"
+},{
+  "tool": "Code Inspection",
+  "category": "Python",
+  "type": "An invalid interpreter",
+  "tags": [
+    "Python"
+  ],
+  "severity": "High",
+  "comment": "No Python interpreter configured for the project",
+  "detailsInfo": "Reports problems if there is no Python interpreter configured for the project or if the interpreter is invalid. Without a properly\nconfigured interpreter, you cannot execute your Python scripts and benefit from some Python code insight features.\n\nThe IDE provides quick access to the interpreter settings.",
+  "sources": [
+    {
+      "type": "file",
+      "path": "mi/exception.py",
+      "language": "Python",
+      "line": 1,
+      "offset": 0,
+      "length": 2116
+    }
+  ],
+  "attributes": {
+    "module": "project",
+    "inspectionName": "PyInterpreterInspection"
+  },
+  "hash": "3931454779921249868"
+},{
+  "tool": "Code Inspection",
+  "category": "Python",
+  "type": "An invalid interpreter",
+  "tags": [
+    "Python"
+  ],
+  "severity": "High",
+  "comment": "No Python interpreter configured for the project",
+  "detailsInfo": "Reports problems if there is no Python interpreter configured for the project or if the interpreter is invalid. Without a properly\nconfigured interpreter, you cannot execute your Python scripts and benefit from some Python code insight features.\n\nThe IDE provides quick access to the interpreter settings.",
+  "sources": [
+    {
+      "type": "file",
+      "path": "mi/iterators.py",
+      "language": "Python",
+      "line": 1,
+      "offset": 0,
+      "length": 2077
+    }
+  ],
+  "attributes": {
+    "module": "project",
+    "inspectionName": "PyInterpreterInspection"
+  },
+  "hash": "2455142038654370180"
+},{
+  "tool": "Code Inspection",
+  "category": "Python",
+  "type": "An invalid interpreter",
+  "tags": [
+    "Cython"
+  ],
+  "severity": "High",
+  "comment": "No Python interpreter configured for the project",
+  "detailsInfo": "Reports problems if there is no Python interpreter configured for the project or if the interpreter is invalid. Without a properly\nconfigured interpreter, you cannot execute your Python scripts and benefit from some Python code insight features.\n\nThe IDE provides quick access to the interpreter settings.",
+  "sources": [
+    {
+      "type": "file",
+      "path": "mi/next_utils.pyx",
+      "language": "Cython",
+      "line": 1,
+      "offset": 0,
+      "length": 322,
+      "code": {
+        "startLine": 1,
+        "length": 322,
+        "offset": 0,
+        "surroundingCode": "import cython\n\n@cython.boundscheck(False)\n@cython.wraparound(False)\ndef check_multi_arg(*args) -> bool:\n    \"\"\"?????????????????bool?????\n\n    Parameters\n    ----------\n    args : list\n        ???????????\n\n    Returns\n    -------\n    bool\n        ???????True, ????????False\n    \"\"\"\n    return bool([i for i in args if i])"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "project",
+    "inspectionName": "PyInterpreterInspection"
+  },
+  "hash": "4870343818881493355"
+}]}
