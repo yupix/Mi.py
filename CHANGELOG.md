@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Added
+
+- add event `on_user_follow`
 ## [v1.0.2] 2021-12-24
 
 ### Added
