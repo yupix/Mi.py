@@ -17,6 +17,5 @@ sphinx-intl
 # Mi.py depencies
 aiocache
 aiohttp
-pydantic
 emoji
 cython

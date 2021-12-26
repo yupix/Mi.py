@@ -14,3 +14,4 @@ main.py
 cogs
 .setup.py.swp
 *.mo
+release.sh

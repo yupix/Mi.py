@@ -128,7 +128,7 @@ class ConnectionState(ClientAction):
         ユーザーをフォローした際のイベントを解析する関数
         """
 
-        # self.dispatch('follow', Follower(message, state=self))
+        self.dispatch('user_follow', User(message, state=self))
 
     def parse_followed(self, message: Dict[str, Any]) -> None:
         """

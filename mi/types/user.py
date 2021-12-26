@@ -7,18 +7,18 @@ from .instance import Instance
 
 class Channel(TypedDict):
     id: Optional[str]
-    createdAt: Optional[str]
-    lastNotedAt: Optional[str]
+    created_at: Optional[str]
+    last_noted_at: Optional[str]
     name: Optional[str]
     description: Optional[str]
-    bannerUrl: Optional[str]
-    notesCount: Optional[int]
-    usersCount: Optional[int]
-    isFollowing: Optional[bool]
-    userId: Optional[str]
+    banner_url: Optional[str]
+    notes_count: Optional[int]
+    users_count: Optional[int]
+    is_following: Optional[bool]
+    user_id: Optional[str]
 
 
-class PinnedPage(TypedDict):
+class PinnedNote(TypedDict):
     id: Optional[str]
     created_at: Optional[str]
     text: Optional[str]
@@ -48,6 +48,24 @@ class PinnedPage(TypedDict):
     uri: Optional[str]
     url: Optional[str]
     my_reaction: Optional[Dict[str, Any]]
+
+
+class PinnedPage(TypedDict):
+    id: Optional[str]
+    created_at: Optional[str]
+    updated_at: Optional[str]
+    title: Optional[str]
+    name: Optional[str]
+    summary: Optional[str]
+    content: Optional[List]
+    variables: Optional[List]
+    user_id: Optional[str]
+    author: Optional[Dict[str, Any]]
+
+
+class FieldContent(TypedDict):
+    name: str
+    value: str
 
 
 class OptionalUser(TypedDict, total=False):
