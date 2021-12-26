@@ -31,18 +31,18 @@ class File(TypedDict):
     """
 
     id: str
-    createdAt: str
+    created_at: str
     name: str
     type: str
     md5: str
     size: int
-    isSensitive: bool
+    is_sensitive: bool
     blurhash: str
     properties: Properties
     url: str
-    thumbnailUrl: str
+    thumbnail_url: str
     comment: str
-    folderId: str
+    folder_id: str
     folder: Folder
-    userId: str
+    user_id: str
     user: Dict[str, Any]

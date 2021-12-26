@@ -1,9 +1,7 @@
 from __future__ import annotations
 from typing import TYPE_CHECKING, Any, Dict
 
-from pydantic import BaseModel
-
-from .types.drive import (Folder as FolderPayload,)
+from .types.drive import (Folder as FolderPayload, File as FilePayload)
 
 if TYPE_CHECKING:
     from .state import ConnectionState
@@ -27,23 +25,24 @@ class Folder:
         self._state = state
 
 
-class File(BaseModel):
-    id: str
-    createdAt: str
-    name: str
-    type: str
-    md5: str
-    size: int
-    isSensitive: bool
-    blurhash: str
-    properties: Properties
-    url: str
-    thumbnailUrl: str
-    comment: str
-    folderId: str
-    folder: Folder
-    userId: str
-    user: Dict[str, Any]
+class File:
+    def __init__(self, data: FilePayload, state: ConnectionState):
+        self.id: str = data['id']
+        self.created_at: str = data['created_at']
+        self.name: str = data['name']
+        self.type: str = data['type']
+        self.md5: str = data['md5']
+        self.size: int = data['size']
+        self.is_sensitive: bool = data['is_sensitive']
+        self.blurhash: str = data['blurhash']
+        self.properties: Properties = Properties(data['properties'])
+        self.url: str = data['url']
+        self.thumbnail_url: str = data['thumbnail_url']
+        self.comment: str = data['comment']
+        self.folder_id: str = data['folder_id']
+        self.folder: Folder = Folder(data['folder'], state=state)
+        self.user_id: str = data['user_id']
+        self.user: Dict[str, Any] = data['user']
 
 
 class Drive:
