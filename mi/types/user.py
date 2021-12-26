@@ -50,6 +50,24 @@ class PinnedNote(TypedDict):
     my_reaction: Optional[Dict[str, Any]]
 
 
+class PinnedPage(TypedDict):
+    id: Optional[str]
+    created_at: Optional[str]
+    updated_at: Optional[str]
+    title: Optional[str]
+    name: Optional[str]
+    summary: Optional[str]
+    content: Optional[List]
+    variables: Optional[List]
+    user_id: Optional[str]
+    author: Optional[Dict[str, Any]]
+
+
+class FieldContent(TypedDict):
+    name: str
+    value: str
+
+
 class OptionalUser(TypedDict, total=False):
     name: str
     host: str

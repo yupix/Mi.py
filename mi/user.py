@@ -93,19 +93,22 @@ class PinnedNote:
         self.uri: Optional[str] = data.get("uri")
         self.url: Optional[str] = data.get("url")
         self.my_reaction: Optional[Dict[str, Any]] = data.get("my_reaction")
+        self._state: ConnectionState = state
 
 
-class PinnedPage(BaseModel):
-    id: Optional[str] = None
-    created_at: Optional[str] = None
-    updated_at: Optional[str] = None
-    title: Optional[str] = None
-    name: Optional[str] = None
-    summary: Optional[str] = None
-    content: Optional[List] = []
-    variables: Optional[List] = []
-    user_id: Optional[str] = None
-    author: Optional[Dict[str, Any]] = {}
+class PinnedPage:
+    def __init__(self, data: PinnedPagePayload, state: ConnectionState):
+        self.id: Optional[str] = data.get("id")
+        self.created_at: Optional[str] = data.get("created_at")
+        self.updated_at: Optional[str] = data.get("updated_at")
+        self.title: Optional[str] = data.get("title")
+        self.name: Optional[str] = data.get("name")
+        self.summary: Optional[str] = data.get("summary")
+        self.content: Optional[List] = data.get("content")
+        self.variables: Optional[List] = data.get("variables")
+        self.user_id: Optional[str] = data.get("user_id")
+        self.author: Optional[Dict[str, Any]] = data.get("author")
+        self._state: ConnectionState = state
 
 
 class FieldContent(BaseModel):
