@@ -1,5 +1,4 @@
 aiocache
 aiohttp
-pydantic
 emoji
 cython

@@ -28,6 +28,7 @@ if TYPE_CHECKING:
 class Client:
     def __init__(self, loop: Optional[asyncio.AbstractEventLoop] = None, **options: Dict[Any, Any]):
         super().__init__(**options)
+        self.url = None
         self.extra_events: Dict[str, Any] = {}
         self.special_events: Dict[str, Any] = {}
         self.token: Optional[str] = None

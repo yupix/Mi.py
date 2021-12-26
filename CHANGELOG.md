@@ -10,6 +10,23 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 - add event `on_user_follow`
+
+### Changed
+
+- The following classes no longer inherit from `BaseModel`
+  - Properties
+  - Folder
+  - File
+  - Channel
+  - PinnedNote
+  - PinnedPage
+  - FieldContent
+- internal change: Renamed `PinnedPage` to `PinnedNote`
+
+### Removed
+
+- **BREAKING CHANGE**: Removed pydantic from dependencies
+
 ## [v1.0.2] 2021-12-24
 
 ### Added
