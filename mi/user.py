@@ -1,14 +1,14 @@
 from __future__ import annotations
 from typing import Any, AsyncIterator, Dict, List, Optional, TYPE_CHECKING
 
-from pydantic import BaseModel
 
 from mi import Instance
-from mi.drive import File
 from mi.emoji import Emoji
 from mi.types.user import (User as UserPayload,
                            Channel as ChannelPayload,
-                           PinnedNote as PinnedNotePayload)
+                           PinnedNote as PinnedNotePayload,
+                           PinnedPage as PinnedPagePayload,
+                           FieldContent as FieldContentPayload)
 
 if TYPE_CHECKING:
     from mi import ConnectionState
@@ -111,9 +111,11 @@ class PinnedPage:
         self._state: ConnectionState = state
 
 
-class FieldContent(BaseModel):
-    name: str
-    value: str
+class FieldContent:
+    def __init__(self, data: FieldContentPayload, state: ConnectionState):
+        self.name: str = data["name"]
+        self.value: str = data["value"]
+        self._state: ConnectionState = state
 
 
 class UserDetails:
