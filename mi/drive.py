@@ -6,10 +6,11 @@ from pydantic import BaseModel
 if TYPE_CHECKING:
     from .state import ConnectionState
 
-class Properties(BaseModel):
-    width: int
-    height: int
-    avgColor: str
+class Properties:
+    def __init__(self, data):
+        self.width:int = data['width']
+        self.height:int = data['height']
+        self.avg_color:float = data['avg_color']
 
 
 class Folder(BaseModel):
