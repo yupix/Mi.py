@@ -7,15 +7,15 @@ from .instance import Instance
 
 class Channel(TypedDict):
     id: Optional[str]
-    createdAt: Optional[str]
-    lastNotedAt: Optional[str]
+    created_at: Optional[str]
+    last_noted_at: Optional[str]
     name: Optional[str]
     description: Optional[str]
-    bannerUrl: Optional[str]
-    notesCount: Optional[int]
-    usersCount: Optional[int]
-    isFollowing: Optional[bool]
-    userId: Optional[str]
+    banner_url: Optional[str]
+    notes_count: Optional[int]
+    users_count: Optional[int]
+    is_following: Optional[bool]
+    user_id: Optional[str]
 
 
 class PinnedNote(TypedDict):

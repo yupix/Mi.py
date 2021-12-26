@@ -5,7 +5,10 @@ from pydantic import BaseModel
 
 from mi import Instance
 from mi.drive import File
-from mi.types.user import (User as UserPayload)
+from mi.emoji import Emoji
+from mi.types.user import (User as UserPayload,
+                           Channel as ChannelPayload,
+                           PinnedNote as PinnedNotePayload)
 
 if TYPE_CHECKING:
     from mi import ConnectionState
@@ -22,8 +25,9 @@ class Follower:
         self.user: User = User(data['follower'], state=state)
         self._state = state
 
+
 class Following:
-    def __init__(self, data, state:ConnectionState):
+    def __init__(self, data, state: ConnectionState):
         self.id = data['id']
         self.name = data['name']
         self.username = data['username']
@@ -37,57 +41,58 @@ class Following:
         self.is_bot = bool(data['is_bot'])
         self.is_cat = bool(data['is_cat'])
         self._state = state
-    
+
     async def accept_request(self) -> bool:
         return await self._state.accept_following_request(self.id)
-    
+
     async def reject_request(self) -> bool:
         return await self._state.reject_following_request(self.id)
-    
-
-class Channel(BaseModel):
-    id: Optional[str] = None
-    createdAt: Optional[str] = None
-    lastNotedAt: Optional[str] = None
-    name: Optional[str] = None
-    description: Optional[str] = None
-    bannerUrl: Optional[str] = None
-    notesCount: Optional[int] = 0
-    usersCount: Optional[int] = 0
-    isFollowing: Optional[bool] = False
-    userId: Optional[str] = None
 
 
-class PinnedNote(BaseModel):
-    id: Optional[str] = None
-    createdAt: Optional[str] = None
-    text: Optional[str] = None
-    cw: Optional[str] = None
-    userId: Optional[str] = None
-    user: Optional[Dict[str, Any]] = {}
-    replyId: Optional[str] = None
-    renoteId: Optional[str] = None
-    reply: Optional[Dict[str, Any]] = {}
-    renote: Optional[Dict[str, Any]] = {}
-    viaMobile: Optional[bool] = False
-    isHidden: Optional[bool] = False
-    visibility: Optional[str] = None
-    mentions: Optional[List[str]] = []
-    visibleUserIds: Optional[List[str]] = []
-    fileIds: Optional[List[str]] = []
-    files: Optional[List[File]] = []
-    tags: Optional[List[str]] = []
-    poll: Optional[Dict[str, Any]] = {}
-    channelId: Optional[str] = None
-    channel: Optional[Channel] = Channel()
-    localOnly: Optional[bool] = False
-    # emojis: Optional[List[Emoji]] # TODO: 2021 修正
-    reactions: Optional[Dict[str, Any]] = {}
-    renoteCount: Optional[int] = 0
-    repliesCount: Optional[int] = 0
-    uri: Optional[str] = None
-    url: Optional[str] = None
-    myReaction: Optional[Dict[str, Any]] = {}
+class Channel:
+    def __init__(self, data: ChannelPayload, state: ConnectionState):
+        self.id: Optional[str] = data.get("id")
+        self.created_at: Optional[str] = data.get("created_at")
+        self.last_noted_at: Optional[str] = data.get("last_noted_at")
+        self.name: Optional[str] = data.get("name")
+        self.description: Optional[str] = data.get("description")
+        self.banner_url: Optional[str] = data.get("banner_url")
+        self.notes_count: Optional[int] = data.get("notes_count")
+        self.users_count: Optional[int] = data.get("users_count")
+        self.is_following: Optional[bool] = data.get("is_following")
+        self.user_id: Optional[str] = data.get("user_id")
+        self._state = state
+
+
+class PinnedNote:
+    def __init__(self, data: PinnedNotePayload, state: ConnectionState):
+        self.id: Optional[str] = data.get("id")
+        self.created_at: Optional[str] = data.get("created_at")
+        self.text: Optional[str] = data.get("text")
+        self.cw: Optional[str] = data.get("cw")
+        self.user_id: Optional[str] = data.get("user_id")
+        self.user: Optional[User] = User(data["user"], state=state) if data.get('user') else None
+        self.reply_id: Optional[str] = data.get("reply_id")
+        self.reply: Optional[Dict[str, Any]] = data.get("reply")
+        self.renote: Optional[Dict[str, Any]] = data.get("renote")
+        self.via_mobile: Optional[bool] = data.get("via_mobile")
+        self.is_hidden: Optional[bool] = data.get("is_hidden")
+        self.visibility: Optional[bool] = bool(data["visibility"]) if data.get("visibility") else None
+        self.mentions: Optional[List[str]] = data.get("mentions")
+        self.visible_user_ids: Optional[List[str]] = data.get("visible_user_ids")
+        self.file_ids: Optional[List[str]] = data.get("file_ids")
+        self.files: Optional[List[str]] = data.get("files")
+        self.tags: Optional[List[str]] = data.get("tags")
+        self.poll: Optional[List[str]] = data.get("poll")
+        self.channel: Optional[Channel] = Channel(data["channel"], state=state) if data.get("channel") else None
+        self.local_only: Optional[bool] = data.get("local_only")
+        self.emojis: Optional[List[Emoji]] = [Emoji(i, state=state) for i in data["emojis"]] if data.get("emojis") else None
+        self.reactions: Optional[Dict[str, Any]] = data.get("reactions")
+        self.renote_count: Optional[int] = data.get("renote_count")
+        self.replies_count: Optional[int] = data.get("replies_count")
+        self.uri: Optional[str] = data.get("uri")
+        self.url: Optional[str] = data.get("url")
+        self.my_reaction: Optional[Dict[str, Any]] = data.get("my_reaction")
 
 
 class PinnedPage(BaseModel):
@@ -295,7 +300,7 @@ class User:
     def get_followers(self, until_id: Optional[str] = None, limit: int = 10, get_all: bool = False) -> AsyncIterator[Follower]:
         """
         ユーザーのフォロワー一覧を取得します
-        
+
         Parameters
         ----------
         until_id : str, default=None
