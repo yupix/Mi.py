@@ -18,7 +18,7 @@ class Channel(TypedDict):
     userId: Optional[str]
 
 
-class PinnedPage(TypedDict):
+class PinnedNote(TypedDict):
     id: Optional[str]
     created_at: Optional[str]
     text: Optional[str]
