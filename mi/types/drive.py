@@ -17,11 +17,11 @@ class Folder(TypedDict):
     """
 
     id: str
-    createdAt: str
+    created_at: str
     name: str
-    foldersCount: int
-    filesCount: int
-    parentId: str
+    folders_count: int
+    files_count: int
+    parent_id: str
     parent: Dict[str, Any]
 
 

@@ -3,24 +3,28 @@ from typing import TYPE_CHECKING, Any, Dict
 
 from pydantic import BaseModel
 
+from .types.drive import (Folder as FolderPayload,)
+
 if TYPE_CHECKING:
     from .state import ConnectionState
 
+
 class Properties:
     def __init__(self, data):
-        self.width:int = data['width']
-        self.height:int = data['height']
-        self.avg_color:float = data['avg_color']
+        self.width: int = data['width']
+        self.height: int = data['height']
+        self.avg_color: float = data['avg_color']
 
 
-class Folder(BaseModel):
-    id: str
-    createdAt: str
-    name: str
-    foldersCount: int
-    filesCount: int
-    parentId: str
-    parent: Dict[str, Any]
+class Folder:
+    def __init__(self, data: FolderPayload, state: ConnectionState):
+        self.id: str = data['id']
+        self.created_at: str = data['created_at']
+        self.name: str = data['name']
+        self.folders_count: int = data['folders_count']
+        self.parent_id: str = data['parent_id']
+        self.parent: Dict[str, Any] = data['parent']
+        self._state = state
 
 
 class File(BaseModel):
@@ -47,7 +51,7 @@ class Drive:
         self.id: str = data['id']
         self.created_at: str = data['created_at']
         self.name: str = data['name']
-        self.type: str=  data['type']
+        self.type: str = data['type']
         self.md5: str = data['md5']
         self.size: int = data['size']
         self.url: str = data['url']
@@ -65,5 +69,5 @@ class Drive:
         bool
             削除に成功したかどうか
         """
-        
+
         return await self._state.remove_file(self.id)
