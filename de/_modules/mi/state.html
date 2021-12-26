@@ -313,9 +313,9 @@
 <div class="viewcode-block" id="ConnectionState.parse_follow"><a class="viewcode-back" href="../../mi.html#mi.ConnectionState.parse_follow">[Doku]</a>    <span class="k">def</span> <span class="nf">parse_follow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">"""</span>
 <span class="sd">        ユーザーをフォローした際のイベントを解析する関数</span>
-<span class="sd">        """</span></div>
+<span class="sd">        """</span>
 
-        <span class="c1"># self.dispatch('follow', Follower(message, state=self))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s1">'user_follow'</span><span class="p">,</span> <span class="n">User</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="bp">self</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="ConnectionState.parse_followed"><a class="viewcode-back" href="../../mi.html#mi.ConnectionState.parse_followed">[Doku]</a>    <span class="k">def</span> <span class="nf">parse_followed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">"""</span>

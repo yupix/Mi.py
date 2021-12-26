@@ -188,44 +188,48 @@
 <span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span>
 
-<span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">BaseModel</span>
+<span class="kn">from</span> <span class="nn">.types.drive</span> <span class="kn">import</span> <span class="p">(</span><span class="n">Folder</span> <span class="k">as</span> <span class="n">FolderPayload</span><span class="p">,</span> <span class="n">File</span> <span class="k">as</span> <span class="n">FilePayload</span><span class="p">)</span>
 
 <span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
     <span class="kn">from</span> <span class="nn">.state</span> <span class="kn">import</span> <span class="n">ConnectionState</span>
 
-<span class="k">class</span> <span class="nc">Properties</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
-    <span class="n">width</span><span class="p">:</span> <span class="nb">int</span>
-    <span class="n">height</span><span class="p">:</span> <span class="nb">int</span>
-    <span class="n">avgColor</span><span class="p">:</span> <span class="nb">str</span>
+
+<span class="k">class</span> <span class="nc">Properties</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">width</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">'width'</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">height</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">'height'</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">avg_color</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">'avg_color'</span><span class="p">]</span>
 
 
-<span class="k">class</span> <span class="nc">Folder</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
-    <span class="nb">id</span><span class="p">:</span> <span class="nb">str</span>
-    <span class="n">createdAt</span><span class="p">:</span> <span class="nb">str</span>
-    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
-    <span class="n">foldersCount</span><span class="p">:</span> <span class="nb">int</span>
-    <span class="n">filesCount</span><span class="p">:</span> <span class="nb">int</span>
-    <span class="n">parentId</span><span class="p">:</span> <span class="nb">str</span>
-    <span class="n">parent</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span>
+<span class="k">class</span> <span class="nc">Folder</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">FolderPayload</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="n">ConnectionState</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">'id'</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">created_at</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">'created_at'</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">'name'</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">folders_count</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">'folders_count'</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parent_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">'parent_id'</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">'parent'</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_state</span> <span class="o">=</span> <span class="n">state</span>
 
 
-<span class="k">class</span> <span class="nc">File</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
-    <span class="nb">id</span><span class="p">:</span> <span class="nb">str</span>
-    <span class="n">createdAt</span><span class="p">:</span> <span class="nb">str</span>
-    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
-    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span>
-    <span class="n">md5</span><span class="p">:</span> <span class="nb">str</span>
-    <span class="n">size</span><span class="p">:</span> <span class="nb">int</span>
-    <span class="n">isSensitive</span><span class="p">:</span> <span class="nb">bool</span>
-    <span class="n">blurhash</span><span class="p">:</span> <span class="nb">str</span>
-    <span class="n">properties</span><span class="p">:</span> <span class="n">Properties</span>
-    <span class="n">url</span><span class="p">:</span> <span class="nb">str</span>
-    <span class="n">thumbnailUrl</span><span class="p">:</span> <span class="nb">str</span>
-    <span class="n">comment</span><span class="p">:</span> <span class="nb">str</span>
-    <span class="n">folderId</span><span class="p">:</span> <span class="nb">str</span>
-    <span class="n">folder</span><span class="p">:</span> <span class="n">Folder</span>
-    <span class="n">userId</span><span class="p">:</span> <span class="nb">str</span>
-    <span class="n">user</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span>
+<span class="k">class</span> <span class="nc">File</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">FilePayload</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="n">ConnectionState</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">'id'</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">created_at</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">'created_at'</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">'name'</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">'type'</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">md5</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">'md5'</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">'size'</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">is_sensitive</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">'is_sensitive'</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">blurhash</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">'blurhash'</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">:</span> <span class="n">Properties</span> <span class="o">=</span> <span class="n">Properties</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">'properties'</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">'url'</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">thumbnail_url</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">'thumbnail_url'</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">comment</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">'comment'</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">folder_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">'folder_id'</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">folder</span><span class="p">:</span> <span class="n">Folder</span> <span class="o">=</span> <span class="n">Folder</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">'folder'</span><span class="p">],</span> <span class="n">state</span><span class="o">=</span><span class="n">state</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">user_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">'user_id'</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">'user'</span><span class="p">]</span>
 
 
 <div class="viewcode-block" id="Drive"><a class="viewcode-back" href="../../mi.html#mi.Drive">[Doku]</a><span class="k">class</span> <span class="nc">Drive</span><span class="p">:</span>
@@ -233,7 +237,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">'id'</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">created_at</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">'created_at'</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">'name'</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">:</span> <span class="nb">str</span><span class="o">=</span>  <span class="n">data</span><span class="p">[</span><span class="s1">'type'</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">'type'</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">md5</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">'md5'</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">'size'</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">'url'</span><span class="p">]</span>
@@ -251,7 +255,7 @@
 <span class="sd">        bool</span>
 <span class="sd">            削除に成功したかどうか</span>
 <span class="sd">        """</span>
-        
+
         <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">remove_file</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span></div></div>
 </pre></div>
         </article>
