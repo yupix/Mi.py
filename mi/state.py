@@ -121,8 +121,15 @@ class NoteActions:
         if not check_multi_arg(content, file_ids, renote_id, poll):
             raise ContentRequired("ノートの送信にはcontent, file_ids, renote_id またはpollのいずれか1つが無くてはいけません")
 
-        if poll and len(poll.choices) > 0:
-            field["poll"] = poll
+        if poll and type(Poll):
+            poll_data = remove_dict_empty({
+                'choices': poll.choices,
+                'multiple': poll.multiple,
+                'expiresAt': poll.expires_at,
+                'expiredAfter': poll.expired_after
+            })
+            field["poll"] = poll_data
+
         if file_ids:
             field["fileIds"] = file_ids
         field = remove_dict_empty(field)
