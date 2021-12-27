@@ -271,6 +271,10 @@ async</span><a class="reference internal" href="#mi.Note.add_reaction">add_react
 <span class="py-attribute-table-badge" title="coroutine">
 async</span><a class="reference internal" href="#mi.Note.add_to_clips">add_to_clips</a></li><li class="py-attribute-table-entry">
 <span class="py-attribute-table-badge" title="coroutine">
+async</span><a class="reference internal" href="#mi.Note.create_quote">create_quote</a></li><li class="py-attribute-table-entry">
+<span class="py-attribute-table-badge" title="coroutine">
+async</span><a class="reference internal" href="#mi.Note.create_renote">create_renote</a></li><li class="py-attribute-table-entry">
+<span class="py-attribute-table-badge" title="coroutine">
 async</span><a class="reference internal" href="#mi.Note.delete">delete</a></li><li class="py-attribute-table-entry">
 <span class="py-attribute-table-badge" title="method">
 def</span><a class="reference internal" href="#mi.Note.emoji_count">emoji_count</a></li><li class="py-attribute-table-entry">
@@ -521,6 +525,32 @@ async</span><a class="reference internal" href="#mi.Note.reply">reply</a></li></
 <em class="property"><span class="pre">await</span> </em><span class="sig-name descname"><span class="pre">add_to_clips</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">clip_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/note.html#Note.add_to_clips"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mi.Note.add_to_clips" title="Permalink to this definition">¶</a></dt>
 <dd><p>指定したクリップにノートを追加します</p>
 </dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="mi.Note.create_renote">
+<em class="property"><span class="pre">await</span> </em><span class="sig-name descname"><span class="pre">create_renote</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/note.html#Note.create_renote"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mi.Note.create_renote" title="Permalink to this definition">¶</a></dt>
+<dd><p>ノートをリノートします</p>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="mi.Note.create_quote">
+<em class="property"><span class="pre">await</span> </em><span class="sig-name descname"><span class="pre">create_quote</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visibility</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visible_user_ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cw</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">local_only</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">no_extract_mentions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">no_extract_hashtags</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">no_extract_emojis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">poll</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/note.html#Note.create_quote"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mi.Note.create_quote" title="Permalink to this definition">¶</a></dt>
+<dd><p>ノートを引用して新規にノートを投稿します</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>content</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>default=None</em>) – 引用に対するテキスト</p></li>
+<li><p><strong>visibility</strong> (<em>str</em><em>, </em><em>default=None</em>) – ノートの公開範囲</p></li>
+<li><p><strong>visible_user_ids</strong> (<em>Optional</em><em>[</em><em>List</em><em>[</em><em>str</em><em>]</em><em>]</em>) – ノートの公開対象になるユーザーid</p></li>
+<li><p><strong>cw</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – 閲覧注意の文字列</p></li>
+<li><p><strong>local_only</strong> (<em>bool</em>) – ローカルにのみ公開するかどうか</p></li>
+<li><p><strong>no_extract_mentions</strong> (<em>bool</em>) – メンションを展開するかどうか</p></li>
+<li><p><strong>no_extract_hashtags</strong> (<em>bool</em>) – ハッシュタグを展開するかどうか</p></li>
+<li><p><strong>no_extract_emojis</strong> (<em>bool</em>) – 絵文字を展開するかどうか</p></li>
+<li><p><strong>file_ids</strong> – 添付するファイルのid</p></li>
+<li><p><strong>poll</strong> (<em>Optional</em><em>[</em><em>Poll</em><em>]</em>) – アンケート</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
 </dd></dl>
 </div>
 <div class="section" id="user">
@@ -532,8 +562,6 @@ Attributes</span><ul>
 <a class="reference internal" href="#mi.User.admin">admin</a></li><li class="py-attribute-table-entry">
 <a class="reference internal" href="#mi.User.avatar_url">avatar_url</a></li><li class="py-attribute-table-entry">
 <a class="reference internal" href="#mi.User.birthday">birthday</a></li><li class="py-attribute-table-entry">
-<a class="reference internal" href="#mi.User.blocked">blocked</a></li><li class="py-attribute-table-entry">
-<a class="reference internal" href="#mi.User.blocking">blocking</a></li><li class="py-attribute-table-entry">
 <a class="reference internal" href="#mi.User.bot">bot</a></li><li class="py-attribute-table-entry">
 <a class="reference internal" href="#mi.User.created_at">created_at</a></li><li class="py-attribute-table-entry">
 <a class="reference internal" href="#mi.User.description">description</a></li><li class="py-attribute-table-entry">
@@ -541,24 +569,26 @@ Attributes</span><ul>
 <a class="reference internal" href="#mi.User.emojis">emojis</a></li><li class="py-attribute-table-entry">
 <a class="reference internal" href="#mi.User.ff_visibility">ff_visibility</a></li><li class="py-attribute-table-entry">
 <a class="reference internal" href="#mi.User.fields">fields</a></li><li class="py-attribute-table-entry">
-<a class="reference internal" href="#mi.User.followed">followed</a></li><li class="py-attribute-table-entry">
 <a class="reference internal" href="#mi.User.followers_count">followers_count</a></li><li class="py-attribute-table-entry">
-<a class="reference internal" href="#mi.User.following">following</a></li><li class="py-attribute-table-entry">
 <a class="reference internal" href="#mi.User.following_count">following_count</a></li><li class="py-attribute-table-entry">
 <a class="reference internal" href="#mi.User.host">host</a></li><li class="py-attribute-table-entry">
 <a class="reference internal" href="#mi.User.id">id</a></li><li class="py-attribute-table-entry">
 <a class="reference internal" href="#mi.User.instance">instance</a></li><li class="py-attribute-table-entry">
+<a class="reference internal" href="#mi.User.is_blocked">is_blocked</a></li><li class="py-attribute-table-entry">
+<a class="reference internal" href="#mi.User.is_blocking">is_blocking</a></li><li class="py-attribute-table-entry">
+<a class="reference internal" href="#mi.User.is_follow">is_follow</a></li><li class="py-attribute-table-entry">
+<a class="reference internal" href="#mi.User.is_following">is_following</a></li><li class="py-attribute-table-entry">
+<a class="reference internal" href="#mi.User.is_locked">is_locked</a></li><li class="py-attribute-table-entry">
+<a class="reference internal" href="#mi.User.is_muted">is_muted</a></li><li class="py-attribute-table-entry">
+<a class="reference internal" href="#mi.User.is_silenced">is_silenced</a></li><li class="py-attribute-table-entry">
+<a class="reference internal" href="#mi.User.is_suspended">is_suspended</a></li><li class="py-attribute-table-entry">
 <a class="reference internal" href="#mi.User.location">location</a></li><li class="py-attribute-table-entry">
-<a class="reference internal" href="#mi.User.locked">locked</a></li><li class="py-attribute-table-entry">
-<a class="reference internal" href="#mi.User.muted">muted</a></li><li class="py-attribute-table-entry">
 <a class="reference internal" href="#mi.User.name">name</a></li><li class="py-attribute-table-entry">
 <a class="reference internal" href="#mi.User.notes_count">notes_count</a></li><li class="py-attribute-table-entry">
 <a class="reference internal" href="#mi.User.online_status">online_status</a></li><li class="py-attribute-table-entry">
 <a class="reference internal" href="#mi.User.pinned_note_ids">pinned_note_ids</a></li><li class="py-attribute-table-entry">
 <a class="reference internal" href="#mi.User.pinned_page">pinned_page</a></li><li class="py-attribute-table-entry">
 <a class="reference internal" href="#mi.User.pinned_page_id">pinned_page_id</a></li><li class="py-attribute-table-entry">
-<a class="reference internal" href="#mi.User.silienced">silienced</a></li><li class="py-attribute-table-entry">
-<a class="reference internal" href="#mi.User.suspended">suspended</a></li><li class="py-attribute-table-entry">
 <a class="reference internal" href="#mi.User.updated_at">updated_at</a></li><li class="py-attribute-table-entry">
 <a class="reference internal" href="#mi.User.uri">uri</a></li><li class="py-attribute-table-entry">
 <a class="reference internal" href="#mi.User.url">url</a></li><li class="py-attribute-table-entry">
@@ -709,8 +739,8 @@ async</span><a class="reference internal" href="#mi.User.unfollow">unfollow</a><
 </dl>
 </dd></dl>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="mi.User.locked">
-<span class="sig-name descname"><span class="pre">locked</span></span><a class="headerlink" href="#mi.User.locked" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mi.User.is_locked">
+<span class="sig-name descname"><span class="pre">is_locked</span></span><a class="headerlink" href="#mi.User.is_locked" title="Permalink to this definition">¶</a></dt>
 <dd><p>アカウントがロックされているか</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
@@ -719,8 +749,8 @@ async</span><a class="reference internal" href="#mi.User.unfollow">unfollow</a><
 </dl>
 </dd></dl>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="mi.User.silienced">
-<span class="sig-name descname"><span class="pre">silienced</span></span><a class="headerlink" href="#mi.User.silienced" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mi.User.is_silenced">
+<span class="sig-name descname"><span class="pre">is_silenced</span></span><a class="headerlink" href="#mi.User.is_silenced" title="Permalink to this definition">¶</a></dt>
 <dd><p>アカウントがミュートされているか</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
@@ -729,8 +759,8 @@ async</span><a class="reference internal" href="#mi.User.unfollow">unfollow</a><
 </dl>
 </dd></dl>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="mi.User.suspended">
-<span class="sig-name descname"><span class="pre">suspended</span></span><a class="headerlink" href="#mi.User.suspended" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mi.User.is_suspended">
+<span class="sig-name descname"><span class="pre">is_suspended</span></span><a class="headerlink" href="#mi.User.is_suspended" title="Permalink to this definition">¶</a></dt>
 <dd><p>アカウントが凍結されているか</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
@@ -849,8 +879,8 @@ async</span><a class="reference internal" href="#mi.User.unfollow">unfollow</a><
 </dl>
 </dd></dl>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="mi.User.following">
-<span class="sig-name descname"><span class="pre">following</span></span><a class="headerlink" href="#mi.User.following" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mi.User.is_following">
+<span class="sig-name descname"><span class="pre">is_following</span></span><a class="headerlink" href="#mi.User.is_following" title="Permalink to this definition">¶</a></dt>
 <dd><p>ユーザーがフォローしているかどうか</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
@@ -859,8 +889,8 @@ async</span><a class="reference internal" href="#mi.User.unfollow">unfollow</a><
 </dl>
 </dd></dl>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="mi.User.followed">
-<span class="sig-name descname"><span class="pre">followed</span></span><a class="headerlink" href="#mi.User.followed" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mi.User.is_follow">
+<span class="sig-name descname"><span class="pre">is_follow</span></span><a class="headerlink" href="#mi.User.is_follow" title="Permalink to this definition">¶</a></dt>
 <dd><p>ユーザーのことをフォローしているかどうか</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
@@ -869,8 +899,8 @@ async</span><a class="reference internal" href="#mi.User.unfollow">unfollow</a><
 </dl>
 </dd></dl>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="mi.User.blocking">
-<span class="sig-name descname"><span class="pre">blocking</span></span><a class="headerlink" href="#mi.User.blocking" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mi.User.is_blocking">
+<span class="sig-name descname"><span class="pre">is_blocking</span></span><a class="headerlink" href="#mi.User.is_blocking" title="Permalink to this definition">¶</a></dt>
 <dd><p>ユーザーが自分のことをブロックしているかどうか</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
@@ -879,8 +909,8 @@ async</span><a class="reference internal" href="#mi.User.unfollow">unfollow</a><
 </dl>
 </dd></dl>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="mi.User.blocked">
-<span class="sig-name descname"><span class="pre">blocked</span></span><a class="headerlink" href="#mi.User.blocked" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mi.User.is_blocked">
+<span class="sig-name descname"><span class="pre">is_blocked</span></span><a class="headerlink" href="#mi.User.is_blocked" title="Permalink to this definition">¶</a></dt>
 <dd><p>ユーザーのことをブロックしているかどうか</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
@@ -889,8 +919,8 @@ async</span><a class="reference internal" href="#mi.User.unfollow">unfollow</a><
 </dl>
 </dd></dl>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="mi.User.muted">
-<span class="sig-name descname"><span class="pre">muted</span></span><a class="headerlink" href="#mi.User.muted" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mi.User.is_muted">
+<span class="sig-name descname"><span class="pre">is_muted</span></span><a class="headerlink" href="#mi.User.is_muted" title="Permalink to this definition">¶</a></dt>
 <dd><p>ユーザーのことをミュートしているかどうか</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
@@ -1590,39 +1620,6 @@ fetch_userを使った場合はキャッシュが廃棄され再度サーバー�
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>bool</p>
-</dd>
-</dl>
-</dd></dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="mi.ConnectionState.post_note">
-<em class="property"><span class="pre">await</span> </em><span class="sig-name descname"><span class="pre">post_note</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visibility</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'public'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visible_user_ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cw</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">local_only</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">no_extract_mentions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">no_extract_hashtags</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">no_extract_emojis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reply_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">renote_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">poll</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/state.html#ConnectionState.post_note"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mi.ConnectionState.post_note" title="Permalink to this definition">¶</a></dt>
-<dd><p>ノートを投稿します。</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>content</strong> (<em>str</em>) – 投稿する内容</p></li>
-<li><p><strong>visibility</strong> (<em>str</em><em>, </em><em>optional</em>) – 公開範囲, by default “public”</p></li>
-<li><p><strong>visible_user_ids</strong> (<em>Optional</em><em>[</em><em>List</em><em>[</em><em>str</em><em>]</em><em>]</em><em>, </em><em>optional</em>) – 公開するユーザー, by default None</p></li>
-<li><p><strong>cw</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – 閲覧注意の文字, by default None</p></li>
-<li><p><strong>local_only</strong> (<em>bool</em><em>, </em><em>optional</em>) – ローカルにのみ表示するか, by default False</p></li>
-<li><p><strong>no_extract_mentions</strong> (<em>bool</em><em>, </em><em>optional</em>) – メンションを展開するか, by default False</p></li>
-<li><p><strong>no_extract_hashtags</strong> (<em>bool</em><em>, </em><em>optional</em>) – ハッシュタグを展開するか, by default False</p></li>
-<li><p><strong>no_extract_emojis</strong> (<em>bool</em><em>, </em><em>optional</em>) – 絵文字を展開するか, by default False</p></li>
-<li><p><strong>reply_id</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – リプライ先のid, by default None</p></li>
-<li><p><strong>renote_id</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – リノート先のid, by default None</p></li>
-<li><p><strong>channel_id</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – チャンネルid, by default None</p></li>
-<li><p><strong>file_ids</strong> (<em>[</em><em>type</em><em>]</em><em>, </em><em>optional</em>) – 添付するファイルのid, by default None</p></li>
-<li><p><strong>poll</strong> (<em>Optional</em><em>[</em><em>Poll</em><em>]</em><em>, </em><em>optional</em>) – アンケート, by default None</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>[description]</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>[type]</p>
-</dd>
-<dt class="field-even">Raises</dt>
-<dd class="field-even"><p><a class="reference internal" href="#mi.ContentRequired" title="mi.ContentRequired"><strong>ContentRequired</strong></a> – [description]</p>
 </dd>
 </dl>
 </dd></dl>

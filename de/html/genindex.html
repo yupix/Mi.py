@@ -186,7 +186,7 @@
           
 <section class="genindex-section">
   <h1 id="index">Stichwortverzeichnis</h1>
-  <div class="genindex-jumpbox"><a href="#A"><strong>A</strong></a> | <a href="#B"><strong>B</strong></a> | <a href="#C"><strong>C</strong></a> | <a href="#D"><strong>D</strong></a> | <a href="#E"><strong>E</strong></a> | <a href="#F"><strong>F</strong></a> | <a href="#G"><strong>G</strong></a> | <a href="#H"><strong>H</strong></a> | <a href="#I"><strong>I</strong></a> | <a href="#L"><strong>L</strong></a> | <a href="#M"><strong>M</strong></a> | <a href="#N"><strong>N</strong></a> | <a href="#O"><strong>O</strong></a> | <a href="#P"><strong>P</strong></a> | <a href="#R"><strong>R</strong></a> | <a href="#S"><strong>S</strong></a> | <a href="#T"><strong>T</strong></a> | <a href="#U"><strong>U</strong></a> | <a href="#V"><strong>V</strong></a></div>
+  <div class="genindex-jumpbox"><a href="#A"><strong>A</strong></a> | <a href="#B"><strong>B</strong></a> | <a href="#C"><strong>C</strong></a> | <a href="#D"><strong>D</strong></a> | <a href="#E"><strong>E</strong></a> | <a href="#F"><strong>F</strong></a> | <a href="#G"><strong>G</strong></a> | <a href="#H"><strong>H</strong></a> | <a href="#I"><strong>I</strong></a> | <a href="#L"><strong>L</strong></a> | <a href="#M"><strong>M</strong></a> | <a href="#N"><strong>N</strong></a> | <a href="#O"><strong>O</strong></a> | <a href="#P"><strong>P</strong></a> | <a href="#R"><strong>R</strong></a> | <a href="#T"><strong>T</strong></a> | <a href="#U"><strong>U</strong></a> | <a href="#V"><strong>V</strong></a></div>
 </section>
 <section id="A" class="genindex-section">
   <h2>A</h2>
@@ -228,12 +228,8 @@
     <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="mi.html#mi.User.birthday">birthday (Attribut von mi.User)</a>
 </li>
-        <li><a href="mi.html#mi.User.blocked">blocked (Attribut von mi.User)</a>
-</li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="mi.html#mi.User.blocking">blocking (Attribut von mi.User)</a>
-</li>
         <li><a href="mi.html#mi.User.bot">bot (Attribut von mi.User)</a>
 </li>
     </ul></td>
@@ -258,13 +254,17 @@
 </li>
         <li><a href="mi.html#mi.CommandRegistrationError">CommandRegistrationError (Klasse in mi)</a>
 </li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="mi.html#mi.ConnectionState">ConnectionState (Klasse in mi)</a>
 </li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="mi.html#mi.Note.content">content (Attribut von mi.Note)</a>
 </li>
         <li><a href="mi.html#mi.ContentRequired">ContentRequired (Klasse in mi)</a>
+</li>
+        <li><a href="mi.html#mi.Note.create_quote">create_quote() (Methode von mi.Note)</a>
+</li>
+        <li><a href="mi.html#mi.Note.create_renote">create_renote() (Methode von mi.Note)</a>
 </li>
         <li><a href="mi.html#mi.Note.created_at">created_at (Attribut von mi.Note)</a>
 
@@ -354,10 +354,10 @@
 </li>
         <li><a href="mi.html#mi.Note.files">files (Attribut von mi.Note)</a>
 </li>
-        <li><a href="mi.html#mi.Follow">Follow (Klasse in mi)</a>
-</li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="mi.html#mi.Follow">Follow (Klasse in mi)</a>
+</li>
         <li><a href="mi.html#mi.Follow.follow">follow() (Methode von mi.Follow)</a>
 
         <ul>
@@ -366,11 +366,7 @@
         </ul></li>
         <li><a href="mi.html#mi.ConnectionState.follow_user">follow_user() (Methode von mi.ConnectionState)</a>
 </li>
-        <li><a href="mi.html#mi.User.followed">followed (Attribut von mi.User)</a>
-</li>
         <li><a href="mi.html#mi.User.followers_count">followers_count (Attribut von mi.User)</a>
-</li>
-        <li><a href="mi.html#mi.User.following">following (Attribut von mi.User)</a>
 </li>
         <li><a href="mi.html#mi.User.following_count">following_count (Attribut von mi.User)</a>
 </li>
@@ -432,8 +428,6 @@
 </li>
         <li><a href="mi.html#mi.User.instance">instance (Attribut von mi.User)</a>
 </li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="mi.html#mi.InstanceIterator">InstanceIterator (Klasse in mi)</a>
 </li>
         <li><a href="mi.html#mi.InternalServerError">InternalServerError (Klasse in mi)</a>
@@ -441,6 +435,24 @@
         <li><a href="mi.html#mi.InvalidCogPath">InvalidCogPath (Klasse in mi)</a>
 </li>
         <li><a href="mi.html#mi.InvalidParameters">InvalidParameters (Klasse in mi)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="mi.html#mi.User.is_blocked">is_blocked (Attribut von mi.User)</a>
+</li>
+        <li><a href="mi.html#mi.User.is_blocking">is_blocking (Attribut von mi.User)</a>
+</li>
+        <li><a href="mi.html#mi.User.is_follow">is_follow (Attribut von mi.User)</a>
+</li>
+        <li><a href="mi.html#mi.User.is_following">is_following (Attribut von mi.User)</a>
+</li>
+        <li><a href="mi.html#mi.User.is_locked">is_locked (Attribut von mi.User)</a>
+</li>
+        <li><a href="mi.html#mi.User.is_muted">is_muted (Attribut von mi.User)</a>
+</li>
+        <li><a href="mi.html#mi.User.is_silenced">is_silenced (Attribut von mi.User)</a>
+</li>
+        <li><a href="mi.html#mi.User.is_suspended">is_suspended (Attribut von mi.User)</a>
 </li>
     </ul></td>
   </tr></table>
@@ -456,8 +468,6 @@
     <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="mi.html#mi.User.location">location (Attribut von mi.User)</a>
 </li>
-        <li><a href="mi.html#mi.User.locked">locked (Attribut von mi.User)</a>
-</li>
     </ul></td>
   </tr></table>
 </section>
@@ -471,8 +481,6 @@
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="mi.html#mi.MisskeyWebSocket">MisskeyWebSocket (Klasse in mi)</a>
-</li>
-        <li><a href="mi.html#mi.User.muted">muted (Attribut von mi.User)</a>
 </li>
     </ul></td>
   </tr></table>
@@ -544,10 +552,10 @@
 </li>
         <li><a href="mi.html#mi.ConnectionState.parse_receive_follow_request">parse_receive_follow_request() (Methode von mi.ConnectionState)</a>
 </li>
-        <li><a href="mi.html#mi.ConnectionState.parse_reply">parse_reply() (Methode von mi.ConnectionState)</a>
-</li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="mi.html#mi.ConnectionState.parse_reply">parse_reply() (Methode von mi.ConnectionState)</a>
+</li>
         <li><a href="mi.html#mi.ConnectionState.parse_unfollow">parse_unfollow() (Methode von mi.ConnectionState)</a>
 </li>
         <li><a href="mi.html#mi.ConnectionState.parse_unread_messaging_message">parse_unread_messaging_message() (Methode von mi.ConnectionState)</a>
@@ -563,8 +571,6 @@
         <li><a href="mi.html#mi.Note.poll">poll (Attribut von mi.Note)</a>
 </li>
         <li><a href="mi.html#mi.ConnectionState.post_chat">post_chat() (Methode von mi.ConnectionState)</a>
-</li>
-        <li><a href="mi.html#mi.ConnectionState.post_note">post_note() (Methode von mi.ConnectionState)</a>
 </li>
         <li><a href="mi.html#mi.Properties">Properties (Klasse in mi)</a>
 </li>
@@ -599,20 +605,6 @@
         <li><a href="mi.html#mi.Note.reply_id">reply_id (Attribut von mi.Note)</a>
 </li>
         <li><a href="mi.html#mi.Route">Route (Klasse in mi)</a>
-</li>
-    </ul></td>
-  </tr></table>
-</section>
-
-<section id="S" class="genindex-section">
-  <h2>S</h2>
-  <table style="width: 100%" class="indextable genindextable"><tr>
-    <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="mi.html#mi.User.silienced">silienced (Attribut von mi.User)</a>
-</li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="mi.html#mi.User.suspended">suspended (Attribut von mi.User)</a>
 </li>
     </ul></td>
   </tr></table>

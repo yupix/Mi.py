@@ -197,12 +197,12 @@
 <span class="kn">from</span> <span class="nn">mi</span> <span class="kn">import</span> <span class="n">Instance</span><span class="p">,</span> <span class="n">InstanceMeta</span><span class="p">,</span> <span class="n">User</span>
 <span class="kn">from</span> <span class="nn">mi.chat</span> <span class="kn">import</span> <span class="n">Chat</span>
 <span class="kn">from</span> <span class="nn">mi.drive</span> <span class="kn">import</span> <span class="n">Drive</span>
+<span class="kn">from</span> <span class="nn">mi.emoji</span> <span class="kn">import</span> <span class="n">Emoji</span>
 <span class="kn">from</span> <span class="nn">mi.exception</span> <span class="kn">import</span> <span class="n">ContentRequired</span><span class="p">,</span> <span class="n">InvalidParameters</span><span class="p">,</span> <span class="n">NotExistRequiredParameters</span>
 <span class="kn">from</span> <span class="nn">mi.http</span> <span class="kn">import</span> <span class="n">Route</span>
 <span class="kn">from</span> <span class="nn">mi.iterators</span> <span class="kn">import</span> <span class="n">InstanceIterator</span>
 <span class="kn">from</span> <span class="nn">mi.note</span> <span class="kn">import</span> <span class="n">Note</span><span class="p">,</span> <span class="n">Poll</span><span class="p">,</span> <span class="n">Reaction</span>
 <span class="kn">from</span> <span class="nn">mi.user</span> <span class="kn">import</span> <span class="n">Follower</span><span class="p">,</span> <span class="n">Following</span>
-<span class="kn">from</span> <span class="nn">mi.emoji</span> <span class="kn">import</span> <span class="n">Emoji</span>
 <span class="kn">from</span> <span class="nn">mi.utils</span> <span class="kn">import</span> <span class="n">check_multi_arg</span><span class="p">,</span> <span class="n">get_cache_key</span><span class="p">,</span> <span class="n">get_module_logger</span><span class="p">,</span> <span class="n">key_builder</span><span class="p">,</span> <span class="n">remove_dict_empty</span><span class="p">,</span> <span class="n">str_lower</span><span class="p">,</span> \
     <span class="n">upper_to_lower</span>
 
@@ -231,6 +231,116 @@
     <span class="k">async</span> <span class="k">def</span> <span class="nf">add_reaction_to_note</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">note_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">reaction</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'noteId'</span><span class="p">:</span> <span class="n">note_id</span><span class="p">,</span> <span class="s1">'reaction'</span><span class="p">:</span> <span class="n">reaction</span><span class="p">}</span>
         <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">Route</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">,</span> <span class="s1">'/api/reactions/create'</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="kc">True</span><span class="p">)))</span>
+
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">post_note</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                        <span class="n">content</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                        <span class="n">visibility</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"public"</span><span class="p">,</span>
+                        <span class="n">visible_user_ids</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                        <span class="n">cw</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                        <span class="n">local_only</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+                        <span class="n">no_extract_mentions</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+                        <span class="n">no_extract_hashtags</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+                        <span class="n">no_extract_emojis</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+                        <span class="n">reply_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                        <span class="n">renote_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                        <span class="n">channel_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                        <span class="n">file_ids</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">poll</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Poll</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+                        <span class="p">):</span>
+        <span class="sd">"""</span>
+
+<span class="sd">        ノートを投稿します。</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        content : str</span>
+<span class="sd">            投稿する内容</span>
+<span class="sd">        visibility : str, optional</span>
+<span class="sd">            公開範囲, by default "public"</span>
+<span class="sd">        visible_user_ids : Optional[List[str]], optional</span>
+<span class="sd">            公開するユーザー, by default None</span>
+<span class="sd">        cw : Optional[str], optional</span>
+<span class="sd">            閲覧注意の文字, by default None</span>
+<span class="sd">        local_only : bool, optional</span>
+<span class="sd">            ローカルにのみ表示するか, by default False</span>
+<span class="sd">        no_extract_mentions : bool, optional</span>
+<span class="sd">            メンションを展開するか, by default False</span>
+<span class="sd">        no_extract_hashtags : bool, optional</span>
+<span class="sd">            ハッシュタグを展開するか, by default False</span>
+<span class="sd">        no_extract_emojis : bool, optional</span>
+<span class="sd">            絵文字を展開するか, by default False</span>
+<span class="sd">        reply_id : Optional[str], optional</span>
+<span class="sd">            リプライ先のid, by default None</span>
+<span class="sd">        renote_id : Optional[str], optional</span>
+<span class="sd">            リノート先のid, by default None</span>
+<span class="sd">        channel_id : Optional[str], optional</span>
+<span class="sd">            チャンネルid, by default None</span>
+<span class="sd">        file_ids : [type], optional</span>
+<span class="sd">            添付するファイルのid, by default None</span>
+<span class="sd">        poll : Optional[Poll], optional</span>
+<span class="sd">            アンケート, by default None</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        [type]</span>
+<span class="sd">            [description]</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        ContentRequired</span>
+<span class="sd">            [description]</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="n">file_ids</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">file_ids</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">field</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">"visibility"</span><span class="p">:</span> <span class="n">visibility</span><span class="p">,</span>
+            <span class="s2">"visibleUserIds"</span><span class="p">:</span> <span class="n">visible_user_ids</span><span class="p">,</span>
+            <span class="s2">"text"</span><span class="p">:</span> <span class="n">content</span><span class="p">,</span>
+            <span class="s2">"cw"</span><span class="p">:</span> <span class="n">cw</span><span class="p">,</span>
+            <span class="s2">"localOnly"</span><span class="p">:</span> <span class="n">local_only</span><span class="p">,</span>
+            <span class="s2">"noExtractMentions"</span><span class="p">:</span> <span class="n">no_extract_mentions</span><span class="p">,</span>
+            <span class="s2">"noExtractHashtags"</span><span class="p">:</span> <span class="n">no_extract_hashtags</span><span class="p">,</span>
+            <span class="s2">"noExtractEmojis"</span><span class="p">:</span> <span class="n">no_extract_emojis</span><span class="p">,</span>
+            <span class="s2">"replyId"</span><span class="p">:</span> <span class="n">reply_id</span><span class="p">,</span>
+            <span class="s2">"renoteId"</span><span class="p">:</span> <span class="n">renote_id</span><span class="p">,</span>
+            <span class="s2">"channelId"</span><span class="p">:</span> <span class="n">channel_id</span>
+        <span class="p">}</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">check_multi_arg</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="n">file_ids</span><span class="p">,</span> <span class="n">renote_id</span><span class="p">,</span> <span class="n">poll</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">ContentRequired</span><span class="p">(</span><span class="s2">"ノートの送信にはcontent, file_ids, renote_id またはpollのいずれか1つが無くてはいけません"</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">poll</span> <span class="ow">and</span> <span class="nb">type</span><span class="p">(</span><span class="n">Poll</span><span class="p">):</span>
+            <span class="n">poll_data</span> <span class="o">=</span> <span class="n">remove_dict_empty</span><span class="p">({</span>
+                <span class="s1">'choices'</span><span class="p">:</span> <span class="n">poll</span><span class="o">.</span><span class="n">choices</span><span class="p">,</span>
+                <span class="s1">'multiple'</span><span class="p">:</span> <span class="n">poll</span><span class="o">.</span><span class="n">multiple</span><span class="p">,</span>
+                <span class="s1">'expiresAt'</span><span class="p">:</span> <span class="n">poll</span><span class="o">.</span><span class="n">expires_at</span><span class="p">,</span>
+                <span class="s1">'expiredAfter'</span><span class="p">:</span> <span class="n">poll</span><span class="o">.</span><span class="n">expired_after</span>
+            <span class="p">})</span>
+            <span class="n">field</span><span class="p">[</span><span class="s2">"poll"</span><span class="p">]</span> <span class="o">=</span> <span class="n">poll_data</span>
+
+        <span class="k">if</span> <span class="n">file_ids</span><span class="p">:</span>
+            <span class="n">field</span><span class="p">[</span><span class="s2">"fileIds"</span><span class="p">]</span> <span class="o">=</span> <span class="n">file_ids</span>
+        <span class="n">field</span> <span class="o">=</span> <span class="n">remove_dict_empty</span><span class="p">(</span><span class="n">field</span><span class="p">)</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">Route</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">,</span> <span class="s1">'/api/notes/create'</span><span class="p">),</span> <span class="n">json</span><span class="o">=</span><span class="n">field</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Note</span><span class="p">(</span><span class="n">res</span><span class="p">[</span><span class="s2">"created_note"</span><span class="p">],</span> <span class="n">state</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">create_renote</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">note_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Note</span><span class="p">:</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">post_note</span><span class="p">(</span><span class="n">renote_id</span><span class="o">=</span><span class="n">note_id</span><span class="p">)</span>
+
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">create_quote</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">note_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+                           <span class="n">content</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                           <span class="n">visibility</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">'public'</span><span class="p">,</span>
+                           <span class="n">visible_user_ids</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                           <span class="n">cw</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                           <span class="n">local_only</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+                           <span class="n">no_extract_mentions</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+                           <span class="n">no_extract_hashtags</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+                           <span class="n">no_extract_emojis</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+                           <span class="n">file_ids</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                           <span class="n">poll</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Poll</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Note</span><span class="p">:</span>
+        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">post_note</span><span class="p">(</span><span class="n">content</span><span class="o">=</span><span class="n">content</span><span class="p">,</span> <span class="n">visibility</span><span class="o">=</span><span class="n">visibility</span><span class="p">,</span> <span class="n">visible_user_ids</span><span class="o">=</span><span class="n">visible_user_ids</span><span class="p">,</span> <span class="n">cw</span><span class="o">=</span><span class="n">cw</span><span class="p">,</span>
+                                    <span class="n">local_only</span><span class="o">=</span><span class="n">local_only</span><span class="p">,</span> <span class="n">no_extract_mentions</span><span class="o">=</span><span class="n">no_extract_mentions</span><span class="p">,</span>
+                                    <span class="n">no_extract_hashtags</span><span class="o">=</span><span class="n">no_extract_hashtags</span><span class="p">,</span>
+                                    <span class="n">no_extract_emojis</span><span class="o">=</span><span class="n">no_extract_emojis</span><span class="p">,</span> <span class="n">renote_id</span><span class="o">=</span><span class="n">note_id</span><span class="p">,</span> <span class="n">file_ids</span><span class="o">=</span><span class="n">file_ids</span><span class="p">,</span> <span class="n">poll</span><span class="o">=</span><span class="n">poll</span><span class="p">)</span>
 
 
 <span class="k">class</span> <span class="nc">UserAction</span><span class="p">:</span>
@@ -396,8 +506,8 @@
 <span class="sd">        message : Dict[str, Any]</span>
 <span class="sd">            Received message</span>
 <span class="sd">        """</span></div>
-        <span class="c1">#notification_type = str_lower(message['type'])</span>
-        <span class="c1">#getattr(self, f'parse_{notification_type}')(message)</span>
+        <span class="c1"># notification_type = str_lower(message['type'])</span>
+        <span class="c1"># getattr(self, f'parse_{notification_type}')(message)</span>
 
 <div class="viewcode-block" id="ConnectionState.parse_reaction"><a class="viewcode-back" href="../../mi.html#mi.ConnectionState.parse_reaction">[docs]</a>    <span class="k">def</span> <span class="nf">parse_reaction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">"""</span>
@@ -603,90 +713,6 @@
         <span class="k">await</span> <span class="n">old_cache</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">'cache_key'</span><span class="p">]</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">'get_user'</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">User</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
 
-<div class="viewcode-block" id="ConnectionState.post_note"><a class="viewcode-back" href="../../mi.html#mi.ConnectionState.post_note">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">post_note</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
-                        <span class="n">content</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                        <span class="n">visibility</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"public"</span><span class="p">,</span>
-                        <span class="n">visible_user_ids</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                        <span class="n">cw</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                        <span class="n">local_only</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-                        <span class="n">no_extract_mentions</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-                        <span class="n">no_extract_hashtags</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-                        <span class="n">no_extract_emojis</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-                        <span class="n">reply_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                        <span class="n">renote_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                        <span class="n">channel_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                        <span class="n">file_ids</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                        <span class="n">poll</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Poll</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
-                        <span class="p">):</span>
-        <span class="sd">"""</span>
-
-<span class="sd">        ノートを投稿します。</span>
-
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        content : str</span>
-<span class="sd">            投稿する内容</span>
-<span class="sd">        visibility : str, optional</span>
-<span class="sd">            公開範囲, by default "public"</span>
-<span class="sd">        visible_user_ids : Optional[List[str]], optional</span>
-<span class="sd">            公開するユーザー, by default None</span>
-<span class="sd">        cw : Optional[str], optional</span>
-<span class="sd">            閲覧注意の文字, by default None</span>
-<span class="sd">        local_only : bool, optional</span>
-<span class="sd">            ローカルにのみ表示するか, by default False</span>
-<span class="sd">        no_extract_mentions : bool, optional</span>
-<span class="sd">            メンションを展開するか, by default False</span>
-<span class="sd">        no_extract_hashtags : bool, optional</span>
-<span class="sd">            ハッシュタグを展開するか, by default False</span>
-<span class="sd">        no_extract_emojis : bool, optional</span>
-<span class="sd">            絵文字を展開するか, by default False</span>
-<span class="sd">        reply_id : Optional[str], optional</span>
-<span class="sd">            リプライ先のid, by default None</span>
-<span class="sd">        renote_id : Optional[str], optional</span>
-<span class="sd">            リノート先のid, by default None</span>
-<span class="sd">        channel_id : Optional[str], optional</span>
-<span class="sd">            チャンネルid, by default None</span>
-<span class="sd">        file_ids : [type], optional</span>
-<span class="sd">            添付するファイルのid, by default None</span>
-<span class="sd">        poll : Optional[Poll], optional</span>
-<span class="sd">            アンケート, by default None</span>
-
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        [type]</span>
-<span class="sd">            [description]</span>
-
-<span class="sd">        Raises</span>
-<span class="sd">        ------</span>
-<span class="sd">        ContentRequired</span>
-<span class="sd">            [description]</span>
-<span class="sd">        """</span>
-        <span class="k">if</span> <span class="n">file_ids</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">file_ids</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">field</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s2">"visibility"</span><span class="p">:</span> <span class="n">visibility</span><span class="p">,</span>
-            <span class="s2">"visibleUserIds"</span><span class="p">:</span> <span class="n">visible_user_ids</span><span class="p">,</span>
-            <span class="s2">"text"</span><span class="p">:</span> <span class="n">content</span><span class="p">,</span>
-            <span class="s2">"cw"</span><span class="p">:</span> <span class="n">cw</span><span class="p">,</span>
-            <span class="s2">"localOnly"</span><span class="p">:</span> <span class="n">local_only</span><span class="p">,</span>
-            <span class="s2">"noExtractMentions"</span><span class="p">:</span> <span class="n">no_extract_mentions</span><span class="p">,</span>
-            <span class="s2">"noExtractHashtags"</span><span class="p">:</span> <span class="n">no_extract_hashtags</span><span class="p">,</span>
-            <span class="s2">"noExtractEmojis"</span><span class="p">:</span> <span class="n">no_extract_emojis</span><span class="p">,</span>
-            <span class="s2">"replyId"</span><span class="p">:</span> <span class="n">reply_id</span><span class="p">,</span>
-            <span class="s2">"renoteId"</span><span class="p">:</span> <span class="n">renote_id</span><span class="p">,</span>
-            <span class="s2">"channelId"</span><span class="p">:</span> <span class="n">channel_id</span>
-        <span class="p">}</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">check_multi_arg</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="n">file_ids</span><span class="p">,</span> <span class="n">renote_id</span><span class="p">,</span> <span class="n">poll</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="n">ContentRequired</span><span class="p">(</span><span class="s2">"ノートの送信にはcontent, file_ids, renote_id またはpollのいずれか1つが無くてはいけません"</span><span class="p">)</span>
-
-        <span class="k">if</span> <span class="n">poll</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">poll</span><span class="o">.</span><span class="n">choices</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">field</span><span class="p">[</span><span class="s2">"poll"</span><span class="p">]</span> <span class="o">=</span> <span class="n">poll</span>
-        <span class="k">if</span> <span class="n">file_ids</span><span class="p">:</span>
-            <span class="n">field</span><span class="p">[</span><span class="s2">"fileIds"</span><span class="p">]</span> <span class="o">=</span> <span class="n">file_ids</span>
-        <span class="n">field</span> <span class="o">=</span> <span class="n">remove_dict_empty</span><span class="p">(</span><span class="n">field</span><span class="p">)</span>
-        <span class="n">res</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">Route</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">,</span> <span class="s1">'/api/notes/create'</span><span class="p">),</span> <span class="n">json</span><span class="o">=</span><span class="n">field</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">Note</span><span class="p">(</span><span class="n">res</span><span class="p">[</span><span class="s2">"created_note"</span><span class="p">],</span> <span class="n">state</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span></div>
-
 <div class="viewcode-block" id="ConnectionState.get_followers"><a class="viewcode-back" href="../../mi.html#mi.ConnectionState.get_followers">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">get_followers</span><span class="p">(</span>
             <span class="bp">self</span><span class="p">,</span>
             <span class="n">user_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -775,26 +801,27 @@
 
     <span class="k">async</span> <span class="k">def</span> <span class="nf">show_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">url</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Drive</span><span class="p">:</span>
         <span class="n">data</span> <span class="o">=</span> <span class="n">remove_dict_empty</span><span class="p">({</span><span class="s2">"fileId"</span><span class="p">:</span> <span class="n">file_id</span><span class="p">,</span> <span class="s2">"url"</span><span class="p">:</span> <span class="n">url</span><span class="p">})</span>
-        <span class="k">return</span> <span class="n">Drive</span><span class="p">(</span><span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">Route</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">,</span> <span class="s1">'/api/admin/drive/show-file'</span><span class="p">),</span> <span class="n">json</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">state</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Drive</span><span class="p">(</span><span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">Route</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">,</span> <span class="s1">'/api/admin/drive/show-file'</span><span class="p">),</span> <span class="n">json</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+                     <span class="n">state</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
 
     <span class="k">async</span> <span class="k">def</span> <span class="nf">remove_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">Route</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">,</span> <span class="s1">'/api/drive/files/delete'</span><span class="p">),</span> <span class="n">json</span><span class="o">=</span><span class="p">{</span><span class="s1">'fileId'</span><span class="p">:</span> <span class="n">file_id</span><span class="p">},</span> <span class="n">auth</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
 
     <span class="k">async</span> <span class="k">def</span> <span class="nf">get_user_notes</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="n">user_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-        <span class="o">*</span><span class="p">,</span>
-        <span class="n">since_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">include_my_renotes</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-        <span class="n">include_replies</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-        <span class="n">with_files</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-        <span class="n">until_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">limit</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
-        <span class="n">get_all</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-        <span class="n">exclude_nsfw</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-        <span class="n">file_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">since_date</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
-        <span class="n">until_data</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">user_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+            <span class="o">*</span><span class="p">,</span>
+            <span class="n">since_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">include_my_renotes</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+            <span class="n">include_replies</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+            <span class="n">with_files</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="n">until_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">limit</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
+            <span class="n">get_all</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="n">exclude_nsfw</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+            <span class="n">file_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="n">since_date</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="n">until_data</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncIterator</span><span class="p">[</span><span class="n">Note</span><span class="p">]:</span>
         <span class="k">if</span> <span class="n">limit</span> <span class="o">&gt;</span> <span class="mi">100</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">InvalidParameters</span><span class="p">(</span><span class="s2">"limit は100以上を受け付けません"</span><span class="p">)</span>
