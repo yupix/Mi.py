@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
+- add `create_renote` and `create_quote` method to `Note` class
+- add `create_renote` and `create_quote` method to `NoteActions` class
 - add event `on_user_follow`
 
 ### Changed
@@ -21,14 +23,20 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
     - PinnedNote
     - PinnedPage
     - FieldContent
+- internal change: optimizing import
 - internal change: Renamed `PinnedPage` to `PinnedNote`
+- **BREAKING CHANGE**: Moved the post_note method of ConnectionState to NoteActions
 
 ### Removed
 
+- removed appveyor.yml
+- **BREAKING CHANGE**: Removed api function in utils.py
 - **BREAKING CHANGE**: Removed pydantic from dependencies
 
 ### Fixed
 
+- Fixed a bug that prevented the correct use of poll in the post_note method.
+- Corrected the attribute name of User class to the correct one
 - Fixed typo in reconnect argument of start method
 
 ## [v1.0.2] 2021-12-24
