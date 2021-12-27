@@ -9,23 +9,35 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
+- add `create_renote` and `create_quote` method to `Note` class
+- add `create_renote` and `create_quote` method to `NoteActions` class
 - add event `on_user_follow`
 
 ### Changed
 
 - The following classes no longer inherit from `BaseModel`
-  - Properties
-  - Folder
-  - File
-  - Channel
-  - PinnedNote
-  - PinnedPage
-  - FieldContent
+    - Properties
+    - Folder
+    - File
+    - Channel
+    - PinnedNote
+    - PinnedPage
+    - FieldContent
+- internal change: optimizing import
 - internal change: Renamed `PinnedPage` to `PinnedNote`
+- **BREAKING CHANGE**: Moved the post_note method of ConnectionState to NoteActions
 
 ### Removed
 
+- removed appveyor.yml
+- **BREAKING CHANGE**: Removed api function in utils.py
 - **BREAKING CHANGE**: Removed pydantic from dependencies
+
+### Fixed
+
+- Fixed a bug that prevented the correct use of poll in the post_note method.
+- Corrected the attribute name of User class to the correct one
+- Fixed typo in reconnect argument of start method
 
 ## [v1.0.2] 2021-12-24
 
@@ -48,8 +60,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - add `favorite`, `add_to_clips`, `add_reaction` and `remove_favorite` method to `Note` class
 - add `favorite`, `add_note_to_clips`, `add_reaction_to_note` and `remove_favorite` method to `NoteAction` class
 - add class
-  - NoteActions
-  - ClientAction
+    - NoteActions
+    - ClientAction
 
 ### Fixed
 
@@ -61,21 +73,21 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - `Note` クラスに `reply` メソッドを追加しました
 - 以下のクラスを追加
-  - MisskeyWebSocket
-  - MisskeyClientWebSocketResponse
-  - Route
-  - HTTPClient
+    - MisskeyWebSocket
+    - MisskeyClientWebSocketResponse
+    - Route
+    - HTTPClient
 - Client に以下のメソッドを追加
-  - post_chat
-  - delete_chat
-  - post_note
-    - 今後のノート投稿はこちらを使用してください
-  - delete_note
-  - get_instance
-  - fetch_instance
-  - get_user
-  - fetch_user
-  - upload_file
+    - post_chat
+    - delete_chat
+    - post_note
+        - 今後のノート投稿はこちらを使用してください
+    - delete_note
+    - get_instance
+    - fetch_instance
+    - get_user
+    - fetch_user
+    - upload_file
 - `rich` を使ったデバッグ機能を追加しました
 - `file_upload` 関数を追加しました
 - `run` メソッドに `debug` 引数を追加しました
@@ -92,11 +104,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - api 周りでのエラー出力が分かりやすくなりました
 - ~~今までの `Note` クラスに当たるものを `NoteContent` に変更し別途 `Note` クラスを作成させるようにしました~~
-  - ~~これは不要なデータなどを生成しないようにすることが目的です。~~
+    - ~~これは不要なデータなどを生成しないようにすることが目的です。~~
 - 部分的に Pydantic を廃止
-  - 素直に使わないほうが部分的に楽だから
+    - 素直に使わないほうが部分的に楽だから
 - `Drive` クラスの `upload` メソッドで例外 `InvalidParameters` を発生させるようにしました
-  - これは`to_file`, `to_url` の両方がないと変数が定義されず、`Drive`クラスの生成に失敗する可能性があるからです。
+    - これは`to_file`, `to_url` の両方がないと変数が定義されず、`Drive`クラスの生成に失敗する可能性があるからです。
 - `get_user` メソッドが 非同期になりました。
 - 内部変更: `utils.py` の一部を Cython を用いたものに変更
 - 内部変更: `DriveAction` を廃止し, `file_upload` を使用するように
@@ -114,8 +126,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - **破壊的変更**: `Reaction` クラスと `ReactionContent` を結合させました
 - **破壊的変更**: `Chat` クラスと `ChatContent` を結合させました
 - **破壊的変更**: `Drive` クラスの `upload` メソッドで使用できる引数名を変更、キーワード引数を強制するようにしました。
-  - 引数名の変更は次の通りです `url` => `to_url`, `path` => `to_file`
-  - 強制されるキーワード引数は次の通りです `force`, `is_sensitive`
+    - 引数名の変更は次の通りです `url` => `to_url`, `path` => `to_file`
+    - 強制されるキーワード引数は次の通りです `force`, `is_sensitive`
 
 ### Fixed
 
@@ -126,21 +138,21 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Removed
 
 - `Router` クラスから以下のメソッドを削除しました
-  - main_channel
-  - home_time_line
-  - local_time_line
-  - global_time_line
+    - main_channel
+    - home_time_line
+    - local_time_line
+    - global_time_line
 - クラスの削除について
-  - `ChatContent`
-  - `ReactionContent`
-  - `NoteContent`
-  - `UserAction`
-  - `UserProfile`
-    - `UserProfile`にあったものは `User` に統合され、詳細な情報は `User` クラスの details オブジェクト(`UserDetails`) から取得可能です
+    - `ChatContent`
+    - `ReactionContent`
+    - `NoteContent`
+    - `UserAction`
+    - `UserProfile`
+        - `UserProfile`にあったものは `User` に統合され、詳細な情報は `User` クラスの details オブジェクト(`UserDetails`) から取得可能です
 - **破壊的変更**: `WebSocket` クラスを削除しました
-  - 今後は aiohttp の `ws_connect` メソッドを使用します
+    - 今後は aiohttp の `ws_connect` メソッドを使用します
 - **破壊的変更**: `requests` ライブラリを削除しました
-  - 今後は aiohttp の `request` メソッドを使用します
+    - 今後は aiohttp の `request` メソッドを使用します
 
 ## [v0.2.5] 2021-10-07
 
@@ -160,7 +172,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 
 - **破壊的変更**: `commandFrameWork` を使用しない場合の bot モジュールの名前を client に変更しました
-  - 主にこれは Discord.py に近づけるためと `commandFrameWork` の bot モジュールとの差別化を目的としています
+    - 主にこれは Discord.py に近づけるためと `commandFrameWork` の bot モジュールとの差別化を目的としています
 - `on_mention` イベントの `.text` に自分自身のメンションを含まないように、必要な場合は `content` をご利用ください
 - デフォルトで接続するチャンネルを `globalTimeline` から `main` に変更しました。グローバルタイムラインを見る場合は `Router` をご利用ください
 - `add_poll` の引数位置が変更されています。ご注意ください
@@ -302,8 +314,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Added Each event method.
 
 [v0.2.5]: https://github.com/yupix/mi.py/compare/v0.1.0-5...v0.2.5
+
 [v0.1.5]: https://github.com/yupix/mi.py/compare/v0.1.0-1a...v0.1.0-5
+
 [v0.1.0-1a]: https://github.com/yupix/mi.py/compare/v0.1.0a...v0.1.0-1a
+
 [v0.1.0a]: https://github.com/yupix/mi.py/compare/v0.0.1a...v0.1.0a
+
 [v0.0.1a]: https://github.com/yupix/Mi.py/releases
+
 [unreleased]: https://github.com/yupix/mi.py/compare/master...HEAD

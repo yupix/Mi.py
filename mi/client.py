@@ -14,11 +14,10 @@ from aiohttp import ClientWebSocketResponse
 from mi import Instance, InstanceMeta, User, config
 from mi.chat import Chat
 from mi.drive import Drive
-from mi.exception import InvalidParameters
 from mi.http import HTTPClient
 from mi.note import Note
 from mi.state import ConnectionState
-from mi.utils import api, get_module_logger
+from mi.utils import get_module_logger
 from .gateway import MisskeyWebSocket
 
 if TYPE_CHECKING:
@@ -218,8 +217,10 @@ class Client:
             since_date: int = 0,
             until_data: int = 0
     ) -> AsyncIterator[Note]:
-        return self._connection.get_user_notes(user_id=user_id, since_id=since_id, include_my_renotes=include_my_renotes, include_replies=include_replies, with_files=with_files,
-                                               until_id=until_id, limit=limit, get_all=get_all, exclude_nsfw=exclude_nsfw, file_type=file_type, since_date=since_date, until_data=until_data)
+        return self._connection.get_user_notes(user_id=user_id, since_id=since_id, include_my_renotes=include_my_renotes,
+                                               include_replies=include_replies, with_files=with_files,
+                                               until_id=until_id, limit=limit, get_all=get_all, exclude_nsfw=exclude_nsfw,
+                                               file_type=file_type, since_date=since_date, until_data=until_data)
 
     async def get_instance(self, host: Optional[str] = None) -> Union[Instance, InstanceMeta]:
         """
@@ -294,7 +295,7 @@ class Client:
         await self._connection.fetch_user(user_id=user_id, username=username, host=host)
 
     async def file_upload(
-        self,
+            self,
             name: Optional[str] = None,
             to_file: Optional[str] = None,
             to_url: Optional[str] = None,
@@ -322,7 +323,8 @@ class Client:
             upload後のレスポンスをDrive型に変更して返します
         """
 
-        return await self._connection.file_upload(name=name, to_file=to_file, to_url=to_url, force=force, is_sensitive=is_sensitive)
+        return await self._connection.file_upload(name=name, to_file=to_file, to_url=to_url, force=force,
+                                                  is_sensitive=is_sensitive)
 
     async def show_file(self, file_id: Optional[str] = None, url: Optional[str] = None) -> Drive:
         """
@@ -369,7 +371,8 @@ class Client:
                                                 poll=poll)
 
     async def get_announcements(self, limit: int, with_unreads: bool, since_id: str, until_id: str):
-        return await self._connection.get_announcements(limit=limit, with_unreads=with_unreads, since_id=since_id, until_id=until_id)
+        return await self._connection.get_announcements(limit=limit, with_unreads=with_unreads, since_id=since_id,
+                                                        until_id=until_id)
 
     async def login(self, token):
 
@@ -383,7 +386,7 @@ class Client:
         while True:
             await self.ws.poll_event()
 
-    async def start(self, url: str, token: str, *, debug: bool = False, recconect: bool = True, timeout: int = 60):
+    async def start(self, url: str, token: str, *, debug: bool = False, reconnect: bool = True, timeout: int = 60):
         """
         Starting Bot
 
@@ -395,7 +398,7 @@ class Client:
             User Token
         debug: bool, default False
             debugging mode
-        recconect: bool, default True
+        reconnect: bool, default True
             coming soon...
         timeout: int, default 60
             Time until websocket times out
@@ -405,9 +408,9 @@ class Client:
         if _origin_uri := re.search(r"wss?://(.*)/streaming", url):
             origin_uri = (
                 _origin_uri.group(0)
-                .replace("wss", "https")
-                .replace("ws", "http")
-                .replace("/streaming", "")
+                    .replace("wss", "https")
+                    .replace("ws", "http")
+                    .replace("/streaming", "")
             )
         else:
             origin_uri = url
@@ -420,4 +423,4 @@ class Client:
         config.i = config.Config(**auth_i)
         config.debug = debug
         await self.login(token)
-        await self.connect(reconnect=recconect, timeout=timeout)
+        await self.connect(reconnect=reconnect, timeout=timeout)

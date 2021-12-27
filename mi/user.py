@@ -1,14 +1,11 @@
 from __future__ import annotations
-from typing import Any, AsyncIterator, Dict, List, Optional, TYPE_CHECKING
 
+from typing import Any, AsyncIterator, Dict, List, Optional, TYPE_CHECKING
 
 from mi import Instance
 from mi.emoji import Emoji
-from mi.types.user import (User as UserPayload,
-                           Channel as ChannelPayload,
-                           PinnedNote as PinnedNotePayload,
-                           PinnedPage as PinnedPagePayload,
-                           FieldContent as FieldContentPayload)
+from mi.types.user import (Channel as ChannelPayload, FieldContent as FieldContentPayload, PinnedNote as PinnedNotePayload,
+                           PinnedPage as PinnedPagePayload, User as UserPayload)
 
 if TYPE_CHECKING:
     from mi import ConnectionState
@@ -177,11 +174,11 @@ class User:
         アカウントの作成日
     updated_at: str
         アカウントの更新日(ノートを投稿するなど)
-    locked: bool
+    is_locked: bool
         アカウントがロックされているか
-    silienced: bool
+    is_silenced: bool
         アカウントがミュートされているか
-    suspended: bool
+    is_suspended: bool
         アカウントが凍結されているか
     description: str
         アカウントの概要
@@ -205,15 +202,15 @@ class User:
         ピン留めされたページ
     ff_visibility: str
         ノートの投稿範囲
-    following: bool
+    is_following: bool
         ユーザーがフォローしているかどうか
-    followed: bool
+    is_follow: bool
         ユーザーのことをフォローしているかどうか
-    blocking: bool
+    is_blocking: bool
         ユーザーが自分のことをブロックしているかどうか
-    blocked: bool
+    is_blocked: bool
         ユーザーのことをブロックしているかどうか
-    muted:bool
+    is_muted: bool
         ユーザーのことをミュートしているかどうか
     instance: Any
         ユーザーのインスタンス
@@ -238,9 +235,9 @@ class User:
         self.uri: Optional[str] = data.get("uri")
         self.created_at = data.get("created_at")
         self.updated_at = data.get("updated_at")
-        self.locked = data.get("is_locked", False)
-        self.silenced = data.get("is_silenced", False)
-        self.suspended = data.get("is_suspended", False)
+        self.is_locked = data.get("is_locked", False)
+        self.is_silenced = data.get("is_silenced", False)
+        self.is_suspended = data.get("is_suspended", False)
         self.description = data.get("description")
         self.location = data.get("location")
         self.birthday = data.get("birthday")
@@ -253,11 +250,11 @@ class User:
         self.pinned_page_id = data.get("pinned_page_id")
         self.pinned_page = data.get("pinned_page")
         self.ff_visibility: str = data.get("ff_visibility", 'public')
-        self.following: bool = bool(data.get("is_following", False))
-        self.followed: bool = bool(data.get("is_follow", False))
-        self.blocking: bool = bool(data.get("is_blocking", False))
-        self.blocked: bool = bool(data.get("is_blocked", False))
-        self.muted: bool = bool(data.get("is_muted", False))
+        self.is_following: bool = bool(data.get("is_following", False))
+        self.is_follow: bool = bool(data.get("is_follow", False))
+        self.is_blocking: bool = bool(data.get("is_blocking", False))
+        self.is_blocked: bool = bool(data.get("is_blocked", False))
+        self.is_muted: bool = bool(data.get("is_muted", False))
         self.details = UserDetails(data)
         self._state = state
 

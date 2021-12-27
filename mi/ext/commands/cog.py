@@ -1,9 +1,9 @@
 import inspect
-from typing import Any, Callable, ClassVar, Coroutine, Dict, List, Optional, Tuple, Union
-from mi.abc.ext.bot import AbstractBotBase
+from typing import Any, Callable, ClassVar, Coroutine, Dict, List, Optional, Tuple
 
-from mi.ext.commands.core import Command
+from mi.abc.ext.bot import AbstractBotBase
 from mi.ext.commands._types import _BaseCommand
+from mi.ext.commands.core import Command
 
 
 class CogMeta(type):

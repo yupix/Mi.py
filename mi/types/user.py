@@ -90,9 +90,9 @@ class User(OptionalUser):
     uri: str
     created_at: str
     updated_at: str
-    locked: bool
-    silienced: bool
-    suspended: bool
+    is_locked: bool
+    is_silenced: bool
+    is_suspended: bool
     description: str
     location: str
     birthday: str
@@ -105,9 +105,9 @@ class User(OptionalUser):
     pinned_page_id: str
     pinned_page: str
     ff_visibility: str
-    following: bool
-    followed: bool
-    blocking: bool
-    blocked: bool
-    muted: bool
+    is_following: bool
+    is_follow: bool
+    is_blocking: bool
+    is_blocked: bool
+    is_muted: bool
     instance: Optional[Instance]

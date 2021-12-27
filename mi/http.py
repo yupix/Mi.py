@@ -10,7 +10,6 @@ from mi.gateway import MisskeyClientWebSocketResponse
 from mi.utils import remove_dict_empty, upper_to_lower
 from . import __version__, config, exception
 
-
 __all__ = ('Route', 'HTTPClient')
 
 
@@ -64,13 +63,10 @@ class HTTPClient:
             kwargs['json'] = kwargs.pop('json')
 
         if kwargs.get('auth') and kwargs.pop('auth'):
-            if 'json' in kwargs:
+            if 'json' in kwargs or 'data' not in kwargs:
                 key = 'json'
-            elif 'data' in kwargs:
-                key = 'data'
             else:
-                key = 'json'
-
+                key = 'data'
             if not kwargs.get(key):
                 kwargs[key] = {}
             kwargs[key]['i'] = self.token

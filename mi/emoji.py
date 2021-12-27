@@ -1,7 +1,8 @@
 from __future__ import annotations
-from typing import List, TYPE_CHECKING, Optional
-from mi.exception import NotExistRequiredData
 
+from typing import List, Optional, TYPE_CHECKING
+
+from mi.exception import NotExistRequiredData
 from mi.types.emoji import Emoji as EmojiPayload
 
 if TYPE_CHECKING:
