@@ -131,14 +131,6 @@ def find(predicate: Callable[[T], Any], seq: Iterable[T]) -> Optional[T]:
 def json_dump(data, *args, **kwargs):
     return json.dumps(data, ensure_ascii=False, *args, **kwargs)
 
-@deprecated_func
-def api(*args, **kwargs) -> None:
-    """
-    .. deprecated:: 1.0.1
-        この関数は廃止され、現在は使用できません。互換性のため名前空間のみが提供されています。
-        今後は :func:`request` を使用してください
-    """
-
 
 def remove_list_empty(data: List[Any]) -> List[Any]:
     """
