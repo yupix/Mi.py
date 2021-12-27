@@ -129,6 +129,8 @@ class NoteActions:
         res = await self.http.request(Route('POST', '/api/notes/create'), json=field, auth=True, lower=True)
         return Note(res["created_note"], state=self)
 
+    async def create_renote(self, note_id: str) -> Note:
+        return await self.post_note(renote_id=note_id)
 
 
 class UserAction:
