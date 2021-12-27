@@ -150,7 +150,6 @@ class Client:
             except asyncio.CancelledError:
                 pass
 
-
     @staticmethod
     async def __on_error(event_method: str) -> None:
         print(f"Ignoring exception in {event_method}", file=sys.stderr)
