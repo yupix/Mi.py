@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [v1.0.3] 2021-12-27
+
 ### Added
 
 - add `create_renote` and `create_quote` method to `Note` class
