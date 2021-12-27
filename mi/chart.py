@@ -1,6 +1,6 @@
 from typing import List, Optional
-from mi.state import ConnectionState
 
+from mi.state import ConnectionState
 
 __all__ = ['Chart', 'Local', 'Remote']
 

@@ -5,11 +5,11 @@ import json
 import logging
 import re
 from inspect import isawaitable
-from typing import Any, Callable, Dict, Iterable, List, Optional, TypeVar, Union
+from typing import Any, Callable, Dict, Iterable, List, Optional, TypeVar
 
 import emoji
 
-from mi import config, exception
+from mi import config
 
 T = TypeVar("T")
 

@@ -1,12 +1,11 @@
-from abc import abstractmethod
 import asyncio
+from abc import abstractmethod
 from types import ModuleType
 from typing import Any, Callable, Coroutine, Dict, Optional, Tuple
 
 from aiohttp.client_ws import ClientWebSocketResponse
 
 from mi.abc.ext.core import AbstractGroupMixin
-
 from .context import AbstractContext
 
 

@@ -6,11 +6,7 @@ from mi import Emoji, utils
 from mi.exception import NotExistRequiredData
 from mi.user import User
 from .abc.note import AbstractNote
-from .types.note import (Note as NotePayload,
-                         Poll as PollPayload,
-                         Renote as RenotePayload,
-                         Reaction as ReactionPayload
-                         )
+from .types.note import (Note as NotePayload, Poll as PollPayload, Reaction as ReactionPayload, Renote as RenotePayload)
 
 if TYPE_CHECKING:
     from mi import ConnectionState

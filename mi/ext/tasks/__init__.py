@@ -1,5 +1,6 @@
 import asyncio
 from typing import Any, Callable, Coroutine, Dict, Optional
+
 from mi.exception import TaskNotRunningError
 
 __all__ = ["Loop", "loop"]

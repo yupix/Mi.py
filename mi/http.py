@@ -10,7 +10,6 @@ from mi.gateway import MisskeyClientWebSocketResponse
 from mi.utils import remove_dict_empty, upper_to_lower
 from . import __version__, config, exception
 
-
 __all__ = ('Route', 'HTTPClient')
 
 

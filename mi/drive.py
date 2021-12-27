@@ -1,7 +1,8 @@
 from __future__ import annotations
-from typing import TYPE_CHECKING, Any, Dict
 
-from .types.drive import (Folder as FolderPayload, File as FilePayload)
+from typing import Any, Dict, TYPE_CHECKING
+
+from .types.drive import (File as FilePayload, Folder as FolderPayload)
 
 if TYPE_CHECKING:
     from .state import ConnectionState

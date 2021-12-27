@@ -1,8 +1,8 @@
 from typing import Any, Dict, List, Optional, TypedDict
 
-from .user import User
-from .emoji import Emoji
 from .drive import File
+from .emoji import Emoji
+from .user import User
 
 
 class Geo(TypedDict):

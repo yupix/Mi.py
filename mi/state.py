@@ -10,12 +10,12 @@ from aiocache.factory import Cache
 from mi import Instance, InstanceMeta, User
 from mi.chat import Chat
 from mi.drive import Drive
+from mi.emoji import Emoji
 from mi.exception import ContentRequired, InvalidParameters, NotExistRequiredParameters
 from mi.http import Route
 from mi.iterators import InstanceIterator
 from mi.note import Note, Poll, Reaction
 from mi.user import Follower, Following
-from mi.emoji import Emoji
 from mi.utils import check_multi_arg, get_cache_key, get_module_logger, key_builder, remove_dict_empty, str_lower, \
     upper_to_lower
 

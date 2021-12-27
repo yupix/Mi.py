@@ -1,8 +1,9 @@
 """Misskeyのチャンネルへの接続や、メッセージのキャプチャ等のWebSocket関連"""
 
 from __future__ import annotations
-from typing import TYPE_CHECKING, List
+
 import uuid
+from typing import List, TYPE_CHECKING
 
 if TYPE_CHECKING:
     from aiohttp.client_ws import ClientWebSocketResponse
