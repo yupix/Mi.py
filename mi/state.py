@@ -45,6 +45,93 @@ class NoteActions:
         data = {'noteId': note_id, 'reaction': reaction}
         return bool(await self.http.request(Route('POST', '/api/reactions/create', json=data, auth=True)))
 
+    async def post_note(self,
+                        content: Optional[str] = None,
+                        visibility: str = "public",
+                        visible_user_ids: Optional[List[str]] = None,
+                        cw: Optional[str] = None,
+                        local_only: bool = False,
+                        no_extract_mentions: bool = False,
+                        no_extract_hashtags: bool = False,
+                        no_extract_emojis: bool = False,
+                        reply_id: Optional[str] = None,
+                        renote_id: Optional[str] = None,
+                        channel_id: Optional[str] = None,
+                        file_ids=None,
+                        poll: Optional[Poll] = None
+                        ):
+        """
+
+        ノートを投稿します。
+
+        Parameters
+        ----------
+        content : str
+            投稿する内容
+        visibility : str, optional
+            公開範囲, by default "public"
+        visible_user_ids : Optional[List[str]], optional
+            公開するユーザー, by default None
+        cw : Optional[str], optional
+            閲覧注意の文字, by default None
+        local_only : bool, optional
+            ローカルにのみ表示するか, by default False
+        no_extract_mentions : bool, optional
+            メンションを展開するか, by default False
+        no_extract_hashtags : bool, optional
+            ハッシュタグを展開するか, by default False
+        no_extract_emojis : bool, optional
+            絵文字を展開するか, by default False
+        reply_id : Optional[str], optional
+            リプライ先のid, by default None
+        renote_id : Optional[str], optional
+            リノート先のid, by default None
+        channel_id : Optional[str], optional
+            チャンネルid, by default None
+        file_ids : [type], optional
+            添付するファイルのid, by default None
+        poll : Optional[Poll], optional
+            アンケート, by default None
+
+        Returns
+        -------
+        [type]
+            [description]
+
+        Raises
+        ------
+        ContentRequired
+            [description]
+        """
+        if file_ids is None:
+            file_ids = []
+        field = {
+            "visibility": visibility,
+            "visibleUserIds": visible_user_ids,
+            "text": content,
+            "cw": cw,
+            "localOnly": local_only,
+            "noExtractMentions": no_extract_mentions,
+            "noExtractHashtags": no_extract_hashtags,
+            "noExtractEmojis": no_extract_emojis,
+            "replyId": reply_id,
+            "renoteId": renote_id,
+            "channelId": channel_id
+        }
+        if not check_multi_arg(content, file_ids, renote_id, poll):
+            raise ContentRequired("ノートの送信にはcontent, file_ids, renote_id またはpollのいずれか1つが無くてはいけません")
+
+        if poll and len(poll.choices) > 0:
+            field["poll"] = poll
+        if file_ids:
+            field["fileIds"] = file_ids
+        field = remove_dict_empty(field)
+        res = await self.http.request(Route('POST', '/api/notes/create'), json=field, auth=True, lower=True)
+        return Note(res["created_note"], state=self)
+
+    async def create_renote(self, note_id: str) -> Note:
+        return await self.post_note(renote_id=note_id)
+
 
 class UserAction:
     def __init__(self, http: HTTPClient, loop: asyncio.AbstractEventLoop):
@@ -209,8 +296,8 @@ class ConnectionState(ClientAction):
         message : Dict[str, Any]
             Received message
         """
-        #notification_type = str_lower(message['type'])
-        #getattr(self, f'parse_{notification_type}')(message)
+        # notification_type = str_lower(message['type'])
+        # getattr(self, f'parse_{notification_type}')(message)
 
     def parse_reaction(self, message: Dict[str, Any]) -> None:
         """
@@ -416,90 +503,6 @@ class ConnectionState(ClientAction):
         await old_cache.delete(kwargs['cache_key'].format('get_user'))
         return User(data, state=self)
 
-    async def post_note(self,
-                        content: Optional[str] = None,
-                        visibility: str = "public",
-                        visible_user_ids: Optional[List[str]] = None,
-                        cw: Optional[str] = None,
-                        local_only: bool = False,
-                        no_extract_mentions: bool = False,
-                        no_extract_hashtags: bool = False,
-                        no_extract_emojis: bool = False,
-                        reply_id: Optional[str] = None,
-                        renote_id: Optional[str] = None,
-                        channel_id: Optional[str] = None,
-                        file_ids=None,
-                        poll: Optional[Poll] = None
-                        ):
-        """
-
-        ノートを投稿します。
-
-        Parameters
-        ----------
-        content : str
-            投稿する内容
-        visibility : str, optional
-            公開範囲, by default "public"
-        visible_user_ids : Optional[List[str]], optional
-            公開するユーザー, by default None
-        cw : Optional[str], optional
-            閲覧注意の文字, by default None
-        local_only : bool, optional
-            ローカルにのみ表示するか, by default False
-        no_extract_mentions : bool, optional
-            メンションを展開するか, by default False
-        no_extract_hashtags : bool, optional
-            ハッシュタグを展開するか, by default False
-        no_extract_emojis : bool, optional
-            絵文字を展開するか, by default False
-        reply_id : Optional[str], optional
-            リプライ先のid, by default None
-        renote_id : Optional[str], optional
-            リノート先のid, by default None
-        channel_id : Optional[str], optional
-            チャンネルid, by default None
-        file_ids : [type], optional
-            添付するファイルのid, by default None
-        poll : Optional[Poll], optional
-            アンケート, by default None
-
-        Returns
-        -------
-        [type]
-            [description]
-
-        Raises
-        ------
-        ContentRequired
-            [description]
-        """
-        if file_ids is None:
-            file_ids = []
-        field = {
-            "visibility": visibility,
-            "visibleUserIds": visible_user_ids,
-            "text": content,
-            "cw": cw,
-            "localOnly": local_only,
-            "noExtractMentions": no_extract_mentions,
-            "noExtractHashtags": no_extract_hashtags,
-            "noExtractEmojis": no_extract_emojis,
-            "replyId": reply_id,
-            "renoteId": renote_id,
-            "channelId": channel_id
-        }
-        if not check_multi_arg(content, file_ids, renote_id, poll):
-            raise ContentRequired("ノートの送信にはcontent, file_ids, renote_id またはpollのいずれか1つが無くてはいけません")
-
-        if poll and len(poll.choices) > 0:
-            field["poll"] = poll
-        if file_ids:
-            field["fileIds"] = file_ids
-        field = remove_dict_empty(field)
-        res = await self.http.request(Route('POST', '/api/notes/create'), json=field, auth=True, lower=True)
-        return Note(res["created_note"], state=self)
-
     async def get_followers(
             self,
             user_id: Optional[str] = None,
@@ -588,26 +591,27 @@ class ConnectionState(ClientAction):
 
     async def show_file(self, file_id: Optional[str], url: Optional[str]) -> Drive:
         data = remove_dict_empty({"fileId": file_id, "url": url})
-        return Drive(await self.http.request(Route('POST', '/api/admin/drive/show-file'), json=data, auth=True, lower=True), state=self)
+        return Drive(await self.http.request(Route('POST', '/api/admin/drive/show-file'), json=data, auth=True, lower=True),
+                     state=self)
 
     async def remove_file(self, file_id: str) -> bool:
         return bool(await self.http.request(Route('POST', '/api/drive/files/delete'), json={'fileId': file_id}, auth=True))
 
     async def get_user_notes(
-        self,
-        user_id: str,
-        *,
-        since_id: Optional[str] = None,
-        include_my_renotes: bool = True,
-        include_replies: bool = True,
-        with_files: bool = False,
-        until_id: Optional[str] = None,
-        limit: int = 10,
-        get_all: bool = False,
-        exclude_nsfw: bool = True,
-        file_type: Optional[List[str]] = None,
-        since_date: int = 0,
-        until_data: int = 0
+            self,
+            user_id: str,
+            *,
+            since_id: Optional[str] = None,
+            include_my_renotes: bool = True,
+            include_replies: bool = True,
+            with_files: bool = False,
+            until_id: Optional[str] = None,
+            limit: int = 10,
+            get_all: bool = False,
+            exclude_nsfw: bool = True,
+            file_type: Optional[List[str]] = None,
+            since_date: int = 0,
+            until_data: int = 0
     ) -> AsyncIterator[Note]:
         if limit > 100:
             raise InvalidParameters("limit は100以上を受け付けません")

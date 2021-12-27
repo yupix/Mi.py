@@ -326,3 +326,10 @@ class Note(AbstractNote):
         """
 
         return await self._state.add_note_to_clips(clip_id=clip_id, note_id=self.id)
+
+    async def create_renote(self) -> Note:
+        """
+        ノートをリノートします
+        """
+
+        return await self._state.create_renote(self.id)
