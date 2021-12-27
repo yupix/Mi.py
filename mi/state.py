@@ -121,8 +121,15 @@ class NoteActions:
         if not check_multi_arg(content, file_ids, renote_id, poll):
             raise ContentRequired("ノートの送信にはcontent, file_ids, renote_id またはpollのいずれか1つが無くてはいけません")
 
-        if poll and len(poll.choices) > 0:
-            field["poll"] = poll
+        if poll and type(Poll):
+            poll_data = remove_dict_empty({
+                'choices': poll.choices,
+                'multiple': poll.multiple,
+                'expiresAt': poll.expires_at,
+                'expiredAfter': poll.expired_after
+            })
+            field["poll"] = poll_data
+
         if file_ids:
             field["fileIds"] = file_ids
         field = remove_dict_empty(field)
@@ -131,6 +138,22 @@ class NoteActions:
 
     async def create_renote(self, note_id: str) -> Note:
         return await self.post_note(renote_id=note_id)
+
+    async def create_quote(self, note_id: str,
+                           content: Optional[str] = None,
+                           visibility: str = 'public',
+                           visible_user_ids: Optional[List[str]] = None,
+                           cw: Optional[str] = None,
+                           local_only: bool = False,
+                           no_extract_mentions: bool = False,
+                           no_extract_hashtags: bool = False,
+                           no_extract_emojis: bool = False,
+                           file_ids=None,
+                           poll: Optional[Poll] = None) -> Note:
+        return await self.post_note(content=content, visibility=visibility, visible_user_ids=visible_user_ids, cw=cw,
+                                    local_only=local_only, no_extract_mentions=no_extract_mentions,
+                                    no_extract_hashtags=no_extract_hashtags,
+                                    no_extract_emojis=no_extract_emojis, renote_id=note_id, file_ids=file_ids, poll=poll)
 
 
 class UserAction:

@@ -333,3 +333,48 @@ class Note(AbstractNote):
         """
 
         return await self._state.create_renote(self.id)
+
+    async def create_quote(self,
+                           content: Optional[str] = None,
+                           visibility: str = None,
+                           visible_user_ids: Optional[List[str]] = None,
+                           cw: Optional[str] = None,
+                           local_only: bool = False,
+                           no_extract_mentions: bool = False,
+                           no_extract_hashtags: bool = False,
+                           no_extract_emojis: bool = False,
+                           file_ids=None,
+                           poll: Optional[Poll] = None):
+        """
+        ノートを引用して新規にノートを投稿します
+
+        Parameters
+        ----------
+        content: Optional[str], default=None
+            引用に対するテキスト
+        visibility: str, default=None
+            ノートの公開範囲
+        visible_user_ids: Optional[List[str]]
+            ノートの公開対象になるユーザーid
+        cw: Optional[str]
+            閲覧注意の文字列
+        local_only: bool
+            ローカルにのみ公開するかどうか
+        no_extract_mentions: bool
+            メンションを展開するかどうか
+        no_extract_hashtags: bool
+            ハッシュタグを展開するかどうか
+        no_extract_emojis: bool
+            絵文字を展開するかどうか
+        file_ids:
+            添付するファイルのid
+        poll: Optional[Poll]
+            アンケート
+        """
+
+        visibility = self.visibility or visibility or 'public'
+        return await self._state.create_quote(content=content, visibility=visibility, visible_user_ids=visible_user_ids, cw=cw,
+                                              local_only=local_only, no_extract_mentions=no_extract_mentions,
+                                              no_extract_hashtags=no_extract_hashtags,
+                                              no_extract_emojis=no_extract_emojis, note_id=self.id, file_ids=file_ids,
+                                              poll=poll)
