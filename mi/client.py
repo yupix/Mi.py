@@ -41,7 +41,7 @@ class Client:
         self.ws: MisskeyWebSocket = None
 
     def _get_state(self, **options: Any) -> ConnectionState:
-        return ConnectionState(dispatch=self.dispatch, http=self.http, loop=self.loop, **options)
+        return ConnectionState(dispatch=self.dispatch, http=self.http, loop=self.loop, client=self, **options)
 
     async def on_ready(self, ws: ClientWebSocketResponse):
         """
@@ -150,8 +150,6 @@ class Client:
             except asyncio.CancelledError:
                 pass
 
-    async def _on_message(self, message):
-        await self.dispatch("message", message)
 
     @staticmethod
     async def __on_error(event_method: str) -> None:

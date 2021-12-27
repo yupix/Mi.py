@@ -20,7 +20,7 @@ from mi.utils import check_multi_arg, get_cache_key, get_module_logger, key_buil
     upper_to_lower
 
 if TYPE_CHECKING:
-    from mi import HTTPClient
+    from mi import HTTPClient, Client
     from mi.types import (Note as NotePayload, Chat as ChatPayload)
 
 
@@ -175,8 +175,9 @@ class ClientAction(NoteActions, UserAction):
 
 
 class ConnectionState(ClientAction):
-    def __init__(self, dispatch: Callable[..., Any], http: HTTPClient, loop: asyncio.AbstractEventLoop):
+    def __init__(self, dispatch: Callable[..., Any], http: HTTPClient, loop: asyncio.AbstractEventLoop, client: Client):
         super().__init__(http, loop)
+        self.client: Client = client
         self.dispatch = dispatch
         self.http: HTTPClient = http
         self.logger = get_module_logger(__name__)
@@ -334,7 +335,7 @@ class ConnectionState(ClientAction):
         """
         note = Note(message, state=self)
         # Router(self.http.ws).capture_message(note.id) TODO: capture message
-        self.dispatch('message', note)
+        self.client._on_message(note)
 
     async def follow_user(self, user_id: str) -> tuple[bool, Optional[str]]:
         """
