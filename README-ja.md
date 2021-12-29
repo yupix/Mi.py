@@ -1,24 +1,28 @@
 # Mi.py
 
 [![CodeFactor](https://www.codefactor.io/repository/github/yupix/mi.py/badge)](https://www.codefactor.io/repository/github/yupix/mi.py)
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/f5acd9da804d4a11b031d36dbd398067)](https://www.codacy.com/gh/yupix/Mi.py/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=yupix/Mi.py&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/f5acd9da804d4a11b031d36dbd398067)](https://www.codacy.com/gh/yupix/Mi.py/dashboard?utm_source=github.com&utm_medium=referral&utm_content=yupix/Mi.py&utm_campaign=Badge_Grade)
 [![buddy pipeline](https://app.buddy.works/yupi0982/mi-py/pipelines/pipeline/345007/badge.svg?token=b304dd68d3eeb7917d453a2d2102621123ae4f05e0b659dde59cad486e2984b3 "buddy pipeline")](https://app.buddy.works/yupi0982/mi-py/pipelines/pipeline/345007)
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fyupix%2FMi.py.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fyupix%2FMi.py?ref=badge_shield)
 [![Build Status](https://ci.akarinext.org/api/badges/yupix/Mi.py/status.svg)](https://ci.akarinext.org/yupix/Mi.py)
 
 ## 概要
 
-Mi.pyは[Discord.py](https://github.com/Rapptz/discord.py)
-ライクな書き方ができるように作っているMisskeyApi wrapperです 現在動作を確認しているMisskeyは本家Misskey v12の最新です。
-`Ayuskey` での動作確認も一応行っていますが、 11/5時点でAyuskeyそのものの動作が怪しいため現在はテストを行っていません。
+Mi.py は[Discord.py](https://github.com/Rapptz/discord.py)
+ライクな書き方ができるように作っている MisskeyApi wrapper です
+
+# サポートしているMisskey
+
+- [Misskey Official v12](https://github.com/misskey-dev/misskey)
+- [Ayuskey latest](https://gtihub.com/teamblackcrystal/misskey)
 
 ## 使い方
 
-様々な使い方を書くにあたってREADMEから変更しました。[こちら](examples)からご覧ください。 その他のメソッドなどについては[ドキュメント](https://yupix.github.io/Mi.py) をご覧ください
+様々な使い方を書くにあたって README から変更しました。[こちら](examples)からご覧ください。 その他のメソッドなどについては[ドキュメント](https://yupix.github.io/Mi.py) をご覧ください
 
 ## 注意点
 
-グローバルタイムラインに接続したりする際に使う以下の様なコードがあるとホームタイムラインとグローバルタイムラインの2つを受信したことになりon_messageが2回動作します。 これは接続するチャンネルを増やすごとに増えていく形になります
+グローバルタイムラインに接続したりする際に使う以下の様なコードがあるとホームタイムラインとグローバルタイムラインの 2 つを受信したことになり on_message が 2 回動作します。 これは接続するチャンネルを増やすごとに増えていく形になります
 
 ```python
 await Router(ws).connect_channel(['home', 'global'])
@@ -57,9 +61,9 @@ await Router(ws).connect_channel(['home', 'global'])
 ### Libraries
 
 - [Discord.py](https://github.com/Rapptz/discord.py)
-    - 一部や仕組みを参考にさせてもらっています。実際にコードも利用しています 
+  - 一部や仕組みを参考にさせてもらっています。実際にコードも利用しています
 
-最後にこのプロジェクトを作るきっかけになり、一部のコードを使用させていただいているDiscord.pyがArchivedになりました。 作者であるDannyさんや全てのコラボレーターに最大限の感謝申し上げます。
+最後にこのプロジェクトを作るきっかけになり、一部のコードを使用させていただいている Discord.py が Archived になりました。 作者である Danny さんや全てのコラボレーターに最大限の感謝申し上げます。
 
 # LICENSE
 

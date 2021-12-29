@@ -1,7 +1,7 @@
 # Mi.py
 
 [![CodeFactor](https://www.codefactor.io/repository/github/yupix/mi.py/badge)](https://www.codefactor.io/repository/github/yupix/mi.py)
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/f5acd9da804d4a11b031d36dbd398067)](https://www.codacy.com/gh/yupix/Mi.py/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=yupix/Mi.py&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/f5acd9da804d4a11b031d36dbd398067)](https://www.codacy.com/gh/yupix/Mi.py/dashboard?utm_source=github.com&utm_medium=referral&utm_content=yupix/Mi.py&utm_campaign=Badge_Grade)
 [![buddy pipeline](https://app.buddy.works/yupi0982/mi-py/pipelines/pipeline/345007/badge.svg?token=b304dd68d3eeb7917d453a2d2102621123ae4f05e0b659dde59cad486e2984b3 "buddy pipeline")](https://app.buddy.works/yupi0982/mi-py/pipelines/pipeline/345007)
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fyupix%2FMi.py.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fyupix%2FMi.py?ref=badge_shield)
 [![Build Status](https://ci.akarinext.org/api/badges/yupix/Mi.py/status.svg)](https://ci.akarinext.org/yupix/Mi.py)
@@ -10,12 +10,16 @@
 
 ## Overview
 
-Mi.py is a Misskey API Wrapper that is designed to be written in a [Discord.py](https://github.com/Rapptz/discord.py)-like way. The only Misskey currently tested is the latest version of Misskey v12. We have also tested it with `Ayuskey`, but as of 11/5, Ayuskey itself is not working properly, so we are not testing it now.
+Mi.py is a Misskey API Wrapper that is designed to be written in a [Discord.py](https://github.com/Rapptz/discord.py)-like way
+
+## Supported Misskey
+
+- [Misskey Official v12](https://github.com/misskey-dev/misskey)
+- [Ayuskey latest](https://gtihub.com/teamblackcrystal/misskey)
 
 ## How to use
 
 Changed from README to [here](examples) in writing various usages. For other methods, etc., please see [Documentation](https://yupix.github.io/Mi.py/en/).
-
 
 ## warning
 
@@ -58,7 +62,7 @@ These are the people who contributed to the development
 ### Libraries
 
 - [Discord.py](https://github.com/Rapptz/discord.py)
-    - I am using some of the mechanisms as a reference. We also use the actual code. 
+  - I am using some of the mechanisms as a reference. We also use the actual code.
 
 Finally, Discord.py, which inspired me to create this project and for which I use some of the code, is now Archived. Many thanks to Danny and all the collaborators.
 
