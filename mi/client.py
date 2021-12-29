@@ -384,10 +384,10 @@ class Client:
                         no_extract_mentions: bool = False,
                         no_extract_hashtags: bool = False,
                         no_extract_emojis: bool = False,
-                        reply_id: List[str] = [],
+                        reply_id: Optional[List[str]] = None,
                         renote_id: Optional[str] = None,
                         channel_id: Optional[str] = None,
-                        file_ids: List[File] = [],
+                        file_ids: Optional[List[File]] = None,
                         poll: Optional[Poll] = None
                         ) -> Note:
         """
@@ -433,6 +433,10 @@ class Client:
             [description]
         """
 
+        if file_ids is None:
+            file_ids = []
+        if reply_id is None:
+            reply_id = []
         return await self._connection.post_note(content, visibility=visibility, visible_user_ids=visible_user_ids, cw=cw,
                                                 local_only=local_only, no_extract_mentions=no_extract_mentions,
                                                 no_extract_hashtags=no_extract_hashtags, no_extract_emojis=no_extract_emojis,
