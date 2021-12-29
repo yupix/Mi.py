@@ -31,9 +31,13 @@ __all__ = ["BotBase", "Bot"]
 
 
 class BotBase(CommandManager, AbstractBotBase):
-    def __init__(self, command_prefix: str, **options: Dict[Any, Any]):
+    def __init__(self, command_prefix: Optional[str]=None, **options: Dict[Any, Any]):
+        """
+        .. deprecated:: v2.3.0
+            引数 `command_prefix` は 削除予定です。
+        """
+        
         super().__init__(**options)
-        self.command_prefix = command_prefix
         self.extra_events: Dict[str, Any] = {}
         self.special_events: Dict[str, Any] = {}
         self._check_once: List[Any] = []  # TODO: いつか確認する
