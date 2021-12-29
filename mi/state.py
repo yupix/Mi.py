@@ -59,50 +59,7 @@ class NoteActions:
                         channel_id: Optional[str] = None,
                         file_ids=None,
                         poll: Optional[Poll] = None
-                        ):
-        """
-
-        ノートを投稿します。
-
-        Parameters
-        ----------
-        content : str
-            投稿する内容
-        visibility : str, optional
-            公開範囲, by default "public"
-        visible_user_ids : Optional[List[str]], optional
-            公開するユーザー, by default None
-        cw : Optional[str], optional
-            閲覧注意の文字, by default None
-        local_only : bool, optional
-            ローカルにのみ表示するか, by default False
-        no_extract_mentions : bool, optional
-            メンションを展開するか, by default False
-        no_extract_hashtags : bool, optional
-            ハッシュタグを展開するか, by default False
-        no_extract_emojis : bool, optional
-            絵文字を展開するか, by default False
-        reply_id : Optional[str], optional
-            リプライ先のid, by default None
-        renote_id : Optional[str], optional
-            リノート先のid, by default None
-        channel_id : Optional[str], optional
-            チャンネルid, by default None
-        file_ids : [type], optional
-            添付するファイルのid, by default None
-        poll : Optional[Poll], optional
-            アンケート, by default None
-
-        Returns
-        -------
-        [type]
-            [description]
-
-        Raises
-        ------
-        ContentRequired
-            [description]
-        """
+                        ) -> Note:
         if file_ids is None:
             file_ids = []
         field = {
@@ -159,8 +116,11 @@ class NoteActions:
         res = await self.http.request(Route('POST', '/api/notes/show'), json={"noteId": note_id}, auth=True, lower=True)
         return Note(res, state=self)
 
-    async def get_replies(self, note_id: str, since_id: Optional[str] = None, until_id: Optional[str] = None, limit: int = 10,) -> List[Note]:
-        res = await self.http.request(Route('POST', '/api/notes/replies'), json={"noteId": note_id, "sinceId": since_id, "untilId": until_id, "limit": limit}, auth=True, lower=True)
+    async def get_replies(self, note_id: str, since_id: Optional[str] = None, until_id: Optional[str] = None,
+                          limit: int = 10, ) -> List[Note]:
+        res = await self.http.request(Route('POST', '/api/notes/replies'),
+                                      json={"noteId": note_id, "sinceId": since_id, "untilId": until_id, "limit": limit},
+                                      auth=True, lower=True)
         return [Note(i, state=self) for i in res]
 
 
@@ -304,11 +264,8 @@ class ConnectionState(ClientAction):
         ----------
         message: Dict[str, Any]
             Received message
-
-        Returns
-        -------
-        None
         """
+
         accept_type = ['reaction']
         notification_type = str_lower(message['type'])
         if notification_type in accept_type:
@@ -379,7 +336,7 @@ class ConnectionState(ClientAction):
 
         Returns
         -------
-        status: bool = False
+        bool
             成功したならTrue, 失敗したならFalse
         """
         data = {"userId": user_id}
@@ -416,7 +373,7 @@ class ConnectionState(ClientAction):
 
         Returns
         -------
-        status: bool
+        bool
             成功したならTrue,失敗ならFalse
         """
         data = remove_dict_empty({"noteId": note_id, "reaction": reaction})
@@ -458,7 +415,7 @@ class ConnectionState(ClientAction):
 
         Returns
         -------
-        dict:
+        dict
             ユーザー情報
         """
         field = remove_dict_empty({"userId": user_id, "username": username, "host": host})
@@ -524,7 +481,7 @@ class ConnectionState(ClientAction):
 
         Returns
         -------
-        dict:
+        dict
             ユーザー情報
         """
         if not check_multi_arg(user_id, username):
@@ -689,10 +646,6 @@ class ConnectionState(ClientAction):
         since_id: str
         until_id: str
             前回の最後の値を与える(既に実行し取得しきれない場合に使用)
-
-        Returns
-        -------
-
         """
 
         if limit > 100:

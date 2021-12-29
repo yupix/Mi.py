@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Fixed
+
+- DocString
+
 ## [v1.0.3] 2021-12-29
 
 ### Added
