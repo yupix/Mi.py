@@ -382,6 +382,9 @@ class Client:
     async def get_note(self, note_id: str) -> Note:
         return await self._connection.get_note(note_id=note_id)
 
+    async def get_replies(self, note_id: str, since_id: Optional[str] = None, until_id: Optional[str] = None, limit: int = 1) -> List[Note]:
+        return await self._connection.get_replies(note_id=note_id, limit=limit, since_id=since_id, until_id=until_id)
+
     async def login(self, token):
 
         data = await self.http.static_login(token)

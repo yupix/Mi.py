@@ -10,6 +10,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 - `commands.mention_command` を追加しました
+- `get_replies` and  `get_note` method to `Class` class
+- `get_replies` method to `Note` class
+- `get_replies` and  `get_note` method to `NoteActions` class
 
 
 ### Removed
