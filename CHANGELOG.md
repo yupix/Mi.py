@@ -7,19 +7,21 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [v1.0.3] 2021-12-29
+
 ### Added
 
-- `commands.mention_command` を追加しました
-- `get_replies` and  `get_note` method to `Class` class
-- `get_replies` method to `Note` class
-- `get_replies` and  `get_note` method to `NoteActions` class
+- `commands.mention_command` を追加しました MP-8
+- `get_replies` and  `get_note` method to `Class` class MP-10 MP-9
+- `get_replies` method to `Note` class MP-10 MP-9
+- `get_replies` and  `get_note` method to `NoteActions` class MP-10 MP-9
 
 
 ### Removed
 
-- **BREAKING CHANGE**: removed core.py and context.py
-- **BREAKING CHANGE**: Cogに関連する多くのクラスを削除しました
-- **BREAKING CHANGE**: `commands.command` デコレータを削除しました
+- **BREAKING CHANGE**: removed core.py and context.py MP-8
+- **BREAKING CHANGE**: Cogに関連する多くのクラスを削除しました MP-8
+- **BREAKING CHANGE**: `commands.command` デコレータを削除しました MP-8
 
 ## [v1.0.3] 2021-12-27
 
