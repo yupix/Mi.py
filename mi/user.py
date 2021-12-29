@@ -268,7 +268,7 @@ class User:
 
         Returns
         -------
-        bool = False
+        bool
             成功ならTrue, 失敗ならFalse
         str
             実行に失敗した際のエラーコード
@@ -282,7 +282,7 @@ class User:
 
         Returns
         -------
-        status: bool = False
+        bool
             成功ならTrue, 失敗ならFalse
         """
 
@@ -294,7 +294,7 @@ class User:
 
         Returns
         -------
-        User:
+        User
             ユーザーのプロフィールオブジェクト
         """
         return await self._state.get_user(user_id=self.id, username=self.username, host=self.host)
@@ -314,7 +314,7 @@ class User:
 
         Returns
         -------
-        AsyncIterator[Follower]:
+        AsyncIterator[Follower]
             ユーザーのフォロワー一覧
         """
         return self._state.get_followers(username=self.username, host=self.host, until_id=until_id, limit=limit,

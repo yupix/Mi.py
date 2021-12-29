@@ -45,11 +45,8 @@ class Router:
         ----------
         channel_list : List
             ['global', 'local', 'home', 'main']
-
-        Returns
-        -------
-        None: None
         """
+
         channel_dict = {
             "global": 'globalTimeline',
             "main": 'main',
@@ -78,11 +75,8 @@ class Router:
         Parameters
         ----------
         message_id : str
-
-        Returns
-        -------
-        None: None
         """
+
         await self.web_socket.send_json(
             {"type": "subNote", "body": {"id": f"{message_id}"}}
         )

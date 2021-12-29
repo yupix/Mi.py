@@ -67,11 +67,8 @@ def emoji_count(text: Optional[str] = None, emojis: Optional[List[str]] = None):
     ----------
     text
     emojis
-
-    Returns
-    -------
-
     """
+
     if emojis is None:
         emojis = []
     return len(emojis) if text is None else len(emojis) + emoji.emoji_count(
@@ -142,7 +139,7 @@ def remove_list_empty(data: List[Any]) -> List[Any]:
 
     Returns
     -------
-    _data: Dict[str, Any]
+    Dict[str, Any]
         空のkeyがなくなったdict
     """
     return [k for k in data if k]

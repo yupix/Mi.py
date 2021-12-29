@@ -28,7 +28,7 @@ MISSING: Any = _MissingSentinel()
 
 
 class Route:
-    def __init__(self, method: str, path: str, **parameters: Any):
+    def __init__(self, method: str, path: str):
         self.path: str = path
         self.method: str = method
         self.url = config.i.origin_uri + path
@@ -51,7 +51,7 @@ class HTTPClient:
         self.__session: aiohttp.ClientSession = MISSING
         self.token: Optional[str] = None
 
-    async def request(self, route: Route, *, files=None, form=None, **kwargs) -> Any:
+    async def request(self, route: Route, **kwargs) -> Any:
         headers: Dict[str, str] = {
             'User-Agent': self.user_agent,
         }

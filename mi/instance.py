@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Dict, Iterator, List, Optional, TYPE_CHECKING
+from typing import AsyncIterator, Dict, List, Optional, TYPE_CHECKING
 
 from .emoji import Emoji
 from .types.instance import (Instance as InstancePayload,
@@ -8,7 +8,7 @@ from .types.instance import (Instance as InstancePayload,
 
 if TYPE_CHECKING:
     from .user import User
-    from . import ConnectionState
+    from . import ConnectionState, User
 
 
 class InstanceMeta:
@@ -84,7 +84,7 @@ class Instance:
                   username: Optional[str] = None,
                   hostname: Optional[str] = None,
                   get_all: bool = False
-                  ) -> Iterator[User]:
+                  ) -> AsyncIterator[User]:
         """
 
         Parameters
@@ -100,7 +100,7 @@ class Instance:
 
         Returns
         -------
-        Iterator[User]
+        AsyncIterator[User]
         """
         return self._state.get_users(limit=limit, offset=offset, sort=sort, state=state, origin=origin, username=username,
                                      hostname=hostname, get_all=get_all)

@@ -27,7 +27,7 @@ class Follow:
         ユーザーをフォローします
         Returns
         -------
-        bool = False
+        bool
             成功ならTrue, 失敗ならFalse
         str
             実行に失敗した際のエラーコード
@@ -48,7 +48,7 @@ class Follow:
 
         Returns
         -------
-        status: bool = False
+        status
             成功ならTrue, 失敗ならFalse
         """
 
@@ -283,8 +283,6 @@ class Note(AbstractNote):
         -------
         bool
             成功したかどうか
-
-
         """
 
         return await self._state.add_reaction_to_note(note_id=self.id, reaction=reaction)
@@ -316,6 +314,11 @@ class Note(AbstractNote):
     async def remove_favorite(self) -> bool:
         """
         お気に入りから解除します
+        
+        Returns
+        -------
+        bool
+            お気に入りの解除に成功したかどうか
         """
 
         return await self._state.remove_favorite(note_id=self.id)
@@ -323,6 +326,11 @@ class Note(AbstractNote):
     async def add_to_clips(self, clip_id: str) -> bool:
         """
         指定したクリップにノートを追加します
+        
+        Returns
+        -------
+        bool
+            クリップに追加できたかどうか
         """
 
         return await self._state.add_note_to_clips(clip_id=clip_id, note_id=self.id)
@@ -330,6 +338,11 @@ class Note(AbstractNote):
     async def create_renote(self) -> Note:
         """
         ノートをリノートします
+        
+        Returns
+        -------
+        Note
+            作成したリノート
         """
 
         return await self._state.create_renote(self.id)
@@ -337,6 +350,19 @@ class Note(AbstractNote):
     async def get_replies(self, since_id: Optional[str] = None, until_id: Optional[str] = None, limit: int = 10) -> List[Note]:
         """
         ノートに対する返信を取得します
+        
+        Parameters
+        ----------
+        since_id: Optional[str], default=None
+        until_id: Optional[str], default=None
+            前回の最後のidから取得する場合
+        limit: int, default=10
+            取得する件数
+        
+        Returns
+        -------
+        List[Note]
+            ノートに対する返信一覧
         """
 
         return await self._state.get_replies(note_id=self.id, since_id=since_id, until_id=until_id, limit=limit)
@@ -377,6 +403,11 @@ class Note(AbstractNote):
             添付するファイルのid
         poll: Optional[Poll]
             アンケート
+        
+        Returns
+        -------
+        Note
+            作成した引用ノート
         """
 
         visibility = self.visibility or visibility or 'public'

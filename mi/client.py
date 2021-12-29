@@ -87,7 +87,8 @@ class Client:
             self.extra_events[name] = [func]
 
     def event_dispatch(self, event_name: str, *args: Tuple[Any], **kwargs: Dict[Any, Any]) -> bool:
-        """on_ready等といった
+        """
+        on_ready等といった
 
         Parameters
         ----------
@@ -99,6 +100,7 @@ class Client:
         -------
 
         """
+
         ev = "on_" + event_name
         for event in self.special_events.get(ev, []):
             foo = importlib.import_module(event.__module__)
@@ -158,7 +160,10 @@ class Client:
     async def progress_command(self, message):
         for key, command in self.all_commands.items():
             if re.search(command.regex, message.content):
-                await command.invoke(message)
+                hit_list = re.findall(command.regex, message.content)
+                if isinstance(hit_list, tuple):
+                    hit_list = hit_list[0]
+                await command.invoke(message, *hit_list)
 
     async def on_mention(self, message):
         await self.progress_command(message)
@@ -169,8 +174,7 @@ class Client:
     # ここからクライアント操作
 
     async def post_chat(self, content: str, *, user_id: str = None, group_id: str = None, file_id: str = None) -> Chat:
-        """post_chat API
-
+        """
         チャットを送信します。
 
         Parameters
@@ -188,6 +192,7 @@ class Client:
         -------
         None
         """
+
         return await self._connection.post_chat(content, user_id=user_id, group_id=group_id, file_id=file_id)
 
     async def delete_chat(self, message_id: str) -> bool:
@@ -204,6 +209,7 @@ class Client:
         bool
             削除に成功したかどうか
         """
+
         return await self._connection.delete_chat(message_id=message_id)
 
     async def get_user_notes(
@@ -233,9 +239,10 @@ class Client:
 
         Returns
         -------
-        Union[Instance, InstanceMeta]:
+        Union[Instance, InstanceMeta]
             インスタンス情報
         """
+
         return await self._connection.get_instance(host=host)
 
     async def fetch_instance(self, host: Optional[str] = None) -> Union[Instance, InstanceMeta]:
@@ -244,9 +251,10 @@ class Client:
 
         Returns
         -------
-        Union[Instance, InstanceMeta]:
+        Union[Instance, InstanceMeta]
             インスタンス情報
         """
+
         return await self._connection.fetch_instance(host=host)
 
     async def get_i(self) -> User:
@@ -273,9 +281,10 @@ class Client:
 
         Returns
         -------
-        dict:
+        dict
             ユーザー情報
         """
+
         return await self._connection.get_user(user_id=user_id, username=username, host=host)
 
     async def fetch_user(self, user_id: Optional[str] = None, username: Optional[str] = None,
@@ -294,10 +303,11 @@ class Client:
 
         Returns
         -------
-        dict:
+        dict
             ユーザー情報
         """
-        await self._connection.fetch_user(user_id=user_id, username=username, host=host)
+
+        return await self._connection.fetch_user(user_id=user_id, username=username, host=host)
 
     async def file_upload(
             self,
@@ -347,9 +357,24 @@ class Client:
         Drive
             ファイルの情報
         """
+
         return await self._connection.show_file(file_id=file_id, url=url)
 
     async def remove_file(self, file_id: str) -> bool:
+        """
+        指定したファイルIDのファイルを削除します
+        
+        Parameters
+        ----------
+        file_id:str
+            削除したいファイルのID
+        
+        Returns
+        -------
+        bool
+            削除に成功したかどうか
+        """
+
         return await self._connection.remove_file(file_id=file_id)
 
     async def post_note(self,
@@ -362,12 +387,57 @@ class Client:
                         no_extract_mentions: bool = False,
                         no_extract_hashtags: bool = False,
                         no_extract_emojis: bool = False,
-                        reply_id: List[str] = [],
+                        reply_id: Optional[str] = None,
                         renote_id: Optional[str] = None,
                         channel_id: Optional[str] = None,
-                        file_ids: List[File] = [],
+                        file_ids: Optional[List[File]] = None,
                         poll: Optional[Poll] = None
                         ) -> Note:
+        """
+        ノートを投稿します。
+
+        Parameters
+        ----------
+        content : str
+            投稿する内容
+        visibility : str, optional
+            公開範囲, by default "public"
+        visible_user_ids : Optional[List[str]], optional
+            公開するユーザー, by default None
+        cw : Optional[str], optional
+            閲覧注意の文字, by default None
+        local_only : bool, optional
+            ローカルにのみ表示するか, by default False
+        no_extract_mentions : bool, optional
+            メンションを展開するか, by default False
+        no_extract_hashtags : bool, optional
+            ハッシュタグを展開するか, by default False
+        no_extract_emojis : bool, optional
+            絵文字を展開するか, by default False
+        reply_id : Optional[str], optional
+            リプライ先のid, by default None
+        renote_id : Optional[str], optional
+            リノート先のid, by default None
+        channel_id : Optional[str], optional
+            チャンネルid, by default None
+        file_ids : [type], optional
+            添付するファイルのid, by default None
+        poll : Optional[Poll], optional
+            アンケート, by default None
+
+        Returns
+        -------
+        Note
+            投稿したノート
+
+        Raises
+        ------
+        ContentRequired
+            [description]
+        """
+
+        if file_ids is None:
+            file_ids = []
         return await self._connection.post_note(content, visibility=visibility, visible_user_ids=visible_user_ids, cw=cw,
                                                 local_only=local_only, no_extract_mentions=no_extract_mentions,
                                                 no_extract_hashtags=no_extract_hashtags, no_extract_emojis=no_extract_emojis,
@@ -380,13 +450,45 @@ class Client:
                                                         until_id=until_id)
 
     async def get_note(self, note_id: str) -> Note:
+        """
+        ノートを取得
+        Parameters
+        ----------
+        note_id:str
+            取得したいノートのID
+        
+        Returns
+        -------
+        Note
+            取得したノート
+        """
+
         return await self._connection.get_note(note_id=note_id)
 
-    async def get_replies(self, note_id: str, since_id: Optional[str] = None, until_id: Optional[str] = None, limit: int = 1) -> List[Note]:
+    async def get_replies(self, note_id: str, since_id: Optional[str] = None, until_id: Optional[str] = None,
+                          limit: int = 1) -> List[Note]:
+        """
+        ノートに対する返信を取得します
+        
+        Parameters
+        ----------
+        note_id : str
+            返信を取得したいノートのID
+        since_id: Optional[str], default=None
+        until_id: Optional[str], default=None
+            前回の最後のidから取得する場合
+        limit: int, default=10
+            取得する件数
+        
+        Returns
+        -------
+        List[Note]
+            ノートに対する返信一覧
+        """
+
         return await self._connection.get_replies(note_id=note_id, limit=limit, since_id=since_id, until_id=until_id)
 
     async def login(self, token):
-
         data = await self.http.static_login(token)
         self.i = User(data, self._connection)
 
@@ -419,9 +521,9 @@ class Client:
         if _origin_uri := re.search(r"wss?://(.*)/streaming", url):
             origin_uri = (
                 _origin_uri.group(0)
-                .replace("wss", "https")
-                .replace("ws", "http")
-                .replace("/streaming", "")
+                    .replace("wss", "https")
+                    .replace("ws", "http")
+                    .replace("/streaming", "")
             )
         else:
             origin_uri = url

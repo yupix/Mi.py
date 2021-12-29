@@ -35,12 +35,8 @@ class Loop:
     def stop(self):
         """
         タスクを停止
-
-        Returns
-        -------
-        None
-
         """
+
         if self._task is None:
             raise TaskNotRunningError('タスクは起動していません')
 
