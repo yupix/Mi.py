@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 
+- The `fetch_user` method is not doing a return.
 - DocString
 
 ## [v1.0.3] 2021-12-29

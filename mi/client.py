@@ -87,7 +87,8 @@ class Client:
             self.extra_events[name] = [func]
 
     def event_dispatch(self, event_name: str, *args: Tuple[Any], **kwargs: Dict[Any, Any]) -> bool:
-        """on_ready等といった
+        """
+        on_ready等といった
 
         Parameters
         ----------
@@ -170,8 +171,7 @@ class Client:
     # ここからクライアント操作
 
     async def post_chat(self, content: str, *, user_id: str = None, group_id: str = None, file_id: str = None) -> Chat:
-        """post_chat API
-
+        """
         チャットを送信します。
 
         Parameters
@@ -304,7 +304,7 @@ class Client:
             ユーザー情報
         """
 
-        await self._connection.fetch_user(user_id=user_id, username=username, host=host)
+        return await self._connection.fetch_user(user_id=user_id, username=username, host=host)
 
     async def file_upload(
             self,
