@@ -3,13 +3,11 @@ from __future__ import annotations
 from typing import AsyncIterator, Optional, TYPE_CHECKING
 
 from mi.http import Route
-
 from . import User
 from .utils import remove_dict_empty
 
 if TYPE_CHECKING:
     from . import ConnectionState
-
 
 __all__ = ('InstanceIterator',)
 

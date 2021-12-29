@@ -13,9 +13,10 @@ from mi import config
 
 T = TypeVar("T")
 
+
 def deprecated_func(func):
     print('deprecated function:' + func.__name__)
-    
+
 
 def get_cache_key(func):
     async def decorator(self, *args, **kwargs):

@@ -5,27 +5,8 @@ from typing import Any, Callable, Coroutine, Dict, Optional, Tuple
 
 from aiohttp.client_ws import ClientWebSocketResponse
 
-from mi.abc.ext.core import AbstractGroupMixin
-from .context import AbstractContext
 
-
-class AbstractBotBase(AbstractGroupMixin):
-    @abstractmethod
-    async def can_run(self, ctx: AbstractContext, *, call_once: bool = False) -> bool:
-        pass
-
-    @abstractmethod
-    async def invoke(self, ctx: AbstractContext, *args: Tuple[Any], **kwargs: Dict[Any, Any]):
-        pass
-
-    @abstractmethod
-    async def get_context(self, message, *, cls: Any = AbstractContext):
-        pass
-
-    @abstractmethod
-    async def process_commands(self, message):
-        pass
-
+class AbstractBotBase:
     @abstractmethod
     async def _on_message(self, message):
         pass

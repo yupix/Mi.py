@@ -1,9 +1,13 @@
-import inspect
-from typing import Any, Callable, ClassVar, Coroutine, Dict, List, Optional, Tuple
+from __future__ import annotations
 
-from mi.abc.ext.bot import AbstractBotBase
+import inspect
+from typing import Any, Callable, ClassVar, Coroutine, Dict, List, Optional, TYPE_CHECKING, Tuple
+
 from mi.ext.commands._types import _BaseCommand
 from mi.ext.commands.core import Command
+
+if TYPE_CHECKING:
+    from mi.ext import Bot
 
 
 class CogMeta(type):
@@ -11,8 +15,8 @@ class CogMeta(type):
         name, bases, attrs = args
         attrs['__cog_name__'] = kwargs.pop("name", name)
         attrs['__cog_settings__'] = kwargs.pop("command_attrs", {})
-        commands = {}
         listeners = {}
+        commands = {}
         no_bot_cog = "Commands or listeners must not start with cog_ or bot_ (in method {0.__name__}.{1})"
         new_cls = super().__new__(cls, name, bases, attrs, **kwargs)
 
@@ -22,20 +26,15 @@ class CogMeta(type):
                     del commands[elem]  # commandsから削除
                 if elem in listeners:
                     del listeners[elem]  # listenersから削除
-
                 is_static_method = isinstance(value, staticmethod)
+
+                if isinstance(value, Command):
+                    commands[elem] = value
 
                 if is_static_method:  # staticmethodか確認
                     value = value.__func__  # 関数をvalueに !valueが重要
-
-                if isinstance(value, _BaseCommand):
-                    if is_static_method:
-                        raise TypeError(
-                            f"Command in method {base}.{elem!r} must not be staticmethod."
-                        )
-                    if elem.startswith(("cog", "bot_")):
-                        raise TypeError(no_bot_cog.format(base, elem))
-                    commands[elem] = value
+                    if isinstance(value, _BaseCommand):
+                        commands[elem] = value
                 elif inspect.iscoroutinefunction(value):
                     try:
                         value.__cog_listener__
@@ -45,11 +44,9 @@ class CogMeta(type):
                         if elem.startswith(("cog", "bot_")):
                             raise TypeError(no_bot_cog.format(base, elem))
                         listeners[elem] = value
-
         new_cls.__cog_commands__ = list(commands.values())
 
         listeners_as_list: List[tuple[str, Any]] = []
-
         for listener in listeners.values():
             for listener_name in listener.__cog_listener_names__:
                 listeners_as_list.append((listener_name, listener))
@@ -64,31 +61,16 @@ class CogMeta(type):
 class Cog(metaclass=CogMeta):
     __cog_name__ = ClassVar[str]
     __cog_settings__: Dict[str, Any] = {}
-    __cog_commands__: List[Command] = []
     __cog_listeners__: ClassVar[List[Tuple[str, str]]]
+    __cog_commands__: List[Command] = []
 
     def __new__(cls, *args: tuple[Any], **kwargs: Dict[str, Any]):
         self = super().__new__(cls)
-        cmd_attrs = cls.__cog_settings__
-        self.__cog_commands__ = tuple(c._update_copy(cmd_attrs) for c in cls.__cog_commands__)
-
-        lookup = {cmd.qualified_name: cmd for cmd in self.__cog_commands__}
-
-        for command in self.__cog_commands__:
-            setattr(self, command.callback.__name__, command)
-            parent = command.parent
-            if parent:
-                parent = lookup[parent.qualified_name]
-
-                parent.remove_command(command.name)
-                parent.add_command(command)
+        self.__cog_commands__ = tuple(cls.__cog_commands__)
         return self
 
     @classmethod
     def listener(cls, name: Optional[str] = None):
-        if name is not None:
-            raise TypeError(f'Cog.listener expected str but received {name.__clsss__.__name__!r} instead.')
-
         def decorator(func: Callable[..., Coroutine[Any, Any, Any]]):
             actual = func
             if isinstance(actual, staticmethod):
@@ -105,18 +87,11 @@ class Cog(metaclass=CogMeta):
 
         return decorator
 
-    def _inject(self, bot: AbstractBotBase):
-        cls = self.__class__
-        for index, command in enumerate(self.__cog_commands__):
-            if command.parent is None:
-                try:
-                    bot.add_command(command)
-                except Exception as e:
-                    for to_undo in self.__cog_commands__[:index]:
-                        if to_undo.parent is None:
-                            bot.remove_command(to_undo.name)
-                        raise e
-        for name, method_name in self.__cog_listeners__:
-            bot.add_listener(getattr(self, method_name), name)
+    def _inject(self, bot: Bot):
+        for command in self.__cog_commands__:
+            bot.add_command(command)
+
+        for name, method_func in self.__cog_listeners__:
+            bot.add_listener(getattr(self, name), name)
 
         return self

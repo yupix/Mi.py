@@ -41,7 +41,7 @@ class Client:
         self.ws: MisskeyWebSocket = None
 
     def _get_state(self, **options: Any) -> ConnectionState:
-        return ConnectionState(dispatch=self.dispatch, http=self.http, loop=self.loop, **options)
+        return ConnectionState(dispatch=self.dispatch, http=self.http, loop=self.loop, client=self, **options)
 
     async def on_ready(self, ws: ClientWebSocketResponse):
         """
@@ -150,13 +150,18 @@ class Client:
             except asyncio.CancelledError:
                 pass
 
-    async def _on_message(self, message):
-        await self.dispatch("message", message)
-
     @staticmethod
     async def __on_error(event_method: str) -> None:
         print(f"Ignoring exception in {event_method}", file=sys.stderr)
         traceback.print_exc()
+
+    async def progress_command(self, message):
+        for key, command in self.all_commands.items():
+            if re.search(command.regex, message.content):
+                await command.invoke(message)
+
+    async def on_mention(self, message):
+        await self.progress_command(message)
 
     async def on_error(self, err):
         await self.event_dispatch("error", err)

@@ -2,9 +2,9 @@ from __future__ import annotations
 
 from typing import Dict, Iterator, List, Optional, TYPE_CHECKING
 
+from .emoji import Emoji
 from .types.instance import (Instance as InstancePayload,
                              Meta as InstanceMetaPayload)
-from .emoji import Emoji
 
 if TYPE_CHECKING:
     from .user import User
