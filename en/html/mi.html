@@ -520,21 +520,60 @@ async</span><a class="reference internal" href="#mi.Note.reply">reply</a></li></
 <dt class="sig sig-object py" id="mi.Note.remove_favorite">
 <em class="property"><span class="pre">await</span> </em><span class="sig-name descname"><span class="pre">remove_favorite</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/note.html#Note.remove_favorite"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mi.Note.remove_favorite" title="Permalink to this definition">¶</a></dt>
 <dd><p>お気に入りから解除します</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>お気に入りの解除に成功したかどうか</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="mi.Note.add_to_clips">
 <em class="property"><span class="pre">await</span> </em><span class="sig-name descname"><span class="pre">add_to_clips</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">clip_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/note.html#Note.add_to_clips"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mi.Note.add_to_clips" title="Permalink to this definition">¶</a></dt>
 <dd><p>指定したクリップにノートを追加します</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>クリップに追加できたかどうか</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="mi.Note.create_renote">
 <em class="property"><span class="pre">await</span> </em><span class="sig-name descname"><span class="pre">create_renote</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/note.html#Note.create_renote"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mi.Note.create_renote" title="Permalink to this definition">¶</a></dt>
 <dd><p>ノートをリノートします</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>作成したリノート</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#mi.Note" title="mi.Note">Note</a></p>
+</dd>
+</dl>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="mi.Note.get_replies">
 <em class="property"><span class="pre">await</span> </em><span class="sig-name descname"><span class="pre">get_replies</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">since_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">until_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/note.html#Note.get_replies"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mi.Note.get_replies" title="Permalink to this definition">¶</a></dt>
 <dd><p>ノートに対する返信を取得します</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>since_id</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>default=None</em>) – </p></li>
+<li><p><strong>until_id</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>default=None</em>) – 前回の最後のidから取得する場合</p></li>
+<li><p><strong>limit</strong> (<em>int</em><em>, </em><em>default=10</em>) – 取得する件数</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>ノートに対する返信一覧</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>List[<a class="reference internal" href="#mi.Note" title="mi.Note">Note</a>]</p>
+</dd>
+</dl>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="mi.Note.create_quote">
@@ -554,6 +593,12 @@ async</span><a class="reference internal" href="#mi.Note.reply">reply</a></li></
 <li><p><strong>file_ids</strong> – 添付するファイルのid</p></li>
 <li><p><strong>poll</strong> (<em>Optional</em><em>[</em><em>Poll</em><em>]</em>) – アンケート</p></li>
 </ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>作成した引用ノート</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#mi.Note" title="mi.Note">Note</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -961,7 +1006,7 @@ async</span><a class="reference internal" href="#mi.User.unfollow">unfollow</a><
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p><ul class="simple">
-<li><p><em>bool = False</em> – True for success, False for failure</p></li>
+<li><p><em>bool</em> – 成功ならTrue, 失敗ならFalse</p></li>
 <li><p><em>str</em> – Error code when execution fails.</p></li>
 </ul>
 </p>
@@ -974,10 +1019,10 @@ async</span><a class="reference internal" href="#mi.User.unfollow">unfollow</a><
 <dd><p>Unfollow a user</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><strong>status</strong> – True for success, False for failure</p>
+<dd class="field-odd"><p>成功ならTrue, 失敗ならFalse</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p>bool = False</p>
+<dd class="field-even"><p>bool</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1176,7 +1221,8 @@ async</span><a class="reference internal" href="#mi.Follow.unfollow">unfollow</a
 <dd><dl class="py method">
 <dt class="sig sig-object py" id="mi.Follow.follow">
 <em class="property"><span class="pre">await</span> </em><span class="sig-name descname"><span class="pre">follow</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/note.html#Follow.follow"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mi.Follow.follow" title="Permalink to this definition">¶</a></dt>
-<dd><p>Follow the user :returns: * <em>bool = False</em> – True for success, False for failure.</p>
+<dd><p>ユーザーをフォローします
+:returns: * <em>bool</em> – 成功ならTrue, 失敗ならFalse</p>
 <blockquote>
 <div><ul class="simple">
 <li><p><em>str</em> – Error code when execution fails.</p></li>
@@ -1192,10 +1238,10 @@ async</span><a class="reference internal" href="#mi.Follow.unfollow">unfollow</a
 <dd class="field-odd"><p><strong>user_id</strong> (<em>Optional</em><em>[</em><em>str</em><em>] </em><em>= None</em>) – ID of the user you want to unfollow</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>status</strong> – True for success, False for failure</p>
+<dd class="field-even"><p>成功ならTrue, 失敗ならFalse</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>bool = False</p>
+<dd class="field-odd"><p>status</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1476,12 +1522,6 @@ async</span><a class="reference internal" href="#mi.Follow.unfollow">unfollow</a
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>message</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – Received message</p>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p></p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>None</p>
-</dd>
 </dl>
 </dd></dl>
 <dl class="py method">
@@ -1528,10 +1568,10 @@ async</span><a class="reference internal" href="#mi.Follow.unfollow">unfollow</a
 <dd class="field-odd"><p><strong>user_id</strong> – ID of the user you want to unfollow</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>status</strong> – True for success, False for failure</p>
+<dd class="field-even"><p>成功したならTrue, 失敗したならFalse</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>bool = False</p>
+<dd class="field-odd"><p>bool</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1547,7 +1587,7 @@ async</span><a class="reference internal" href="#mi.Follow.unfollow">unfollow</a
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>status</strong> – True for success, False for failure</p>
+<dd class="field-even"><p>成功したならTrue,失敗ならFalse</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>bool</p>

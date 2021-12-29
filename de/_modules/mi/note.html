@@ -214,7 +214,7 @@
 <span class="sd">        ユーザーをフォローします</span>
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        bool = False</span>
+<span class="sd">        bool</span>
 <span class="sd">            成功ならTrue, 失敗ならFalse</span>
 <span class="sd">        str</span>
 <span class="sd">            実行に失敗した際のエラーコード</span>
@@ -235,7 +235,7 @@
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        status: bool = False</span>
+<span class="sd">        status</span>
 <span class="sd">            成功ならTrue, 失敗ならFalse</span>
 <span class="sd">        """</span>
 
@@ -470,8 +470,6 @@
 <span class="sd">        -------</span>
 <span class="sd">        bool</span>
 <span class="sd">            成功したかどうか</span>
-
-
 <span class="sd">        """</span>
 
         <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">add_reaction_to_note</span><span class="p">(</span><span class="n">note_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">reaction</span><span class="o">=</span><span class="n">reaction</span><span class="p">)</span></div>
@@ -503,6 +501,11 @@
 <div class="viewcode-block" id="Note.remove_favorite"><a class="viewcode-back" href="../../mi.html#mi.Note.remove_favorite">[Doku]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">remove_favorite</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="sd">"""</span>
 <span class="sd">        お気に入りから解除します</span>
+<span class="sd">        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        bool</span>
+<span class="sd">            お気に入りの解除に成功したかどうか</span>
 <span class="sd">        """</span>
 
         <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">remove_favorite</span><span class="p">(</span><span class="n">note_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span></div>
@@ -510,6 +513,11 @@
 <div class="viewcode-block" id="Note.add_to_clips"><a class="viewcode-back" href="../../mi.html#mi.Note.add_to_clips">[Doku]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">add_to_clips</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">clip_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="sd">"""</span>
 <span class="sd">        指定したクリップにノートを追加します</span>
+<span class="sd">        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        bool</span>
+<span class="sd">            クリップに追加できたかどうか</span>
 <span class="sd">        """</span>
 
         <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">add_note_to_clips</span><span class="p">(</span><span class="n">clip_id</span><span class="o">=</span><span class="n">clip_id</span><span class="p">,</span> <span class="n">note_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span></div>
@@ -517,6 +525,11 @@
 <div class="viewcode-block" id="Note.create_renote"><a class="viewcode-back" href="../../mi.html#mi.Note.create_renote">[Doku]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">create_renote</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Note</span><span class="p">:</span>
         <span class="sd">"""</span>
 <span class="sd">        ノートをリノートします</span>
+<span class="sd">        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        Note</span>
+<span class="sd">            作成したリノート</span>
 <span class="sd">        """</span>
 
         <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">create_renote</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span></div>
@@ -524,6 +537,19 @@
 <div class="viewcode-block" id="Note.get_replies"><a class="viewcode-back" href="../../mi.html#mi.Note.get_replies">[Doku]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">get_replies</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">since_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">until_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">limit</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Note</span><span class="p">]:</span>
         <span class="sd">"""</span>
 <span class="sd">        ノートに対する返信を取得します</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        since_id: Optional[str], default=None</span>
+<span class="sd">        until_id: Optional[str], default=None</span>
+<span class="sd">            前回の最後のidから取得する場合</span>
+<span class="sd">        limit: int, default=10</span>
+<span class="sd">            取得する件数</span>
+<span class="sd">        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        List[Note]</span>
+<span class="sd">            ノートに対する返信一覧</span>
 <span class="sd">        """</span>
 
         <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">get_replies</span><span class="p">(</span><span class="n">note_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">since_id</span><span class="o">=</span><span class="n">since_id</span><span class="p">,</span> <span class="n">until_id</span><span class="o">=</span><span class="n">until_id</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="n">limit</span><span class="p">)</span></div>
@@ -564,6 +590,11 @@
 <span class="sd">            添付するファイルのid</span>
 <span class="sd">        poll: Optional[Poll]</span>
 <span class="sd">            アンケート</span>
+<span class="sd">        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        Note</span>
+<span class="sd">            作成した引用ノート</span>
 <span class="sd">        """</span>
 
         <span class="n">visibility</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">visibility</span> <span class="ow">or</span> <span class="n">visibility</span> <span class="ow">or</span> <span class="s1">'public'</span>

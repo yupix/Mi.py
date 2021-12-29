@@ -246,50 +246,7 @@
                         <span class="n">channel_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
                         <span class="n">file_ids</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                         <span class="n">poll</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Poll</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
-                        <span class="p">):</span>
-        <span class="sd">"""</span>
-
-<span class="sd">        ノートを投稿します。</span>
-
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        content : str</span>
-<span class="sd">            投稿する内容</span>
-<span class="sd">        visibility : str, optional</span>
-<span class="sd">            公開範囲, by default "public"</span>
-<span class="sd">        visible_user_ids : Optional[List[str]], optional</span>
-<span class="sd">            公開するユーザー, by default None</span>
-<span class="sd">        cw : Optional[str], optional</span>
-<span class="sd">            閲覧注意の文字, by default None</span>
-<span class="sd">        local_only : bool, optional</span>
-<span class="sd">            ローカルにのみ表示するか, by default False</span>
-<span class="sd">        no_extract_mentions : bool, optional</span>
-<span class="sd">            メンションを展開するか, by default False</span>
-<span class="sd">        no_extract_hashtags : bool, optional</span>
-<span class="sd">            ハッシュタグを展開するか, by default False</span>
-<span class="sd">        no_extract_emojis : bool, optional</span>
-<span class="sd">            絵文字を展開するか, by default False</span>
-<span class="sd">        reply_id : Optional[str], optional</span>
-<span class="sd">            リプライ先のid, by default None</span>
-<span class="sd">        renote_id : Optional[str], optional</span>
-<span class="sd">            リノート先のid, by default None</span>
-<span class="sd">        channel_id : Optional[str], optional</span>
-<span class="sd">            チャンネルid, by default None</span>
-<span class="sd">        file_ids : [type], optional</span>
-<span class="sd">            添付するファイルのid, by default None</span>
-<span class="sd">        poll : Optional[Poll], optional</span>
-<span class="sd">            アンケート, by default None</span>
-
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        [type]</span>
-<span class="sd">            [description]</span>
-
-<span class="sd">        Raises</span>
-<span class="sd">        ------</span>
-<span class="sd">        ContentRequired</span>
-<span class="sd">            [description]</span>
-<span class="sd">        """</span>
+                        <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Note</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">file_ids</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">file_ids</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">field</span> <span class="o">=</span> <span class="p">{</span>
@@ -346,8 +303,11 @@
         <span class="n">res</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">Route</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">,</span> <span class="s1">'/api/notes/show'</span><span class="p">),</span> <span class="n">json</span><span class="o">=</span><span class="p">{</span><span class="s2">"noteId"</span><span class="p">:</span> <span class="n">note_id</span><span class="p">},</span> <span class="n">auth</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">Note</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
 
-    <span class="k">async</span> <span class="k">def</span> <span class="nf">get_replies</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">note_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">since_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">until_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">limit</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Note</span><span class="p">]:</span>
-        <span class="n">res</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">Route</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">,</span> <span class="s1">'/api/notes/replies'</span><span class="p">),</span> <span class="n">json</span><span class="o">=</span><span class="p">{</span><span class="s2">"noteId"</span><span class="p">:</span> <span class="n">note_id</span><span class="p">,</span> <span class="s2">"sinceId"</span><span class="p">:</span> <span class="n">since_id</span><span class="p">,</span> <span class="s2">"untilId"</span><span class="p">:</span> <span class="n">until_id</span><span class="p">,</span> <span class="s2">"limit"</span><span class="p">:</span> <span class="n">limit</span><span class="p">},</span> <span class="n">auth</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">get_replies</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">note_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">since_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">until_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                          <span class="n">limit</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Note</span><span class="p">]:</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">Route</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">,</span> <span class="s1">'/api/notes/replies'</span><span class="p">),</span>
+                                      <span class="n">json</span><span class="o">=</span><span class="p">{</span><span class="s2">"noteId"</span><span class="p">:</span> <span class="n">note_id</span><span class="p">,</span> <span class="s2">"sinceId"</span><span class="p">:</span> <span class="n">since_id</span><span class="p">,</span> <span class="s2">"untilId"</span><span class="p">:</span> <span class="n">until_id</span><span class="p">,</span> <span class="s2">"limit"</span><span class="p">:</span> <span class="n">limit</span><span class="p">},</span>
+                                      <span class="n">auth</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="k">return</span> <span class="p">[</span><span class="n">Note</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">res</span><span class="p">]</span>
 
 
@@ -491,11 +451,8 @@
 <span class="sd">        ----------</span>
 <span class="sd">        message: Dict[str, Any]</span>
 <span class="sd">            Received message</span>
-
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        None</span>
 <span class="sd">        """</span>
+
         <span class="n">accept_type</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'reaction'</span><span class="p">]</span>
         <span class="n">notification_type</span> <span class="o">=</span> <span class="n">str_lower</span><span class="p">(</span><span class="n">message</span><span class="p">[</span><span class="s1">'type'</span><span class="p">])</span>
         <span class="k">if</span> <span class="n">notification_type</span> <span class="ow">in</span> <span class="n">accept_type</span><span class="p">:</span>
@@ -566,7 +523,7 @@
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        status: bool = False</span>
+<span class="sd">        bool</span>
 <span class="sd">            成功したならTrue, 失敗したならFalse</span>
 <span class="sd">        """</span>
         <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"userId"</span><span class="p">:</span> <span class="n">user_id</span><span class="p">}</span>
@@ -603,7 +560,7 @@
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        status: bool</span>
+<span class="sd">        bool</span>
 <span class="sd">            成功したならTrue,失敗ならFalse</span>
 <span class="sd">        """</span>
         <span class="n">data</span> <span class="o">=</span> <span class="n">remove_dict_empty</span><span class="p">({</span><span class="s2">"noteId"</span><span class="p">:</span> <span class="n">note_id</span><span class="p">,</span> <span class="s2">"reaction"</span><span class="p">:</span> <span class="n">reaction</span><span class="p">})</span>
@@ -645,7 +602,7 @@
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        dict:</span>
+<span class="sd">        dict</span>
 <span class="sd">            ユーザー情報</span>
 <span class="sd">        """</span>
         <span class="n">field</span> <span class="o">=</span> <span class="n">remove_dict_empty</span><span class="p">({</span><span class="s2">"userId"</span><span class="p">:</span> <span class="n">user_id</span><span class="p">,</span> <span class="s2">"username"</span><span class="p">:</span> <span class="n">username</span><span class="p">,</span> <span class="s2">"host"</span><span class="p">:</span> <span class="n">host</span><span class="p">})</span>
@@ -711,7 +668,7 @@
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        dict:</span>
+<span class="sd">        dict</span>
 <span class="sd">            ユーザー情報</span>
 <span class="sd">        """</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">check_multi_arg</span><span class="p">(</span><span class="n">user_id</span><span class="p">,</span> <span class="n">username</span><span class="p">):</span>
@@ -876,10 +833,6 @@
 <span class="sd">        since_id: str</span>
 <span class="sd">        until_id: str</span>
 <span class="sd">            前回の最後の値を与える(既に実行し取得しきれない場合に使用)</span>
-
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-
 <span class="sd">        """</span>
 
         <span class="k">if</span> <span class="n">limit</span> <span class="o">&gt;</span> <span class="mi">100</span><span class="p">:</span>
