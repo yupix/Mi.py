@@ -334,7 +334,7 @@ class Note(AbstractNote):
 
         return await self._state.create_renote(self.id)
 
-    async def get_replies(self, since_id: Optional[str] = None, until_id: Optional[str] = None, limit: int = 10):
+    async def get_replies(self, since_id: Optional[str] = None, until_id: Optional[str] = None, limit: int = 10) -> List[Note]:
         """
         ノートに対する返信を取得します
         """
