@@ -155,6 +155,10 @@ class NoteActions:
                                     no_extract_hashtags=no_extract_hashtags,
                                     no_extract_emojis=no_extract_emojis, renote_id=note_id, file_ids=file_ids, poll=poll)
 
+    async def get_note(self, note_id) -> Note:
+        res = await self.http.request(Route('POST', '/api/notes/show'), json={"noteId": note_id}, auth=True, lower=True)
+        return Note(res, state=self)
+
 
 class UserAction:
     def __init__(self, http: HTTPClient, loop: asyncio.AbstractEventLoop):
