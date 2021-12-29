@@ -11,6 +11,7 @@ from types import ModuleType
 from typing import Any, Callable, Coroutine, Dict, List, Optional, TYPE_CHECKING, Tuple, Union
 
 from mi import Client, User
+from mi.ext.commands import CommandManager
 from mi.abc.ext.bot import AbstractBotBase
 from mi.exception import (
     CogNameDuplicate,
@@ -29,7 +30,7 @@ if TYPE_CHECKING:
 __all__ = ["BotBase", "Bot"]
 
 
-class BotBase(AbstractBotBase):
+class BotBase(CommandManager, AbstractBotBase):
     def __init__(self, command_prefix: str, **options: Dict[Any, Any]):
         super().__init__(**options)
         self.command_prefix = command_prefix

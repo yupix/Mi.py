@@ -155,6 +155,14 @@ class Client:
         print(f"Ignoring exception in {event_method}", file=sys.stderr)
         traceback.print_exc()
 
+    async def progress_command(self, message):
+        for key, command in self.all_commands.items():
+            if re.search(command.regex, message.content):
+                await command.invoke(message)
+
+    async def on_mention(self, message):
+        await self.progress_command(message)
+
     async def on_error(self, err):
         await self.event_dispatch("error", err)
 

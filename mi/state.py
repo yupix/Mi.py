@@ -252,6 +252,7 @@ class ConnectionState(ClientAction):
         """
         メンションイベントを解析する関数
         """
+
         self.dispatch('mention', Note(message, state=self))
 
     def parse_drive_file_created(self, message: Dict[str, Any]) -> None:
