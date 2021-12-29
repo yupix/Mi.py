@@ -6,12 +6,10 @@ from typing import Any, Callable, Dict, Optional, TYPE_CHECKING
 import aiohttp
 
 from mi.utils import str_lower
-
 from . import config
 
 if TYPE_CHECKING:
     from .client import Client
-
 
 __all__ = ('MisskeyWebSocket', 'MisskeyClientWebSocketResponse')
 
@@ -30,7 +28,7 @@ class MisskeyWebSocket:
 
     @classmethod
     async def from_client(cls, client: Client, *, timeout: int = 60):
-        socket = await client.http.ws_connect(client.url+f'?i={config.i.token}')
+        socket = await client.http.ws_connect(client.url + f'?i={config.i.token}')
         ws = cls(socket)
         ws._dispatch = client.dispatch
         ws._connection = client._connection

@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [v1.0.3] 2021-12-29
+
+### Added
+
+- `commands.mention_command` を追加しました MP-8
+- `get_replies` and  `get_note` method to `Class` class MP-10 MP-9
+- `get_replies` method to `Note` class MP-10 MP-9
+- `get_replies` and  `get_note` method to `NoteActions` class MP-10 MP-9
+
+
+### Removed
+
+- **BREAKING CHANGE**: removed core.py and context.py MP-8
+- **BREAKING CHANGE**: Cogに関連する多くのクラスを削除しました MP-8
+- **BREAKING CHANGE**: `commands.command` デコレータを削除しました MP-8
+
 ## [v1.0.3] 2021-12-27
 
 ### Added
@@ -162,7 +178,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - `conn.py` に `get_followers` `get_user` `fetch_user` 関数が追加されました
 - `commandFrameWork` に関する多くのものを追加
-- `commandFrameWork` に `listener` `commands` デコレーターを追加
+- `commandFrameWork` に `listener` `commands` デコレータを追加
 - `Drive` クラスの `upload` メソッドで url から画像をアップロードできるように `url` 引数を追加
 - `utils.py` に `check_multi_arg` `remove_dict_empty` 関数を追加
 - `upper_to_lower` 関数に `replace_list` 引数を追加

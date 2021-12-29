@@ -334,6 +334,13 @@ class Note(AbstractNote):
 
         return await self._state.create_renote(self.id)
 
+    async def get_replies(self, since_id: Optional[str] = None, until_id: Optional[str] = None, limit: int = 10) -> List[Note]:
+        """
+        ノートに対する返信を取得します
+        """
+
+        return await self._state.get_replies(note_id=self.id, since_id=since_id, until_id=until_id, limit=limit)
+
     async def create_quote(self,
                            content: Optional[str] = None,
                            visibility: str = None,

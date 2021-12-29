@@ -8,8 +8,8 @@ from typing import List, TYPE_CHECKING
 if TYPE_CHECKING:
     from aiohttp.client_ws import ClientWebSocketResponse
 
-
 __all__ = ['Router']
+
 
 class Router:
     """

@@ -20,7 +20,7 @@ from mi.utils import check_multi_arg, get_cache_key, get_module_logger, key_buil
     upper_to_lower
 
 if TYPE_CHECKING:
-    from mi import HTTPClient
+    from mi import HTTPClient, Client
     from mi.types import (Note as NotePayload, Chat as ChatPayload)
 
 
@@ -155,6 +155,14 @@ class NoteActions:
                                     no_extract_hashtags=no_extract_hashtags,
                                     no_extract_emojis=no_extract_emojis, renote_id=note_id, file_ids=file_ids, poll=poll)
 
+    async def get_note(self, note_id) -> Note:
+        res = await self.http.request(Route('POST', '/api/notes/show'), json={"noteId": note_id}, auth=True, lower=True)
+        return Note(res, state=self)
+
+    async def get_replies(self, note_id: str, since_id: Optional[str] = None, until_id: Optional[str] = None, limit: int = 10,) -> List[Note]:
+        res = await self.http.request(Route('POST', '/api/notes/replies'), json={"noteId": note_id, "sinceId": since_id, "untilId": until_id, "limit": limit}, auth=True, lower=True)
+        return [Note(i, state=self) for i in res]
+
 
 class UserAction:
     def __init__(self, http: HTTPClient, loop: asyncio.AbstractEventLoop):
@@ -175,8 +183,9 @@ class ClientAction(NoteActions, UserAction):
 
 
 class ConnectionState(ClientAction):
-    def __init__(self, dispatch: Callable[..., Any], http: HTTPClient, loop: asyncio.AbstractEventLoop):
+    def __init__(self, dispatch: Callable[..., Any], http: HTTPClient, loop: asyncio.AbstractEventLoop, client: Client):
         super().__init__(http, loop)
+        self.client: Client = client
         self.dispatch = dispatch
         self.http: HTTPClient = http
         self.logger = get_module_logger(__name__)
@@ -251,6 +260,7 @@ class ConnectionState(ClientAction):
         """
         メンションイベントを解析する関数
         """
+
         self.dispatch('mention', Note(message, state=self))
 
     def parse_drive_file_created(self, message: Dict[str, Any]) -> None:
@@ -334,7 +344,7 @@ class ConnectionState(ClientAction):
         """
         note = Note(message, state=self)
         # Router(self.http.ws).capture_message(note.id) TODO: capture message
-        self.dispatch('message', note)
+        self.client._on_message(note)
 
     async def follow_user(self, user_id: str) -> tuple[bool, Optional[str]]:
         """

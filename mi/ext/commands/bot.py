@@ -10,30 +10,27 @@ import traceback
 from types import ModuleType
 from typing import Any, Callable, Coroutine, Dict, List, Optional, TYPE_CHECKING, Tuple, Union
 
-from mi import Client, User, utils
+from mi import Client, User
+from mi.ext.commands import CommandManager
 from mi.abc.ext.bot import AbstractBotBase
 from mi.exception import (
-    CheckFailure,
     CogNameDuplicate,
-    CommandError,
     ExtensionAlreadyLoaded,
     ExtensionFailed,
     ExtensionNotFound,
     InvalidCogPath,
     NoEntryPointError,
 )
-from mi.ext.commands.context import Context
-from mi.ext.commands.core import GroupMixin
-from mi.ext.commands.view import StringView
 from mi.utils import get_module_logger
 
 if TYPE_CHECKING:
     from aiohttp.client_ws import ClientWebSocketResponse
+    from mi.ext import Cog
 
 __all__ = ["BotBase", "Bot"]
 
 
-class BotBase(GroupMixin, AbstractBotBase):
+class BotBase(CommandManager, AbstractBotBase):
     def __init__(self, command_prefix: str, **options: Dict[Any, Any]):
         super().__init__(**options)
         self.command_prefix = command_prefix
@@ -46,60 +43,13 @@ class BotBase(GroupMixin, AbstractBotBase):
         self.origin_uri: Optional[str] = None
         self.__extensions: Dict[str, Any] = {}
         self.i: User = None
-        self.__cogs: Dict[str, str] = {}
+        self.__cogs: Dict[str, Cog] = {}
         self.strip_after_prefix = options.get("strip_after_prefix", False)
         self.logger = get_module_logger(__name__)
         self.loop = asyncio.get_event_loop()
 
-    async def can_run(self, ctx: Context, *, call_once: bool = False) -> bool:
-        data = self._check_once if call_once else self._checks
-
-        if len(data) == 0:
-            return True
-
-        return await utils.async_all(f(ctx) for f in data)
-
-    async def invoke(self, ctx: Context, *args: Tuple[Any], **kwargs: Dict[Any, Any]):
-        if ctx.command is None:
-            return False
-        try:
-            if not await self.can_run(ctx, call_once=True):
-                raise CheckFailure("")
-            await ctx.command.invoke(ctx, *args, **kwargs)
-            return True
-        except CommandError as exc:
-            await ctx.command.dispatch_error(ctx, exc)
-
-    async def get_context(self, message, *, cls=Context):
-        ctx = cls(bot=self, message=message)
-        if message.content is None:
-            return ctx
-        view = StringView(message.content)
-        if view.skip_string(self.command_prefix) is False:  # prefixがテキストに含まれているか確認
-            return ctx
-        invoker = view.get_word()
-        if not self.all_commands.get(invoker):
-            self.dispatch("missing_command", invoker)
-        ctx.message.content = message.content.replace(
-            self.command_prefix + invoker, ""
-        ).strip(" ")
-        ctx.command = self.all_commands.get(invoker)
-        return ctx
-
-    async def process_commands(self, message):
-        if message.author.bot:
-            return
-
-        ctx = await self.get_context(message)
-        if ctx.message.content:
-            await self.invoke(ctx, *ctx.message.content.split(" "))
-        else:
-            await self.invoke(ctx)
-
-        self.dispatch("message", message)
-
-    async def _on_message(self, message):
-        await self.process_commands(message)
+    def _on_message(self, message):
+        self.dispatch('message', message)
 
     async def on_ready(self, ws: ClientWebSocketResponse):
         """
@@ -180,7 +130,7 @@ class BotBase(GroupMixin, AbstractBotBase):
         if ev in dir(self):
             self.schedule_event(getattr(self, ev), ev, *args, **kwargs)
 
-    def add_cog(self, cog, override: bool = False) -> None:
+    def add_cog(self, cog: Cog, override: bool = False) -> None:
         cog_name = cog.__cog_name__
         existing = self.__cogs.get(cog_name)
         if existing is not None:

@@ -41,7 +41,7 @@ class Client:
         self.ws: MisskeyWebSocket = None
 
     def _get_state(self, **options: Any) -> ConnectionState:
-        return ConnectionState(dispatch=self.dispatch, http=self.http, loop=self.loop, **options)
+        return ConnectionState(dispatch=self.dispatch, http=self.http, loop=self.loop, client=self, **options)
 
     async def on_ready(self, ws: ClientWebSocketResponse):
         """
@@ -150,13 +150,18 @@ class Client:
             except asyncio.CancelledError:
                 pass
 
-    async def _on_message(self, message):
-        await self.dispatch("message", message)
-
     @staticmethod
     async def __on_error(event_method: str) -> None:
         print(f"Ignoring exception in {event_method}", file=sys.stderr)
         traceback.print_exc()
+
+    async def progress_command(self, message):
+        for key, command in self.all_commands.items():
+            if re.search(command.regex, message.content):
+                await command.invoke(message)
+
+    async def on_mention(self, message):
+        await self.progress_command(message)
 
     async def on_error(self, err):
         await self.event_dispatch("error", err)
@@ -374,6 +379,12 @@ class Client:
         return await self._connection.get_announcements(limit=limit, with_unreads=with_unreads, since_id=since_id,
                                                         until_id=until_id)
 
+    async def get_note(self, note_id: str) -> Note:
+        return await self._connection.get_note(note_id=note_id)
+
+    async def get_replies(self, note_id: str, since_id: Optional[str] = None, until_id: Optional[str] = None, limit: int = 1) -> List[Note]:
+        return await self._connection.get_replies(note_id=note_id, limit=limit, since_id=since_id, until_id=until_id)
+
     async def login(self, token):
 
         data = await self.http.static_login(token)
@@ -408,9 +419,9 @@ class Client:
         if _origin_uri := re.search(r"wss?://(.*)/streaming", url):
             origin_uri = (
                 _origin_uri.group(0)
-                    .replace("wss", "https")
-                    .replace("ws", "http")
-                    .replace("/streaming", "")
+                .replace("wss", "https")
+                .replace("ws", "http")
+                .replace("/streaming", "")
             )
         else:
             origin_uri = url
