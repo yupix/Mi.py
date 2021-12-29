@@ -160,7 +160,10 @@ class Client:
     async def progress_command(self, message):
         for key, command in self.all_commands.items():
             if re.search(command.regex, message.content):
-                await command.invoke(message)
+                hit_list = re.findall(command.regex, message.content)
+                if isinstance(hit_list, tuple):
+                    hit_list = hit_list[0]
+                await command.invoke(message, *hit_list)
 
     async def on_mention(self, message):
         await self.progress_command(message)
@@ -384,7 +387,7 @@ class Client:
                         no_extract_mentions: bool = False,
                         no_extract_hashtags: bool = False,
                         no_extract_emojis: bool = False,
-                        reply_id: Optional[List[str]] = None,
+                        reply_id: Optional[str] = None,
                         renote_id: Optional[str] = None,
                         channel_id: Optional[str] = None,
                         file_ids: Optional[List[File]] = None,
@@ -435,8 +438,6 @@ class Client:
 
         if file_ids is None:
             file_ids = []
-        if reply_id is None:
-            reply_id = []
         return await self._connection.post_note(content, visibility=visibility, visible_user_ids=visible_user_ids, cw=cw,
                                                 local_only=local_only, no_extract_mentions=no_extract_mentions,
                                                 no_extract_hashtags=no_extract_hashtags, no_extract_emojis=no_extract_emojis,
