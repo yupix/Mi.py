@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Changed
+
+- ドキュメントを更新
+
+## [v2.1.0-alpha] 2021-12-30
+
+### Fixed
+
+- ドキュメントのバージョン
+
 ## [v2.1.0] 2021-12-30
 
 ### Added

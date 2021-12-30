@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  Mi.py\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-12-24 07:51+0900\n"
+"POT-Creation-Date: 2021-12-30 09:33+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -146,16 +146,17 @@ msgid "ノートに対して返信を送信します"
 msgstr "Senden Sie eine Antwort auf die Notiz"
 
 #: mi.iterators.InstanceIterator.get_users mi.note.Follow.unfollow
-#: mi.note.Note.add_reaction mi.note.Note.reply
-#: mi.state.ConnectionState.add_reaction mi.state.ConnectionState.delete_chat
-#: mi.state.ConnectionState.delete_note mi.state.ConnectionState.follow_user
+#: mi.note.Note.add_reaction mi.note.Note.create_quote mi.note.Note.get_replies
+#: mi.note.Note.reply mi.state.ConnectionState.add_reaction
+#: mi.state.ConnectionState.delete_chat mi.state.ConnectionState.delete_note
+#: mi.state.ConnectionState.follow_user
 #: mi.state.ConnectionState.get_announcements
 #: mi.state.ConnectionState.get_followers mi.state.ConnectionState.get_user
 #: mi.state.ConnectionState.parse_channel
 #: mi.state.ConnectionState.parse_notification
 #: mi.state.ConnectionState.parse_unread_notification
-#: mi.state.ConnectionState.post_chat mi.state.ConnectionState.post_note
-#: mi.state.ConnectionState.unfollow_user mi.user.User.get_followers of
+#: mi.state.ConnectionState.post_chat mi.state.ConnectionState.unfollow_user
+#: mi.user.User.get_followers of
 msgid "Parameters"
 msgstr "Parameter"
 
@@ -167,31 +168,31 @@ msgstr "Inhalt der Antwort"
 msgid "閲覧注意"
 msgstr "Warnung"
 
-#: mi.note.Note.reply:8 mi.state.ConnectionState.post_note:14 of
+#: mi.note.Note.reply:8 of
 msgid "メンションを展開するか, by default False"
 msgstr "Ob die Erwähnung erweitert werden soll, standardmäßig False"
 
-#: mi.note.Note.reply:10 mi.state.ConnectionState.post_note:16 of
+#: mi.note.Note.reply:10 of
 msgid "ハッシュタグを展開するか, by default False"
 msgstr "Hashtags erweitern, standardmäßig False"
 
-#: mi.note.Note.reply:12 mi.state.ConnectionState.post_note:18 of
+#: mi.note.Note.reply:12 of
 msgid "絵文字を展開するか, by default False"
 msgstr "Ob Emoji erweitert werden sollen, standardmäßig False"
 
-#: mi.note.Note.reply:14 mi.state.ConnectionState.post_note:22 of
+#: mi.note.Note.reply:14 of
 msgid "リノート先のid, by default None"
 msgstr "Die ID des Renote-Ziels, standardmäßig Keine"
 
-#: mi.note.Note.reply:16 mi.state.ConnectionState.post_note:24 of
+#: mi.note.Note.reply:16 of
 msgid "チャンネルid, by default None"
 msgstr "Kanal-ID, standardmäßig Keine"
 
-#: mi.note.Note.reply:18 mi.state.ConnectionState.post_note:26 of
+#: mi.note.Note.reply:18 of
 msgid "添付するファイルのid, by default None"
 msgstr "Die ID der anzuhängenden Datei, standardmäßig None"
 
-#: mi.note.Note.reply:20 mi.state.ConnectionState.post_note:28 of
+#: mi.note.Note.reply:20 of
 msgid "アンケート, by default None"
 msgstr "Umfrage, standardmäßig None"
 
@@ -201,15 +202,16 @@ msgstr "Gibt die Anzahl der Emoji im Text der Notiz zurück"
 
 #: mi.chat.Chat.delete mi.drive.Drive.delete
 #: mi.iterators.InstanceIterator.get_users mi.note.Follow.unfollow
-#: mi.note.Note.add_reaction mi.note.Note.delete mi.note.Note.emoji_count
-#: mi.note.Note.favorite mi.note.Renote.delete mi.note.Renote.emoji_count
-#: mi.state.ConnectionState.add_reaction mi.state.ConnectionState.delete_chat
-#: mi.state.ConnectionState.delete_note mi.state.ConnectionState.follow_user
-#: mi.state.ConnectionState.get_user
-#: mi.state.ConnectionState.parse_notification
-#: mi.state.ConnectionState.post_chat mi.state.ConnectionState.post_note
-#: mi.state.ConnectionState.unfollow_user mi.user.User.follow
-#: mi.user.User.get_followers mi.user.User.get_profile mi.user.User.unfollow of
+#: mi.note.Note.add_reaction mi.note.Note.add_to_clips
+#: mi.note.Note.create_quote mi.note.Note.create_renote mi.note.Note.delete
+#: mi.note.Note.emoji_count mi.note.Note.favorite mi.note.Note.get_replies
+#: mi.note.Note.remove_favorite mi.note.Renote.delete
+#: mi.note.Renote.emoji_count mi.state.ConnectionState.add_reaction
+#: mi.state.ConnectionState.delete_chat mi.state.ConnectionState.delete_note
+#: mi.state.ConnectionState.follow_user mi.state.ConnectionState.get_user
+#: mi.state.ConnectionState.post_chat mi.state.ConnectionState.unfollow_user
+#: mi.user.User.follow mi.user.User.get_followers mi.user.User.get_profile
+#: mi.user.User.unfollow of
 msgid "Returns"
 msgstr "Rückgabe"
 
@@ -219,13 +221,13 @@ msgstr "Anzahl der enthaltenen Emoji"
 
 #: mi.chat.Chat.delete mi.drive.Drive.delete
 #: mi.iterators.InstanceIterator.get_users mi.note.Follow.unfollow
-#: mi.note.Note.add_reaction mi.note.Note.delete mi.note.Note.emoji_count
-#: mi.note.Note.favorite mi.note.Renote.emoji_count
+#: mi.note.Note.add_reaction mi.note.Note.add_to_clips
+#: mi.note.Note.create_quote mi.note.Note.create_renote mi.note.Note.delete
+#: mi.note.Note.emoji_count mi.note.Note.favorite mi.note.Note.get_replies
+#: mi.note.Note.remove_favorite mi.note.Renote.emoji_count
 #: mi.state.ConnectionState.add_reaction mi.state.ConnectionState.delete_chat
 #: mi.state.ConnectionState.delete_note mi.state.ConnectionState.follow_user
-#: mi.state.ConnectionState.get_user
-#: mi.state.ConnectionState.parse_notification
-#: mi.state.ConnectionState.post_chat mi.state.ConnectionState.post_note
+#: mi.state.ConnectionState.get_user mi.state.ConnectionState.post_chat
 #: mi.state.ConnectionState.unfollow_user mi.user.User.get_followers
 #: mi.user.User.get_profile mi.user.User.unfollow of
 msgid "Return type"
@@ -264,10 +266,96 @@ msgstr ""
 msgid "お気に入りから解除します"
 msgstr ""
 
+#: mi.note.Note.remove_favorite:4 of
+#, fuzzy
+msgid "お気に入りの解除に成功したかどうか"
+msgstr "ob die Löschung erfolgreich war oder nicht"
+
 #: mi.note.Note.add_to_clips:2 of
 #, fuzzy
 msgid "指定したクリップにノートを追加します"
 msgstr "Löscht die Notiz mit der angegebenen ID"
+
+#: mi.note.Note.add_to_clips:4 of
+msgid "クリップに追加できたかどうか"
+msgstr ""
+
+#: mi.note.Note.create_renote:2 of
+#, fuzzy
+msgid "ノートをリノートします"
+msgstr "Schreiben Sie eine Notiz."
+
+#: mi.note.Note.create_renote:4 of
+msgid "作成したリノート"
+msgstr ""
+
+#: mi.note.Note.get_replies:2 of
+#, fuzzy
+msgid "ノートに対する返信を取得します"
+msgstr "Senden Sie eine Antwort auf die Notiz"
+
+#: mi.note.Note.get_replies:6 of
+msgid "前回の最後のidから取得する場合"
+msgstr ""
+
+#: mi.note.Note.get_replies:8 of
+msgid "取得する件数"
+msgstr ""
+
+#: mi.note.Note.get_replies:11 of
+msgid "ノートに対する返信一覧"
+msgstr ""
+
+#: mi.note.Note.create_quote:2 of
+#, fuzzy
+msgid "ノートを引用して新規にノートを投稿します"
+msgstr "Schreiben Sie eine Notiz."
+
+#: mi.note.Note.create_quote:4 of
+msgid "引用に対するテキスト"
+msgstr ""
+
+#: mi.note.Note.create_quote:6 of
+#, fuzzy
+msgid "ノートの公開範囲"
+msgstr "Umfang der Note Einreichungen"
+
+#: mi.note.Note.create_quote:8 of
+msgid "ノートの公開対象になるユーザーid"
+msgstr ""
+
+#: mi.note.Note.create_quote:10 of
+#, fuzzy
+msgid "閲覧注意の文字列"
+msgstr "Warnung"
+
+#: mi.note.Note.create_quote:12 of
+msgid "ローカルにのみ公開するかどうか"
+msgstr ""
+
+#: mi.note.Note.create_quote:14 of
+msgid "メンションを展開するかどうか"
+msgstr ""
+
+#: mi.note.Note.create_quote:16 of
+msgid "ハッシュタグを展開するかどうか"
+msgstr ""
+
+#: mi.note.Note.create_quote:18 of
+msgid "絵文字を展開するかどうか"
+msgstr ""
+
+#: mi.note.Note.create_quote:20 of
+msgid "添付するファイルのid"
+msgstr ""
+
+#: mi.note.Note.create_quote:21 of
+msgid "アンケート"
+msgstr ""
+
+#: mi.note.Note.create_quote:24 of
+msgid "作成した引用ノート"
+msgstr ""
 
 #: mi.state.ConnectionState.get_followers:4 mi.user.User:4 of
 msgid "ユーザーのid"
@@ -430,13 +518,15 @@ msgid "ユーザーをフォローします"
 msgstr "Folgen Sie dem Benutzer"
 
 #: mi.user.User.follow:4 of
-msgid "* *bool = False* -- 成功ならTrue, 失敗ならFalse * *str* -- 実行に失敗した際のエラーコード"
+#, fuzzy
+msgid "* *bool* -- 成功ならTrue, 失敗ならFalse * *str* -- 実行に失敗した際のエラーコード"
 msgstr ""
 "* *bool = False* -- True für Erfolg, False für Misserfolg * *str* -- "
 "Fehlercode für fehlgeschlagene Ausführung"
 
 #: mi.user.User.follow:4 of
-msgid "*bool = False* -- 成功ならTrue, 失敗ならFalse"
+#, fuzzy
+msgid "*bool* -- 成功ならTrue, 失敗ならFalse"
 msgstr "*bool = False* -- True für Erfolg, False für Misserfolg"
 
 #: mi.note.Follow.follow:4 mi.user.User.follow:5 of
@@ -447,9 +537,9 @@ msgstr "*str* -- Fehlercode im Falle eines Ausführungsfehlers"
 msgid "ユーザーのフォローを解除します"
 msgstr "Einem Benutzer nicht mehr folgen"
 
-#: mi.note.Follow.unfollow:7 mi.state.ConnectionState.follow_user:7
-#: mi.user.User.unfollow:4 of
-msgid "**status** -- 成功ならTrue, 失敗ならFalse"
+#: mi.note.Follow.unfollow:7 mi.user.User.unfollow:4 of
+#, fuzzy
+msgid "成功ならTrue, 失敗ならFalse"
 msgstr "**status** -- True für Erfolg, False für Misserfolg"
 
 #: mi.user.User.get_profile:2 of
@@ -547,7 +637,8 @@ msgid "Follow"
 msgstr "Follow"
 
 #: mi.note.Follow.follow:2 of
-msgid "ユーザーをフォローします :returns: * *bool = False* -- 成功ならTrue, 失敗ならFalse"
+#, fuzzy
+msgid "ユーザーをフォローします :returns: * *bool* -- 成功ならTrue, 失敗ならFalse"
 msgstr ""
 "Folge dem Benutzer :returns: * *bool = False* -- True für Erfolg, False "
 "für Misserfolg"
@@ -776,6 +867,16 @@ msgstr ""
 msgid "Received message"
 msgstr "Empfangene Nachricht"
 
+#: mi.state.ConnectionState.parse_unfollow:2 of
+#, fuzzy
+msgid "フォローを解除した際のイベントを解析する関数"
+msgstr "Funktion zur Analyse des Ereignisses der Verfolgung eines Benutzers"
+
+#: mi.state.ConnectionState.parse_receive_follow_request:2 of
+#, fuzzy
+msgid "フォローリクエストを受け取った際のイベントを解析する関数"
+msgstr "Funktion zum Parsen von Folgeereignissen"
+
 #: mi.state.ConnectionState.parse_reply:2 of
 msgid "リプライ"
 msgstr "Antwort"
@@ -824,8 +925,13 @@ msgstr "Dem Benutzer mit der angegebenen ID folgen"
 msgid "フォローしたいユーザーのID"
 msgstr "ID des Benutzers, dem Sie folgen möchten"
 
+#: mi.state.ConnectionState.follow_user:7 of
+msgid "**status** -- 成功ならTrue, 失敗ならFalse"
+msgstr "**status** -- True für Erfolg, False für Misserfolg"
+
 #: mi.state.ConnectionState.unfollow_user:4 of
-msgid "**status** -- 成功したならTrue, 失敗したならFalse"
+#, fuzzy
+msgid "成功したならTrue, 失敗したならFalse"
 msgstr "**status** -- True für Erfolg, False für Misserfolg"
 
 #: mi.state.ConnectionState.add_reaction:2 of
@@ -843,7 +949,8 @@ msgid "付与対象のノートID"
 msgstr "Hinweis zu erteilende ID"
 
 #: mi.state.ConnectionState.add_reaction:9 of
-msgid "**status** -- 成功したならTrue,失敗ならFalse"
+#, fuzzy
+msgid "成功したならTrue,失敗ならFalse"
 msgstr "**status** -- True für Erfolg, False für Misserfolg"
 
 #: mi.state.ConnectionState.delete_note:2 of
@@ -911,43 +1018,6 @@ msgstr "Löscht die Nachricht mit der angegebenen ID."
 msgid "メッセージid"
 msgstr "Nachrichten-ID"
 
-#: mi.state.ConnectionState.post_note:2 of
-msgid "ノートを投稿します。"
-msgstr "Schreiben Sie eine Notiz."
-
-#: mi.state.ConnectionState.post_note:4 of
-msgid "投稿する内容"
-msgstr "Was zu veröffentlichen ist"
-
-#: mi.state.ConnectionState.post_note:6 of
-msgid "公開範囲, by default \"public\""
-msgstr "Öffentlicher Bereich, standardmäßig \"öffentlich\""
-
-#: mi.state.ConnectionState.post_note:8 of
-msgid "公開するユーザー, by default None"
-msgstr "Zu veröffentlichende Benutzer, standardmäßig Keine"
-
-#: mi.state.ConnectionState.post_note:10 of
-msgid "閲覧注意の文字, by default None"
-msgstr "Warntext, standardmäßig Keine"
-
-#: mi.state.ConnectionState.post_note:12 of
-msgid "ローカルにのみ表示するか, by default False"
-msgstr "Nur lokal anzeigen, standardmäßig False"
-
-#: mi.state.ConnectionState.post_note:20 of
-msgid "リプライ先のid, by default None"
-msgstr "Reply-to id, standardmäßig Keine"
-
-#: mi.state.ConnectionState.post_note:31 mi.state.ConnectionState.post_note:34
-#: of
-msgid "[description]"
-msgstr "[Beschreibung]."
-
-#: mi.state.ConnectionState.get_followers mi.state.ConnectionState.post_note of
-msgid "Raises"
-msgstr "Erhöht"
-
 #: mi.state.ConnectionState.get_followers:2 of
 msgid "与えられたユーザーのフォロワーを取得します"
 msgstr "Ruft die Follower eines bestimmten Benutzers ab"
@@ -983,6 +1053,10 @@ msgstr "Treffer"
 msgid "*dict* -- フォロワーの情報"
 msgstr "*dict* -- Follower-Informationen"
 
+#: mi.state.ConnectionState.get_followers of
+msgid "Raises"
+msgstr "Erhöht"
+
 #: mi.state.ConnectionState.get_followers:21 of
 msgid "limit引数が不正な場合"
 msgstr "Wenn das limit-Argument ungültig ist"
@@ -998,4 +1072,25 @@ msgstr "Schon gelesen oder nicht?"
 #: ../../mi.rst:263
 msgid "Low-Layer API"
 msgstr "Low-Layer-API"
+
+#~ msgid "投稿する内容"
+#~ msgstr "Was zu veröffentlichen ist"
+
+#~ msgid "公開範囲, by default \"public\""
+#~ msgstr "Öffentlicher Bereich, standardmäßig \"öffentlich\""
+
+#~ msgid "公開するユーザー, by default None"
+#~ msgstr "Zu veröffentlichende Benutzer, standardmäßig Keine"
+
+#~ msgid "閲覧注意の文字, by default None"
+#~ msgstr "Warntext, standardmäßig Keine"
+
+#~ msgid "ローカルにのみ表示するか, by default False"
+#~ msgstr "Nur lokal anzeigen, standardmäßig False"
+
+#~ msgid "リプライ先のid, by default None"
+#~ msgstr "Reply-to id, standardmäßig Keine"
+
+#~ msgid "[description]"
+#~ msgstr "[Beschreibung]."
 
