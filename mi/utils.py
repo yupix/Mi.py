@@ -24,6 +24,9 @@ class _Missing:
     def __repr__(self):
         return '...'
 
+    def __int__(self):
+        return 0
+
 
 MISSING: Any = _Missing()
 
@@ -36,11 +39,11 @@ def get_cache_key(func):
     async def decorator(self, *args, **kwargs):
         ordered_kwargs = sorted(kwargs.items())
         key = (
-            (func.__module__ or "")
-            + '.{0}'
-            + f'{self}'
-            + str(args)
-            + str(ordered_kwargs)
+                (func.__module__ or "")
+                + '.{0}'
+                + f'{self}'
+                + str(args)
+                + str(ordered_kwargs)
         )
         return await func(self, *args, **kwargs, cache_key=key)
 
@@ -50,11 +53,11 @@ def get_cache_key(func):
 def key_builder(func, cls, *args, **kwargs):
     ordered_kwargs = sorted(kwargs.items())
     key = (
-        (func.__module__ or "")
-        + f'.{func.__name__}'
-        + f'{cls}'
-        + str(args)
-        + str(ordered_kwargs)
+            (func.__module__ or "")
+            + f'.{func.__name__}'
+            + f'{cls}'
+            + str(args)
+            + str(ordered_kwargs)
     )
     return key
 
