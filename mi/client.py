@@ -495,7 +495,11 @@ class Client:
     async def connect(self, *, reconnect: bool = True, timeout: int = 60) -> None:
 
         coro = MisskeyWebSocket.from_client(self, timeout=timeout)
-        self.ws = await asyncio.wait_for(coro, timeout=60)
+        try:
+            self.ws = await asyncio.wait_for(coro, timeout=60)
+        except asyncio.exceptions.TimeoutError:
+            await self.connect(reconnect=reconnect, timeout=timeout)
+
         while True:
             await self.ws.poll_event()
 
