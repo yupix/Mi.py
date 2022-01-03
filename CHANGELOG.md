@@ -12,16 +12,24 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - FavoriteManager クラスを追加
   - `add`, `remove` メソッドを追加
 - FollowManager クラスを追加
-  - `accept`, `reject` メソッドを追加
+  - `add`, `remove` メソッドを追加
+- FollowRequestManager クラスを追加
+  - `accept`, `reject`, `get` メソッドを追加
 
 ### Changed
 
 - ドキュメントを更新
 - 内部変更: `UserAction` や `ClientAction` のメソッドを別クラスに分割
-- **BREAKING CHANGE**: モデルの_state属性を__stateに変更
+- **BREAKING CHANGE**: `User` クラスの `follow` `unfollow` メソッドを削除
+  - 今後は `User` クラスの `action` メソッドから `add` `remove` メソッドを使用できます
+- **BREAKING CHANGE**: モデル名の変更 `Following` -> `Follower`
+- **BREAKING CHANGE**: モデル名の変更 `Follower` -> `Followee`
+- **BREAKING CHANGE**: モデルの\_state 属性を\_\_state に変更
 - **BREAKING CHANGE**: `Following` クラスのメソッドを以下のとおりに変更
-    - `accept_request` -> `accept`
-    - `reject_request` -> `reject`
+  - `accept_request` -> `accept`
+  - `reject_request` -> `reject`
+  - `follow` -> `add`
+  - `remove_follow` -> `remove`
 
 ## [v2.1.0-alpha] 2021-12-30
 

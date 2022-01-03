@@ -10,10 +10,10 @@ from mi.types.user import (Channel as ChannelPayload, FieldContent as FieldConte
 if TYPE_CHECKING:
     from mi import ConnectionState
 
-__all__ = ['User', 'UserDetails', 'Following']
+__all__ = ['User', 'UserDetails', 'Follower', 'Followee']
 
 
-class Follower:
+class Followee:
     def __init__(self, data, state: ConnectionState):
         self.id: str = data['id']
         self.created_at: str = data['created_at']
@@ -23,7 +23,7 @@ class Follower:
         self.__state = state
 
 
-class Following:
+class Follower:
     def __init__(self, data, state: ConnectionState):
         self.id = data['id']
         self.name = data['name']
@@ -39,11 +39,14 @@ class Following:
         self.is_cat = bool(data['is_cat'])
         self.__state = state
 
+    async def get(self):
+        return await self.__state.user.follow_request.get()
+
     async def accept(self) -> bool:
-        return await self.__state.user.follow.accept(self.id)
+        return await self.__state.user.follow_request.accept(self.id)
 
     async def reject(self) -> bool:
-        return await self.__state.user.follow.reject(self.id)
+        return await self.__state.user.follow_request.reject(self.id)
 
 
 class Channel:
@@ -262,31 +265,9 @@ class User:
             Instance(data["instance"], state) if data.get("instance") else Instance({}, state)
         )
 
-    async def follow(self) -> tuple[bool, Optional[str]]:
-        """
-        ユーザーをフォローします
-
-        Returns
-        -------
-        bool
-            成功ならTrue, 失敗ならFalse
-        str
-            実行に失敗した際のエラーコード
-        """
-
-        return await self.__state.follow_user(user_id=self.id)
-
-    async def unfollow(self) -> bool:
-        """
-        ユーザーのフォローを解除します
-
-        Returns
-        -------
-        bool
-            成功ならTrue, 失敗ならFalse
-        """
-
-        return await self.__state.unfollow_user(user_id=self.id)
+    @property
+    async def action(self):
+        return self.__state.user
 
     async def get_profile(self) -> "User":
         """
@@ -318,4 +299,4 @@ class User:
             ユーザーのフォロワー一覧
         """
         return self.__state.get_followers(username=self.username, host=self.host, until_id=until_id, limit=limit,
-                                         get_all=get_all)
+                                          get_all=get_all)

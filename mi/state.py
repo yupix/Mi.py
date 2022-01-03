@@ -9,7 +9,7 @@ from aiocache.factory import Cache
 
 from mi import Instance, InstanceMeta, User
 from mi.api import FavoriteManager
-from mi.api.follow import FollowManager
+from mi.api.follow import FollowManager, FollowRequestManager
 from mi.chat import Chat
 from mi.drive import Drive
 from mi.emoji import Emoji
@@ -17,7 +17,7 @@ from mi.exception import ContentRequired, InvalidParameters, NotExistRequiredPar
 from mi.http import Route
 from mi.iterators import InstanceIterator
 from mi.note import Note, Poll, Reaction
-from mi.user import Follower, Following
+from mi.user import Followee, Follower
 from mi.utils import check_multi_arg, get_cache_key, get_module_logger, key_builder, remove_dict_empty, str_lower, \
     upper_to_lower
 
@@ -126,6 +126,7 @@ class UserAction:
         self.http = http
         self.loop = loop
         self.follow = FollowManager(client, http, loop)
+        self.follow_request = FollowRequestManager(client, http, loop)
 
 
 class ClientAction:
@@ -184,7 +185,7 @@ class ConnectionState(ClientAction):
         フォローリクエストを受け取った際のイベントを解析する関数
         """
 
-        self.dispatch('follow_request', Following(message, state=self))
+        self.dispatch('follow_request', Follower(message, state=self))
 
     def parse_me_updated(self, message: Dict[str, Any]):
         pass
@@ -302,45 +303,6 @@ class ConnectionState(ClientAction):
         # Router(self.http.ws).capture_message(note.id) TODO: capture message
         self.client._on_message(note)
 
-    async def follow_user(self, user_id: str) -> tuple[bool, Optional[str]]:
-        """
-        与えられたIDのユーザーをフォローします
-
-        Parameters
-        ----------
-        user_id : Optional[str] = None
-            フォローしたいユーザーのID
-
-        Returns
-        -------
-        status: bool = False
-            成功ならTrue, 失敗ならFalse
-        """
-        data = {"userId": user_id}
-        res = await self.http.request(Route('POST', '/api/following/create'), json=data, auth=True, lower=True)
-        if res.get("error"):
-            code = res["error"]["code"]
-            status = False
-        else:
-            code = None
-            status = True
-        return status, code
-
-    async def unfollow_user(self, user_id: str) -> bool:
-        """
-        Parameters
-        ----------
-        user_id :
-            フォローを解除したいユーザーのID
-
-        Returns
-        -------
-        bool
-            成功したならTrue, 失敗したならFalse
-        """
-        data = {"userId": user_id}
-        res = await self.http.request(Route('POST', '/api/following/delete'), json=data, auth=True)
-        return bool(res.status_code == 204 or 200)
 
     async def get_i(self) -> User:
         res = await self.http.request(Route('POST', '/api/i'), auth=True, lower=True)
@@ -501,7 +463,7 @@ class ConnectionState(ClientAction):
             until_id: Optional[str] = None,
             limit: int = 10,
             get_all: bool = False,
-    ) -> AsyncIterator[Follower]:
+    ) -> AsyncIterator[Followee]:
         """
         与えられたユーザーのフォロワーを取得します
 
@@ -553,11 +515,11 @@ class ConnectionState(ClientAction):
                     data["untilId"] = get_data[-1]["id"]
                 else:
                     break
-                for i in [Follower(i, state=self) for i in get_data]:
+                for i in [Followee(i, state=self) for i in get_data]:
                     yield i
         else:
             get_data = await self.http.request(Route('POST', '/api/users/followers'), json=data, auth=True, lower=True)
-            for i in [Follower(i, state=self) for i in get_data]:
+            for i in [Followee(i, state=self) for i in get_data]:
                 yield i
 
     @cached(ttl=10, key_builder=key_builder, key='get_instance')
