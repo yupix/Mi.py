@@ -241,6 +241,9 @@ class ConnectionState(ClientAction):
     def parse_unread_mention(self, message: Dict[str, Any]) -> None:
         pass
 
+    def parse_unread_specified_note(self, message: Dict[str, Any]) -> None:
+        pass
+
     def parse_read_all_messaging_messages(self, message: Dict[str, Any]) -> None:
         pass
 
