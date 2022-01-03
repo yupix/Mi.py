@@ -183,6 +183,11 @@ class ConnectionState(ClientAction):
         フォローを解除した際のイベントを解析する関数
         """
 
+    def parse_signin(self, message: Dict[str, Any]):
+        """
+        ログインが発生した際のイベント
+        """
+
     def parse_receive_follow_request(self, message: Dict[str, Any]):
         """
         フォローリクエストを受け取った際のイベントを解析する関数
