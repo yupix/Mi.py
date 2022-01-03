@@ -8,6 +8,7 @@ from aiocache import cached
 from aiocache.factory import Cache
 
 from mi import Instance, InstanceMeta, User
+from mi.api import FavoriteManager
 from mi.chat import Chat
 from mi.drive import Drive
 from mi.emoji import Emoji
@@ -25,17 +26,11 @@ if TYPE_CHECKING:
 
 
 class NoteActions:
-    def __init__(self, http: HTTPClient, loop: asyncio.AbstractEventLoop):
+    def __init__(self, client: 'ConnectionState', http: HTTPClient, loop: asyncio.AbstractEventLoop):
+        self.client = client
         self.http = http
         self.loop = loop
-
-    async def favorite(self, note_id: str) -> bool:
-        data = {'noteId': note_id}
-        return bool(await self.http.request(Route('POST', '/api/notes/favorites/create'), json=data, auth=True))
-
-    async def remove_favorite(self, note_id: str) -> bool:
-        data = {'noteId': note_id}
-        return bool(await self.http.request(Route('POST', '/api/notes/favorites/delete'), json=data, auth=True))
+        self.favorite = FavoriteManager(client, http, loop)
 
     async def add_note_to_clips(self, clip_id: str, note_id: str) -> bool:
         data = {'noteId': note_id, 'clipId': clip_id}
@@ -43,9 +38,9 @@ class NoteActions:
 
     async def add_reaction_to_note(self, note_id: str, reaction: str) -> bool:
         data = {'noteId': note_id, 'reaction': reaction}
-        return bool(await self.http.request(Route('POST', '/api/reactions/create', json=data, auth=True)))
+        return bool(await self.http.request(Route('POST', '/api/reactions/create'), json=data, auth=True))
 
-    async def post_note(self,
+    async def send(self,
                         content: Optional[str] = None,
                         visibility: str = "public",
                         visible_user_ids: Optional[List[str]] = None,
@@ -91,7 +86,7 @@ class NoteActions:
             field["fileIds"] = file_ids
         field = remove_dict_empty(field)
         res = await self.http.request(Route('POST', '/api/notes/create'), json=field, auth=True, lower=True)
-        return Note(res["created_note"], state=self)
+        return Note(res["created_note"], state=self.client)
 
     async def create_renote(self, note_id: str) -> Note:
         return await self.post_note(renote_id=note_id)
@@ -114,18 +109,19 @@ class NoteActions:
 
     async def get_note(self, note_id) -> Note:
         res = await self.http.request(Route('POST', '/api/notes/show'), json={"noteId": note_id}, auth=True, lower=True)
-        return Note(res, state=self)
+        return Note(res, state=self.client)
 
     async def get_replies(self, note_id: str, since_id: Optional[str] = None, until_id: Optional[str] = None,
                           limit: int = 10, ) -> List[Note]:
         res = await self.http.request(Route('POST', '/api/notes/replies'),
                                       json={"noteId": note_id, "sinceId": since_id, "untilId": until_id, "limit": limit},
                                       auth=True, lower=True)
-        return [Note(i, state=self) for i in res]
+        return [Note(i, state=self.client) for i in res]
 
 
 class UserAction:
-    def __init__(self, http: HTTPClient, loop: asyncio.AbstractEventLoop):
+    def __init__(self, client: 'ConnectionState', http: HTTPClient, loop: asyncio.AbstractEventLoop):
+        self.client = client
         self.http = http
         self.loop = loop
 
@@ -138,13 +134,15 @@ class UserAction:
         return bool(await self.http.request(Route('POST', '/api/following/requests/reject'), json=data, auth=True))
 
 
-class ClientAction(NoteActions, UserAction):
-    pass
+class ClientAction:
+    def __init__(self, client: 'ConnectionState', http: HTTPClient, loop: asyncio.AbstractEventLoop):
+        self.note = NoteActions(client, http, loop)
+        self.user = UserAction(client, http, loop)
 
 
 class ConnectionState(ClientAction):
     def __init__(self, dispatch: Callable[..., Any], http: HTTPClient, loop: asyncio.AbstractEventLoop, client: Client):
-        super().__init__(http, loop)
+        super().__init__(self, http, loop)
         self.client: Client = client
         self.dispatch = dispatch
         self.http: HTTPClient = http
