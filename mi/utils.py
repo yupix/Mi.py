@@ -14,6 +14,20 @@ from mi import config
 T = TypeVar("T")
 
 
+class _Missing:
+    def __eq__(self, other):
+        return False
+
+    def __bool__(self):
+        return False
+
+    def __repr__(self):
+        return '...'
+
+
+MISSING: Any = _Missing()
+
+
 def deprecated_func(func):
     print('deprecated function:' + func.__name__)
 
@@ -22,11 +36,11 @@ def get_cache_key(func):
     async def decorator(self, *args, **kwargs):
         ordered_kwargs = sorted(kwargs.items())
         key = (
-                (func.__module__ or "")
-                + '.{0}'
-                + f'{self}'
-                + str(args)
-                + str(ordered_kwargs)
+            (func.__module__ or "")
+            + '.{0}'
+            + f'{self}'
+            + str(args)
+            + str(ordered_kwargs)
         )
         return await func(self, *args, **kwargs, cache_key=key)
 
@@ -36,11 +50,11 @@ def get_cache_key(func):
 def key_builder(func, cls, *args, **kwargs):
     ordered_kwargs = sorted(kwargs.items())
     key = (
-            (func.__module__ or "")
-            + f'.{func.__name__}'
-            + f'{cls}'
-            + str(args)
-            + str(ordered_kwargs)
+        (func.__module__ or "")
+        + f'.{func.__name__}'
+        + f'{cls}'
+        + str(args)
+        + str(ordered_kwargs)
     )
     return key
 
