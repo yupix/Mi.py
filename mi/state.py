@@ -9,6 +9,7 @@ from aiocache.factory import Cache
 
 from mi import Instance, InstanceMeta, User
 from mi.api import FavoriteManager
+from mi.api.follow import FollowManager
 from mi.chat import Chat
 from mi.drive import Drive
 from mi.emoji import Emoji
@@ -41,20 +42,20 @@ class NoteActions:
         return bool(await self.http.request(Route('POST', '/api/reactions/create'), json=data, auth=True))
 
     async def send(self,
-                        content: Optional[str] = None,
-                        visibility: str = "public",
-                        visible_user_ids: Optional[List[str]] = None,
-                        cw: Optional[str] = None,
-                        local_only: bool = False,
-                        no_extract_mentions: bool = False,
-                        no_extract_hashtags: bool = False,
-                        no_extract_emojis: bool = False,
-                        reply_id: Optional[str] = None,
-                        renote_id: Optional[str] = None,
-                        channel_id: Optional[str] = None,
-                        file_ids=None,
-                        poll: Optional[Poll] = None
-                        ) -> Note:
+                   content: Optional[str] = None,
+                   visibility: str = "public",
+                   visible_user_ids: Optional[List[str]] = None,
+                   cw: Optional[str] = None,
+                   local_only: bool = False,
+                   no_extract_mentions: bool = False,
+                   no_extract_hashtags: bool = False,
+                   no_extract_emojis: bool = False,
+                   reply_id: Optional[str] = None,
+                   renote_id: Optional[str] = None,
+                   channel_id: Optional[str] = None,
+                   file_ids=None,
+                   poll: Optional[Poll] = None
+                   ) -> Note:
         if file_ids is None:
             file_ids = []
         field = {
@@ -124,14 +125,7 @@ class UserAction:
         self.client = client
         self.http = http
         self.loop = loop
-
-    async def accept_following_request(self, user_id: str) -> bool:
-        data = {'userId': user_id}
-        return bool(await self.http.request(Route('POST', '/api/following/requests/accept'), json=data, auth=True))
-
-    async def reject_following_request(self, user_id: str) -> bool:
-        data = {'userId': user_id}
-        return bool(await self.http.request(Route('POST', '/api/following/requests/reject'), json=data, auth=True))
+        self.follow = FollowManager(client, http, loop)
 
 
 class ClientAction:
@@ -154,7 +148,6 @@ class ConnectionState(ClientAction):
                 parsers[attr[6:].upper()] = func
 
     def parse_emoji_added(self, message: Dict[str, Any]):
-        print(message)
         self.dispatch('emoji_add', Emoji(message['body']['emoji'], state=self))
 
     def parse_channel(self, message: Dict[str, Any]) -> None:

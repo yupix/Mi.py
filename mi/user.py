@@ -20,7 +20,7 @@ class Follower:
         self.followee_id: str = data['followee_id']
         self.follower_id: str = data['follower_id']
         self.user: User = User(data['follower'], state=state)
-        self._state = state
+        self.__state = state
 
 
 class Following:
@@ -37,13 +37,13 @@ class Following:
         self.is_admin = bool(data['is_admin'])
         self.is_bot = bool(data['is_bot'])
         self.is_cat = bool(data['is_cat'])
-        self._state = state
+        self.__state = state
 
-    async def accept_request(self) -> bool:
-        return await self._state.accept_following_request(self.id)
+    async def accept(self) -> bool:
+        return await self.__state.user.follow.accept(self.id)
 
-    async def reject_request(self) -> bool:
-        return await self._state.reject_following_request(self.id)
+    async def reject(self) -> bool:
+        return await self.__state.user.follow.reject(self.id)
 
 
 class Channel:
@@ -58,7 +58,7 @@ class Channel:
         self.users_count: Optional[int] = data.get("users_count")
         self.is_following: Optional[bool] = data.get("is_following")
         self.user_id: Optional[str] = data.get("user_id")
-        self._state = state
+        self.__state = state
 
 
 class PinnedNote:
@@ -90,7 +90,7 @@ class PinnedNote:
         self.uri: Optional[str] = data.get("uri")
         self.url: Optional[str] = data.get("url")
         self.my_reaction: Optional[Dict[str, Any]] = data.get("my_reaction")
-        self._state: ConnectionState = state
+        self.__state: ConnectionState = state
 
 
 class PinnedPage:
@@ -105,14 +105,14 @@ class PinnedPage:
         self.variables: Optional[List] = data.get("variables")
         self.user_id: Optional[str] = data.get("user_id")
         self.author: Optional[Dict[str, Any]] = data.get("author")
-        self._state: ConnectionState = state
+        self.__state: ConnectionState = state
 
 
 class FieldContent:
     def __init__(self, data: FieldContentPayload, state: ConnectionState):
         self.name: str = data["name"]
         self.value: str = data["value"]
-        self._state: ConnectionState = state
+        self.__state: ConnectionState = state
 
 
 class UserDetails:
@@ -256,7 +256,7 @@ class User:
         self.is_blocked: bool = bool(data.get("is_blocked", False))
         self.is_muted: bool = bool(data.get("is_muted", False))
         self.details = UserDetails(data)
-        self._state = state
+        self.__state = state
 
         self.instance = (
             Instance(data["instance"], state) if data.get("instance") else Instance({}, state)
@@ -274,7 +274,7 @@ class User:
             実行に失敗した際のエラーコード
         """
 
-        return await self._state.follow_user(user_id=self.id)
+        return await self.__state.follow_user(user_id=self.id)
 
     async def unfollow(self) -> bool:
         """
@@ -286,7 +286,7 @@ class User:
             成功ならTrue, 失敗ならFalse
         """
 
-        return await self._state.unfollow_user(user_id=self.id)
+        return await self.__state.unfollow_user(user_id=self.id)
 
     async def get_profile(self) -> "User":
         """
@@ -297,7 +297,7 @@ class User:
         User
             ユーザーのプロフィールオブジェクト
         """
-        return await self._state.get_user(user_id=self.id, username=self.username, host=self.host)
+        return await self.__state.get_user(user_id=self.id, username=self.username, host=self.host)
 
     def get_followers(self, until_id: Optional[str] = None, limit: int = 10, get_all: bool = False) -> AsyncIterator[Follower]:
         """
@@ -317,5 +317,5 @@ class User:
         AsyncIterator[Follower]
             ユーザーのフォロワー一覧
         """
-        return self._state.get_followers(username=self.username, host=self.host, until_id=until_id, limit=limit,
+        return self.__state.get_followers(username=self.username, host=self.host, until_id=until_id, limit=limit,
                                          get_all=get_all)

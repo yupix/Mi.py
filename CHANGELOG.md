@@ -17,6 +17,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 
 - ドキュメントを更新
+- 内部変更: `UserAction` や `ClientAction` のメソッドを別クラスに分割
+- **BREAKING CHANGE**: モデルの_state属性を__stateに変更
+- **BREAKING CHANGE**: `Following` クラスのメソッドを以下のとおりに変更
+    - `accept_request` -> `accept`
+    - `reject_request` -> `reject`
 
 ## [v2.1.0-alpha] 2021-12-30
 
