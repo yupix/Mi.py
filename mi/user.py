@@ -118,35 +118,6 @@ class FieldContent:
         self.__state: ConnectionState = state
 
 
-class UserDetails:
-    """
-    ユーザー情報だが、一般的に使うか怪しいもの
-
-    Attributes
-    ----------
-    avatar_blurhash: Optional[str]
-        ユーザーのアバターのblurhash
-    avatar_color: str
-        ユーザーのアバターの色
-    lang: str
-        ユーザーの言語
-    """
-
-    def __init__(self, data) -> None:
-        self.avatar_blurhash: Optional[str] = data.get("avatar_blurhash")
-        self.avatar_color: Optional[str] = data.get("avatar_color")
-        self.banner_url = data.get("banner_url")
-        self.banner_blurhash = data.get("banner_blurhash")
-        self.banner_color = data.get("banner_color")
-        self.two_factor_enabled = data.get("two_factor_enabled", False)
-        self.use_password_less_login = data.get("use_password_less_login", False)
-        self.security_keys = data.get("security_keys", False)
-        self.has_pending_follow_request_from_you = data.get("has_pending_follow_request_from_you", False)
-        self.has_pending_follow_request_to_you = data.get("has_pending_follow_request_to_you", False)
-        self.public_reactions = data.get("public_reactions", False)
-        self.lang = data.get("lang")
-
-
 class User:
     """
     Attributes

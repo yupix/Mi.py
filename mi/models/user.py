@@ -7,6 +7,19 @@ from mi.types.user import User as UserPayload
 __all__ = ['UserPayload', 'RawUser']
 
 class RawUserDetails:
+    """
+    ユーザー情報だが、一般的に使うか怪しいもの
+
+    Attributes
+    ----------
+    avatar_blurhash: Optional[str]
+        ユーザーのアバターのblurhash
+    avatar_color: str
+        ユーザーのアバターの色
+    lang: str
+        ユーザーの言語
+    """
+    
     def __init__(self, data):
         self.avatar_blurhash: Optional[str] = data.get("avatar_blurhash")
         self.avatar_color: Optional[str] = data.get("avatar_color")
