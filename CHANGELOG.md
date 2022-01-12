@@ -9,12 +9,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
+- added `RawUserDetails` class
+- added `RawUser` class
 - FavoriteManager クラスを追加
   - `add`, `remove` メソッドを追加
 - FollowManager クラスを追加
   - `add`, `remove` メソッドを追加
 - FollowRequestManager クラスを追加
-  - `accept`, `reject`, `get` メソッドを追加
+  - `accept`, `reject`, `get_all` メソッドを追加
 
 ### Changed
 
