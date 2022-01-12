@@ -12,12 +12,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - added `RawInstance` class
 - added `RawUserDetails` class
 - added `RawUser` class
-- FavoriteManager クラスを追加
-  - `add`, `remove` メソッドを追加
-- FollowManager クラスを追加
-  - `add`, `remove` メソッドを追加
-- FollowRequestManager クラスを追加
-  - `accept`, `reject`, `get_all` メソッドを追加
+- added `FavoriteManager` class
+- added `FollowManager` class
+- added FollowRequestManager class
 
 ### Changed
 
@@ -36,6 +33,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   - `reject_request` -> `reject`
   - `follow` -> `add`
   - `remove_follow` -> `remove`
+
+## Removed
+
+- Unused class UserDetails
+  - from now on use `RawUserDetails`
 
 ## [v2.1.0-alpha] 2021-12-30
 
