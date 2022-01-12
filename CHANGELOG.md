@@ -23,6 +23,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - ドキュメントを更新
 - 内部変更: `UserAction` や `ClientAction` のメソッドを別クラスに分割
+- **BREAKING CHANGE**: `User` クラスのプロパティーを以下のように変更
+  - `name` -> `nickname`
+  - `username` -> `name`
 - **BREAKING CHANGE**: `User` クラスの `follow` `unfollow` メソッドを削除
   - 今後は `User` クラスの `action` メソッドから `add` `remove` メソッドを使用できます
 - **BREAKING CHANGE**: モデル名の変更 `Following` -> `Follower`

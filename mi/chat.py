@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from typing import List, TYPE_CHECKING
 
+from mi.models.user import RawUser
+
 from .abc.chat import AbstractChatContent
 from .types.chat import Chat as ChatPayload
 from .user import User
@@ -22,7 +24,7 @@ class Chat(AbstractChatContent):
         self.created_at: str = data["created_at"]
         self.content: str = data["text"]
         self.user_id: str = data["user_id"]
-        self.author: User = User(data["user"], state=state)
+        self.author: User = User(RawUser(data["user"]), state=state)
         self.recipient_id: str = data["recipient_id"]
         self.recipient: str = data["recipient"]
         self.group_id: str = data["group_id"]
