@@ -2,17 +2,16 @@ from __future__ import annotations
 
 from typing import Any, AsyncIterator, Dict, List, Optional, TYPE_CHECKING
 
-from mi import Instance
 from mi.emoji import Emoji
 from mi.models.user import RawUser
 from mi.types.user import (Channel as ChannelPayload, FieldContent as FieldContentPayload, PinnedNote as PinnedNotePayload,
-                           PinnedPage as PinnedPagePayload, User as UserPayload)
+                           PinnedPage as PinnedPagePayload)
 
 if TYPE_CHECKING:
     from mi import ConnectionState
     from mi.api.follow import FollowRequestManager
 
-__all__ = ['User', 'UserDetails', 'FollowRequest', 'Followee']
+__all__ = ['User', 'FollowRequest', 'Followee']
 
 
 class Followee:
