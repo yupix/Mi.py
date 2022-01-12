@@ -16,8 +16,9 @@ from mi.emoji import Emoji
 from mi.exception import ContentRequired, InvalidParameters, NotExistRequiredParameters
 from mi.http import Route
 from mi.iterators import InstanceIterator
+from mi.models.user import RawUser
 from mi.note import Note, Poll, Reaction
-from mi.user import Followee, Follower
+from mi.user import Followee, FollowRequest
 from mi.utils import check_multi_arg, get_cache_key, get_module_logger, key_builder, remove_dict_empty, str_lower, \
     upper_to_lower
 
@@ -90,7 +91,7 @@ class NoteActions:
         return Note(res["created_note"], state=self.client)
 
     async def create_renote(self, note_id: str) -> Note:
-        return await self.post_note(renote_id=note_id)
+        return await self.send(renote_id=note_id)
 
     async def create_quote(self, note_id: str,
                            content: Optional[str] = None,
@@ -103,10 +104,10 @@ class NoteActions:
                            no_extract_emojis: bool = False,
                            file_ids=None,
                            poll: Optional[Poll] = None) -> Note:
-        return await self.post_note(content=content, visibility=visibility, visible_user_ids=visible_user_ids, cw=cw,
-                                    local_only=local_only, no_extract_mentions=no_extract_mentions,
-                                    no_extract_hashtags=no_extract_hashtags,
-                                    no_extract_emojis=no_extract_emojis, renote_id=note_id, file_ids=file_ids, poll=poll)
+        return await self.send(content=content, visibility=visibility, visible_user_ids=visible_user_ids, cw=cw,
+                               local_only=local_only, no_extract_mentions=no_extract_mentions,
+                               no_extract_hashtags=no_extract_hashtags,
+                               no_extract_emojis=no_extract_emojis, renote_id=note_id, file_ids=file_ids, poll=poll)
 
     async def get_note(self, note_id) -> Note:
         res = await self.http.request(Route('POST', '/api/notes/show'), json={"noteId": note_id}, auth=True, lower=True)
@@ -121,18 +122,36 @@ class NoteActions:
 
 
 class UserAction:
-    def __init__(self, client: 'ConnectionState', http: HTTPClient, loop: asyncio.AbstractEventLoop):
+    def __init__(
+            self, client: 'ConnectionState',
+            http: HTTPClient,
+            loop: asyncio.AbstractEventLoop,
+            *,
+            user_id: Optional[str] = None
+    ):
         self.client = client
         self.http = http
         self.loop = loop
-        self.follow = FollowManager(client, http, loop)
-        self.follow_request = FollowRequestManager(client, http, loop)
+        self.follow = FollowManager(client, http, loop, user_id=user_id)
+        self.follow_request = FollowRequestManager(client, http, loop, user_id=user_id)
+
+    def get_follow(self, user_id: str) -> FollowManager:
+        return FollowManager(self.client, self.http, self.loop, user_id=user_id)
+
+    def get_follow_request(self, user_id: str) -> FollowRequestManager:
+        return FollowRequestManager(self.client, self.http, self.loop, user_id=user_id)
 
 
 class ClientAction:
     def __init__(self, client: 'ConnectionState', http: HTTPClient, loop: asyncio.AbstractEventLoop):
+        self.client = client
+        self.http = http
+        self.loop = loop
         self.note = NoteActions(client, http, loop)
         self.user = UserAction(client, http, loop)
+
+    def get_user_instance(self, user_id: Optional[str]) -> UserAction:
+        return UserAction(self.client, self.http, self.loop, user_id=user_id)
 
 
 class ConnectionState(ClientAction):
@@ -185,7 +204,7 @@ class ConnectionState(ClientAction):
         フォローリクエストを受け取った際のイベントを解析する関数
         """
 
-        self.dispatch('follow_request', Follower(message, state=self))
+        self.dispatch('follow_request', FollowRequest(message, state=self))
 
     def parse_me_updated(self, message: Dict[str, Any]):
         pass
@@ -204,14 +223,14 @@ class ConnectionState(ClientAction):
         ユーザーをフォローした際のイベントを解析する関数
         """
 
-        self.dispatch('user_follow', User(message, state=self))
+        self.dispatch('user_follow', User(RawUser(message), state=self))
 
     def parse_followed(self, message: Dict[str, Any]) -> None:
         """
         フォローイベントを解析する関数
         """
 
-        self.dispatch('follow', User(message, state=self))
+        self.dispatch('follow', User(RawUser(message), state=self))
 
     def parse_mention(self, message: Dict[str, Any]) -> None:
         """
@@ -303,10 +322,9 @@ class ConnectionState(ClientAction):
         # Router(self.http.ws).capture_message(note.id) TODO: capture message
         self.client._on_message(note)
 
-
     async def get_i(self) -> User:
         res = await self.http.request(Route('POST', '/api/i'), auth=True, lower=True)
-        return User(res, state=self)
+        return User(RawUser(res), state=self)
 
     def get_users(self,
                   limit: int = 10,
@@ -354,6 +372,7 @@ class ConnectionState(ClientAction):
         bool
             成功したか否か
         """
+
         data = {"noteId": note_id}
         res = await self.http.request(Route('POST', '/api/notes/delete'), json=data, auth=True)
         return bool(res)
@@ -379,9 +398,10 @@ class ConnectionState(ClientAction):
         dict
             ユーザー情報
         """
+
         field = remove_dict_empty({"userId": user_id, "username": username, "host": host})
         data = await self.http.request(Route('POST', '/api/users/show'), json=field, auth=True, lower=True)
-        return User(data, state=self)
+        return User(RawUser(data), state=self)
 
     async def post_chat(self, content: str, *, user_id: str = None, group_id: str = None, file_id=None) -> Chat:
         """
@@ -452,7 +472,7 @@ class ConnectionState(ClientAction):
         data = await self.http.request(Route('POST', '/api/users/show'), json=field, auth=True, lower=True)
         old_cache = Cache(namespace='get_user')
         await old_cache.delete(kwargs['cache_key'].format('get_user'))
-        return User(data, state=self)
+        return User(RawUser(data), state=self)
 
     async def get_followers(
             self,

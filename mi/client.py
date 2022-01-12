@@ -15,6 +15,7 @@ from mi import Instance, InstanceMeta, User, config
 from mi.chat import Chat
 from mi.drive import Drive
 from mi.http import HTTPClient
+from mi.models.user import RawUser
 from mi.note import Note
 from mi.state import ConnectionState
 from mi.utils import get_module_logger
@@ -378,7 +379,7 @@ class Client:
         return await self._connection.remove_file(file_id=file_id)
 
     async def post_note(self,
-                        content: str,
+                        content: Optional[str] = None,
                         *,
                         visibility: str = "public",
                         visible_user_ids: Optional[List[str]] = None,
@@ -398,7 +399,7 @@ class Client:
 
         Parameters
         ----------
-        content : str
+        content : Optional[str], default=None
             投稿する内容
         visibility : str, optional
             公開範囲, by default "public"
@@ -438,7 +439,7 @@ class Client:
 
         if file_ids is None:
             file_ids = []
-        return await self._connection.post_note(content, visibility=visibility, visible_user_ids=visible_user_ids, cw=cw,
+        return await self._connection.note.send(content, visibility=visibility, visible_user_ids=visible_user_ids, cw=cw,
                                                 local_only=local_only, no_extract_mentions=no_extract_mentions,
                                                 no_extract_hashtags=no_extract_hashtags, no_extract_emojis=no_extract_emojis,
                                                 reply_id=reply_id, renote_id=renote_id, channel_id=channel_id,
@@ -490,7 +491,7 @@ class Client:
 
     async def login(self, token):
         data = await self.http.static_login(token)
-        self.i = User(data, self._connection)
+        self.i = User(RawUser(data), state=self._connection)
 
     async def connect(self, *, reconnect: bool = True, timeout: int = 60) -> None:
 
