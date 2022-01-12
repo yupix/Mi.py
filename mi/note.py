@@ -4,6 +4,7 @@ from typing import Any, Dict, List, Optional, TYPE_CHECKING
 
 from mi import Emoji, utils
 from mi.exception import NotExistRequiredData
+from mi.models.user import RawUser
 from mi.user import User
 from .abc.note import AbstractNote
 from .types.note import (Note as NotePayload, Poll as PollPayload, Reaction as ReactionPayload, Renote as RenotePayload)
@@ -105,7 +106,7 @@ class Renote(AbstractNote):
         self.id: str = data["id"]
         self.created_at = data["created_at"]
         self.user_id = data["user_id"]
-        self.user = User(data.get("user", {}), state=state)
+        self.user = User(RawUser(data), state=state)
         self.content: Optional[str] = data.get("text", None)
         self.cw = data["cw"]
         self.visibility = data["visibility"]
@@ -145,7 +146,7 @@ class Reaction:
         self.created_at = data.get('created_at')
         self.type: Optional[str] = data.get('type')
         self.is_read: bool = bool(data.get('is_read'))
-        self.user: Optional[User] = User(data['user'], state=state) if data.get('user') else None
+        self.user: Optional[User] = User(RawUser(data['user']), state=state) if data.get('user') else None
         self.note: Optional[Note] = Note(data['note'], state=state) if data.get('note') else None
         self.reaction: str = data['reaction']
         self._state: ConnectionState = state
@@ -178,7 +179,7 @@ class Note(AbstractNote):
         self.id: str = data["id"]
         self.created_at: str = data["created_at"]
         self.user_id: str = data["user_id"]
-        self.author: User = User(data["user"], state)
+        self.author: User = User(RawUser(data['user']), state=state)
         self.content: Optional[str] = data.get("text")
         self.cw: Optional[str] = data.get("cw")
         self.renote: Optional[Renote] = Renote(data['renote'], state=state) if data.get('renote') else None
