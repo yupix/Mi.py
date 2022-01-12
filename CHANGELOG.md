@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
+- added `RawInstance` class
 - added `RawUserDetails` class
 - added `RawUser` class
 - FavoriteManager クラスを追加
