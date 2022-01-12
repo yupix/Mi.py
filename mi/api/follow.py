@@ -1,23 +1,26 @@
 from __future__ import annotations
 import asyncio
 
-from typing import TYPE_CHECKING, Optional
+from typing import TYPE_CHECKING, List, Optional
 
 from mi.http import HTTPClient, Route
+from mi.user import FollowRequest
 
 if TYPE_CHECKING:
     from mi.state import ConnectionState
 
-__all__ = ['FollowManager']
+__all__ = ['FollowManager', 'FollowRequestManager']
 
 
 class FollowManager:
-    def __init__(self, client: ConnectionState, http: HTTPClient, loop: asyncio.AbstractEventLoop):
+    def __init__(self, client: ConnectionState, http: HTTPClient, loop: asyncio.AbstractEventLoop, *,
+                 user_id: Optional[str] = None):
         self.client: 'ConnectionState' = client
         self.http: 'HTTPClient' = http
         self.loop: asyncio.AbstractEventLoop = loop
+        self._user_id: Optional[str] = user_id
 
-    async def add(self, user_id: str) -> tuple[bool, Optional[str]]:
+    async def add(self, user_id: Optional[str] = None) -> tuple[bool, Optional[str]]:
         """
         ユーザーをフォローします
 
@@ -28,6 +31,9 @@ class FollowManager:
         str
             実行に失敗した際のエラーコード
         """
+
+        if user_id is None:
+            user_id = self._user_id
 
         data = {"userId": user_id}
         res = await self.http.request(Route('POST', '/api/following/create'), json=data, auth=True, lower=True)
@@ -55,30 +61,38 @@ class FollowManager:
 
 
 class FollowRequestManager:
-    def __init__(self, client: ConnectionState, http: HTTPClient, loop: asyncio.AbstractEventLoop):
+    def __init__(self, client: ConnectionState, http: HTTPClient, loop: asyncio.AbstractEventLoop, *,
+                 user_id: Optional[str] = None):
         self.client: 'ConnectionState' = client
         self.http: 'HTTPClient' = http
         self.loop: asyncio.AbstractEventLoop = loop
+        self._user_id: Optional[str] = user_id
 
-    async def get(self):
+    async def get_all(self) -> List[FollowRequest]:
         """
-        フォローリクエストを取得します
+        未承認のフォローリクエストを取得します
         """
 
-        return await self.http.request(Route('GET', '/api/following/requests/list'), auth=True)
+        return [FollowRequest(i['follower'], state=self.client) for i in
+                await self.http.request(Route('POST', '/api/following/requests/list'), auth=True, lower=True)]
 
-    async def accept(self, user_id: str) -> bool:
+    async def accept(self, user_id: Optional[str] = None) -> bool:
         """
         与えられたIDのユーザーのフォローリクエストを承認します
         """
 
+        if user_id is None:
+            user_id = self._user_id
         data = {'userId': user_id}
         return bool(await self.http.request(Route('POST', '/api/following/requests/accept'), json=data, auth=True))
 
-    async def reject(self, user_id: str) -> bool:
+    async def reject(self, user_id: Optional[str]) -> bool:
         """
         与えられたIDのユーザーのフォローリクエストを拒否します
         """
+
+        if user_id is None:
+            user_id = self._user_id
 
         data = {'userId': user_id}
         return bool(await self.http.request(Route('POST', '/api/following/requests/reject'), json=data, auth=True))
