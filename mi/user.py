@@ -1,14 +1,15 @@
 from __future__ import annotations
 
-from typing import Any, AsyncIterator, Dict, List, Optional, TYPE_CHECKING
+from typing import Any, AsyncIterator, Dict, List, Optional, TYPE_CHECKING, Tuple
 
+from mi.instance import Instance
 from mi.emoji import Emoji
 from mi.models.user import RawUser
 from mi.types.user import (Channel as ChannelPayload, FieldContent as FieldContentPayload, PinnedNote as PinnedNotePayload,
                            PinnedPage as PinnedPagePayload)
 
 if TYPE_CHECKING:
-    from mi import ConnectionState
+    from mi import ConnectionState, Instance
     from mi.api.follow import FollowRequestManager
 
 __all__ = ['User', 'FollowRequest', 'Followee']
@@ -49,7 +50,7 @@ class FollowRequest:
 
 
 class Channel:
-    def __init__(self, data: ChannelPayload, state: ConnectionState):
+    def __init__(self, data: ChannelPayload):
         self.id: Optional[str] = data.get("id")
         self.created_at: Optional[str] = data.get("created_at")
         self.last_noted_at: Optional[str] = data.get("last_noted_at")
@@ -60,7 +61,6 @@ class Channel:
         self.users_count: Optional[int] = data.get("users_count")
         self.is_following: Optional[bool] = data.get("is_following")
         self.user_id: Optional[str] = data.get("user_id")
-        self.__state = state
 
 
 class PinnedNote:
@@ -83,7 +83,7 @@ class PinnedNote:
         self.files: Optional[List[str]] = data.get("files")
         self.tags: Optional[List[str]] = data.get("tags")
         self.poll: Optional[List[str]] = data.get("poll")
-        self.channel: Optional[Channel] = Channel(data["channel"], state=state) if data.get("channel") else None
+        self.channel: Optional[Channel] = Channel(data["channel"]) if data.get("channel") else None
         self.local_only: Optional[bool] = data.get("local_only")
         self.emojis: Optional[List[Emoji]] = [Emoji(i, state=state) for i in data["emojis"]] if data.get("emojis") else None
         self.reactions: Optional[Dict[str, Any]] = data.get("reactions")
@@ -118,79 +118,6 @@ class FieldContent:
 
 
 class User:
-    """
-    Attributes
-    ----------
-    id: str
-        ユーザーのid
-    name: str
-        ユーザーのアカウント名
-    nickname: str
-        ユーザーのニックネーム
-    host: Optional[str]
-        ユーザーのホスト名
-    avatar_url: Optional[str]
-        ユーザーのアバターのURL
-    is_admin: bool
-        ユーザーが管理者かどうか
-    is_bot: bool
-        ユーザーがbotかどうか
-    emojis: list
-        ユーザーが使用しているemoji
-    online_status: Any
-        ユーザーのオンライン状況
-    url: str
-        ユーザーのプロフィールへのURL
-    uri: str
-        謎
-    created_at: str
-        アカウントの作成日
-    updated_at: str
-        アカウントの更新日(ノートを投稿するなど)
-    is_locked: bool
-        アカウントがロックされているか
-    is_silenced: bool
-        アカウントがミュートされているか
-    is_suspended: bool
-        アカウントが凍結されているか
-    description: str
-        アカウントの概要
-    location: str
-        ユーザーが住んでいる場所
-    birthday: str
-        ユーザーの誕生日
-    fields: list
-        プロフィールのリンクフィールド
-    followers_count: int
-        フォロワーの数
-    following_count: int
-        フォローしている人の数
-    notes_count: int
-        投稿したノートの数
-    pinned_note_ids: list
-        ピン留めされたノートのidリスト
-    pinned_page_id:str
-        ピン留めされたページのid
-    pinned_page: str
-        ピン留めされたページ
-    ff_visibility: str
-        ノートの投稿範囲
-    is_following: bool
-        ユーザーがフォローしているかどうか
-    is_follow: bool
-        ユーザーのことをフォローしているかどうか
-    is_blocking: bool
-        ユーザーが自分のことをブロックしているかどうか
-    is_blocked: bool
-        ユーザーのことをブロックしているかどうか
-    is_muted: bool
-        ユーザーのことをミュートしているかどうか
-    instance: Any
-        ユーザーのインスタンス
-    details: UserDetails
-        ユーザーの詳細な情報
-    """
-
     def __init__(self, raw_user: RawUser, state: ConnectionState):
         self.__raw_user = raw_user
         self.__state = state
@@ -348,8 +275,8 @@ class User:
         return self.__raw_user.details
 
     @property
-    def instance(self):
-        return self.__raw_user.instance
+    def instance(self) -> Instance | None:
+        return Instance(self.__raw_user.instance, state=self.__state) if self.__raw_user.instance else None
 
     async def get_profile(self) -> "User":
         """
@@ -360,7 +287,8 @@ class User:
         User
             ユーザーのプロフィールオブジェクト
         """
-        return await self.__state.get_user(user_id=self.__raw_user.id, username=self.__raw_user.name, host=self.__raw_user.host)
+        return await self.__state.get_user(user_id=self.__raw_user.id, username=self.__raw_user.name,
+                                           host=self.__raw_user.host)
 
     def get_followers(self, until_id: Optional[str] = None, limit: int = 10, get_all: bool = False) -> AsyncIterator[Followee]:
         """
@@ -380,5 +308,6 @@ class User:
         AsyncIterator[FollowRequest]
             ユーザーのフォロワー一覧
         """
-        return self.__state.get_followers(username=self.__raw_user.name, host=self.__raw_user.host, until_id=until_id, limit=limit,
+        return self.__state.get_followers(username=self.__raw_user.name, host=self.__raw_user.host, until_id=until_id,
+                                          limit=limit,
                                           get_all=get_all)
