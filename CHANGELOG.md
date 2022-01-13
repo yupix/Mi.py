@@ -27,6 +27,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - ドキュメントを更新
 - 内部変更: `UserAction` や `ClientAction` のメソッドを別クラスに分割
+- Allow only property-based access to most data classes.
 - **BREAKING CHANGE**: `User` クラスのプロパティーを以下のように変更
   - `name` -> `nickname`
   - `username` -> `name`
