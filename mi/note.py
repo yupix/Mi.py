@@ -1,13 +1,16 @@
 from __future__ import annotations
 
-from typing import Any, Dict, List, Optional, TYPE_CHECKING
+from typing import Dict, List, Optional, TYPE_CHECKING
 
 from mi import Emoji, utils
 from mi.exception import NotExistRequiredData
+from mi.models.drive import RawFile
+from mi.models.note import RawNote, RawRenote
+from mi.models.poll import RawPoll
 from mi.models.user import RawUser
 from mi.user import User
 from .abc.note import AbstractNote
-from .types.note import (Note as NotePayload, Poll as PollPayload, Reaction as ReactionPayload, Renote as RenotePayload)
+from .types.note import (Reaction as ReactionPayload)
 
 if TYPE_CHECKING:
     from mi import ConnectionState
@@ -73,56 +76,167 @@ class Properties:
 
 
 class File:
-    def __init__(self, data, state: ConnectionState):
-        self.id: Optional[str] = data.get('id')
-        self.created_at: Optional[str] = data.get('create_at')
-        self.name: Optional[str] = data.get('name')
-        self.type: Optional[str] = data.get('type')
-        self.md5: Optional[str] = data.get('md5')
-        self.size: Optional[int] = data.get('size')
-        self.is_sensitive: Optional[bool] = bool(data.get('is_sensitive'))
-        self.blurhash: Optional[str] = data.get('blurhash')
-        self.properties: Optional[Properties] = Properties(
-            data.get('properties'), state=state) if data.get('properties') else None
-        self.url: Optional[str] = data.get('url')
-        self.thumbnail_url: Optional[str] = data.get('thumbnail_url')
-        self.comment: Optional[str] = data.get('comment')
-        self.folder_id: Optional[str] = data.get('folder_id')
-        self.folder: Optional[str] = data.get('folder')
-        self.user_id: Optional[str] = data.get('user_id')
-        self.user: Optional[str] = data.get('user')
+    def __init__(self, raw_data: RawFile, state: ConnectionState):
+        self.__raw_data = raw_data
+
+    @property
+    def id(self):
+        return self.__raw_data.id
+
+    @property
+    def created_at(self):
+        return self.__raw_data.created_at
+
+    @property
+    def name(self):
+        return self.__raw_data.name
+
+    @property
+    def type(self):
+        return self.__raw_data.type
+
+    @property
+    def md5(self):
+        return self.__raw_data.md5
+
+    @property
+    def size(self):
+        return self.__raw_data.size
+
+    @property
+    def is_sensitive(self):
+        return self.__raw_data.is_sensitive
+
+    @property
+    def blurhash(self):
+        return self.__raw_data.blurhash
+
+    @property
+    def properties(self):
+        return self.__raw_data.properties
+
+    @property
+    def url(self):
+        return self.__raw_data.url
+
+    @property
+    def thumbnail_url(self):
+        return self.__raw_data.thumbnail_url
+
+    @property
+    def comment(self):
+        return self.__raw_data.comment
+
+    @property
+    def folder_id(self):
+        return self.__raw_data.folder_id
+
+    @property
+    def folder(self):
+        return self.__raw_data.folder
+
+    @property
+    def user_id(self):
+        return self.__raw_data.user_id
+
+    @property
+    def user(self):
+        return self.__raw_data.user
 
 
 class Poll:
-    def __init__(self, data: PollPayload):
-        self.multiple: Optional[bool] = data.get("multiple")
-        self.expires_at: Optional[int] = data.get("expires_at")
-        self.choices: Optional[List[str]] = data.get("choices")
-        self.expired_after: Optional[int] = data.get("expired_after")
+    def __init__(self, raw_data: RawPoll):
+        self.__raw_data = raw_data
+
+    @property
+    def multiple(self):
+        return self.__raw_data.multiple
+
+    @property
+    def expires_at(self):
+        return self.__raw_data.expires_at
+
+    @property
+    def choices(self):
+        return self.__raw_data.choices
+
+    @property
+    def expired_after(self):
+        return self.__raw_data.expired_after
 
 
 class Renote(AbstractNote):
-    def __init__(self, data: RenotePayload, state: ConnectionState):
-        self.id: str = data["id"]
-        self.created_at = data["created_at"]
-        self.user_id = data["user_id"]
-        self.user = User(RawUser(data), state=state)
-        self.content: Optional[str] = data.get("text", None)
-        self.cw = data["cw"]
-        self.visibility = data["visibility"]
-        self.renote_count = data["renote_count"]
-        self.replies_count = data["replies_count"]
-        self.reactions = data["reactions"]
-        self.emojis = data["emojis"]
-        self.file_ids: List[str] = data["file_ids"]
-        self.files = data["files"]
-        self.reply_id = data["reply_id"]
-        self.files = data["files"]
-        self.reply_id = data["reply_id"]
-        self.renote_id = data["renote_id"]
-        self.uri = data.get("uri")
-        self.poll = Poll(data["poll"]) if data.get("poll") else None
-        self._state = state
+    def __init__(self, raw_data: RawRenote, state: ConnectionState):
+        self.__raw_data: RawRenote = raw_data
+        self.__state = state
+
+    @property
+    def id(self) -> str:
+        return self.__raw_data.id
+
+    @property
+    def created_at(self):
+        return self.__raw_data.created_at
+
+    @property
+    def user_id(self):
+        return self.__raw_data.user_id
+
+    @property
+    def user(self):
+        return User(self.__raw_data.user, state=self.__state)
+
+    @property
+    def content(self):
+        return self.__raw_data.content
+
+    @property
+    def cw(self):
+        return self.__raw_data.cw
+
+    @property
+    def visibility(self):
+        return self.__raw_data.visibility
+
+    @property
+    def renote_count(self):
+        return self.__raw_data.renote_count
+
+    @property
+    def replies_count(self):
+        return self.__raw_data.replies_count
+
+    @property
+    def reactions(self):
+        return self.__raw_data.reactions
+
+    @property
+    def emojis(self):
+        return self.__raw_data.emojis
+
+    @property
+    def file_ids(self):
+        return self.__raw_data.file_ids
+
+    @property
+    def files(self):
+        return self.__raw_data.files
+
+    @property
+    def reply_id(self):
+        return self.__raw_data.reply_id
+
+    @property
+    def renote_id(self):
+        return self.__raw_data.renote_id
+
+    @property
+    def uri(self):
+        return self.__raw_data.uri
+
+    @property
+    def poll(self) -> Poll | None:
+        return Poll(self.__raw_data.poll) if self.__raw_data.poll else None
 
     def emoji_count(self) -> int:
         """
@@ -134,10 +248,10 @@ class Renote(AbstractNote):
             含まれている絵文字の数
         """
 
-        return utils.emoji_count(self.content)
+        return utils.emoji_count(self.__raw_data.content)
 
     async def delete(self) -> bool:
-        return await self._state.delete_note(self.id)
+        return await self.__state.delete_note(self.__raw_data.id)
 
 
 class Reaction:
@@ -147,7 +261,7 @@ class Reaction:
         self.type: Optional[str] = data.get('type')
         self.is_read: bool = bool(data.get('is_read'))
         self.user: Optional[User] = User(RawUser(data['user']), state=state) if data.get('user') else None
-        self.note: Optional[Note] = Note(data['note'], state=state) if data.get('note') else None
+        self.note: Optional[Note] = Note(RawNote(data['note']), state=state) if data.get('note') else None
         self.reaction: str = data['reaction']
         self._state: ConnectionState = state
 
@@ -175,36 +289,121 @@ class Note(AbstractNote):
     poll: Optional[Poll]
     """
 
-    def __init__(self, data: NotePayload, state: ConnectionState):
-        self.id: str = data["id"]
-        self.created_at: str = data["created_at"]
-        self.user_id: str = data["user_id"]
-        self.author: User = User(RawUser(data['user']), state=state)
-        self.content: Optional[str] = data.get("text")
-        self.cw: Optional[str] = data.get("cw")
-        self.renote: Optional[Renote] = Renote(data['renote'], state=state) if data.get('renote') else None
-        self.visibility: Optional[str] = data.get("visibility")  # This may be an optional
-        self.renote_count: int = data["renote_count"]
-        self.replies_count: int = data["replies_count"]
-        self.reactions: Dict[str, Any] = data["reactions"]
-        self.emojis: List[Emoji] = [Emoji(i, state=state) for i in data["emojis"]]
-        self.file_ids: Optional[List[str]] = data["file_ids"]
-        self.files: List[File] = [File(i, state=state) for i in data["files"]]
-        self.reply_id: Optional[str] = data["reply_id"]
-        self.renote_id: Optional[str] = data["renote_id"]
-        self.poll: Optional[Poll] = Poll(data["poll"]) if data.get("poll") else None
-        self.visible_user_ids: Optional[List[str]] = data.get("visible_user_ids", [])
-        self.via_mobile: Optional[bool] = data.get("via_mobile", False)
-        self.local_only: bool = bool(data.get("local_only", False))
-        self.no_extract_mentions: Optional[bool] = data.get("no_extract_mentions", False)
-        self.no_extract_hashtags: Optional[bool] = data.get("no_extract_hashtags")
-        self.no_extract_emojis: Optional[bool] = data.get("no_extract_emojis")
-        self.preview: Optional[bool] = data.get("preview")
-        self.media_ids: Optional[List[str]] = data.get("media_ids")
-        self.field: Optional[dict] = {}
-        self.tags: Optional[List[str]] = data.get("tags", [])
-        self.channel_id: Optional[str] = data.get("channel_id")
-        self._state = state
+    def __init__(self, raw_data: RawNote, state: ConnectionState):
+        self.__raw_data = raw_data
+        self.__state = state
+
+    @property
+    def id(self):
+        return self.__raw_data.id
+
+    @property
+    def created_at(self):
+        return self.__raw_data.created_at
+
+    @property
+    def user_id(self):
+        return self.__raw_data.user_id
+
+    @property
+    def author(self):
+        return self.__raw_data.author
+
+    @property
+    def content(self):
+        return self.__raw_data.content
+
+    @property
+    def cw(self):
+        return self.__raw_data.cw
+
+    @property
+    def renote(self):
+        return self.__raw_data.renote  # TODO: 実装
+
+    @property
+    def visibility(self):
+        return self.__raw_data.visibility
+
+    @property
+    def renote_count(self):
+        return self.__raw_data.renote_count
+
+    @property
+    def replies_count(self):
+        return self.__raw_data.replies_count
+
+    @property
+    def reactions(self):
+        return self.__raw_data.reactions
+
+    @property
+    def emojis(self):
+        return self.__raw_data.emojis  # TODO: 実装
+
+    @property
+    def file_ids(self):
+        return self.__raw_data.file_ids
+
+    @property
+    def files(self) -> List[File]:
+        return [File(i, state=self.__state) for i in self.__raw_data.files]
+
+    @property
+    def reply_id(self):
+        return self.__raw_data.reply_id
+
+    @property
+    def renote_id(self):
+        return self.__raw_data.renote_id
+
+    @property
+    def poll(self) -> Poll | None:
+        return Poll(self.__raw_data.poll) if self.__raw_data.poll else None
+
+    @property
+    def visible_user_ids(self):
+        return self.__raw_data.visible_user_ids
+
+    @property
+    def via_mobile(self):
+        return self.__raw_data.via_mobile
+
+    @property
+    def local_only(self):
+        return self.__raw_data.local_only
+
+    @property
+    def no_extract_mentions(self):
+        return self.__raw_data.no_extract_mentions
+
+    @property
+    def no_extract_hashtags(self):
+        return self.__raw_data.no_extract_hashtags
+
+    @property
+    def no_extract_emojis(self):
+        return self.__raw_data.no_extract_emojis
+
+    @property
+    def preview(self):
+        return self.__raw_data.preview
+
+    @property
+    def media_ids(self):
+        return self.__raw_data.media_ids
+
+    @property
+    def field(self):
+        return self.__raw_data.field
+
+    @property
+    def tags(self):
+        return self.__raw_data.tags
+
+    @property
+    def channel_id(self):
+        return self.__raw_data.channel_id
 
     async def reply(
             self, content: Optional[str],
@@ -243,7 +442,7 @@ class Note(AbstractNote):
         """
         if file_ids is None:
             file_ids = []
-        return await self._state.post_note(
+        return await self.__state.post_note(
             content,
             visibility=self.visibility,
             visible_user_ids=self.visible_user_ids,
@@ -286,7 +485,7 @@ class Note(AbstractNote):
             成功したかどうか
         """
 
-        return await self._state.add_reaction_to_note(note_id=self.id, reaction=reaction)
+        return await self.__state.add_reaction_to_note(note_id=self.id, reaction=reaction)
 
     async def delete(self) -> bool:
         """
@@ -298,7 +497,7 @@ class Note(AbstractNote):
             成功したか否か
         """
 
-        return await self._state.delete_note(self.id)
+        return await self.__state.delete_note(self.id)
 
     async def favorite(self) -> bool:
         """
@@ -310,48 +509,48 @@ class Note(AbstractNote):
             成功したか否か
         """
 
-        return await self._state.favorite(note_id=self.id)
+        return await self.__state.favorite(note_id=self.id)
 
     async def remove_favorite(self) -> bool:
         """
         お気に入りから解除します
-        
+
         Returns
         -------
         bool
             お気に入りの解除に成功したかどうか
         """
 
-        return await self._state.remove_favorite(note_id=self.id)
+        return await self.__state.remove_favorite(note_id=self.id)
 
     async def add_to_clips(self, clip_id: str) -> bool:
         """
         指定したクリップにノートを追加します
-        
+
         Returns
         -------
         bool
             クリップに追加できたかどうか
         """
 
-        return await self._state.add_note_to_clips(clip_id=clip_id, note_id=self.id)
+        return await self.__state.add_note_to_clips(clip_id=clip_id, note_id=self.id)
 
     async def create_renote(self) -> Note:
         """
         ノートをリノートします
-        
+
         Returns
         -------
         Note
             作成したリノート
         """
 
-        return await self._state.create_renote(self.id)
+        return await self.__state.create_renote(self.id)
 
     async def get_replies(self, since_id: Optional[str] = None, until_id: Optional[str] = None, limit: int = 10) -> List[Note]:
         """
         ノートに対する返信を取得します
-        
+
         Parameters
         ----------
         since_id: Optional[str], default=None
@@ -359,14 +558,14 @@ class Note(AbstractNote):
             前回の最後のidから取得する場合
         limit: int, default=10
             取得する件数
-        
+
         Returns
         -------
         List[Note]
             ノートに対する返信一覧
         """
 
-        return await self._state.get_replies(note_id=self.id, since_id=since_id, until_id=until_id, limit=limit)
+        return await self.__state.get_replies(note_id=self.id, since_id=since_id, until_id=until_id, limit=limit)
 
     async def create_quote(self,
                            content: Optional[str] = None,
@@ -404,7 +603,7 @@ class Note(AbstractNote):
             添付するファイルのid
         poll: Optional[Poll]
             アンケート
-        
+
         Returns
         -------
         Note
@@ -412,8 +611,9 @@ class Note(AbstractNote):
         """
 
         visibility = self.visibility or visibility or 'public'
-        return await self._state.create_quote(content=content, visibility=visibility, visible_user_ids=visible_user_ids, cw=cw,
-                                              local_only=local_only, no_extract_mentions=no_extract_mentions,
-                                              no_extract_hashtags=no_extract_hashtags,
-                                              no_extract_emojis=no_extract_emojis, note_id=self.id, file_ids=file_ids,
-                                              poll=poll)
+        return await self.__state.create_quote(content=content, visibility=visibility, visible_user_ids=visible_user_ids,
+                                               cw=cw,
+                                               local_only=local_only, no_extract_mentions=no_extract_mentions,
+                                               no_extract_hashtags=no_extract_hashtags,
+                                               no_extract_emojis=no_extract_emojis, note_id=self.id, file_ids=file_ids,
+                                               poll=poll)
