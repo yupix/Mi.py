@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
+- added `RawPollChoices` class
+- added `RawPoll` class
 - added `RawInstance` class
 - added `RawUserDetails` class
 - added `RawUser` class
