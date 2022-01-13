@@ -1,7 +1,7 @@
 from __future__ import annotations
-import asyncio
 
-from typing import TYPE_CHECKING, List, Optional
+import asyncio
+from typing import List, Optional, TYPE_CHECKING
 
 from mi.http import HTTPClient, Route
 from mi.user import FollowRequest

@@ -1,4 +1,3 @@
-from dataclasses import dataclass
 from typing import List, Optional
 
 from mi.models.instance import RawInstance

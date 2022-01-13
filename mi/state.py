@@ -19,7 +19,7 @@ from mi.iterators import InstanceIterator
 from mi.models.note import RawNote
 from mi.models.user import RawUser
 from mi.note import Note, Poll, Reaction
-from mi.user import Followee, FollowRequest
+from mi.user import FollowRequest, Followee
 from mi.utils import check_multi_arg, get_cache_key, get_module_logger, key_builder, remove_dict_empty, str_lower, \
     upper_to_lower
 

@@ -5,7 +5,6 @@ from typing import Dict, List, Optional, TYPE_CHECKING
 from mi import Emoji, utils
 from mi.drive import File
 from mi.exception import NotExistRequiredData
-from mi.models.drive import RawFile
 from mi.models.note import RawNote, RawRenote
 from mi.models.poll import RawPoll
 from mi.models.user import RawUser

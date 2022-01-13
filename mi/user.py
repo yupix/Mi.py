@@ -1,8 +1,7 @@
 from __future__ import annotations
 
-from typing import Any, AsyncIterator, Dict, List, Optional, TYPE_CHECKING, Tuple
+from typing import Any, AsyncIterator, Dict, List, Optional, TYPE_CHECKING
 
-from mi.instance import Instance
 from mi.emoji import Emoji
 from mi.models.user import RawUser
 from mi.types.user import (Channel as ChannelPayload, FieldContent as FieldContentPayload, PinnedNote as PinnedNotePayload,

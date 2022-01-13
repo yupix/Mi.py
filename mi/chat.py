@@ -3,7 +3,6 @@ from __future__ import annotations
 from typing import List, TYPE_CHECKING
 
 from mi.models.user import RawUser
-
 from .abc.chat import AbstractChatContent
 from .types.chat import Chat as ChatPayload
 from .user import User
