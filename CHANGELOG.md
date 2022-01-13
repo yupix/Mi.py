@@ -8,7 +8,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 
 ### Added
-
+- added `RawProperties` class
+- added `RawFolder` class
+- added `RawFile` class
 - added `RawPollChoices` class
 - added `RawPoll` class
 - added `RawInstance` class
