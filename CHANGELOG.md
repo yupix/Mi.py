@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 
 ### Added
+- added `RawEmoji` class
 - added `RawProperties` class
 - added `RawFolder` class
 - added `RawFile` class
