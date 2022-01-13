@@ -3,6 +3,7 @@ from typing import Optional
 
 __all__ = ['RawInstance']
 
+
 @dataclass
 class RawInstance:
     host: Optional[str] = None
@@ -12,4 +13,3 @@ class RawInstance:
     icon_url: Optional[str] = None
     favicon_url: Optional[str] = None
     theme_color: Optional[str] = None
-    
