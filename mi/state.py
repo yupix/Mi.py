@@ -16,6 +16,7 @@ from mi.emoji import Emoji
 from mi.exception import ContentRequired, InvalidParameters, NotExistRequiredParameters
 from mi.http import Route
 from mi.iterators import InstanceIterator
+from mi.models.note import RawNote
 from mi.models.user import RawUser
 from mi.note import Note, Poll, Reaction
 from mi.user import Followee, FollowRequest
@@ -88,7 +89,7 @@ class NoteActions:
             field["fileIds"] = file_ids
         field = remove_dict_empty(field)
         res = await self.http.request(Route('POST', '/api/notes/create'), json=field, auth=True, lower=True)
-        return Note(res["created_note"], state=self.client)
+        return Note(RawNote(res["created_note"]), state=self.client)
 
     async def create_renote(self, note_id: str) -> Note:
         return await self.send(renote_id=note_id)
@@ -111,14 +112,14 @@ class NoteActions:
 
     async def get_note(self, note_id) -> Note:
         res = await self.http.request(Route('POST', '/api/notes/show'), json={"noteId": note_id}, auth=True, lower=True)
-        return Note(res, state=self.client)
+        return Note(RawNote(res), state=self.client)
 
     async def get_replies(self, note_id: str, since_id: Optional[str] = None, until_id: Optional[str] = None,
                           limit: int = 10, ) -> List[Note]:
         res = await self.http.request(Route('POST', '/api/notes/replies'),
                                       json={"noteId": note_id, "sinceId": since_id, "untilId": until_id, "limit": limit},
                                       auth=True, lower=True)
-        return [Note(i, state=self.client) for i in res]
+        return [Note(RawNote(i), state=self.client) for i in res]
 
 
 class UserAction:
@@ -216,7 +217,7 @@ class ConnectionState(ClientAction):
         """
         リプライ
         """
-        self.dispatch('message', Note(message, state=self))
+        self.dispatch('message', Note(RawNote(message), state=self))
 
     def parse_follow(self, message: Dict[str, Any]) -> None:
         """
@@ -237,7 +238,7 @@ class ConnectionState(ClientAction):
         メンションイベントを解析する関数
         """
 
-        self.dispatch('mention', Note(message, state=self))
+        self.dispatch('mention', Note(RawNote(message), state=self))
 
     def parse_drive_file_created(self, message: Dict[str, Any]) -> None:
         pass  # TODO: 実装
@@ -318,7 +319,7 @@ class ConnectionState(ClientAction):
         """
         ノートイベントを解析する関数
         """
-        note = Note(message, state=self)
+        note = Note(RawNote(message), state=self)
         # Router(self.http.ws).capture_message(note.id) TODO: capture message
         self.client._on_message(note)
 
@@ -610,11 +611,11 @@ class ConnectionState(ClientAction):
                     break
                 args["untilId"] = get_data[-1]["id"]
                 for data in get_data:
-                    yield Note(NotePayload(**data), state=self)
+                    yield Note(RawNote(data), state=self)
         else:
             get_data = await self.http.request(Route('POST', '/api/users/notes'), json=args, auth=True, lower=True)
             for data in get_data:
-                yield Note(NotePayload(**upper_to_lower(data)), state=self)
+                yield Note(RawNote(**upper_to_lower(data)), state=self)
 
     async def get_announcements(self, limit: int, with_unreads: bool, since_id: str, until_id: str):
         """
