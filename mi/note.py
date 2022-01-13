@@ -3,6 +3,7 @@ from __future__ import annotations
 from typing import Dict, List, Optional, TYPE_CHECKING
 
 from mi import Emoji, utils
+from mi.drive import File
 from mi.exception import NotExistRequiredData
 from mi.models.drive import RawFile
 from mi.models.note import RawNote, RawRenote
@@ -73,75 +74,6 @@ class Properties:
         self.width: Optional[int] = data['width']
         self.height: Optional[int] = data['height']
         self.state: ConnectionState = state
-
-
-class File:
-    def __init__(self, raw_data: RawFile, state: ConnectionState):
-        self.__raw_data = raw_data
-
-    @property
-    def id(self):
-        return self.__raw_data.id
-
-    @property
-    def created_at(self):
-        return self.__raw_data.created_at
-
-    @property
-    def name(self):
-        return self.__raw_data.name
-
-    @property
-    def type(self):
-        return self.__raw_data.type
-
-    @property
-    def md5(self):
-        return self.__raw_data.md5
-
-    @property
-    def size(self):
-        return self.__raw_data.size
-
-    @property
-    def is_sensitive(self):
-        return self.__raw_data.is_sensitive
-
-    @property
-    def blurhash(self):
-        return self.__raw_data.blurhash
-
-    @property
-    def properties(self):
-        return self.__raw_data.properties
-
-    @property
-    def url(self):
-        return self.__raw_data.url
-
-    @property
-    def thumbnail_url(self):
-        return self.__raw_data.thumbnail_url
-
-    @property
-    def comment(self):
-        return self.__raw_data.comment
-
-    @property
-    def folder_id(self):
-        return self.__raw_data.folder_id
-
-    @property
-    def folder(self):
-        return self.__raw_data.folder
-
-    @property
-    def user_id(self):
-        return self.__raw_data.user_id
-
-    @property
-    def user(self):
-        return self.__raw_data.user
 
 
 class Poll:
