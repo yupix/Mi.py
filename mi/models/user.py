@@ -73,5 +73,5 @@ class RawUser:
         self.is_blocking: bool = bool(data.get("is_blocking", False))
         self.is_blocked: bool = bool(data.get("is_blocked", False))
         self.is_muted: bool = bool(data.get("is_muted", False))
-        self.details = RawUserDetails(data)
-        self.instance = RawInstance(**data["instance"]) if data.get("instance") else None
+        self.details: RawUserDetails = RawUserDetails(data)
+        self.instance: Optional[RawInstance] = RawInstance(**data["instance"]) if data.get("instance") else None
