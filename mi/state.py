@@ -315,7 +315,7 @@ class ConnectionState(ClientAction):
         """
         self.dispatch('reaction', Reaction(message, state=self))
 
-    def parse_note(self, message: Dict[str, Any]) -> None:
+    def parse_note(self, message: NotePayload) -> None:
         """
         ノートイベントを解析する関数
         """
