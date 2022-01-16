@@ -53,9 +53,9 @@ class RawNote:
         self.visible_user_ids: Optional[List[str]] = data.get("visible_user_ids", [])
         self.via_mobile: Optional[bool] = data.get("via_mobile", False)
         self.local_only: bool = bool(data.get("local_only", False))
-        self.no_extract_mentions: Optional[bool] = data.get("no_extract_mentions", False)
-        self.no_extract_hashtags: Optional[bool] = data.get("no_extract_hashtags")
-        self.no_extract_emojis: Optional[bool] = data.get("no_extract_emojis")
+        self.extract_mentions: bool = bool(data.get("extract_mentions"))
+        self.extract_hashtags: bool = bool(data.get("extract_hashtags"))
+        self.extract_emojis: bool = bool(data.get("extract_emojis"))
         self.preview: Optional[bool] = data.get("preview")
         self.media_ids: Optional[List[str]] = data.get("media_ids")
         self.field: Optional[dict] = {}

@@ -1,8 +1,8 @@
 from __future__ import annotations
 
-from typing import Dict, List, Optional, TYPE_CHECKING
+from typing import List, Optional, TYPE_CHECKING
 
-from mi import Emoji, utils
+from mi import utils
 from mi.drive import File
 from mi.exception import NotExistRequiredData
 from mi.models.note import RawNote, RawRenote
@@ -191,28 +191,6 @@ class Reaction:
 
 
 class Note(AbstractNote):
-    """
-    Attributes
-    -----------
-    id: str 
-    created_at: str
-    user_id: str
-    author: User
-    content: Optional[str]
-    cw: Optional[str]
-    renote: Renote
-    visibility: str
-    renote_count: int
-    replies_count:int
-    reactions:Dict[str, Any]
-    emojis:List[Emoji]
-    file_ids:Optional[List[str]]
-    files: Optional[List[str]]
-    reply_id: Optional[str]
-    renote_id: Optional[str]
-    poll: Optional[Poll]
-    """
-
     def __init__(self, raw_data: RawNote, state: ConnectionState):
         self.__raw_data = raw_data
         self.__state = state
@@ -298,16 +276,16 @@ class Note(AbstractNote):
         return self.__raw_data.local_only
 
     @property
-    def no_extract_mentions(self):
-        return self.__raw_data.no_extract_mentions
+    def extract_mentions(self):
+        return self.__raw_data.extract_mentions
 
     @property
-    def no_extract_hashtags(self):
-        return self.__raw_data.no_extract_hashtags
+    def extract_hashtags(self):
+        return self.__raw_data.extract_hashtags
 
     @property
-    def no_extract_emojis(self):
-        return self.__raw_data.no_extract_emojis
+    def extract_emojis(self):
+        return self.__raw_data.extract_emojis
 
     @property
     def preview(self):
@@ -332,9 +310,9 @@ class Note(AbstractNote):
     async def reply(
             self, content: Optional[str],
             cw: Optional[str] = None,
-            no_extract_mentions: bool = False,
-            no_extract_hashtags: bool = False,
-            no_extract_emojis: bool = False,
+            extract_mentions: bool = True,
+            extract_hashtags: bool = True,
+            extract_emojis: bool = True,
             renote_id: Optional[str] = None,
             channel_id: Optional[str] = None,
             file_ids=None,
@@ -349,11 +327,11 @@ class Note(AbstractNote):
             返信内容
         cw: Optional[str]
             閲覧注意
-        no_extract_mentions : bool, optional
+        extract_mentions : bool, optional
             メンションを展開するか, by default False
-        no_extract_hashtags : bool, optional
+        extract_hashtags : bool, optional
             ハッシュタグを展開するか, by default False
-        no_extract_emojis : bool, optional
+        extract_emojis : bool, optional
             絵文字を展開するか, by default False
         renote_id : Optional[str], optional
             リノート先のid, by default None
@@ -372,9 +350,9 @@ class Note(AbstractNote):
             visible_user_ids=self.visible_user_ids,
             cw=cw,
             local_only=self.local_only,
-            no_extract_mentions=no_extract_mentions,
-            no_extract_hashtags=no_extract_hashtags,
-            no_extract_emojis=no_extract_emojis,
+            extract_mentions=extract_mentions,
+            extract_hashtags=extract_hashtags,
+            extract_emojis=extract_emojis,
             reply_id=self.id,
             renote_id=renote_id,
             channel_id=channel_id,
@@ -497,9 +475,9 @@ class Note(AbstractNote):
                            visible_user_ids: Optional[List[str]] = None,
                            cw: Optional[str] = None,
                            local_only: bool = False,
-                           no_extract_mentions: bool = False,
-                           no_extract_hashtags: bool = False,
-                           no_extract_emojis: bool = False,
+                           extract_mentions: bool = True,
+                           extract_hashtags: bool = True,
+                           extract_emojis: bool = True,
                            file_ids=None,
                            poll: Optional[Poll] = None):
         """
@@ -517,11 +495,11 @@ class Note(AbstractNote):
             閲覧注意の文字列
         local_only: bool
             ローカルにのみ公開するかどうか
-        no_extract_mentions: bool
+        extract_mentions: bool
             メンションを展開するかどうか
-        no_extract_hashtags: bool
+        extract_hashtags: bool
             ハッシュタグを展開するかどうか
-        no_extract_emojis: bool
+        extract_emojis: bool
             絵文字を展開するかどうか
         file_ids:
             添付するファイルのid
@@ -537,7 +515,7 @@ class Note(AbstractNote):
         visibility = self.visibility or visibility or 'public'
         return await self.__state.create_quote(content=content, visibility=visibility, visible_user_ids=visible_user_ids,
                                                cw=cw,
-                                               local_only=local_only, no_extract_mentions=no_extract_mentions,
-                                               no_extract_hashtags=no_extract_hashtags,
-                                               no_extract_emojis=no_extract_emojis, note_id=self.id, file_ids=file_ids,
+                                               local_only=local_only, extract_mentions=extract_mentions,
+                                               extract_hashtags=extract_hashtags,
+                                               extract_emojis=extract_emojis, note_id=self.id, file_ids=file_ids,
                                                poll=poll)

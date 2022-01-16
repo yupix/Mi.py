@@ -49,9 +49,9 @@ class NoteActions:
                    visible_user_ids: Optional[List[str]] = None,
                    cw: Optional[str] = None,
                    local_only: bool = False,
-                   no_extract_mentions: bool = False,
-                   no_extract_hashtags: bool = False,
-                   no_extract_emojis: bool = False,
+                   extract_mentions: bool = True,
+                   extract_hashtags: bool = True,
+                   extract_emojis: bool = True,
                    reply_id: Optional[str] = None,
                    renote_id: Optional[str] = None,
                    channel_id: Optional[str] = None,
@@ -66,9 +66,9 @@ class NoteActions:
             "text": content,
             "cw": cw,
             "localOnly": local_only,
-            "noExtractMentions": no_extract_mentions,
-            "noExtractHashtags": no_extract_hashtags,
-            "noExtractEmojis": no_extract_emojis,
+            "noExtractMentions": extract_mentions,
+            "noExtractHashtags": extract_hashtags,
+            "noExtractEmojis": extract_emojis,
             "replyId": reply_id,
             "renoteId": renote_id,
             "channelId": channel_id
@@ -100,15 +100,15 @@ class NoteActions:
                            visible_user_ids: Optional[List[str]] = None,
                            cw: Optional[str] = None,
                            local_only: bool = False,
-                           no_extract_mentions: bool = False,
-                           no_extract_hashtags: bool = False,
-                           no_extract_emojis: bool = False,
+                           extract_mentions: bool = True,
+                           extract_hashtags: bool = True,
+                           extract_emojis: bool = True,
                            file_ids=None,
                            poll: Optional[Poll] = None) -> Note:
         return await self.send(content=content, visibility=visibility, visible_user_ids=visible_user_ids, cw=cw,
-                               local_only=local_only, no_extract_mentions=no_extract_mentions,
-                               no_extract_hashtags=no_extract_hashtags,
-                               no_extract_emojis=no_extract_emojis, renote_id=note_id, file_ids=file_ids, poll=poll)
+                               local_only=local_only, extract_mentions=extract_mentions,
+                               extract_hashtags=extract_hashtags,
+                               extract_emojis=extract_emojis, renote_id=note_id, file_ids=file_ids, poll=poll)
 
     async def get_note(self, note_id) -> Note:
         res = await self.http.request(Route('POST', '/api/notes/show'), json={"noteId": note_id}, auth=True, lower=True)

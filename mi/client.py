@@ -385,9 +385,9 @@ class Client:
                         visible_user_ids: Optional[List[str]] = None,
                         cw: Optional[str] = None,
                         local_only: bool = False,
-                        no_extract_mentions: bool = False,
-                        no_extract_hashtags: bool = False,
-                        no_extract_emojis: bool = False,
+                        extract_mentions: bool = True,
+                        extract_hashtags: bool = True,
+                        extract_emojis: bool = True,
                         reply_id: Optional[str] = None,
                         renote_id: Optional[str] = None,
                         channel_id: Optional[str] = None,
@@ -409,11 +409,11 @@ class Client:
             閲覧注意の文字, by default None
         local_only : bool, optional
             ローカルにのみ表示するか, by default False
-        no_extract_mentions : bool, optional
+        extract_mentions : bool, optional
             メンションを展開するか, by default False
-        no_extract_hashtags : bool, optional
+        extract_hashtags : bool, optional
             ハッシュタグを展開するか, by default False
-        no_extract_emojis : bool, optional
+        extract_emojis : bool, optional
             絵文字を展開するか, by default False
         reply_id : Optional[str], optional
             リプライ先のid, by default None
@@ -440,8 +440,8 @@ class Client:
         if file_ids is None:
             file_ids = []
         return await self._connection.note.send(content, visibility=visibility, visible_user_ids=visible_user_ids, cw=cw,
-                                                local_only=local_only, no_extract_mentions=no_extract_mentions,
-                                                no_extract_hashtags=no_extract_hashtags, no_extract_emojis=no_extract_emojis,
+                                                local_only=local_only, extract_mentions=extract_mentions,
+                                                extract_hashtags=extract_hashtags, extract_emojis=extract_emojis,
                                                 reply_id=reply_id, renote_id=renote_id, channel_id=channel_id,
                                                 file_ids=file_ids,
                                                 poll=poll)
