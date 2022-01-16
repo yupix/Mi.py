@@ -4,8 +4,6 @@ from mi.models.drive import RawFile
 from mi.models.emoji import RawEmoji
 from mi.models.poll import RawPoll
 from mi.models.user import RawUser
-from mi.types.drive import File
-from mi.types.emoji import Emoji
 from mi.types.note import Note, Renote
 from mi.utils import upper_to_lower
 
@@ -46,9 +44,9 @@ class RawNote:
         self.renote_count: int = data["renote_count"]
         self.replies_count: int = data["replies_count"]
         self.reactions: Dict[str, Any] = data["reactions"]
-        self.emojis: List[Emoji] = [RawEmoji(i) for i in data["emojis"]]
+        self.emojis: List[RawEmoji] = [RawEmoji(i) for i in data["emojis"]]
         self.file_ids: Optional[List[str]] = data["file_ids"]
-        self.files: List[File] = [RawFile(upper_to_lower(i)) for i in data["files"]]
+        self.files: List[RawFile] = [RawFile(upper_to_lower(i)) for i in data["files"]]
         self.reply_id: Optional[str] = data["reply_id"]
         self.renote_id: Optional[str] = data["renote_id"]
         self.poll: Optional[RawPoll] = RawPoll(data["poll"]) if data.get("poll") else None
