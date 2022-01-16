@@ -249,8 +249,8 @@ class Note(AbstractNote):
         return self.__raw_data.cw
 
     @property
-    def renote(self):
-        return self.__raw_data.renote  # TODO: 実装
+    def renote(self) -> None | Renote:
+        return Renote(self.__raw_data.renote, state=self.__state) if self.__raw_data.renote else None
 
     @property
     def visibility(self):
