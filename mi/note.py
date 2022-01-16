@@ -15,7 +15,7 @@ from .types.note import (Reaction as ReactionPayload)
 if TYPE_CHECKING:
     from mi import ConnectionState
 
-__all__ = ['Note', 'Poll', 'Reaction', 'Follow', 'Header', 'Properties', 'File', 'Renote']
+__all__ = ['Note', 'Poll', 'Reaction', 'Follow', 'Header', 'File', 'Renote']
 
 
 class Follow:
@@ -66,13 +66,6 @@ class Header:
         self.id = data.get("id")
         self.type = data.get("type")
         self._state = state
-
-
-class Properties:
-    def __init__(self, data, state: ConnectionState) -> None:
-        self.width: Optional[int] = data['width']
-        self.height: Optional[int] = data['height']
-        self.state: ConnectionState = state
 
 
 class Poll:

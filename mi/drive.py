@@ -9,12 +9,15 @@ from mi.user import User
 if TYPE_CHECKING:
     from .state import ConnectionState
 
+__all__ = ['Properties', 'File', 'Drive']
+
 
 class Properties:
-    def __init__(self, data):
+    def __init__(self, data, state: ConnectionState) -> None:
         self.width: int = data['width']
         self.height: int = data['height']
         self.avg_color: float = data['avg_color']
+        self.__state = state
 
 
 class Folder:
