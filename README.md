@@ -5,6 +5,7 @@
 [![buddy pipeline](https://app.buddy.works/yupi0982/mi-py/pipelines/pipeline/345007/badge.svg?token=b304dd68d3eeb7917d453a2d2102621123ae4f05e0b659dde59cad486e2984b3 "buddy pipeline")](https://app.buddy.works/yupi0982/mi-py/pipelines/pipeline/345007)
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fyupix%2FMi.py.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fyupix%2FMi.py?ref=badge_shield)
 [![Build Status](https://ci.akarinext.org/api/badges/yupix/Mi.py/status.svg)](https://ci.akarinext.org/yupix/Mi.py)
+[![Join the chat at https://gitter.im/yupix/Mi.py](https://badges.gitter.im/yupix/Mi.py.svg)](https://gitter.im/yupix/Mi.py?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 [日本語](./README-ja.md)
 
