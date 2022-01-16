@@ -13,14 +13,14 @@ from mi.utils import upper_to_lower
 class RawRenote:
     def __init__(self, data: Renote):
         self.id: str = data["id"]
-        self.created_at = data["created_at"]
-        self.user_id = data["user_id"]
-        self.user = RawUser(data)
+        self.created_at: str = data["created_at"]
+        self.user_id: str = data["user_id"]
+        self.user: RawUser = RawUser(data['user'])
         self.content: Optional[str] = data.get("text", None)
-        self.cw = data["cw"]
-        self.visibility = data["visibility"]
-        self.renote_count = data["renote_count"]
-        self.replies_count = data["replies_count"]
+        self.cw: Optional[str] = data["cw"]
+        self.visibility: str = data["visibility"]
+        self.renote_count: int = data["renote_count"]
+        self.replies_count: int = data["replies_count"]
         self.reactions = data["reactions"]
         self.emojis = data["emojis"]
         self.file_ids: List[str] = data["file_ids"]
