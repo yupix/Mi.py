@@ -38,7 +38,7 @@ class NoteActions:
         self.favorite = FavoriteManager(client, http, loop, note_id=note_id)
         self.reaction = ReactionManager(client, http, loop, note_id=note_id)
 
-    async def add_note_to_clips(self, clip_id: str, note_id: str) -> bool:
+    async def add_clips(self, clip_id: str, note_id: str) -> bool:
         data = {'noteId': note_id, 'clipId': clip_id}
         return bool(await self.http.request(Route('POST', '/api/clips/add-note'), json=data, auth=True))
 
