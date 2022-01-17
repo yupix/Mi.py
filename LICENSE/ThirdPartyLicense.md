@@ -9,7 +9,7 @@ The following 3rd-party software packages may be used by or distributed with **M
 
 Date generated | Revision ID
 :------------: | :----------:
-12/18/21 | dafaa0588e053e5cef28cd569168132d61b0206d
+01/17/22 | ef6611c93c8a5237ec9d51ff89e845b85771e070
 
 ---
 
@@ -46,7 +46,7 @@ Date generated | Revision ID
 
 ---
 
-### [aiohttp (4.0.0a1)](https://github.com/aio-libs/aiohttp/)
+### [aiohttp (4.0.0a1)](https://github.com/aio-libs/aiohttp)
 
 
 #### Declared Licenses
@@ -268,7 +268,7 @@ MIT
 
 
 ```
-Copyright (c) 2021, aiohttp Contributors
+Copyright (c) 2022, aiohttp Contributors
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
 in the Software without restriction, including without limitation the rights
@@ -305,36 +305,36 @@ SOFTWARE.
 
 ---
 
-### [awscli (1.22.24)](http://aws.amazon.com/cli/)
+### [awscli (1.22.26)](http://aws.amazon.com/cli/)
 
 
 #### Declared Licenses
-Apache-2.0
-
-
-```
-Copyright 2012-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
-
-Licensed under the Apache License, Version 2.0 (the "License"). You
-may not use this file except in compliance with the License. A copy of
-the License is located at
-
-    http://aws.amazon.com/apache2.0/
-
-or in the "license" file accompanying this file. This file is
-distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF
-ANY KIND, either express or implied. See the License for the specific
-language governing permissions and limitations under the License.
-
-```
-
-
-
 
 
 
 #### Other Licenses
-**Multi-license:**BSD-3-Clause, **Multi-license:**MIT
+**Multi-license:**Apache-2.0, **Multi-license:**BSD-3-Clause, **Multi-license:**MIT
+
+
+```
+Copyright 2012 Amazon
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+
+See the License for the specific language governing permissions and limitations under the License.
+```
+
+
+
+
 
 
 ```
@@ -409,7 +409,7 @@ SOFTWARE.
 
 ---
 
-### [boto3 (1.20.24)](https://github.com/boto/boto3)
+### [boto3 (1.20.26)](https://github.com/boto/boto3)
 
 
 #### Declared Licenses
@@ -1535,7 +1535,7 @@ You should have received a copy of the GNU General Public License along with thi
 
 
 ```
-Copyright (c) 2021, docutils Contributors<<beginOptional>>
+Copyright (c) 2022, docutils Contributors<<beginOptional>>
 All rights reserved.<<endOptional>>
 
 Redistribution and use in source and binary forms, with or without
@@ -1682,7 +1682,7 @@ MIT
 
 
 ```
-Copyright (c) 2021, furo Contributors
+Copyright (c) 2022, furo Contributors
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
 in the Software without restriction, including without limitation the rights
@@ -1727,59 +1727,6 @@ SOFTWARE.
 
 
 #### Declared Licenses
-
-
-
-#### Other Licenses
-
-
-
-
-
-
-
-
-
-
-
-
-
----
-
-### [mi.py-front (f80d3a392f52dd4d9ee5ee5a22a291a1ebf3455f)](https://github.com/yupix/mi.py-front)
-
-
-#### Declared Licenses
-MIT
-
-
-```
-MIT License
-
-Copyright (c) 2021 yupix
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-```
-
-
-
 
 
 
@@ -1939,59 +1886,6 @@ STICHTING MATHEMATISCH CENTRUM DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFT
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
----
-
-### [pydantic (1.8.2)](https://github.com/samuelcolvin/pydantic)
-
-
-#### Declared Licenses
-MIT
-
-
-```
-The MIT License (MIT)
-
-Copyright (c) 2017, 2018, 2019, 2020, 2021 Samuel Colvin and other contributors
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-```
-
-
-
-
-
-
-#### Other Licenses
 
 
 
@@ -3547,6 +3441,63 @@ the library.  If this is what you want to do, use the GNU Lesser General
 Public License instead of this License.  But first, please read
 <http://www.gnu.org/philosophy/why-not-lgpl.html>.
 
+```
+
+
+
+
+
+
+#### Other Licenses
+
+
+
+
+
+
+
+
+
+
+
+
+
+---
+
+### [sphinx-intl (2.0.1)](https://github.com/sphinx-doc/sphinx-intl)
+
+
+#### Declared Licenses
+BSD-3-Clause
+
+
+```
+Copyright (c) 2022, sphinx-intl Contributors . All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+   1. Redistributions of source code must retain the above copyright notice,
+      this list of conditions and the following disclaimer.
+
+   2. Redistributions in binary form must reproduce the above copyright notice,
+      this list of conditions and the following disclaimer in the documentation
+      and/or other materials provided with the distribution.
+
+   3. Neither the name of the copyright holder nor the names of its
+      contributors may be used to endorse or promote products derived from
+      this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ```
 
 
