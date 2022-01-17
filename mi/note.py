@@ -41,7 +41,7 @@ class Follow:
 
         if self.id:
             raise NotExistRequiredData('user_idがありません')
-        return await self._state.follow_user(user_id=self.id)
+        return await self._state.user.follow.add(user_id=self.id)
 
     async def unfollow(self, user_id: Optional[str] = None) -> bool:
         """
@@ -60,7 +60,7 @@ class Follow:
 
         if user_id is None:
             user_id = self.user.id
-        return await self._state.unfollow_user(user_id)
+        return await self._state.user.follow.remove(user_id)
 
 
 class Header:
@@ -415,7 +415,7 @@ class Note(AbstractNote):
             成功したかどうか
         """
 
-        return await self.__state.add_reaction_to_note(note_id=self.id, reaction=reaction)
+        return await self.__state.note.reaction.add(note_id=self.id, reaction=reaction)
 
     async def delete(self) -> bool:
         """
@@ -439,7 +439,7 @@ class Note(AbstractNote):
             成功したか否か
         """
 
-        return await self.__state.favorite(note_id=self.id)
+        return await self.__state.note.favorite.add(note_id=self.id)
 
     async def remove_favorite(self) -> bool:
         """
@@ -451,7 +451,7 @@ class Note(AbstractNote):
             お気に入りの解除に成功したかどうか
         """
 
-        return await self.__state.remove_favorite(note_id=self.id)
+        return await self.__state.note.favorite.remove(note_id=self.id)
 
     async def add_to_clips(self, clip_id: str) -> bool:
         """
@@ -463,7 +463,7 @@ class Note(AbstractNote):
             クリップに追加できたかどうか
         """
 
-        return await self.__state.add_note_to_clips(clip_id=clip_id, note_id=self.id)
+        return await self.__state.note.add_clips(clip_id=clip_id, note_id=self.id)
 
     async def create_renote(self) -> Note:
         """
@@ -475,7 +475,7 @@ class Note(AbstractNote):
             作成したリノート
         """
 
-        return await self.__state.create_renote(self.id)
+        return await self.__state.note.create_renote(self.id)
 
     async def get_replies(self, since_id: Optional[str] = None, until_id: Optional[str] = None, limit: int = 10) -> List[Note]:
         """
@@ -495,7 +495,7 @@ class Note(AbstractNote):
             ノートに対する返信一覧
         """
 
-        return await self.__state.get_replies(note_id=self.id, since_id=since_id, until_id=until_id, limit=limit)
+        return await self.__state.note.get_replies(note_id=self.id, since_id=since_id, until_id=until_id, limit=limit)
 
     async def create_quote(self,
                            content: Optional[str] = None,
@@ -541,9 +541,9 @@ class Note(AbstractNote):
         """
 
         visibility = self.visibility or visibility or 'public'
-        return await self.__state.create_quote(content=content, visibility=visibility, visible_user_ids=visible_user_ids,
-                                               cw=cw,
-                                               local_only=local_only, extract_mentions=extract_mentions,
-                                               extract_hashtags=extract_hashtags,
-                                               extract_emojis=extract_emojis, note_id=self.id, file_ids=file_ids,
-                                               poll=poll)
+        return await self.__state.note.create_quote(content=content, visibility=visibility, visible_user_ids=visible_user_ids,
+                                                    cw=cw,
+                                                    local_only=local_only, extract_mentions=extract_mentions,
+                                                    extract_hashtags=extract_hashtags,
+                                                    extract_emojis=extract_emojis, note_id=self.id, file_ids=file_ids,
+                                                    poll=poll)
