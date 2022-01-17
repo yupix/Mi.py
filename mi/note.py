@@ -10,12 +10,14 @@ from mi.models.poll import RawPoll
 from mi.models.user import RawUser
 from mi.user import User
 from .abc.note import AbstractNote
+from .models.reaction import RawNoteReaction
 from .types.note import (Reaction as ReactionPayload)
 
 if TYPE_CHECKING:
     from mi import ConnectionState
+    from mi.state import NoteActions
 
-__all__ = ['Note', 'Poll', 'Reaction', 'Follow', 'Header', 'File', 'Renote']
+__all__ = ('Note', 'Poll', 'Reaction', 'Follow', 'Header', 'File', 'Renote', 'NoteReaction')
 
 
 class Follow:
@@ -178,6 +180,28 @@ class Renote(AbstractNote):
         return await self.__state.delete_note(self.__raw_data.id)
 
 
+class NoteReaction:
+    def __init__(self, raw_data: RawNoteReaction, state: ConnectionState):
+        self.__raw_data = raw_data
+        self.__state = state
+
+    @property
+    def id(self) -> str:
+        return self.__raw_data.id
+
+    @property
+    def created_at(self) -> str:
+        return self.__raw_data.created_at
+
+    @property
+    def user(self) -> User:
+        return User(RawUser(self.__raw_data.user), state=self.__state)
+
+    @property
+    def reaction(self) -> str:
+        return self.__raw_data.reaction
+
+
 class Reaction:
     def __init__(self, data: ReactionPayload, state: ConnectionState):
         self.id: Optional[str] = data.get('id')
@@ -307,6 +331,10 @@ class Note(AbstractNote):
     def channel_id(self):
         return self.__raw_data.channel_id
 
+    @property
+    def action(self) -> NoteActions:
+        return self.__state.get_note_instance(self.id)
+
     async def reply(
             self, content: Optional[str],
             cw: Optional[str] = None,
@@ -344,7 +372,7 @@ class Note(AbstractNote):
         """
         if file_ids is None:
             file_ids = []
-        return await self.__state.post_note(
+        return await self.__state.note.send(
             content,
             visibility=self.visibility,
             visible_user_ids=self.visible_user_ids,
