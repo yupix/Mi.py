@@ -10,6 +10,7 @@ from aiocache.factory import Cache
 from mi import Instance, InstanceMeta, User
 from mi.api import FavoriteManager
 from mi.api.follow import FollowManager, FollowRequestManager
+from mi.api.reaction import ReactionManager
 from mi.chat import Chat
 from mi.drive import Drive
 from mi.emoji import Emoji
@@ -29,11 +30,13 @@ if TYPE_CHECKING:
 
 
 class NoteActions:
-    def __init__(self, client: 'ConnectionState', http: HTTPClient, loop: asyncio.AbstractEventLoop):
+    def __init__(self, client: 'ConnectionState', http: HTTPClient, loop: asyncio.AbstractEventLoop,
+                 note_id: Optional[str] = None):
         self.client = client
         self.http = http
         self.loop = loop
-        self.favorite = FavoriteManager(client, http, loop)
+        self.favorite = FavoriteManager(client, http, loop, note_id=note_id)
+        self.reaction = ReactionManager(client, http, loop, note_id=note_id)
 
     async def add_note_to_clips(self, clip_id: str, note_id: str) -> bool:
         data = {'noteId': note_id, 'clipId': clip_id}
@@ -121,6 +124,9 @@ class NoteActions:
                                       auth=True, lower=True)
         return [Note(RawNote(i), state=self.client) for i in res]
 
+    def get_reaction(self, note_id: str, reaction: str):
+        return ReactionManager(self.client, self.http, self.loop, note_id=note_id, reaction=reaction)
+
 
 class UserAction:
     def __init__(
@@ -153,6 +159,9 @@ class ClientAction:
 
     def get_user_instance(self, user_id: Optional[str]) -> UserAction:
         return UserAction(self.client, self.http, self.loop, user_id=user_id)
+
+    def get_note_instance(self, note_id: str) -> NoteActions:
+        return NoteActions(self.client, self.http, self.loop, note_id=note_id)
 
 
 class ConnectionState(ClientAction):
@@ -339,25 +348,6 @@ class ConnectionState(ClientAction):
                   get_all: bool = False) -> AsyncIterator[User]:
         return InstanceIterator(self).get_users(limit=limit, offset=offset, sort=sort, state=state, origin=origin,
                                                 username=username, hostname=hostname, get_all=get_all)
-
-    async def add_reaction(self, reaction: str, note_id: Optional[str] = None) -> bool:
-        """
-        指定したnoteに指定したリアクションを付与します（内部用
-
-        Parameters
-        ----------
-        reaction : Optional[str]
-            付与するリアクション名
-        note_id : Optional[str]
-            付与対象のノートID
-
-        Returns
-        -------
-        bool
-            成功したならTrue,失敗ならFalse
-        """
-        data = remove_dict_empty({"noteId": note_id, "reaction": reaction})
-        return await self.http.request(Route('POST', '/api/notes/reactions/create'), json=data, auth=True, lower=True)
 
     async def delete_note(self, note_id: str) -> bool:
         """
