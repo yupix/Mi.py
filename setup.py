@@ -27,9 +27,12 @@ packages = [
     'mi',
     'mi.abc',
     'mi.abc.ext',
-    'mi.types',
+    'mi.api',
+    'mi.ext',
     'mi.ext.commands',
-    'mi.ext.tasks'
+    'mi.ext.tasks',
+    'mi.models',
+    'mi.types'
 ]
 
 setup(

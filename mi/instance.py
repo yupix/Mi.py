@@ -3,8 +3,8 @@ from __future__ import annotations
 from typing import AsyncIterator, Dict, List, Optional, TYPE_CHECKING
 
 from .emoji import Emoji
-from .types.instance import (Instance as InstancePayload,
-                             Meta as InstanceMetaPayload)
+from .models import RawInstance
+from .types.instance import (Meta as InstanceMetaPayload)
 
 if TYPE_CHECKING:
     from .user import User
@@ -53,26 +53,48 @@ class InstanceMeta:
 
 
 class Instance:
-    def __init__(self, data: InstancePayload, state: ConnectionState):
+    def __init__(self, raw_data: RawInstance, state: ConnectionState):
         """
         インスタンス情報
         
         Parameters
         ----------
-        data : InstancePayload
+        raw_data : RawInstance
             インスタンス情報の入った dict
         state: ConnectionState
             botのコネクション
         """
 
-        self.host: Optional[str] = data.get("host")
-        self.name: Optional[str] = data.get("name")
-        self.software_name: Optional[str] = data.get("software_name")
-        self.software_version: Optional[str] = data.get("software_version")
-        self.icon_url: Optional[str] = data.get("icon_url")
-        self.favicon_url: Optional[str] = data.get("favicon_url")
-        self.theme_color: Optional[str] = data.get("theme_color")
-        self._state = state
+        self.__raw_data: RawInstance = raw_data
+        self.__state: ConnectionState = state
+
+    @property
+    def host(self):
+        return self.__raw_data.host
+
+    @property
+    def name(self):
+        return self.__raw_data.name
+
+    @property
+    def software_name(self):
+        return self.__raw_data.software_name
+
+    @property
+    def software_version(self):
+        return self.__raw_data.software_version
+
+    @property
+    def icon_url(self):
+        return self.__raw_data.icon_url
+
+    @property
+    def favicon_url(self):
+        return self.__raw_data.favicon_url
+
+    @property
+    def theme_color(self):
+        return self.__raw_data.theme_color
 
     def get_users(self,
                   limit: int = 10,
@@ -102,5 +124,5 @@ class Instance:
         -------
         AsyncIterator[User]
         """
-        return self._state.get_users(limit=limit, offset=offset, sort=sort, state=state, origin=origin, username=username,
-                                     hostname=hostname, get_all=get_all)
+        return self.__state.get_users(limit=limit, offset=offset, sort=sort, state=state, origin=origin, username=username,
+                                      hostname=hostname, get_all=get_all)

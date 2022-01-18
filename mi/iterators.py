@@ -3,6 +3,7 @@ from __future__ import annotations
 from typing import AsyncIterator, Optional, TYPE_CHECKING
 
 from mi.http import Route
+from mi.models.user import RawUser
 from . import User
 from .utils import remove_dict_empty
 
@@ -55,11 +56,11 @@ class InstanceIterator:
         if get_all:
             while True:
                 for i in res:
-                    yield User(i, self._state)
+                    yield User(RawUser(i), state=self._state)
                 args['offset'] = args['offset'] + len(res)
                 res = await self._state.http.request(Route('POST', '/api/admin/show-users'), json=args, auth=True, lower=True)
                 if len(res) == 0:
                     break
         else:
             for i in res:
-                yield User(i, self._state)
+                yield User(RawUser(i), state=self._state)

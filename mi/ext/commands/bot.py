@@ -11,7 +11,6 @@ from types import ModuleType
 from typing import Any, Callable, Coroutine, Dict, List, Optional, TYPE_CHECKING, Tuple, Union
 
 from mi import Client, User
-from mi.ext.commands import CommandManager
 from mi.abc.ext.bot import AbstractBotBase
 from mi.exception import (
     CogNameDuplicate,
@@ -21,6 +20,7 @@ from mi.exception import (
     InvalidCogPath,
     NoEntryPointError,
 )
+from mi.ext.commands import CommandManager
 from mi.utils import get_module_logger
 
 if TYPE_CHECKING:
@@ -31,12 +31,7 @@ __all__ = ["BotBase", "Bot"]
 
 
 class BotBase(CommandManager, AbstractBotBase):
-    def __init__(self, command_prefix: Optional[str]=None, **options: Dict[Any, Any]):
-        """
-        .. deprecated:: v2.3.0
-            引数 `command_prefix` は 削除予定です。
-        """
-        
+    def __init__(self, **options: Dict[Any, Any]):
         super().__init__(**options)
         self.extra_events: Dict[str, Any] = {}
         self.special_events: Dict[str, Any] = {}

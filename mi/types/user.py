@@ -24,7 +24,7 @@ class PinnedNote(TypedDict):
     text: Optional[str]
     cw: Optional[str]
     user_id: Optional[str]
-    user: Optional[Dict[str, Any]]
+    user: Optional['User']
     reply_id: Optional[str]
     renote_id: Optional[str]
     reply: Optional[Dict[str, Any]]

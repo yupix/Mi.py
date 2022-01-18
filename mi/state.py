@@ -8,14 +8,19 @@ from aiocache import cached
 from aiocache.factory import Cache
 
 from mi import Instance, InstanceMeta, User
+from mi.api import FavoriteManager
+from mi.api.follow import FollowManager, FollowRequestManager
+from mi.api.reaction import ReactionManager
 from mi.chat import Chat
 from mi.drive import Drive
 from mi.emoji import Emoji
 from mi.exception import ContentRequired, InvalidParameters, NotExistRequiredParameters
 from mi.http import Route
 from mi.iterators import InstanceIterator
+from mi.models.note import RawNote
+from mi.models.user import RawUser
 from mi.note import Note, Poll, Reaction
-from mi.user import Follower, Following
+from mi.user import FollowRequest, Followee
 from mi.utils import check_multi_arg, get_cache_key, get_module_logger, key_builder, remove_dict_empty, str_lower, \
     upper_to_lower
 
@@ -25,41 +30,37 @@ if TYPE_CHECKING:
 
 
 class NoteActions:
-    def __init__(self, http: HTTPClient, loop: asyncio.AbstractEventLoop):
+    def __init__(self, client: 'ConnectionState', http: HTTPClient, loop: asyncio.AbstractEventLoop,
+                 note_id: Optional[str] = None):
+        self.client = client
         self.http = http
         self.loop = loop
+        self.favorite = FavoriteManager(client, http, loop, note_id=note_id)
+        self.reaction = ReactionManager(client, http, loop, note_id=note_id)
 
-    async def favorite(self, note_id: str) -> bool:
-        data = {'noteId': note_id}
-        return bool(await self.http.request(Route('POST', '/api/notes/favorites/create'), json=data, auth=True))
-
-    async def remove_favorite(self, note_id: str) -> bool:
-        data = {'noteId': note_id}
-        return bool(await self.http.request(Route('POST', '/api/notes/favorites/delete'), json=data, auth=True))
-
-    async def add_note_to_clips(self, clip_id: str, note_id: str) -> bool:
+    async def add_clips(self, clip_id: str, note_id: str) -> bool:
         data = {'noteId': note_id, 'clipId': clip_id}
         return bool(await self.http.request(Route('POST', '/api/clips/add-note'), json=data, auth=True))
 
     async def add_reaction_to_note(self, note_id: str, reaction: str) -> bool:
         data = {'noteId': note_id, 'reaction': reaction}
-        return bool(await self.http.request(Route('POST', '/api/reactions/create', json=data, auth=True)))
+        return bool(await self.http.request(Route('POST', '/api/reactions/create'), json=data, auth=True))
 
-    async def post_note(self,
-                        content: Optional[str] = None,
-                        visibility: str = "public",
-                        visible_user_ids: Optional[List[str]] = None,
-                        cw: Optional[str] = None,
-                        local_only: bool = False,
-                        no_extract_mentions: bool = False,
-                        no_extract_hashtags: bool = False,
-                        no_extract_emojis: bool = False,
-                        reply_id: Optional[str] = None,
-                        renote_id: Optional[str] = None,
-                        channel_id: Optional[str] = None,
-                        file_ids=None,
-                        poll: Optional[Poll] = None
-                        ) -> Note:
+    async def send(self,
+                   content: Optional[str] = None,
+                   visibility: str = "public",
+                   visible_user_ids: Optional[List[str]] = None,
+                   cw: Optional[str] = None,
+                   local_only: bool = False,
+                   extract_mentions: bool = True,
+                   extract_hashtags: bool = True,
+                   extract_emojis: bool = True,
+                   reply_id: Optional[str] = None,
+                   renote_id: Optional[str] = None,
+                   channel_id: Optional[str] = None,
+                   file_ids=None,
+                   poll: Optional[Poll] = None
+                   ) -> Note:
         if file_ids is None:
             file_ids = []
         field = {
@@ -68,9 +69,9 @@ class NoteActions:
             "text": content,
             "cw": cw,
             "localOnly": local_only,
-            "noExtractMentions": no_extract_mentions,
-            "noExtractHashtags": no_extract_hashtags,
-            "noExtractEmojis": no_extract_emojis,
+            "noExtractMentions": extract_mentions,
+            "noExtractHashtags": extract_hashtags,
+            "noExtractEmojis": extract_emojis,
             "replyId": reply_id,
             "renoteId": renote_id,
             "channelId": channel_id
@@ -91,10 +92,10 @@ class NoteActions:
             field["fileIds"] = file_ids
         field = remove_dict_empty(field)
         res = await self.http.request(Route('POST', '/api/notes/create'), json=field, auth=True, lower=True)
-        return Note(res["created_note"], state=self)
+        return Note(RawNote(res["created_note"]), state=self.client)
 
     async def create_renote(self, note_id: str) -> Note:
-        return await self.post_note(renote_id=note_id)
+        return await self.send(renote_id=note_id)
 
     async def create_quote(self, note_id: str,
                            content: Optional[str] = None,
@@ -102,49 +103,70 @@ class NoteActions:
                            visible_user_ids: Optional[List[str]] = None,
                            cw: Optional[str] = None,
                            local_only: bool = False,
-                           no_extract_mentions: bool = False,
-                           no_extract_hashtags: bool = False,
-                           no_extract_emojis: bool = False,
+                           extract_mentions: bool = True,
+                           extract_hashtags: bool = True,
+                           extract_emojis: bool = True,
                            file_ids=None,
                            poll: Optional[Poll] = None) -> Note:
-        return await self.post_note(content=content, visibility=visibility, visible_user_ids=visible_user_ids, cw=cw,
-                                    local_only=local_only, no_extract_mentions=no_extract_mentions,
-                                    no_extract_hashtags=no_extract_hashtags,
-                                    no_extract_emojis=no_extract_emojis, renote_id=note_id, file_ids=file_ids, poll=poll)
+        return await self.send(content=content, visibility=visibility, visible_user_ids=visible_user_ids, cw=cw,
+                               local_only=local_only, extract_mentions=extract_mentions,
+                               extract_hashtags=extract_hashtags,
+                               extract_emojis=extract_emojis, renote_id=note_id, file_ids=file_ids, poll=poll)
 
     async def get_note(self, note_id) -> Note:
         res = await self.http.request(Route('POST', '/api/notes/show'), json={"noteId": note_id}, auth=True, lower=True)
-        return Note(res, state=self)
+        return Note(RawNote(res), state=self.client)
 
     async def get_replies(self, note_id: str, since_id: Optional[str] = None, until_id: Optional[str] = None,
                           limit: int = 10, ) -> List[Note]:
         res = await self.http.request(Route('POST', '/api/notes/replies'),
                                       json={"noteId": note_id, "sinceId": since_id, "untilId": until_id, "limit": limit},
                                       auth=True, lower=True)
-        return [Note(i, state=self) for i in res]
+        return [Note(RawNote(i), state=self.client) for i in res]
+
+    def get_reaction(self, note_id: str, reaction: str):
+        return ReactionManager(self.client, self.http, self.loop, note_id=note_id, reaction=reaction)
 
 
 class UserAction:
-    def __init__(self, http: HTTPClient, loop: asyncio.AbstractEventLoop):
+    def __init__(
+            self, client: 'ConnectionState',
+            http: HTTPClient,
+            loop: asyncio.AbstractEventLoop,
+            *,
+            user_id: Optional[str] = None
+    ):
+        self.client = client
         self.http = http
         self.loop = loop
+        self.follow = FollowManager(client, http, loop, user_id=user_id)
+        self.follow_request = FollowRequestManager(client, http, loop, user_id=user_id)
 
-    async def accept_following_request(self, user_id: str) -> bool:
-        data = {'userId': user_id}
-        return bool(await self.http.request(Route('POST', '/api/following/requests/accept'), json=data, auth=True))
+    def get_follow(self, user_id: str) -> FollowManager:
+        return FollowManager(self.client, self.http, self.loop, user_id=user_id)
 
-    async def reject_following_request(self, user_id: str) -> bool:
-        data = {'userId': user_id}
-        return bool(await self.http.request(Route('POST', '/api/following/requests/reject'), json=data, auth=True))
+    def get_follow_request(self, user_id: str) -> FollowRequestManager:
+        return FollowRequestManager(self.client, self.http, self.loop, user_id=user_id)
 
 
-class ClientAction(NoteActions, UserAction):
-    pass
+class ClientAction:
+    def __init__(self, client: 'ConnectionState', http: HTTPClient, loop: asyncio.AbstractEventLoop):
+        self.client = client
+        self.http = http
+        self.loop = loop
+        self.note = NoteActions(client, http, loop)
+        self.user = UserAction(client, http, loop)
+
+    def get_user_instance(self, user_id: Optional[str]) -> UserAction:
+        return UserAction(self.client, self.http, self.loop, user_id=user_id)
+
+    def get_note_instance(self, note_id: str) -> NoteActions:
+        return NoteActions(self.client, self.http, self.loop, note_id=note_id)
 
 
 class ConnectionState(ClientAction):
     def __init__(self, dispatch: Callable[..., Any], http: HTTPClient, loop: asyncio.AbstractEventLoop, client: Client):
-        super().__init__(http, loop)
+        super().__init__(self, http, loop)
         self.client: Client = client
         self.dispatch = dispatch
         self.http: HTTPClient = http
@@ -156,7 +178,6 @@ class ConnectionState(ClientAction):
                 parsers[attr[6:].upper()] = func
 
     def parse_emoji_added(self, message: Dict[str, Any]):
-        print(message)
         self.dispatch('emoji_add', Emoji(message['body']['emoji'], state=self))
 
     def parse_channel(self, message: Dict[str, Any]) -> None:
@@ -193,7 +214,7 @@ class ConnectionState(ClientAction):
         フォローリクエストを受け取った際のイベントを解析する関数
         """
 
-        self.dispatch('follow_request', Following(message, state=self))
+        self.dispatch('follow_request', FollowRequest(message, state=self))
 
     def parse_me_updated(self, message: Dict[str, Any]):
         pass
@@ -205,28 +226,28 @@ class ConnectionState(ClientAction):
         """
         リプライ
         """
-        self.dispatch('message', Note(message, state=self))
+        self.dispatch('message', Note(RawNote(message), state=self))
 
     def parse_follow(self, message: Dict[str, Any]) -> None:
         """
         ユーザーをフォローした際のイベントを解析する関数
         """
 
-        self.dispatch('user_follow', User(message, state=self))
+        self.dispatch('user_follow', User(RawUser(message), state=self))
 
     def parse_followed(self, message: Dict[str, Any]) -> None:
         """
         フォローイベントを解析する関数
         """
 
-        self.dispatch('follow', User(message, state=self))
+        self.dispatch('follow', User(RawUser(message), state=self))
 
     def parse_mention(self, message: Dict[str, Any]) -> None:
         """
         メンションイベントを解析する関数
         """
 
-        self.dispatch('mention', Note(message, state=self))
+        self.dispatch('mention', Note(RawNote(message), state=self))
 
     def parse_drive_file_created(self, message: Dict[str, Any]) -> None:
         pass  # TODO: 実装
@@ -303,57 +324,17 @@ class ConnectionState(ClientAction):
         """
         self.dispatch('reaction', Reaction(message, state=self))
 
-    def parse_note(self, message: Dict[str, Any]) -> None:
+    def parse_note(self, message: NotePayload) -> None:
         """
         ノートイベントを解析する関数
         """
-        note = Note(message, state=self)
+        note = Note(RawNote(message), state=self)
         # Router(self.http.ws).capture_message(note.id) TODO: capture message
         self.client._on_message(note)
 
-    async def follow_user(self, user_id: str) -> tuple[bool, Optional[str]]:
-        """
-        与えられたIDのユーザーをフォローします
-
-        Parameters
-        ----------
-        user_id : Optional[str] = None
-            フォローしたいユーザーのID
-
-        Returns
-        -------
-        status: bool = False
-            成功ならTrue, 失敗ならFalse
-        """
-        data = {"userId": user_id}
-        res = await self.http.request(Route('POST', '/api/following/create'), json=data, auth=True, lower=True)
-        if res.get("error"):
-            code = res["error"]["code"]
-            status = False
-        else:
-            code = None
-            status = True
-        return status, code
-
-    async def unfollow_user(self, user_id: str) -> bool:
-        """
-        Parameters
-        ----------
-        user_id :
-            フォローを解除したいユーザーのID
-
-        Returns
-        -------
-        bool
-            成功したならTrue, 失敗したならFalse
-        """
-        data = {"userId": user_id}
-        res = await self.http.request(Route('POST', '/api/following/delete'), json=data, auth=True)
-        return bool(res.status_code == 204 or 200)
-
     async def get_i(self) -> User:
         res = await self.http.request(Route('POST', '/api/i'), auth=True, lower=True)
-        return User(res, state=self)
+        return User(RawUser(res), state=self)
 
     def get_users(self,
                   limit: int = 10,
@@ -367,25 +348,6 @@ class ConnectionState(ClientAction):
                   get_all: bool = False) -> AsyncIterator[User]:
         return InstanceIterator(self).get_users(limit=limit, offset=offset, sort=sort, state=state, origin=origin,
                                                 username=username, hostname=hostname, get_all=get_all)
-
-    async def add_reaction(self, reaction: str, note_id: Optional[str] = None) -> bool:
-        """
-        指定したnoteに指定したリアクションを付与します（内部用
-
-        Parameters
-        ----------
-        reaction : Optional[str]
-            付与するリアクション名
-        note_id : Optional[str]
-            付与対象のノートID
-
-        Returns
-        -------
-        bool
-            成功したならTrue,失敗ならFalse
-        """
-        data = remove_dict_empty({"noteId": note_id, "reaction": reaction})
-        return await self.http.request(Route('POST', '/api/notes/reactions/create'), json=data, auth=True, lower=True)
 
     async def delete_note(self, note_id: str) -> bool:
         """
@@ -401,6 +363,7 @@ class ConnectionState(ClientAction):
         bool
             成功したか否か
         """
+
         data = {"noteId": note_id}
         res = await self.http.request(Route('POST', '/api/notes/delete'), json=data, auth=True)
         return bool(res)
@@ -426,9 +389,10 @@ class ConnectionState(ClientAction):
         dict
             ユーザー情報
         """
+
         field = remove_dict_empty({"userId": user_id, "username": username, "host": host})
         data = await self.http.request(Route('POST', '/api/users/show'), json=field, auth=True, lower=True)
-        return User(data, state=self)
+        return User(RawUser(data), state=self)
 
     async def post_chat(self, content: str, *, user_id: str = None, group_id: str = None, file_id=None) -> Chat:
         """
@@ -499,7 +463,7 @@ class ConnectionState(ClientAction):
         data = await self.http.request(Route('POST', '/api/users/show'), json=field, auth=True, lower=True)
         old_cache = Cache(namespace='get_user')
         await old_cache.delete(kwargs['cache_key'].format('get_user'))
-        return User(data, state=self)
+        return User(RawUser(data), state=self)
 
     async def get_followers(
             self,
@@ -510,7 +474,7 @@ class ConnectionState(ClientAction):
             until_id: Optional[str] = None,
             limit: int = 10,
             get_all: bool = False,
-    ) -> AsyncIterator[Follower]:
+    ) -> AsyncIterator[Followee]:
         """
         与えられたユーザーのフォロワーを取得します
 
@@ -562,11 +526,11 @@ class ConnectionState(ClientAction):
                     data["untilId"] = get_data[-1]["id"]
                 else:
                     break
-                for i in [Follower(i, state=self) for i in get_data]:
+                for i in [Followee(i, state=self) for i in get_data]:
                     yield i
         else:
             get_data = await self.http.request(Route('POST', '/api/users/followers'), json=data, auth=True, lower=True)
-            for i in [Follower(i, state=self) for i in get_data]:
+            for i in [Followee(i, state=self) for i in get_data]:
                 yield i
 
     @cached(ttl=10, key_builder=key_builder, key='get_instance')
@@ -637,11 +601,11 @@ class ConnectionState(ClientAction):
                     break
                 args["untilId"] = get_data[-1]["id"]
                 for data in get_data:
-                    yield Note(NotePayload(**data), state=self)
+                    yield Note(RawNote(data), state=self)
         else:
             get_data = await self.http.request(Route('POST', '/api/users/notes'), json=args, auth=True, lower=True)
             for data in get_data:
-                yield Note(NotePayload(**upper_to_lower(data)), state=self)
+                yield Note(RawNote(**upper_to_lower(data)), state=self)
 
     async def get_announcements(self, limit: int, with_unreads: bool, since_id: str, until_id: str):
         """

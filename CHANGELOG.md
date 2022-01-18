@@ -7,9 +7,45 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Added
+- added `RawNote` class
+- added `RawRenote` class
+- added `RawEmoji` class
+- added `RawProperties` class
+- added `RawFolder` class
+- added `RawFile` class
+- added `RawPollChoices` class
+- added `RawPoll` class
+- added `RawInstance` class
+- added `RawUserDetails` class
+- added `RawUser` class
+- added `FavoriteManager` class
+- added `FollowManager` class
+- added FollowRequestManager class
+
 ### Changed
 
 - ドキュメントを更新
+- 内部変更: `UserAction` や `ClientAction` のメソッドを別クラスに分割
+- Allow only property-based access to most data classes.
+- **BREAKING CHANGE**: `User` クラスのプロパティーを以下のように変更
+  - `name` -> `nickname`
+  - `username` -> `name`
+- **BREAKING CHANGE**: `User` クラスの `follow` `unfollow` メソッドを削除
+  - 今後は `User` クラスの `action` メソッドから `add` `remove` メソッドを使用できます
+- **BREAKING CHANGE**: モデル名の変更 `Following` -> `Follower`
+- **BREAKING CHANGE**: モデル名の変更 `Follower` -> `Followee`
+- **BREAKING CHANGE**: モデルの\_state 属性を\_\_state に変更
+- **BREAKING CHANGE**: `Following` クラスのメソッドを以下のとおりに変更
+  - `accept_request` -> `accept`
+  - `reject_request` -> `reject`
+  - `follow` -> `add`
+  - `remove_follow` -> `remove`
+
+## Removed
+
+- Unused class UserDetails
+  - from now on use `RawUserDetails`
 
 ## [v2.1.0-alpha] 2021-12-30
 

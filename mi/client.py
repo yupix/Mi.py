@@ -15,6 +15,7 @@ from mi import Instance, InstanceMeta, User, config
 from mi.chat import Chat
 from mi.drive import Drive
 from mi.http import HTTPClient
+from mi.models.user import RawUser
 from mi.note import Note
 from mi.state import ConnectionState
 from mi.utils import get_module_logger
@@ -378,15 +379,15 @@ class Client:
         return await self._connection.remove_file(file_id=file_id)
 
     async def post_note(self,
-                        content: str,
+                        content: Optional[str] = None,
                         *,
                         visibility: str = "public",
                         visible_user_ids: Optional[List[str]] = None,
                         cw: Optional[str] = None,
                         local_only: bool = False,
-                        no_extract_mentions: bool = False,
-                        no_extract_hashtags: bool = False,
-                        no_extract_emojis: bool = False,
+                        extract_mentions: bool = True,
+                        extract_hashtags: bool = True,
+                        extract_emojis: bool = True,
                         reply_id: Optional[str] = None,
                         renote_id: Optional[str] = None,
                         channel_id: Optional[str] = None,
@@ -398,7 +399,7 @@ class Client:
 
         Parameters
         ----------
-        content : str
+        content : Optional[str], default=None
             投稿する内容
         visibility : str, optional
             公開範囲, by default "public"
@@ -408,11 +409,11 @@ class Client:
             閲覧注意の文字, by default None
         local_only : bool, optional
             ローカルにのみ表示するか, by default False
-        no_extract_mentions : bool, optional
+        extract_mentions : bool, optional
             メンションを展開するか, by default False
-        no_extract_hashtags : bool, optional
+        extract_hashtags : bool, optional
             ハッシュタグを展開するか, by default False
-        no_extract_emojis : bool, optional
+        extract_emojis : bool, optional
             絵文字を展開するか, by default False
         reply_id : Optional[str], optional
             リプライ先のid, by default None
@@ -438,9 +439,9 @@ class Client:
 
         if file_ids is None:
             file_ids = []
-        return await self._connection.post_note(content, visibility=visibility, visible_user_ids=visible_user_ids, cw=cw,
-                                                local_only=local_only, no_extract_mentions=no_extract_mentions,
-                                                no_extract_hashtags=no_extract_hashtags, no_extract_emojis=no_extract_emojis,
+        return await self._connection.note.send(content, visibility=visibility, visible_user_ids=visible_user_ids, cw=cw,
+                                                local_only=local_only, extract_mentions=extract_mentions,
+                                                extract_hashtags=extract_hashtags, extract_emojis=extract_emojis,
                                                 reply_id=reply_id, renote_id=renote_id, channel_id=channel_id,
                                                 file_ids=file_ids,
                                                 poll=poll)
@@ -490,12 +491,16 @@ class Client:
 
     async def login(self, token):
         data = await self.http.static_login(token)
-        self.i = User(data, self._connection)
+        self.i = User(RawUser(data), state=self._connection)
 
     async def connect(self, *, reconnect: bool = True, timeout: int = 60) -> None:
 
         coro = MisskeyWebSocket.from_client(self, timeout=timeout)
-        self.ws = await asyncio.wait_for(coro, timeout=60)
+        try:
+            self.ws = await asyncio.wait_for(coro, timeout=60)
+        except asyncio.exceptions.TimeoutError:
+            await self.connect(reconnect=reconnect, timeout=timeout)
+
         while True:
             await self.ws.poll_event()
 
