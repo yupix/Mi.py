@@ -17,7 +17,7 @@ from mi.drive import Drive
 from mi.http import HTTPClient
 from mi.models.user import RawUser
 from mi.note import Note
-from mi.state import ConnectionState
+from mi.state import ClientActions, ConnectionState
 from mi.utils import get_module_logger
 from .gateway import MisskeyWebSocket
 
@@ -179,6 +179,10 @@ class Client:
 
     # ここからクライアント操作
 
+    @property
+    def client(self) -> ClientActions:
+        return self._connection.get_client_actions()
+
     async def post_chat(self, content: str, *, user_id: str = None, group_id: str = None, file_id: str = None) -> Chat:
         """
         チャットを送信します。
@@ -314,6 +318,10 @@ class Client:
         """
 
         return await self._connection.fetch_user(user_id=user_id, username=username, host=host)
+
+    async def get_drive_folders(self, limit: int = 100, since_id: Optional[str] = None, until_id: Optional[str] = None,
+                                folder_id: Optional[str] = None):
+        return await self._connection.drive.action.get_folders(limit, since_id, until_id, folder_id)
 
     async def file_upload(
             self,
