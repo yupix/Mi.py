@@ -46,6 +46,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Unused class UserDetails
   - from now on use `RawUserDetails`
+- Unused file view.py
 
 ## [v2.1.0-alpha] 2021-12-30
 
