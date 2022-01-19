@@ -4,6 +4,7 @@ from typing import AsyncIterator, Dict, List, Optional, TYPE_CHECKING
 
 from .emoji import Emoji
 from .models import RawInstance
+from .models.emoji import RawEmoji
 from .types.instance import (Meta as InstanceMetaPayload)
 
 if TYPE_CHECKING:
@@ -37,7 +38,7 @@ class InstanceMeta:
         self.mascot_image_url: str = data['mascot_image_url']
         self.error_image: str = data['error_image_url']
         self.max_note_text_length: int = data['max_note_text_length']
-        self.emojis: List[Emoji] = [Emoji(i, state=state) for i in data['emojis']]
+        self.emojis: List[Emoji] = [Emoji(RawEmoji(i), state=state) for i in data['emojis']]
         self.ads: list = data['ads']
         self.enable_email: bool = bool(data['enable_email'])
         self.enable_twitter_integration = bool(data['enable_twitter_integration'])
