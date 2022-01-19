@@ -139,7 +139,7 @@ class NoteActions:
         res = await self.__http.request(Route('POST', '/api/notes/create'), json=field, auth=True, lower=True)
         return Note(RawNote(res["created_note"]), state=self.__state)
 
-    async def delete(self, note_id: Optional[str]=None):
+    async def delete(self, note_id: Optional[str] = None):
         data = {"noteId": note_id}
         res = await self.__http.request(Route('POST', '/api/notes/delete'), json=data, auth=True)
         return bool(res)
@@ -170,8 +170,8 @@ class NoteActions:
     async def get_replies(self, note_id: str, since_id: Optional[str] = None, until_id: Optional[str] = None,
                           limit: int = 10, ) -> List[Note]:
         res = await self.__http.request(Route('POST', '/api/notes/replies'),
-                                      json={"noteId": note_id, "sinceId": since_id, "untilId": until_id, "limit": limit},
-                                      auth=True, lower=True)
+                                        json={"noteId": note_id, "sinceId": since_id, "untilId": until_id, "limit": limit},
+                                        auth=True, lower=True)
         return [Note(RawNote(i), state=self.__state) for i in res]
 
     def get_reaction(self, note_id: str, reaction: str):
@@ -231,19 +231,19 @@ class DriveActions:
 
 
 class ClientActions:
-    def __init__(self, client: 'ConnectionState', http: HTTPClient, loop: asyncio.AbstractEventLoop):
-        self.__client = client
+    def __init__(self, state: 'ConnectionState', http: HTTPClient, loop: asyncio.AbstractEventLoop):
+        self.__state = state
         self.__http = http
         self.__loop = loop
-        self.note = NoteActions(client, http, loop)
-        self.user = UserActions(client, http, loop)
-        self.drive = DriveActions(client, http, loop)
+        self.note = NoteActions(state, http, loop)
+        self.user = UserActions(state, http, loop)
+        self.drive = DriveActions(state, http, loop)
 
     def get_user_instance(self, user_id: Optional[str]) -> UserActions:
-        return UserActions(self.__client, self.__http, self.__loop, user_id=user_id)
+        return UserActions(self.__state, self.__http, self.__loop, user_id=user_id)
 
     def get_note_instance(self, note_id: str) -> NoteActions:
-        return NoteActions(self.__client, self.__http, self.__loop, note_id=note_id)
+        return NoteActions(self.__state, self.__http, self.__loop, note_id=note_id)
 
 
 class ConnectionState(ClientActions):
@@ -616,7 +616,6 @@ class ConnectionState(ClientActions):
 
     async def remove_emoji(self, emoji_id: str) -> bool:
         return bool(await self.http.request(Route('POST', '/api/admin/emoji/remove'), json={'id': emoji_id}, auth=True))
-
 
     async def get_user_notes(
             self,
