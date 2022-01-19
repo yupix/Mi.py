@@ -9,6 +9,7 @@ from aiocache.factory import Cache
 
 from mi import Instance, InstanceMeta, User
 from mi.api import FavoriteManager
+from mi.api.drive import DriveManager, FolderManager
 from mi.api.follow import FollowManager, FollowRequestManager
 from mi.api.reaction import ReactionManager
 from mi.chat import Chat
@@ -61,6 +62,49 @@ class NoteActions:
                    file_ids=None,
                    poll: Optional[Poll] = None
                    ) -> Note:
+        """
+        ノートを投稿します。
+
+        Parameters
+        ----------
+        content : Optional[str], default=None
+            投稿する内容
+        visibility : str, optional
+            公開範囲, by default "public"
+        visible_user_ids : Optional[List[str]], optional
+            公開するユーザー, by default None
+        cw : Optional[str], optional
+            閲覧注意の文字, by default None
+        local_only : bool, optional
+            ローカルにのみ表示するか, by default False
+        extract_mentions : bool, optional
+            メンションを展開するか, by default False
+        extract_hashtags : bool, optional
+            ハッシュタグを展開するか, by default False
+        extract_emojis : bool, optional
+            絵文字を展開するか, by default False
+        reply_id : Optional[str], optional
+            リプライ先のid, by default None
+        renote_id : Optional[str], optional
+            リノート先のid, by default None
+        channel_id : Optional[str], optional
+            チャンネルid, by default None
+        file_ids : [type], optional
+            添付するファイルのid, by default None
+        poll : Optional[Poll], optional
+            アンケート, by default None
+
+        Returns
+        -------
+        Note
+            投稿したノート
+
+        Raises
+        ------
+        ContentRequired
+            [description]
+        """
+
         if file_ids is None:
             file_ids = []
         field = {
@@ -128,7 +172,7 @@ class NoteActions:
         return ReactionManager(self.client, self.http, self.loop, note_id=note_id, reaction=reaction)
 
 
-class UserAction:
+class UserActions:
     def __init__(
             self, client: 'ConnectionState',
             http: HTTPClient,
@@ -149,22 +193,53 @@ class UserAction:
         return FollowRequestManager(self.client, self.http, self.loop, user_id=user_id)
 
 
-class ClientAction:
-    def __init__(self, client: 'ConnectionState', http: HTTPClient, loop: asyncio.AbstractEventLoop):
+class FolderActions:
+    def __init__(
+            self, client: 'ConnectionState',
+            http: HTTPClient,
+            loop: asyncio.AbstractEventLoop,
+            *,
+            folder_id: Optional[str] = None
+    ):
         self.client = client
         self.http = http
         self.loop = loop
-        self.note = NoteActions(client, http, loop)
-        self.user = UserAction(client, http, loop)
+        self.action: FolderManager = FolderManager(self.client, self.http, self.loop, folder_id=folder_id)
 
-    def get_user_instance(self, user_id: Optional[str]) -> UserAction:
-        return UserAction(self.client, self.http, self.loop, user_id=user_id)
+
+class DriveActions:
+    def __init__(
+            self, client: 'ConnectionState',
+            http: HTTPClient,
+            loop: asyncio.AbstractEventLoop,
+    ):
+        self.client = client
+        self.http = http
+        self.loop = loop
+        self.action: DriveManager = DriveManager(self.client, self.http, self.loop)
+        self.folder: FolderActions = FolderActions(self.client, self.http, self.loop)
+
+    def get_folder_instance(self, folder_id: str) -> FolderActions:
+        return FolderActions(self.client, self.http, self.loop, folder_id=folder_id)
+
+
+class ClientActions:
+    def __init__(self, client: 'ConnectionState', http: HTTPClient, loop: asyncio.AbstractEventLoop):
+        self.__client = client
+        self.__http = http
+        self.__loop = loop
+        self.note = NoteActions(client, http, loop)
+        self.user = UserActions(client, http, loop)
+        self.drive = DriveActions(client, http, loop)
+
+    def get_user_instance(self, user_id: Optional[str]) -> UserActions:
+        return UserActions(self.__client, self.__http, self.__loop, user_id=user_id)
 
     def get_note_instance(self, note_id: str) -> NoteActions:
-        return NoteActions(self.client, self.http, self.loop, note_id=note_id)
+        return NoteActions(self.__client, self.__http, self.__loop, note_id=note_id)
 
 
-class ConnectionState(ClientAction):
+class ConnectionState(ClientActions):
     def __init__(self, dispatch: Callable[..., Any], http: HTTPClient, loop: asyncio.AbstractEventLoop, client: Client):
         super().__init__(self, http, loop)
         self.client: Client = client
@@ -176,6 +251,9 @@ class ConnectionState(ClientAction):
         for attr, func in inspect.getmembers(self):
             if attr.startswith('parse'):
                 parsers[attr[6:].upper()] = func
+
+    def get_client_actions(self) -> ClientActions:
+        return ClientActions(self, self.http, self.loop)
 
     def parse_emoji_added(self, message: Dict[str, Any]):
         self.dispatch('emoji_add', Emoji(message['body']['emoji'], state=self))
