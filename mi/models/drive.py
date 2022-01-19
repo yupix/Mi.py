@@ -15,9 +15,9 @@ class RawFolder:
         self.id: str = data['id']
         self.created_at: str = data['created_at']
         self.name: str = data['name']
-        self.folders_count: int = data['folders_count']
+        self.folders_count: Optional[int] = data.get('folders_count', 0)
         self.parent_id: str = data['parent_id']
-        self.parent: Dict[str, Any] = data['parent']
+        self.parent: Optional[Dict[str, Any]] = data.get('parent')
 
 
 class RawFile:
