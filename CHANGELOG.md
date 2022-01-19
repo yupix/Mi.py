@@ -54,6 +54,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Unused file view.py
 - **BREAKING CHANGE**: removed `post_note` method
     - from now on use `self.client.note.send`
+- **BREAKING CHANGE**: removed `note_delete` method
+    - from now on use `self.client.note.delete`
 
 ## [v2.1.0-alpha] 2021-12-30
 

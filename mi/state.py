@@ -32,21 +32,21 @@ if TYPE_CHECKING:
 
 
 class NoteActions:
-    def __init__(self, client: 'ConnectionState', http: HTTPClient, loop: asyncio.AbstractEventLoop,
+    def __init__(self, state: 'ConnectionState', http: HTTPClient, loop: asyncio.AbstractEventLoop,
                  note_id: Optional[str] = None):
-        self.client = client
-        self.http = http
-        self.loop = loop
-        self.favorite = FavoriteManager(client, http, loop, note_id=note_id)
-        self.reaction = ReactionManager(client, http, loop, note_id=note_id)
+        self.__state = state
+        self.__http = http
+        self.__loop = loop
+        self.favorite = FavoriteManager(state, http, loop, note_id=note_id)
+        self.reaction = ReactionManager(state, http, loop, note_id=note_id)
 
     async def add_clips(self, clip_id: str, note_id: str) -> bool:
         data = {'noteId': note_id, 'clipId': clip_id}
-        return bool(await self.http.request(Route('POST', '/api/clips/add-note'), json=data, auth=True))
+        return bool(await self.__http.request(Route('POST', '/api/clips/add-note'), json=data, auth=True))
 
     async def add_reaction_to_note(self, note_id: str, reaction: str) -> bool:
         data = {'noteId': note_id, 'reaction': reaction}
-        return bool(await self.http.request(Route('POST', '/api/reactions/create'), json=data, auth=True))
+        return bool(await self.__http.request(Route('POST', '/api/reactions/create'), json=data, auth=True))
 
     async def send(self,
                    content: Optional[str] = None,
@@ -136,8 +136,13 @@ class NoteActions:
         if file_ids:
             field["fileIds"] = file_ids
         field = remove_dict_empty(field)
-        res = await self.http.request(Route('POST', '/api/notes/create'), json=field, auth=True, lower=True)
-        return Note(RawNote(res["created_note"]), state=self.client)
+        res = await self.__http.request(Route('POST', '/api/notes/create'), json=field, auth=True, lower=True)
+        return Note(RawNote(res["created_note"]), state=self.__state)
+
+    async def delete(self, note_id: Optional[str]=None):
+        data = {"noteId": note_id}
+        res = await self.__http.request(Route('POST', '/api/notes/delete'), json=data, auth=True)
+        return bool(res)
 
     async def create_renote(self, note_id: str) -> Note:
         return await self.send(renote_id=note_id)
@@ -159,18 +164,18 @@ class NoteActions:
                                extract_emojis=extract_emojis, renote_id=note_id, file_ids=file_ids, poll=poll)
 
     async def get_note(self, note_id) -> Note:
-        res = await self.http.request(Route('POST', '/api/notes/show'), json={"noteId": note_id}, auth=True, lower=True)
-        return Note(RawNote(res), state=self.client)
+        res = await self.__http.request(Route('POST', '/api/notes/show'), json={"noteId": note_id}, auth=True, lower=True)
+        return Note(RawNote(res), state=self.__state)
 
     async def get_replies(self, note_id: str, since_id: Optional[str] = None, until_id: Optional[str] = None,
                           limit: int = 10, ) -> List[Note]:
-        res = await self.http.request(Route('POST', '/api/notes/replies'),
+        res = await self.__http.request(Route('POST', '/api/notes/replies'),
                                       json={"noteId": note_id, "sinceId": since_id, "untilId": until_id, "limit": limit},
                                       auth=True, lower=True)
-        return [Note(RawNote(i), state=self.client) for i in res]
+        return [Note(RawNote(i), state=self.__state) for i in res]
 
     def get_reaction(self, note_id: str, reaction: str):
-        return ReactionManager(self.client, self.http, self.loop, note_id=note_id)
+        return ReactionManager(self.__state, self.__http, self.__loop, note_id=note_id)
 
 
 class UserActions:
@@ -428,25 +433,6 @@ class ConnectionState(ClientActions):
                   get_all: bool = False) -> AsyncIterator[User]:
         return InstanceIterator(self).get_users(limit=limit, offset=offset, sort=sort, state=state, origin=origin,
                                                 username=username, hostname=hostname, get_all=get_all)
-
-    async def delete_note(self, note_id: str) -> bool:
-        """
-        指定したidのノートを削除します。
-
-        Parameters
-        ----------
-        note_id : str
-            ノートid
-
-        Returns
-        -------
-        bool
-            成功したか否か
-        """
-
-        data = {"noteId": note_id}
-        res = await self.http.request(Route('POST', '/api/notes/delete'), json=data, auth=True)
-        return bool(res)
 
     @cached(ttl=10, namespace='get_user', key_builder=key_builder)
     async def get_user(self, user_id: Optional[str] = None, username: Optional[str] = None,
