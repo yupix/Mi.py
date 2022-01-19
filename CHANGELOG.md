@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 
 ### Added
+- added `text` arg to mention_command
 - added `RawNote` class
 - added `RawRenote` class
 - added `RawEmoji` class

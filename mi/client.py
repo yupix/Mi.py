@@ -160,11 +160,16 @@ class Client:
 
     async def progress_command(self, message):
         for key, command in self.all_commands.items():
-            if re.search(command.regex, message.content):
-                hit_list = re.findall(command.regex, message.content)
-                if isinstance(hit_list, tuple):
-                    hit_list = hit_list[0]
-                await command.invoke(message, *hit_list)
+            if key == 'regex':
+                if re.search(command[0], message.content):
+                    hit_list = re.findall(command[0], message.content)
+                    if isinstance(hit_list, tuple):
+                        hit_list = hit_list[0]
+                    await command[1].invoke(message, *hit_list)
+            elif message.content.find(command[0]) != -1:
+                await command[1].invoke(message)
+            else:
+                continue
 
     async def on_mention(self, message):
         await self.progress_command(message)

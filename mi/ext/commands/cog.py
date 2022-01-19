@@ -71,7 +71,7 @@ class Cog(metaclass=CogMeta):
 
     @classmethod
     def listener(cls, name: Optional[str] = None):
-        def decorator(func: Callable[..., Coroutine[Any, Any, Any]]):
+        def decorator(func: Cog):
             actual = func
             if isinstance(actual, staticmethod):
                 actual = actual.__func__
