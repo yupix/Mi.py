@@ -47,8 +47,6 @@ await Router(ws).connect_channel(['home', 'global'])
 
 These are the people who contributed to the development
 
-[uraking][uraking-icon]
-
 <table>
     <tr>
         <td align="center">
