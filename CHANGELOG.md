@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 
 ### Added
+- added `FolderManager` class
+- added `DriveManager` class
 - added `text` arg to mention_command
 - added `RawNote` class
 - added `RawRenote` class
@@ -26,8 +28,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 
+- updated a examples
 - ドキュメントを更新
-- 内部変更: `UserAction` や `ClientAction` のメソッドを別クラスに分割
+- 内部変更: `UserActions` や `ClientActions` のメソッドを別クラスに分割
 - Allow only property-based access to most data classes.
 - **BREAKING CHANGE**: `User` クラスのプロパティーを以下のように変更
   - `name` -> `nickname`
@@ -129,9 +132,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 - add event `on_follow` and `follow_request`
-- add a new `Following` and `UserAction` class
+- add a new `Following` and `UserActions` class
 - add `accept_request` and `reject_request` method to `Following` class
-- add `accept_following_request` and `reject_following_request` method to `UserAction` class
+- add `accept_following_request` and `reject_following_request` method to `UserActions` class
 
 ### Fixed
 
@@ -146,7 +149,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - add `favorite`, `add_note_to_clips`, `add_reaction_to_note` and `remove_favorite` method to `NoteAction` class
 - add class
   - NoteActions
-  - ClientAction
+  - ClientActions
 
 ### Fixed
 
@@ -231,7 +234,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   - `ChatContent`
   - `ReactionContent`
   - `NoteContent`
-  - `UserAction`
+  - `UserActions`
   - `UserProfile`
     - `UserProfile`にあったものは `User` に統合され、詳細な情報は `User` クラスの details オブジェクト(`UserDetails`) から取得可能です
 - **破壊的変更**: `WebSocket` クラスを削除しました
@@ -263,14 +266,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - `add_poll` の引数位置が変更されています。ご注意ください
 - `delete` メソッドの引数を `_id` -> `note_id` に変更しました
 - 内部変更: `api` 関数で使用されている `data` 引数は非推奨(Deprecated)に代わりに `json_data` を受け取るように
-- 内部変更: `NoteAction` `UserAction` クラスのメソッドを大半を staticmethod に置き換えしました
+- 内部変更: `NoteAction` `UserActions` クラスのメソッドを大半を staticmethod に置き換えしました
 - 内部変更: `Note` クラスのメソッドの依存性を下げました
 - 内部変更: `Follow` をモデルに変更しました
 - 内部変更: イベントの発火に `dispatch` を用いるようになりました。 これにより `bot.py` から各イベントが削除されています
 
 ### Removed
 
-- `UserProfile` クラスから `get_i` を削除しました。今後は`UserAction`から直接ご利用ください
+- `UserProfile` クラスから `get_i` を削除しました。今後は`UserActions`から直接ご利用ください
 - 内部変更: `dispatch` を使うことで `client.py` から `on_message` 等のクラスを削除
 
 ### Fixed
@@ -302,7 +305,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - 内部変更: auth_i の部分を config.i に置き換え
 - `upload`メソッドの引数変更に伴う`add_file`の引数に`is_sensitive`と`force` を追加
 - ほぼすべてのデータ格納用クラスを Pydantic に置き換え( `Note`や`File` など)
-- `get_i`を`UserAction` に移動
+- `get_i`を`UserActions` に移動
 
 ### Removed
 
