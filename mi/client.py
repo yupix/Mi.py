@@ -13,7 +13,6 @@ from aiohttp import ClientWebSocketResponse
 
 from mi import Instance, InstanceMeta, User, config
 from mi.chat import Chat
-from mi.drive import Drive
 from mi.http import HTTPClient
 from mi.models.user import RawUser
 from mi.note import Note
@@ -22,7 +21,7 @@ from mi.utils import get_module_logger
 from .gateway import MisskeyWebSocket
 
 if TYPE_CHECKING:
-    from . import File, Poll
+    from . import File
 
 
 class Client:
@@ -42,7 +41,7 @@ class Client:
         self.ws: MisskeyWebSocket = None
 
     def _get_state(self, **options: Any) -> ConnectionState:
-        return ConnectionState(dispatch=self.dispatch, http=self.http, loop=self.loop, client=self, **options)
+        return ConnectionState(dispatch=self.dispatch, http=self.http, loop=self.loop, client=self)
 
     async def on_ready(self, ws: ClientWebSocketResponse):
         """
@@ -331,7 +330,7 @@ class Client:
             *,
             force: bool = False,
             is_sensitive: bool = False,
-    ) -> Drive:
+    ) -> File:
         """
         Parameters
         ----------
@@ -348,14 +347,14 @@ class Client:
 
         Returns
         -------
-        Drive: Drive
+        Drive: File
             upload後のレスポンスをDrive型に変更して返します
         """
 
         return await self._connection.file_upload(name=name, to_file=to_file, to_url=to_url, force=force,
                                                   is_sensitive=is_sensitive)
 
-    async def show_file(self, file_id: Optional[str] = None, url: Optional[str] = None) -> Drive:
+    async def show_file(self, file_id: Optional[str] = None, url: Optional[str] = None) -> File:
         """
         ファイルの情報を取得します。
 
@@ -368,7 +367,7 @@ class Client:
 
         Returns
         -------
-        Drive
+        File
             ファイルの情報
         """
 

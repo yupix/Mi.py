@@ -18,6 +18,7 @@ from mi.emoji import Emoji
 from mi.exception import ContentRequired, InvalidParameters, NotExistRequiredParameters
 from mi.http import Route
 from mi.iterators import InstanceIterator
+from mi.models.drive import RawFile
 from mi.models.note import RawNote
 from mi.models.user import RawUser
 from mi.note import Note, Poll, Reaction
@@ -722,4 +723,4 @@ class ConnectionState(ClientActions):
             res = await self.http.request(Route('POST', '/api/drive/files/upload-from-url'), json=args, auth=True, lower=True)
         else:
             raise InvalidParameters("path または url のどちらかは必須です")
-        return File(res, state=self)
+        return File(RawFile(res), state=self)
