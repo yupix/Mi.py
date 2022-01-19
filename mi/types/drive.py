@@ -1,4 +1,4 @@
-from typing import Any, Dict, TypedDict
+from typing import Any, Dict, Optional, TypedDict
 
 
 class Properties(TypedDict):
@@ -8,7 +8,7 @@ class Properties(TypedDict):
 
     width: int
     height: int
-    avgColor: str
+    avg_color: Optional[str]
 
 
 class Folder(TypedDict):
