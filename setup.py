@@ -1,6 +1,6 @@
 import pathlib
 
-from setuptools import Extension, find_packages, setup
+from setuptools import Extension, setup
 
 description = "A Python wrapper for the Misskey API"
 readme_file = pathlib.Path(__file__).parent / "README.md"

@@ -1,5 +1,5 @@
 import asyncio
-from mi import Note
+
 from mi.ext import commands, tasks
 from mi.note import Note
 from mi.router import Router

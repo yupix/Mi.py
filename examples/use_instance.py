@@ -1,5 +1,6 @@
 import asyncio
-from mi import Client, Drive, Note, Router
+
+from mi import Client, Note, Router
 from mi.ext import tasks
 
 uri = "wss://example.com/streaming"

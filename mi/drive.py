@@ -10,7 +10,7 @@ if TYPE_CHECKING:
     from .state import ConnectionState
     from .api.drive import FolderManager
 
-__all__ = ['Properties', 'File', 'Drive', 'Folder']
+__all__ = ['Properties', 'File', 'File', 'Folder']
 
 
 class Properties:
@@ -133,30 +133,3 @@ class File:
     @property
     def user(self):
         return User(RawUser(self.__raw_data.user), state=self.__state)
-
-
-class Drive:
-    def __init__(self, data, state: ConnectionState) -> None:
-        self.id: str = data['id']
-        self.created_at: str = data['created_at']
-        self.name: str = data['name']
-        self.type: str = data['type']
-        self.md5: str = data['md5']
-        self.size: int = data['size']
-        self.url: str = data['url']
-        self.folder_id: str = data['folder_id']
-        self.is_sensitive: bool = data['is_sensitive']
-        self.blurhash: str = data['blurhash']
-        self._state = state
-
-    async def delete(self) -> bool:
-        """
-        ファイルを削除します。
-
-        Returns
-        -------
-        bool
-            削除に成功したかどうか
-        """
-
-        return await self._state.remove_file(self.id)

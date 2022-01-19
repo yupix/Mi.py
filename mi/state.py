@@ -2,18 +2,18 @@ from __future__ import annotations
 
 import asyncio
 import inspect
-from typing import Any, AsyncIterator, Callable, Dict, List, Optional, TYPE_CHECKING, Union
+from typing import Any, AsyncIterator, Callable, Dict, Generator, List, Optional, TYPE_CHECKING, Union
 
 from aiocache import cached
 from aiocache.factory import Cache
 
 from mi import Instance, InstanceMeta, User
 from mi.api import FavoriteManager
-from mi.api.drive import DriveManager, FolderManager
+from mi.api.drive import DriveManager, FileManager, FolderManager
 from mi.api.follow import FollowManager, FollowRequestManager
 from mi.api.reaction import ReactionManager
 from mi.chat import Chat
-from mi.drive import Drive
+from mi.drive import File
 from mi.emoji import Emoji
 from mi.exception import ContentRequired, InvalidParameters, NotExistRequiredParameters
 from mi.http import Route
@@ -169,7 +169,7 @@ class NoteActions:
         return [Note(RawNote(i), state=self.client) for i in res]
 
     def get_reaction(self, note_id: str, reaction: str):
-        return ReactionManager(self.client, self.http, self.loop, note_id=note_id, reaction=reaction)
+        return ReactionManager(self.client, self.http, self.loop, note_id=note_id)
 
 
 class UserActions:
@@ -209,18 +209,19 @@ class FolderActions:
 
 class DriveActions:
     def __init__(
-            self, client: 'ConnectionState',
+            self, state: 'ConnectionState',
             http: HTTPClient,
             loop: asyncio.AbstractEventLoop,
     ):
-        self.client = client
+        self.state = state
         self.http = http
         self.loop = loop
-        self.action: DriveManager = DriveManager(self.client, self.http, self.loop)
-        self.folder: FolderActions = FolderActions(self.client, self.http, self.loop)
+        self.action: DriveManager = DriveManager(self.state, self.http, self.loop)
+        self.folder: FolderActions = FolderActions(self.state, self.http, self.loop)
+        self.files: FileManager = FileManager(state, http, loop)
 
     def get_folder_instance(self, folder_id: str) -> FolderActions:
-        return FolderActions(self.client, self.http, self.loop, folder_id=folder_id)
+        return FolderActions(self.state, self.http, self.loop, folder_id=folder_id)
 
 
 class ClientActions:
@@ -629,13 +630,6 @@ class ConnectionState(ClientActions):
     async def remove_emoji(self, emoji_id: str) -> bool:
         return bool(await self.http.request(Route('POST', '/api/admin/emoji/remove'), json={'id': emoji_id}, auth=True))
 
-    async def show_file(self, file_id: Optional[str], url: Optional[str]) -> Drive:
-        data = remove_dict_empty({"fileId": file_id, "url": url})
-        return Drive(await self.http.request(Route('POST', '/api/admin/drive/show-file'), json=data, auth=True, lower=True),
-                     state=self)
-
-    async def remove_file(self, file_id: str) -> bool:
-        return bool(await self.http.request(Route('POST', '/api/drive/files/delete'), json={'fileId': file_id}, auth=True))
 
     async def get_user_notes(
             self,
@@ -652,7 +646,7 @@ class ConnectionState(ClientActions):
             file_type: Optional[List[str]] = None,
             since_date: int = 0,
             until_data: int = 0
-    ) -> AsyncIterator[Note]:
+    ) -> Generator[Note]:
         if limit > 100:
             raise InvalidParameters("limit は100以上を受け付けません")
 
@@ -717,7 +711,7 @@ class ConnectionState(ClientActions):
             *,
             force: bool = False,
             is_sensitive: bool = False,
-    ) -> Drive:
+    ) -> File:
 
         if to_file and to_url is None:  # ローカルからアップロードする
             with open(to_file, "rb") as f:
@@ -728,4 +722,4 @@ class ConnectionState(ClientActions):
             res = await self.http.request(Route('POST', '/api/drive/files/upload-from-url'), json=args, auth=True, lower=True)
         else:
             raise InvalidParameters("path または url のどちらかは必須です")
-        return Drive(res, state=self)
+        return File(res, state=self)

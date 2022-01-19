@@ -7,7 +7,7 @@ class RawProperties:
     def __init__(self, data: PropertiesPayload):
         self.width: int = data['width']
         self.height: int = data['height']
-        self.avg_color: Optional[float] = data.get('avg_color')
+        self.avg_color: Optional[str] = data.get('avg_color')
 
 
 class RawFolder:
