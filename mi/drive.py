@@ -2,22 +2,33 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from mi.models.drive import RawFile, RawFolder
+from mi.models.drive import RawFile, RawFolder, RawProperties
 from mi.models.user import RawUser
 from mi.user import User
 
 if TYPE_CHECKING:
     from .state import ConnectionState
+    from .api.drive import FolderManager
 
-__all__ = ['Properties', 'File', 'Drive']
+__all__ = ['Properties', 'File', 'Drive', 'Folder']
 
 
 class Properties:
-    def __init__(self, data, state: ConnectionState) -> None:
-        self.width: int = data['width']
-        self.height: int = data['height']
-        self.avg_color: float = data['avg_color']
+    def __init__(self, raw_data: RawProperties, state: ConnectionState) -> None:
+        self.__raw_data: RawProperties = raw_data
         self.__state = state
+
+    @property
+    def width(self) -> int:
+        return self.__raw_data.width
+
+    @property
+    def height(self) -> int:
+        return self.__raw_data.height
+
+    @property
+    def avg_color(self) -> float | None:
+        return self.__raw_data.avg_color
 
 
 class Folder:
@@ -48,6 +59,10 @@ class Folder:
     @property
     def parent(self):
         return self.__raw_data.parent
+
+    @property
+    def action(self) -> FolderManager:
+        return self.__state.drive.get_folder_instance(self.id).action
 
 
 class File:
