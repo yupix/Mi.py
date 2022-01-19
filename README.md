@@ -25,12 +25,14 @@ see [Documentation](https://yupix.github.io/Mi.py/en/).
 
 ## warning
 
-If you connect to the home timeline while connected to the global timeline, the `on_message` event will work twice for one
+1. If you connect to the home timeline while connected to the global timeline, the `on_message` event will work twice for one
 message, because the same message is received on two channels. This is not a bug, but normal behavior.
 
 ```python
 await Router(ws).connect_channel(['home', 'global'])
 ```
+
+2. v3.0.0 has very little compatibility with v2.0.0.
 
 ### Collaborators
 
