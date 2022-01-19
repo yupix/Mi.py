@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import AsyncIterator, Optional, TYPE_CHECKING
+from typing import Generator, Optional, TYPE_CHECKING
 
 from mi.http import Route
 from mi.models.user import RawUser
@@ -26,7 +26,7 @@ class InstanceIterator:
                         username: Optional[str] = None,
                         hostname: Optional[str] = None,
                         get_all: bool = False
-                        ) -> AsyncIterator[User]:
+                        ) -> Generator[User]:
         """
         Parameters
         ----------
