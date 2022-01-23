@@ -257,8 +257,8 @@ class Note(AbstractNote):
         return self.__raw_data.user_id
 
     @property
-    def author(self):
-        return self.__raw_data.author
+    def author(self) -> User:
+        return User(self.__raw_data.author, state=self.__state)
 
     @property
     def content(self):
