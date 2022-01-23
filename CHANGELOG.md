@@ -7,8 +7,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [v3.0.0] 2022-01-23
+
 ### Added
 
+- added `ChatManager` class
+- added `RawReaction` class
+- added `RawChat` class
+- added `EmojiManager` class
 - added `FolderManager` class
 - added `DriveManager` class
 - added `text` arg to mention_command
