@@ -42,8 +42,8 @@ class ClientActions:
         self.emoji: EmojiManager = EmojiManager(state, http, loop)
         self.reaction: ReactionManager = ReactionManager(state, http, loop)
 
-    def get_user_instance(self, user_id: Optional[str]) -> UserActions:
-        return UserActions(self.__state, self.__http, self.__loop, user_id=user_id)
+    def get_user_instance(self, user_id: Optional[str] = None, user: Optional[User] = None) -> UserActions:
+        return UserActions(self.__state, self.__http, self.__loop, user_id=user_id, user=user)
 
     def get_note_instance(self, note_id: str) -> NoteActions:
         return NoteActions(self.__state, self.__http, self.__loop, note_id=note_id)
