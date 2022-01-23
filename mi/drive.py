@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Union
 
 from mi.models.drive import RawFile, RawFolder, RawProperties
 from mi.models.user import RawUser
@@ -27,7 +27,7 @@ class Properties:
         return self.__raw_data.height
 
     @property
-    def avg_color(self) -> float | None:
+    def avg_color(self) -> Union[float, None]:
         return self.__raw_data.avg_color
 
 
