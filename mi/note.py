@@ -211,7 +211,11 @@ class Reaction:
         self.user: Optional[User] = User(RawUser(data['user']), state=state) if data.get('user') else None
         self.note: Optional[Note] = Note(RawNote(data['note']), state=state) if data.get('note') else None
         self.reaction: str = data['reaction']
-        self._state: ConnectionState = state
+        self.__state: ConnectionState = state
+
+    @property
+    def action(self):
+        return self.__state.reaction
 
 
 class Note(AbstractNote):
