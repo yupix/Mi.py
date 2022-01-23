@@ -5,7 +5,7 @@ from mi.types.drive import (File as FilePayload, Folder as FolderPayload, Proper
 
 class RawProperties:
     def __init__(self, data: PropertiesPayload):
-        self.width: int = data.get['width']
+        self.width: int = data.get('width')
         self.height: int = data['height']
         self.avg_color: Optional[str] = data.get('avg_color')
 
@@ -30,7 +30,7 @@ class RawFile:
         self.size: int = data['size']
         self.is_sensitive: bool = data['is_sensitive']
         self.blurhash: str = data['blurhash']
-        self.properties: Optional[RawProperties] = RawProperties(data['properties']) if data.get('properties') else None
+        self.properties: Optional[RawProperties] = RawProperties(data['properties']) if len(data.get('properties')) else None
         self.url: str = data['url']
         self.thumbnail_url: str = data['thumbnail_url']
         self.comment: str = data['comment']
