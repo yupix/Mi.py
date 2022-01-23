@@ -30,10 +30,6 @@ class NoteActions:
         data = {'noteId': note_id, 'clipId': clip_id}
         return bool(await self.__http.request(Route('POST', '/api/clips/add-note'), json=data, auth=True))
 
-    async def add_reaction_to_note(self, note_id: str, reaction: str) -> bool:
-        data = {'noteId': note_id, 'reaction': reaction}
-        return bool(await self.__http.request(Route('POST', '/api/reactions/create'), json=data, auth=True))
-
     async def send(self,
                    content: Optional[str] = None,
                    visibility: str = "public",
