@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [v3.1.0] 2022-01-23
+
+### Added
+
+- Added `get_mention` method to `UserActions` class
+
+### Fixed
+
+- propertiesが存在しない場合にエラーが出る
+
+## [v3.0.1] 2022-01-23
+
+### Fixed
+
+- user.pyでInstanceクラスが読み込めてない
+
 ## [v3.0.0] 2022-01-23
 
 ### Added
