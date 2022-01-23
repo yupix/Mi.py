@@ -15,6 +15,7 @@ from mi.emoji import Emoji
 from mi.exception import InvalidParameters, NotExistRequiredParameters
 from mi.http import Route
 from mi.iterators import InstanceIterator
+from mi.models.chat import RawChat
 from mi.models.drive import RawFile
 from mi.models.note import RawNote
 from mi.models.user import RawUser
@@ -160,13 +161,13 @@ class ConnectionState(ClientActions):
         """
         チャットが来た際のデータを処理する関数
         """
-        self.dispatch('message', Chat(message, state=self))
+        self.dispatch('message', Chat(RawChat(message), state=self))
 
     def parse_unread_messaging_message(self, message: Dict[str, Any]) -> None:
         """
         チャットが既読になっていない場合のデータを処理する関数
         """
-        self.dispatch('message', Chat(message, state=self))
+        self.dispatch('message', Chat(RawChat(message), state=self))
 
     def parse_notification(self, message: Dict[str, Any]) -> None:
         """
@@ -280,7 +281,7 @@ class ConnectionState(ClientActions):
         """
         args = remove_dict_empty({'userId': user_id, 'groupId': group_id, 'text': content, 'fileId': file_id})
         data = await self.http.request(Route('POST', '/api/messaging/messages/create'), json=args, auth=True, lower=True)
-        return Chat(data, state=self)
+        return Chat(RawChat(data), state=self)
 
     async def delete_chat(self, message_id: str) -> bool:
         """
