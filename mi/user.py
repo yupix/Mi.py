@@ -6,9 +6,11 @@ from mi.emoji import Emoji
 from mi.models.user import RawUser
 from mi.types.user import (Channel as ChannelPayload, FieldContent as FieldContentPayload, PinnedNote as PinnedNotePayload,
                            PinnedPage as PinnedPagePayload)
+from mi.instance import Instance
+
 
 if TYPE_CHECKING:
-    from mi import ConnectionState, Instance
+    from mi import ConnectionState
     from mi.api.follow import FollowRequestManager
 
 __all__ = ['User', 'FollowRequest', 'Followee']
@@ -309,4 +311,4 @@ class User:
 
     @property
     def action(self):
-        return self.__state.get_user_instance(self.__raw_user.id)
+        return self.__state.get_user_instance(self.__raw_user.id, user=self)
