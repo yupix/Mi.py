@@ -1,6 +1,6 @@
 import pathlib
 
-from setuptools import Extension, find_packages, setup
+from setuptools import Extension, setup
 
 description = "A Python wrapper for the Misskey API"
 readme_file = pathlib.Path(__file__).parent / "README.md"
@@ -27,14 +27,18 @@ packages = [
     'mi',
     'mi.abc',
     'mi.abc.ext',
-    'mi.types',
+    'mi.api',
+    'mi.ext',
     'mi.ext.commands',
-    'mi.ext.tasks'
+    'mi.ext.tasks',
+    'mi.models',
+    'mi.types',
+    'mi.actions'
 ]
 
 setup(
     name="mi.py",
-    version="2.1.0",
+    version="3.0.0",
     install_requires=["emoji", 'aiocache', 'aiohttp'],
     url="https://github.com/yupix/mi.py",
     author="yupix",

@@ -1,10 +1,9 @@
 from __future__ import annotations
 
-from typing import List, TYPE_CHECKING
+from typing import TYPE_CHECKING
 
+from mi.models.chat import RawChat
 from .abc.chat import AbstractChatContent
-from .types.chat import Chat as ChatPayload
-from .user import User
 
 __all__ = ['Chat']
 
@@ -17,19 +16,53 @@ class Chat(AbstractChatContent):
     チャットオブジェクト
     """
 
-    def __init__(self, data: ChatPayload, state: ConnectionState):
-        self.id: str = data["id"]
-        self.created_at: str = data["created_at"]
-        self.content: str = data["text"]
-        self.user_id: str = data["user_id"]
-        self.author: User = User(data["user"], state=state)
-        self.recipient_id: str = data["recipient_id"]
-        self.recipient: str = data["recipient"]
-        self.group_id: str = data["group_id"]
-        self.file_id: str = data["file_id"]
-        self.is_read: bool = data["is_read"]
-        self.reads: List = data["reads"]
-        self._state = state
+    def __init__(self, raw_data: RawChat, state: ConnectionState):
+        self.__raw_data = raw_data
+        self.__state = state
+
+    @property
+    def id(self):
+        return self.__raw_data.id
+
+    @property
+    def created_at(self):
+        return self.__raw_data.created_at
+
+    @property
+    def content(self):
+        return self.__raw_data.content
+
+    @property
+    def user_id(self):
+        return self.__raw_data.user_id
+
+    @property
+    def author(self):
+        return self.__raw_data.author
+
+    @property
+    def recipient_id(self):
+        return self.__raw_data.recipient_id
+
+    @property
+    def recipient(self):
+        return self.__raw_data.recipient
+
+    @property
+    def group_id(self):
+        return self.__raw_data.group_id
+
+    @property
+    def file_id(self):
+        return self.__raw_data.file_id
+
+    @property
+    def is_read(self):
+        return self.__raw_data.is_read
+
+    @property
+    def reads(self):
+        return self.__raw_data.reads
 
     async def delete(self) -> bool:
         """
@@ -40,5 +73,5 @@ class Chat(AbstractChatContent):
         bool:
             成功したか否か
         """
-        res = await self._state.delete_chat(message_id=self.id)
+        res = await self.__state.delete_chat(message_id=self.id)
         return bool(res)

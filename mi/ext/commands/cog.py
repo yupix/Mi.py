@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import inspect
-from typing import Any, Callable, ClassVar, Coroutine, Dict, List, Optional, TYPE_CHECKING, Tuple
+from typing import Any, ClassVar, Dict, List, Optional, TYPE_CHECKING, Tuple
 
 from mi.ext.commands._types import _BaseCommand
 from mi.ext.commands.core import Command
@@ -71,7 +71,7 @@ class Cog(metaclass=CogMeta):
 
     @classmethod
     def listener(cls, name: Optional[str] = None):
-        def decorator(func: Callable[..., Coroutine[Any, Any, Any]]):
+        def decorator(func: Cog):
             actual = func
             if isinstance(actual, staticmethod):
                 actual = actual.__func__

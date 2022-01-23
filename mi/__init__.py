@@ -4,7 +4,7 @@ __license__ = "MIT"
 __copyright__ = "Copyright 2021-present yupix"
 __author_email__ = "yupi0982@outlook.jp"
 __url__ = "https://github.com/yupix/Mi.py"
-__version__ = "2.1.0"
+__version__ = "3.0.0"
 
 __path__ = __import__("pkgutil").extend_path(__path__, __name__)
 
@@ -23,3 +23,4 @@ from .gateway import *
 from .http import *
 from .iterators import *
 from .exception import *
+from .api import *

@@ -40,7 +40,6 @@ class MisskeyWebSocket:
     async def received_message(self, msg, /):
         if type(msg) is bytes:
             msg = msg.decode()
-        # print(self._misskey_parsers)
 
         self._misskey_parsers[str_lower(msg['type']).upper()](msg)
 

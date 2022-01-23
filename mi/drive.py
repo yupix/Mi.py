@@ -1,73 +1,135 @@
 from __future__ import annotations
 
-from typing import Any, Dict, TYPE_CHECKING
+from typing import TYPE_CHECKING, Union
 
-from .types.drive import (File as FilePayload, Folder as FolderPayload)
+from mi.models.drive import RawFile, RawFolder, RawProperties
+from mi.models.user import RawUser
+from mi.user import User
 
 if TYPE_CHECKING:
     from .state import ConnectionState
+    from .api.drive import FolderManager
+
+__all__ = ['Properties', 'File', 'File', 'Folder']
 
 
 class Properties:
-    def __init__(self, data):
-        self.width: int = data['width']
-        self.height: int = data['height']
-        self.avg_color: float = data['avg_color']
+    def __init__(self, raw_data: RawProperties, state: ConnectionState) -> None:
+        self.__raw_data: RawProperties = raw_data
+        self.__state = state
+
+    @property
+    def width(self) -> int:
+        return self.__raw_data.width
+
+    @property
+    def height(self) -> int:
+        return self.__raw_data.height
+
+    @property
+    def avg_color(self) -> Union[float, None]:
+        return self.__raw_data.avg_color
 
 
 class Folder:
-    def __init__(self, data: FolderPayload, state: ConnectionState):
-        self.id: str = data['id']
-        self.created_at: str = data['created_at']
-        self.name: str = data['name']
-        self.folders_count: int = data['folders_count']
-        self.parent_id: str = data['parent_id']
-        self.parent: Dict[str, Any] = data['parent']
-        self._state = state
+    def __init__(self, raw_data: RawFolder, state: ConnectionState):
+        self.__raw_data = raw_data
+        self.__state = state
+
+    @property
+    def id(self):
+        return self.__raw_data.id
+
+    @property
+    def created_at(self):
+        return self.__raw_data.created_at
+
+    @property
+    def name(self):
+        return self.__raw_data.name
+
+    @property
+    def folders_count(self):
+        return self.__raw_data.folders_count
+
+    @property
+    def parent_id(self):
+        return self.__raw_data.parent_id
+
+    @property
+    def parent(self):
+        return self.__raw_data.parent
+
+    @property
+    def action(self) -> FolderManager:
+        return self.__state.drive.get_folder_instance(self.id).action
 
 
 class File:
-    def __init__(self, data: FilePayload, state: ConnectionState):
-        self.id: str = data['id']
-        self.created_at: str = data['created_at']
-        self.name: str = data['name']
-        self.type: str = data['type']
-        self.md5: str = data['md5']
-        self.size: int = data['size']
-        self.is_sensitive: bool = data['is_sensitive']
-        self.blurhash: str = data['blurhash']
-        self.properties: Properties = Properties(data['properties'])
-        self.url: str = data['url']
-        self.thumbnail_url: str = data['thumbnail_url']
-        self.comment: str = data['comment']
-        self.folder_id: str = data['folder_id']
-        self.folder: Folder = Folder(data['folder'], state=state)
-        self.user_id: str = data['user_id']
-        self.user: Dict[str, Any] = data['user']
+    def __init__(self, raw_data: RawFile, state: ConnectionState):
+        self.__raw_data = raw_data
+        self.__state = state
 
+    @property
+    def id(self):
+        return self.__raw_data.id
 
-class Drive:
-    def __init__(self, data, state: ConnectionState) -> None:
-        self.id: str = data['id']
-        self.created_at: str = data['created_at']
-        self.name: str = data['name']
-        self.type: str = data['type']
-        self.md5: str = data['md5']
-        self.size: int = data['size']
-        self.url: str = data['url']
-        self.folder_id: str = data['folder_id']
-        self.is_sensitive: bool = data['is_sensitive']
-        self.blurhash: str = data['blurhash']
-        self._state = state
+    @property
+    def created_at(self):
+        return self.__raw_data.created_at
 
-    async def delete(self) -> bool:
-        """
-        ファイルを削除します。
+    @property
+    def name(self):
+        return self.__raw_data.name
 
-        Returns
-        -------
-        bool
-            削除に成功したかどうか
-        """
+    @property
+    def type(self):
+        return self.__raw_data.type
 
-        return await self._state.remove_file(self.id)
+    @property
+    def md5(self):
+        return self.__raw_data.md5
+
+    @property
+    def size(self):
+        return self.__raw_data.size
+
+    @property
+    def is_sensitive(self):
+        return self.__raw_data.is_sensitive
+
+    @property
+    def blurhash(self):
+        return self.__raw_data.blurhash
+
+    @property
+    def properties(self):
+        return self.__raw_data.properties
+
+    @property
+    def url(self):
+        return self.__raw_data.url
+
+    @property
+    def thumbnail_url(self):
+        return self.__raw_data.thumbnail_url
+
+    @property
+    def comment(self):
+        return self.__raw_data.comment
+
+    @property
+    def folder_id(self):
+        return self.__raw_data.folder_id
+
+    @property
+    def folder(self):
+        return self.__raw_data.folder
+
+    @property
+    def user_id(self):
+        return self.__raw_data.user_id
+
+    @property
+    def user(self):
+        return User(RawUser(self.__raw_data.user), state=self.__state)

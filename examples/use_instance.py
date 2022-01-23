@@ -1,5 +1,6 @@
 import asyncio
-from mi import Client, Drive, Note, Router
+
+from mi import Client, Note, Router
 from mi.ext import tasks
 
 uri = "wss://example.com/streaming"
@@ -31,7 +32,7 @@ async def on_ready(ws):
     print("work on my machine")
     await Router(ws).connect_channel(["global", "main"])  # globalとmainチャンネルに接続
     task.start()  # タスクを起動
-    res = await bot.post_note("Hello World")  # ノートを投稿
+    res = await bot.client.note.send("Hello World")  # ノートを投稿
     print(res.content)
     task.stop()  # タスクを止める
 
