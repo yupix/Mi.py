@@ -2,7 +2,6 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from mi.exception import NotExistRequiredData
 from mi.models.emoji import RawEmoji
 
 if TYPE_CHECKING:
