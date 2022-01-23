@@ -4,7 +4,7 @@ from mi.models.drive import RawFile
 from mi.models.emoji import RawEmoji
 from mi.models.poll import RawPoll
 from mi.models.user import RawUser
-from mi.types.note import Note, Renote
+from mi.types.note import Note, Reaction, Renote
 from mi.utils import upper_to_lower
 
 
@@ -29,6 +29,17 @@ class RawRenote:
         self.renote_id = data["renote_id"]
         self.uri = data.get("uri")
         self.poll: Optional[RawPoll] = RawPoll(data["poll"]) if data.get("poll") else None
+
+
+class RawReaction:
+    def __init__(self, data: Reaction):
+        self.id: Optional[str] = data.get('id')
+        self.created_at = data.get('created_at')
+        self.type: Optional[str] = data.get('type')
+        self.is_read: bool = bool(data.get('is_read'))
+        self.user: Optional[RawUser] = RawUser(data['user']) if data.get('user') else None
+        self.note: Optional[RawNote] = RawNote(data['note']) if data.get('note') else None
+        self.reaction: str = data['reaction']
 
 
 class RawNote:
