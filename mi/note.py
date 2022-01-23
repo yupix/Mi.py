@@ -5,13 +5,12 @@ from typing import List, Optional, TYPE_CHECKING, Union
 from mi import utils
 from mi.drive import File
 from mi.exception import NotExistRequiredData
-from mi.models.note import RawNote, RawRenote
+from mi.models.note import RawNote, RawReaction, RawRenote
 from mi.models.poll import RawPoll
 from mi.models.user import RawUser
 from mi.user import User
 from .abc.note import AbstractNote
 from .models.reaction import RawNoteReaction
-from .types.note import (Reaction as ReactionPayload)
 
 if TYPE_CHECKING:
     from mi import ConnectionState
@@ -203,15 +202,37 @@ class NoteReaction:
 
 
 class Reaction:
-    def __init__(self, data: ReactionPayload, state: ConnectionState):
-        self.id: Optional[str] = data.get('id')
-        self.created_at = data.get('created_at')
-        self.type: Optional[str] = data.get('type')
-        self.is_read: bool = bool(data.get('is_read'))
-        self.user: Optional[User] = User(RawUser(data['user']), state=state) if data.get('user') else None
-        self.note: Optional[Note] = Note(RawNote(data['note']), state=state) if data.get('note') else None
-        self.reaction: str = data['reaction']
+    def __init__(self, raw_data: RawReaction, state: ConnectionState):
+        self.__raw_data = raw_data
         self.__state: ConnectionState = state
+
+    @property
+    def id(self):
+        return self.__raw_data.id
+
+    @property
+    def created_at(self):
+        return self.__raw_data.created_at
+
+    @property
+    def type(self):
+        return self.__raw_data.type
+
+    @property
+    def is_read(self):
+        return self.__raw_data.is_read
+
+    @property
+    def user(self):
+        return self.__raw_data.user
+
+    @property
+    def note(self):
+        return self.__raw_data.note
+
+    @property
+    def reaction(self):
+        return self.__raw_data.reaction
 
     @property
     def action(self):
