@@ -9,6 +9,8 @@ from aiocache.factory import Cache
 
 from mi import Instance, InstanceMeta, User
 from mi.actions import DriveActions, NoteActions, UserActions
+from mi.api.emoji import EmojiManager
+from mi.api.reaction import ReactionManager
 from mi.chat import Chat
 from mi.drive import File
 from mi.emoji import Emoji
@@ -34,9 +36,11 @@ class ClientActions:
         self.__state = state
         self.__http = http
         self.__loop = loop
-        self.note = NoteActions(state, http, loop)
-        self.user = UserActions(state, http, loop)
-        self.drive = DriveActions(state, http, loop)
+        self.note: NoteActions = NoteActions(state, http, loop)
+        self.user: UserActions = UserActions(state, http, loop)
+        self.drive: DriveActions = DriveActions(state, http, loop)
+        self.emoji: EmojiManager = EmojiManager(state, http, loop)
+        self.reaction: ReactionManager = ReactionManager(state, http, loop)
 
     def get_user_instance(self, user_id: Optional[str]) -> UserActions:
         return UserActions(self.__state, self.__http, self.__loop, user_id=user_id)
