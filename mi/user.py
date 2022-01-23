@@ -122,10 +122,6 @@ class User:
         self.__state = state
 
     @property
-    def action(self):
-        return self.__state.get_user_instance(self.__raw_user.id)
-
-    @property
     def id(self):
         return self.__raw_user.id
 
@@ -310,3 +306,7 @@ class User:
         return self.__state.get_followers(username=self.__raw_user.name, host=self.__raw_user.host, until_id=until_id,
                                           limit=limit,
                                           get_all=get_all)
+
+    @property
+    def action(self):
+        return self.__state.get_user_instance(self.__raw_user.id)
