@@ -9,10 +9,10 @@ from mi.exception import ContentRequired
 from mi.models.note import RawNote
 from mi.note import Note, Poll
 from mi.utils import check_multi_arg, remove_dict_empty
+from mi.http import HTTPClient, Route
 
 if TYPE_CHECKING:
     from mi.state import ConnectionState
-    from mi.http import HTTPClient, Route
 
 __all__ = ['NoteActions']
 
