@@ -1,17 +1,16 @@
 from __future__ import annotations
 
-from typing import List, Optional, TYPE_CHECKING
+from typing import List, Optional, TYPE_CHECKING, Union
 
 from mi import utils
 from mi.drive import File
 from mi.exception import NotExistRequiredData
-from mi.models.note import RawNote, RawRenote
+from mi.models.note import RawNote, RawReaction, RawRenote
 from mi.models.poll import RawPoll
 from mi.models.user import RawUser
 from mi.user import User
 from .abc.note import AbstractNote
 from .models.reaction import RawNoteReaction
-from .types.note import (Reaction as ReactionPayload)
 
 if TYPE_CHECKING:
     from mi import ConnectionState
@@ -161,7 +160,7 @@ class Renote(AbstractNote):
         return self.__raw_data.uri
 
     @property
-    def poll(self) -> Poll | None:
+    def poll(self) -> Union[Poll, None]:
         return Poll(self.__raw_data.poll) if self.__raw_data.poll else None
 
     def emoji_count(self) -> int:
@@ -203,15 +202,41 @@ class NoteReaction:
 
 
 class Reaction:
-    def __init__(self, data: ReactionPayload, state: ConnectionState):
-        self.id: Optional[str] = data.get('id')
-        self.created_at = data.get('created_at')
-        self.type: Optional[str] = data.get('type')
-        self.is_read: bool = bool(data.get('is_read'))
-        self.user: Optional[User] = User(RawUser(data['user']), state=state) if data.get('user') else None
-        self.note: Optional[Note] = Note(RawNote(data['note']), state=state) if data.get('note') else None
-        self.reaction: str = data['reaction']
-        self._state: ConnectionState = state
+    def __init__(self, raw_data: RawReaction, state: ConnectionState):
+        self.__raw_data = raw_data
+        self.__state: ConnectionState = state
+
+    @property
+    def id(self):
+        return self.__raw_data.id
+
+    @property
+    def created_at(self):
+        return self.__raw_data.created_at
+
+    @property
+    def type(self):
+        return self.__raw_data.type
+
+    @property
+    def is_read(self):
+        return self.__raw_data.is_read
+
+    @property
+    def user(self):
+        return self.__raw_data.user
+
+    @property
+    def note(self):
+        return self.__raw_data.note
+
+    @property
+    def reaction(self):
+        return self.__raw_data.reaction
+
+    @property
+    def action(self):
+        return self.__state.reaction
 
 
 class Note(AbstractNote):
@@ -232,8 +257,8 @@ class Note(AbstractNote):
         return self.__raw_data.user_id
 
     @property
-    def author(self):
-        return self.__raw_data.author
+    def author(self) -> User:
+        return User(self.__raw_data.author, state=self.__state)
 
     @property
     def content(self):
@@ -244,7 +269,7 @@ class Note(AbstractNote):
         return self.__raw_data.cw
 
     @property
-    def renote(self) -> None | Renote:
+    def renote(self) -> Union[None, Renote]:
         return Renote(self.__raw_data.renote, state=self.__state) if self.__raw_data.renote else None
 
     @property
@@ -284,7 +309,7 @@ class Note(AbstractNote):
         return self.__raw_data.renote_id
 
     @property
-    def poll(self) -> Poll | None:
+    def poll(self) -> Union[Poll, None]:
         return Poll(self.__raw_data.poll) if self.__raw_data.poll else None
 
     @property
@@ -399,151 +424,3 @@ class Note(AbstractNote):
         """
 
         return utils.emoji_count(self.content)
-
-    async def add_reaction(self, reaction: str) -> bool:
-        """
-        ノートにリアクションを追加します
-
-        Parameters
-        ----------
-        reaction: str
-            つけるリアクション
-
-        Returns
-        -------
-        bool
-            成功したかどうか
-        """
-
-        return await self.__state.note.reaction.add(note_id=self.id, reaction=reaction)
-
-    async def delete(self) -> bool:
-        """
-        ノートを削除します
-
-        Returns
-        -------
-        bool
-            成功したか否か
-        """
-
-        return await self.__state.delete_note(self.id)
-
-    async def favorite(self) -> bool:
-        """
-        ノートをお気に入り登録します
-
-        Returns
-        -------
-        bool
-            成功したか否か
-        """
-
-        return await self.__state.note.favorite.add(note_id=self.id)
-
-    async def remove_favorite(self) -> bool:
-        """
-        お気に入りから解除します
-
-        Returns
-        -------
-        bool
-            お気に入りの解除に成功したかどうか
-        """
-
-        return await self.__state.note.favorite.remove(note_id=self.id)
-
-    async def add_to_clips(self, clip_id: str) -> bool:
-        """
-        指定したクリップにノートを追加します
-
-        Returns
-        -------
-        bool
-            クリップに追加できたかどうか
-        """
-
-        return await self.__state.note.add_clips(clip_id=clip_id, note_id=self.id)
-
-    async def create_renote(self) -> Note:
-        """
-        ノートをリノートします
-
-        Returns
-        -------
-        Note
-            作成したリノート
-        """
-
-        return await self.__state.note.create_renote(self.id)
-
-    async def get_replies(self, since_id: Optional[str] = None, until_id: Optional[str] = None, limit: int = 10) -> List[Note]:
-        """
-        ノートに対する返信を取得します
-
-        Parameters
-        ----------
-        since_id: Optional[str], default=None
-        until_id: Optional[str], default=None
-            前回の最後のidから取得する場合
-        limit: int, default=10
-            取得する件数
-
-        Returns
-        -------
-        List[Note]
-            ノートに対する返信一覧
-        """
-
-        return await self.__state.note.get_replies(note_id=self.id, since_id=since_id, until_id=until_id, limit=limit)
-
-    async def create_quote(self,
-                           content: Optional[str] = None,
-                           visibility: str = None,
-                           visible_user_ids: Optional[List[str]] = None,
-                           cw: Optional[str] = None,
-                           local_only: bool = False,
-                           extract_mentions: bool = True,
-                           extract_hashtags: bool = True,
-                           extract_emojis: bool = True,
-                           file_ids=None,
-                           poll: Optional[Poll] = None):
-        """
-        ノートを引用して新規にノートを投稿します
-
-        Parameters
-        ----------
-        content: Optional[str], default=None
-            引用に対するテキスト
-        visibility: str, default=None
-            ノートの公開範囲
-        visible_user_ids: Optional[List[str]]
-            ノートの公開対象になるユーザーid
-        cw: Optional[str]
-            閲覧注意の文字列
-        local_only: bool
-            ローカルにのみ公開するかどうか
-        extract_mentions: bool
-            メンションを展開するかどうか
-        extract_hashtags: bool
-            ハッシュタグを展開するかどうか
-        extract_emojis: bool
-            絵文字を展開するかどうか
-        file_ids:
-            添付するファイルのid
-        poll: Optional[Poll]
-            アンケート
-
-        Returns
-        -------
-        Note
-            作成した引用ノート
-        """
-
-        visibility = self.visibility or visibility or 'public'
-        return await self.__state.note.create_quote(content=content, visibility=visibility, visible_user_ids=visible_user_ids,
-                                                    cw=cw,
-                                                    local_only=local_only, extract_mentions=extract_mentions,
-                                                    extract_hashtags=extract_hashtags,
-                                                    extract_emojis=extract_emojis, note_id=self.id, file_ids=file_ids,
-                                                    poll=poll)

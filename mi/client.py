@@ -13,16 +13,15 @@ from aiohttp import ClientWebSocketResponse
 
 from mi import Instance, InstanceMeta, User, config
 from mi.chat import Chat
-from mi.drive import Drive
 from mi.http import HTTPClient
 from mi.models.user import RawUser
 from mi.note import Note
-from mi.state import ConnectionState
+from mi.state import ClientActions, ConnectionState
 from mi.utils import get_module_logger
 from .gateway import MisskeyWebSocket
 
 if TYPE_CHECKING:
-    from . import File, Poll
+    from . import File
 
 
 class Client:
@@ -42,7 +41,7 @@ class Client:
         self.ws: MisskeyWebSocket = None
 
     def _get_state(self, **options: Any) -> ConnectionState:
-        return ConnectionState(dispatch=self.dispatch, http=self.http, loop=self.loop, client=self, **options)
+        return ConnectionState(dispatch=self.dispatch, http=self.http, loop=self.loop, client=self)
 
     async def on_ready(self, ws: ClientWebSocketResponse):
         """
@@ -178,6 +177,10 @@ class Client:
         await self.event_dispatch("error", err)
 
     # ここからクライアント操作
+
+    @property
+    def client(self) -> ClientActions:
+        return self._connection.get_client_actions()
 
     async def post_chat(self, content: str, *, user_id: str = None, group_id: str = None, file_id: str = None) -> Chat:
         """
@@ -315,6 +318,10 @@ class Client:
 
         return await self._connection.fetch_user(user_id=user_id, username=username, host=host)
 
+    async def get_drive_folders(self, limit: int = 100, since_id: Optional[str] = None, until_id: Optional[str] = None,
+                                folder_id: Optional[str] = None):
+        return await self._connection.drive.action.get_folders(limit, since_id, until_id, folder_id)
+
     async def file_upload(
             self,
             name: Optional[str] = None,
@@ -323,7 +330,7 @@ class Client:
             *,
             force: bool = False,
             is_sensitive: bool = False,
-    ) -> Drive:
+    ) -> File:
         """
         Parameters
         ----------
@@ -340,14 +347,14 @@ class Client:
 
         Returns
         -------
-        Drive: Drive
+        Drive: File
             upload後のレスポンスをDrive型に変更して返します
         """
 
         return await self._connection.file_upload(name=name, to_file=to_file, to_url=to_url, force=force,
                                                   is_sensitive=is_sensitive)
 
-    async def show_file(self, file_id: Optional[str] = None, url: Optional[str] = None) -> Drive:
+    async def show_file(self, file_id: Optional[str] = None, url: Optional[str] = None) -> File:
         """
         ファイルの情報を取得します。
 
@@ -360,7 +367,7 @@ class Client:
 
         Returns
         -------
-        Drive
+        File
             ファイルの情報
         """
 
@@ -382,74 +389,6 @@ class Client:
         """
 
         return await self._connection.remove_file(file_id=file_id)
-
-    async def post_note(self,
-                        content: Optional[str] = None,
-                        *,
-                        visibility: str = "public",
-                        visible_user_ids: Optional[List[str]] = None,
-                        cw: Optional[str] = None,
-                        local_only: bool = False,
-                        extract_mentions: bool = True,
-                        extract_hashtags: bool = True,
-                        extract_emojis: bool = True,
-                        reply_id: Optional[str] = None,
-                        renote_id: Optional[str] = None,
-                        channel_id: Optional[str] = None,
-                        file_ids: Optional[List[File]] = None,
-                        poll: Optional[Poll] = None
-                        ) -> Note:
-        """
-        ノートを投稿します。
-
-        Parameters
-        ----------
-        content : Optional[str], default=None
-            投稿する内容
-        visibility : str, optional
-            公開範囲, by default "public"
-        visible_user_ids : Optional[List[str]], optional
-            公開するユーザー, by default None
-        cw : Optional[str], optional
-            閲覧注意の文字, by default None
-        local_only : bool, optional
-            ローカルにのみ表示するか, by default False
-        extract_mentions : bool, optional
-            メンションを展開するか, by default False
-        extract_hashtags : bool, optional
-            ハッシュタグを展開するか, by default False
-        extract_emojis : bool, optional
-            絵文字を展開するか, by default False
-        reply_id : Optional[str], optional
-            リプライ先のid, by default None
-        renote_id : Optional[str], optional
-            リノート先のid, by default None
-        channel_id : Optional[str], optional
-            チャンネルid, by default None
-        file_ids : [type], optional
-            添付するファイルのid, by default None
-        poll : Optional[Poll], optional
-            アンケート, by default None
-
-        Returns
-        -------
-        Note
-            投稿したノート
-
-        Raises
-        ------
-        ContentRequired
-            [description]
-        """
-
-        if file_ids is None:
-            file_ids = []
-        return await self._connection.note.send(content, visibility=visibility, visible_user_ids=visible_user_ids, cw=cw,
-                                                local_only=local_only, extract_mentions=extract_mentions,
-                                                extract_hashtags=extract_hashtags, extract_emojis=extract_emojis,
-                                                reply_id=reply_id, renote_id=renote_id, channel_id=channel_id,
-                                                file_ids=file_ids,
-                                                poll=poll)
 
     async def get_announcements(self, limit: int, with_unreads: bool, since_id: str, until_id: str):
         return await self._connection.get_announcements(limit=limit, with_unreads=with_unreads, since_id=since_id,

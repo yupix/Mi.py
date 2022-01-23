@@ -1,23 +1,34 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Union
 
-from mi.models.drive import RawFile, RawFolder
+from mi.models.drive import RawFile, RawFolder, RawProperties
 from mi.models.user import RawUser
 from mi.user import User
 
 if TYPE_CHECKING:
     from .state import ConnectionState
+    from .api.drive import FolderManager
 
-__all__ = ['Properties', 'File', 'Drive']
+__all__ = ['Properties', 'File', 'File', 'Folder']
 
 
 class Properties:
-    def __init__(self, data, state: ConnectionState) -> None:
-        self.width: int = data['width']
-        self.height: int = data['height']
-        self.avg_color: float = data['avg_color']
+    def __init__(self, raw_data: RawProperties, state: ConnectionState) -> None:
+        self.__raw_data: RawProperties = raw_data
         self.__state = state
+
+    @property
+    def width(self) -> int:
+        return self.__raw_data.width
+
+    @property
+    def height(self) -> int:
+        return self.__raw_data.height
+
+    @property
+    def avg_color(self) -> Union[float, None]:
+        return self.__raw_data.avg_color
 
 
 class Folder:
@@ -48,6 +59,10 @@ class Folder:
     @property
     def parent(self):
         return self.__raw_data.parent
+
+    @property
+    def action(self) -> FolderManager:
+        return self.__state.drive.get_folder_instance(self.id).action
 
 
 class File:
@@ -118,30 +133,3 @@ class File:
     @property
     def user(self):
         return User(RawUser(self.__raw_data.user), state=self.__state)
-
-
-class Drive:
-    def __init__(self, data, state: ConnectionState) -> None:
-        self.id: str = data['id']
-        self.created_at: str = data['created_at']
-        self.name: str = data['name']
-        self.type: str = data['type']
-        self.md5: str = data['md5']
-        self.size: int = data['size']
-        self.url: str = data['url']
-        self.folder_id: str = data['folder_id']
-        self.is_sensitive: bool = data['is_sensitive']
-        self.blurhash: str = data['blurhash']
-        self._state = state
-
-    async def delete(self) -> bool:
-        """
-        ファイルを削除します。
-
-        Returns
-        -------
-        bool
-            削除に成功したかどうか
-        """
-
-        return await self._state.remove_file(self.id)

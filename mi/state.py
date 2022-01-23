@@ -2,24 +2,26 @@ from __future__ import annotations
 
 import asyncio
 import inspect
-from typing import Any, AsyncIterator, Callable, Dict, List, Optional, TYPE_CHECKING, Union
+from typing import Any, AsyncIterator, Callable, Dict, Generator, List, Optional, TYPE_CHECKING, Union
 
 from aiocache import cached
 from aiocache.factory import Cache
 
 from mi import Instance, InstanceMeta, User
-from mi.api import FavoriteManager
-from mi.api.follow import FollowManager, FollowRequestManager
+from mi.actions import DriveActions, NoteActions, UserActions
+from mi.api.emoji import EmojiManager
 from mi.api.reaction import ReactionManager
 from mi.chat import Chat
-from mi.drive import Drive
+from mi.drive import File
 from mi.emoji import Emoji
-from mi.exception import ContentRequired, InvalidParameters, NotExistRequiredParameters
+from mi.exception import InvalidParameters, NotExistRequiredParameters
 from mi.http import Route
 from mi.iterators import InstanceIterator
+from mi.models.chat import RawChat
+from mi.models.drive import RawFile
 from mi.models.note import RawNote
 from mi.models.user import RawUser
-from mi.note import Note, Poll, Reaction
+from mi.note import Note, Reaction
 from mi.user import FollowRequest, Followee
 from mi.utils import check_multi_arg, get_cache_key, get_module_logger, key_builder, remove_dict_empty, str_lower, \
     upper_to_lower
@@ -29,142 +31,25 @@ if TYPE_CHECKING:
     from mi.types import (Note as NotePayload, Chat as ChatPayload)
 
 
-class NoteActions:
-    def __init__(self, client: 'ConnectionState', http: HTTPClient, loop: asyncio.AbstractEventLoop,
-                 note_id: Optional[str] = None):
-        self.client = client
-        self.http = http
-        self.loop = loop
-        self.favorite = FavoriteManager(client, http, loop, note_id=note_id)
-        self.reaction = ReactionManager(client, http, loop, note_id=note_id)
+class ClientActions:
+    def __init__(self, state: 'ConnectionState', http: HTTPClient, loop: asyncio.AbstractEventLoop):
+        self.__state = state
+        self.__http = http
+        self.__loop = loop
+        self.note: NoteActions = NoteActions(state, http, loop)
+        self.user: UserActions = UserActions(state, http, loop)
+        self.drive: DriveActions = DriveActions(state, http, loop)
+        self.emoji: EmojiManager = EmojiManager(state, http, loop)
+        self.reaction: ReactionManager = ReactionManager(state, http, loop)
 
-    async def add_clips(self, clip_id: str, note_id: str) -> bool:
-        data = {'noteId': note_id, 'clipId': clip_id}
-        return bool(await self.http.request(Route('POST', '/api/clips/add-note'), json=data, auth=True))
-
-    async def add_reaction_to_note(self, note_id: str, reaction: str) -> bool:
-        data = {'noteId': note_id, 'reaction': reaction}
-        return bool(await self.http.request(Route('POST', '/api/reactions/create'), json=data, auth=True))
-
-    async def send(self,
-                   content: Optional[str] = None,
-                   visibility: str = "public",
-                   visible_user_ids: Optional[List[str]] = None,
-                   cw: Optional[str] = None,
-                   local_only: bool = False,
-                   extract_mentions: bool = True,
-                   extract_hashtags: bool = True,
-                   extract_emojis: bool = True,
-                   reply_id: Optional[str] = None,
-                   renote_id: Optional[str] = None,
-                   channel_id: Optional[str] = None,
-                   file_ids=None,
-                   poll: Optional[Poll] = None
-                   ) -> Note:
-        if file_ids is None:
-            file_ids = []
-        field = {
-            "visibility": visibility,
-            "visibleUserIds": visible_user_ids,
-            "text": content,
-            "cw": cw,
-            "localOnly": local_only,
-            "noExtractMentions": extract_mentions,
-            "noExtractHashtags": extract_hashtags,
-            "noExtractEmojis": extract_emojis,
-            "replyId": reply_id,
-            "renoteId": renote_id,
-            "channelId": channel_id
-        }
-        if not check_multi_arg(content, file_ids, renote_id, poll):
-            raise ContentRequired("ノートの送信にはcontent, file_ids, renote_id またはpollのいずれか1つが無くてはいけません")
-
-        if poll and type(Poll):
-            poll_data = remove_dict_empty({
-                'choices': poll.choices,
-                'multiple': poll.multiple,
-                'expiresAt': poll.expires_at,
-                'expiredAfter': poll.expired_after
-            })
-            field["poll"] = poll_data
-
-        if file_ids:
-            field["fileIds"] = file_ids
-        field = remove_dict_empty(field)
-        res = await self.http.request(Route('POST', '/api/notes/create'), json=field, auth=True, lower=True)
-        return Note(RawNote(res["created_note"]), state=self.client)
-
-    async def create_renote(self, note_id: str) -> Note:
-        return await self.send(renote_id=note_id)
-
-    async def create_quote(self, note_id: str,
-                           content: Optional[str] = None,
-                           visibility: str = 'public',
-                           visible_user_ids: Optional[List[str]] = None,
-                           cw: Optional[str] = None,
-                           local_only: bool = False,
-                           extract_mentions: bool = True,
-                           extract_hashtags: bool = True,
-                           extract_emojis: bool = True,
-                           file_ids=None,
-                           poll: Optional[Poll] = None) -> Note:
-        return await self.send(content=content, visibility=visibility, visible_user_ids=visible_user_ids, cw=cw,
-                               local_only=local_only, extract_mentions=extract_mentions,
-                               extract_hashtags=extract_hashtags,
-                               extract_emojis=extract_emojis, renote_id=note_id, file_ids=file_ids, poll=poll)
-
-    async def get_note(self, note_id) -> Note:
-        res = await self.http.request(Route('POST', '/api/notes/show'), json={"noteId": note_id}, auth=True, lower=True)
-        return Note(RawNote(res), state=self.client)
-
-    async def get_replies(self, note_id: str, since_id: Optional[str] = None, until_id: Optional[str] = None,
-                          limit: int = 10, ) -> List[Note]:
-        res = await self.http.request(Route('POST', '/api/notes/replies'),
-                                      json={"noteId": note_id, "sinceId": since_id, "untilId": until_id, "limit": limit},
-                                      auth=True, lower=True)
-        return [Note(RawNote(i), state=self.client) for i in res]
-
-    def get_reaction(self, note_id: str, reaction: str):
-        return ReactionManager(self.client, self.http, self.loop, note_id=note_id, reaction=reaction)
-
-
-class UserAction:
-    def __init__(
-            self, client: 'ConnectionState',
-            http: HTTPClient,
-            loop: asyncio.AbstractEventLoop,
-            *,
-            user_id: Optional[str] = None
-    ):
-        self.client = client
-        self.http = http
-        self.loop = loop
-        self.follow = FollowManager(client, http, loop, user_id=user_id)
-        self.follow_request = FollowRequestManager(client, http, loop, user_id=user_id)
-
-    def get_follow(self, user_id: str) -> FollowManager:
-        return FollowManager(self.client, self.http, self.loop, user_id=user_id)
-
-    def get_follow_request(self, user_id: str) -> FollowRequestManager:
-        return FollowRequestManager(self.client, self.http, self.loop, user_id=user_id)
-
-
-class ClientAction:
-    def __init__(self, client: 'ConnectionState', http: HTTPClient, loop: asyncio.AbstractEventLoop):
-        self.client = client
-        self.http = http
-        self.loop = loop
-        self.note = NoteActions(client, http, loop)
-        self.user = UserAction(client, http, loop)
-
-    def get_user_instance(self, user_id: Optional[str]) -> UserAction:
-        return UserAction(self.client, self.http, self.loop, user_id=user_id)
+    def get_user_instance(self, user_id: Optional[str]) -> UserActions:
+        return UserActions(self.__state, self.__http, self.__loop, user_id=user_id)
 
     def get_note_instance(self, note_id: str) -> NoteActions:
-        return NoteActions(self.client, self.http, self.loop, note_id=note_id)
+        return NoteActions(self.__state, self.__http, self.__loop, note_id=note_id)
 
 
-class ConnectionState(ClientAction):
+class ConnectionState(ClientActions):
     def __init__(self, dispatch: Callable[..., Any], http: HTTPClient, loop: asyncio.AbstractEventLoop, client: Client):
         super().__init__(self, http, loop)
         self.client: Client = client
@@ -176,6 +61,9 @@ class ConnectionState(ClientAction):
         for attr, func in inspect.getmembers(self):
             if attr.startswith('parse'):
                 parsers[attr[6:].upper()] = func
+
+    def get_client_actions(self) -> ClientActions:
+        return ClientActions(self, self.http, self.loop)
 
     def parse_emoji_added(self, message: Dict[str, Any]):
         self.dispatch('emoji_add', Emoji(message['body']['emoji'], state=self))
@@ -277,13 +165,13 @@ class ConnectionState(ClientAction):
         """
         チャットが来た際のデータを処理する関数
         """
-        self.dispatch('message', Chat(message, state=self))
+        self.dispatch('message', Chat(RawChat(message), state=self))
 
     def parse_unread_messaging_message(self, message: Dict[str, Any]) -> None:
         """
         チャットが既読になっていない場合のデータを処理する関数
         """
-        self.dispatch('message', Chat(message, state=self))
+        self.dispatch('message', Chat(RawChat(message), state=self))
 
     def parse_notification(self, message: Dict[str, Any]) -> None:
         """
@@ -349,25 +237,6 @@ class ConnectionState(ClientAction):
         return InstanceIterator(self).get_users(limit=limit, offset=offset, sort=sort, state=state, origin=origin,
                                                 username=username, hostname=hostname, get_all=get_all)
 
-    async def delete_note(self, note_id: str) -> bool:
-        """
-        指定したidのノートを削除します。
-
-        Parameters
-        ----------
-        note_id : str
-            ノートid
-
-        Returns
-        -------
-        bool
-            成功したか否か
-        """
-
-        data = {"noteId": note_id}
-        res = await self.http.request(Route('POST', '/api/notes/delete'), json=data, auth=True)
-        return bool(res)
-
     @cached(ttl=10, namespace='get_user', key_builder=key_builder)
     async def get_user(self, user_id: Optional[str] = None, username: Optional[str] = None,
                        host: Optional[str] = None) -> User:
@@ -416,7 +285,7 @@ class ConnectionState(ClientAction):
         """
         args = remove_dict_empty({'userId': user_id, 'groupId': group_id, 'text': content, 'fileId': file_id})
         data = await self.http.request(Route('POST', '/api/messaging/messages/create'), json=args, auth=True, lower=True)
-        return Chat(data, state=self)
+        return Chat(RawChat(data), state=self)
 
     async def delete_chat(self, message_id: str) -> bool:
         """
@@ -551,14 +420,6 @@ class ConnectionState(ClientAction):
     async def remove_emoji(self, emoji_id: str) -> bool:
         return bool(await self.http.request(Route('POST', '/api/admin/emoji/remove'), json={'id': emoji_id}, auth=True))
 
-    async def show_file(self, file_id: Optional[str], url: Optional[str]) -> Drive:
-        data = remove_dict_empty({"fileId": file_id, "url": url})
-        return Drive(await self.http.request(Route('POST', '/api/admin/drive/show-file'), json=data, auth=True, lower=True),
-                     state=self)
-
-    async def remove_file(self, file_id: str) -> bool:
-        return bool(await self.http.request(Route('POST', '/api/drive/files/delete'), json={'fileId': file_id}, auth=True))
-
     async def get_user_notes(
             self,
             user_id: str,
@@ -574,7 +435,7 @@ class ConnectionState(ClientAction):
             file_type: Optional[List[str]] = None,
             since_date: int = 0,
             until_data: int = 0
-    ) -> AsyncIterator[Note]:
+    ) -> Generator[Note]:
         if limit > 100:
             raise InvalidParameters("limit は100以上を受け付けません")
 
@@ -639,7 +500,7 @@ class ConnectionState(ClientAction):
             *,
             force: bool = False,
             is_sensitive: bool = False,
-    ) -> Drive:
+    ) -> File:
 
         if to_file and to_url is None:  # ローカルからアップロードする
             with open(to_file, "rb") as f:
@@ -650,4 +511,4 @@ class ConnectionState(ClientAction):
             res = await self.http.request(Route('POST', '/api/drive/files/upload-from-url'), json=args, auth=True, lower=True)
         else:
             raise InvalidParameters("path または url のどちらかは必須です")
-        return Drive(res, state=self)
+        return File(RawFile(res), state=self)

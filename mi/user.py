@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Any, AsyncIterator, Dict, List, Optional, TYPE_CHECKING
+from typing import Any, AsyncIterator, Dict, List, Optional, TYPE_CHECKING, Union
 
 from mi.emoji import Emoji
 from mi.models.user import RawUser
@@ -120,10 +120,6 @@ class User:
     def __init__(self, raw_user: RawUser, state: ConnectionState):
         self.__raw_user = raw_user
         self.__state = state
-
-    @property
-    def action(self):
-        return self.__state.get_user_instance(self.__raw_user.id)
 
     @property
     def id(self):
@@ -274,7 +270,7 @@ class User:
         return self.__raw_user.details
 
     @property
-    def instance(self) -> Instance | None:
+    def instance(self) -> Union[Instance, None]:
         return Instance(self.__raw_user.instance, state=self.__state) if self.__raw_user.instance else None
 
     async def get_profile(self) -> "User":
@@ -310,3 +306,7 @@ class User:
         return self.__state.get_followers(username=self.__raw_user.name, host=self.__raw_user.host, until_id=until_id,
                                           limit=limit,
                                           get_all=get_all)
+
+    @property
+    def action(self):
+        return self.__state.get_user_instance(self.__raw_user.id)

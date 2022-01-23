@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import inspect
-from typing import Any, Callable, ClassVar, Coroutine, Dict, List, Optional, TYPE_CHECKING, Tuple
+from typing import Any, ClassVar, Dict, List, Optional, TYPE_CHECKING, Tuple
 
 from mi.ext.commands._types import _BaseCommand
 from mi.ext.commands.core import Command
