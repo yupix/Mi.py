@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Any, AsyncIterator, Dict, List, Optional, TYPE_CHECKING
+from typing import Any, AsyncIterator, Dict, List, Optional, TYPE_CHECKING, Union
 
 from mi.emoji import Emoji
 from mi.models.user import RawUser
@@ -274,7 +274,7 @@ class User:
         return self.__raw_user.details
 
     @property
-    def instance(self) -> Instance | None:
+    def instance(self) -> Union[Instance, None]:
         return Instance(self.__raw_user.instance, state=self.__state) if self.__raw_user.instance else None
 
     async def get_profile(self) -> "User":

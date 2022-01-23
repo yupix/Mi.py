@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import List, Optional, TYPE_CHECKING
+from typing import List, Optional, TYPE_CHECKING, Union
 
 from mi import utils
 from mi.drive import File
@@ -161,7 +161,7 @@ class Renote(AbstractNote):
         return self.__raw_data.uri
 
     @property
-    def poll(self) -> Poll | None:
+    def poll(self) -> Union[Poll, None]:
         return Poll(self.__raw_data.poll) if self.__raw_data.poll else None
 
     def emoji_count(self) -> int:
@@ -244,7 +244,7 @@ class Note(AbstractNote):
         return self.__raw_data.cw
 
     @property
-    def renote(self) -> None | Renote:
+    def renote(self) -> Union[None, Renote]:
         return Renote(self.__raw_data.renote, state=self.__state) if self.__raw_data.renote else None
 
     @property
@@ -284,7 +284,7 @@ class Note(AbstractNote):
         return self.__raw_data.renote_id
 
     @property
-    def poll(self) -> Poll | None:
+    def poll(self) -> Union[Poll, None]:
         return Poll(self.__raw_data.poll) if self.__raw_data.poll else None
 
     @property
