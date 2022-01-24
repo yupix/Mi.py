@@ -49,7 +49,7 @@ class ReactionManager:
         data = remove_dict_empty({"noteId": note_id})
         return bool(await self.http.request(Route('POST', '/api/notes/reactions/delete'), json=data, auth=True, lower=True))
 
-    async def get_reaction(self, reaction: str, note_id: Optional[str] = None, *, limit: int = 11):
+    async def get_reaction(self, reaction: str, note_id: Optional[str] = None, *, limit: int = 11) -> List[NoteReaction]:
         note_id = note_id or self.__note_id
         data = remove_dict_empty({"noteId": note_id, 'limit': limit, 'type': reaction})
         res = await self.http.request(Route('POST', '/api/notes/reactions'), json=data, auth=True, lower=True)

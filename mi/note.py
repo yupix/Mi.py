@@ -1,9 +1,10 @@
 from __future__ import annotations
 
-from typing import List, Optional, TYPE_CHECKING, Union
+from typing import Any, Dict, List, Optional, TYPE_CHECKING, Union
 
 from mi import utils
 from mi.drive import File
+from mi.emoji import Emoji
 from mi.exception import NotExistRequiredData
 from mi.models.note import RawNote, RawReaction, RawRenote
 from mi.models.poll import RawPoll
@@ -15,6 +16,7 @@ from .models.reaction import RawNoteReaction
 if TYPE_CHECKING:
     from mi import ConnectionState
     from mi.state import NoteActions
+    from mi.api.reaction import ReactionManager
 
 __all__ = ('Note', 'Poll', 'Reaction', 'Follow', 'Header', 'File', 'Renote', 'NoteReaction')
 
@@ -207,53 +209,53 @@ class Reaction:
         self.__state: ConnectionState = state
 
     @property
-    def id(self):
+    def id(self) -> Optional[str]:
         return self.__raw_data.id
 
     @property
-    def created_at(self):
+    def created_at(self) -> Optional[str]:
         return self.__raw_data.created_at
 
     @property
-    def type(self):
+    def type(self) -> Optional[str]:
         return self.__raw_data.type
 
     @property
-    def is_read(self):
+    def is_read(self) -> bool:
         return self.__raw_data.is_read
 
     @property
-    def user(self):
-        return self.__raw_data.user
+    def user(self) -> Optional[User]:
+        return User(self.__raw_data.user, state=self.__state) if self.__raw_data.user else None
 
     @property
-    def note(self):
-        return self.__raw_data.note
+    def note(self) -> Optional[Note]:
+        return Note(self.__raw_data.note, state=self.__state) if self.__raw_data.note else None
 
     @property
-    def reaction(self):
+    def reaction(self) -> str:
         return self.__raw_data.reaction
 
     @property
-    def action(self):
+    def action(self) -> ReactionManager:
         return self.__state.reaction
 
 
 class Note(AbstractNote):
     def __init__(self, raw_data: RawNote, state: ConnectionState):
-        self.__raw_data = raw_data
-        self.__state = state
+        self.__raw_data: RawNote = raw_data
+        self.__state: ConnectionState = state
 
     @property
-    def id(self):
+    def id(self) -> str:
         return self.__raw_data.id
 
     @property
-    def created_at(self):
+    def created_at(self) -> str:
         return self.__raw_data.created_at
 
     @property
-    def user_id(self):
+    def user_id(self) -> str:
         return self.__raw_data.user_id
 
     @property
@@ -261,11 +263,11 @@ class Note(AbstractNote):
         return User(self.__raw_data.author, state=self.__state)
 
     @property
-    def content(self):
+    def content(self) -> Optional[str]:
         return self.__raw_data.content
 
     @property
-    def cw(self):
+    def cw(self) -> Optional[str]:
         return self.__raw_data.cw
 
     @property
@@ -273,27 +275,27 @@ class Note(AbstractNote):
         return Renote(self.__raw_data.renote, state=self.__state) if self.__raw_data.renote else None
 
     @property
-    def visibility(self):
+    def visibility(self) -> Optional[str]:
         return self.__raw_data.visibility
 
     @property
-    def renote_count(self):
+    def renote_count(self) -> Optional[int]:
         return self.__raw_data.renote_count
 
     @property
-    def replies_count(self):
+    def replies_count(self) -> Optional[int]:
         return self.__raw_data.replies_count
 
     @property
-    def reactions(self):
+    def reactions(self) -> Optional[Dict[str, Any]]:  # TODO: 型の確認
         return self.__raw_data.reactions
 
     @property
-    def emojis(self):
-        return self.__raw_data.emojis  # TODO: 実装
+    def emojis(self) -> List[Emoji]:
+        return [Emoji(i, state=self.__state) for i in self.__raw_data.emojis]
 
     @property
-    def file_ids(self):
+    def file_ids(self) -> Optional[List[str]]:
         return self.__raw_data.file_ids
 
     @property
@@ -301,11 +303,11 @@ class Note(AbstractNote):
         return [File(i, state=self.__state) for i in self.__raw_data.files]
 
     @property
-    def reply_id(self):
+    def reply_id(self) -> Optional[str]:
         return self.__raw_data.reply_id
 
     @property
-    def renote_id(self):
+    def renote_id(self) -> Optional[str]:
         return self.__raw_data.renote_id
 
     @property
@@ -313,47 +315,47 @@ class Note(AbstractNote):
         return Poll(self.__raw_data.poll) if self.__raw_data.poll else None
 
     @property
-    def visible_user_ids(self):
+    def visible_user_ids(self) -> Optional[List[str]]:
         return self.__raw_data.visible_user_ids
 
     @property
-    def via_mobile(self):
+    def via_mobile(self) -> bool:
         return self.__raw_data.via_mobile
 
     @property
-    def local_only(self):
+    def local_only(self) -> bool:
         return self.__raw_data.local_only
 
     @property
-    def extract_mentions(self):
+    def extract_mentions(self) -> bool:
         return self.__raw_data.extract_mentions
 
     @property
-    def extract_hashtags(self):
+    def extract_hashtags(self) -> bool:
         return self.__raw_data.extract_hashtags
 
     @property
-    def extract_emojis(self):
+    def extract_emojis(self) -> bool:
         return self.__raw_data.extract_emojis
 
     @property
-    def preview(self):
+    def preview(self) -> bool:
         return self.__raw_data.preview
 
     @property
-    def media_ids(self):
+    def media_ids(self) -> Optional[List[str]]:
         return self.__raw_data.media_ids
 
     @property
-    def field(self):
+    def field(self) -> Optional[Dict]:
         return self.__raw_data.field
 
     @property
-    def tags(self):
+    def tags(self) -> Optional[List[str]]:
         return self.__raw_data.tags
 
     @property
-    def channel_id(self):
+    def channel_id(self) -> Optional[str]:
         return self.__raw_data.channel_id
 
     @property
