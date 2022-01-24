@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Added
+
+- type hint
+
 ### Fixed
 
 - 以下のNoteクラスのメソッドでnote_idが必須になっていたのを修正
