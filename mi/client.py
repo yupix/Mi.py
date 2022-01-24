@@ -158,15 +158,16 @@ class Client:
         traceback.print_exc()
 
     async def progress_command(self, message):
-        for key, command in self.all_commands.items():
-            if key == 'regex':
-                if re.search(command[0], message.content):
-                    hit_list = re.findall(command[0], message.content)
+        for cmd in self.all_commands:
+            print(cmd)
+            if cmd.cmd_type == 'regex':
+                if re.search(cmd.key, message.content):
+                    hit_list = re.findall(cmd.key, message.content)
                     if isinstance(hit_list, tuple):
                         hit_list = hit_list[0]
-                    await command[1].invoke(message, *hit_list)
-            elif message.content.find(command[0]) != -1:
-                await command[1].invoke(message)
+                    await cmd.func.invoke(message, *hit_list)
+            elif message.content.find(cmd.key) != -1:
+                await cmd.func.invoke(message)
             else:
                 continue
 
