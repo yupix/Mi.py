@@ -96,9 +96,9 @@ class NoteActions:
             "text": content,
             "cw": cw,
             "localOnly": local_only,
-            "noExtractMentions": extract_mentions,
-            "noExtractHashtags": extract_hashtags,
-            "noExtractEmojis": extract_emojis,
+            "noExtractMentions": not extract_mentions,
+            "noExtractHashtags": not extract_hashtags,
+            "noExtractEmojis": not extract_emojis,
             "replyId": reply_id,
             "renoteId": renote_id,
             "channelId": channel_id
