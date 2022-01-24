@@ -72,19 +72,11 @@ User
    :members:
 
 Chat
-~~~~~~~~~~~~
+~~~~
 
 .. attributetable::  Chat
 
 .. autoclass:: Chat()
-   :members:
-
-Drive
-~~~~~
-
-.. attributetable:: Drive
-
-.. autoclass:: Drive()
    :members:
 
 Emoji
@@ -135,9 +127,9 @@ Properties
 File
 ~~~~
 
-.. attributetable:: Header
+.. attributetable:: File
 
-.. autoclass:: Header()
+.. autoclass:: File()
    :members:
 
 Reaction

@@ -52,9 +52,9 @@ class RawNote:
         self.cw: Optional[str] = data.get("cw")
         self.renote: Optional[RawRenote] = RawRenote(data['renote']) if data.get('renote') else None
         self.visibility: Optional[str] = data.get("visibility")  # This may be an optional
-        self.renote_count: int = data["renote_count"]
-        self.replies_count: int = data["replies_count"]
-        self.reactions: Dict[str, Any] = data["reactions"]
+        self.renote_count: Optional[int] = data.get("renote_count")  # TODO: Optionalかどうか
+        self.replies_count: Optional[int] = data.get("replies_count")  # TODO: Optionalかどうか
+        self.reactions: Optional[Dict[str, Any]] = data["reactions"]  # TODO: Optionalかどうか
         self.emojis: List[RawEmoji] = [RawEmoji(i) for i in data["emojis"]]
         self.file_ids: Optional[List[str]] = data["file_ids"]
         self.files: List[RawFile] = [RawFile(upper_to_lower(i)) for i in data["files"]]
@@ -62,12 +62,12 @@ class RawNote:
         self.renote_id: Optional[str] = data["renote_id"]
         self.poll: Optional[RawPoll] = RawPoll(data["poll"]) if data.get("poll") else None
         self.visible_user_ids: Optional[List[str]] = data.get("visible_user_ids", [])
-        self.via_mobile: Optional[bool] = data.get("via_mobile", False)
+        self.via_mobile: bool = bool(data.get("via_mobile", False))
         self.local_only: bool = bool(data.get("local_only", False))
         self.extract_mentions: bool = bool(data.get("extract_mentions"))
         self.extract_hashtags: bool = bool(data.get("extract_hashtags"))
         self.extract_emojis: bool = bool(data.get("extract_emojis"))
-        self.preview: Optional[bool] = data.get("preview")
+        self.preview: bool = bool(data.get("preview"))
         self.media_ids: Optional[List[str]] = data.get("media_ids")
         self.field: Optional[dict] = {}
         self.tags: Optional[List[str]] = data.get("tags", [])
