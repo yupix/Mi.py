@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Fixed
+
+- `mention_command` が複数登録できない不具合を修正しました
+
 ## [v3.2.0] 2022-01-24
 
 ### Added
