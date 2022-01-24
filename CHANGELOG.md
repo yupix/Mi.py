@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Fixed
+
+- 以下のNoteクラスのメソッドでnote_idが必須になっていたのを修正
+    - `add_clips`
+    - `create_renote`
+    - `create_quote`
+    - `get_note`
+    - `get_replies`
+    - `get_reaction`
+    - `delete`
+- 以下の引数が正常な動作になりました
+    - `noExtractMentions`
+    - `noExtractHashtags`
+    - `noExtractEmojis`
+
 ## [v3.1.0] 2022-01-23
 
 ### Added
