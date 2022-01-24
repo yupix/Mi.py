@@ -1,12 +1,19 @@
 import asyncio
-from typing import Dict, List, Optional
+from typing import List, Optional
 
 from mi.ext.commands._types import _BaseCommand
 
 
+class CMD:
+    def __init__(self, cmd_type: str, key: str, func: 'Command'):
+        self.cmd_type = cmd_type
+        self.key = key
+        self.func = func
+
+
 class CommandManager:
     def __init__(self, *args, **kwargs):
-        self.all_commands: Dict[str, List[str, Command]] = {}
+        self.all_commands: List[CMD] = []
         super().__init__(*args, **kwargs)  # Clientクラスを初期化する
 
     def add_command(self, command: 'Command'):
@@ -14,7 +21,7 @@ class CommandManager:
             raise TypeError(f'{command}はCommandクラスである必要があります')
         command_type = 'regex' if command.regex else 'text'
         command_key = command.regex or command.text
-        self.all_commands[command_type] = [command_key,  command]
+        self.all_commands.append(CMD(command_type, command_key, command))
 
 
 class Command(_BaseCommand):
