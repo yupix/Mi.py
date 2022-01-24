@@ -70,6 +70,12 @@ await Router(ws).connect_channel(['home', 'global'])
 - [Discord.py](https://github.com/Rapptz/discord.py)
     - 一部や仕組みを参考にさせてもらっています。実際にコードも利用しています
 
+## Mi.pyを使って作成されたプロジェクト
+
+- [Misskey Ebooks Bot](https://github.com/fotoente/MIsskey-ebooks-bot)
+- [Misskey Bot CeilingFox](https://github.com/fotoente/MIsskey-ebooks-bot)
+
+
 最後にこのプロジェクトを作るきっかけになり、一部のコードを使用させていただいている Discord.py が Archived になりました。 作者である Danny さんや全てのコラボレーターに最大限の感謝申し上げます。
 
 # LICENSE
