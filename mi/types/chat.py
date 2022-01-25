@@ -3,7 +3,7 @@ from typing import List, TypedDict
 from mi.types.user import User
 
 
-class Chat(TypedDict):
+class ChatPayload(TypedDict):
     id: str
     created_at: str
     text: str

@@ -1,11 +1,11 @@
 from typing import Any, Dict, List, Optional, TypedDict
 
-from .drive import File
-from .emoji import Emoji
+from .drive import FilePayload
+from .emoji import EmojiPayload
 from .user import User
 
 
-class Geo(TypedDict):
+class GeoPayload(TypedDict):
     """
     衛星情報
     """
@@ -17,7 +17,7 @@ class Geo(TypedDict):
     speed: Optional[int]
 
 
-class Poll(TypedDict, total=False):
+class PollPayload(TypedDict, total=False):
     """
     アンケート情報
     """
@@ -28,7 +28,7 @@ class Poll(TypedDict, total=False):
     expired_after: int
 
 
-class Renote(TypedDict):
+class RenotePayload(TypedDict):
     id: str
     created_at: str
     user_id: str
@@ -45,7 +45,7 @@ class Renote(TypedDict):
     reply_id: Optional[str]
     renote_id: Optional[str]
     uri: Optional[str]
-    poll: Optional[Poll]
+    poll: Optional[PollPayload]
     tags: Optional[List[str]]
     channel_id: Optional[str]
 
@@ -56,10 +56,10 @@ class _NoteOptional(TypedDict, total=False):
     """
     text: str
     cw: str
-    geo: Geo
+    geo: GeoPayload
 
 
-class Note(_NoteOptional):
+class NotePayload(_NoteOptional):
     """
     note object
     """
@@ -72,12 +72,12 @@ class Note(_NoteOptional):
     renote_count: Optional[int]
     replies_count: Optional[int]
     reactions: Optional[Dict[str, Any]]
-    emojis: List[Emoji]
+    emojis: List[EmojiPayload]
     file_ids: Optional[List[str]]
-    files: Optional[List[File]]
+    files: Optional[List[FilePayload]]
     reply_id: Optional[str]
     renote_id: Optional[str]
-    poll: Optional[Poll]
+    poll: Optional[PollPayload]
     visible_user_ids: Optional[List[str]]
     via_mobile: Optional[bool]
     local_only: Optional[bool]
@@ -86,7 +86,7 @@ class Note(_NoteOptional):
     extract_emojis: Optional[bool]
     preview: Optional[bool]
     media_ids: Optional[List[str]]
-    renote: Optional[Renote]
+    renote: Optional[RenotePayload]
     field: Optional[dict]
     tags: Optional[List[str]]
     channel_id: Optional[str]
@@ -97,9 +97,9 @@ class OptionalReaction(TypedDict, total=False):
     type: str
     is_read: bool
     user: User
-    note: Note
+    note: NotePayload
     id: str
 
 
-class Reaction(OptionalReaction):
+class ReactionPayload(OptionalReaction):
     reaction: str

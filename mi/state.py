@@ -28,7 +28,7 @@ from mi.utils import check_multi_arg, get_cache_key, get_module_logger, key_buil
 
 if TYPE_CHECKING:
     from mi import HTTPClient, Client
-    from mi.types import (Note as NotePayload, Chat as ChatPayload)
+    from mi.types import NotePayload, ChatPayload
 
 
 class ClientActions:

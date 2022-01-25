@@ -6,6 +6,20 @@ from mi.types import Instance
 
 
 class RawInstance:
+    """
+    Attributes
+    ----------
+    host : Optional[str], default=None
+    name : Optional[str], default=None
+    software_name : Optional[str], default=None
+    software_version : Optional[str], default=None
+    icon_url : Optional[str], default=None
+    favicon_url : Optional[str], default=None
+    theme_color : Optional[str], default=None
+    """
+
+    __slots__ = ('host', 'name', 'software_name', 'software_version', 'icon_url', 'favicon_url', 'theme_color')
+
     def __init__(self, data: Instance):
         self.host: Optional[str] = data.get('host')
         self.name: Optional[str] = data.get('name')

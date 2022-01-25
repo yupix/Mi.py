@@ -1,6 +1,8 @@
 from typing import List, Optional
 
-from mi.types.note import Poll as PollPayload
+from mi.types.note import PollPayload
+
+__all__ = ['RawPollChoices', 'RawPoll']
 
 
 class RawPollChoices:

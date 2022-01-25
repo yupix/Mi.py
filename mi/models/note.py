@@ -4,12 +4,37 @@ from mi.models.drive import RawFile
 from mi.models.emoji import RawEmoji
 from mi.models.poll import RawPoll
 from mi.models.user import RawUser
-from mi.types.note import Note, Reaction, Renote
+from mi.types.note import NotePayload, ReactionPayload, RenotePayload
 from mi.utils import upper_to_lower
 
 
 class RawRenote:
-    def __init__(self, data: Renote):
+    """
+    Attributes
+    ----------
+    id : str
+    created_at :str
+    user_id :str
+    user : RawUser
+    content: Optional[str], default=None
+    cw : Optional[str], default=None
+    visibility : str
+    renote_count : int
+    replies_count : int
+    reactions
+    emojis
+    file_ids : List[str]
+    files
+    reply_id
+    renote_id
+    uri
+    poll Optional[RawPoll]
+    """
+
+    __slots__ = ('id', 'created_at', 'user_id', 'user', 'content', 'cw', 'visibility', 'renote_count', 'replies_count',
+                 'replies_count', 'reactions', 'emojis', 'file_ids', 'files', 'reply_id', 'renote_id', 'uri', 'poll')
+
+    def __init__(self, data: RenotePayload):
         self.id: str = data["id"]
         self.created_at: str = data["created_at"]
         self.user_id: str = data["user_id"]
@@ -19,8 +44,8 @@ class RawRenote:
         self.visibility: str = data["visibility"]
         self.renote_count: int = data["renote_count"]
         self.replies_count: int = data["replies_count"]
-        self.reactions = data["reactions"]
-        self.emojis = data["emojis"]
+        self.reactions = data["reactions"]  # TODO:型探す
+        self.emojis = data["emojis"]  # TODO:型探す
         self.file_ids: List[str] = data["file_ids"]
         self.files = data["files"]
         self.reply_id = data["reply_id"]
@@ -32,9 +57,23 @@ class RawRenote:
 
 
 class RawReaction:
-    def __init__(self, data: Reaction):
+    """
+    Attributes
+    ----------
+    id : Optional[str], default=None
+    created_at : Optional[str], default=None
+    type : Optional[str], default=None
+    is_read : bool
+    user : Optional[RawUser], default=None
+    note : Optional[RawNote], default=None
+    reaction : str
+    """
+
+    __slots__ = ('id', 'created_at', 'type', 'is_read', 'user', 'note', 'reaction')
+
+    def __init__(self, data: ReactionPayload):
         self.id: Optional[str] = data.get('id')
-        self.created_at = data.get('created_at')
+        self.created_at: Optional[str] = data.get('created_at')
         self.type: Optional[str] = data.get('type')
         self.is_read: bool = bool(data.get('is_read'))
         self.user: Optional[RawUser] = RawUser(data['user']) if data.get('user') else None
@@ -43,7 +82,46 @@ class RawReaction:
 
 
 class RawNote:
-    def __init__(self, data: Note):
+    """
+    Attributes
+    ----------
+    id :  str
+    created_at :  str
+    user_id :  str
+    author :  RawUser
+    content : Optional[str]
+    cw : Optional[str]
+    renote : Optional[RawRenote]
+    visibility : Optional[str]
+    renote_count : Optional[int]
+    replies_count : Optional[int]
+    reactions : Optional[Dict[str, Any]]
+    emojis : List[RawEmoji]
+    file_ids : Optional[List[str]]
+    files : List[RawFile]
+    reply_id : Optional[str]
+    renote_id : Optional[str]
+    poll : Optional[RawPoll]
+    visible_user_ids : Optional[List[str]]
+    via_mobile :  bool
+    local_only :  bool
+    extract_mentions :  bool
+    extract_hashtags :  bool
+    extract_emojis :  bool
+    preview :  bool
+    media_ids : Optional[List[str]]
+    field : Optional[dict]
+    tags : Optional[List[str]]
+    channel_id : Optional[str]
+    """
+
+    __slots__ = (
+        'id', 'created_at', 'user_id', 'author', 'content', 'cw', 'renote', 'visibility', 'renote_count', 'replies_count',
+        'reactions', 'emojis', 'file_ids', 'files', 'reply_id', 'renote_id', 'uri', 'poll', 'visible_user_ids',
+        'via_mobile', 'local_only', 'extract_mentions', 'extract_hashtags', 'extract_emojis', 'preview', 'media_ids',
+        'field', 'tags', 'channel_id')
+
+    def __init__(self, data: NotePayload):
         self.id: str = data["id"]
         self.created_at: str = data["created_at"]
         self.user_id: str = data["user_id"]

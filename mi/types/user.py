@@ -1,7 +1,7 @@
 from typing import Any, Dict, List, Optional, TypedDict
 
-from .drive import File
-from .emoji import Emoji
+from .drive import FilePayload
+from .emoji import EmojiPayload
 from .instance import Instance
 
 
@@ -35,13 +35,13 @@ class PinnedNote(TypedDict):
     mentions: Optional[List[str]]
     visible_user_ids: Optional[List[str]]
     file_ids: Optional[List[str]]
-    files: Optional[List[File]]
+    files: Optional[List[FilePayload]]
     tags: Optional[List[str]]
     poll: Optional[Dict[str, Any]]
     channel_id: Optional[str]
     channel: Optional[Channel]
     local_only: Optional[bool]
-    emojis: Optional[List[Emoji]]
+    emojis: Optional[List[EmojiPayload]]
     reactions: Optional[Dict[str, Any]]
     renote_count: Optional[int]
     replies_count: Optional[int]

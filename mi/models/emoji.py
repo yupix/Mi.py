@@ -1,6 +1,6 @@
 from typing import List, Optional
 
-from mi.types.emoji import Emoji as EmojiPayload
+from mi.types.emoji import EmojiPayload
 
 
 class RawEmoji:

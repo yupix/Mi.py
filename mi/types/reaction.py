@@ -3,7 +3,7 @@ from typing import TypedDict
 from mi.types import User
 
 
-class NoteReaction(TypedDict):
+class NoteReactionPayload(TypedDict):
     id: str
     created_at: str
     user: User

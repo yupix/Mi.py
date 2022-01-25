@@ -1,6 +1,6 @@
 from typing import Any, Dict, Optional
 
-from mi.types.drive import (File as FilePayload, Folder as FolderPayload, Properties as PropertiesPayload)
+from mi.types.drive import (FilePayload as FilePayload, FolderPayload as FolderPayload, PropertiesPayload as PropertiesPayload)
 
 
 class RawProperties:

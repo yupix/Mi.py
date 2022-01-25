@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import List, Optional, TYPE_CHECKING, TypedDict
 
 if TYPE_CHECKING:
-    from mi.types import Emoji
+    from mi.types import EmojiPayload
 
 
 class Features:
@@ -56,7 +56,7 @@ class Meta(OptionalMeta):
     mascot_image_url: str
     error_image_url: str
     max_note_text_length: int
-    emojis: List[Emoji]
+    emojis: List[EmojiPayload]
     ads: list
     enable_email: bool
     enable_twitter_integration: bool
