@@ -5,7 +5,7 @@ from typing import AsyncIterator, Dict, List, Optional, TYPE_CHECKING
 from .emoji import Emoji
 from .models import RawInstance
 from .models.emoji import RawEmoji
-from .types.instance import (Meta as InstanceMetaPayload)
+from .types.instance import (MetaPayload as InstanceMetaPayload)
 
 if TYPE_CHECKING:
     from .user import User

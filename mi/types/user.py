@@ -2,7 +2,7 @@ from typing import Any, Dict, List, Optional, TypedDict
 
 from .drive import FilePayload
 from .emoji import EmojiPayload
-from .instance import Instance
+from .instance import InstancePayload
 
 
 class Channel(TypedDict):
@@ -110,4 +110,4 @@ class User(OptionalUser):
     is_blocking: bool
     is_blocked: bool
     is_muted: bool
-    instance: Optional[Instance]
+    instance: Optional[InstancePayload]

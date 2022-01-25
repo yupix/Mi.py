@@ -6,7 +6,7 @@ if TYPE_CHECKING:
     from mi.types import EmojiPayload
 
 
-class Features:
+class FeaturesPayload:
     registration: bool
     local_time_line: bool
     global_time_line: bool
@@ -28,10 +28,10 @@ class OptionalMeta(TypedDict, total=False):
     cache_remote_files: bool
     proxy_remote_files: bool
     require_setup: bool
-    features: Features
+    features: FeaturesPayload
 
 
-class Meta(OptionalMeta):
+class MetaPayload(OptionalMeta):
     maintainer_name: str
     maintainer_email: str
     version: str
@@ -75,5 +75,5 @@ class OptionalInstance(TypedDict, total=False):
     theme_color: str
 
 
-class Instance(OptionalInstance, Meta):
-    meta: Meta
+class InstancePayload(OptionalInstance, MetaPayload):
+    meta: MetaPayload

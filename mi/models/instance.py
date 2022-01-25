@@ -2,7 +2,7 @@ from typing import Optional
 
 __all__ = ['RawInstance']
 
-from mi.types import Instance
+from mi.types import InstancePayload
 
 
 class RawInstance:
@@ -20,7 +20,7 @@ class RawInstance:
 
     __slots__ = ('host', 'name', 'software_name', 'software_version', 'icon_url', 'favicon_url', 'theme_color')
 
-    def __init__(self, data: Instance):
+    def __init__(self, data: InstancePayload):
         self.host: Optional[str] = data.get('host')
         self.name: Optional[str] = data.get('name')
         self.software_name: Optional[str] = data.get('software_version')
