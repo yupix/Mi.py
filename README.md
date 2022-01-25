@@ -26,7 +26,7 @@ see [Documentation](https://yupix.github.io/Mi.py/en/).
 ## warning
 
 1. If you connect to the home timeline while connected to the global timeline, the `on_message` event will work twice for one
-message, because the same message is received on two channels. This is not a bug, but normal behavior.
+   message, because the same message is received on two channels. This is not a bug, but normal behavior.
 
 ```python
 await Router(ws).connect_channel(['home', 'global'])
@@ -75,6 +75,11 @@ These are the people who contributed to the development
 
 Finally, Discord.py, which inspired me to create this project and for which I use some of the code, is now Archived. Many
 thanks to Danny and all the collaborators.
+
+### Projects that use Mi.py
+
+- [Misskey Ebooks Bot](https://github.com/fotoente/MIsskey-ebooks-bot)
+- [Misskey Bot CeilingFox](https://github.com/fotoente/MIsskey-ebooks-bot)
 
 # LICENSE
 

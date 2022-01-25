@@ -23,7 +23,7 @@ Mi.py は[Discord.py](https://github.com/Rapptz/discord.py)
 
 ## 注意点
 
-1. グローバルタイムラインに接続したりする際に使う以下の様なコードがあるとホームタイムラインとグローバルタイムラインの 2 つを受信したことになり on_message が 2 回動作します。 
+1. グローバルタイムラインに接続したりする際に使う以下の様なコードがあるとホームタイムラインとグローバルタイムラインの 2 つを受信したことになり on_message が 2 回動作します。
    これは接続するチャンネルを増やすごとに増えていく形になります
 
 ```python
@@ -71,6 +71,11 @@ await Router(ws).connect_channel(['home', 'global'])
     - 一部や仕組みを参考にさせてもらっています。実際にコードも利用しています
 
 最後にこのプロジェクトを作るきっかけになり、一部のコードを使用させていただいている Discord.py が Archived になりました。 作者である Danny さんや全てのコラボレーターに最大限の感謝申し上げます。
+
+## Mi.pyを使って作成されたプロジェクト
+
+- [Misskey Ebooks Bot](https://github.com/fotoente/MIsskey-ebooks-bot)
+- [Misskey Bot CeilingFox](https://github.com/fotoente/MIsskey-ebooks-bot)
 
 # LICENSE
 
