@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from datetime import datetime
 from typing import Any, Dict, List, Optional, TYPE_CHECKING, Union
 
 from mi.drive import File
@@ -23,7 +24,8 @@ __all__ = ('Note', 'Poll', 'Reaction', 'Follow', 'Header', 'File', 'Renote', 'No
 class Follow:
     def __init__(self, data, state: ConnectionState):
         self.id: Optional[str] = data.get('id')
-        self.created_at: Optional[str] = data.get('created_at')
+        self.created_at: Optional[datetime] = datetime.strptime(data["created_at"], '%Y-%m-%dT%H:%M:%S.%fZ') if data.get("created_at") \
+            else None
         self.type: Optional[str] = data.get('type')
         self.user: Optional[User] = data.get('user')
         self._state = state
@@ -101,7 +103,7 @@ class Renote(AbstractNote):
         return self.__raw_data.id
 
     @property
-    def created_at(self):
+    def created_at(self) -> datetime:
         return self.__raw_data.created_at
 
     @property
@@ -190,7 +192,7 @@ class NoteReaction:
         return self.__raw_data.id
 
     @property
-    def created_at(self) -> str:
+    def created_at(self) -> datetime:
         return self.__raw_data.created_at
 
     @property
@@ -212,7 +214,7 @@ class Reaction:
         return self.__raw_data.id
 
     @property
-    def created_at(self) -> Optional[str]:
+    def created_at(self) -> Optional[datetime]:
         return self.__raw_data.created_at
 
     @property
@@ -250,7 +252,7 @@ class Note(AbstractNote):
         return self.__raw_data.id
 
     @property
-    def created_at(self) -> str:
+    def created_at(self) -> datetime:
         return self.__raw_data.created_at
 
     @property

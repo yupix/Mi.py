@@ -69,6 +69,7 @@ class FieldContentPayload(TypedDict):
 
 
 class OptionalUser(TypedDict, total=False):
+    user_id: str
     name: str
     host: str
     is_admin: bool

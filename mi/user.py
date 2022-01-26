@@ -1,11 +1,13 @@
 from __future__ import annotations
 
+from datetime import datetime
 from typing import Any, AsyncIterator, Dict, List, Optional, TYPE_CHECKING, Union
 
 from mi.emoji import Emoji
 from mi.instance import Instance
 from mi.models.user import RawUser
-from mi.types.user import (ChannelPayload as ChannelPayload, FieldContentPayload as FieldContentPayload, PinnedNotePayload as PinnedNotePayload,
+from mi.types.user import (ChannelPayload as ChannelPayload, FieldContentPayload as FieldContentPayload,
+                           PinnedNotePayload as PinnedNotePayload,
                            PinnedPagePayload as PinnedPagePayload)
 
 if TYPE_CHECKING:
@@ -18,7 +20,7 @@ __all__ = ['User', 'FollowRequest', 'Followee']
 class Followee:
     def __init__(self, data, state: ConnectionState):
         self.id: str = data['id']
-        self.created_at: str = data['created_at']
+        self.created_at: datetime = datetime.strptime(data["created_at"], '%Y-%m-%dT%H:%M:%S.%fZ')
         self.followee_id: str = data['followee_id']
         self.follower_id: str = data['follower_id']
         self.user: User = User(RawUser(data['follower']), state=state)
@@ -52,7 +54,8 @@ class FollowRequest:
 class Channel:
     def __init__(self, data: ChannelPayload):
         self.id: Optional[str] = data.get("id")
-        self.created_at: Optional[str] = data.get("created_at")
+        self.created_at: Optional[datetime] = datetime.strptime(data["created_at"], '%Y-%m-%dT%H:%M:%S.%fZ') if data.get(
+            "created_at") else None
         self.last_noted_at: Optional[str] = data.get("last_noted_at")
         self.name: Optional[str] = data.get("name")
         self.description: Optional[str] = data.get("description")
@@ -66,7 +69,8 @@ class Channel:
 class PinnedNote:
     def __init__(self, data: PinnedNotePayload, state: ConnectionState):
         self.id: Optional[str] = data.get("id")
-        self.created_at: Optional[str] = data.get("created_at")
+        self.created_at: Optional[datetime] = datetime.strptime(data["created_at"], '%Y-%m-%dT%H:%M:%S.%fZ') if data.get(
+            "created_at") else None
         self.text: Optional[str] = data.get("text")
         self.cw: Optional[str] = data.get("cw")
         self.user_id: Optional[str] = data.get("user_id")
@@ -98,7 +102,8 @@ class PinnedNote:
 class PinnedPage:
     def __init__(self, data: PinnedPagePayload, state: ConnectionState):
         self.id: Optional[str] = data.get("id")
-        self.created_at: Optional[str] = data.get("created_at")
+        self.created_at: Optional[datetime] = datetime.strptime(data["created_at"], '%Y-%m-%dT%H:%M:%S.%fZ') if data.get(
+            "created_at") else None
         self.updated_at: Optional[str] = data.get("updated_at")
         self.title: Optional[str] = data.get("title")
         self.name: Optional[str] = data.get("name")
@@ -179,7 +184,7 @@ class User:
         return self.__raw_user.uri
 
     @property
-    def created_at(self):
+    def created_at(self) -> datetime:
         return self.__raw_user.created_at
 
     @property

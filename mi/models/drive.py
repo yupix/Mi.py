@@ -1,3 +1,4 @@
+from datetime import datetime
 from typing import Any, Dict, Optional
 
 from mi.types.drive import (FilePayload as FilePayload, FolderPayload as FolderPayload, PropertiesPayload as PropertiesPayload)
@@ -13,7 +14,7 @@ class RawProperties:
 class RawFolder:
     def __init__(self, data: FolderPayload):
         self.id: str = data['id']
-        self.created_at: str = data['created_at']
+        self.created_at: datetime = datetime.strptime(data["created_at"], '%Y-%m-%dT%H:%M:%S.%fZ')
         self.name: str = data['name']
         self.folders_count: Optional[int] = data.get('folders_count', 0)
         self.parent_id: str = data['parent_id']
@@ -23,7 +24,7 @@ class RawFolder:
 class RawFile:
     def __init__(self, data: FilePayload):
         self.id: str = data['id']
-        self.created_at: str = data['created_at']
+        self.created_at: datetime = datetime.strptime(data["created_at"], '%Y-%m-%dT%H:%M:%S.%fZ')
         self.name: str = data['name']
         self.type: str = data['type']
         self.md5: str = data['md5']

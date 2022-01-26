@@ -1,3 +1,4 @@
+from datetime import datetime
 from typing import Any, Dict, List, Optional
 
 from mi.models.drive import RawFile
@@ -13,7 +14,7 @@ class RawRenote:
     Attributes
     ----------
     id : str
-    created_at :str
+    created_at : datetime
     user_id :str
     user : RawUser
     content: Optional[str], default=None
@@ -36,7 +37,7 @@ class RawRenote:
 
     def __init__(self, data: RenotePayload):
         self.id: str = data["id"]
-        self.created_at: str = data["created_at"]
+        self.created_at: datetime = datetime.strptime(data["created_at"], '%Y-%m-%dT%H:%M:%S.%fZ')
         self.user_id: str = data["user_id"]
         self.user: RawUser = RawUser(data['user'])
         self.content: Optional[str] = data.get("text", None)
@@ -61,7 +62,7 @@ class RawReaction:
     Attributes
     ----------
     id : Optional[str], default=None
-    created_at : Optional[str], default=None
+    created_at : Optional[datetime], default=None
     type : Optional[str], default=None
     is_read : bool
     user : Optional[RawUser], default=None
@@ -73,7 +74,8 @@ class RawReaction:
 
     def __init__(self, data: ReactionPayload):
         self.id: Optional[str] = data.get('id')
-        self.created_at: Optional[str] = data.get('created_at')
+        self.created_at: Optional[str] = datetime.strptime(data["created_at"], '%Y-%m-%dT%H:%M:%S.%fZ') if data.get(
+            'created_at') else None
         self.type: Optional[str] = data.get('type')
         self.is_read: bool = bool(data.get('is_read'))
         self.user: Optional[RawUser] = RawUser(data['user']) if data.get('user') else None
@@ -86,7 +88,7 @@ class RawNote:
     Attributes
     ----------
     id :  str
-    created_at :  str
+    created_at :  datetime
     user_id :  str
     author :  RawUser
     content : Optional[str]
@@ -123,7 +125,7 @@ class RawNote:
 
     def __init__(self, data: NotePayload):
         self.id: str = data["id"]
-        self.created_at: str = data["created_at"]
+        self.created_at: datetime = datetime.strptime(data["created_at"], '%Y-%m-%dT%H:%M:%S.%fZ')
         self.user_id: str = data["user_id"]
         self.author: RawUser = RawUser(data['user'])
         self.content: Optional[str] = data.get("text")

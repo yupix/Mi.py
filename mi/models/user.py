@@ -1,3 +1,4 @@
+from datetime import datetime
 from typing import List, Optional
 
 from mi.models.instance import RawInstance
@@ -37,7 +38,8 @@ class RawUserDetails:
 
 class RawUser:
     def __init__(self, data: UserPayload):
-        self.id: str = data["id"]
+        print(data)
+        self.id: str = data['user_id'] if data.get('user_id') else data['id']
         self.name: str = data["username"]
         self.nickname: Optional[str] = data.get("name")
         self.host: Optional[str] = data.get("host")
@@ -51,7 +53,8 @@ class RawUser:
         self.online_status = data.get("online_status", None)
         self.url: Optional[str] = data.get("url")
         self.uri: Optional[str] = data.get("uri")
-        self.created_at = data.get("created_at")
+        self.created_at: Optional[datetime] = datetime.strptime(data["created_at"], '%Y-%m-%dT%H:%M:%S.%fZ') if data.get("created_at") \
+            else None
         self.updated_at = data.get("updated_at")
         self.is_locked = data.get("is_locked", False)
         self.is_silenced = data.get("is_silenced", False)

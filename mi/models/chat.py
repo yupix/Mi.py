@@ -1,3 +1,4 @@
+from datetime import datetime
 from typing import List
 
 from mi.types.chat import ChatPayload
@@ -40,7 +41,7 @@ class RawChat:
         data: ChatPayload
         """
         self.id: str = data["id"]
-        self.created_at: str = data["created_at"]
+        self.created_at: datetime = datetime.strptime(data["created_at"], '%Y-%m-%dT%H:%M:%S.%fZ')
         self.content: str = data["text"]
         self.user_id: str = data["user_id"]
         self.author: RawUser = RawUser(data["user"])
