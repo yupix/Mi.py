@@ -90,5 +90,4 @@ class DriveManager:
             'folderId': folder_id
         }
         data = await self.__http.request(Route('POST', '/api/drive/folders'), json=data, lower=True, auth=True)
-        print(data)
         return [Folder(RawFolder(i), state=self.__state) for i in data]

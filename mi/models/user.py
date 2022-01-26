@@ -38,7 +38,6 @@ class RawUserDetails:
 
 class RawUser:
     def __init__(self, data: UserPayload):
-        print(data)
         self.id: str = data['user_id'] if data.get('user_id') else data['id']
         self.name: str = data["username"]
         self.nickname: Optional[str] = data.get("name")

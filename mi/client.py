@@ -161,7 +161,6 @@ class Client:
 
     async def progress_command(self, message):
         for cmd in self.all_commands:
-            print(cmd)
             if cmd.cmd_type == 'regex':
                 if re.search(cmd.key, message.content):
                     hit_list = re.findall(cmd.key, message.content)
