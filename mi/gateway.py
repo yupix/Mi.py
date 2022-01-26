@@ -38,7 +38,7 @@ class MisskeyWebSocket:
         return ws
 
     async def received_message(self, msg, /):
-        if type(msg) is bytes:
+        if isinstance(msg, bytes):
             msg = msg.decode()
 
         self._misskey_parsers[str_lower(msg['type']).upper()](msg)

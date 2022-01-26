@@ -203,7 +203,7 @@ def upper_to_lower(
         if replace_list.get(attr):
             default_key = default_key.replace(attr, replace_list.get(attr))
         field[default_key] = data[attr]
-        if type(field[default_key]) is dict and nest:
+        if isinstance(field[default_key], dict) and nest:
             field[default_key] = upper_to_lower(field[default_key])
     return field
 

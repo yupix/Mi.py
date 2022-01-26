@@ -78,7 +78,7 @@ class HTTPClient:
         async with self.__session.request(route.method, route.url, **kwargs) as res:
             data = await json_or_text(res)
             if is_lower:
-                if type(data) is list:
+                if isinstance(data, list):
                     data = [upper_to_lower(i) for i in data]
                 else:
                     data = upper_to_lower(data)
