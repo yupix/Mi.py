@@ -20,7 +20,7 @@ from mi.exception import (
     InvalidCogPath,
     NoEntryPointError,
 )
-from mi.ext.commands import CommandManager
+from mi.ext.commands.core import CommandManager
 from mi.user import User
 from mi.utils import get_module_logger
 

@@ -14,11 +14,11 @@ from aiohttp import ClientWebSocketResponse
 from mi import config
 from mi.chat import Chat
 from mi.http import HTTPClient
-from mi.models.user import RawUser
 from mi.instance import Instance, InstanceMeta
-from mi.user import User
+from mi.models.user import RawUser
 from mi.note import Note
 from mi.state import ClientActions, ConnectionState
+from mi.user import User
 from mi.utils import get_module_logger
 from .gateway import MisskeyWebSocket
 

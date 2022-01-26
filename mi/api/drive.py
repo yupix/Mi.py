@@ -64,8 +64,8 @@ class FolderManager:
         data = {'folderId': folder_id}
         return bool(await self.__http.request(Route('POST', '/api/drive/folders/delete'), json=data, lower=True, auth=True))
 
-    async def get_files(self, limit: int = 10, since_id: Optional[str] = None, until_id: Optional[str] = None, folder_id: Optional[str] = None, file_type: Optional[str] = None) -> List[File]:
-
+    async def get_files(self, limit: int = 10, since_id: Optional[str] = None, until_id: Optional[str] = None,
+                        folder_id: Optional[str] = None, file_type: Optional[str] = None) -> List[File]:
         if limit >= 100:
             raise InvalidParameters('limit must be less than 100')
 

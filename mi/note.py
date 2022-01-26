@@ -2,7 +2,6 @@ from __future__ import annotations
 
 from typing import Any, Dict, List, Optional, TYPE_CHECKING, Union
 
-from mi.utils import emoji_count
 from mi.drive import File
 from mi.emoji import Emoji
 from mi.exception import NotExistRequiredData
@@ -10,6 +9,7 @@ from mi.models.note import RawNote, RawReaction, RawRenote
 from mi.models.poll import RawPoll
 from mi.models.user import RawUser
 from mi.user import User
+from mi.utils import emoji_count
 from .abc.note import AbstractNote
 from .models.reaction import RawNoteReaction
 
