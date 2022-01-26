@@ -14,7 +14,7 @@ if TYPE_CHECKING:
 
 
 class FileManager:
-    def __init__(self, __state: 'ConnectionState', http: HTTPClient, loop: asyncio.AbstractEventLoop,
+    def __init__(self, __state: ConnectionState, http: HTTPClient, loop: asyncio.AbstractEventLoop,
                  file_id: Optional[str] = None):
         self.__state = __state
         self.__http = http
@@ -46,7 +46,7 @@ class FileManager:
 
 
 class FolderManager:
-    def __init__(self, __state: 'ConnectionState', http: HTTPClient, loop: asyncio.AbstractEventLoop,
+    def __init__(self, __state: ConnectionState, http: HTTPClient, loop: asyncio.AbstractEventLoop,
                  folder_id: Optional[str] = None):
         self.__state = __state
         self.__http = http
@@ -76,7 +76,7 @@ class FolderManager:
 
 
 class DriveManager:
-    def __init__(self, __state: 'ConnectionState', http: HTTPClient, loop: asyncio.AbstractEventLoop):
+    def __init__(self, __state: ConnectionState, http: HTTPClient, loop: asyncio.AbstractEventLoop):
         self.__state = __state
         self.__http = http
         self.__loop = loop

@@ -14,7 +14,7 @@ __all__ = ['FolderActions', 'DriveActions']
 
 class FolderActions:
     def __init__(
-            self, client: 'ConnectionState',
+            self, client: ConnectionState,
             http: HTTPClient,
             loop: asyncio.AbstractEventLoop,
             *,
@@ -28,7 +28,7 @@ class FolderActions:
 
 class DriveActions:
     def __init__(
-            self, state: 'ConnectionState',
+            self, state: ConnectionState,
             http: HTTPClient,
             loop: asyncio.AbstractEventLoop,
     ):

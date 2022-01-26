@@ -12,7 +12,7 @@ if TYPE_CHECKING:
 
 
 class ChatManager:
-    def __init__(self, __state: 'ConnectionState', http: HTTPClient, loop: asyncio.AbstractEventLoop,
+    def __init__(self, __state: ConnectionState, http: HTTPClient, loop: asyncio.AbstractEventLoop,
                  user_id: Optional[str] = None):
         self.__client = __state
         self.__http = http

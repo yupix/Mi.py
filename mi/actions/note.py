@@ -18,7 +18,7 @@ __all__ = ['NoteActions']
 
 
 class NoteActions:
-    def __init__(self, state: 'ConnectionState', http: HTTPClient, loop: asyncio.AbstractEventLoop,
+    def __init__(self, state: ConnectionState, http: HTTPClient, loop: asyncio.AbstractEventLoop,
                  note_id: Optional[str] = None):
         self.__state = state
         self.__http = http

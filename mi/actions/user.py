@@ -17,7 +17,7 @@ __all__ = ['UserActions']
 
 class UserActions:
     def __init__(
-            self, state: 'ConnectionState',
+            self, state: ConnectionState,
             http: HTTPClient,
             loop: asyncio.AbstractEventLoop,
             *,

@@ -15,7 +15,7 @@ __all__ = ['FollowManager', 'FollowRequestManager']
 class FollowManager:
     def __init__(self, client: ConnectionState, http: HTTPClient, loop: asyncio.AbstractEventLoop, *,
                  user_id: Optional[str] = None):
-        self.client: 'ConnectionState' = client
+        self.client: ConnectionState = client
         self.http: 'HTTPClient' = http
         self.loop: asyncio.AbstractEventLoop = loop
         self._user_id: Optional[str] = user_id
@@ -63,7 +63,7 @@ class FollowManager:
 class FollowRequestManager:
     def __init__(self, client: ConnectionState, http: HTTPClient, loop: asyncio.AbstractEventLoop, *,
                  user_id: Optional[str] = None):
-        self.client: 'ConnectionState' = client
+        self.client: ConnectionState = client
         self.http: 'HTTPClient' = http
         self.loop: asyncio.AbstractEventLoop = loop
         self._user_id: Optional[str] = user_id

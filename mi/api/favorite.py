@@ -10,9 +10,9 @@ if TYPE_CHECKING:
 
 
 class FavoriteManager:
-    def __init__(self, client: 'ConnectionState', http: HTTPClient, loop: asyncio.AbstractEventLoop,
+    def __init__(self, client: ConnectionState, http: HTTPClient, loop: asyncio.AbstractEventLoop,
                  note_id: Optional[str] = None):
-        self.client: 'ConnectionState' = client
+        self.client: ConnectionState = client
         self.http: HTTPClient = http
         self.loop: asyncio.AbstractEventLoop = loop
         self.__note_id = note_id
