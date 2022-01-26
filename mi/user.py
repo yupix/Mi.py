@@ -9,7 +9,7 @@ from mi.types.user import (Channel as ChannelPayload, FieldContent as FieldConte
                            PinnedPage as PinnedPagePayload)
 
 if TYPE_CHECKING:
-    from mi import ConnectionState
+    from mi.state import ConnectionState
     from mi.api.follow import FollowRequestManager
 
 __all__ = ['User', 'FollowRequest', 'Followee']

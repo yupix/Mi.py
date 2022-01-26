@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING
 from mi.models.emoji import RawEmoji
 
 if TYPE_CHECKING:
-    from mi import ConnectionState
+    from mi.state import ConnectionState
 
 __all__ = ('Emoji',)
 

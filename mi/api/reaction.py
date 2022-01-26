@@ -3,7 +3,7 @@ from __future__ import annotations
 import asyncio
 from typing import List, Optional, TYPE_CHECKING
 
-from mi import Emoji
+from mi.emoji import Emoji
 from mi.http import HTTPClient, Route
 from mi.models.emoji import RawEmoji
 from mi.models.reaction import RawNoteReaction

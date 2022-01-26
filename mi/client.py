@@ -11,10 +11,12 @@ from typing import Any, AsyncIterator, Callable, Coroutine, Dict, List, Optional
 import aiohttp
 from aiohttp import ClientWebSocketResponse
 
-from mi import Instance, InstanceMeta, User, config
+from mi import config
 from mi.chat import Chat
 from mi.http import HTTPClient
 from mi.models.user import RawUser
+from mi.instance import Instance, InstanceMeta
+from mi.user import User
 from mi.note import Note
 from mi.state import ClientActions, ConnectionState
 from mi.utils import get_module_logger

@@ -10,8 +10,8 @@ import traceback
 from types import ModuleType
 from typing import Any, Callable, Coroutine, Dict, List, Optional, TYPE_CHECKING, Tuple, Union
 
-from mi import Client, User
 from mi.abc.ext.bot import AbstractBotBase
+from mi.client import Client
 from mi.exception import (
     CogNameDuplicate,
     ExtensionAlreadyLoaded,
@@ -21,6 +21,7 @@ from mi.exception import (
     NoEntryPointError,
 )
 from mi.ext.commands import CommandManager
+from mi.user import User
 from mi.utils import get_module_logger
 
 if TYPE_CHECKING:

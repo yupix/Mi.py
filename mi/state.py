@@ -7,7 +7,6 @@ from typing import Any, AsyncIterator, Callable, Dict, Generator, List, Optional
 from aiocache import cached
 from aiocache.factory import Cache
 
-from mi import Instance, InstanceMeta, User
 from mi.actions import DriveActions, NoteActions, UserActions
 from mi.api.emoji import EmojiManager
 from mi.api.reaction import ReactionManager
@@ -16,18 +15,20 @@ from mi.drive import File
 from mi.emoji import Emoji
 from mi.exception import InvalidParameters, NotExistRequiredParameters
 from mi.http import Route
+from mi.instance import Instance, InstanceMeta
 from mi.iterators import InstanceIterator
 from mi.models.chat import RawChat
 from mi.models.drive import RawFile
 from mi.models.note import RawNote
 from mi.models.user import RawUser
 from mi.note import Note, Reaction
-from mi.user import FollowRequest, Followee
+from mi.user import FollowRequest, Followee, User
 from mi.utils import check_multi_arg, get_cache_key, get_module_logger, key_builder, remove_dict_empty, str_lower, \
     upper_to_lower
 
 if TYPE_CHECKING:
-    from mi import HTTPClient, Client
+    from mi.http import HTTPClient
+    from mi.client import Client
     from mi.types import NotePayload, ChatPayload
 
 

@@ -4,8 +4,8 @@ from typing import Generator, Optional, TYPE_CHECKING
 
 from mi.http import Route
 from mi.models.user import RawUser
-from . import User
-from .utils import remove_dict_empty
+from mi.user import User
+from mi.utils import remove_dict_empty
 
 if TYPE_CHECKING:
     from . import ConnectionState

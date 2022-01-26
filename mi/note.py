@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import Any, Dict, List, Optional, TYPE_CHECKING, Union
 
-from mi import utils
+from mi.utils import emoji_count
 from mi.drive import File
 from mi.emoji import Emoji
 from mi.exception import NotExistRequiredData
@@ -14,8 +14,7 @@ from .abc.note import AbstractNote
 from .models.reaction import RawNoteReaction
 
 if TYPE_CHECKING:
-    from mi import ConnectionState
-    from mi.state import NoteActions
+    from mi.state import NoteActions, ConnectionState
     from mi.api.reaction import ReactionManager
 
 __all__ = ('Note', 'Poll', 'Reaction', 'Follow', 'Header', 'File', 'Renote', 'NoteReaction')
@@ -175,7 +174,7 @@ class Renote(AbstractNote):
             含まれている絵文字の数
         """
 
-        return utils.emoji_count(self.__raw_data.content)
+        return emoji_count(self.__raw_data.content)
 
     async def delete(self) -> bool:
         return await self.__state.delete_note(self.__raw_data.id)
@@ -425,4 +424,4 @@ class Note(AbstractNote):
             含まれている絵文字の数
         """
 
-        return utils.emoji_count(self.content)
+        return emoji_count(self.content)
