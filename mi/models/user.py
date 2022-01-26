@@ -1,7 +1,7 @@
 from typing import List, Optional
 
 from mi.models.instance import RawInstance
-from mi.types.user import User as UserPayload
+from mi.types.user import UserPayload as UserPayload
 
 __all__ = ('RawUserDetails', 'RawUser')
 

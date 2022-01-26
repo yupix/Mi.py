@@ -5,8 +5,8 @@ from typing import Any, AsyncIterator, Dict, List, Optional, TYPE_CHECKING, Unio
 from mi.emoji import Emoji
 from mi.instance import Instance
 from mi.models.user import RawUser
-from mi.types.user import (Channel as ChannelPayload, FieldContent as FieldContentPayload, PinnedNote as PinnedNotePayload,
-                           PinnedPage as PinnedPagePayload)
+from mi.types.user import (ChannelPayload as ChannelPayload, FieldContentPayload as FieldContentPayload, PinnedNotePayload as PinnedNotePayload,
+                           PinnedPagePayload as PinnedPagePayload)
 
 if TYPE_CHECKING:
     from mi.state import ConnectionState

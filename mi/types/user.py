@@ -5,7 +5,7 @@ from .emoji import EmojiPayload
 from .instance import InstancePayload
 
 
-class Channel(TypedDict):
+class ChannelPayload(TypedDict):
     id: Optional[str]
     created_at: Optional[str]
     last_noted_at: Optional[str]
@@ -18,13 +18,13 @@ class Channel(TypedDict):
     user_id: Optional[str]
 
 
-class PinnedNote(TypedDict):
+class PinnedNotePayload(TypedDict):
     id: Optional[str]
     created_at: Optional[str]
     text: Optional[str]
     cw: Optional[str]
     user_id: Optional[str]
-    user: Optional['User']
+    user: Optional['UserPayload']
     reply_id: Optional[str]
     renote_id: Optional[str]
     reply: Optional[Dict[str, Any]]
@@ -39,7 +39,7 @@ class PinnedNote(TypedDict):
     tags: Optional[List[str]]
     poll: Optional[Dict[str, Any]]
     channel_id: Optional[str]
-    channel: Optional[Channel]
+    channel: Optional[ChannelPayload]
     local_only: Optional[bool]
     emojis: Optional[List[EmojiPayload]]
     reactions: Optional[Dict[str, Any]]
@@ -50,7 +50,7 @@ class PinnedNote(TypedDict):
     my_reaction: Optional[Dict[str, Any]]
 
 
-class PinnedPage(TypedDict):
+class PinnedPagePayload(TypedDict):
     id: Optional[str]
     created_at: Optional[str]
     updated_at: Optional[str]
@@ -63,7 +63,7 @@ class PinnedPage(TypedDict):
     author: Optional[Dict[str, Any]]
 
 
-class FieldContent(TypedDict):
+class FieldContentPayload(TypedDict):
     name: str
     value: str
 
@@ -79,7 +79,7 @@ class OptionalUser(TypedDict, total=False):
     online_status: str
 
 
-class User(OptionalUser):
+class UserPayload(OptionalUser):
     id: str
     username: str
     avatar_url: Optional[str]

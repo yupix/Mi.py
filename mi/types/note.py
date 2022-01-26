@@ -2,7 +2,7 @@ from typing import Any, Dict, List, Optional, TypedDict
 
 from .drive import FilePayload
 from .emoji import EmojiPayload
-from .user import User
+from .user import UserPayload
 
 
 class GeoPayload(TypedDict):
@@ -32,7 +32,7 @@ class RenotePayload(TypedDict):
     id: str
     created_at: str
     user_id: str
-    user: User
+    user: UserPayload
     text: str
     cw: str
     visibility: str
@@ -67,7 +67,7 @@ class NotePayload(_NoteOptional):
     id: str
     created_at: str
     user_id: str
-    user: User
+    user: UserPayload
     visibility: Optional[str]
     renote_count: Optional[int]
     replies_count: Optional[int]
@@ -96,7 +96,7 @@ class OptionalReaction(TypedDict, total=False):
     created_at: str
     type: str
     is_read: bool
-    user: User
+    user: UserPayload
     note: NotePayload
     id: str
 
