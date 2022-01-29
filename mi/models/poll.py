@@ -13,9 +13,11 @@ class RawPollChoices:
         アンケートの項目名
     votes : int
         投票数
-    is_votes : bool
+    is_voted : bool
         投票済みか否か
     """
+
+    __slots__ = ('text', 'votes', 'is_voted')
 
     def __init__(self, data):
         self.text: str = data["text"]
@@ -36,6 +38,8 @@ class RawPoll:
     expired_after : Optional[int]
         残り期限
     """
+
+    __slots__ = ('multiple', 'expires_at', 'choices', 'expired_after')
 
     def __init__(self, data: PollPayload):
         self.multiple: Optional[bool] = data.get("multiple")

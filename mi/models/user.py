@@ -21,6 +21,12 @@ class RawUserDetails:
         ユーザーの言語
     """
 
+    __slots__ = (
+        'avatar_blurhash', 'avatar_color', 'banner_url', 'banner_blurhash', 'banner_color', 'two_factor_enabled',
+        'use_password_less_login', 'security_keys', 'has_pending_follow_request_from_you',
+        'has_pending_follow_request_to_you', 'public_reactions', 'lang'
+    )
+
     def __init__(self, data):
         self.avatar_blurhash: Optional[str] = data.get("avatar_blurhash")
         self.avatar_color: Optional[str] = data.get("avatar_color")
@@ -37,6 +43,47 @@ class RawUserDetails:
 
 
 class RawUser:
+    """
+    id : str
+        ユーザーのID
+    name : str
+        ユーザーの名前
+    nickname : Optional[str]
+        ユーザーの表示名
+    host : Optional[str]
+        # TODO: いい感じに
+    avatar_url : Optional[str]
+        ユーザーのアバターurl
+    is_admin : bool
+        管理者か否か
+    is_bot : bool
+        ボットか否か
+    is_cat : bool
+        ねこか否か
+    is_lady : bool
+        お嬢様か否か (Ayuskeyのみ)
+    emojis : Optional[List[str]]
+    url : Optional[str]
+    uri : Optional[str]
+    created_at : Optional[datetime]
+    ff_visibility : str
+    is_following : bool
+    is_follow : bool
+    is_blocking : bool
+    is_blocked : bool
+    is_muted : bool
+    details : RawUserDetails
+    instance : Optional[RawInstance]
+    """
+
+    __slots__ = (
+        'id', 'name', 'nickname', 'host', 'avatar_url', 'is_admin', 'is_moderator', 'is_bot', 'is_cat', 'is_lady', 'emojis',
+        'online_status', 'url', 'uri', 'created_at', 'updated_at', 'is_locked', 'is_silenced', 'is_suspended', 'description',
+        'location', 'birthday', 'fields', 'followers_count', 'following_count', 'notes_count', 'pinned_note_ids',
+        'pinned_notes', 'pinned_page_id', 'pinned_page', 'ff_visibility', 'is_following', 'is_follow', 'is_blocking',
+        'is_blocked', 'is_muted', 'details', 'instance'
+    )
+
     def __init__(self, data: UserPayload):
         self.id: str = data['user_id'] if data.get('user_id') else data['id']
         self.name: str = data["username"]
@@ -52,7 +99,8 @@ class RawUser:
         self.online_status = data.get("online_status", None)
         self.url: Optional[str] = data.get("url")
         self.uri: Optional[str] = data.get("uri")
-        self.created_at: Optional[datetime] = datetime.strptime(data["created_at"], '%Y-%m-%dT%H:%M:%S.%fZ') if data.get("created_at") \
+        self.created_at: Optional[datetime] = datetime.strptime(data["created_at"], '%Y-%m-%dT%H:%M:%S.%fZ') if data.get(
+            "created_at") \
             else None
         self.updated_at = data.get("updated_at")
         self.is_locked = data.get("is_locked", False)

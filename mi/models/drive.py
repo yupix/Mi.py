@@ -16,6 +16,8 @@ class RawProperties:
         ファイルの平均色
     """
 
+    __slots__ = ('width', 'height', 'avg_color')
+
     def __init__(self, data: PropertiesPayload):
         self.width: Optional[int] = data.get('width')
         self.height: int = data['height']
@@ -39,6 +41,8 @@ class RawFolder:
     parent : Optional[Dict[str, Any]]
         親フォルダー
     """
+
+    __slots__ = ('id', 'created_at', 'name', 'folders_count', 'parent_id', 'parent')
 
     def __init__(self, data: FolderPayload):
         self.id: str = data['id']
@@ -87,6 +91,11 @@ class RawFile:
     user : Dict[str, Any]
         ファイル作成者の情報
     """
+
+    __slots__ = (
+        'id', 'created_at', 'name', 'type', 'md5', 'size', 'is_sensitive', 'blurhash', 'properties', 'url', 'thumbnail_url',
+        'comment', 'folder_id', 'folder', 'user_id', 'user'
+    )
 
     def __init__(self, data: FilePayload):
         self.id: str = data['id']

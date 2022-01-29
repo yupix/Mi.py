@@ -18,7 +18,9 @@ class RawNoteReaction:
         リアクションを付けたユーザー
     reaction : str
     """
-    
+
+    __slots__ = ('id', 'created_at', 'user', 'reaction')
+
     def __init__(self, data: NoteReactionPayload):
         self.id: str = data['id']
         self.created_at: datetime = datetime.strptime(data["created_at"], '%Y-%m-%dT%H:%M:%S.%fZ')

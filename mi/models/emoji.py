@@ -21,6 +21,8 @@ class RawEmoji:
         絵文字のURL
     """
 
+    __slots__ = ('id', 'aliases', 'name', 'category', 'host', 'url')
+
     def __init__(self, data: EmojiPayload):
         self.id: Optional[str] = data.get('id')
         self.aliases: Optional[List[str]] = data.get('aliases')
