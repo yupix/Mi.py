@@ -1,17 +1,45 @@
 from datetime import datetime
 from typing import Any, Dict, Optional
 
-from mi.types.drive import (FilePayload as FilePayload, FolderPayload as FolderPayload, PropertiesPayload as PropertiesPayload)
+from mi.types.drive import FilePayload, FolderPayload, PropertiesPayload
 
 
 class RawProperties:
+    """
+    Attributes
+    ----------
+    width : int
+        ファイルの幅
+    height : int
+        ファイルの高さ
+    avg_color : Optional[str]
+        ファイルの平均色
+    """
+
     def __init__(self, data: PropertiesPayload):
-        self.width: int = data.get('width')
+        self.width: Optional[int] = data.get('width')
         self.height: int = data['height']
         self.avg_color: Optional[str] = data.get('avg_color')
 
 
 class RawFolder:
+    """
+    Attributes
+    ----------
+    id : str
+        フォルダーのID
+    created_at : datetime
+        フォルダーの作成された日時
+    name : str
+        フォルダーの名前
+    folders_count : Optional[int]
+        # TODO: 調査
+    parent_id : str
+        親フォルダーのID
+    parent : Optional[Dict[str, Any]]
+        親フォルダー
+    """
+
     def __init__(self, data: FolderPayload):
         self.id: str = data['id']
         self.created_at: datetime = datetime.strptime(data["created_at"], '%Y-%m-%dT%H:%M:%S.%fZ')
@@ -22,6 +50,44 @@ class RawFolder:
 
 
 class RawFile:
+    """
+    Attributes
+    ----------
+    id : str
+        ファイルのID
+    created_at : datetime
+        ファイルのの作成された日時
+    name : str
+        ファイルの名前
+    type : str
+        ファイルの拡張子
+    md5 : str
+        ファイルのmd5
+    size : int
+        ファイルのサイズ
+    is_sensitive : bool
+        このファイルはセンシティブか否か
+    blurhash : str
+        このファイルのblurhash
+    properties : Optional[RawProperties]
+        ファイルの情報
+    url : str
+        ファイルのurl
+    thumbnail_url : str
+        ファイルのサムネイルurl
+    comment : str
+        ファイルのコメント
+    folder_id : str
+        親フォルダのID
+    folder : Optional[RawFolder]
+        親フォルダの情報？
+        # TODO: 調査
+    user_id : str
+        ファイル作成者のID
+    user : Dict[str, Any]
+        ファイル作成者の情報
+    """
+
     def __init__(self, data: FilePayload):
         self.id: str = data['id']
         self.created_at: datetime = datetime.strptime(data["created_at"], '%Y-%m-%dT%H:%M:%S.%fZ')

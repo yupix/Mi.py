@@ -6,6 +6,17 @@ __all__ = ['RawPollChoices', 'RawPoll']
 
 
 class RawPollChoices:
+    """
+    Attributes
+    ----------
+    text : str
+        アンケートの項目名
+    votes : int
+        投票数
+    is_votes : bool
+        投票済みか否か
+    """
+
     def __init__(self, data):
         self.text: str = data["text"]
         self.votes: int = data["votes"]
@@ -13,6 +24,19 @@ class RawPollChoices:
 
 
 class RawPoll:
+    """
+    Attributes
+    ----------
+    multiple : Optional[bool]
+        複数回投票可能か否か
+    expires_at : Optional[int]
+        投票期限
+    choices : Optional[List[RawPollChoices]]
+        項目
+    expired_after : Optional[int]
+        残り期限
+    """
+
     def __init__(self, data: PollPayload):
         self.multiple: Optional[bool] = data.get("multiple")
         self.expires_at: Optional[int] = data.get("expires_at")
