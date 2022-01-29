@@ -25,4 +25,5 @@ from .iterators import *
 from .models import *
 from .note import *
 from .router import *
+from .types import *
 from .user import *
