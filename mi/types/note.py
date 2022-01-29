@@ -71,7 +71,7 @@ class NotePayload(_NoteOptional):
     visibility: Optional[str]
     renote_count: Optional[int]
     replies_count: Optional[int]
-    reactions: Optional[Dict[str, Any]]
+    reactions: Dict[str, Any]
     emojis: List[EmojiPayload]
     file_ids: Optional[List[str]]
     files: Optional[List[FilePayload]]

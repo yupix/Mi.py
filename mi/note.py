@@ -24,8 +24,8 @@ __all__ = ('Note', 'Poll', 'Reaction', 'Follow', 'Header', 'File', 'Renote', 'No
 class Follow:
     def __init__(self, data, state: ConnectionState):
         self.id: Optional[str] = data.get('id')
-        self.created_at: Optional[datetime] = datetime.strptime(data["created_at"], '%Y-%m-%dT%H:%M:%S.%fZ') if data.get("created_at") \
-            else None
+        self.created_at: Optional[datetime] = datetime.strptime(data["created_at"], '%Y-%m-%dT%H:%M:%S.%fZ') if data.get(
+            "created_at") else None
         self.type: Optional[str] = data.get('type')
         self.user: Optional[User] = data.get('user')
         self._state = state

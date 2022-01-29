@@ -134,7 +134,7 @@ class RawNote:
         self.visibility: Optional[str] = data.get("visibility")  # This may be an optional
         self.renote_count: Optional[int] = data.get("renote_count")  # TODO: Optionalかどうか
         self.replies_count: Optional[int] = data.get("replies_count")  # TODO: Optionalかどうか
-        self.reactions: Optional[Dict[str, Any]] = data["reactions"]  # TODO: Optionalかどうか
+        self.reactions: Dict[str, Any] = data["reactions"]
         self.emojis: List[RawEmoji] = [RawEmoji(i) for i in data["emojis"]]
         self.file_ids: Optional[List[str]] = data["file_ids"]
         self.files: List[RawFile] = [RawFile(upper_to_lower(i)) for i in data["files"]]
