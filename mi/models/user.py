@@ -63,17 +63,29 @@ class RawUser:
     is_lady : bool
         お嬢様か否か (Ayuskeyのみ)
     emojis : Optional[List[str]]
+        # TODO 謎
     url : Optional[str]
+        # TODO 謎
     uri : Optional[str]
+        # TODO 謎
     created_at : Optional[datetime]
+        ユーザーの作成日時
     ff_visibility : str
+        # TODO 謎
     is_following : bool
+        フォローされてるか否か
     is_follow : bool
+        フォローしているか否か
     is_blocking : bool
+        ブロックしているか否か
     is_blocked : bool
+        ブロックされてるか否か
     is_muted : bool
+        ミュートしているか否か
     details : RawUserDetails
+        ユーザーの詳細情報
     instance : Optional[RawInstance]
+        インスタンスの情報
     """
 
     __slots__ = (

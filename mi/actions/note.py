@@ -28,6 +28,22 @@ class NoteActions:
         self.reaction = ReactionManager(state, http, loop, note_id=note_id)
 
     async def add_clips(self, clip_id: str, note_id: Optional[str] = None) -> bool:
+        """
+        クリップに追加します
+
+        Parameters
+        ----------
+        clip_id : str
+            クリップのID
+        note_id Optional[str], default=None
+            追加したいノートのID
+
+        Returns
+        -------
+        bool
+            成功したか否か
+        """
+
         note_id = note_id or self.__note_id
 
         data = {'noteId': note_id, 'clipId': clip_id}
@@ -124,7 +140,21 @@ class NoteActions:
         res = await self.__http.request(Route('POST', '/api/notes/create'), json=field, auth=True, lower=True)
         return Note(RawNote(res["created_note"]), state=self.__state)
 
-    async def delete(self, note_id: Optional[str] = None):
+    async def delete(self, note_id: Optional[str] = None) -> bool:
+        """
+        ノートを削除します
+
+        Parameters
+        ----------
+        note_id : Optional[str], default=None
+            削除したいノートのID
+
+        Returns
+        -------
+        bool
+            削除に成功したか否か
+        """
+
         note_id = note_id or self.__note_id
 
         data = {"noteId": note_id}
@@ -132,6 +162,19 @@ class NoteActions:
         return bool(res)
 
     async def create_renote(self, note_id: Optional[str] = None) -> Note:
+        """
+        リノートを作成します
+
+        Parameters
+        ----------
+        note_id : Optional[str], default=None
+            ノートのID
+
+        Returns
+        -------
+        Note
+            作成したリノート
+        """
         note_id = note_id or self.__note_id
         return await self.send(renote_id=note_id)
 
@@ -186,6 +229,19 @@ class NoteActions:
                                extract_emojis=extract_emojis, renote_id=note_id, file_ids=file_ids, poll=poll)
 
     async def get_note(self, note_id: Optional[str] = None) -> Note:
+        """
+        ノートを取得します
+
+        Parameters
+        ----------
+        note_id : Optional[str], default=None
+            ノートのID
+
+        Returns
+        -------
+        Note
+            取得したノートID
+        """
         note_id = note_id or self.__note_id
         res = await self.__http.request(Route('POST', '/api/notes/show'), json={"noteId": note_id}, auth=True, lower=True)
         return Note(RawNote(res), state=self.__state)
@@ -197,6 +253,23 @@ class NoteActions:
             limit: int = 10,
             note_id: Optional[str] = None
     ) -> List[Note]:
+        """
+        Paramters
+        ---------
+        since_id : Optional[str], default=None
+            指定すると、その投稿を投稿を起点としてより新しい投稿を取得します
+        until_id : Optional[str], default=None
+            指定すると、その投稿を投稿を起点としてより古い投稿を取得します
+        limit : int, default=10
+            取得する上限
+        note_id: Optional[str], default=None
+            返信を取得したいノートのID
+
+        Returns
+        -------
+        List[Note]
+            返信のリスト
+        """
         note_id = note_id or self.__note_id
         res = await self.__http.request(Route('POST', '/api/notes/replies'),
                                         json={"noteId": note_id, "sinceId": since_id, "untilId": until_id, "limit": limit},

@@ -68,6 +68,20 @@ class UserActions:
         return [Note(RawNote(i), state=self.__state) for i in res]
 
     def get_mention(self, user: Optional[User] = None) -> str:
+        """
+        Get mention name of user.
+        
+        Parameters
+        ----------
+        user : Optional[User], default=None
+            メンションを取得したいユーザーのオブジェクト
+        
+        Returns
+        -------
+        str
+            メンション
+        """
+        
         user = user or self.__user
 
         if user is None:
