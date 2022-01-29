@@ -367,15 +367,6 @@ RenotePayload
    :members:
 
 
-_NoteOptional
-~~~~~~~~~~~
-
-.. attributetable:: _NoteOptional
-
-.. autoclass:: _NoteOptional()
-   :members:
-
-
 NotePayload
 ~~~~~~~~~~~
 
@@ -412,30 +403,53 @@ NoteReactionPayload
    :members:
 
 
-Channel
+ChannelPayload
 ~~~~~~~~~~~
 
-.. attributetable:: Channel
+.. attributetable:: ChannelPayload
 
-.. autoclass:: Channel()
+.. autoclass:: ChannelPayload()
    :members:
 
 
-PinnedNote
+PinnedNotePayload
 ~~~~~~~~~~~
 
-.. attributetable:: PinnedNote
+.. attributetable:: PinnedNotePayload
 
-.. autoclass:: PinnedNote()
+.. autoclass:: PinnedNotePayload()
    :members:
 
 
-GeoPayload
+PinnedPagePayload
 ~~~~~~~~~~~
 
-.. attributetable:: GeoPayload
+.. attributetable:: PinnedPagePayload
 
-.. autoclass:: GeoPayload()
+.. autoclass:: PinnedPagePayload()
+   :members:
+
+FieldContentPayload
+~~~~~~~~~~~
+
+.. attributetable:: FieldContentPayload
+
+.. autoclass:: FieldContentPayload()
+   :members:
+
+OptionalUser
+~~~~~~~~~~~
+.. attributetable:: OptionalUser
+
+.. autoclass:: OptionalUser()
+   :members:
+
+UserPayload
+~~~~~~~~~~~
+
+.. attributetable:: UserPayload
+
+.. autoclass:: UserPayload()
    :members:
 
 
