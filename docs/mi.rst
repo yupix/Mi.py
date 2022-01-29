@@ -103,11 +103,6 @@ Follow
 .. autoclass:: Follow()
    :members:
 
-
-
-データクラス
-------------
-
 Header
 ~~~~~~
 
@@ -139,6 +134,311 @@ Reaction
 
 .. autoclass:: Reaction()
    :members:
+
+
+データクラス
+------------
+
+RawNote
+~~~~~~~
+
+.. attributetable:: RawNote
+
+.. autoclass:: RawNote()
+   :members:
+
+
+RawChat
+~~~~~~~
+
+.. attributetable:: RawChat
+
+.. autoclass:: RawChat()
+   :members:
+
+
+RawProperties
+~~~~~~~~~~~~~
+
+.. attributetable:: RawProperties
+
+.. autoclass:: RawProperties()
+   :members:
+
+
+RawFolder
+~~~~~~~~~
+
+.. attributetable:: RawFolder
+
+.. autoclass:: RawFolder()
+   :members:
+
+
+RawFile
+~~~~~~~~~
+
+.. attributetable:: RawFile
+
+.. autoclass:: RawFile()
+   :members:
+
+
+RawEmoji
+~~~~~~~~~
+
+.. attributetable:: RawEmoji
+
+.. autoclass:: RawEmoji()
+   :members:
+
+
+RawInstance
+~~~~~~~~~
+
+.. attributetable:: RawInstance
+
+.. autoclass:: RawInstance()
+   :members:
+
+
+RawRenote
+~~~~~~~~~
+
+.. attributetable:: RawRenote
+
+.. autoclass:: RawRenote()
+   :members:
+
+
+RawPollChoices
+~~~~~~~~~
+
+.. attributetable:: RawPollChoices
+
+.. autoclass:: RawPollChoices()
+   :members:
+
+
+RawNoteReaction
+~~~~~~~~~
+
+.. attributetable:: RawNoteReaction
+
+.. autoclass:: RawNoteReaction()
+   :members:
+
+
+RawUserDetails
+~~~~~~~~~
+
+.. attributetable:: RawUserDetails
+
+.. autoclass:: RawUserDetails()
+   :members:
+
+
+RawUser
+~~~~~~~~~
+
+.. attributetable:: RawUser
+
+.. autoclass:: RawUser()
+   :members:
+
+
+型クラス
+--------
+
+ChatPayload
+~~~~~~~~~~~
+
+.. attributetable:: ChatPayload
+
+.. autoclass:: ChatPayload()
+   :members:
+
+
+PropertiesPayload
+~~~~~~~~~~~
+
+.. attributetable:: PropertiesPayload
+
+.. autoclass:: PropertiesPayload()
+   :members:
+
+
+FolderPayload
+~~~~~~~~~~~
+
+.. attributetable:: FolderPayload
+
+.. autoclass:: FolderPayload()
+   :members:
+
+
+FilePayload
+~~~~~~~~~~~
+
+.. attributetable:: FilePayload
+
+.. autoclass:: FilePayload()
+   :members:
+
+
+EmojiPayload
+~~~~~~~~~~~
+
+.. attributetable:: EmojiPayload
+
+.. autoclass:: EmojiPayload()
+   :members:
+
+
+FeaturesPayload
+~~~~~~~~~~~
+
+.. attributetable:: FeaturesPayload
+
+.. autoclass:: FeaturesPayload()
+   :members:
+
+
+OptionalMeta
+~~~~~~~~~~~
+
+.. attributetable:: OptionalMeta
+
+.. autoclass:: OptionalMeta()
+   :members:
+
+
+MetaPayload
+~~~~~~~~~~~
+
+.. attributetable:: MetaPayload
+
+.. autoclass:: MetaPayload()
+   :members:
+
+
+OptionalInstance
+~~~~~~~~~~~
+
+.. attributetable:: OptionalInstance
+
+.. autoclass:: OptionalInstance()
+   :members:
+
+
+InstancePayload
+~~~~~~~~~~~
+
+.. attributetable:: InstancePayload
+
+.. autoclass:: InstancePayload()
+   :members:
+
+
+GeoPayload
+~~~~~~~~~~~
+
+.. attributetable:: GeoPayload
+
+.. autoclass:: GeoPayload()
+   :members:
+
+
+PollPayload
+~~~~~~~~~~~
+
+.. attributetable:: PollPayload
+
+.. autoclass:: PollPayload()
+   :members:
+
+
+RenotePayload
+~~~~~~~~~~~
+
+.. attributetable:: RenotePayload
+
+.. autoclass:: RenotePayload()
+   :members:
+
+
+_NoteOptional
+~~~~~~~~~~~
+
+.. attributetable:: _NoteOptional
+
+.. autoclass:: _NoteOptional()
+   :members:
+
+
+NotePayload
+~~~~~~~~~~~
+
+.. attributetable:: NotePayload
+
+.. autoclass:: NotePayload()
+   :members:
+
+
+OptionalReaction
+~~~~~~~~~~~
+
+.. attributetable:: OptionalReaction
+
+.. autoclass:: OptionalReaction()
+   :members:
+
+
+ReactionPayload
+~~~~~~~~~~~
+
+.. attributetable:: ReactionPayload
+
+.. autoclass:: ReactionPayload()
+   :members:
+
+
+NoteReactionPayload
+~~~~~~~~~~~
+
+.. attributetable:: NoteReactionPayload
+
+.. autoclass:: NoteReactionPayload()
+   :members:
+
+
+Channel
+~~~~~~~~~~~
+
+.. attributetable:: Channel
+
+.. autoclass:: Channel()
+   :members:
+
+
+PinnedNote
+~~~~~~~~~~~
+
+.. attributetable:: PinnedNote
+
+.. autoclass:: PinnedNote()
+   :members:
+
+
+GeoPayload
+~~~~~~~~~~~
+
+.. attributetable:: GeoPayload
+
+.. autoclass:: GeoPayload()
+   :members:
+
+
 
 
 例外処理
