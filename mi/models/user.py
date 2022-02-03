@@ -2,7 +2,7 @@ from datetime import datetime
 from typing import List, Optional
 
 from mi.models.instance import RawInstance
-from mi.types.user import UserPayload as UserPayload
+from mi.types.user import UserPayload
 
 __all__ = ('RawUserDetails', 'RawUser')
 

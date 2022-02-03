@@ -292,7 +292,7 @@ class Client:
 
         Returns
         -------
-        dict
+        User
             ユーザー情報
         """
 

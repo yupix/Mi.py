@@ -323,7 +323,7 @@ class ConnectionState(ClientActions):
 
         Returns
         -------
-        dict
+        User
             ユーザー情報
         """
         if not check_multi_arg(user_id, username):

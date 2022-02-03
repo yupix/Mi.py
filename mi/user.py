@@ -6,12 +6,11 @@ from typing import Any, AsyncIterator, Dict, List, Optional, TYPE_CHECKING, Unio
 from mi.emoji import Emoji
 from mi.instance import Instance
 from mi.models.user import RawUser
-from mi.types.user import (ChannelPayload as ChannelPayload, FieldContentPayload as FieldContentPayload,
-                           PinnedNotePayload as PinnedNotePayload,
-                           PinnedPagePayload as PinnedPagePayload)
+from mi.types.user import ChannelPayload, FieldContentPayload, PinnedNotePayload, PinnedPagePayload
 
 if TYPE_CHECKING:
     from mi.state import ConnectionState
+    from mi.actions.user import UserActions
     from mi.api.follow import FollowRequestManager
 
 __all__ = ['User', 'FollowRequest', 'Followee']
@@ -314,5 +313,5 @@ class User:
                                           get_all=get_all)
 
     @property
-    def action(self):
+    def action(self) -> UserActions:
         return self.__state.get_user_instance(self.__raw_user.id, self)
