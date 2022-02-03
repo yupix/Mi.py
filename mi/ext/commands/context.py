@@ -22,7 +22,7 @@ class Context:
     ):
         self.__message: Note = message
         self.bot: BotBase = bot
-        self.args = args if args else []
+        self.args = args if args else ()
         self.kwargs = kwargs if kwargs else {}
         self.command = cmd.func
         self.__cmd = cmd
