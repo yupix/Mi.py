@@ -29,8 +29,8 @@ class Followee:
 class FollowRequest:
     def __init__(self, data, state: ConnectionState):
         self.id = data['id']
-        self.name = data['name']
-        self.username = data['username']
+        self.name = data['username']
+        self.nickname = data['name']
         self.host = data['host']
         self.avatar_url = data['avatar_url']
         self.avatar_blurhash = data['avatar_blurhash']
