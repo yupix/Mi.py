@@ -4,7 +4,7 @@ import asyncio
 from typing import List, Optional, TYPE_CHECKING
 
 from mi.http import HTTPClient, Route
-from mi.user import FollowRequest
+from mi.user import FollowRequest, User
 
 if TYPE_CHECKING:
     from mi.state import ConnectionState
@@ -32,8 +32,7 @@ class FollowManager:
             実行に失敗した際のエラーコード
         """
 
-        if user_id is None:
-            user_id = self.__user_id
+        user_id = user_id or self.__user_id
 
         data = {"userId": user_id}
         res = await self.__http.request(Route('POST', '/api/following/create'), json=data, auth=True, lower=True)
@@ -45,7 +44,7 @@ class FollowManager:
             status = True
         return status, code
 
-    async def remove(self, user_id: str) -> bool:
+    async def remove(self, user_id: Optional[str] = None) -> bool:
         """
         ユーザーのフォローを解除します
 
@@ -54,6 +53,8 @@ class FollowManager:
         bool
             成功ならTrue, 失敗ならFalse
         """
+
+        user_id = user_id or self.__user_id
 
         data = {"userId": user_id}
         res = await self.__http.request(Route('POST', '/api/following/delete'), json=data, auth=True)
@@ -76,13 +77,31 @@ class FollowRequestManager:
         return [FollowRequest(i['follower'], state=self.__state) for i in
                 await self.__http.request(Route('POST', '/api/following/requests/list'), auth=True, lower=True)]
 
+    async def get_user(self, user_id: Optional[str] = None) -> User:
+        """
+        フォローリクエスト元のユーザーを取得します
+        Parameters
+        ----------
+        user_id : Optional[str], default=None
+            ユーザーID
+
+        Returns
+        -------
+        User
+            フォローリクエスト元のユーザー
+        """
+
+        user_id = user_id or self.__user_id
+
+        return await self.__state.client.get_user(user_id)
+
     async def accept(self, user_id: Optional[str] = None) -> bool:
         """
         与えられたIDのユーザーのフォローリクエストを承認します
         """
 
-        if user_id is None:
-            user_id = self.__user_id
+        user_id = user_id or self.__user_id
+
         data = {'userId': user_id}
         return bool(await self.__http.request(Route('POST', '/api/following/requests/accept'), json=data, auth=True))
 
@@ -91,8 +110,7 @@ class FollowRequestManager:
         与えられたIDのユーザーのフォローリクエストを拒否します
         """
 
-        if user_id is None:
-            user_id = self.__user_id
+        user_id = user_id or self.__user_id
 
         data = {'userId': user_id}
         return bool(await self.__http.request(Route('POST', '/api/following/requests/reject'), json=data, auth=True))
