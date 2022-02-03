@@ -38,7 +38,7 @@ class Client:
         connector: Optional[aiohttp.BaseConnector] = options.pop('connector', None)
         self.http: HTTPClient = HTTPClient(connector=connector)
         self._connection: ConnectionState = self._get_state(**options)
-        self.i: User = None
+        self.user: User = None
         self.logger = get_module_logger(__name__)
         self.ws: MisskeyWebSocket = None
 
@@ -159,21 +159,7 @@ class Client:
         print(f"Ignoring exception in {event_method}", file=sys.stderr)
         traceback.print_exc()
 
-    async def progress_command(self, message):
-        for cmd in self.all_commands:
-            if cmd.cmd_type == 'regex':
-                if re.search(cmd.key, message.content):
-                    hit_list = re.findall(cmd.key, message.content)
-                    if isinstance(hit_list, tuple):
-                        hit_list = hit_list[0]
-                    await cmd.func.invoke(message, *hit_list)
-            elif message.content.find(cmd.key) != -1:
-                await cmd.func.invoke(message)
-            else:
-                continue
 
-    async def on_mention(self, message):
-        await self.progress_command(message)
 
     async def on_error(self, err):
         await self.event_dispatch("error", err)
@@ -437,7 +423,7 @@ class Client:
 
     async def login(self, token):
         data = await self.http.static_login(token)
-        self.i = User(RawUser(data), state=self._connection)
+        self.user = User(RawUser(data), state=self._connection)
 
     async def connect(self, *, reconnect: bool = True, timeout: int = 60) -> None:
 
