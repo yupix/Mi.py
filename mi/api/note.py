@@ -12,9 +12,9 @@ if TYPE_CHECKING:
 class NoteManager:
     def __init__(self, state: ConnectionState, http: HTTPClient, loop: asyncio.AbstractEventLoop, *, note_id: Optional[str]
     = None):
-        self.state = state
-        self.http = http
-        self.loop = loop
+        self.__state = state
+        self.__http = http
+        self.__loop = loop
         self.__note_id = note_id
 
     async def get(self, local: bool = True, reply: bool = False, renote: bool = True, with_files: bool = False,
@@ -29,4 +29,4 @@ class NoteManager:
             'sinceId': since_id,
             'untilId': until_id
         }
-        await self.http.request(Route('POST', '/api/notes'), json=data, auth=True, lower=True)
+        await self.__http.request(Route('POST', '/api/notes'), json=data, auth=True, lower=True)

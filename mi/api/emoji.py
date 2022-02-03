@@ -18,7 +18,7 @@ class EmojiManager:
             *,
             emoji_id: Optional[str] = None
     ):
-        self.__client: ConnectionState = client
+        self.__state: ConnectionState = client
         self.__http: HTTPClient = http
         self.__loop: asyncio.AbstractEventLoop = loop
         self.emoji_id: Optional[str] = emoji_id
