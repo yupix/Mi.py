@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import asyncio
 from typing import List, Optional, TYPE_CHECKING
 
 from mi.api.chat import ChatManager
@@ -8,11 +7,10 @@ from mi.api.follow import FollowManager, FollowRequestManager
 from mi.api.models.note import RawNote
 from mi.api.note import NoteManager
 from mi.exception import NotExistRequiredData
-from mi.http import HTTPClient, Route
+from mi.framework.http import Route, get_session
 from mi.models.note import Note
 
 if TYPE_CHECKING:
-    from mi.state import ConnectionState
     from mi.models.user import User
 
 __all__ = ['UserActions']
@@ -20,21 +18,15 @@ __all__ = ['UserActions']
 
 class UserActions:
     def __init__(
-            self, state: ConnectionState,
-            http: HTTPClient,
-            loop: asyncio.AbstractEventLoop,
-            *,
+            self,
             user_id: Optional[str] = None,
             user: Optional[User] = None
     ):
-        self.__state = state
-        self.__http = http
-        self.__loop = loop
         self.__user: User = user
-        self.note: NoteManager(state, http, loop, user_id=user_id)
-        self.follow: FollowManager = FollowManager(state, http, loop, user_id=user_id)
-        self.follow_request: FollowRequestManager = FollowRequestManager(state, http, loop, user_id=user_id)
-        self.chat: ChatManager = ChatManager(state, http, loop, user_id=user_id)
+        self.note: NoteManager(user_id=user_id)
+        self.follow: FollowManager = FollowManager(user_id=user_id)
+        self.follow_request: FollowRequestManager = FollowRequestManager(user_id=user_id)
+        self.chat: ChatManager = ChatManager(user_id=user_id)
 
     async def get_notes(
             self,
@@ -64,8 +56,8 @@ class UserActions:
             'fileType': file_type,
             'excludeNsfw': exclude_nsfw
         }
-        res = await self.__http.request(Route('POST', '/api/users/notes'), json=data, auth=True, lower=True)
-        return [Note(RawNote(i), state=self.__state) for i in res]
+        res = await get_session().request(Route('POST', '/api/users/notes'), json=data, auth=True, lower=True)
+        return [Note(RawNote(i)) for i in res]
 
     def get_mention(self, user: Optional[User] = None) -> str:
         """
@@ -89,7 +81,7 @@ class UserActions:
         return f'@{user.name}@{user.host}' if user.instance else f'@{user.name}'
 
     def get_follow(self, user_id: str) -> FollowManager:
-        return FollowManager(self.__state, self.__http, self.__loop, user_id=user_id)
+        return FollowManager(user_id=user_id)
 
     def get_follow_request(self, user_id: str) -> FollowRequestManager:
-        return FollowRequestManager(self.__state, self.__http, self.__loop, user_id=user_id)
+        return FollowRequestManager(user_id=user_id)

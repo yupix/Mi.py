@@ -1,26 +1,19 @@
 from __future__ import annotations
 
-import asyncio
 from typing import List, Optional, TYPE_CHECKING
 
 from mi.exception import NotExistRequiredData
-from mi.http import HTTPClient, Route
+from mi.framework.http import Route
 
 if TYPE_CHECKING:
-    from mi.state import ConnectionState
+    pass
 
 
 class EmojiManager:
     def __init__(
-            self, client: ConnectionState,
-            http: HTTPClient,
-            loop: asyncio.AbstractEventLoop,
-            *,
+            self,
             emoji_id: Optional[str] = None
     ):
-        self.__state: ConnectionState = client
-        self.__http: HTTPClient = http
-        self.__loop: asyncio.AbstractEventLoop = loop
         self.emoji_id: Optional[str] = emoji_id
 
     async def add(self, name: str, url: str, category: Optional[str] = None, aliases: Optional[List[str]] = None):

@@ -5,8 +5,8 @@ from typing import Any, Callable, Dict, Optional, TYPE_CHECKING
 
 import aiohttp
 
+from mi import config
 from mi.utils import str_lower
-from . import config
 
 if TYPE_CHECKING:
     from .client import Client

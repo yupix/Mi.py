@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import List, Optional, TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from mi.state import ConnectionState
+    from mi.framework.state import ConnectionState
 
 __all__ = ['Chart', 'Local', 'Remote']
 

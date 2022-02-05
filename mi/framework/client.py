@@ -11,14 +11,15 @@ from typing import Any, AsyncIterator, Callable, Coroutine, Dict, List, Optional
 import aiohttp
 from aiohttp import ClientWebSocketResponse
 
+import mi.framework.manager
 from mi import config
 from mi.api.models.user import RawUser
-from mi.http import HTTPClient
-from mi.models.instance import Instance, InstanceMeta
+from mi.framework.http import HTTPClient, get_session, set_session
+from mi.framework.state import ConnectionState
 from mi.models.chat import Chat
+from mi.models.instance import Instance, InstanceMeta
 from mi.models.note import Note
 from mi.models.user import User
-from mi.state import ClientActions, ConnectionState
 from mi.utils import get_module_logger
 from .gateway import MisskeyWebSocket
 
@@ -36,14 +37,15 @@ class Client:
         self.origin_uri: Optional[str] = None
         self.loop = asyncio.get_event_loop() if loop is None else loop
         connector: Optional[aiohttp.BaseConnector] = options.pop('connector', None)
-        self.http: HTTPClient = HTTPClient(connector=connector)
+        self.http = HTTPClient(connector=connector)
+        set_session(self.http)
         self._connection: ConnectionState = self._get_state(**options)
         self.user: User = None
         self.logger = get_module_logger(__name__)
         self.ws: MisskeyWebSocket = None
 
     def _get_state(self, **options: Any) -> ConnectionState:
-        return ConnectionState(dispatch=self.dispatch, http=self.http, loop=self.loop, client=self)
+        return ConnectionState(dispatch=self.dispatch, loop=self.loop, client=self)
 
     async def on_ready(self, ws: ClientWebSocketResponse):
         """
@@ -165,8 +167,8 @@ class Client:
     # ここからクライアント操作
 
     @property
-    def client(self) -> ClientActions:
-        return self._connection.get_client_actions()
+    def client(self) -> mi.framework.manager.ClientActions:
+        return mi.framework.manager.get_client_actions()
 
     async def post_chat(self, content: str, *, user_id: str = None, group_id: str = None, file_id: str = None) -> Chat:
         """
@@ -420,8 +422,8 @@ class Client:
         return await self._connection.get_replies(note_id=note_id, limit=limit, since_id=since_id, until_id=until_id)
 
     async def login(self, token):
-        data = await self.http.static_login(token)
-        self.user = User(RawUser(data), state=self._connection)
+        data = await get_session().static_login(token)
+        self.user = User(RawUser(data))
 
     async def connect(self, *, reconnect: bool = True, timeout: int = 60) -> None:
 

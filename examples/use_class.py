@@ -2,7 +2,7 @@ import asyncio
 
 from mi.ext import commands, tasks
 from mi.models.note import Note
-from mi.router import Router
+from mi.framework.router import Router
 
 uri = "wss://example.com/streaming"
 token = "This is your token"

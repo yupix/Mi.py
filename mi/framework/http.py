@@ -6,11 +6,12 @@ from typing import Any, Dict, Optional
 
 import aiohttp
 
-from mi.gateway import MisskeyClientWebSocketResponse
+from mi import __version__, exception
+from mi.framework.gateway import MisskeyClientWebSocketResponse
+from mi.framework.router import Route
 from mi.utils import remove_dict_empty, upper_to_lower
-from . import __version__, config, exception
 
-__all__ = ('Route', 'HTTPClient')
+__all__ = ('Route', 'HTTPClient', 'get_session', 'set_session', 'HTTPSession')
 
 
 class _MissingSentinel:
@@ -27,13 +28,6 @@ class _MissingSentinel:
 MISSING: Any = _MissingSentinel()
 
 
-class Route:
-    def __init__(self, method: str, path: str):
-        self.path: str = path
-        self.method: str = method
-        self.url = config.i.origin_uri + path
-
-
 async def json_or_text(response: aiohttp.ClientResponse):
     text = await response.text(encoding='utf-8')
     try:
@@ -41,6 +35,18 @@ async def json_or_text(response: aiohttp.ClientResponse):
             return json.loads(text)
     except KeyError:
         pass
+
+
+HTTPSession: 'HTTPClient' = None
+
+
+def set_session(session: 'HTTPClient'):
+    global HTTPSession
+    HTTPSession = session
+
+
+def get_session() -> 'HTTPClient':
+    return HTTPSession
 
 
 class HTTPClient:

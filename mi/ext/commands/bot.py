@@ -12,7 +12,6 @@ from types import ModuleType
 from typing import Any, Callable, Coroutine, Dict, List, Optional, TYPE_CHECKING, Tuple, Union
 
 from mi.abc.ext.bot import AbstractBotBase
-from mi.client import Client
 from mi.exception import (
     CogNameDuplicate,
     ExtensionAlreadyLoaded,
@@ -23,6 +22,7 @@ from mi.exception import (
 )
 from mi.ext.commands.context import Context
 from mi.ext.commands.core import CommandManager
+from mi.framework.client import Client
 from mi.models.user import User
 from mi.utils import get_module_logger
 

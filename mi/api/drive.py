@@ -1,26 +1,21 @@
 from __future__ import annotations
 
-import asyncio
 from typing import List, Optional, TYPE_CHECKING
 
 from mi.api.models.drive import RawFile, RawFolder
 from mi.exception import InvalidParameters
-from mi.http import HTTPClient, Route
+from mi.framework.http import Route, get_session
 from mi.models.drive import File, Folder
 from mi.utils import remove_dict_empty
 
 if TYPE_CHECKING:
-    from mi.client import ConnectionState
+    pass
 
 __all__ = ['FolderManager', 'FileManager', 'DriveManager']
 
 
 class FileManager:
-    def __init__(self, __state: ConnectionState, http: HTTPClient, loop: asyncio.AbstractEventLoop,
-                 file_id: Optional[str] = None):
-        self.__state = __state
-        self.__http = http
-        self.__loop = loop
+    def __init__(self, file_id: Optional[str] = None):
         self.__file_id = file_id
 
     async def show_file(self, file_id: Optional[str], url: Optional[str]) -> File:
@@ -48,11 +43,7 @@ class FileManager:
 
 
 class FolderManager:
-    def __init__(self, __state: ConnectionState, http: HTTPClient, loop: asyncio.AbstractEventLoop,
-                 folder_id: Optional[str] = None):
-        self.__state = __state
-        self.__http = http
-        self.__loop = loop
+    def __init__(self, folder_id: Optional[str] = None):
         self.__folder_id = folder_id
 
     async def create(self, name: str, parent_id: Optional[str] = None) -> bool:
@@ -117,15 +108,13 @@ class FolderManager:
 
         folder_id = folder_id or self.__folder_id
         data = {'limit': limit, 'sinceId': since_id, 'untilId': until_id, 'folderId': folder_id, 'Type': file_type}
-        res = await self.__http.request(Route('POST', '/api/drive/files'), json=data, auth=True, lower=True)
-        return [File(RawFile(i), state=self.__state) for i in res]
+        res = await get_session().request(Route('POST', '/api/drive/files'), json=data, auth=True, lower=True)
+        return [File(RawFile(i)) for i in res]
 
 
 class DriveManager:
-    def __init__(self, __state: ConnectionState, http: HTTPClient, loop: asyncio.AbstractEventLoop):
-        self.__state = __state
-        self.__http = http
-        self.__loop = loop
+    def __init__(self):
+        pass
 
     async def get_folders(self, limit: int = 100, since_id: Optional[str] = None, until_id: Optional[str] = None,
                           folder_id: Optional[str] = None) -> List[Folder]:
@@ -150,5 +139,5 @@ class DriveManager:
             'untilId': until_id,
             'folderId': folder_id
         }
-        data = await self.__http.request(Route('POST', '/api/drive/folders'), json=data, lower=True, auth=True)
-        return [Folder(RawFolder(i), state=self.__state) for i in data]
+        data = await get_session().request(Route('POST', '/api/drive/folders'), json=data, lower=True, auth=True)
+        return [Folder(RawFolder(i)) for i in data]

@@ -8,7 +8,7 @@ from mi.api.models.chat import RawChat
 __all__ = ['Chat']
 
 if TYPE_CHECKING:
-    from mi.state import ConnectionState
+    from mi.framework.state import ConnectionState
 
 
 class Chat(AbstractChatContent):

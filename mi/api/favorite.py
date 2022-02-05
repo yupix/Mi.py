@@ -1,20 +1,15 @@
 from __future__ import annotations
 
-import asyncio
 from typing import Optional, TYPE_CHECKING
 
-from mi.http import HTTPClient, Route
+from mi.framework.http import Route
 
 if TYPE_CHECKING:
-    from mi.client import ConnectionState
+    pass
 
 
 class FavoriteManager:
-    def __init__(self, client: ConnectionState, http: HTTPClient, loop: asyncio.AbstractEventLoop,
-                 note_id: Optional[str] = None):
-        self.__state: ConnectionState = client
-        self.__http: HTTPClient = http
-        self.__loop: asyncio.AbstractEventLoop = loop
+    def __init__(self, note_id: Optional[str] = None):
         self.__note_id = note_id
 
     async def add(self, note_id: Optional[str] = None) -> bool:

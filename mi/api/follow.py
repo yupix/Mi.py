@@ -1,23 +1,18 @@
 from __future__ import annotations
 
-import asyncio
 from typing import List, Optional, TYPE_CHECKING
 
-from mi.http import HTTPClient, Route
+from mi.framework.http import Route
 from mi.models.user import FollowRequest, User
 
 if TYPE_CHECKING:
-    from mi.state import ConnectionState
+    pass
 
 __all__ = ['FollowManager', 'FollowRequestManager']
 
 
 class FollowManager:
-    def __init__(self, client: ConnectionState, http: HTTPClient, loop: asyncio.AbstractEventLoop, *,
-                 user_id: Optional[str] = None):
-        self.__state: ConnectionState = client
-        self.__http: 'HTTPClient' = http
-        self.__loop: asyncio.AbstractEventLoop = loop
+    def __init__(self, user_id: Optional[str] = None):
         self.__user_id: Optional[str] = user_id
 
     async def add(self, user_id: Optional[str] = None) -> tuple[bool, Optional[str]]:
@@ -62,11 +57,7 @@ class FollowManager:
 
 
 class FollowRequestManager:
-    def __init__(self, client: ConnectionState, http: HTTPClient, loop: asyncio.AbstractEventLoop, *,
-                 user_id: Optional[str] = None):
-        self.__state: ConnectionState = client
-        self.__http: 'HTTPClient' = http
-        self.__loop: asyncio.AbstractEventLoop = loop
+    def __init__(self, user_id: Optional[str] = None):
         self.__user_id: Optional[str] = user_id
 
     async def get_all(self) -> List[FollowRequest]:

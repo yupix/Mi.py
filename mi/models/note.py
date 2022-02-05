@@ -3,6 +3,7 @@ from __future__ import annotations
 from datetime import datetime
 from typing import Any, Dict, List, Optional, TYPE_CHECKING, Union
 
+import mi.framework.manager
 from mi.api.models.note import RawNote, RawReaction, RawRenote
 from mi.api.models.poll import RawPoll
 from mi.api.models.reaction import RawNoteReaction
@@ -14,7 +15,7 @@ from mi.models.user import User
 from mi.utils import emoji_count
 
 if TYPE_CHECKING:
-    from mi.state import NoteActions, ConnectionState
+    from mi.framework.state import NoteActions, ConnectionState
     from mi.api.reaction import ReactionManager
 
 __all__ = ('Note', 'Poll', 'Reaction', 'Follow', 'Header', 'File', 'Renote', 'NoteReaction')
@@ -182,9 +183,8 @@ class Renote:
 
 
 class NoteReaction:
-    def __init__(self, raw_data: RawNoteReaction, state: ConnectionState):
+    def __init__(self, raw_data: RawNoteReaction):
         self.__raw_data = raw_data
-        self.__state = state
 
     @property
     def id(self) -> str:
@@ -196,7 +196,7 @@ class NoteReaction:
 
     @property
     def user(self) -> User:
-        return User(RawUser(self.__raw_data.user), state=self.__state)
+        return User(RawUser(self.__raw_data.user))
 
     @property
     def reaction(self) -> str:
@@ -204,9 +204,8 @@ class NoteReaction:
 
 
 class Reaction:
-    def __init__(self, raw_data: RawReaction, state: ConnectionState):
+    def __init__(self, raw_data: RawReaction):
         self.__raw_data = raw_data
-        self.__state: ConnectionState = state
 
     @property
     def id(self) -> Optional[str]:
@@ -226,11 +225,11 @@ class Reaction:
 
     @property
     def user(self) -> Optional[User]:
-        return User(self.__raw_data.user, state=self.__state) if self.__raw_data.user else None
+        return User(self.__raw_data.user) if self.__raw_data.user else None
 
     @property
     def note(self) -> Optional[Note]:
-        return Note(self.__raw_data.note, state=self.__state) if self.__raw_data.note else None
+        return Note(self.__raw_data.note) if self.__raw_data.note else None
 
     @property
     def reaction(self) -> str:
@@ -238,13 +237,12 @@ class Reaction:
 
     @property
     def action(self) -> ReactionManager:
-        return self.__state.reaction
+        return mi.framework.manager.get_client_actions().reaction
 
 
 class Note:
-    def __init__(self, raw_data: RawNote, state: ConnectionState):
+    def __init__(self, raw_data: RawNote):
         self.__raw_data: RawNote = raw_data
-        self.__state: ConnectionState = state
 
     @property
     def id(self) -> str:
@@ -260,7 +258,7 @@ class Note:
 
     @property
     def author(self) -> User:
-        return User(self.__raw_data.author, state=self.__state)
+        return User(self.__raw_data.author)
 
     @property
     def content(self) -> Optional[str]:
@@ -272,7 +270,7 @@ class Note:
 
     @property
     def renote(self) -> Union[None, Renote]:
-        return Renote(self.__raw_data.renote, state=self.__state) if self.__raw_data.renote else None
+        return Renote(self.__raw_data.renote) if self.__raw_data.renote else None
 
     @property
     def visibility(self) -> Optional[str]:
@@ -360,7 +358,7 @@ class Note:
 
     @property
     def action(self) -> NoteActions:
-        return self.__state.get_note_instance(self.id)
+        return mi.framework.manager.get_client_actions().get_note_instance(self.id)
 
     async def reply(
             self, content: Optional[str],

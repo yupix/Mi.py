@@ -9,7 +9,7 @@ from mi.types.instance import (MetaPayload as InstanceMetaPayload)
 
 if TYPE_CHECKING:
     from mi.models.user import User
-    from mi.state import ConnectionState
+    from mi.framework.state import ConnectionState
 
 
 class InstanceMeta:

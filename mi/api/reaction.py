@@ -1,25 +1,17 @@
 from __future__ import annotations
 
-import asyncio
-from typing import List, Optional, TYPE_CHECKING
+from typing import List, Optional
 
 from mi.api.models.emoji import RawEmoji
 from mi.api.models.reaction import RawNoteReaction
-from mi.http import HTTPClient, Route
+from mi.framework.http import Route, get_session
 from mi.models.emoji import Emoji
 from mi.models.note import NoteReaction
 from mi.utils import remove_dict_empty
 
-if TYPE_CHECKING:
-    from mi.state import ConnectionState
-
 
 class ReactionManager:
-    def __init__(self, client: ConnectionState, http: HTTPClient, loop: asyncio.AbstractEventLoop, *,
-                 note_id: Optional[str] = None):
-        self.__state = client
-        self.__http = http
-        self.__loop = loop
+    def __init__(self, note_id: Optional[str] = None):
         self.__note_id = note_id
 
     async def add(self, reaction: str, note_id: Optional[str] = None) -> bool:
@@ -41,20 +33,22 @@ class ReactionManager:
         note_id = note_id or self.__note_id
 
         data = remove_dict_empty({"noteId": note_id, "reaction": reaction})
-        return await self.__http.request(Route('POST', '/api/notes/reactions/create'), json=data, auth=True, lower=True)
+        return await get_session().request(Route('POST', '/api/notes/reactions/create'), json=data, auth=True,
+                                           lower=True)
 
     async def remove(self, note_id: Optional[str] = None) -> bool:
         note_id = note_id or self.__note_id
 
         data = remove_dict_empty({"noteId": note_id})
-        return bool(await self.__http.request(Route('POST', '/api/notes/reactions/delete'), json=data, auth=True, lower=True))
+        return bool(await get_session().request(Route('POST', '/api/notes/reactions/delete'), json=data, auth=True,
+                                                lower=True))
 
     async def get_reaction(self, reaction: str, note_id: Optional[str] = None, *, limit: int = 11) -> List[NoteReaction]:
         note_id = note_id or self.__note_id
         data = remove_dict_empty({"noteId": note_id, 'limit': limit, 'type': reaction})
-        res = await self.__http.request(Route('POST', '/api/notes/reactions'), json=data, auth=True, lower=True)
-        return [NoteReaction(RawNoteReaction(i), state=self.__state) for i in res]
+        res = await get_session().request(Route('POST', '/api/notes/reactions'), json=data, auth=True, lower=True)
+        return [NoteReaction(RawNoteReaction(i)) for i in res]
 
     async def get_emoji_list(self) -> List[Emoji]:
-        data = await self.__http.request(Route('GET', '/api/meta'), json={'detail': False}, auth=True)
-        return [Emoji(RawEmoji(i), state=self.__state) for i in data['emojis']]
+        data = await get_session().request(Route('GET', '/api/meta'), json={'detail': False}, auth=True)
+        return [Emoji(RawEmoji(i)) for i in data['emojis']]

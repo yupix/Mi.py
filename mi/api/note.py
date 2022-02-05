@@ -1,20 +1,12 @@
 from __future__ import annotations
 
-import asyncio
-from typing import Optional, TYPE_CHECKING
+from typing import Optional
 
-from mi.http import HTTPClient, Route
-
-if TYPE_CHECKING:
-    from mi.state import ConnectionState
+from mi.framework.http import Route, get_session
 
 
 class NoteManager:
-    def __init__(self, state: ConnectionState, http: HTTPClient, loop: asyncio.AbstractEventLoop, *, note_id: Optional[str]
-    = None):
-        self.__state = state
-        self.__http = http
-        self.__loop = loop
+    def __init__(self, note_id: Optional[str] = None):
         self.__note_id = note_id
 
     async def get(self, local: bool = True, reply: bool = False, renote: bool = True, with_files: bool = False,
@@ -29,4 +21,4 @@ class NoteManager:
             'sinceId': since_id,
             'untilId': until_id
         }
-        await self.__http.request(Route('POST', '/api/notes'), json=data, auth=True, lower=True)
+        await get_session().request(Route('POST', '/api/notes'), json=data, auth=True, lower=True)

@@ -1,22 +1,17 @@
 from __future__ import annotations
 
-import asyncio
 from typing import Optional, TYPE_CHECKING
 
 from mi.api.models.chat import RawChat
-from mi.http import HTTPClient, Route
+from mi.framework.http import Route
 from mi.models.chat import Chat
 
 if TYPE_CHECKING:
-    from mi.client import ConnectionState
+    pass
 
 
 class ChatManager:
-    def __init__(self, __state: ConnectionState, http: HTTPClient, loop: asyncio.AbstractEventLoop,
-                 user_id: Optional[str] = None):
-        self.__state = __state
-        self.__http = http
-        self.__loop = loop
+    def __init__(self, user_id: Optional[str] = None):
         self.__user_id = user_id
 
     async def send(

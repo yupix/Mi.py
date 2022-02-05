@@ -3,13 +3,14 @@ from __future__ import annotations
 from datetime import datetime
 from typing import Any, AsyncIterator, Dict, List, Optional, TYPE_CHECKING, Union
 
+import mi.framework.manager
 from mi.api.models.user import RawUser
-from mi.models.instance import Instance
 from mi.models.emoji import Emoji
+from mi.models.instance import Instance
 from mi.types.user import ChannelPayload, FieldContentPayload, PinnedNotePayload, PinnedPagePayload
 
 if TYPE_CHECKING:
-    from mi.state import ConnectionState
+    from mi.framework.state import ConnectionState
     from mi.actions.user import UserActions
     from mi.api.follow import FollowRequestManager
 
@@ -122,9 +123,8 @@ class FieldContent:
 
 
 class User:
-    def __init__(self, raw_user: RawUser, state: ConnectionState):
+    def __init__(self, raw_user: RawUser):
         self.__raw_user = raw_user
-        self.__state = state
 
     @property
     def id(self):
@@ -314,4 +314,4 @@ class User:
 
     @property
     def action(self) -> UserActions:
-        return self.__state.get_user_instance(self.__raw_user.id, self)
+        return mi.framework.manager.get_client_actions().get_user_instance(self.__raw_user.id, self)

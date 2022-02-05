@@ -1,19 +1,14 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
-
+import mi.framework.manager
 from mi.api.models.emoji import RawEmoji
-
-if TYPE_CHECKING:
-    from mi.state import ConnectionState
 
 __all__ = ('Emoji',)
 
 
 class Emoji:
-    def __init__(self, raw_data: RawEmoji, state: ConnectionState):
+    def __init__(self, raw_data: RawEmoji):
         self.__raw_data = raw_data
-        self.__state: ConnectionState = state
 
     @property
     def id(self):
@@ -41,4 +36,4 @@ class Emoji:
 
     @property
     def action(self):
-        return self.__state.emoji
+        return mi.framework.manager.get_client_actions().emoji

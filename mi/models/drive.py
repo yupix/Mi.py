@@ -2,12 +2,13 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, Union
 
+import mi.framework.manager
 from mi.api.models.drive import RawFile, RawFolder, RawProperties
 from mi.api.models.user import RawUser
 from mi.models.user import User
 
 if TYPE_CHECKING:
-    from mi.state import ConnectionState
+    from mi.framework.state import ConnectionState
     from mi.api.drive import FolderManager
 
 __all__ = ['Properties', 'File', 'File', 'Folder']
@@ -32,9 +33,8 @@ class Properties:
 
 
 class Folder:
-    def __init__(self, raw_data: RawFolder, state: ConnectionState):
+    def __init__(self, raw_data: RawFolder):
         self.__raw_data = raw_data
-        self.__state = state
 
     @property
     def id(self):
@@ -62,13 +62,12 @@ class Folder:
 
     @property
     def action(self) -> FolderManager:
-        return self.__state.drive.get_folder_instance(self.id).action
+        return mi.framework.manager.get_client_actions().drive.get_folder_instance(self.id).action
 
 
 class File:
-    def __init__(self, raw_data: RawFile, state: ConnectionState):
+    def __init__(self, raw_data: RawFile):
         self.__raw_data = raw_data
-        self.__state = state
 
     @property
     def id(self):
@@ -132,4 +131,4 @@ class File:
 
     @property
     def user(self):
-        return User(RawUser(self.__raw_data.user), state=self.__state)
+        return User(RawUser(self.__raw_data.user))
