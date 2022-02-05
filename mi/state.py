@@ -16,7 +16,7 @@ from mi.api.models.user import RawUser
 from mi.api.reaction import ReactionManager
 from mi.exception import InvalidParameters, NotExistRequiredParameters
 from mi.http import Route
-from mi.instance import Instance, InstanceMeta
+from mi.models.instance import InstanceMeta, Instance
 from mi.iterators import InstanceIterator
 from mi.models.chat import Chat
 from mi.models.drive import File

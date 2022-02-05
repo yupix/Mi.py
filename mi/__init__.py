@@ -16,7 +16,6 @@ from .exception import *
 from .ext import *
 from .gateway import *
 from .http import *
-from .instance import *
 from .iterators import *
 from .models import *
 from .router import *

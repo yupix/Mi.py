@@ -5,7 +5,7 @@ from typing import AsyncIterator, Dict, List, Optional, TYPE_CHECKING
 from mi.api.models import RawInstance
 from mi.api.models.emoji import RawEmoji
 from mi.models.emoji import Emoji
-from .types.instance import (MetaPayload as InstanceMetaPayload)
+from mi.types.instance import (MetaPayload as InstanceMetaPayload)
 
 if TYPE_CHECKING:
     from mi.models.user import User

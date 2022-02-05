@@ -3,7 +3,6 @@ from __future__ import annotations
 from datetime import datetime
 from typing import Any, Dict, List, Optional, TYPE_CHECKING, Union
 
-from mi.abc.note import AbstractNote
 from mi.api.models.note import RawNote, RawReaction, RawRenote
 from mi.api.models.poll import RawPoll
 from mi.api.models.reaction import RawNoteReaction
@@ -93,7 +92,7 @@ class Poll:
         return self.__raw_data.expired_after
 
 
-class Renote(AbstractNote):
+class Renote:
     def __init__(self, raw_data: RawRenote, state: ConnectionState):
         self.__raw_data: RawRenote = raw_data
         self.__state = state
@@ -242,7 +241,7 @@ class Reaction:
         return self.__state.reaction
 
 
-class Note(AbstractNote):
+class Note:
     def __init__(self, raw_data: RawNote, state: ConnectionState):
         self.__raw_data: RawNote = raw_data
         self.__state: ConnectionState = state

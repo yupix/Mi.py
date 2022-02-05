@@ -14,7 +14,7 @@ from aiohttp import ClientWebSocketResponse
 from mi import config
 from mi.api.models.user import RawUser
 from mi.http import HTTPClient
-from mi.instance import Instance, InstanceMeta
+from mi.models.instance import Instance, InstanceMeta
 from mi.models.chat import Chat
 from mi.models.note import Note
 from mi.models.user import User

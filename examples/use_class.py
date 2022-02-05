@@ -1,7 +1,7 @@
 import asyncio
 
 from mi.ext import commands, tasks
-from mi.note import Note
+from mi.models.note import Note
 from mi.router import Router
 
 uri = "wss://example.com/streaming"

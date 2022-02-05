@@ -4,7 +4,7 @@ from datetime import datetime
 from typing import Any, AsyncIterator, Dict, List, Optional, TYPE_CHECKING, Union
 
 from mi.api.models.user import RawUser
-from mi.instance import Instance
+from mi.models.instance import Instance
 from mi.models.emoji import Emoji
 from mi.types.user import ChannelPayload, FieldContentPayload, PinnedNotePayload, PinnedPagePayload
 
