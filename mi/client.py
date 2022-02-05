@@ -12,13 +12,13 @@ import aiohttp
 from aiohttp import ClientWebSocketResponse
 
 from mi import config
-from mi.chat import Chat
+from mi.api.models.user import RawUser
 from mi.http import HTTPClient
 from mi.instance import Instance, InstanceMeta
-from mi.models.user import RawUser
-from mi.note import Note
+from mi.models.chat import Chat
+from mi.models.note import Note
+from mi.models.user import User
 from mi.state import ClientActions, ConnectionState
-from mi.user import User
 from mi.utils import get_module_logger
 from .gateway import MisskeyWebSocket
 
@@ -159,10 +159,8 @@ class Client:
         print(f"Ignoring exception in {event_method}", file=sys.stderr)
         traceback.print_exc()
 
-
-
     async def on_error(self, err):
-        await self.event_dispatch("error", err)
+        self.event_dispatch("error", err)
 
     # ここからクライアント操作
 

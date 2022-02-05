@@ -3,9 +3,9 @@ from __future__ import annotations
 import asyncio
 from typing import Optional, TYPE_CHECKING
 
-from mi.chat import Chat
+from mi.api.models.chat import RawChat
 from mi.http import HTTPClient, Route
-from mi.models.chat import RawChat
+from mi.models.chat import Chat
 
 if TYPE_CHECKING:
     from mi.client import ConnectionState

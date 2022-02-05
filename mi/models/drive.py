@@ -1,116 +1,135 @@
-from datetime import datetime
-from typing import Any, Dict, Optional
+from __future__ import annotations
 
-from mi.types.drive import FilePayload, FolderPayload, PropertiesPayload
+from typing import TYPE_CHECKING, Union
 
+from mi.api.models.drive import RawFile, RawFolder, RawProperties
+from mi.api.models.user import RawUser
+from mi.models.user import User
 
-class RawProperties:
-    """
-    Attributes
-    ----------
-    width : int
-        ファイルの幅
-    height : int
-        ファイルの高さ
-    avg_color : Optional[str]
-        ファイルの平均色
-    """
+if TYPE_CHECKING:
+    from mi.state import ConnectionState
+    from mi.api.drive import FolderManager
 
-    __slots__ = ('width', 'height', 'avg_color')
-
-    def __init__(self, data: PropertiesPayload):
-        self.width: Optional[int] = data.get('width')
-        self.height: int = data['height']
-        self.avg_color: Optional[str] = data.get('avg_color')
+__all__ = ['Properties', 'File', 'File', 'Folder']
 
 
-class RawFolder:
-    """
-    Attributes
-    ----------
-    id : str
-        フォルダーのID
-    created_at : datetime
-        フォルダーの作成された日時
-    name : str
-        フォルダーの名前
-    folders_count : Optional[int]
-        # TODO: 調査
-    parent_id : str
-        親フォルダーのID
-    parent : Optional[Dict[str, Any]]
-        親フォルダー
-    """
+class Properties:
+    def __init__(self, raw_data: RawProperties, state: ConnectionState) -> None:
+        self.__raw_data: RawProperties = raw_data
+        self.__state = state
 
-    __slots__ = ('id', 'created_at', 'name', 'folders_count', 'parent_id', 'parent')
+    @property
+    def width(self) -> int:
+        return self.__raw_data.width
 
-    def __init__(self, data: FolderPayload):
-        self.id: str = data['id']
-        self.created_at: datetime = datetime.strptime(data["created_at"], '%Y-%m-%dT%H:%M:%S.%fZ')
-        self.name: str = data['name']
-        self.folders_count: Optional[int] = data.get('folders_count', 0)
-        self.parent_id: str = data['parent_id']
-        self.parent: Optional[Dict[str, Any]] = data.get('parent')
+    @property
+    def height(self) -> int:
+        return self.__raw_data.height
+
+    @property
+    def avg_color(self) -> Union[float, None]:
+        return self.__raw_data.avg_color
 
 
-class RawFile:
-    """
-    Attributes
-    ----------
-    id : str
-        ファイルのID
-    created_at : datetime
-        ファイルのの作成された日時
-    name : str
-        ファイルの名前
-    type : str
-        ファイルの拡張子
-    md5 : str
-        ファイルのmd5
-    size : int
-        ファイルのサイズ
-    is_sensitive : bool
-        このファイルはセンシティブか否か
-    blurhash : str
-        このファイルのblurhash
-    properties : Optional[RawProperties]
-        ファイルの情報
-    url : str
-        ファイルのurl
-    thumbnail_url : str
-        ファイルのサムネイルurl
-    comment : str
-        ファイルのコメント
-    folder_id : str
-        親フォルダのID
-    folder : Optional[RawFolder]
-        親フォルダの情報？
-        # TODO: 調査
-    user_id : str
-        ファイル作成者のID
-    user : Dict[str, Any]
-        ファイル作成者の情報
-    """
+class Folder:
+    def __init__(self, raw_data: RawFolder, state: ConnectionState):
+        self.__raw_data = raw_data
+        self.__state = state
 
-    __slots__ = (
-        'id', 'created_at', 'name', 'type', 'md5', 'size', 'is_sensitive', 'blurhash', 'properties', 'url', 'thumbnail_url',
-        'comment', 'folder_id', 'folder', 'user_id', 'user'
-    )
+    @property
+    def id(self):
+        return self.__raw_data.id
 
-    def __init__(self, data: FilePayload):
-        self.id: str = data['id']
-        self.created_at: datetime = datetime.strptime(data["created_at"], '%Y-%m-%dT%H:%M:%S.%fZ')
-        self.name: str = data['name']
-        self.type: str = data['type']
-        self.md5: str = data['md5']
-        self.size: int = data['size']
-        self.is_sensitive: bool = data['is_sensitive']
-        self.blurhash: str = data['blurhash']
-        self.properties: Optional[RawProperties] = RawProperties(data['properties']) if len(data.get('properties')) else None
-        self.url: str = data['url']
-        self.thumbnail_url: str = data['thumbnail_url']
-        self.comment: str = data['comment']
-        self.folder_id: str = data['folder_id']
-        self.folder: Optional[RawFolder] = RawFolder(data['folder']) if data.get('folder') else None
-        self.user_id: str = data['user_id']
-        self.user: Dict[str, Any] = data['user']
+    @property
+    def created_at(self):
+        return self.__raw_data.created_at
+
+    @property
+    def name(self):
+        return self.__raw_data.name
+
+    @property
+    def folders_count(self):
+        return self.__raw_data.folders_count
+
+    @property
+    def parent_id(self):
+        return self.__raw_data.parent_id
+
+    @property
+    def parent(self):
+        return self.__raw_data.parent
+
+    @property
+    def action(self) -> FolderManager:
+        return self.__state.drive.get_folder_instance(self.id).action
+
+
+class File:
+    def __init__(self, raw_data: RawFile, state: ConnectionState):
+        self.__raw_data = raw_data
+        self.__state = state
+
+    @property
+    def id(self):
+        return self.__raw_data.id
+
+    @property
+    def created_at(self):
+        return self.__raw_data.created_at
+
+    @property
+    def name(self):
+        return self.__raw_data.name
+
+    @property
+    def type(self):
+        return self.__raw_data.type
+
+    @property
+    def md5(self):
+        return self.__raw_data.md5
+
+    @property
+    def size(self):
+        return self.__raw_data.size
+
+    @property
+    def is_sensitive(self):
+        return self.__raw_data.is_sensitive
+
+    @property
+    def blurhash(self):
+        return self.__raw_data.blurhash
+
+    @property
+    def properties(self):
+        return self.__raw_data.properties
+
+    @property
+    def url(self):
+        return self.__raw_data.url
+
+    @property
+    def thumbnail_url(self):
+        return self.__raw_data.thumbnail_url
+
+    @property
+    def comment(self):
+        return self.__raw_data.comment
+
+    @property
+    def folder_id(self):
+        return self.__raw_data.folder_id
+
+    @property
+    def folder(self):
+        return self.__raw_data.folder
+
+    @property
+    def user_id(self):
+        return self.__raw_data.user_id
+
+    @property
+    def user(self):
+        return User(RawUser(self.__raw_data.user), state=self.__state)

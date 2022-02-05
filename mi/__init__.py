@@ -11,11 +11,7 @@ __path__ = __import__("pkgutil").extend_path(__path__, __name__)
 from .abc import *
 from .actions import *
 from .api import *
-from .chart import *
-from .chat import *
 from .client import *
-from .drive import *
-from .emoji import *
 from .exception import *
 from .ext import *
 from .gateway import *
@@ -23,7 +19,5 @@ from .http import *
 from .instance import *
 from .iterators import *
 from .models import *
-from .note import *
 from .router import *
 from .types import *
-from .user import *

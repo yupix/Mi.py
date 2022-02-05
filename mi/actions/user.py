@@ -5,15 +5,15 @@ from typing import List, Optional, TYPE_CHECKING
 
 from mi.api.chat import ChatManager
 from mi.api.follow import FollowManager, FollowRequestManager
+from mi.api.models.note import RawNote
 from mi.api.note import NoteManager
 from mi.exception import NotExistRequiredData
 from mi.http import HTTPClient, Route
-from mi.models.note import RawNote
-from mi.note import Note
+from mi.models.note import Note
 
 if TYPE_CHECKING:
     from mi.state import ConnectionState
-    from mi.user import User
+    from mi.models.user import User
 
 __all__ = ['UserActions']
 
@@ -81,7 +81,7 @@ class UserActions:
         str
             メンション
         """
-        
+
         user = user or self.__user
 
         if user is None:

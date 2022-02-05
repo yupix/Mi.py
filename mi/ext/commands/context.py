@@ -4,8 +4,8 @@ from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from mi.ext.commands import BotBase, CMD
-    from mi.note import Note
-    from mi.user import User
+    from mi.models.note import Note
+    from mi.models.user import User
 
 
 class Context:

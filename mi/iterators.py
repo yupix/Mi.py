@@ -2,9 +2,9 @@ from __future__ import annotations
 
 from typing import Generator, Optional, TYPE_CHECKING
 
+from mi.api.models.user import RawUser
 from mi.http import Route
-from mi.models.user import RawUser
-from mi.user import User
+from mi.models.user import User
 from mi.utils import remove_dict_empty
 
 if TYPE_CHECKING:

@@ -4,7 +4,7 @@ import asyncio
 from typing import List, Optional, TYPE_CHECKING
 
 from mi.http import HTTPClient, Route
-from mi.user import FollowRequest, User
+from mi.models.user import FollowRequest, User
 
 if TYPE_CHECKING:
     from mi.state import ConnectionState

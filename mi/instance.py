@@ -2,14 +2,14 @@ from __future__ import annotations
 
 from typing import AsyncIterator, Dict, List, Optional, TYPE_CHECKING
 
-from .emoji import Emoji
-from .models import RawInstance
-from .models.emoji import RawEmoji
+from mi.api.models import RawInstance
+from mi.api.models.emoji import RawEmoji
+from mi.models.emoji import Emoji
 from .types.instance import (MetaPayload as InstanceMetaPayload)
 
 if TYPE_CHECKING:
-    from .user import User
-    from . import ConnectionState, User
+    from mi.models.user import User
+    from mi.state import ConnectionState
 
 
 class InstanceMeta:

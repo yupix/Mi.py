@@ -3,11 +3,11 @@ from __future__ import annotations
 import asyncio
 from typing import List, Optional, TYPE_CHECKING
 
-from mi.emoji import Emoji
+from mi.api.models.emoji import RawEmoji
+from mi.api.models.reaction import RawNoteReaction
 from mi.http import HTTPClient, Route
-from mi.models.emoji import RawEmoji
-from mi.models.reaction import RawNoteReaction
-from mi.note import NoteReaction
+from mi.models.emoji import Emoji
+from mi.models.note import NoteReaction
 from mi.utils import remove_dict_empty
 
 if TYPE_CHECKING:

@@ -9,20 +9,20 @@ from aiocache.factory import Cache
 
 from mi.actions import DriveActions, NoteActions, UserActions
 from mi.api.emoji import EmojiManager
+from mi.api.models.chat import RawChat
+from mi.api.models.drive import RawFile
+from mi.api.models.note import RawNote
+from mi.api.models.user import RawUser
 from mi.api.reaction import ReactionManager
-from mi.chat import Chat
-from mi.drive import File
-from mi.emoji import Emoji
 from mi.exception import InvalidParameters, NotExistRequiredParameters
 from mi.http import Route
 from mi.instance import Instance, InstanceMeta
 from mi.iterators import InstanceIterator
-from mi.models.chat import RawChat
-from mi.models.drive import RawFile
-from mi.models.note import RawNote
-from mi.models.user import RawUser
-from mi.note import Note, Reaction
-from mi.user import FollowRequest, Followee, User
+from mi.models.chat import Chat
+from mi.models.drive import File
+from mi.models.emoji import Emoji
+from mi.models.note import Note, Reaction
+from mi.models.user import FollowRequest, Followee, User
 from mi.utils import check_multi_arg, get_cache_key, get_module_logger, key_builder, remove_dict_empty, str_lower, \
     upper_to_lower
 

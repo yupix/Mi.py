@@ -1,6 +1,9 @@
-from typing import List, Optional
+from __future__ import annotations
 
-from mi.state import ConnectionState
+from typing import List, Optional, TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from mi.state import ConnectionState
 
 __all__ = ['Chart', 'Local', 'Remote']
 
