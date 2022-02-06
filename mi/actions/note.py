@@ -10,8 +10,6 @@ from mi.wrapper.favorite import FavoriteManager
 from mi.wrapper.models.note import RawNote
 from mi.wrapper.reaction import ReactionManager
 
-if TYPE_CHECKING:
-    pass
 
 __all__ = ['NoteActions']
 

@@ -1,15 +1,12 @@
 from __future__ import annotations
 
-from typing import List, Optional, TYPE_CHECKING
+from typing import List, Optional
 
 from mi.exception import InvalidParameters
 from mi.framework.http import HTTPSession, Route
 from mi.framework.models.drive import File, Folder
 from mi.utils import remove_dict_empty
 from mi.wrapper.models.drive import RawFile, RawFolder
-
-if TYPE_CHECKING:
-    pass
 
 __all__ = ['FolderManager', 'FileManager', 'DriveManager']
 

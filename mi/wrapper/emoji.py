@@ -1,12 +1,9 @@
 from __future__ import annotations
 
-from typing import List, Optional, TYPE_CHECKING
+from typing import List, Optional
 
 from mi.exception import NotExistRequiredData
 from mi.framework.http import Route
-
-if TYPE_CHECKING:
-    pass
 
 
 class EmojiManager:

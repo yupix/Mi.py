@@ -1,12 +1,9 @@
 from __future__ import annotations
 
-from typing import List, Optional, TYPE_CHECKING
+from typing import List, Optional
 
 from mi.framework.http import Route
 from mi.framework.models.user import FollowRequest, User
-
-if TYPE_CHECKING:
-    pass
 
 __all__ = ['FollowManager', 'FollowRequestManager']
 

@@ -1,13 +1,10 @@
 from __future__ import annotations
 
-from typing import Optional, TYPE_CHECKING
+from typing import Optional
 
 from mi.framework.http import Route
 from mi.framework.models.chat import Chat
 from mi.wrapper.models.chat import RawChat
-
-if TYPE_CHECKING:
-    pass
 
 
 class ChatManager:
