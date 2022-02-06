@@ -1,14 +1,9 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
-
 from mi.abc.chat import AbstractChatContent
 from mi.wrapper.models.chat import RawChat
 
 __all__ = ['Chat']
-
-if TYPE_CHECKING:
-    from mi.framework.state import ConnectionState
 
 
 class Chat(AbstractChatContent):
@@ -16,9 +11,8 @@ class Chat(AbstractChatContent):
     チャットオブジェクト
     """
 
-    def __init__(self, raw_data: RawChat, state: ConnectionState):
+    def __init__(self, raw_data: RawChat):
         self.__raw_data = raw_data
-        self.__state = state
 
     @property
     def id(self):

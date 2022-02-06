@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import List, Optional, TYPE_CHECKING
+from typing import List, Optional
 
 from mi.exception import ContentRequired
 from mi.framework.http import HTTPSession, Route
@@ -9,7 +9,6 @@ from mi.utils import check_multi_arg, remove_dict_empty
 from mi.wrapper.favorite import FavoriteManager
 from mi.wrapper.models.note import RawNote
 from mi.wrapper.reaction import ReactionManager
-
 
 __all__ = ['NoteActions']
 
@@ -40,7 +39,7 @@ class NoteActions:
         note_id = note_id or self.__note_id
 
         data = {'noteId': note_id, 'clipId': clip_id}
-        return bool(await self.__http.request(Route('POST', '/api/clips/add-note'), json=data, auth=True))
+        return bool(await HTTPSession.request(Route('POST', '/api/clips/add-note'), json=data, auth=True))
 
     async def send(self,
                    content: Optional[str] = None,

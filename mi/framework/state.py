@@ -129,13 +129,13 @@ class ConnectionState:
         """
         チャットが来た際のデータを処理する関数
         """
-        self.dispatch('message', Chat(RawChat(message), state=self))
+        self.dispatch('message', Chat(RawChat(message)))
 
     def parse_unread_messaging_message(self, message: Dict[str, Any]) -> None:
         """
         チャットが既読になっていない場合のデータを処理する関数
         """
-        self.dispatch('message', Chat(RawChat(message), state=self))
+        self.dispatch('message', Chat(RawChat(message)))
 
     def parse_notification(self, message: Dict[str, Any]) -> None:
         """

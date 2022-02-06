@@ -17,8 +17,8 @@ class FileManager:
 
     async def show_file(self, file_id: Optional[str], url: Optional[str]) -> File:
         data = remove_dict_empty({"fileId": file_id, "url": url})
-        res = await self.__http.request(Route('POST', '/api/admin/drive/show-file'), json=data, auth=True, lower=True)
-        return File(RawFile(res), state=self.__state)
+        res = await HTTPSession.request(Route('POST', '/api/admin/drive/show-file'), json=data, auth=True, lower=True)
+        return File(RawFile(res))
 
     async def remove_file(self, file_id: Optional[str] = None) -> bool:
         """
@@ -36,7 +36,7 @@ class FileManager:
         """
 
         file_id = file_id or self.__file_id
-        return bool(await self.__http.request(Route('POST', '/api/drive/files/delete'), json={'fileId': file_id}, auth=True))
+        return bool(await HTTPSession.request(Route('POST', '/api/drive/files/delete'), json={'fileId': file_id}, auth=True))
 
 
 class FolderManager:
@@ -63,7 +63,7 @@ class FolderManager:
         parent_id = parent_id or self.__folder_id
 
         data = {'name': name, 'parent_id': parent_id}
-        return bool(await self.__http.request(Route('POST', '/api/drive/folders/create'), json=data, lower=True, auth=True))
+        return bool(await HTTPSession.request(Route('POST', '/api/drive/folders/create'), json=data, lower=True, auth=True))
 
     async def delete(self, folder_id: Optional[str] = None) -> bool:
         """
@@ -80,7 +80,7 @@ class FolderManager:
 
         folder_id = folder_id or self.__folder_id
         data = {'folderId': folder_id}
-        return bool(await self.__http.request(Route('POST', '/api/drive/folders/delete'), json=data, lower=True, auth=True))
+        return bool(await HTTPSession.request(Route('POST', '/api/drive/folders/delete'), json=data, lower=True, auth=True))
 
     async def get_files(self, limit: int = 10, since_id: Optional[str] = None, until_id: Optional[str] = None,
                         folder_id: Optional[str] = None, file_type: Optional[str] = None) -> List[File]:

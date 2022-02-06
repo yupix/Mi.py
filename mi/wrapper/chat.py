@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import Optional
 
-from mi.framework.http import Route
+from mi.framework.http import HTTPSession, Route
 from mi.framework.models.chat import Chat
 from mi.wrapper.models.chat import RawChat
 
@@ -35,5 +35,5 @@ class ChatManager:
         """
         user_id = user_id or self.__user_id
         data = {'userId': user_id, 'groupId': group_id, 'text': text, 'fileId': file_id}
-        res = await self.__http.request(Route('POST', '/api/messaging/messages/create'), json=data, auth=True, lower=True)
-        return Chat(RawChat(res), state=self.__state)
+        res = await HTTPSession.request(Route('POST', '/api/messaging/messages/create'), json=data, auth=True, lower=True)
+        return Chat(RawChat(res))

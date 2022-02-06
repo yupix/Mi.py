@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import Optional
 
-from mi.framework.http import Route
+from mi.framework.http import HTTPSession, Route
 
 
 class FavoriteManager:
@@ -12,9 +12,9 @@ class FavoriteManager:
     async def add(self, note_id: Optional[str] = None) -> bool:
         note_id = note_id or self.__note_id
         data = {'noteId': note_id}
-        return bool(await self.__http.request(Route('POST', '/api/notes/favorites/create'), json=data, auth=True))
+        return bool(await HTTPSession.request(Route('POST', '/api/notes/favorites/create'), json=data, auth=True))
 
     async def remove(self, note_id: Optional[str] = None) -> bool:
         note_id = note_id or self.__note_id
         data = {'noteId': note_id}
-        return bool(await self.__http.request(Route('POST', '/api/notes/favorites/delete'), json=data, auth=True))
+        return bool(await HTTPSession.request(Route('POST', '/api/notes/favorites/delete'), json=data, auth=True))

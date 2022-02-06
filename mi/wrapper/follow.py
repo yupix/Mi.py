@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import List, Optional
 
-from mi.framework.http import Route
+from mi.framework.http import HTTPSession, Route
 from mi.framework.models.user import FollowRequest, User
 
 __all__ = ['FollowManager', 'FollowRequestManager']
@@ -27,7 +27,7 @@ class FollowManager:
         user_id = user_id or self.__user_id
 
         data = {"userId": user_id}
-        res = await self.__http.request(Route('POST', '/api/following/create'), json=data, auth=True, lower=True)
+        res = await HTTPSession.request(Route('POST', '/api/following/create'), json=data, auth=True, lower=True)
         if res.get("error"):
             code = res["error"]["code"]
             status = False
@@ -49,7 +49,7 @@ class FollowManager:
         user_id = user_id or self.__user_id
 
         data = {"userId": user_id}
-        res = await self.__http.request(Route('POST', '/api/following/delete'), json=data, auth=True)
+        res = await HTTPSession.request(Route('POST', '/api/following/delete'), json=data, auth=True)
         return bool(res.status_code == 204 or 200)
 
 
@@ -63,7 +63,7 @@ class FollowRequestManager:
         """
 
         return [FollowRequest(i['follower'], state=self.__state) for i in
-                await self.__http.request(Route('POST', '/api/following/requests/list'), auth=True, lower=True)]
+                await HTTPSession.request(Route('POST', '/api/following/requests/list'), auth=True, lower=True)]
 
     async def get_user(self, user_id: Optional[str] = None) -> User:
         """
@@ -91,7 +91,7 @@ class FollowRequestManager:
         user_id = user_id or self.__user_id
 
         data = {'userId': user_id}
-        return bool(await self.__http.request(Route('POST', '/api/following/requests/accept'), json=data, auth=True))
+        return bool(await HTTPSession.request(Route('POST', '/api/following/requests/accept'), json=data, auth=True))
 
     async def reject(self, user_id: Optional[str]) -> bool:
         """
@@ -101,4 +101,4 @@ class FollowRequestManager:
         user_id = user_id or self.__user_id
 
         data = {'userId': user_id}
-        return bool(await self.__http.request(Route('POST', '/api/following/requests/reject'), json=data, auth=True))
+        return bool(await HTTPSession.request(Route('POST', '/api/following/requests/reject'), json=data, auth=True))
