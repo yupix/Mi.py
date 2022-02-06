@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import Optional
 
-from mi.framework.http import Route, get_session
+from mi.framework.http import Route, HTTPSession
 
 
 class NoteManager:
@@ -21,4 +21,4 @@ class NoteManager:
             'sinceId': since_id,
             'untilId': until_id
         }
-        await get_session().request(Route('POST', '/api/notes'), json=data, auth=True, lower=True)
+        await HTTPSession.request(Route('POST', '/api/notes'), json=data, auth=True, lower=True)

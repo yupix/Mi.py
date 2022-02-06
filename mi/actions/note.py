@@ -6,7 +6,7 @@ from mi.api.favorite import FavoriteManager
 from mi.api.models.note import RawNote
 from mi.api.reaction import ReactionManager
 from mi.exception import ContentRequired
-from mi.framework.http import Route, get_session
+from mi.framework.http import Route, HTTPSession
 from mi.models.note import Note, NoteReaction, Poll
 from mi.utils import check_multi_arg, remove_dict_empty
 
@@ -132,7 +132,7 @@ class NoteActions:
         if file_ids:
             field["fileIds"] = file_ids
         field = remove_dict_empty(field)
-        res = await get_session().request(Route('POST', '/api/notes/create'), json=field, auth=True, lower=True)
+        res = await HTTPSession.request(Route('POST', '/api/notes/create'), json=field, auth=True, lower=True)
         return Note(RawNote(res["created_note"]))
 
     async def delete(self, note_id: Optional[str] = None) -> bool:
@@ -153,7 +153,7 @@ class NoteActions:
         note_id = note_id or self.__note_id
 
         data = {"noteId": note_id}
-        res = await get_session().request(Route('POST', '/api/notes/delete'), json=data, auth=True)
+        res = await HTTPSession.request(Route('POST', '/api/notes/delete'), json=data, auth=True)
         return bool(res)
 
     async def create_renote(self, note_id: Optional[str] = None) -> Note:
@@ -238,7 +238,7 @@ class NoteActions:
             取得したノートID
         """
         note_id = note_id or self.__note_id
-        res = await get_session().request(Route('POST', '/api/notes/show'), json={"noteId": note_id}, auth=True, lower=True)
+        res = await HTTPSession.request(Route('POST', '/api/notes/show'), json={"noteId": note_id}, auth=True, lower=True)
         return Note(RawNote(res))
 
     async def get_replies(
@@ -266,7 +266,7 @@ class NoteActions:
             返信のリスト
         """
         note_id = note_id or self.__note_id
-        res = await get_session().request(Route('POST', '/api/notes/replies'),
+        res = await HTTPSession.request(Route('POST', '/api/notes/replies'),
                                           json={"noteId": note_id, "sinceId": since_id, "untilId": until_id, "limit": limit},
                                           auth=True, lower=True)
         return [Note(RawNote(i)) for i in res]

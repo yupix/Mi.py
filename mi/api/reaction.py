@@ -4,7 +4,7 @@ from typing import List, Optional
 
 from mi.api.models.emoji import RawEmoji
 from mi.api.models.reaction import RawNoteReaction
-from mi.framework.http import Route, get_session
+from mi.framework.http import Route, HTTPSession
 from mi.models.emoji import Emoji
 from mi.models.note import NoteReaction
 from mi.utils import remove_dict_empty
@@ -33,22 +33,22 @@ class ReactionManager:
         note_id = note_id or self.__note_id
 
         data = remove_dict_empty({"noteId": note_id, "reaction": reaction})
-        return await get_session().request(Route('POST', '/api/notes/reactions/create'), json=data, auth=True,
+        return await HTTPSession.request(Route('POST', '/api/notes/reactions/create'), json=data, auth=True,
                                            lower=True)
 
     async def remove(self, note_id: Optional[str] = None) -> bool:
         note_id = note_id or self.__note_id
 
         data = remove_dict_empty({"noteId": note_id})
-        return bool(await get_session().request(Route('POST', '/api/notes/reactions/delete'), json=data, auth=True,
+        return bool(await HTTPSession.request(Route('POST', '/api/notes/reactions/delete'), json=data, auth=True,
                                                 lower=True))
 
     async def get_reaction(self, reaction: str, note_id: Optional[str] = None, *, limit: int = 11) -> List[NoteReaction]:
         note_id = note_id or self.__note_id
         data = remove_dict_empty({"noteId": note_id, 'limit': limit, 'type': reaction})
-        res = await get_session().request(Route('POST', '/api/notes/reactions'), json=data, auth=True, lower=True)
+        res = await HTTPSession.request(Route('POST', '/api/notes/reactions'), json=data, auth=True, lower=True)
         return [NoteReaction(RawNoteReaction(i)) for i in res]
 
     async def get_emoji_list(self) -> List[Emoji]:
-        data = await get_session().request(Route('GET', '/api/meta'), json={'detail': False}, auth=True)
+        data = await HTTPSession.request(Route('GET', '/api/meta'), json={'detail': False}, auth=True)
         return [Emoji(RawEmoji(i)) for i in data['emojis']]

@@ -11,10 +11,10 @@ from typing import Any, AsyncIterator, Callable, Coroutine, Dict, List, Optional
 import aiohttp
 from aiohttp import ClientWebSocketResponse
 
-import mi.framework.manager
+import mi.framework.http
+import mi.framework.manager as manager
 from mi import config
 from mi.api.models.user import RawUser
-from mi.framework.http import HTTPClient, get_session, set_session
 from mi.framework.state import ConnectionState
 from mi.models.chat import Chat
 from mi.models.instance import Instance, InstanceMeta
@@ -36,9 +36,7 @@ class Client:
         self.token: Optional[str] = None
         self.origin_uri: Optional[str] = None
         self.loop = asyncio.get_event_loop() if loop is None else loop
-        connector: Optional[aiohttp.BaseConnector] = options.pop('connector', None)
-        self.http = HTTPClient(connector=connector)
-        set_session(self.http)
+        self.http = mi.framework.http.HTTPSession
         self._connection: ConnectionState = self._get_state(**options)
         self.user: User = None
         self.logger = get_module_logger(__name__)
@@ -167,8 +165,8 @@ class Client:
     # ここからクライアント操作
 
     @property
-    def client(self) -> mi.framework.manager.ClientActions:
-        return mi.framework.manager.get_client_actions()
+    def client(self) -> manager.ClientActions:
+        return manager.get_client_actions()
 
     async def post_chat(self, content: str, *, user_id: str = None, group_id: str = None, file_id: str = None) -> Chat:
         """
@@ -422,7 +420,7 @@ class Client:
         return await self._connection.get_replies(note_id=note_id, limit=limit, since_id=since_id, until_id=until_id)
 
     async def login(self, token):
-        data = await get_session().static_login(token)
+        data = await mi.framework.http.HTTPSession.static_login(token)
         self.user = User(RawUser(data))
 
     async def connect(self, *, reconnect: bool = True, timeout: int = 60) -> None:

@@ -4,7 +4,7 @@ from typing import List, Optional, TYPE_CHECKING
 
 from mi.api.models.drive import RawFile, RawFolder
 from mi.exception import InvalidParameters
-from mi.framework.http import Route, get_session
+from mi.framework.http import Route, HTTPSession
 from mi.models.drive import File, Folder
 from mi.utils import remove_dict_empty
 
@@ -108,7 +108,7 @@ class FolderManager:
 
         folder_id = folder_id or self.__folder_id
         data = {'limit': limit, 'sinceId': since_id, 'untilId': until_id, 'folderId': folder_id, 'Type': file_type}
-        res = await get_session().request(Route('POST', '/api/drive/files'), json=data, auth=True, lower=True)
+        res = await HTTPSession.request(Route('POST', '/api/drive/files'), json=data, auth=True, lower=True)
         return [File(RawFile(i)) for i in res]
 
 
@@ -139,5 +139,5 @@ class DriveManager:
             'untilId': until_id,
             'folderId': folder_id
         }
-        data = await get_session().request(Route('POST', '/api/drive/folders'), json=data, lower=True, auth=True)
+        data = await HTTPSession.request(Route('POST', '/api/drive/folders'), json=data, lower=True, auth=True)
         return [Folder(RawFolder(i)) for i in data]

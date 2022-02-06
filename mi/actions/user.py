@@ -7,7 +7,7 @@ from mi.api.follow import FollowManager, FollowRequestManager
 from mi.api.models.note import RawNote
 from mi.api.note import NoteManager
 from mi.exception import NotExistRequiredData
-from mi.framework.http import Route, get_session
+from mi.framework.http import Route, HTTPSession
 from mi.models.note import Note
 
 if TYPE_CHECKING:
@@ -56,7 +56,7 @@ class UserActions:
             'fileType': file_type,
             'excludeNsfw': exclude_nsfw
         }
-        res = await get_session().request(Route('POST', '/api/users/notes'), json=data, auth=True, lower=True)
+        res = await HTTPSession.request(Route('POST', '/api/users/notes'), json=data, auth=True, lower=True)
         return [Note(RawNote(i)) for i in res]
 
     def get_mention(self, user: Optional[User] = None) -> str:
