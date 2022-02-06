@@ -23,7 +23,7 @@ from mi.exception import (
 from mi.ext.commands.context import Context
 from mi.ext.commands.core import CommandManager
 from mi.framework.client import Client
-from mi.models.user import User
+from mi.framework.models.user import User
 from mi.utils import get_module_logger
 
 if TYPE_CHECKING:

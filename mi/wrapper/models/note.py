@@ -1,12 +1,12 @@
 from datetime import datetime
 from typing import Any, Dict, List, Optional
 
-from mi.api.models.drive import RawFile
-from mi.api.models.emoji import RawEmoji
-from mi.api.models.poll import RawPoll
-from mi.api.models.user import RawUser
 from mi.types.note import NotePayload, ReactionPayload, RenotePayload
 from mi.utils import upper_to_lower
+from mi.wrapper.models.drive import RawFile
+from mi.wrapper.models.emoji import RawEmoji
+from mi.wrapper.models.poll import RawPoll
+from mi.wrapper.models.user import RawUser
 
 
 class RawRenote:

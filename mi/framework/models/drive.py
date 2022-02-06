@@ -3,13 +3,13 @@ from __future__ import annotations
 from typing import TYPE_CHECKING, Union
 
 import mi.framework.manager
-from mi.api.models.drive import RawFile, RawFolder, RawProperties
-from mi.api.models.user import RawUser
-from mi.models.user import User
+from mi.framework.models.user import User
+from mi.wrapper.models.drive import RawFile, RawFolder, RawProperties
+from mi.wrapper.models.user import RawUser
 
 if TYPE_CHECKING:
     from mi.framework.state import ConnectionState
-    from mi.api.drive import FolderManager
+    from mi.wrapper.drive import FolderManager
 
 __all__ = ['Properties', 'File', 'File', 'Folder']
 

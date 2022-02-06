@@ -2,16 +2,16 @@ from __future__ import annotations
 
 from typing import List, Optional, TYPE_CHECKING
 
-from mi.api.chat import ChatManager
-from mi.api.follow import FollowManager, FollowRequestManager
-from mi.api.models.note import RawNote
-from mi.api.note import NoteManager
 from mi.exception import NotExistRequiredData
-from mi.framework.http import Route, HTTPSession
-from mi.models.note import Note
+from mi.framework.http import HTTPSession, Route
+from mi.framework.models.note import Note
+from mi.wrapper.chat import ChatManager
+from mi.wrapper.follow import FollowManager, FollowRequestManager
+from mi.wrapper.models.note import RawNote
+from mi.wrapper.note import NoteManager
 
 if TYPE_CHECKING:
-    from mi.models.user import User
+    from mi.framework.models.user import User
 
 __all__ = ['UserActions']
 

@@ -2,9 +2,9 @@ from __future__ import annotations
 
 from typing import Optional, TYPE_CHECKING
 
-from mi.api.models.chat import RawChat
 from mi.framework.http import Route
-from mi.models.chat import Chat
+from mi.framework.models.chat import Chat
+from mi.wrapper.models.chat import RawChat
 
 if TYPE_CHECKING:
     pass

@@ -2,10 +2,10 @@ from __future__ import annotations
 
 from typing import Generator, Optional, TYPE_CHECKING
 
-from mi.api.models.user import RawUser
 from mi.framework.http import Route
-from mi.models.user import User
+from mi.framework.models.user import User
 from mi.utils import remove_dict_empty
+from mi.wrapper.models.user import RawUser
 
 if TYPE_CHECKING:
     from . import ConnectionState

@@ -5,11 +5,11 @@ from typing import Optional, TYPE_CHECKING
 from mi.actions.drive import DriveActions
 from mi.actions.note import NoteActions
 from mi.actions.user import UserActions
-from mi.api.emoji import EmojiManager
-from mi.api.reaction import ReactionManager
+from mi.wrapper.emoji import EmojiManager
+from mi.wrapper.reaction import ReactionManager
 
 if TYPE_CHECKING:
-    from mi.models import User
+    from mi.framework.models import User
 
 
 class ClientActions:

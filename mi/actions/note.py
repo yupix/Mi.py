@@ -2,13 +2,13 @@ from __future__ import annotations
 
 from typing import List, Optional, TYPE_CHECKING
 
-from mi.api.favorite import FavoriteManager
-from mi.api.models.note import RawNote
-from mi.api.reaction import ReactionManager
 from mi.exception import ContentRequired
-from mi.framework.http import Route, HTTPSession
-from mi.models.note import Note, NoteReaction, Poll
+from mi.framework.http import HTTPSession, Route
+from mi.framework.models.note import Note, NoteReaction, Poll
 from mi.utils import check_multi_arg, remove_dict_empty
+from mi.wrapper.favorite import FavoriteManager
+from mi.wrapper.models.note import RawNote
+from mi.wrapper.reaction import ReactionManager
 
 if TYPE_CHECKING:
     pass
@@ -267,8 +267,8 @@ class NoteActions:
         """
         note_id = note_id or self.__note_id
         res = await HTTPSession.request(Route('POST', '/api/notes/replies'),
-                                          json={"noteId": note_id, "sinceId": since_id, "untilId": until_id, "limit": limit},
-                                          auth=True, lower=True)
+                                        json={"noteId": note_id, "sinceId": since_id, "untilId": until_id, "limit": limit},
+                                        auth=True, lower=True)
         return [Note(RawNote(i)) for i in res]
 
     async def get_reaction(self, reaction: str, note_id: Optional[str] = None) -> List[NoteReaction]:

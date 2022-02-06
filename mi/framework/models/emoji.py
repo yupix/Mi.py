@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import mi.framework.manager
-from mi.api.models.emoji import RawEmoji
+from mi.wrapper.models.emoji import RawEmoji
 
 __all__ = ('Emoji',)
 

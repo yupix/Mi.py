@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from mi.abc.chat import AbstractChatContent
-from mi.api.models.chat import RawChat
+from mi.wrapper.models.chat import RawChat
 
 __all__ = ['Chat']
 

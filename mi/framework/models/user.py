@@ -4,15 +4,15 @@ from datetime import datetime
 from typing import Any, AsyncIterator, Dict, List, Optional, TYPE_CHECKING, Union
 
 import mi.framework.manager
-from mi.api.models.user import RawUser
-from mi.models.emoji import Emoji
-from mi.models.instance import Instance
+from mi.framework.models.emoji import Emoji
+from mi.framework.models.instance import Instance
 from mi.types.user import ChannelPayload, FieldContentPayload, PinnedNotePayload, PinnedPagePayload
+from mi.wrapper.models.user import RawUser
 
 if TYPE_CHECKING:
     from mi.framework.state import ConnectionState
     from mi.actions.user import UserActions
-    from mi.api.follow import FollowRequestManager
+    from mi.wrapper.follow import FollowRequestManager
 
 __all__ = ['User', 'FollowRequest', 'Followee']
 

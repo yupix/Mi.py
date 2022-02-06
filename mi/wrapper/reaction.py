@@ -2,12 +2,12 @@ from __future__ import annotations
 
 from typing import List, Optional
 
-from mi.api.models.emoji import RawEmoji
-from mi.api.models.reaction import RawNoteReaction
-from mi.framework.http import Route, HTTPSession
-from mi.models.emoji import Emoji
-from mi.models.note import NoteReaction
+from mi.framework.http import HTTPSession, Route
+from mi.framework.models.emoji import Emoji
+from mi.framework.models.note import NoteReaction
 from mi.utils import remove_dict_empty
+from mi.wrapper.models.emoji import RawEmoji
+from mi.wrapper.models.reaction import RawNoteReaction
 
 
 class ReactionManager:
@@ -34,14 +34,14 @@ class ReactionManager:
 
         data = remove_dict_empty({"noteId": note_id, "reaction": reaction})
         return await HTTPSession.request(Route('POST', '/api/notes/reactions/create'), json=data, auth=True,
-                                           lower=True)
+                                         lower=True)
 
     async def remove(self, note_id: Optional[str] = None) -> bool:
         note_id = note_id or self.__note_id
 
         data = remove_dict_empty({"noteId": note_id})
         return bool(await HTTPSession.request(Route('POST', '/api/notes/reactions/delete'), json=data, auth=True,
-                                                lower=True))
+                                              lower=True))
 
     async def get_reaction(self, reaction: str, note_id: Optional[str] = None, *, limit: int = 11) -> List[NoteReaction]:
         note_id = note_id or self.__note_id

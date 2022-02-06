@@ -4,19 +4,19 @@ from datetime import datetime
 from typing import Any, Dict, List, Optional, TYPE_CHECKING, Union
 
 import mi.framework.manager
-from mi.api.models.note import RawNote, RawReaction, RawRenote
-from mi.api.models.poll import RawPoll
-from mi.api.models.reaction import RawNoteReaction
-from mi.api.models.user import RawUser
 from mi.exception import NotExistRequiredData
-from mi.models.drive import File
-from mi.models.emoji import Emoji
-from mi.models.user import User
+from mi.framework.models.drive import File
+from mi.framework.models.emoji import Emoji
+from mi.framework.models.user import User
 from mi.utils import emoji_count
+from mi.wrapper.models.note import RawNote, RawReaction, RawRenote
+from mi.wrapper.models.poll import RawPoll
+from mi.wrapper.models.reaction import RawNoteReaction
+from mi.wrapper.models.user import RawUser
 
 if TYPE_CHECKING:
     from mi.framework.state import NoteActions, ConnectionState
-    from mi.api.reaction import ReactionManager
+    from mi.wrapper.reaction import ReactionManager
 
 __all__ = ('Note', 'Poll', 'Reaction', 'Follow', 'Header', 'File', 'Renote', 'NoteReaction')
 

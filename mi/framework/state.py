@@ -4,14 +4,14 @@ import asyncio
 import inspect
 from typing import Any, Callable, Dict, TYPE_CHECKING
 
-from mi.api.models.chat import RawChat
-from mi.api.models.note import RawNote
-from mi.api.models.user import RawUser
-from mi.models.chat import Chat
-from mi.models.emoji import Emoji
-from mi.models.note import Note, Reaction
-from mi.models.user import FollowRequest, User
+from mi.framework.models.chat import Chat
+from mi.framework.models.emoji import Emoji
+from mi.framework.models.note import Note, Reaction
+from mi.framework.models.user import FollowRequest, User
 from mi.utils import get_module_logger, str_lower, upper_to_lower
+from mi.wrapper.models.chat import RawChat
+from mi.wrapper.models.note import RawNote
+from mi.wrapper.models.user import RawUser
 
 if TYPE_CHECKING:
     from mi.framework.client import Client

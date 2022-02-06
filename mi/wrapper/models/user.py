@@ -1,8 +1,8 @@
 from datetime import datetime
 from typing import List, Optional
 
-from mi.api.models.instance import RawInstance
 from mi.types.user import UserPayload
+from mi.wrapper.models.instance import RawInstance
 
 __all__ = ('RawUserDetails', 'RawUser')
 

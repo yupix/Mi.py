@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import Optional, TYPE_CHECKING
 
-from mi.api.drive import DriveManager, FileManager, FolderManager
+from mi.wrapper.drive import DriveManager, FileManager, FolderManager
 
 if TYPE_CHECKING:
     pass

@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import List, Optional, TYPE_CHECKING
 
 from mi.framework.http import Route
-from mi.models.user import FollowRequest, User
+from mi.framework.models.user import FollowRequest, User
 
 if TYPE_CHECKING:
     pass
