@@ -2,12 +2,16 @@ from __future__ import annotations
 
 from typing import List, Optional, TYPE_CHECKING
 
-from mi.exception import NotExistRequiredData
+from aiocache import Cache, cached
+
+from mi.exception import NotExistRequiredData, NotExistRequiredParameters
 from mi.framework.http import HTTPSession, Route
 from mi.framework.models.note import Note
+from mi.utils import check_multi_arg, get_cache_key, key_builder, remove_dict_empty
 from mi.wrapper.chat import ChatManager
 from mi.wrapper.follow import FollowManager, FollowRequestManager
 from mi.wrapper.models.note import RawNote
+from mi.wrapper.models.user import RawUser
 from mi.wrapper.note import NoteManager
 
 if TYPE_CHECKING:
@@ -27,6 +31,60 @@ class UserActions:
         self.follow: FollowManager = FollowManager(user_id=user_id)
         self.follow_request: FollowRequestManager = FollowRequestManager(user_id=user_id)
         self.chat: ChatManager = ChatManager(user_id=user_id)
+
+    @cached(ttl=10, namespace='get_user', key_builder=key_builder)
+    async def get(self, user_id: Optional[str] = None, username: Optional[str] = None, host: Optional[str] = None) -> User:
+        """
+        ユーザーのプロフィールを取得します。一度のみサーバーにアクセスしキャッシュをその後は使います。
+        fetch_userを使った場合はキャッシュが廃棄され再度サーバーにアクセスします。
+
+        Parameters
+        ----------
+        user_id : str
+            取得したいユーザーのユーザーID
+        username : str
+            取得したいユーザーのユーザー名
+        host : str, default=None
+            取得したいユーザーがいるインスタンスのhost
+
+        Returns
+        -------
+        dict
+            ユーザー情報
+        """
+
+        field = remove_dict_empty({"userId": user_id, "username": username, "host": host})
+        data = await HTTPSession.request(Route('POST', '/api/users/show'), json=field, auth=True, lower=True)
+        return User(RawUser(data))
+
+    @get_cache_key
+    async def fetch(self, user_id: Optional[str] = None, username: Optional[str] = None,
+                    host: Optional[str] = None, **kwargs) -> User:
+        """
+        サーバーにアクセスし、ユーザーのプロフィールを取得します。基本的には get_userをお使いください。
+
+        Parameters
+        ----------
+        user_id : str
+            取得したいユーザーのユーザーID
+        username : str
+            取得したいユーザーのユーザー名
+        host : str, default=None
+            取得したいユーザーがいるインスタンスのhost
+
+        Returns
+        -------
+        User
+            ユーザー情報
+        """
+        if not check_multi_arg(user_id, username):
+            raise NotExistRequiredParameters("user_id, usernameどちらかは必須です")
+
+        field = remove_dict_empty({"userId": user_id, "username": username, "host": host})
+        data = await HTTPSession.request(Route('POST', '/api/users/show'), json=field, auth=True, lower=True)
+        old_cache = Cache(namespace='get_user')
+        await old_cache.delete(kwargs['cache_key'].format('get_user'))
+        return User(RawUser(data))
 
     async def get_notes(
             self,

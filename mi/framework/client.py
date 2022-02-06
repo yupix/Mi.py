@@ -165,7 +165,7 @@ class Client:
 
     @property
     def client(self) -> manager.ClientActions:
-        return manager.get_client_actions()
+        return manager.ClientActions()
 
     async def post_chat(self, content: str, *, user_id: str = None, group_id: str = None, file_id: str = None) -> Chat:
         """

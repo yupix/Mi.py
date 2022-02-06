@@ -36,4 +36,4 @@ class Emoji:
 
     @property
     def action(self):
-        return mi.framework.manager.get_client_actions().emoji
+        return mi.framework.manager.ClientActions().emoji

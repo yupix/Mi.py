@@ -62,7 +62,7 @@ class Folder:
 
     @property
     def action(self) -> FolderManager:
-        return mi.framework.manager.get_client_actions().drive.get_folder_instance(self.id).action
+        return mi.framework.manager.ClientActions().drive.get_folder_instance(self.id).action
 
 
 class File:

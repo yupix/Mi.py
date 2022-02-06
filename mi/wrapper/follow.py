@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from typing import List, Optional
 
+import mi.framework.manager
 from mi.framework.http import HTTPSession, Route
 from mi.framework.models.user import FollowRequest, User
 
@@ -81,7 +82,7 @@ class FollowRequestManager:
 
         user_id = user_id or self.__user_id
 
-        return await self.__state.client.get_user(user_id)
+        return await mi.framework.manager.ClientActions().client.get_user(user_id)
 
     async def accept(self, user_id: Optional[str] = None) -> bool:
         """

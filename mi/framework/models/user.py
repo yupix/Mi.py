@@ -314,4 +314,4 @@ class User:
 
     @property
     def action(self) -> UserActions:
-        return mi.framework.manager.get_client_actions().get_user_instance(self.__raw_user.id, self)
+        return mi.framework.manager.ClientActions().get_user_instance(self.__raw_user.id, self)

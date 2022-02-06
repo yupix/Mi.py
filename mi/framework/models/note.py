@@ -237,7 +237,7 @@ class Reaction:
 
     @property
     def action(self) -> ReactionManager:
-        return mi.framework.manager.get_client_actions().reaction
+        return mi.framework.manager.ClientActions().reaction
 
 
 class Note:
@@ -358,7 +358,7 @@ class Note:
 
     @property
     def action(self) -> NoteActions:
-        return mi.framework.manager.get_client_actions().get_note_instance(self.id)
+        return mi.framework.manager.ClientActions().get_note_instance(self.id)
 
     async def reply(
             self, content: Optional[str],
