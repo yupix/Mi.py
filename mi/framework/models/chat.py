@@ -1,14 +1,10 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
-
 from mi.abc.chat import AbstractChatContent
-from mi.api.models.chat import RawChat
+import mi.framework.manager as manager
+from mi.wrapper.models.chat import RawChat
 
 __all__ = ['Chat']
-
-if TYPE_CHECKING:
-    from mi.state import ConnectionState
 
 
 class Chat(AbstractChatContent):
@@ -16,9 +12,8 @@ class Chat(AbstractChatContent):
     チャットオブジェクト
     """
 
-    def __init__(self, raw_data: RawChat, state: ConnectionState):
+    def __init__(self, raw_data: RawChat):
         self.__raw_data = raw_data
-        self.__state = state
 
     @property
     def id(self):
@@ -73,5 +68,5 @@ class Chat(AbstractChatContent):
         bool:
             成功したか否か
         """
-        res = await self.__state.delete_chat(message_id=self.id)
+        res = await manager.ClientActions().chat.delete(message_id=self.id)
         return bool(res)

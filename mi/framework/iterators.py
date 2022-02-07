@@ -2,10 +2,10 @@ from __future__ import annotations
 
 from typing import Generator, Optional, TYPE_CHECKING
 
-from mi.api.models.user import RawUser
-from mi.http import Route
-from mi.models.user import User
+from mi.framework.http import Route
+from mi.framework.models.user import User
 from mi.utils import remove_dict_empty
+from mi.wrapper.models.user import RawUser
 
 if TYPE_CHECKING:
     from . import ConnectionState
@@ -56,11 +56,11 @@ class InstanceIterator:
         if get_all:
             while True:
                 for i in res:
-                    yield User(RawUser(i), state=self._state)
+                    yield User(RawUser(i))
                 args['offset'] = args['offset'] + len(res)
                 res = await self._state.http.request(Route('POST', '/api/admin/show-users'), json=args, auth=True, lower=True)
                 if len(res) == 0:
                     break
         else:
             for i in res:
-                yield User(RawUser(i), state=self._state)
+                yield User(RawUser(i))

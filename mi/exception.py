@@ -19,8 +19,15 @@ __all__ = (
     "InternalServerError",
     "TaskNotRunningError",
     "NotFoundError",
-    "NotExistRequiredData"
+    "NotExistRequiredData",
+    "NotSupportedError"
 )
+
+
+class NotSupportedError(Exception):
+    """
+    is_ayuskeyをTrueにしていて、かつサポートされていないAPIをを使用した際に発生する例外
+    """
 
 
 class NotExistRequiredData(Exception):

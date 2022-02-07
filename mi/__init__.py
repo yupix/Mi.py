@@ -8,15 +8,10 @@ __version__ = "3.3.0"
 
 __path__ = __import__("pkgutil").extend_path(__path__, __name__)
 
+import mi.ext
+import mi.framework
+import mi.wrapper
 from .abc import *
 from .actions import *
-from .api import *
-from .client import *
 from .exception import *
-from .ext import *
-from .gateway import *
-from .http import *
-from .iterators import *
-from .models import *
-from .router import *
 from .types import *

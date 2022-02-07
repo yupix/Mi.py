@@ -1,40 +1,95 @@
 from __future__ import annotations
 
-import asyncio
 from typing import List, Optional, TYPE_CHECKING
 
-from mi.api.chat import ChatManager
-from mi.api.follow import FollowManager, FollowRequestManager
-from mi.api.models.note import RawNote
-from mi.api.note import NoteManager
-from mi.exception import NotExistRequiredData
-from mi.http import HTTPClient, Route
-from mi.models.note import Note
+from aiocache import Cache, cached
+
+from mi.exception import NotExistRequiredData, NotExistRequiredParameters
+from mi.framework.http import HTTPSession, Route
+from mi.framework.models.note import Note
+from mi.utils import check_multi_arg, get_cache_key, key_builder, remove_dict_empty
+from mi.wrapper.chat import ChatManager
+from mi.wrapper.follow import FollowManager, FollowRequestManager
+from mi.wrapper.models.note import RawNote
+from mi.wrapper.models.user import RawUser
+from mi.wrapper.note import NoteManager
+from mi.wrapper.user import AdminUserManager
 
 if TYPE_CHECKING:
-    from mi.state import ConnectionState
-    from mi.models.user import User
+    from mi.framework.models.user import User
 
 __all__ = ['UserActions']
 
 
 class UserActions:
     def __init__(
-            self, state: ConnectionState,
-            http: HTTPClient,
-            loop: asyncio.AbstractEventLoop,
-            *,
+            self,
             user_id: Optional[str] = None,
             user: Optional[User] = None
     ):
-        self.__state = state
-        self.__http = http
-        self.__loop = loop
         self.__user: User = user
-        self.note: NoteManager(state, http, loop, user_id=user_id)
-        self.follow: FollowManager = FollowManager(state, http, loop, user_id=user_id)
-        self.follow_request: FollowRequestManager = FollowRequestManager(state, http, loop, user_id=user_id)
-        self.chat: ChatManager = ChatManager(state, http, loop, user_id=user_id)
+        self.admin = AdminUserManager(user_id=user_id)
+        self.note: NoteManager()
+        self.follow: FollowManager = FollowManager(user_id=user_id)
+        self.follow_request: FollowRequestManager = FollowRequestManager(user_id=user_id)
+        self.chat: ChatManager = ChatManager(user_id=user_id)
+
+    def _get_chat_instance(self, message_id: Optional[str] = None, user_id: Optional[str] = None) -> ChatManager:
+        return ChatManager(user_id=self.__user.id, message_id=message_id)
+
+    @cached(ttl=10, namespace='get_user', key_builder=key_builder)
+    async def get(self, user_id: Optional[str] = None, username: Optional[str] = None, host: Optional[str] = None) -> User:
+        """
+        ユーザーのプロフィールを取得します。一度のみサーバーにアクセスしキャッシュをその後は使います。
+        fetch_userを使った場合はキャッシュが廃棄され再度サーバーにアクセスします。
+
+        Parameters
+        ----------
+        user_id : str
+            取得したいユーザーのユーザーID
+        username : str
+            取得したいユーザーのユーザー名
+        host : str, default=None
+            取得したいユーザーがいるインスタンスのhost
+
+        Returns
+        -------
+        User
+            ユーザー情報
+        """
+
+        field = remove_dict_empty({"userId": user_id, "username": username, "host": host})
+        data = await HTTPSession.request(Route('POST', '/api/users/show'), json=field, auth=True, lower=True)
+        return User(RawUser(data))
+
+    @get_cache_key
+    async def fetch(self, user_id: Optional[str] = None, username: Optional[str] = None,
+                    host: Optional[str] = None, **kwargs) -> User:
+        """
+        サーバーにアクセスし、ユーザーのプロフィールを取得します。基本的には get_userをお使いください。
+
+        Parameters
+        ----------
+        user_id : str
+            取得したいユーザーのユーザーID
+        username : str
+            取得したいユーザーのユーザー名
+        host : str, default=None
+            取得したいユーザーがいるインスタンスのhost
+
+        Returns
+        -------
+        User
+            ユーザー情報
+        """
+        if not check_multi_arg(user_id, username):
+            raise NotExistRequiredParameters("user_id, usernameどちらかは必須です")
+
+        field = remove_dict_empty({"userId": user_id, "username": username, "host": host})
+        data = await HTTPSession.request(Route('POST', '/api/users/show'), json=field, auth=True, lower=True)
+        old_cache = Cache(namespace='get_user')
+        await old_cache.delete(kwargs['cache_key'].format('get_user'))
+        return User(RawUser(data))
 
     async def get_notes(
             self,
@@ -64,8 +119,8 @@ class UserActions:
             'fileType': file_type,
             'excludeNsfw': exclude_nsfw
         }
-        res = await self.__http.request(Route('POST', '/api/users/notes'), json=data, auth=True, lower=True)
-        return [Note(RawNote(i), state=self.__state) for i in res]
+        res = await HTTPSession.request(Route('POST', '/api/users/notes'), json=data, auth=True, lower=True)
+        return [Note(RawNote(i)) for i in res]
 
     def get_mention(self, user: Optional[User] = None) -> str:
         """
@@ -89,7 +144,7 @@ class UserActions:
         return f'@{user.name}@{user.host}' if user.instance else f'@{user.name}'
 
     def get_follow(self, user_id: str) -> FollowManager:
-        return FollowManager(self.__state, self.__http, self.__loop, user_id=user_id)
+        return FollowManager(user_id=user_id)
 
     def get_follow_request(self, user_id: str) -> FollowRequestManager:
-        return FollowRequestManager(self.__state, self.__http, self.__loop, user_id=user_id)
+        return FollowRequestManager(user_id=user_id)

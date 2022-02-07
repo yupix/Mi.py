@@ -2,21 +2,21 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, Union
 
-from mi.api.models.drive import RawFile, RawFolder, RawProperties
-from mi.api.models.user import RawUser
-from mi.models.user import User
+import mi.framework.manager
+from mi.framework.models.user import User
+from mi.wrapper.models.drive import RawFile, RawFolder, RawProperties
+from mi.wrapper.models.user import RawUser
 
 if TYPE_CHECKING:
-    from mi.state import ConnectionState
-    from mi.api.drive import FolderManager
+    from mi.framework.state import ConnectionState
+    from mi.wrapper.drive import FolderManager
 
 __all__ = ['Properties', 'File', 'File', 'Folder']
 
 
 class Properties:
-    def __init__(self, raw_data: RawProperties, state: ConnectionState) -> None:
+    def __init__(self, raw_data: RawProperties) -> None:
         self.__raw_data: RawProperties = raw_data
-        self.__state = state
 
     @property
     def width(self) -> int:
@@ -32,9 +32,8 @@ class Properties:
 
 
 class Folder:
-    def __init__(self, raw_data: RawFolder, state: ConnectionState):
+    def __init__(self, raw_data: RawFolder):
         self.__raw_data = raw_data
-        self.__state = state
 
     @property
     def id(self):
@@ -62,13 +61,12 @@ class Folder:
 
     @property
     def action(self) -> FolderManager:
-        return self.__state.drive.get_folder_instance(self.id).action
+        return mi.framework.manager.ClientActions().drive.get_folder_instance(self.id).action
 
 
 class File:
-    def __init__(self, raw_data: RawFile, state: ConnectionState):
+    def __init__(self, raw_data: RawFile):
         self.__raw_data = raw_data
-        self.__state = state
 
     @property
     def id(self):
@@ -132,4 +130,4 @@ class File:
 
     @property
     def user(self):
-        return User(RawUser(self.__raw_data.user), state=self.__state)
+        return User(RawUser(self.__raw_data.user))

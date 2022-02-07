@@ -6,11 +6,12 @@ from typing import Any, Dict, Optional
 
 import aiohttp
 
-from mi.gateway import MisskeyClientWebSocketResponse
+from mi import __version__, exception
+from mi.framework.gateway import MisskeyClientWebSocketResponse
+from mi.framework.router import Route
 from mi.utils import remove_dict_empty, upper_to_lower
-from . import __version__, config, exception
 
-__all__ = ('Route', 'HTTPClient')
+__all__ = ('Route', 'HTTPClient', 'HTTPSession')
 
 
 class _MissingSentinel:
@@ -27,13 +28,6 @@ class _MissingSentinel:
 MISSING: Any = _MissingSentinel()
 
 
-class Route:
-    def __init__(self, method: str, path: str):
-        self.path: str = path
-        self.method: str = method
-        self.url = config.i.origin_uri + path
-
-
 async def json_or_text(response: aiohttp.ClientResponse):
     text = await response.text(encoding='utf-8')
     try:
@@ -44,8 +38,7 @@ async def json_or_text(response: aiohttp.ClientResponse):
 
 
 class HTTPClient:
-    def __init__(self, connector: Optional[aiohttp.BaseConnector] = None) -> None:
-        self.connector = connector
+    def __init__(self) -> None:
         user_agent = 'Misskey Bot (https://github.com/yupix/Mi.py {0}) Python/{1[0]}.{1[1]} aiohttp/{2}'
         self.user_agent = user_agent.format(__version__, sys.version_info, aiohttp.__version__)
         self.__session: aiohttp.ClientSession = MISSING
@@ -117,8 +110,7 @@ class HTTPClient:
 
     async def static_login(self, token: str):
         self.token = token
-        self.__session = aiohttp.ClientSession(
-            connector=self.connector, ws_response_class=MisskeyClientWebSocketResponse)
+        self.__session = aiohttp.ClientSession(ws_response_class=MisskeyClientWebSocketResponse)
         data = await self.request(Route('POST', '/api/i'), auth=True)
         return data
 
@@ -133,3 +125,6 @@ class HTTPClient:
             'compress': compress
         }
         return await self.__session.ws_connect(url, **kwargs)
+
+
+HTTPSession: HTTPClient = HTTPClient()

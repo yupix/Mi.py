@@ -5,10 +5,19 @@ from __future__ import annotations
 import uuid
 from typing import List, TYPE_CHECKING
 
+from mi import config
+
 if TYPE_CHECKING:
     from aiohttp.client_ws import ClientWebSocketResponse
 
-__all__ = ['Router']
+__all__ = ['Router', 'Route']
+
+
+class Route:
+    def __init__(self, method: str, path: str):
+        self.path: str = path
+        self.method: str = method
+        self.url = config.i.origin_uri + path
 
 
 class Router:

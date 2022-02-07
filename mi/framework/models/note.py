@@ -3,19 +3,20 @@ from __future__ import annotations
 from datetime import datetime
 from typing import Any, Dict, List, Optional, TYPE_CHECKING, Union
 
-from mi.api.models.note import RawNote, RawReaction, RawRenote
-from mi.api.models.poll import RawPoll
-from mi.api.models.reaction import RawNoteReaction
-from mi.api.models.user import RawUser
+import mi.framework.manager as manager
 from mi.exception import NotExistRequiredData
-from mi.models.drive import File
-from mi.models.emoji import Emoji
-from mi.models.user import User
+from mi.framework.models.drive import File
+from mi.framework.models.emoji import Emoji
+from mi.framework.models.user import User
 from mi.utils import emoji_count
+from mi.wrapper.models.note import RawNote, RawReaction, RawRenote
+from mi.wrapper.models.poll import RawPoll
+from mi.wrapper.models.reaction import RawNoteReaction
+from mi.wrapper.models.user import RawUser
 
 if TYPE_CHECKING:
-    from mi.state import NoteActions, ConnectionState
-    from mi.api.reaction import ReactionManager
+    from mi.framework.state import NoteActions, ConnectionState
+    from mi.wrapper.reaction import ReactionManager
 
 __all__ = ('Note', 'Poll', 'Reaction', 'Follow', 'Header', 'File', 'Renote', 'NoteReaction')
 
@@ -93,9 +94,9 @@ class Poll:
 
 
 class Renote:
-    def __init__(self, raw_data: RawRenote, state: ConnectionState):
+    def __init__(self, raw_data: RawRenote):
         self.__raw_data: RawRenote = raw_data
-        self.__state = state
+        self.__client = manager.ClientActions()
 
     @property
     def id(self) -> str:
@@ -111,7 +112,7 @@ class Renote:
 
     @property
     def user(self):
-        return User(self.__raw_data.user, state=self.__state)
+        return User(self.__raw_data.user)
 
     @property
     def content(self):
@@ -178,13 +179,12 @@ class Renote:
         return emoji_count(self.__raw_data.content)
 
     async def delete(self) -> bool:
-        return await self.__state.delete_note(self.__raw_data.id)
+        return await self.__client.note.delete(self.__raw_data.id)
 
 
 class NoteReaction:
-    def __init__(self, raw_data: RawNoteReaction, state: ConnectionState):
+    def __init__(self, raw_data: RawNoteReaction):
         self.__raw_data = raw_data
-        self.__state = state
 
     @property
     def id(self) -> str:
@@ -196,7 +196,7 @@ class NoteReaction:
 
     @property
     def user(self) -> User:
-        return User(RawUser(self.__raw_data.user), state=self.__state)
+        return User(RawUser(self.__raw_data.user))
 
     @property
     def reaction(self) -> str:
@@ -204,9 +204,8 @@ class NoteReaction:
 
 
 class Reaction:
-    def __init__(self, raw_data: RawReaction, state: ConnectionState):
+    def __init__(self, raw_data: RawReaction):
         self.__raw_data = raw_data
-        self.__state: ConnectionState = state
 
     @property
     def id(self) -> Optional[str]:
@@ -226,11 +225,11 @@ class Reaction:
 
     @property
     def user(self) -> Optional[User]:
-        return User(self.__raw_data.user, state=self.__state) if self.__raw_data.user else None
+        return User(self.__raw_data.user) if self.__raw_data.user else None
 
     @property
     def note(self) -> Optional[Note]:
-        return Note(self.__raw_data.note, state=self.__state) if self.__raw_data.note else None
+        return Note(self.__raw_data.note) if self.__raw_data.note else None
 
     @property
     def reaction(self) -> str:
@@ -238,13 +237,13 @@ class Reaction:
 
     @property
     def action(self) -> ReactionManager:
-        return self.__state.reaction
+        return manager.ClientActions().reaction
 
 
 class Note:
-    def __init__(self, raw_data: RawNote, state: ConnectionState):
+    def __init__(self, raw_data: RawNote):
         self.__raw_data: RawNote = raw_data
-        self.__state: ConnectionState = state
+        self.__client = manager.ClientActions()
 
     @property
     def id(self) -> str:
@@ -260,7 +259,7 @@ class Note:
 
     @property
     def author(self) -> User:
-        return User(self.__raw_data.author, state=self.__state)
+        return User(self.__raw_data.author)
 
     @property
     def content(self) -> Optional[str]:
@@ -272,7 +271,7 @@ class Note:
 
     @property
     def renote(self) -> Union[None, Renote]:
-        return Renote(self.__raw_data.renote, state=self.__state) if self.__raw_data.renote else None
+        return Renote(self.__raw_data.renote) if self.__raw_data.renote else None
 
     @property
     def visibility(self) -> Optional[str]:
@@ -292,7 +291,7 @@ class Note:
 
     @property
     def emojis(self) -> List[Emoji]:
-        return [Emoji(i, state=self.__state) for i in self.__raw_data.emojis]
+        return [Emoji(i) for i in self.__raw_data.emojis]
 
     @property
     def file_ids(self) -> Optional[List[str]]:
@@ -300,7 +299,7 @@ class Note:
 
     @property
     def files(self) -> List[File]:
-        return [File(i, state=self.__state) for i in self.__raw_data.files]
+        return [File(i) for i in self.__raw_data.files]
 
     @property
     def reply_id(self) -> Optional[str]:
@@ -360,7 +359,7 @@ class Note:
 
     @property
     def action(self) -> NoteActions:
-        return self.__state.get_note_instance(self.id)
+        return self.__client.get_note_instance(self.id)
 
     async def reply(
             self, content: Optional[str],
@@ -399,7 +398,7 @@ class Note:
         """
         if file_ids is None:
             file_ids = []
-        return await self.__state.note.send(
+        return await self.__client.note.send(
             content,
             visibility=self.visibility,
             visible_user_ids=self.visible_user_ids,
