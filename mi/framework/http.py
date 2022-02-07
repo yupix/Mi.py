@@ -67,7 +67,6 @@ class HTTPClient:
         for i in ('json', 'data'):
             if kwargs.get(i):
                 kwargs[i] = remove_dict_empty(kwargs[i])
-
         async with self.__session.request(route.method, route.url, **kwargs) as res:
             data = await json_or_text(res)
             if is_lower:
@@ -113,6 +112,9 @@ class HTTPClient:
         self.__session = aiohttp.ClientSession(ws_response_class=MisskeyClientWebSocketResponse)
         data = await self.request(Route('POST', '/api/i'), auth=True)
         return data
+
+    async def close_session(self):
+        await self.__session.close()
 
     async def ws_connect(self, url: str, *, compress: int = 0) -> Any:
         kwargs = {
