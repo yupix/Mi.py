@@ -433,7 +433,8 @@ class Client:
         while True:
             await self.ws.poll_event()
 
-    async def start(self, url: str, token: str, *, debug: bool = False, reconnect: bool = True, timeout: int = 60):
+    async def start(self, url: str, token: str, *, debug: bool = False, reconnect: bool = True, timeout: int = 60,
+                    is_ayuskey: bool = False):
         """
         Starting Bot
 
@@ -469,5 +470,6 @@ class Client:
         }
         config.i = config.Config(**auth_i)
         config.debug = debug
+        config.is_ayuskey = is_ayuskey
         await self.login(token)
         await self.connect(reconnect=reconnect, timeout=timeout)

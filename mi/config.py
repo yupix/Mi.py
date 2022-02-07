@@ -21,3 +21,4 @@ class Config:
 
 i: Config = Config(token=None, origin_uri=None)
 debug: bool = False
+is_ayuskey: bool = False
