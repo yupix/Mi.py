@@ -10,8 +10,8 @@ __path__ = __import__("pkgutil").extend_path(__path__, __name__)
 
 import mi.ext
 import mi.framework
+import mi.wrapper
 from .abc import *
 from .actions import *
 from .exception import *
 from .types import *
-from .wrapper import *
