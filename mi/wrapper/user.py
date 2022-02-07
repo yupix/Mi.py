@@ -15,5 +15,6 @@ class AdminUserManager:
 
     @staticmethod
     async def delete_account(user_id: str) -> bool:
-        res = await HTTPSession.request(Route('DELETE', '/admin/accounts/delete'.format(user_id)), auth=True, lower=True)
+        data = {'userId': user_id}
+        res = await HTTPSession.request(Route('POST', '/admin/accounts/delete'), json=data, auth=True, lower=True)
         return bool(res)
