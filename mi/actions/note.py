@@ -246,7 +246,9 @@ class NoteActions:
             note_id: Optional[str] = None
     ) -> List[Note]:
         """
-        Paramters
+        ノートに対する返信を取得します
+
+        Parameters
         ---------
         since_id : Optional[str], default=None
             指定すると、その投稿を投稿を起点としてより新しい投稿を取得します

@@ -167,45 +167,6 @@ class Client:
     def client(self) -> manager.ClientActions:
         return manager.ClientActions()
 
-    async def post_chat(self, content: str, *, user_id: str = None, group_id: str = None, file_id: str = None) -> Chat:
-        """
-        チャットを送信します。
-
-        Parameters
-        ----------
-        content : str
-            テキスト
-        user_id : str, optional
-            送信対象のユーザーid, by default None
-        group_id : str, optional
-            送信対象のグループid, by default None
-        file_id : str, optional
-            添付するファイルid, by default None
-
-        Returns
-        -------
-        None
-        """
-
-        return await self._connection.post_chat(content, user_id=user_id, group_id=group_id, file_id=file_id)
-
-    async def delete_chat(self, message_id: str) -> bool:
-        """
-        指定されたIDのチャットを削除します。
-
-        Parameters
-        ----------
-        message_id : str
-            削除するメッセージのid
-
-        Returns
-        -------
-        bool
-            削除に成功したかどうか
-        """
-
-        return await self._connection.delete_chat(message_id=message_id)
-
     async def get_user_notes(
             self,
             user_id: str,
@@ -258,55 +219,6 @@ class Client:
 
         return await self._connection.get_i()
 
-    async def get_user(self, user_id: Optional[str] = None, username: Optional[str] = None,
-                       host: Optional[str] = None) -> User:
-        """
-        ユーザーのプロフィールを取得します。一度のみサーバーにアクセスしキャッシュをその後は使います。
-        fetch_userを使った場合はキャッシュが廃棄され再度サーバーにアクセスします。
-
-        Parameters
-        ----------
-        user_id : str
-            取得したいユーザーのユーザーID
-        username : str
-        host : str, default=None
-            取得したいユーザーのユーザー名
-            取得したいユーザーがいるインスタンスのhost
-
-        Returns
-        -------
-        User
-            ユーザー情報
-        """
-
-        return await self._connection.get_user(user_id=user_id, username=username, host=host)
-
-    async def fetch_user(self, user_id: Optional[str] = None, username: Optional[str] = None,
-                         host: Optional[str] = None) -> User:
-        """
-        サーバーにアクセスし、ユーザーのプロフィールを取得します。基本的には get_userをお使いください。
-
-        Parameters
-        ----------
-        user_id : str
-            取得したいユーザーのユーザーID
-        username : str
-            取得したいユーザーのユーザー名
-        host : str, default=None
-            取得したいユーザーがいるインスタンスのhost
-
-        Returns
-        -------
-        dict
-            ユーザー情報
-        """
-
-        return await self._connection.fetch_user(user_id=user_id, username=username, host=host)
-
-    async def get_drive_folders(self, limit: int = 100, since_id: Optional[str] = None, until_id: Optional[str] = None,
-                                folder_id: Optional[str] = None):
-        return await self._connection.drive.action.get_folders(limit, since_id, until_id, folder_id)
-
     async def file_upload(
             self,
             name: Optional[str] = None,
@@ -338,85 +250,6 @@ class Client:
 
         return await self._connection.file_upload(name=name, to_file=to_file, to_url=to_url, force=force,
                                                   is_sensitive=is_sensitive)
-
-    async def show_file(self, file_id: Optional[str] = None, url: Optional[str] = None) -> File:
-        """
-        ファイルの情報を取得します。
-
-        Parameters
-        ----------
-        file_id : Optional[str], default=None
-            ファイルのID
-        url : Optional[str], default=None
-            ファイルのURL
-
-        Returns
-        -------
-        File
-            ファイルの情報
-        """
-
-        return await self._connection.show_file(file_id=file_id, url=url)
-
-    async def remove_file(self, file_id: str) -> bool:
-        """
-        指定したファイルIDのファイルを削除します
-        
-        Parameters
-        ----------
-        file_id:str
-            削除したいファイルのID
-        
-        Returns
-        -------
-        bool
-            削除に成功したかどうか
-        """
-
-        return await self._connection.remove_file(file_id=file_id)
-
-    async def get_announcements(self, limit: int, with_unreads: bool, since_id: str, until_id: str):
-        return await self._connection.get_announcements(limit=limit, with_unreads=with_unreads, since_id=since_id,
-                                                        until_id=until_id)
-
-    async def get_note(self, note_id: str) -> Note:
-        """
-        ノートを取得
-        Parameters
-        ----------
-        note_id:str
-            取得したいノートのID
-        
-        Returns
-        -------
-        Note
-            取得したノート
-        """
-
-        return await self._connection.get_note(note_id=note_id)
-
-    async def get_replies(self, note_id: str, since_id: Optional[str] = None, until_id: Optional[str] = None,
-                          limit: int = 1) -> List[Note]:
-        """
-        ノートに対する返信を取得します
-        
-        Parameters
-        ----------
-        note_id : str
-            返信を取得したいノートのID
-        since_id: Optional[str], default=None
-        until_id: Optional[str], default=None
-            前回の最後のidから取得する場合
-        limit: int, default=10
-            取得する件数
-        
-        Returns
-        -------
-        List[Note]
-            ノートに対する返信一覧
-        """
-
-        return await self._connection.get_replies(note_id=note_id, limit=limit, since_id=since_id, until_id=until_id)
 
     async def login(self, token):
         data = await mi.framework.http.HTTPSession.static_login(token)

@@ -8,8 +8,9 @@ from mi.wrapper.models.chat import RawChat
 
 
 class ChatManager:
-    def __init__(self, user_id: Optional[str] = None):
+    def __init__(self, user_id: Optional[str] = None, message_id: Optional[str] = None):
         self.__user_id = user_id
+        self.__message_id = message_id
 
     async def send(
             self,
@@ -37,3 +38,23 @@ class ChatManager:
         data = {'userId': user_id, 'groupId': group_id, 'text': text, 'fileId': file_id}
         res = await HTTPSession.request(Route('POST', '/api/messaging/messages/create'), json=data, auth=True, lower=True)
         return Chat(RawChat(res))
+
+    async def delete(self, message_id: str) -> bool:
+        """
+        指定したidのメッセージを削除します。
+
+        Parameters
+        ----------
+        message_id : str
+            メッセージid
+
+        Returns
+        -------
+        bool
+            成功したか否か
+        """
+
+        message_id = message_id or self.__message_id
+        args = {'messageId': f'{message_id}'}
+        data = await HTTPSession.request(Route('POST', '/api/messaging/messages/delete'), json=args, auth=True)
+        return bool(data)

@@ -16,6 +16,22 @@ class FileManager:
         self.__file_id = file_id
 
     async def show_file(self, file_id: Optional[str], url: Optional[str]) -> File:
+        """
+        ファイルの情報を取得します。
+
+        Parameters
+        ----------
+        file_id : Optional[str], default=None
+            ファイルのID
+        url : Optional[str], default=None
+            ファイルのURL
+
+        Returns
+        -------
+        File
+            ファイルの情報
+        """
+
         data = remove_dict_empty({"fileId": file_id, "url": url})
         res = await HTTPSession.request(Route('POST', '/api/admin/drive/show-file'), json=data, auth=True, lower=True)
         return File(RawFile(res))

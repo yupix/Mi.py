@@ -13,6 +13,7 @@ from mi.wrapper.follow import FollowManager, FollowRequestManager
 from mi.wrapper.models.note import RawNote
 from mi.wrapper.models.user import RawUser
 from mi.wrapper.note import NoteManager
+from mi.wrapper.user import AdminUserManager
 
 if TYPE_CHECKING:
     from mi.framework.models.user import User
@@ -27,10 +28,14 @@ class UserActions:
             user: Optional[User] = None
     ):
         self.__user: User = user
-        self.note: NoteManager(user_id=user_id)
+        self.admin = AdminUserManager(user_id=user_id)
+        self.note: NoteManager()
         self.follow: FollowManager = FollowManager(user_id=user_id)
         self.follow_request: FollowRequestManager = FollowRequestManager(user_id=user_id)
         self.chat: ChatManager = ChatManager(user_id=user_id)
+
+    def _get_chat_instance(self, message_id: Optional[str] = None, user_id: Optional[str] = None) -> ChatManager:
+        return ChatManager(user_id=self.__user.id, message_id=message_id)
 
     @cached(ttl=10, namespace='get_user', key_builder=key_builder)
     async def get(self, user_id: Optional[str] = None, username: Optional[str] = None, host: Optional[str] = None) -> User:
@@ -49,7 +54,7 @@ class UserActions:
 
         Returns
         -------
-        dict
+        User
             ユーザー情報
         """
 
