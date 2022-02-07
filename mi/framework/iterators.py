@@ -56,11 +56,11 @@ class InstanceIterator:
         if get_all:
             while True:
                 for i in res:
-                    yield User(RawUser(i), state=self._state)
+                    yield User(RawUser(i))
                 args['offset'] = args['offset'] + len(res)
                 res = await self._state.http.request(Route('POST', '/api/admin/show-users'), json=args, auth=True, lower=True)
                 if len(res) == 0:
                     break
         else:
             for i in res:
-                yield User(RawUser(i), state=self._state)
+                yield User(RawUser(i))

@@ -3,7 +3,7 @@ from __future__ import annotations
 from datetime import datetime
 from typing import Any, AsyncIterator, Dict, List, Optional, TYPE_CHECKING, Union
 
-import mi.framework.manager
+import mi.framework.manager as manager
 from mi.framework.models.emoji import Emoji
 from mi.framework.models.instance import Instance
 from mi.types.user import ChannelPayload, FieldContentPayload, PinnedNotePayload, PinnedPagePayload
@@ -18,17 +18,16 @@ __all__ = ['User', 'FollowRequest', 'Followee']
 
 
 class Followee:
-    def __init__(self, data, state: ConnectionState):
+    def __init__(self, data):
         self.id: str = data['id']
         self.created_at: datetime = datetime.strptime(data["created_at"], '%Y-%m-%dT%H:%M:%S.%fZ')
         self.followee_id: str = data['followee_id']
         self.follower_id: str = data['follower_id']
-        self.user: User = User(RawUser(data['follower']), state=state)
-        self.__state = state
+        self.user: User = User(RawUser(data['follower']))
 
 
 class FollowRequest:
-    def __init__(self, data, state: ConnectionState):
+    def __init__(self, data):
         self.id = data['id']
         self.name = data['username']
         self.nickname = data['name']
@@ -41,14 +40,14 @@ class FollowRequest:
         self.is_admin: bool = bool(data.get('is_admin'))
         self.is_bot: bool = bool(data.get('is_bot'))
         self.is_cat: bool = bool(data.get('is_cat'))
-        self.__state: ConnectionState = state
+        self.__client = manager.ClientActions()
 
     @property
     def action(self) -> FollowRequestManager:
-        return self.__state.user.get_follow_request(self.id)
+        return self.__client.user.get_follow_request(self.id)
 
     async def get_profile(self) -> User:
-        return await self.__state.get_user(user_id=self.id)
+        return await self.__client.user.get(user_id=self.id)
 
 
 class Channel:
@@ -67,14 +66,14 @@ class Channel:
 
 
 class PinnedNote:
-    def __init__(self, data: PinnedNotePayload, state: ConnectionState):
+    def __init__(self, data: PinnedNotePayload):
         self.id: Optional[str] = data.get("id")
         self.created_at: Optional[datetime] = datetime.strptime(data["created_at"], '%Y-%m-%dT%H:%M:%S.%fZ') if data.get(
             "created_at") else None
         self.text: Optional[str] = data.get("text")
         self.cw: Optional[str] = data.get("cw")
         self.user_id: Optional[str] = data.get("user_id")
-        self.user: Optional[User] = User(RawUser(data['user']), state=state) if data.get('user') else None
+        self.user: Optional[User] = User(RawUser(data['user'])) if data.get('user') else None
         self.reply_id: Optional[str] = data.get("reply_id")
         self.reply: Optional[Dict[str, Any]] = data.get("reply")
         self.renote: Optional[Dict[str, Any]] = data.get("renote")
@@ -89,18 +88,17 @@ class PinnedNote:
         self.poll: Optional[List[str]] = data.get("poll")
         self.channel: Optional[Channel] = Channel(data["channel"]) if data.get("channel") else None
         self.local_only: Optional[bool] = data.get("local_only")
-        self.emojis: Optional[List[Emoji]] = [Emoji(i, state=state) for i in data["emojis"]] if data.get("emojis") else None
+        self.emojis: Optional[List[Emoji]] = [Emoji(i) for i in data["emojis"]] if data.get("emojis") else None
         self.reactions: Optional[Dict[str, Any]] = data.get("reactions")
         self.renote_count: Optional[int] = data.get("renote_count")
         self.replies_count: Optional[int] = data.get("replies_count")
         self.uri: Optional[str] = data.get("uri")
         self.url: Optional[str] = data.get("url")
         self.my_reaction: Optional[Dict[str, Any]] = data.get("my_reaction")
-        self.__state: ConnectionState = state
 
 
 class PinnedPage:
-    def __init__(self, data: PinnedPagePayload, state: ConnectionState):
+    def __init__(self, data: PinnedPagePayload):
         self.id: Optional[str] = data.get("id")
         self.created_at: Optional[datetime] = datetime.strptime(data["created_at"], '%Y-%m-%dT%H:%M:%S.%fZ') if data.get(
             "created_at") else None
@@ -112,19 +110,18 @@ class PinnedPage:
         self.variables: Optional[List] = data.get("variables")
         self.user_id: Optional[str] = data.get("user_id")
         self.author: Optional[Dict[str, Any]] = data.get("author")
-        self.__state: ConnectionState = state
 
 
 class FieldContent:
-    def __init__(self, data: FieldContentPayload, state: ConnectionState):
+    def __init__(self, data: FieldContentPayload):
         self.name: str = data["name"]
         self.value: str = data["value"]
-        self.__state: ConnectionState = state
 
 
 class User:
     def __init__(self, raw_user: RawUser):
         self.__raw_user = raw_user
+        self.__client = manager.ClientActions()
 
     @property
     def id(self):
@@ -276,7 +273,7 @@ class User:
 
     @property
     def instance(self) -> Union[Instance, None]:
-        return Instance(self.__raw_user.instance, state=self.__state) if self.__raw_user.instance else None
+        return Instance(self.__raw_user.instance) if self.__raw_user.instance else None
 
     async def get_profile(self) -> "User":
         """
@@ -287,7 +284,7 @@ class User:
         User
             ユーザーのプロフィールオブジェクト
         """
-        return await self.__state.get_user(user_id=self.__raw_user.id, username=self.__raw_user.name,
+        return await self.__client.get_user(user_id=self.__raw_user.id, username=self.__raw_user.name,
                                            host=self.__raw_user.host)
 
     def get_followers(self, until_id: Optional[str] = None, limit: int = 10, get_all: bool = False) -> AsyncIterator[Followee]:
@@ -308,10 +305,12 @@ class User:
         AsyncIterator[FollowRequest]
             ユーザーのフォロワー一覧
         """
+
+        # TODO:治す
         return self.__state.get_followers(username=self.__raw_user.name, host=self.__raw_user.host, until_id=until_id,
                                           limit=limit,
                                           get_all=get_all)
 
     @property
     def action(self) -> UserActions:
-        return mi.framework.manager.ClientActions().get_user_instance(self.__raw_user.id, self)
+        return self.__client.get_user_instance(self.__raw_user.id, self)

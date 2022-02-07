@@ -30,7 +30,7 @@ class ConnectionState:
                 parsers[attr[6:].upper()] = func
 
     def parse_emoji_added(self, message: Dict[str, Any]):
-        self.dispatch('emoji_add', Emoji(message['body']['emoji'], state=self))
+        self.dispatch('emoji_add', Emoji(message['body']['emoji']))
 
     def parse_channel(self, message: Dict[str, Any]) -> None:
         """parse_channel is a function to parse channel event
@@ -66,7 +66,7 @@ class ConnectionState:
         フォローリクエストを受け取った際のイベントを解析する関数
         """
 
-        self.dispatch('follow_request', FollowRequest(message, state=self))
+        self.dispatch('follow_request', FollowRequest(message))
 
     def parse_me_updated(self, message: Dict[str, Any]):
         pass
@@ -78,28 +78,28 @@ class ConnectionState:
         """
         リプライ
         """
-        self.dispatch('message', Note(RawNote(message), state=self))
+        self.dispatch('message', Note(RawNote(message)))
 
     def parse_follow(self, message: Dict[str, Any]) -> None:
         """
         ユーザーをフォローした際のイベントを解析する関数
         """
 
-        self.dispatch('user_follow', User(RawUser(message), state=self))
+        self.dispatch('user_follow', User(RawUser(message)))
 
     def parse_followed(self, message: Dict[str, Any]) -> None:
         """
         フォローイベントを解析する関数
         """
 
-        self.dispatch('follow', User(RawUser(message), state=self))
+        self.dispatch('follow', User(RawUser(message)))
 
     def parse_mention(self, message: Dict[str, Any]) -> None:
         """
         メンションイベントを解析する関数
         """
 
-        self.dispatch('mention', Note(RawNote(message), state=self))
+        self.dispatch('mention', Note(RawNote(message)))
 
     def parse_drive_file_created(self, message: Dict[str, Any]) -> None:
         pass  # TODO: 実装
@@ -174,7 +174,7 @@ class ConnectionState:
         """
         リアクションに関する情報を解析する関数
         """
-        self.dispatch('reaction', Reaction(message, state=self))
+        self.dispatch('reaction', Reaction(message))
 
     def parse_note(self, message: NotePayload) -> None:
         """

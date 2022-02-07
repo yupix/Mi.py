@@ -6,6 +6,7 @@ from mi.actions.admin import AdminActions
 from mi.actions.drive import DriveActions
 from mi.actions.note import NoteActions
 from mi.actions.user import UserActions
+from mi.wrapper.chat import ChatManager
 from mi.wrapper.reaction import ReactionManager
 
 if TYPE_CHECKING:
@@ -15,6 +16,7 @@ if TYPE_CHECKING:
 class ClientActions:
     def __init__(self, *args, **kwargs):
         self.note: NoteActions = NoteActions(*args, **kwargs)
+        self.chat: ChatManager = ChatManager(*args, **kwargs)
         self.admin: AdminActions = AdminActions(*args, **kwargs)
         self.user: UserActions = UserActions(*args, **kwargs)
         self.drive: DriveActions = DriveActions(*args, **kwargs)

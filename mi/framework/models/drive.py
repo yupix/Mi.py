@@ -15,9 +15,8 @@ __all__ = ['Properties', 'File', 'File', 'Folder']
 
 
 class Properties:
-    def __init__(self, raw_data: RawProperties, state: ConnectionState) -> None:
+    def __init__(self, raw_data: RawProperties) -> None:
         self.__raw_data: RawProperties = raw_data
-        self.__state = state
 
     @property
     def width(self) -> int:

@@ -63,7 +63,7 @@ class FollowRequestManager:
         未承認のフォローリクエストを取得します
         """
 
-        return [FollowRequest(i['follower'], state=self.__state) for i in
+        return [FollowRequest(i['follower']) for i in
                 await HTTPSession.request(Route('POST', '/api/following/requests/list'), auth=True, lower=True)]
 
     async def get_user(self, user_id: Optional[str] = None) -> User:

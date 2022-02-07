@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from mi.abc.chat import AbstractChatContent
+import mi.framework.manager as manager
 from mi.wrapper.models.chat import RawChat
 
 __all__ = ['Chat']
@@ -67,5 +68,5 @@ class Chat(AbstractChatContent):
         bool:
             成功したか否か
         """
-        res = await self.__state.delete_chat(message_id=self.id)
+        res = await manager.ClientActions().chat.delete(message_id=self.id)
         return bool(res)

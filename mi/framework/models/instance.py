@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from typing import AsyncIterator, Dict, List, Optional, TYPE_CHECKING
 
+import mi.framework.manager as manager
 from mi.framework.models.emoji import Emoji
 from mi.types.instance import (MetaPayload as InstanceMetaPayload)
 from mi.wrapper.models import RawInstance
@@ -38,7 +39,7 @@ class InstanceMeta:
         self.mascot_image_url: str = data['mascot_image_url']
         self.error_image: str = data['error_image_url']
         self.max_note_text_length: int = data['max_note_text_length']
-        self.emojis: List[Emoji] = [Emoji(RawEmoji(i), state=state) for i in data['emojis']]
+        self.emojis: List[Emoji] = [Emoji(RawEmoji(i)) for i in data['emojis']]
         self.ads: list = data['ads']
         self.enable_email: bool = bool(data['enable_email'])
         self.enable_twitter_integration = bool(data['enable_twitter_integration'])
@@ -54,7 +55,7 @@ class InstanceMeta:
 
 
 class Instance:
-    def __init__(self, raw_data: RawInstance, state: ConnectionState):
+    def __init__(self, raw_data: RawInstance):
         """
         インスタンス情報
         
@@ -62,12 +63,10 @@ class Instance:
         ----------
         raw_data : RawInstance
             インスタンス情報の入った dict
-        state: ConnectionState
-            botのコネクション
         """
 
         self.__raw_data: RawInstance = raw_data
-        self.__state: ConnectionState = state
+        self.__client = manager.ClientActions()
 
     @property
     def host(self):
@@ -125,5 +124,5 @@ class Instance:
         -------
         AsyncIterator[User]
         """
-        return self.__state.get_users(limit=limit, offset=offset, sort=sort, state=state, origin=origin, username=username,
-                                      hostname=hostname, get_all=get_all)
+        return self.__client.get_users(limit=limit, offset=offset, sort=sort, state=state, origin=origin, username=username,
+                                       hostname=hostname, get_all=get_all)

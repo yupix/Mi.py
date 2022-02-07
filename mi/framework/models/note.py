@@ -3,7 +3,7 @@ from __future__ import annotations
 from datetime import datetime
 from typing import Any, Dict, List, Optional, TYPE_CHECKING, Union
 
-import mi.framework.manager
+import mi.framework.manager as manager
 from mi.exception import NotExistRequiredData
 from mi.framework.models.drive import File
 from mi.framework.models.emoji import Emoji
@@ -94,9 +94,9 @@ class Poll:
 
 
 class Renote:
-    def __init__(self, raw_data: RawRenote, state: ConnectionState):
+    def __init__(self, raw_data: RawRenote):
         self.__raw_data: RawRenote = raw_data
-        self.__state = state
+        self.__client = manager.ClientActions()
 
     @property
     def id(self) -> str:
@@ -112,7 +112,7 @@ class Renote:
 
     @property
     def user(self):
-        return User(self.__raw_data.user, state=self.__state)
+        return User(self.__raw_data.user)
 
     @property
     def content(self):
@@ -179,7 +179,7 @@ class Renote:
         return emoji_count(self.__raw_data.content)
 
     async def delete(self) -> bool:
-        return await self.__state.delete_note(self.__raw_data.id)
+        return await self.__client.note.delete(self.__raw_data.id)
 
 
 class NoteReaction:
@@ -237,12 +237,13 @@ class Reaction:
 
     @property
     def action(self) -> ReactionManager:
-        return mi.framework.manager.ClientActions().reaction
+        return manager.ClientActions().reaction
 
 
 class Note:
     def __init__(self, raw_data: RawNote):
         self.__raw_data: RawNote = raw_data
+        self.__client = manager.ClientActions()
 
     @property
     def id(self) -> str:
@@ -290,7 +291,7 @@ class Note:
 
     @property
     def emojis(self) -> List[Emoji]:
-        return [Emoji(i, state=self.__state) for i in self.__raw_data.emojis]
+        return [Emoji(i) for i in self.__raw_data.emojis]
 
     @property
     def file_ids(self) -> Optional[List[str]]:
@@ -298,7 +299,7 @@ class Note:
 
     @property
     def files(self) -> List[File]:
-        return [File(i, state=self.__state) for i in self.__raw_data.files]
+        return [File(i) for i in self.__raw_data.files]
 
     @property
     def reply_id(self) -> Optional[str]:
@@ -358,7 +359,7 @@ class Note:
 
     @property
     def action(self) -> NoteActions:
-        return mi.framework.manager.ClientActions().get_note_instance(self.id)
+        return self.__client.get_note_instance(self.id)
 
     async def reply(
             self, content: Optional[str],
@@ -397,7 +398,7 @@ class Note:
         """
         if file_ids is None:
             file_ids = []
-        return await self.__state.note.send(
+        return await self.__client.note.send(
             content,
             visibility=self.visibility,
             visible_user_ids=self.visible_user_ids,
