@@ -54,6 +54,37 @@ class FileManager:
         file_id = file_id or self.__file_id
         return bool(await HTTPSession.request(Route('POST', '/api/drive/files/delete'), json={'fileId': file_id}, auth=True))
 
+    @staticmethod
+    async def get_files(
+            limit: int = 10,
+            since_id: Optional[str] = None,
+            until_id: Optional[str] = None,
+            folder_id: Optional[str] = None,
+            file_type: Optional[str] = None
+    ) -> List[File]:
+        """
+        ファイルを取得します
+
+        Parameters
+        ----------
+        limit : int, default=10
+            取得する上限
+        since_id : Optional[str], default=None
+            指定すると、そのIDを起点としてより新しいファイルを取得します
+        until_id : Optional[str], default=None
+            指定すると、そのIDを起点としてより古いファイルを取得します
+        folder_id : Optional[str], default=None
+            指定すると、そのフォルダーを起点としてファイルを取得します
+        file_type : Optional[str], default=None
+            取得したいファイルの拡張子
+        """
+        if limit > 100:
+            raise InvalidParameters('limit must be less than 100')
+
+        data = {'limit': limit, 'sinceId': since_id, 'untilId': until_id, 'folderId': folder_id, 'Type': file_type}
+        res = await HTTPSession.request(Route('POST', '/api/drive/files'), json=data, auth=True, lower=True)
+        return [File(RawFile(i)) for i in res]
+
 
 class FolderManager:
     def __init__(self, folder_id: Optional[str] = None):
@@ -108,15 +139,15 @@ class FolderManager:
         limit : int, default=10
             取得する上限
         since_id : Optional[str], default=None
-            指定すると、その投稿を投稿を起点としてより新しいファイルを取得します
+            指定すると、そのIDを起点としてより新しいファイルを取得します
         until_id : Optional[str], default=None
-            指定すると、その投稿を投稿を起点としてより古いファイルを取得します
+            指定すると、そのIDを起点としてより古いファイルを取得します
         folder_id : Optional[str], default=None
             指定すると、そのフォルダーを起点としてファイルを取得します
         file_type : Optional[str], default=None
             取得したいファイルの拡張子
         """
-        if limit >= 100:
+        if limit > 100:
             raise InvalidParameters('limit must be less than 100')
 
         folder_id = folder_id or self.__folder_id
