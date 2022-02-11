@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import json
-from typing import Any, Callable, Dict, Optional, TYPE_CHECKING
+from typing import Any, Callable, Dict, Optional, TYPE_CHECKING, TypeVar
 
 import aiohttp
 
@@ -19,16 +19,19 @@ class MisskeyClientWebSocketResponse(aiohttp.ClientWebSocketResponse):
         return await super().close(code=code, message=message)
 
 
+MS = TypeVar('MS', bound='MisskeyClientWebSocketResponse')
+
+
 class MisskeyWebSocket:
-    def __init__(self, socket):
-        self.socket = socket
+    def __init__(self, socket: MS):
+        self.socket: MS = socket
         self._dispatch = lambda *args: None
         self._connection = None
         self._misskey_parsers: Optional[Dict[str, Callable[..., Any]]] = None
 
     @classmethod
     async def from_client(cls, client: Client, *, timeout: int = 60):
-        socket = await client.http.ws_connect(client.url + f'?i={config.i.token}')
+        socket = await client.http.ws_connect(f'{client.url}?i={config.i.token}')
         ws = cls(socket)
         ws._dispatch = client.dispatch
         ws._connection = client._connection
