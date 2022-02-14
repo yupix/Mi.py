@@ -116,6 +116,9 @@ class ConnectionState:
     def parse_read_all_notifications(self, message: Dict[str, Any]) -> None:
         pass  # TODO:実装
 
+    def parse_url_upload_finished(self, message: Dict[str, Any]) -> None:
+        pass # TODO:実装
+
     def parse_unread_mention(self, message: Dict[str, Any]) -> None:
         pass
 
