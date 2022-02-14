@@ -6,4 +6,11 @@ from .note import *
 from .poll import *
 from .reaction import *
 from .user import *
-from .chart import RawActiveUsersChart
+from .chart import RawActiveUsersChart, RawDriveChart, RawDriveLocalChart, RawDriveRemoteChart
+
+__all__ = (
+    'RawActiveUsersChart',
+    'RawDriveRemoteChart',
+    'RawDriveLocalChart',
+    'RawDriveChart'
+)

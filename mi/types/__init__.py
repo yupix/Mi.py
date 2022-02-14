@@ -10,6 +10,11 @@ from .instance import *
 from .note import *
 from .reaction import *
 from .user import *
-from .chart import ActiveUsersChartPayload
+from .chart import ActiveUsersChartPayload, DriveChartPayload, DriveLocalChartPayload, DriveRemoteChartPayload
 
-__all__ = ('ActiveUsersChartPayload',)
+__all__ = (
+    'ActiveUsersChartPayload',
+    'DriveLocalChartPayload',
+    'DriveRemoteChartPayload',
+    'DriveChartPayload'
+)

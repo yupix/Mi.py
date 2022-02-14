@@ -4,7 +4,7 @@ from mi import config
 from mi.exception import NotSupportedError
 from mi.framework.http import HTTPSession, Route
 from mi.framework.models.user import User
-from mi.wrapper import RawUser
+from mi.wrapper.models.user import RawUser
 
 
 class AdminUserManager:
