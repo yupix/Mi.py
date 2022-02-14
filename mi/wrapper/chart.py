@@ -1,4 +1,4 @@
-__all__ = []
+__all__ = ('ChartManager',)
 
 from mi.framework.http import HTTPSession, Route
 from mi.wrapper.models.chart import RawActiveUsersChart

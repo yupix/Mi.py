@@ -6,6 +6,7 @@ from mi.actions.admin import AdminActions
 from mi.actions.drive import DriveActions
 from mi.actions.note import NoteActions
 from mi.actions.user import UserActions
+from mi.wrapper.chart import ChartManager
 from mi.wrapper.chat import ChatManager
 from mi.wrapper.reaction import ReactionManager
 
@@ -21,6 +22,7 @@ class ClientActions:
         self.user: UserActions = UserActions(*args, **kwargs)
         self.drive: DriveActions = DriveActions(*args, **kwargs)
         self.reaction: ReactionManager = ReactionManager(*args, **kwargs)
+        self.chart: ChartManager = ChartManager(*args, **kwargs)
 
     def get_user_instance(self, user_id: Optional[str] = None, user: Optional[User] = None) -> UserActions:
         return UserActions(user_id=user_id, user=user)
