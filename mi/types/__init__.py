@@ -10,3 +10,6 @@ from .instance import *
 from .note import *
 from .reaction import *
 from .user import *
+from .chart import ActiveUsersChartPayload
+
+__all__ = ('ActiveUsersChartPayload',)
