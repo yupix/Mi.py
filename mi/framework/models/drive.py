@@ -8,7 +8,6 @@ from mi.wrapper.models.drive import RawFile, RawFolder, RawProperties
 from mi.wrapper.models.user import RawUser
 
 if TYPE_CHECKING:
-    from mi.framework.state import ConnectionState
     from mi.wrapper.drive import FolderManager
 
 __all__ = ['Properties', 'File', 'File', 'Folder']

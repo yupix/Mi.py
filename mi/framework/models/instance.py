@@ -10,11 +10,10 @@ from mi.wrapper.models.emoji import RawEmoji
 
 if TYPE_CHECKING:
     from mi.framework.models.user import User
-    from mi.framework.state import ConnectionState
 
 
 class InstanceMeta:
-    def __init__(self, data: InstanceMetaPayload, state: ConnectionState):
+    def __init__(self, data: InstanceMetaPayload):
         self.maintainer_name: str = data['maintainer_name']
         self.maintainer_email: str = data['maintainer_email']
         self.version: str = data['version']

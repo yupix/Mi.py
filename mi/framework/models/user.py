@@ -10,7 +10,6 @@ from mi.types.user import ChannelPayload, FieldContentPayload, PinnedNotePayload
 from mi.wrapper.models.user import RawUser
 
 if TYPE_CHECKING:
-    from mi.framework.state import ConnectionState
     from mi.actions.user import UserActions
     from mi.wrapper.follow import FollowRequestManager
 

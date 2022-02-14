@@ -15,20 +15,19 @@ from mi.wrapper.models.reaction import RawNoteReaction
 from mi.wrapper.models.user import RawUser
 
 if TYPE_CHECKING:
-    from mi.framework.state import NoteActions, ConnectionState
+    from mi.actions.note import NoteActions
     from mi.wrapper.reaction import ReactionManager
 
 __all__ = ('Note', 'Poll', 'Reaction', 'Follow', 'Header', 'File', 'Renote', 'NoteReaction')
 
 
 class Follow:
-    def __init__(self, data, state: ConnectionState):
+    def __init__(self, data):
         self.id: Optional[str] = data.get('id')
         self.created_at: Optional[datetime] = datetime.strptime(data["created_at"], '%Y-%m-%dT%H:%M:%S.%fZ') if data.get(
             "created_at") else None
         self.type: Optional[str] = data.get('type')
         self.user: Optional[User] = data.get('user')
-        self._state = state
 
     async def follow(self) -> tuple[bool, Optional[str]]:
         """
@@ -66,10 +65,9 @@ class Follow:
 
 
 class Header:
-    def __init__(self, data, state: ConnectionState):
+    def __init__(self, data):
         self.id = data.get("id")
         self.type = data.get("type")
-        self._state = state
 
 
 class Poll:
