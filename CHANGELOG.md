@@ -9,7 +9,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
+- added `ActiveUsersChartPayload` class
+- added `DriveLocalChartPayload` class
+- added `DriveRemoteChartPayload` class
+- added `DriveChartPayload` class
+- added `RawDriveLocalChart` class
+- added `RawDriveRemoteChart` class
+- added `RawDriveChart` class
+- added `RawActiveUsersChart` class
+- added `ChartManager` class
 - added `get_user` method to`FollowRequestManager` class
+- feat: ClientActionsクラスに`chart`変数を追加
 - `Context` クラスを追加しました
 
 ### Changed
