@@ -27,7 +27,6 @@ packages = [
     'mi',
     'mi.abc',
     'mi.abc.ext',
-    'mi.api',
     'mi.ext',
     'mi.ext.commands',
     'mi.ext.tasks',
@@ -37,7 +36,6 @@ packages = [
     'mi.wrapper.models',
     'mi.types',
     'mi.actions',
-    'mi.api.models'
 ]
 
 setup(
