@@ -31,7 +31,10 @@ packages = [
     'mi.ext',
     'mi.ext.commands',
     'mi.ext.tasks',
+    'mi.framework',
     'mi.framework.models',
+    'mi.wrapper',
+    'mi.wrapper.models',
     'mi.types',
     'mi.actions',
     'mi.api.models'
