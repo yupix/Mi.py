@@ -10,8 +10,6 @@ build
 .pylintrc
 __pycache__
 dist/*
-main.py
-cogs
 .setup.py.swp
 *.mo
 release.sh
