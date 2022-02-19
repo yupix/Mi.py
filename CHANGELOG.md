@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [v3.9.9] 2022-02-19
+
 ### Added
 
 - added `ActiveUsersChartPayload` class
