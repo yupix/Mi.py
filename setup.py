@@ -27,18 +27,20 @@ packages = [
     'mi',
     'mi.abc',
     'mi.abc.ext',
-    'mi.api',
     'mi.ext',
     'mi.ext.commands',
     'mi.ext.tasks',
-    'mi.models',
+    'mi.framework',
+    'mi.framework.models',
+    'mi.wrapper',
+    'mi.wrapper.models',
     'mi.types',
-    'mi.actions'
+    'mi.actions',
 ]
 
 setup(
     name="mi.py",
-    version="3.3.0",
+    version="3.3.1",
     install_requires=["emoji", 'aiocache', 'aiohttp'],
     url="https://github.com/yupix/mi.py",
     author="yupix",

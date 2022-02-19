@@ -1,7 +1,7 @@
 from typing import Any, Dict, Optional, TypedDict
 
 
-class Properties(TypedDict):
+class PropertiesPayload(TypedDict):
     """
     プロパティー情報
     """
@@ -11,7 +11,7 @@ class Properties(TypedDict):
     avg_color: Optional[str]
 
 
-class Folder(TypedDict):
+class FolderPayload(TypedDict):
     """
     フォルダーの情報
     """
@@ -25,7 +25,7 @@ class Folder(TypedDict):
     parent: Dict[str, Any]
 
 
-class File(TypedDict):
+class FilePayload(TypedDict):
     """
     ファイル情報
     """
@@ -38,11 +38,11 @@ class File(TypedDict):
     size: int
     is_sensitive: bool
     blurhash: str
-    properties: Properties
+    properties: PropertiesPayload
     url: str
     thumbnail_url: str
     comment: str
     folder_id: str
-    folder: Folder
+    folder: FolderPayload
     user_id: str
     user: Dict[str, Any]

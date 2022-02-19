@@ -1,21 +1,34 @@
 """
 Mi.pyを使用する上でちょっとした際に便利なツール一覧
 """
+from __future__ import annotations
+
 import json
 import logging
 import re
+from datetime import datetime, timedelta
 from inspect import isawaitable
-from typing import Any, Callable, Dict, Iterable, List, Optional, TypeVar
+from typing import Any, Callable, Dict, Iterable, List, Optional, TYPE_CHECKING, TypeVar
 
 import emoji
 
 from mi import config
+from mi.types.util import EmojiList
+
+if TYPE_CHECKING:
+    from mi.framework.models.note import Note
 
 T = TypeVar("T")
 
 
 def deprecated_func(func):
     print('deprecated function:' + func.__name__)
+
+
+class MiTime:
+    def __init__(self, start: timedelta, end: datetime):
+        self.start = start
+        self.end = end
 
 
 def get_cache_key(func):
@@ -57,6 +70,35 @@ def get_module_logger(module_name):
         handler.setFormatter(formatter)
         logger.addHandler(handler)
     return logger
+
+
+def extract_emojis(text: str):
+    return re.findall(emoji.get_emoji_regexp(), text)
+
+
+def get_emoji_list(
+        note_list: List[Note],
+        *,
+        include_unicode: bool = True,
+        include_custom_emoji: bool = True
+) -> Dict[EmojiList]:
+    emoji_list = {}
+    for note in note_list:
+        if include_unicode and note.content:
+            for i in extract_emojis(note.content):
+                emoji_list[i] = {
+                    'name': i,
+                    'count': emoji_list.get(i, {}).get('count', 0) + 1
+                }
+
+        if include_custom_emoji and note.emojis:
+            for i in note.emojis:
+                emoji_list[i.name] = {
+                    'name': i.name,
+                    'object': i,
+                    'count': emoji_list.get(i.name, {}).get('count', 0) + 1
+                }
+    return emoji_list
 
 
 def emoji_count(text: Optional[str] = None, emojis: Optional[List[str]] = None):
@@ -203,7 +245,7 @@ def upper_to_lower(
         if replace_list.get(attr):
             default_key = default_key.replace(attr, replace_list.get(attr))
         field[default_key] = data[attr]
-        if type(field[default_key]) is dict and nest:
+        if isinstance(field[default_key], dict) and nest:
             field[default_key] = upper_to_lower(field[default_key])
     return field
 

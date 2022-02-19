@@ -1,7 +1,7 @@
 from typing import List, Optional, TypedDict
 
 
-class Emoji(TypedDict):
+class EmojiPayload(TypedDict):
     id: Optional[str]
     aliases: Optional[List[str]]
     name: Optional[str]
