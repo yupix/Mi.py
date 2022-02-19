@@ -21,7 +21,7 @@ class MyBot(commands.Bot):
         print("work on my machine")
         await Router(ws).connect_channel(["global", "main"])  # globalとmainチャンネルに接続
         self.task.start()  # タスクを起動する
-        res = self.client.note.send('hello world')
+        res = await self.client.note.send('hello world')
         print(res.content)
         self.task.stop()  # タスクを止める
 
