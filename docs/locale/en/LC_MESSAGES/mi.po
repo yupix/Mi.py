@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  Mi.py\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-01-25 22:19+0900\n"
+"POT-Creation-Date: 2022-02-20 07:37+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -77,7 +77,7 @@ msgstr "AbstractChatContent"
 msgid "Misskey モデル"
 msgstr "Misskey Models"
 
-#: ../../mi.rst:55
+#: ../../mi.rst:57
 msgid ""
 "下記のクラスは、 **ユーザーによって作成されることを考慮していません** 。 "
 "独自のインスタンスは作成するべきではなく、値を変更するべきではありません。"
@@ -86,293 +86,879 @@ msgstr ""
 " should not create your own instances, and you should not modify the "
 "values."
 
-#: ../../mi.rst:59
+#: ../../mi.rst:61
 msgid "Note"
 msgstr "note"
 
-#: mi.types.note.Note:2 of
-msgid "note object"
+#: mi.framework.models.note.Note.reply:2 of
+msgid "ノートに対して返信を送信します"
 msgstr ""
 
-#: ../../mi.rst:67
+#: mi.framework.models.note.Follow.unfollow mi.framework.models.note.Note.reply
+#: mi.framework.models.user.User.get_followers mi.utils.emoji_count
+#: mi.wrapper.models.chat.RawChat of
+msgid "Parameters"
+msgstr "Parameters"
+
+#: mi.framework.models.note.Note.reply:4 of
+#, fuzzy
+msgid "返信内容"
+msgstr "What to send"
+
+#: mi.framework.models.note.Note.reply:6 of
+msgid "閲覧注意"
+msgstr ""
+
+#: mi.framework.models.note.Note.reply:8 of
+msgid "メンションを展開するか, by default False"
+msgstr ""
+
+#: mi.framework.models.note.Note.reply:10 of
+msgid "ハッシュタグを展開するか, by default False"
+msgstr ""
+
+#: mi.framework.models.note.Note.reply:12 of
+msgid "絵文字を展開するか, by default False"
+msgstr ""
+
+#: mi.framework.models.note.Note.reply:14 of
+#, fuzzy
+msgid "リノート先のid, by default None"
+msgstr "User id, default=None"
+
+#: mi.framework.models.note.Note.reply:16 of
+#, fuzzy
+msgid "チャンネルid, by default None"
+msgstr "Group id, default=None"
+
+#: mi.framework.models.note.Note.reply:18 of
+#, fuzzy
+msgid "添付するファイルのid, by default None"
+msgstr "File id to attach, efault=None"
+
+#: mi.framework.models.note.Note.reply:20 of
+#, fuzzy
+msgid "アンケート, by default None"
+msgstr "User id, default=None"
+
+#: mi.framework.models.note.Note.emoji_count:2
+#: mi.framework.models.note.Renote.emoji_count:2 of
+msgid "ノートの本文にemojiが何個含まれているかを返します"
+msgstr ""
+
+#: mi.framework.models.chat.Chat.delete
+#: mi.framework.models.note.Follow.unfollow
+#: mi.framework.models.note.Note.emoji_count
+#: mi.framework.models.note.Renote.emoji_count
+#: mi.framework.models.user.User.get_followers
+#: mi.framework.models.user.User.get_profile of
+msgid "Returns"
+msgstr "Returns"
+
+#: mi.framework.models.note.Note.emoji_count:4
+#: mi.framework.models.note.Renote.emoji_count:4 of
+msgid "含まれている絵文字の数"
+msgstr ""
+
+#: mi.framework.models.chat.Chat.delete
+#: mi.framework.models.note.Follow.unfollow
+#: mi.framework.models.note.Note.emoji_count
+#: mi.framework.models.note.Renote.emoji_count
+#: mi.framework.models.user.User.get_followers
+#: mi.framework.models.user.User.get_profile of
+msgid "Return type"
+msgstr "Return type"
+
+#: ../../mi.rst:69
 msgid "User"
 msgstr "user"
 
-#: mi.user.User.get_profile:2 of
+#: mi.framework.models.user.User.get_profile:2 of
 #, fuzzy
 msgid "ユーザーのプロフィールを取得します"
 msgstr "Gets the followers for a given user"
 
-#: mi.chat.Chat.delete mi.iterators.InstanceIterator.get_users
-#: mi.note.Follow.unfollow mi.state.ConnectionState.delete_chat
-#: mi.state.ConnectionState.get_user mi.state.ConnectionState.post_chat
-#: mi.user.User.get_followers mi.user.User.get_profile of
-msgid "Returns"
-msgstr "Returns"
-
-#: mi.user.User.get_profile:4 of
+#: mi.framework.models.user.User.get_profile:4 of
 msgid "ユーザーのプロフィールオブジェクト"
 msgstr ""
 
-#: mi.chat.Chat.delete mi.iterators.InstanceIterator.get_users
-#: mi.note.Follow.unfollow mi.state.ConnectionState.delete_chat
-#: mi.state.ConnectionState.get_user mi.state.ConnectionState.post_chat
-#: mi.user.User.get_followers mi.user.User.get_profile of
-msgid "Return type"
-msgstr "Return type"
-
-#: mi.user.User.get_followers:2 of
+#: mi.framework.models.user.User.get_followers:2 of
 #, fuzzy
 msgid "ユーザーのフォロワー一覧を取得します"
 msgstr "Gets the followers for a given user"
 
-#: mi.iterators.InstanceIterator.get_users mi.models.chat.RawChat
-#: mi.note.Follow.unfollow mi.state.ConnectionState.delete_chat
-#: mi.state.ConnectionState.get_announcements
-#: mi.state.ConnectionState.get_followers mi.state.ConnectionState.get_user
-#: mi.state.ConnectionState.parse_channel
-#: mi.state.ConnectionState.parse_notification
-#: mi.state.ConnectionState.parse_unread_notification
-#: mi.state.ConnectionState.post_chat mi.user.User.get_followers of
-msgid "Parameters"
-msgstr "Parameters"
-
-#: mi.user.User.get_followers:4 of
+#: mi.framework.models.user.User.get_followers:4 of
 msgid "前回のフォロワーの続きを取得する場合の起点とするユーザーid"
 msgstr ""
 
-#: mi.user.User.get_followers:6 of
+#: mi.framework.models.user.User.get_followers:6 of
 msgid "最大何人取得するか, max=100"
 msgstr ""
 
-#: mi.user.User.get_followers:8 of
+#: mi.framework.models.user.User.get_followers:8 of
 #, fuzzy
 msgid "全てのフォロワーを取得するか否か"
 msgstr "Get All Followers"
 
-#: mi.user.User.get_followers:11 of
+#: mi.framework.models.user.User.get_followers:11 of
 #, fuzzy
 msgid "ユーザーのフォロワー一覧"
 msgstr "Gets the followers for a given user"
 
-#: ../../mi.rst:75
+#: ../../mi.rst:77
 msgid "Chat"
 msgstr ""
 
-#: mi.chat.Chat:2 of
+#: mi.framework.models.chat.Chat:2 of
 msgid "チャットオブジェクト"
 msgstr "chat object"
 
-#: mi.chat.Chat.delete:2 of
+#: mi.framework.models.chat.Chat.delete:2 of
 msgid "チャットを削除します（チャットの作者である必要があります）"
 msgstr "Delete the chat (you must be the author of the chat)"
 
-#: mi.chat.Chat.delete:4 mi.state.ConnectionState.delete_chat:7 of
+#: mi.framework.models.chat.Chat.delete:4 of
 msgid "成功したか否か"
 msgstr "Successful or not."
 
-#: ../../mi.rst:83
+#: ../../mi.rst:85
 msgid "Emoji"
 msgstr "emoji"
 
-#: ../../mi.rst:91
+#: ../../mi.rst:93
 msgid "Renote"
 msgstr "Renote"
 
-#: ../../mi.rst:99
+#: ../../mi.rst:101
 msgid "Follow"
 msgstr "follow"
 
-#: mi.note.Follow.follow:2 of
+#: mi.framework.models.note.Follow.follow:2 of
 #, fuzzy
 msgid "ユーザーをフォローします :returns: * *bool* -- 成功ならTrue, 失敗ならFalse"
 msgstr ""
 "Follow the user :returns: * *bool = False* -- True for success, False for"
 " failure."
 
-#: mi.note.Follow.follow:4 of
+#: mi.framework.models.note.Follow.follow:4 of
 msgid "*str* -- 実行に失敗した際のエラーコード"
 msgstr "*str* -- Error code when execution fails."
 
-#: mi.note.Follow.unfollow:2 of
+#: mi.framework.models.note.Follow.unfollow:2 of
 msgid "与えられたIDのユーザーのフォローを解除します"
 msgstr "Unfollows the user with the given ID"
 
-#: mi.note.Follow.unfollow:4 of
+#: mi.framework.models.note.Follow.unfollow:4 of
 msgid "フォローを解除したいユーザーのID"
 msgstr "ID of the user you want to unfollow"
 
-#: mi.note.Follow.unfollow:7 of
+#: mi.framework.models.note.Follow.unfollow:7 of
 #, fuzzy
 msgid "成功ならTrue, 失敗ならFalse"
 msgstr "**status** -- True for success, False for failure"
 
-#: ../../mi.rst:107
+#: ../../mi.rst:109
 msgid "Header"
 msgstr "Header"
 
-#: ../../mi.rst:115
+#: ../../mi.rst:117
 msgid "Properties"
 msgstr "Properties"
 
-#: ../../mi.rst:123
+#: ../../mi.rst:125
 msgid "File"
 msgstr "file"
 
-#: ../../mi.rst:131
+#: ../../mi.rst:133
 msgid "Reaction"
 msgstr "reaction"
 
-#: ../../mi.rst:140
+#: ../../mi.rst:142
 msgid "データクラス"
 msgstr "data class"
 
-#: ../../mi.rst:143
-msgid "RawChat"
-msgstr ""
+#: ../../mi.rst:147
+#, fuzzy
+msgid "RawNote"
+msgstr "Renote"
 
-#: mi.models.chat.RawChat:4 of
-msgid "chat ID"
-msgstr ""
-
-#: mi.models.chat.RawChat mi.models.instance.RawInstance
-#: mi.models.note.RawRenote mi.models.user.RawUserDetails of
+#: mi.wrapper.models.chat.RawChat mi.wrapper.models.drive.RawFile
+#: mi.wrapper.models.drive.RawFolder mi.wrapper.models.drive.RawProperties
+#: mi.wrapper.models.emoji.RawEmoji mi.wrapper.models.instance.RawInstance
+#: mi.wrapper.models.note.RawNote mi.wrapper.models.note.RawRenote
+#: mi.wrapper.models.poll.RawPollChoices
+#: mi.wrapper.models.reaction.RawNoteReaction
+#: mi.wrapper.models.user.RawUserDetails of
 msgid "type"
 msgstr ""
 
-#: mi.models.chat.RawChat:6 mi.models.chat.RawChat:12 mi.models.chat.RawChat:18
-#: mi.models.chat.RawChat:24 mi.models.chat.RawChat:34
-#: mi.models.chat.RawChat:38 mi.models.chat.RawChat:44
-#: mi.models.chat.RawChat:50 mi.models.note.RawRenote:4
-#: mi.models.note.RawRenote:8 mi.models.note.RawRenote:12
-#: mi.models.note.RawRenote:28 mi.models.user.RawUserDetails:14
-#: mi.models.user.RawUserDetails:20 of
+#: mi.wrapper.models.chat.RawChat:6 mi.wrapper.models.chat.RawChat:12
+#: mi.wrapper.models.chat.RawChat:18 mi.wrapper.models.chat.RawChat:24
+#: mi.wrapper.models.chat.RawChat:34 mi.wrapper.models.chat.RawChat:38
+#: mi.wrapper.models.chat.RawChat:44 mi.wrapper.models.chat.RawChat:50
+#: mi.wrapper.models.drive.RawFile:6 mi.wrapper.models.drive.RawFile:18
+#: mi.wrapper.models.drive.RawFile:24 mi.wrapper.models.drive.RawFile:30
+#: mi.wrapper.models.drive.RawFile:48 mi.wrapper.models.drive.RawFile:60
+#: mi.wrapper.models.drive.RawFile:66 mi.wrapper.models.drive.RawFile:72
+#: mi.wrapper.models.drive.RawFile:78 mi.wrapper.models.drive.RawFile:91
+#: mi.wrapper.models.drive.RawFolder:6 mi.wrapper.models.drive.RawFolder:18
+#: mi.wrapper.models.drive.RawFolder:30 mi.wrapper.models.note.RawNote:4
+#: mi.wrapper.models.note.RawNote:12 mi.wrapper.models.note.RawRenote:4
+#: mi.wrapper.models.note.RawRenote:12 mi.wrapper.models.note.RawRenote:28
+#: mi.wrapper.models.poll.RawPollChoices:6
+#: mi.wrapper.models.reaction.RawNoteReaction:6
+#: mi.wrapper.models.reaction.RawNoteReaction:22
+#: mi.wrapper.models.user.RawUserDetails:14
+#: mi.wrapper.models.user.RawUserDetails:20 of
 msgid "str"
 msgstr ""
 
-#: mi.models.chat.RawChat:10 of
+#: mi.wrapper.models.drive.RawFile:12 mi.wrapper.models.drive.RawFolder:12
+#: mi.wrapper.models.note.RawNote:8 mi.wrapper.models.note.RawRenote:8
+#: mi.wrapper.models.reaction.RawNoteReaction:12 of
+msgid "datetime"
+msgstr ""
+
+#: ../../mi.rst:246 mi.wrapper.models.chat.RawChat:30
+#: mi.wrapper.models.note.RawNote:16 mi.wrapper.models.note.RawRenote:16 of
+msgid "RawUser"
+msgstr ""
+
+#: mi.wrapper.models.drive.RawProperties:18 mi.wrapper.models.emoji.RawEmoji:6
+#: mi.wrapper.models.emoji.RawEmoji:18 mi.wrapper.models.emoji.RawEmoji:24
+#: mi.wrapper.models.emoji.RawEmoji:30 mi.wrapper.models.emoji.RawEmoji:36
+#: mi.wrapper.models.note.RawNote:20 mi.wrapper.models.note.RawNote:24
+#: mi.wrapper.models.note.RawNote:32 mi.wrapper.models.note.RawNote:60
+#: mi.wrapper.models.note.RawNote:64 mi.wrapper.models.note.RawNote:112
+#: mi.wrapper.models.user.RawUserDetails:8 of
+msgid "Optional[str]"
+msgstr ""
+
+#: mi.wrapper.models.note.RawNote:28 of
+msgid "Optional[RawRenote]"
+msgstr ""
+
+#: mi.wrapper.models.drive.RawFolder:24 mi.wrapper.models.note.RawNote:36
+#: mi.wrapper.models.note.RawNote:40 of
+msgid "Optional[int]"
+msgstr ""
+
+#: mi.wrapper.models.drive.RawFolder:36 mi.wrapper.models.note.RawNote:44 of
+msgid "Optional[Dict[str, Any]]"
+msgstr ""
+
+#: mi.wrapper.models.note.RawNote:48 of
+msgid "List[RawEmoji]"
+msgstr ""
+
+#: mi.wrapper.models.emoji.RawEmoji:12 mi.wrapper.models.note.RawNote:52
+#: mi.wrapper.models.note.RawNote:72 mi.wrapper.models.note.RawNote:100
+#: mi.wrapper.models.note.RawNote:108 of
+msgid "Optional[List[str]]"
+msgstr ""
+
+#: mi.wrapper.models.note.RawNote:56 of
+msgid "List[RawFile]"
+msgstr ""
+
+#: mi.wrapper.models.note.RawNote:68 of
+msgid "Optional[RawPoll]"
+msgstr ""
+
+#: mi.wrapper.models.chat.RawChat:56 mi.wrapper.models.drive.RawFile:42
+#: mi.wrapper.models.note.RawNote:76 mi.wrapper.models.note.RawNote:80
+#: mi.wrapper.models.note.RawNote:84 mi.wrapper.models.note.RawNote:88
+#: mi.wrapper.models.note.RawNote:92 mi.wrapper.models.note.RawNote:96
+#: mi.wrapper.models.poll.RawPollChoices:18 of
+msgid "bool"
+msgstr ""
+
+#: mi.wrapper.models.note.RawNote:104 of
+msgid "Optional[dict]"
+msgstr ""
+
+#: ../../mi.rst:156
+msgid "RawChat"
+msgstr ""
+
+#: mi.wrapper.models.chat.RawChat:4 of
+msgid "chat ID"
+msgstr ""
+
+#: mi.wrapper.models.chat.RawChat:10 of
 msgid "chat creation time"
 msgstr ""
 
-#: mi.models.chat.RawChat:16 of
+#: mi.wrapper.models.chat.RawChat:16 of
 #, fuzzy
 msgid "chat content"
 msgstr "AbstractChatContent"
 
-#: mi.models.chat.RawChat:22 of
+#: mi.wrapper.models.chat.RawChat:22 of
 msgid "ID of the user who created the chat"
 msgstr ""
 
-#: mi.models.chat.RawChat:28 of
+#: mi.wrapper.models.chat.RawChat:28 of
 msgid "user who created the chat"
 msgstr ""
 
-#: ../../mi.rst:224 mi.models.chat.RawChat:30 mi.models.note.RawRenote:16 of
-msgid "RawUser"
-msgstr ""
-
-#: mi.models.chat.RawChat:42 of
+#: mi.wrapper.models.chat.RawChat:42 of
 msgid "group ID"
 msgstr ""
 
-#: mi.models.chat.RawChat:48 of
+#: mi.wrapper.models.chat.RawChat:48 of
 msgid "ID of the attached file"
 msgstr ""
 
-#: mi.models.chat.RawChat:54 of
+#: mi.wrapper.models.chat.RawChat:54 of
 msgid "whether the chat is read"
 msgstr ""
 
-#: mi.models.chat.RawChat:56 of
-msgid "bool"
-msgstr ""
-
-#: mi.models.chat.RawChat:60 of
+#: mi.wrapper.models.chat.RawChat:60 of
 msgid "List"
 msgstr ""
 
-#: ../../mi.rst:152
+#: ../../mi.rst:165
 #, fuzzy
 msgid "RawProperties"
 msgstr "Properties"
 
-#: ../../mi.rst:160
+#: mi.wrapper.models.drive.RawProperties:4 of
+msgid "ファイルの幅"
+msgstr ""
+
+#: mi.wrapper.models.drive.RawFile:36 mi.wrapper.models.drive.RawProperties:6
+#: mi.wrapper.models.drive.RawProperties:12 mi.wrapper.models.note.RawRenote:32
+#: mi.wrapper.models.note.RawRenote:36 mi.wrapper.models.poll.RawPollChoices:12
+#: of
+msgid "int"
+msgstr ""
+
+#: mi.wrapper.models.drive.RawProperties:10 of
+msgid "ファイルの高さ"
+msgstr ""
+
+#: mi.wrapper.models.drive.RawProperties:16 of
+msgid "ファイルの平均色"
+msgstr ""
+
+#: ../../mi.rst:174
 msgid "RawFolder"
 msgstr ""
 
-#: ../../mi.rst:168
+#: mi.wrapper.models.drive.RawFolder:4 of
+msgid "フォルダーのID"
+msgstr ""
+
+#: mi.wrapper.models.drive.RawFolder:10 of
+msgid "フォルダーの作成された日時"
+msgstr ""
+
+#: mi.wrapper.models.drive.RawFolder:16 of
+msgid "フォルダーの名前"
+msgstr ""
+
+#: mi.wrapper.models.drive.RawFolder:22 of
+msgid "# TODO: 調査"
+msgstr ""
+
+#: mi.wrapper.models.drive.RawFolder:28 of
+msgid "親フォルダーのID"
+msgstr ""
+
+#: mi.wrapper.models.drive.RawFolder:34 of
+msgid "親フォルダー"
+msgstr ""
+
+#: ../../mi.rst:183
 msgid "RawFile"
 msgstr ""
 
-#: ../../mi.rst:176
-#, fuzzy
-msgid "RawEmoji"
-msgstr "emoji"
-
-#: ../../mi.rst:184
-msgid "RawInstance"
+#: mi.wrapper.models.drive.RawFile:4 of
+msgid "ファイルのID"
 msgstr ""
 
-#: mi.models.instance.RawInstance:4 mi.models.instance.RawInstance:8
-#: mi.models.instance.RawInstance:12 mi.models.instance.RawInstance:16
-#: mi.models.instance.RawInstance:20 mi.models.instance.RawInstance:24
-#: mi.models.instance.RawInstance:28 mi.models.note.RawRenote:20
-#: mi.models.note.RawRenote:24 of
-msgid "Optional[str], default=None"
+#: mi.wrapper.models.drive.RawFile:10 of
+msgid "ファイルのの作成された日時"
+msgstr ""
+
+#: mi.wrapper.models.drive.RawFile:16 of
+msgid "ファイルの名前"
+msgstr ""
+
+#: mi.wrapper.models.drive.RawFile:22 of
+msgid "ファイルの拡張子"
+msgstr ""
+
+#: mi.wrapper.models.drive.RawFile:28 of
+msgid "ファイルのmd5"
+msgstr ""
+
+#: mi.wrapper.models.drive.RawFile:34 of
+msgid "ファイルのサイズ"
+msgstr ""
+
+#: mi.wrapper.models.drive.RawFile:40 of
+msgid "このファイルはセンシティブか否か"
+msgstr ""
+
+#: mi.wrapper.models.drive.RawFile:46 of
+msgid "このファイルのblurhash"
+msgstr ""
+
+#: mi.wrapper.models.drive.RawFile:52 of
+msgid "ファイルの情報"
+msgstr ""
+
+#: mi.wrapper.models.drive.RawFile:54 of
+#, fuzzy
+msgid "Optional[RawProperties]"
+msgstr "Properties"
+
+#: mi.wrapper.models.drive.RawFile:58 of
+msgid "ファイルのurl"
+msgstr ""
+
+#: mi.wrapper.models.drive.RawFile:64 of
+msgid "ファイルのサムネイルurl"
+msgstr ""
+
+#: mi.wrapper.models.drive.RawFile:70 of
+msgid "ファイルのコメント"
+msgstr ""
+
+#: mi.wrapper.models.drive.RawFile:76 of
+msgid "親フォルダのID"
+msgstr ""
+
+#: mi.wrapper.models.drive.RawFile:82 of
+msgid "親フォルダの情報？ # TODO: 調査"
+msgstr ""
+
+#: mi.wrapper.models.drive.RawFile:85 of
+msgid "Optional[RawFolder]"
+msgstr ""
+
+#: mi.wrapper.models.drive.RawFile:89 of
+msgid "ファイル作成者のID"
+msgstr ""
+
+#: mi.wrapper.models.drive.RawFile:95 of
+msgid "ファイル作成者の情報"
+msgstr ""
+
+#: mi.wrapper.models.drive.RawFile:97 of
+msgid "Dict[str, Any]"
 msgstr ""
 
 #: ../../mi.rst:192
 #, fuzzy
+msgid "RawEmoji"
+msgstr "emoji"
+
+#: mi.wrapper.models.emoji.RawEmoji:4 of
+msgid "絵文字のID"
+msgstr ""
+
+#: mi.wrapper.models.emoji.RawEmoji:10 of
+msgid "絵文字のエイリアス"
+msgstr ""
+
+#: mi.wrapper.models.emoji.RawEmoji:16 of
+msgid "絵文字の名前"
+msgstr ""
+
+#: mi.wrapper.models.emoji.RawEmoji:22 of
+msgid "絵文字のカテゴリ"
+msgstr ""
+
+#: mi.wrapper.models.emoji.RawEmoji:28 of
+msgid "絵文字のホスト"
+msgstr ""
+
+#: mi.wrapper.models.emoji.RawEmoji:34 of
+msgid "絵文字のURL"
+msgstr ""
+
+#: ../../mi.rst:201
+msgid "RawInstance"
+msgstr ""
+
+#: mi.wrapper.models.instance.RawInstance:4
+#: mi.wrapper.models.instance.RawInstance:8
+#: mi.wrapper.models.instance.RawInstance:12
+#: mi.wrapper.models.instance.RawInstance:16
+#: mi.wrapper.models.instance.RawInstance:20
+#: mi.wrapper.models.instance.RawInstance:24
+#: mi.wrapper.models.instance.RawInstance:28
+#: mi.wrapper.models.note.RawRenote:20 mi.wrapper.models.note.RawRenote:24 of
+msgid "Optional[str], default=None"
+msgstr ""
+
+#: ../../mi.rst:210
+#, fuzzy
 msgid "RawRenote"
 msgstr "Renote"
 
-#: mi.models.note.RawRenote:32 mi.models.note.RawRenote:36 of
-msgid "int"
-msgstr ""
-
-#: mi.models.note.RawRenote:44 of
+#: mi.wrapper.models.note.RawRenote:44 of
 msgid "List[str]"
 msgstr ""
 
-#: ../../mi.rst:200
+#: ../../mi.rst:219
 msgid "RawPollChoices"
 msgstr ""
 
-#: ../../mi.rst:208
+#: mi.wrapper.models.poll.RawPollChoices:4 of
+msgid "アンケートの項目名"
+msgstr ""
+
+#: mi.wrapper.models.poll.RawPollChoices:10 of
+msgid "投票数"
+msgstr ""
+
+#: mi.wrapper.models.poll.RawPollChoices:16 of
+#, fuzzy
+msgid "投票済みか否か"
+msgstr "read or unread"
+
+#: ../../mi.rst:228
 #, fuzzy
 msgid "RawNoteReaction"
 msgstr "reaction"
 
-#: ../../mi.rst:216
+#: mi.wrapper.models.reaction.RawNoteReaction:4 of
+msgid "TODO: 調査"
+msgstr ""
+
+#: mi.wrapper.models.reaction.RawNoteReaction:10 of
+msgid "リアクションが付けられた時間"
+msgstr ""
+
+#: mi.wrapper.models.reaction.RawNoteReaction:16 of
+msgid "リアクションを付けたユーザー"
+msgstr ""
+
+#: ../../mi.rst:454 mi.wrapper.models.reaction.RawNoteReaction:18 of
+msgid "UserPayload"
+msgstr ""
+
+#: ../../mi.rst:237 of
 msgid "RawUserDetails"
 msgstr ""
 
-#: mi.models.user.RawUserDetails:2 of
+#: mi.wrapper.models.user.RawUserDetails:2 of
 msgid "ユーザー情報だが、一般的に使うか怪しいもの"
 msgstr ""
 
-#: mi.models.user.RawUserDetails:6 of
+#: mi.wrapper.models.user.RawUserDetails:6 of
 msgid "ユーザーのアバターのblurhash"
 msgstr ""
 
-#: mi.models.user.RawUserDetails:8 of
-msgid "Optional[str]"
-msgstr ""
-
-#: mi.models.user.RawUserDetails:12 of
+#: mi.wrapper.models.user.RawUserDetails:12 of
 msgid "ユーザーのアバターの色"
 msgstr ""
 
-#: mi.models.user.RawUserDetails:18 of
+#: mi.wrapper.models.user.RawUserDetails:18 of
 #, fuzzy
 msgid "ユーザーの言語"
 msgstr "The id of the user"
 
-#: ../../mi.rst:233
+#: mi.wrapper.models.user.RawUser:2 of
+msgid "id"
+msgstr ""
+
+#: mi.wrapper.models.user.RawUser:3 of
+#, fuzzy
+msgid "ユーザーのID"
+msgstr "The id of the user"
+
+#: mi.wrapper.models.user.RawUser:4 of
+msgid "name"
+msgstr ""
+
+#: mi.wrapper.models.user.RawUser:5 of
+#, fuzzy
+msgid "ユーザーの名前"
+msgstr "username"
+
+#: mi.wrapper.models.user.RawUser:6 of
+msgid "nickname"
+msgstr ""
+
+#: mi.wrapper.models.user.RawUser:7 of
+#, fuzzy
+msgid "ユーザーの表示名"
+msgstr "username"
+
+#: mi.wrapper.models.user.RawUser:8 of
+msgid "host"
+msgstr ""
+
+#: mi.wrapper.models.user.RawUser:9 of
+msgid "# TODO: いい感じに"
+msgstr ""
+
+#: mi.wrapper.models.user.RawUser:10 of
+msgid "avatar_url"
+msgstr ""
+
+#: mi.wrapper.models.user.RawUser:11 of
+msgid "ユーザーのアバターurl"
+msgstr ""
+
+#: mi.wrapper.models.user.RawUser:12 of
+msgid "is_admin"
+msgstr ""
+
+#: mi.wrapper.models.user.RawUser:13 of
+msgid "管理者か否か"
+msgstr ""
+
+#: mi.wrapper.models.user.RawUser:14 of
+msgid "is_bot"
+msgstr ""
+
+#: mi.wrapper.models.user.RawUser:15 of
+msgid "ボットか否か"
+msgstr ""
+
+#: mi.wrapper.models.user.RawUser:16 of
+msgid "is_cat"
+msgstr ""
+
+#: mi.wrapper.models.user.RawUser:17 of
+msgid "ねこか否か"
+msgstr ""
+
+#: mi.wrapper.models.user.RawUser:18 of
+msgid "is_lady"
+msgstr ""
+
+#: mi.wrapper.models.user.RawUser:19 of
+msgid "お嬢様か否か (Ayuskeyのみ)"
+msgstr ""
+
+#: mi.wrapper.models.user.RawUser:20 of
+#, fuzzy
+msgid "emojis"
+msgstr "emoji"
+
+#: mi.wrapper.models.user.RawUser:21 mi.wrapper.models.user.RawUser:23
+#: mi.wrapper.models.user.RawUser:25 mi.wrapper.models.user.RawUser:29 of
+msgid "# TODO 謎"
+msgstr ""
+
+#: mi.wrapper.models.user.RawUser:22 of
+msgid "url"
+msgstr ""
+
+#: mi.wrapper.models.user.RawUser:24 of
+msgid "uri"
+msgstr ""
+
+#: mi.wrapper.models.user.RawUser:26 of
+msgid "created_at"
+msgstr ""
+
+#: of
+msgid "Optional[datetime]"
+msgstr ""
+
+#: mi.wrapper.models.user.RawUser:27 of
+#, fuzzy
+msgid "ユーザーの作成日時"
+msgstr "The id of the user"
+
+#: mi.wrapper.models.user.RawUser:28 of
+msgid "ff_visibility"
+msgstr ""
+
+#: mi.wrapper.models.user.RawUser:30 of
+msgid "is_following"
+msgstr ""
+
+#: mi.wrapper.models.user.RawUser:31 of
+msgid "フォローされてるか否か"
+msgstr ""
+
+#: mi.wrapper.models.user.RawUser:32 of
+#, fuzzy
+msgid "is_follow"
+msgstr "follow"
+
+#: mi.wrapper.models.user.RawUser:33 of
+msgid "フォローしているか否か"
+msgstr ""
+
+#: mi.wrapper.models.user.RawUser:34 of
+msgid "is_blocking"
+msgstr ""
+
+#: mi.wrapper.models.user.RawUser:35 of
+msgid "ブロックしているか否か"
+msgstr ""
+
+#: mi.wrapper.models.user.RawUser:36 of
+msgid "is_blocked"
+msgstr ""
+
+#: mi.wrapper.models.user.RawUser:37 of
+msgid "ブロックされてるか否か"
+msgstr ""
+
+#: mi.wrapper.models.user.RawUser:38 of
+msgid "is_muted"
+msgstr ""
+
+#: mi.wrapper.models.user.RawUser:39 of
+msgid "ミュートしているか否か"
+msgstr ""
+
+#: mi.wrapper.models.user.RawUser:40 of
+msgid "details"
+msgstr ""
+
+#: mi.wrapper.models.user.RawUser:41 of
+#, fuzzy
+msgid "ユーザーの詳細情報"
+msgstr "user information"
+
+#: mi.wrapper.models.user.RawUser:58 of
+msgid "instance"
+msgstr ""
+
+#: of
+msgid "Optional[RawInstance]"
+msgstr ""
+
+#: mi.wrapper.models.user.RawUser:43 of
+msgid "インスタンスの情報"
+msgstr ""
+
+#: ../../mi.rst:255
+#, fuzzy
+msgid "型クラス"
+msgstr "data class"
+
+#: ../../mi.rst:260
+msgid "ChatPayload"
+msgstr ""
+
+#: ../../mi.rst:269
+#, fuzzy
+msgid "PropertiesPayload"
+msgstr "Properties"
+
+#: mi.types.drive.PropertiesPayload:2 of
+msgid "プロパティー情報"
+msgstr ""
+
+#: ../../mi.rst:278
+msgid "FolderPayload"
+msgstr ""
+
+#: mi.types.drive.FolderPayload:2 of
+msgid "フォルダーの情報"
+msgstr ""
+
+#: ../../mi.rst:287
+msgid "FilePayload"
+msgstr ""
+
+#: mi.types.drive.FilePayload:2 of
+msgid "ファイル情報"
+msgstr ""
+
+#: ../../mi.rst:296
+msgid "EmojiPayload"
+msgstr ""
+
+#: ../../mi.rst:305
+msgid "FeaturesPayload"
+msgstr ""
+
+#: ../../mi.rst:314
+msgid "OptionalMeta"
+msgstr ""
+
+#: ../../mi.rst:323
+msgid "MetaPayload"
+msgstr ""
+
+#: ../../mi.rst:332
+msgid "OptionalInstance"
+msgstr ""
+
+#: ../../mi.rst:341
+msgid "InstancePayload"
+msgstr ""
+
+#: ../../mi.rst:350
+msgid "GeoPayload"
+msgstr ""
+
+#: mi.types.note.GeoPayload:2 of
+msgid "衛星情報"
+msgstr ""
+
+#: ../../mi.rst:359
+msgid "PollPayload"
+msgstr ""
+
+#: mi.types.note.PollPayload:2 of
+msgid "アンケート情報"
+msgstr ""
+
+#: ../../mi.rst:368
+msgid "RenotePayload"
+msgstr ""
+
+#: ../../mi.rst:377
+msgid "NotePayload"
+msgstr ""
+
+#: mi.types.note.NotePayload:2 of
+msgid "note object"
+msgstr ""
+
+#: ../../mi.rst:386
+msgid "OptionalReaction"
+msgstr ""
+
+#: ../../mi.rst:395
+#, fuzzy
+msgid "ReactionPayload"
+msgstr "reaction"
+
+#: ../../mi.rst:404
+msgid "NoteReactionPayload"
+msgstr ""
+
+#: ../../mi.rst:413
+msgid "ChannelPayload"
+msgstr ""
+
+#: ../../mi.rst:422
+msgid "PinnedNotePayload"
+msgstr ""
+
+#: ../../mi.rst:431
+msgid "PinnedPagePayload"
+msgstr ""
+
+#: ../../mi.rst:439
+msgid "FieldContentPayload"
+msgstr ""
+
+#: ../../mi.rst:447
+msgid "OptionalUser"
+msgstr ""
+
+#: ../../mi.rst:465
 msgid "例外処理"
 msgstr "exception handling"
 
-#: ../../mi.rst:236
+#: ../../mi.rst:470
 msgid "NotFoundError"
 msgstr "NotFoundError"
 
@@ -380,7 +966,7 @@ msgstr "NotFoundError"
 msgid "http アクセス時に404が帰ってきた際の例外"
 msgstr "Exception when a 404 is returned on http access"
 
-#: ../../mi.rst:240
+#: ../../mi.rst:474
 msgid "TaskNotRunningError"
 msgstr "TaskNotRunningError"
 
@@ -390,7 +976,7 @@ msgstr ""
 "Exception thrown when attempting to stop a task and the task is not "
 "started."
 
-#: ../../mi.rst:244
+#: ../../mi.rst:478
 msgid "ImAi"
 msgstr "ImAi"
 
@@ -398,7 +984,7 @@ msgstr "ImAi"
 msgid "私は藍です"
 msgstr "I'm Indigo."
 
-#: ../../mi.rst:248
+#: ../../mi.rst:482
 msgid "InternalServerError"
 msgstr "InternalServerError"
 
@@ -406,7 +992,7 @@ msgstr "InternalServerError"
 msgid "http アクセス時に500が帰ってきた際の例外"
 msgstr "Exception when 500 is returned on http access"
 
-#: ../../mi.rst:252
+#: ../../mi.rst:486
 msgid "ClientError"
 msgstr "ClientError"
 
@@ -414,7 +1000,7 @@ msgstr "ClientError"
 msgid "http アクセス時に400が帰ってきた際の例外"
 msgstr "Exception when http access returns 400"
 
-#: ../../mi.rst:257
+#: ../../mi.rst:491
 msgid "AuthenticationError"
 msgstr "AuthenticationError"
 
@@ -422,7 +1008,7 @@ msgstr "AuthenticationError"
 msgid "認証で問題が発生した際の例外"
 msgstr "Exceptions in case of authentication problems"
 
-#: ../../mi.rst:261
+#: ../../mi.rst:495
 msgid "NotExistRequiredParameters"
 msgstr "NotExistRequiredParameters"
 
@@ -430,7 +1016,7 @@ msgstr "NotExistRequiredParameters"
 msgid "必須のパラメーターが存在しない場合の例外"
 msgstr "Exception when a required parameter does not exist"
 
-#: ../../mi.rst:265
+#: ../../mi.rst:499
 msgid "InvalidParameters"
 msgstr "InvalidParameters"
 
@@ -438,7 +1024,7 @@ msgstr "InvalidParameters"
 msgid "パラメーターが無効"
 msgstr "Parameter is invalid"
 
-#: ../../mi.rst:269
+#: ../../mi.rst:503
 msgid "CredentialRequired"
 msgstr "CredentialRequired"
 
@@ -446,7 +1032,7 @@ msgstr "CredentialRequired"
 msgid "認証情報が不足している"
 msgstr "Authentication information is missing."
 
-#: ../../mi.rst:273
+#: ../../mi.rst:507
 msgid "ContentRequired"
 msgstr "ContentRequired"
 
@@ -454,7 +1040,7 @@ msgstr "ContentRequired"
 msgid "送信するコンテンツが不足している"
 msgstr "Not enough content to send"
 
-#: ../../mi.rst:279
+#: ../../mi.rst:513
 msgid "CogNameDuplicate"
 msgstr "CogNameDuplicate"
 
@@ -462,7 +1048,7 @@ msgstr "CogNameDuplicate"
 msgid "cogの名前が重複している"
 msgstr "Duplicate cog names."
 
-#: ../../mi.rst:283
+#: ../../mi.rst:517
 msgid "ExtensionAlreadyLoaded"
 msgstr "ExtensionAlreadyLoaded"
 
@@ -470,7 +1056,7 @@ msgstr "ExtensionAlreadyLoaded"
 msgid "cogがすでに読み込まれている"
 msgstr "cog is already loaded."
 
-#: ../../mi.rst:287
+#: ../../mi.rst:521
 msgid "ExtensionFailed"
 msgstr "ExtensionFailed"
 
@@ -478,7 +1064,7 @@ msgstr "ExtensionFailed"
 msgid "cog周りのエラー"
 msgstr "Errors around cog"
 
-#: ../../mi.rst:291
+#: ../../mi.rst:525
 msgid "NoEntryPointError"
 msgstr "NoEntryPointError"
 
@@ -486,7 +1072,7 @@ msgstr "NoEntryPointError"
 msgid "cogにsetup関数が無い場合の例外"
 msgstr "Exception when cog does not have a setup function"
 
-#: ../../mi.rst:295
+#: ../../mi.rst:529
 msgid "ExtensionNotFound"
 msgstr "ExtensionNotFound"
 
@@ -494,7 +1080,7 @@ msgstr "ExtensionNotFound"
 msgid "指定されたパスにcogが存在しない場合の例外"
 msgstr "Exception if cog does not exist in the specified path"
 
-#: ../../mi.rst:299
+#: ../../mi.rst:533
 msgid "CommandRegistrationError"
 msgstr "CommandRegistrationError"
 
@@ -502,7 +1088,7 @@ msgstr "CommandRegistrationError"
 msgid "コマンド登録時のエラー"
 msgstr "Error in command registration"
 
-#: ../../mi.rst:303
+#: ../../mi.rst:537
 msgid "CommandError"
 msgstr "CommandError"
 
@@ -510,7 +1096,7 @@ msgstr "CommandError"
 msgid "コマンドで問題が発生した際の例外"
 msgstr "Exception when a problem occurs with the command"
 
-#: ../../mi.rst:307
+#: ../../mi.rst:541
 msgid "CommandInvokeError"
 msgstr "CommandInvokeError"
 
@@ -518,7 +1104,7 @@ msgstr "CommandInvokeError"
 msgid "コマンドの実行に問題が発生した際の例外"
 msgstr "Exceptions when there is a problem executing the command"
 
-#: ../../mi.rst:311
+#: ../../mi.rst:545
 msgid "CheckFailure"
 msgstr "CheckFailure"
 
@@ -526,7 +1112,7 @@ msgstr "CheckFailure"
 msgid "コマンドの実行可能かのチェックに失敗した際の例外"
 msgstr "Exception when the command fails to check if it is executable"
 
-#: ../../mi.rst:315
+#: ../../mi.rst:549
 msgid "InvalidCogPath"
 msgstr "InvalidCogPath"
 
@@ -534,7 +1120,7 @@ msgstr "InvalidCogPath"
 msgid "cogのパスが不正"
 msgstr "Incorrect path for cog"
 
-#: ../../mi.rst:320
+#: ../../mi.rst:554
 msgid "NotExistRequiredData"
 msgstr "NotExistRequiredData"
 
@@ -542,193 +1128,33 @@ msgstr "NotExistRequiredData"
 msgid "必要なデータが存在しない場合に発生する例外"
 msgstr "Exception raised when the required data does not exist."
 
-#: ../../mi.rst:325
+#: ../../mi.rst:559
 msgid "Low-Level API"
 msgstr "Low-Level API"
 
-#: mi.state.ConnectionState.parse_channel:2 of
-msgid "parse_channel is a function to parse channel event"
-msgstr "parse_channel is a function to parse channel event"
-
-#: mi.state.ConnectionState.parse_channel:4 of
-msgid "チャンネルタイプのデータを解析後適切なパーサーに移動させます"
-msgstr "Move the channel type data to the appropriate parser after analysis"
-
-#: mi.state.ConnectionState.parse_channel:6
-#: mi.state.ConnectionState.parse_notification:4
-#: mi.state.ConnectionState.parse_unread_notification:4 of
-msgid "Received message"
-msgstr "Received message"
-
-#: mi.state.ConnectionState.parse_unfollow:2 of
-#, fuzzy
-msgid "フォローを解除した際のイベントを解析する関数"
-msgstr "Function to analyze the event when following a user."
-
-#: mi.state.ConnectionState.parse_signin:2 of
-msgid "ログインが発生した際のイベント"
-msgstr ""
-
-#: mi.state.ConnectionState.parse_receive_follow_request:2 of
-#, fuzzy
-msgid "フォローリクエストを受け取った際のイベントを解析する関数"
-msgstr "Function to parse follow events"
-
-#: mi.state.ConnectionState.parse_reply:2 of
-msgid "リプライ"
-msgstr "reply"
-
-#: mi.state.ConnectionState.parse_follow:2 of
-msgid "ユーザーをフォローした際のイベントを解析する関数"
-msgstr "Function to analyze the event when following a user."
-
-#: mi.state.ConnectionState.parse_followed:2 of
-msgid "フォローイベントを解析する関数"
-msgstr "Function to parse follow events"
-
-#: mi.state.ConnectionState.parse_mention:2 of
-msgid "メンションイベントを解析する関数"
-msgstr "Function to parse a mention event"
-
-#: mi.state.ConnectionState.parse_messaging_message:2 of
-msgid "チャットが来た際のデータを処理する関数"
-msgstr "Function to process data when a chat comes in"
-
-#: mi.state.ConnectionState.parse_unread_messaging_message:2 of
-msgid "チャットが既読になっていない場合のデータを処理する関数"
-msgstr "Function to process data when chat has not been read"
-
-#: mi.state.ConnectionState.parse_notification:2 of
-msgid "通知イベントを解析する関数"
-msgstr "Function to parse notification events"
-
-#: mi.state.ConnectionState.parse_unread_notification:2 of
-msgid "未読の通知を解析する関数"
-msgstr "Function to parse unread notifications"
-
-#: mi.state.ConnectionState.parse_reaction:2 of
-msgid "リアクションに関する情報を解析する関数"
-msgstr "Function to analyze information about reactions"
-
-#: mi.state.ConnectionState.parse_note:2 of
-msgid "ノートイベントを解析する関数"
-msgstr "Function to parse note events"
-
-#: mi.state.ConnectionState.get_user:2 of
-msgid ""
-"ユーザーのプロフィールを取得します。一度のみサーバーにアクセスしキャッシュをその後は使います。 "
-"fetch_userを使った場合はキャッシュが廃棄され再度サーバーにアクセスします。"
-msgstr ""
-"Retrieves the user's profile. It accesses the server only once and uses "
-"the cache afterwards. If you use fetch_user, the cache is discarded and "
-"the server is accessed again."
-
-#: mi.state.ConnectionState.get_user:5 of
-msgid "取得したいユーザーのユーザーID"
-msgstr "User ID of the user you want to retrieve"
-
-#: mi.state.ConnectionState.get_user:7 of
-msgid "取得したいユーザーのユーザー名"
-msgstr "User name of the user you want to retrieve"
-
-#: mi.state.ConnectionState.get_user:9 of
-msgid "取得したいユーザーがいるインスタンスのhost"
-msgstr "The host of the instance where the user you want to retrieve is located"
-
-#: mi.state.ConnectionState.get_user:12 of
-msgid "ユーザー情報"
-msgstr "user information"
-
-#: mi.state.ConnectionState.post_chat:2 of
-msgid "チャットを送信します。"
-msgstr "Send a chat."
-
-#: mi.state.ConnectionState.post_chat:4 of
-msgid "送信する内容"
-msgstr "What to send"
-
-#: mi.state.ConnectionState.post_chat:6 of
-msgid "ユーザーid, default=None"
-msgstr "User id, default=None"
-
-#: mi.state.ConnectionState.post_chat:8 of
-msgid "グループid, default=None"
-msgstr "Group id, default=None"
-
-#: mi.state.ConnectionState.post_chat:10 of
-msgid "添付するファイルid, efault=None"
-msgstr "File id to attach, efault=None"
-
-#: mi.state.ConnectionState.post_chat:13 of
-msgid "チャットの内容"
-msgstr "Content of the chat"
-
-#: mi.state.ConnectionState.delete_chat:2 of
-msgid "指定したidのメッセージを削除します。"
-msgstr "Deletes the message with the specified id."
-
-#: mi.state.ConnectionState.delete_chat:4 of
-msgid "メッセージid"
-msgstr "message-id"
-
-#: mi.state.ConnectionState.get_followers:2 of
-msgid "与えられたユーザーのフォロワーを取得します"
-msgstr "Gets the followers for a given user"
-
-#: mi.state.ConnectionState.get_followers:4 of
-msgid "ユーザーのid"
-msgstr "The id of the user"
-
-#: mi.state.ConnectionState.get_followers:6 of
-msgid "ユーザー名"
-msgstr "username"
-
-#: mi.state.ConnectionState.get_followers:8 of
-msgid "ユーザーがいるインスタンスのhost名"
-msgstr "The host name of the instance the user is in"
-
-#: mi.state.ConnectionState.get_announcements:8
-#: mi.state.ConnectionState.get_followers:12 of
-msgid "前回の最後の値を与える(既に実行し取得しきれない場合に使用)"
-msgstr ""
-"Give the last value of the last time (use this if you've already done it "
-"and can't get it)"
-
-#: mi.state.ConnectionState.get_followers:14 of
-msgid "取得する情報の最大数 max: 100"
-msgstr "Maximum number of information to retrieve max: 100"
-
-#: mi.state.ConnectionState.get_followers:16 of
-msgid "全てのフォロワーを取得する"
-msgstr "Get All Followers"
-
-#: mi.state.ConnectionState.get_followers of
-msgid "Yields"
-msgstr "Yields"
-
-#: mi.state.ConnectionState.get_followers:19 of
-msgid "*dict* -- フォロワーの情報"
-msgstr "*dict* -- Follower information"
-
-#: mi.state.ConnectionState.get_followers of
-msgid "Raises"
-msgstr "raises"
-
-#: mi.state.ConnectionState.get_followers:21 of
-msgid "limit引数が不正な場合"
-msgstr "If the limit argument is invalid"
-
-#: mi.state.ConnectionState.get_announcements:2 of
-msgid "最大取得数"
-msgstr "Maximum number of acquisitions"
-
-#: mi.state.ConnectionState.get_announcements:4 of
-msgid "既読済みか否か"
-msgstr "read or unread"
-
-#: ../../mi.rst:337
+#: ../../mi.rst:571
 msgid "Low-Layer API"
 msgstr "Low-Layer API"
+
+#: ../../mi.rst:583
+msgid "Utils"
+msgstr ""
+
+#: ../../mi.rst:588
+msgid "get_emoji_list"
+msgstr ""
+
+#: ../../mi.rst:593
+msgid "emoji_count"
+msgstr ""
+
+#: mi.utils.emoji_count:2 of
+msgid "テキストの中にいくつのemojiが含まれているかをカウントします"
+msgstr ""
+
+#: ../../mi.rst:598
+msgid "check_multi_arg"
+msgstr ""
 
 #~ msgid "投稿する内容"
 #~ msgstr "What to post"
@@ -1111,4 +1537,116 @@ msgstr "Low-Layer API"
 
 #~ msgid "ユーザーのフォロワー一覧"
 #~ msgstr "User's Followers List"
+
+#~ msgid "parse_channel is a function to parse channel event"
+#~ msgstr "parse_channel is a function to parse channel event"
+
+#~ msgid "チャンネルタイプのデータを解析後適切なパーサーに移動させます"
+#~ msgstr "Move the channel type data to the appropriate parser after analysis"
+
+#~ msgid "Received message"
+#~ msgstr "Received message"
+
+#~ msgid "フォローを解除した際のイベントを解析する関数"
+#~ msgstr "Function to analyze the event when following a user."
+
+#~ msgid "ログインが発生した際のイベント"
+#~ msgstr ""
+
+#~ msgid "フォローリクエストを受け取った際のイベントを解析する関数"
+#~ msgstr "Function to parse follow events"
+
+#~ msgid "リプライ"
+#~ msgstr "reply"
+
+#~ msgid "ユーザーをフォローした際のイベントを解析する関数"
+#~ msgstr "Function to analyze the event when following a user."
+
+#~ msgid "フォローイベントを解析する関数"
+#~ msgstr "Function to parse follow events"
+
+#~ msgid "メンションイベントを解析する関数"
+#~ msgstr "Function to parse a mention event"
+
+#~ msgid "チャットが来た際のデータを処理する関数"
+#~ msgstr "Function to process data when a chat comes in"
+
+#~ msgid "チャットが既読になっていない場合のデータを処理する関数"
+#~ msgstr "Function to process data when chat has not been read"
+
+#~ msgid "通知イベントを解析する関数"
+#~ msgstr "Function to parse notification events"
+
+#~ msgid "未読の通知を解析する関数"
+#~ msgstr "Function to parse unread notifications"
+
+#~ msgid "リアクションに関する情報を解析する関数"
+#~ msgstr "Function to analyze information about reactions"
+
+#~ msgid "ノートイベントを解析する関数"
+#~ msgstr "Function to parse note events"
+
+#~ msgid ""
+#~ "ユーザーのプロフィールを取得します。一度のみサーバーにアクセスしキャッシュをその後は使います。 "
+#~ "fetch_userを使った場合はキャッシュが廃棄され再度サーバーにアクセスします。"
+#~ msgstr ""
+#~ "Retrieves the user's profile. It "
+#~ "accesses the server only once and "
+#~ "uses the cache afterwards. If you "
+#~ "use fetch_user, the cache is discarded"
+#~ " and the server is accessed again."
+
+#~ msgid "取得したいユーザーのユーザーID"
+#~ msgstr "User ID of the user you want to retrieve"
+
+#~ msgid "取得したいユーザーのユーザー名"
+#~ msgstr "User name of the user you want to retrieve"
+
+#~ msgid "取得したいユーザーがいるインスタンスのhost"
+#~ msgstr "The host of the instance where the user you want to retrieve is located"
+
+#~ msgid "チャットを送信します。"
+#~ msgstr "Send a chat."
+
+#~ msgid "チャットの内容"
+#~ msgstr "Content of the chat"
+
+#~ msgid "指定したidのメッセージを削除します。"
+#~ msgstr "Deletes the message with the specified id."
+
+#~ msgid "メッセージid"
+#~ msgstr "message-id"
+
+#~ msgid "与えられたユーザーのフォロワーを取得します"
+#~ msgstr "Gets the followers for a given user"
+
+#~ msgid "ユーザーがいるインスタンスのhost名"
+#~ msgstr "The host name of the instance the user is in"
+
+#~ msgid "前回の最後の値を与える(既に実行し取得しきれない場合に使用)"
+#~ msgstr ""
+#~ "Give the last value of the last"
+#~ " time (use this if you've already "
+#~ "done it and can't get it)"
+
+#~ msgid "取得する情報の最大数 max: 100"
+#~ msgstr "Maximum number of information to retrieve max: 100"
+
+#~ msgid "全てのフォロワーを取得する"
+#~ msgstr "Get All Followers"
+
+#~ msgid "Yields"
+#~ msgstr "Yields"
+
+#~ msgid "*dict* -- フォロワーの情報"
+#~ msgstr "*dict* -- Follower information"
+
+#~ msgid "Raises"
+#~ msgstr "raises"
+
+#~ msgid "limit引数が不正な場合"
+#~ msgstr "If the limit argument is invalid"
+
+#~ msgid "最大取得数"
+#~ msgstr "Maximum number of acquisitions"
 

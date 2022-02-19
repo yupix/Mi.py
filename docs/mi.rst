@@ -51,6 +51,8 @@ AbstractChatContent
 Misskey モデル
 ---------------
 
+.. currentmodule:: mi.framework
+
 .. danger::
    下記のクラスは、 **ユーザーによって作成されることを考慮していません** 。
    独自のインスタンスは作成するべきではなく、値を変更するべきではありません。
@@ -138,6 +140,8 @@ Reaction
 
 データクラス
 ------------
+
+.. currentmodule:: mi.wrapper.models
 
 RawNote
 ~~~~~~~
@@ -249,6 +253,8 @@ RawUser
 
 型クラス
 --------
+
+.. currentmodule:: mi.types
 
 ChatPayload
 ~~~~~~~~~~~
@@ -458,6 +464,8 @@ UserPayload
 例外処理
 --------
 
+.. currentmodule:: mi
+
 NotFoundError
 ~~~~~~~~~~~~~
 .. autoclass:: NotFoundError()
@@ -570,3 +578,24 @@ Low-Layer API
 
 .. autoclass:: InstanceIterator()
    :members:
+
+Utils
+-----
+
+.. currentmodule:: mi.utils
+
+get_emoji_list
+~~~~~~~~~~~~~~
+
+.. autofunction:: utils.get_emoji_list
+
+emoji_count
+~~~~~~~~~~~
+
+.. autofunction:: emoji_count
+
+check_multi_arg
+~~~~~~~~~~~~~~~
+
+.. autofunction:: utils.check_multi_arg
+
