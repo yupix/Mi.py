@@ -18,11 +18,30 @@ from mi.types.util import EmojiList
 if TYPE_CHECKING:
     from mi.framework.models.note import Note
 
+__all__ = (
+    'deprecated_func',
+    'MiTime',
+    'get_cache_key',
+    'key_builder',
+    'get_module_logger',
+    'get_unicode_emojis',
+    'get_emoji_list',
+    'emoji_count',
+    'check_multi_arg',
+    'async_all',
+    'find',
+    'remove_list_empty',
+    'remove_dict_empty',
+    'upper_to_lower',
+    'str_lower',
+    'bool_to_string'
+)
+
 T = TypeVar("T")
 
 
 def deprecated_func(func):
-    print('deprecated function:' + func.__name__)
+    print(f'deprecated function:{func.__name__}')
 
 
 class MiTime:
@@ -180,10 +199,6 @@ def find(predicate: Callable[[T], Any], seq: Iterable[T]) -> Optional[T]:
         if predicate(element):
             return element
     return None
-
-
-def json_dump(data, *args, **kwargs):
-    return json.dumps(data, ensure_ascii=False, *args, **kwargs)
 
 
 def remove_list_empty(data: List[Any]) -> List[Any]:
