@@ -1,8 +1,8 @@
 import asyncio
 
 from mi.ext import commands, tasks
-from mi.note import Note
-from mi.router import Router
+from mi.framework import Note
+from mi.framework.router import Router
 
 uri = "wss://example.com/streaming"
 token = "This is your token"
@@ -21,7 +21,7 @@ class MyBot(commands.Bot):
         print("work on my machine")
         await Router(ws).connect_channel(["global", "main"])  # globalとmainチャンネルに接続
         self.task.start()  # タスクを起動する
-        res = self.client.note.send('hello world')
+        res = await self.client.note.send('hello world')
         print(res.content)
         self.task.stop()  # タスクを止める
 

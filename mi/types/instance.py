@@ -3,10 +3,10 @@ from __future__ import annotations
 from typing import List, Optional, TYPE_CHECKING, TypedDict
 
 if TYPE_CHECKING:
-    from mi.types import Emoji
+    from mi.types import EmojiPayload
 
 
-class Features:
+class FeaturesPayload:
     registration: bool
     local_time_line: bool
     global_time_line: bool
@@ -28,10 +28,10 @@ class OptionalMeta(TypedDict, total=False):
     cache_remote_files: bool
     proxy_remote_files: bool
     require_setup: bool
-    features: Features
+    features: FeaturesPayload
 
 
-class Meta(OptionalMeta):
+class MetaPayload(OptionalMeta):
     maintainer_name: str
     maintainer_email: str
     version: str
@@ -56,7 +56,7 @@ class Meta(OptionalMeta):
     mascot_image_url: str
     error_image_url: str
     max_note_text_length: int
-    emojis: List[Emoji]
+    emojis: List[EmojiPayload]
     ads: list
     enable_email: bool
     enable_twitter_integration: bool
@@ -75,5 +75,5 @@ class OptionalInstance(TypedDict, total=False):
     theme_color: str
 
 
-class Instance(OptionalInstance, Meta):
-    meta: Meta
+class InstancePayload(OptionalInstance, MetaPayload):
+    meta: MetaPayload

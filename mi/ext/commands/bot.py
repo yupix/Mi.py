@@ -5,12 +5,12 @@ from __future__ import annotations
 import asyncio
 import importlib
 import inspect
+import re
 import sys
 import traceback
 from types import ModuleType
 from typing import Any, Callable, Coroutine, Dict, List, Optional, TYPE_CHECKING, Tuple, Union
 
-from mi import Client, User
 from mi.abc.ext.bot import AbstractBotBase
 from mi.exception import (
     CogNameDuplicate,
@@ -20,7 +20,10 @@ from mi.exception import (
     InvalidCogPath,
     NoEntryPointError,
 )
-from mi.ext.commands import CommandManager
+from mi.ext.commands.context import Context
+from mi.ext.commands.core import CommandManager
+from mi.framework.client import Client
+from mi.framework.models.user import User
 from mi.utils import get_module_logger
 
 if TYPE_CHECKING:
@@ -41,7 +44,7 @@ class BotBase(CommandManager, AbstractBotBase):
         self.token: Optional[str] = None
         self.origin_uri: Optional[str] = None
         self.__extensions: Dict[str, Any] = {}
-        self.i: User = None
+        self.user: User = None
         self.__cogs: Dict[str, Cog] = {}
         self.strip_after_prefix = options.get("strip_after_prefix", False)
         self.logger = get_module_logger(__name__)
@@ -226,6 +229,31 @@ class BotBase(CommandManager, AbstractBotBase):
 
     async def on_error(self, err):
         await self.event_dispatch("error", err)
+
+    def get_cog(self, name: str) -> Optional[str]:
+        return self.__cogs.get(name)
+
+    async def get_context(self, message, cmd, cls=Context) -> Context:
+        ctx = cls(message=message, bot=self, cmd=cmd)
+        return ctx
+
+    async def progress_command(self, message):
+        for cmd in self.all_commands:
+            ctx = await self.get_context(message, cmd)
+            if cmd.cmd_type == 'regex':
+                if re.search(cmd.key, message.content):
+                    hit_list = re.findall(cmd.key, message.content)
+                    if isinstance(hit_list[0], tuple):
+                        hit_list = tuple([i for i in hit_list[0] if len(i.rstrip()) > 0])
+                    ctx.args = hit_list
+                    await cmd.func.invoke(ctx)
+            elif message.content.find(cmd.key) != -1:
+                await cmd.func.invoke(ctx)
+            else:
+                continue
+
+    async def on_mention(self, message):
+        await self.progress_command(message)
 
 
 class Bot(BotBase, Client):

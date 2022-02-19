@@ -11,6 +11,8 @@ if TYPE_CHECKING:
 
 
 class CogMeta(type):
+    __cog_name__: str
+
     def __new__(cls, *args: Tuple[Any], **kwargs: Dict[str, Any]):
         name, bases, attrs = args
         attrs['__cog_name__'] = kwargs.pop("name", name)
@@ -32,9 +34,10 @@ class CogMeta(type):
                     commands[elem] = value
 
                 if is_static_method:  # staticmethodか確認
-                    value = value.__func__  # 関数をvalueに !valueが重要
-                    if isinstance(value, _BaseCommand):
-                        commands[elem] = value
+                    value = value.__func__  #
+                # 関数をvalueに !valueが重要
+                if isinstance(value, _BaseCommand):
+                    commands[elem] = value
                 elif inspect.iscoroutinefunction(value):
                     try:
                         value.__cog_listener__
@@ -56,6 +59,10 @@ class CogMeta(type):
 
     def __init__(self, *args: Tuple[Any], **kwargs: Dict[str, Any]):
         super().__init__(*args, **kwargs)
+
+    @classmethod
+    def qualified_name(cls) -> str:
+        return cls.__cog_name__
 
 
 class Cog(metaclass=CogMeta):
@@ -87,9 +94,13 @@ class Cog(metaclass=CogMeta):
 
         return decorator
 
+    @classmethod
+    def qualified_name(cls) -> str:
+        return cls.__cog_name__
+
     def _inject(self, bot: Bot):
         for command in self.__cog_commands__:
-            bot.add_command(command)
+            bot.add_command(command, self.__cog_name__)
 
         for name, method_func in self.__cog_listeners__:
             bot.add_listener(getattr(self, name), name)

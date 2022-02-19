@@ -19,11 +19,11 @@ sys.path.append(os.path.abspath('extensions'))
 # -- Project information -----------------------------------------------------
 
 project = "Mi.py"
-copyright = "2021, yupix"
+copyright = "2022, yupix"
 author = "yupix"
 
 # The full version, including alpha/beta/rc tags
-release = "2.1.1"
+release = "3.9.9"
 
 # -- General configuration ---------------------------------------------------
 

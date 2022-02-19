@@ -1,11 +1,13 @@
 # Mi.py
 
+<a><img src="https://img.shields.io/github/commit-activity/w/yupix/Mi.py"></a>
+<a><img src="https://img.shields.io/pypi/dm/Mi.py?label=PyPI"></a>
 [![CodeFactor](https://www.codefactor.io/repository/github/yupix/mi.py/badge)](https://www.codefactor.io/repository/github/yupix/mi.py)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/f5acd9da804d4a11b031d36dbd398067)](https://www.codacy.com/gh/yupix/Mi.py/dashboard?utm_source=github.com&utm_medium=referral&utm_content=yupix/Mi.py&utm_campaign=Badge_Grade)
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fyupix%2FMi.py.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fyupix%2FMi.py?ref=badge_shield)
-[![Join the chat at https://gitter.im/yupix/Mi.py](https://badges.gitter.im/yupix/Mi.py.svg)](https://gitter.im/yupix/Mi.py?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 <a href="https://discord.gg/CcT997U"><img src="https://img.shields.io/discord/530299114387406860?style=flat-square&color=5865f2&logo=discord&logoColor=ffffff&label=discord" alt="Discord server invite" /></a>
-<a><img src="https://img.shields.io/github/commit-activity/w/yupix/Mi.py"></a>
+[![Join the chat at https://gitter.im/yupix/Mi.py](https://badges.gitter.im/yupix/Mi.py.svg)](https://gitter.im/yupix/Mi.py?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 
 ## 概要
 

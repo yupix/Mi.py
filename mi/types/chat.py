@@ -1,14 +1,14 @@
 from typing import List, TypedDict
 
-from mi.types.user import User
+from mi.types.user import UserPayload
 
 
-class Chat(TypedDict):
+class ChatPayload(TypedDict):
     id: str
     created_at: str
     text: str
     user_id: str
-    user: User
+    user: UserPayload
     recipient_id: str
     recipient: str
     group_id: str

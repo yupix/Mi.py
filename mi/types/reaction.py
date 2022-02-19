@@ -1,10 +1,10 @@
 from typing import TypedDict
 
-from mi.types import User
+from mi.types import UserPayload
 
 
-class NoteReaction(TypedDict):
+class NoteReactionPayload(TypedDict):
     id: str
     created_at: str
-    user: User
+    user: UserPayload
     type: str

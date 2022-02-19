@@ -1,11 +1,11 @@
 from typing import Any, Dict, List, Optional, TypedDict
 
-from .drive import File
-from .emoji import Emoji
-from .instance import Instance
+from .drive import FilePayload
+from .emoji import EmojiPayload
+from .instance import InstancePayload
 
 
-class Channel(TypedDict):
+class ChannelPayload(TypedDict):
     id: Optional[str]
     created_at: Optional[str]
     last_noted_at: Optional[str]
@@ -18,13 +18,13 @@ class Channel(TypedDict):
     user_id: Optional[str]
 
 
-class PinnedNote(TypedDict):
+class PinnedNotePayload(TypedDict):
     id: Optional[str]
     created_at: Optional[str]
     text: Optional[str]
     cw: Optional[str]
     user_id: Optional[str]
-    user: Optional['User']
+    user: Optional['UserPayload']
     reply_id: Optional[str]
     renote_id: Optional[str]
     reply: Optional[Dict[str, Any]]
@@ -35,13 +35,13 @@ class PinnedNote(TypedDict):
     mentions: Optional[List[str]]
     visible_user_ids: Optional[List[str]]
     file_ids: Optional[List[str]]
-    files: Optional[List[File]]
+    files: Optional[List[FilePayload]]
     tags: Optional[List[str]]
     poll: Optional[Dict[str, Any]]
     channel_id: Optional[str]
-    channel: Optional[Channel]
+    channel: Optional[ChannelPayload]
     local_only: Optional[bool]
-    emojis: Optional[List[Emoji]]
+    emojis: Optional[List[EmojiPayload]]
     reactions: Optional[Dict[str, Any]]
     renote_count: Optional[int]
     replies_count: Optional[int]
@@ -50,7 +50,7 @@ class PinnedNote(TypedDict):
     my_reaction: Optional[Dict[str, Any]]
 
 
-class PinnedPage(TypedDict):
+class PinnedPagePayload(TypedDict):
     id: Optional[str]
     created_at: Optional[str]
     updated_at: Optional[str]
@@ -63,12 +63,13 @@ class PinnedPage(TypedDict):
     author: Optional[Dict[str, Any]]
 
 
-class FieldContent(TypedDict):
+class FieldContentPayload(TypedDict):
     name: str
     value: str
 
 
 class OptionalUser(TypedDict, total=False):
+    user_id: str
     name: str
     host: str
     is_admin: bool
@@ -79,7 +80,7 @@ class OptionalUser(TypedDict, total=False):
     online_status: str
 
 
-class User(OptionalUser):
+class UserPayload(OptionalUser):
     id: str
     username: str
     avatar_url: Optional[str]
@@ -110,4 +111,4 @@ class User(OptionalUser):
     is_blocking: bool
     is_blocked: bool
     is_muted: bool
-    instance: Optional[Instance]
+    instance: Optional[InstancePayload]
