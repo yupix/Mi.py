@@ -72,7 +72,21 @@ def get_module_logger(module_name):
     return logger
 
 
-def extract_emojis(text: str):
+def get_unicode_emojis(text: str) -> List[str]:
+    """
+    テキストからunicode emojiを取得します
+
+    Parameters
+    ----------
+    text : str
+        テキスト
+
+    Returns
+    -------
+    List[str]
+        unicode emojiのリスト
+    """
+
     return re.findall(emoji.get_emoji_regexp(), text)
 
 
@@ -85,7 +99,7 @@ def get_emoji_list(
     emoji_list = {}
     for note in note_list:
         if include_unicode and note.content:
-            for i in extract_emojis(note.content):
+            for i in get_unicode_emojis(note.content):
                 emoji_list[i] = {
                     'name': i,
                     'count': emoji_list.get(i, {}).get('count', 0) + 1

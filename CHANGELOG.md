@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Changed
+
+- `extract_emojis` を `get_unicode_emojis` に変更しました
+
 ## [v3.9.9] 2022-02-19
 
 ### Added
