@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  Mi.py\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-02-20 07:37+0900\n"
+"POT-Creation-Date: 2022-02-20 09:15+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -94,9 +94,13 @@ msgstr "note"
 msgid "ノートに対して返信を送信します"
 msgstr ""
 
+#: mi.framework.iterators.InstanceIterator.get_users
 #: mi.framework.models.note.Follow.unfollow mi.framework.models.note.Note.reply
-#: mi.framework.models.user.User.get_followers mi.utils.emoji_count
-#: mi.wrapper.models.chat.RawChat of
+#: mi.framework.models.user.User.get_followers
+#: mi.framework.state.ConnectionState.parse_channel
+#: mi.framework.state.ConnectionState.parse_notification
+#: mi.framework.state.ConnectionState.parse_unread_notification
+#: mi.utils.emoji_count mi.wrapper.models.chat.RawChat of
 msgid "Parameters"
 msgstr "Parameters"
 
@@ -160,6 +164,7 @@ msgstr "Returns"
 msgid "含まれている絵文字の数"
 msgstr ""
 
+#: mi.framework.iterators.InstanceIterator.get_users
 #: mi.framework.models.chat.Chat.delete
 #: mi.framework.models.note.Follow.unfollow
 #: mi.framework.models.note.Note.emoji_count
@@ -1132,19 +1137,85 @@ msgstr "Exception raised when the required data does not exist."
 msgid "Low-Level API"
 msgstr "Low-Level API"
 
-#: ../../mi.rst:571
+#: mi.framework.state.ConnectionState.parse_channel:2 of
+msgid "parse_channel is a function to parse channel event"
+msgstr ""
+
+#: mi.framework.state.ConnectionState.parse_channel:4 of
+msgid "チャンネルタイプのデータを解析後適切なパーサーに移動させます"
+msgstr ""
+
+#: mi.framework.state.ConnectionState.parse_channel:6
+#: mi.framework.state.ConnectionState.parse_notification:4
+#: mi.framework.state.ConnectionState.parse_unread_notification:4 of
+msgid "Received message"
+msgstr ""
+
+#: mi.framework.state.ConnectionState.parse_unfollow:2 of
+msgid "フォローを解除した際のイベントを解析する関数"
+msgstr ""
+
+#: mi.framework.state.ConnectionState.parse_signin:2 of
+msgid "ログインが発生した際のイベント"
+msgstr ""
+
+#: mi.framework.state.ConnectionState.parse_receive_follow_request:2 of
+msgid "フォローリクエストを受け取った際のイベントを解析する関数"
+msgstr ""
+
+#: mi.framework.state.ConnectionState.parse_reply:2 of
+msgid "リプライ"
+msgstr ""
+
+#: mi.framework.state.ConnectionState.parse_follow:2 of
+msgid "ユーザーをフォローした際のイベントを解析する関数"
+msgstr ""
+
+#: mi.framework.state.ConnectionState.parse_followed:2 of
+msgid "フォローイベントを解析する関数"
+msgstr ""
+
+#: mi.framework.state.ConnectionState.parse_mention:2 of
+msgid "メンションイベントを解析する関数"
+msgstr ""
+
+#: mi.framework.state.ConnectionState.parse_messaging_message:2 of
+msgid "チャットが来た際のデータを処理する関数"
+msgstr ""
+
+#: mi.framework.state.ConnectionState.parse_unread_messaging_message:2 of
+msgid "チャットが既読になっていない場合のデータを処理する関数"
+msgstr ""
+
+#: mi.framework.state.ConnectionState.parse_notification:2 of
+msgid "通知イベントを解析する関数"
+msgstr ""
+
+#: mi.framework.state.ConnectionState.parse_unread_notification:2 of
+msgid "未読の通知を解析する関数"
+msgstr ""
+
+#: mi.framework.state.ConnectionState.parse_reaction:2 of
+msgid "リアクションに関する情報を解析する関数"
+msgstr ""
+
+#: mi.framework.state.ConnectionState.parse_note:2 of
+msgid "ノートイベントを解析する関数"
+msgstr ""
+
+#: ../../mi.rst:573
 msgid "Low-Layer API"
 msgstr "Low-Layer API"
 
-#: ../../mi.rst:583
+#: ../../mi.rst:585
 msgid "Utils"
 msgstr ""
 
-#: ../../mi.rst:588
+#: ../../mi.rst:590
 msgid "get_emoji_list"
 msgstr ""
 
-#: ../../mi.rst:593
+#: ../../mi.rst:595
 msgid "emoji_count"
 msgstr ""
 
@@ -1152,7 +1223,7 @@ msgstr ""
 msgid "テキストの中にいくつのemojiが含まれているかをカウントします"
 msgstr ""
 
-#: ../../mi.rst:598
+#: ../../mi.rst:600
 msgid "check_multi_arg"
 msgstr ""
 

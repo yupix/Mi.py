@@ -13,3 +13,4 @@ dist/*
 .setup.py.swp
 *.mo
 release.sh
+docs/.vnev
