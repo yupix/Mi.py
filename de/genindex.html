@@ -154,7 +154,11 @@
   <input type="hidden" name="area" value="default">
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
-  
+  <ul>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">QuickStart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mi.html">API-Referenz</a></li>
+</ul>
+
 </div>
 </div>
 
@@ -192,12 +196,16 @@
 </li>
         <li><a href="mi.html#mi.abc.AbstractChatContent">AbstractChatContent (Klasse in mi.abc)</a>
 </li>
-        <li><a href="mi.html#mi.wrapper.models.RawEmoji.aliases">aliases (Attribut von mi.wrapper.models.RawEmoji)</a>
+        <li><a href="mi.html#mi.actions.NoteActions.add_clips">add_clips() (Methode von mi.actions.NoteActions)</a>
 </li>
-        <li><a href="mi.html#mi.AuthenticationError">AuthenticationError (Klasse in mi)</a>
+        <li><a href="mi.html#mi.actions.AdminActions">AdminActions (Klasse in mi.actions)</a>
+</li>
+        <li><a href="mi.html#mi.wrapper.models.RawEmoji.aliases">aliases (Attribut von mi.wrapper.models.RawEmoji)</a>
 </li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="mi.html#mi.AuthenticationError">AuthenticationError (Klasse in mi)</a>
+</li>
         <li><a href="mi.html#mi.wrapper.models.RawChat.author">author (Attribut von mi.wrapper.models.RawChat)</a>
 
         <ul>
@@ -254,8 +262,6 @@
 </li>
         <li><a href="mi.html#mi.framework.ConnectionState">ConnectionState (Klasse in mi.framework)</a>
 </li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="mi.html#mi.wrapper.models.RawChat.content">content (Attribut von mi.wrapper.models.RawChat)</a>
 
         <ul>
@@ -264,7 +270,13 @@
           <li><a href="mi.html#mi.wrapper.models.RawRenote.content">(Attribut von mi.wrapper.models.RawRenote)</a>
 </li>
         </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="mi.html#mi.ContentRequired">ContentRequired (Klasse in mi)</a>
+</li>
+        <li><a href="mi.html#mi.actions.NoteActions.create_quote">create_quote() (Methode von mi.actions.NoteActions)</a>
+</li>
+        <li><a href="mi.html#mi.actions.NoteActions.create_renote">create_renote() (Methode von mi.actions.NoteActions)</a>
 </li>
         <li><a href="mi.html#mi.wrapper.models.RawChat.created_at">created_at (Attribut von mi.wrapper.models.RawChat)</a>
 
@@ -296,7 +308,15 @@
   <h2>D</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="mi.html#mi.framework.Chat.delete">delete() (Methode von mi.framework.Chat)</a>
+        <li><a href="mi.html#mi.actions.NoteActions.delete">delete() (Methode von mi.actions.NoteActions)</a>
+
+        <ul>
+          <li><a href="mi.html#mi.framework.Chat.delete">(Methode von mi.framework.Chat)</a>
+</li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="mi.html#mi.actions.DriveActions">DriveActions (Klasse in mi.actions)</a>
 </li>
     </ul></td>
   </tr></table>
@@ -364,10 +384,10 @@
           <li><a href="mi.html#mi.wrapper.models.RawRenote.file_ids">(Attribut von mi.wrapper.models.RawRenote)</a>
 </li>
         </ul></li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="mi.html#mi.types.FilePayload">FilePayload (Klasse in mi.types)</a>
 </li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="mi.html#mi.wrapper.models.RawNote.files">files (Attribut von mi.wrapper.models.RawNote)</a>
 
         <ul>
@@ -377,6 +397,8 @@
         <li><a href="mi.html#mi.wrapper.models.RawFile.folder">folder (Attribut von mi.wrapper.models.RawFile)</a>
 </li>
         <li><a href="mi.html#mi.wrapper.models.RawFile.folder_id">folder_id (Attribut von mi.wrapper.models.RawFile)</a>
+</li>
+        <li><a href="mi.html#mi.actions.FolderActions">FolderActions (Klasse in mi.actions)</a>
 </li>
         <li><a href="mi.html#mi.types.FolderPayload">FolderPayload (Klasse in mi.types)</a>
 </li>
@@ -396,11 +418,19 @@
     <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="mi.html#mi.types.GeoPayload">GeoPayload (Klasse in mi.types)</a>
 </li>
+        <li><a href="mi.html#mi.actions.UserActions.get">get() (Methode von mi.actions.UserActions)</a>
+</li>
         <li><a href="mi.html#mi.framework.User.get_followers">get_followers() (Methode von mi.framework.User)</a>
+</li>
+        <li><a href="mi.html#mi.actions.UserActions.get_mention">get_mention() (Methode von mi.actions.UserActions)</a>
 </li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="mi.html#mi.actions.NoteActions.get_note">get_note() (Methode von mi.actions.NoteActions)</a>
+</li>
         <li><a href="mi.html#mi.framework.User.get_profile">get_profile() (Methode von mi.framework.User)</a>
+</li>
+        <li><a href="mi.html#mi.actions.NoteActions.get_replies">get_replies() (Methode von mi.actions.NoteActions)</a>
 </li>
         <li><a href="mi.html#mi.framework.InstanceIterator.get_users">get_users() (Methode von mi.framework.InstanceIterator)</a>
 </li>
@@ -526,9 +556,11 @@
         </ul></li>
         <li><a href="mi.html#mi.NoEntryPointError">NoEntryPointError (Klasse in mi)</a>
 </li>
+        <li><a href="mi.html#mi.framework.Note">Note (Klasse in mi.framework)</a>
+</li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="mi.html#mi.framework.Note">Note (Klasse in mi.framework)</a>
+        <li><a href="mi.html#mi.actions.NoteActions">NoteActions (Klasse in mi.actions)</a>
 </li>
         <li><a href="mi.html#mi.types.NotePayload">NotePayload (Klasse in mi.types)</a>
 </li>
@@ -716,6 +748,8 @@
   <h2>S</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="mi.html#mi.actions.NoteActions.send">send() (Methode von mi.actions.NoteActions)</a>
+</li>
         <li><a href="mi.html#mi.wrapper.models.RawFile.size">size (Attribut von mi.wrapper.models.RawFile)</a>
 </li>
     </ul></td>
@@ -786,6 +820,8 @@
           <li><a href="mi.html#mi.wrapper.models.RawRenote.user_id">(Attribut von mi.wrapper.models.RawRenote)</a>
 </li>
         </ul></li>
+        <li><a href="mi.html#mi.actions.UserActions">UserActions (Klasse in mi.actions)</a>
+</li>
         <li><a href="mi.html#mi.types.UserPayload">UserPayload (Klasse in mi.types)</a>
 </li>
     </ul></td>

@@ -3,7 +3,7 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-<link rel="index" title="Stichwortverzeichnis" href="genindex.html" /><link rel="search" title="Suche" href="search.html" />
+<link rel="index" title="Stichwortverzeichnis" href="genindex.html" /><link rel="search" title="Suche" href="search.html" /><link rel="prev" title="QuickStart" href="quickstart.html" />
 
     <meta name="generator" content="sphinx-4.4.0, furo 2022.02.14.1"/>
         <title>API-Referenz - Mi.py 4.0.0 Dokumentation</title>
@@ -156,7 +156,11 @@
   <input type="hidden" name="area" value="default">
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
-  
+  <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">QuickStart</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">API-Referenz</a></li>
+</ul>
+
 </div>
 </div>
 
@@ -1697,7 +1701,252 @@ Attributes</span><ul>
 </section>
 </section>
 <section id="id4">
-<h2>型クラス<a class="headerlink" href="#id4" title="Link zu dieser Überschrift">#</a></h2>
+<h2>アクションクラス<a class="headerlink" href="#id4" title="Link zu dieser Überschrift">#</a></h2>
+<section id="noteactions">
+<h3>NoteActions<a class="headerlink" href="#noteactions" title="Link zu dieser Überschrift">#</a></h3>
+<div class="py-attribute-table" data-move-to-id="mi.actions.NoteActions"><div class="py-attribute-table-column">
+<span>
+Methods</span><ul>
+<li class="py-attribute-table-entry">
+<span class="py-attribute-table-badge" title="coroutine">
+async</span><a class="reference internal" href="#mi.actions.NoteActions.add_clips">add_clips</a></li><li class="py-attribute-table-entry">
+<span class="py-attribute-table-badge" title="coroutine">
+async</span><a class="reference internal" href="#mi.actions.NoteActions.create_quote">create_quote</a></li><li class="py-attribute-table-entry">
+<span class="py-attribute-table-badge" title="coroutine">
+async</span><a class="reference internal" href="#mi.actions.NoteActions.create_renote">create_renote</a></li><li class="py-attribute-table-entry">
+<span class="py-attribute-table-badge" title="coroutine">
+async</span><a class="reference internal" href="#mi.actions.NoteActions.delete">delete</a></li><li class="py-attribute-table-entry">
+<span class="py-attribute-table-badge" title="coroutine">
+async</span><a class="reference internal" href="#mi.actions.NoteActions.get_note">get_note</a></li><li class="py-attribute-table-entry">
+<span class="py-attribute-table-badge" title="coroutine">
+async</span><a class="reference internal" href="#mi.actions.NoteActions.get_replies">get_replies</a></li><li class="py-attribute-table-entry">
+<span class="py-attribute-table-badge" title="coroutine">
+async</span><a class="reference internal" href="#mi.actions.NoteActions.send">send</a></li></ul>
+</div></div><dl class="py class">
+<dt class="sig sig-object py" id="mi.actions.NoteActions">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.actions.</span></span><span class="sig-name descname"><span class="pre">NoteActions</span></span><a class="reference internal" href="_modules/mi/actions/note.html#NoteActions"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.actions.NoteActions" title="Link zu dieser Definition">#</a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="mi.actions.NoteActions.add_clips">
+<em class="property"><span class="pre">await</span> </em><span class="sig-name descname"><span class="pre">add_clips</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">clip_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">note_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/actions/note.html#NoteActions.add_clips"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.actions.NoteActions.add_clips" title="Link zu dieser Definition">#</a></dt>
+<dd><p>クリップに追加します</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameter</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>clip_id</strong> (<em>str</em>) – クリップのID</p></li>
+<li><p><strong>Optional</strong><strong>[</strong><strong>str</strong><strong>]</strong> (<em>note_id</em>) – 追加したいノートのID</p></li>
+<li><p><strong>default=None</strong> – 追加したいノートのID</p></li>
+</ul>
+</dd>
+<dt class="field-even">Rückgabe</dt>
+<dd class="field-even"><p>Erfolg oder Misserfolg</p>
+</dd>
+<dt class="field-odd">Rückgabetyp</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="mi.actions.NoteActions.send">
+<em class="property"><span class="pre">await</span> </em><span class="sig-name descname"><span class="pre">send</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visibility</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'public'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visible_user_ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cw</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">local_only</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extract_mentions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extract_hashtags</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extract_emojis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reply_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">renote_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">poll</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/actions/note.html#NoteActions.send"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.actions.NoteActions.send" title="Link zu dieser Definition">#</a></dt>
+<dd><p>ノートを投稿します。</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameter</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>content</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>default=None</em>) – 投稿する内容</p></li>
+<li><p><strong>visibility</strong> (<em>str</em><em>, </em><em>optional</em>) – 公開範囲, by default „public“</p></li>
+<li><p><strong>visible_user_ids</strong> (<em>Optional</em><em>[</em><em>List</em><em>[</em><em>str</em><em>]</em><em>]</em><em>, </em><em>optional</em>) – 公開するユーザー, by default None</p></li>
+<li><p><strong>cw</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – 閲覧注意の文字, by default None</p></li>
+<li><p><strong>local_only</strong> (<em>bool</em><em>, </em><em>optional</em>) – ローカルにのみ表示するか, by default False</p></li>
+<li><p><strong>extract_mentions</strong> (<em>bool</em><em>, </em><em>optional</em>) – メンションを展開するか, by default False</p></li>
+<li><p><strong>extract_hashtags</strong> (<em>bool</em><em>, </em><em>optional</em>) – ハッシュタグを展開するか, by default False</p></li>
+<li><p><strong>extract_emojis</strong> (<em>bool</em><em>, </em><em>optional</em>) – 絵文字を展開するか, by default False</p></li>
+<li><p><strong>reply_id</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – リプライ先のid, by default None</p></li>
+<li><p><strong>renote_id</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – リノート先のid, by default None</p></li>
+<li><p><strong>channel_id</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – チャンネルid, by default None</p></li>
+<li><p><strong>file_ids</strong> (<em>[</em><em>type</em><em>]</em><em>, </em><em>optional</em>) – 添付するファイルのid, by default None</p></li>
+<li><p><strong>poll</strong> (<em>Optional</em><em>[</em><em>Poll</em><em>]</em><em>, </em><em>optional</em>) – アンケート, by default None</p></li>
+</ul>
+</dd>
+<dt class="field-even">Rückgabe</dt>
+<dd class="field-even"><p>投稿したノート</p>
+</dd>
+<dt class="field-odd">Rückgabetyp</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#mi.framework.Note" title="mi.framework.Note">Note</a></p>
+</dd>
+<dt class="field-even">Verursacht</dt>
+<dd class="field-even"><p><a class="reference internal" href="#mi.ContentRequired" title="mi.ContentRequired"><strong>ContentRequired</strong></a> – [description]</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="mi.actions.NoteActions.delete">
+<em class="property"><span class="pre">await</span> </em><span class="sig-name descname"><span class="pre">delete</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">note_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/actions/note.html#NoteActions.delete"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.actions.NoteActions.delete" title="Link zu dieser Definition">#</a></dt>
+<dd><p>ノートを削除します</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameter</dt>
+<dd class="field-odd"><p><strong>note_id</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>default=None</em>) – 削除したいノートのID</p>
+</dd>
+<dt class="field-even">Rückgabe</dt>
+<dd class="field-even"><p>削除に成功したか否か</p>
+</dd>
+<dt class="field-odd">Rückgabetyp</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="mi.actions.NoteActions.create_renote">
+<em class="property"><span class="pre">await</span> </em><span class="sig-name descname"><span class="pre">create_renote</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">note_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/actions/note.html#NoteActions.create_renote"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.actions.NoteActions.create_renote" title="Link zu dieser Definition">#</a></dt>
+<dd><p>リノートを作成します</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameter</dt>
+<dd class="field-odd"><p><strong>note_id</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>default=None</em>) – ノートのID</p>
+</dd>
+<dt class="field-even">Rückgabe</dt>
+<dd class="field-even"><p>作成したリノート</p>
+</dd>
+<dt class="field-odd">Rückgabetyp</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#mi.framework.Note" title="mi.framework.Note">Note</a></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="mi.actions.NoteActions.create_quote">
+<em class="property"><span class="pre">await</span> </em><span class="sig-name descname"><span class="pre">create_quote</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visibility</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'public'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visible_user_ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cw</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">local_only</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extract_mentions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extract_hashtags</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extract_emojis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">poll</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">note_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/actions/note.html#NoteActions.create_quote"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.actions.NoteActions.create_quote" title="Link zu dieser Definition">#</a></dt>
+<dd><p>Create a note quote.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameter</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>content</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>default=None</em>) – text</p></li>
+<li><p><strong>visibility</strong> (<em>str</em><em>, </em><em>default='public'</em>) – Disclosure range</p></li>
+<li><p><strong>visible_user_ids</strong> (<em>Optional</em><em>[</em><em>List</em><em>[</em><em>str</em><em>]</em><em>]</em><em>, </em><em>default=None</em>) – List of users to be published</p></li>
+<li><p><strong>cw</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>default=None</em>) – Text to be displayed when warning is given</p></li>
+<li><p><strong>local_only</strong> (<em>bool</em><em>, </em><em>default=False</em>) – Whether to show only locally or not</p></li>
+<li><p><strong>extract_mentions</strong> (<em>bool</em><em>, </em><em>default=True</em>) – Whether to expand the mention</p></li>
+<li><p><strong>extract_hashtags</strong> (<em>bool</em><em>, </em><em>default=True</em>) – Whether to expand the hashtag</p></li>
+<li><p><strong>extract_emojis</strong> (<em>bool</em><em>, </em><em>default=True</em>) – Whether to expand the emojis</p></li>
+<li><p><strong>file_ids</strong> (<em>Optional</em><em>[</em><em>List</em><em>[</em><em>str</em><em>]</em><em>]</em><em>, </em><em>default=None</em>) – The ID list of files to be attached</p></li>
+<li><p><strong>poll</strong> (<em>Optional</em><em>[</em><em>Poll</em><em>]</em><em>, </em><em>default=None</em>) – Questionnaire to be created</p></li>
+<li><p><strong>note_id</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>default=None</em>) – Note IDs to target for renote and citations</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="mi.actions.NoteActions.get_note">
+<em class="property"><span class="pre">await</span> </em><span class="sig-name descname"><span class="pre">get_note</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">note_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/actions/note.html#NoteActions.get_note"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.actions.NoteActions.get_note" title="Link zu dieser Definition">#</a></dt>
+<dd><p>ノートを取得します</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameter</dt>
+<dd class="field-odd"><p><strong>note_id</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>default=None</em>) – ノートのID</p>
+</dd>
+<dt class="field-even">Rückgabe</dt>
+<dd class="field-even"><p>取得したノートID</p>
+</dd>
+<dt class="field-odd">Rückgabetyp</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#mi.framework.Note" title="mi.framework.Note">Note</a></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="mi.actions.NoteActions.get_replies">
+<em class="property"><span class="pre">await</span> </em><span class="sig-name descname"><span class="pre">get_replies</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">since_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">until_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">note_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/actions/note.html#NoteActions.get_replies"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.actions.NoteActions.get_replies" title="Link zu dieser Definition">#</a></dt>
+<dd><p>ノートに対する返信を取得します</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameter</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>since_id</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>default=None</em>) – 指定すると、その投稿を投稿を起点としてより新しい投稿を取得します</p></li>
+<li><p><strong>until_id</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>default=None</em>) – 指定すると、その投稿を投稿を起点としてより古い投稿を取得します</p></li>
+<li><p><strong>limit</strong> (<em>int</em><em>, </em><em>default=10</em>) – 取得する上限</p></li>
+<li><p><strong>note_id</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>default=None</em>) – 返信を取得したいノートのID</p></li>
+</ul>
+</dd>
+<dt class="field-even">Rückgabe</dt>
+<dd class="field-even"><p>返信のリスト</p>
+</dd>
+<dt class="field-odd">Rückgabetyp</dt>
+<dd class="field-odd"><p>List[<a class="reference internal" href="#mi.framework.Note" title="mi.framework.Note">Note</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+</dd></dl>
+</section>
+<section id="adminactions">
+<h3>AdminActions<a class="headerlink" href="#adminactions" title="Link zu dieser Überschrift">#</a></h3>
+<div class="py-attribute-table" data-move-to-id="mi.actions.AdminActions"></div><dl class="py class">
+<dt class="sig sig-object py" id="mi.actions.AdminActions">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.actions.</span></span><span class="sig-name descname"><span class="pre">AdminActions</span></span><a class="reference internal" href="_modules/mi/actions/admin.html#AdminActions"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.actions.AdminActions" title="Link zu dieser Definition">#</a></dt>
+<dd></dd></dl>
+</section>
+<section id="folderactions">
+<h3>FolderActions<a class="headerlink" href="#folderactions" title="Link zu dieser Überschrift">#</a></h3>
+<div class="py-attribute-table" data-move-to-id="mi.actions.FolderActions"></div><dl class="py class">
+<dt class="sig sig-object py" id="mi.actions.FolderActions">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.actions.</span></span><span class="sig-name descname"><span class="pre">FolderActions</span></span><a class="reference internal" href="_modules/mi/actions/drive.html#FolderActions"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.actions.FolderActions" title="Link zu dieser Definition">#</a></dt>
+<dd></dd></dl>
+</section>
+<section id="driveactions">
+<h3>DriveActions<a class="headerlink" href="#driveactions" title="Link zu dieser Überschrift">#</a></h3>
+<div class="py-attribute-table" data-move-to-id="mi.actions.DriveActions"></div><dl class="py class">
+<dt class="sig sig-object py" id="mi.actions.DriveActions">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.actions.</span></span><span class="sig-name descname"><span class="pre">DriveActions</span></span><a class="reference internal" href="_modules/mi/actions/drive.html#DriveActions"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.actions.DriveActions" title="Link zu dieser Definition">#</a></dt>
+<dd></dd></dl>
+</section>
+<section id="useractions">
+<h3>UserActions<a class="headerlink" href="#useractions" title="Link zu dieser Überschrift">#</a></h3>
+<div class="py-attribute-table" data-move-to-id="mi.actions.UserActions"><div class="py-attribute-table-column">
+<span>
+Methods</span><ul>
+<li class="py-attribute-table-entry">
+<span class="py-attribute-table-badge" title="coroutine">
+async</span><a class="reference internal" href="#mi.actions.UserActions.get">get</a></li><li class="py-attribute-table-entry">
+<span class="py-attribute-table-badge" title="Methode">
+def</span><a class="reference internal" href="#mi.actions.UserActions.get_mention">get_mention</a></li></ul>
+</div></div><dl class="py class">
+<dt class="sig sig-object py" id="mi.actions.UserActions">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.actions.</span></span><span class="sig-name descname"><span class="pre">UserActions</span></span><a class="reference internal" href="_modules/mi/actions/user.html#UserActions"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.actions.UserActions" title="Link zu dieser Definition">#</a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="mi.actions.UserActions.get">
+<em class="property"><span class="pre">await</span> </em><span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">host</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/actions/user.html#UserActions.get"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.actions.UserActions.get" title="Link zu dieser Definition">#</a></dt>
+<dd><p>ユーザーのプロフィールを取得します。一度のみサーバーにアクセスしキャッシュをその後は使います。
+fetch_userを使った場合はキャッシュが廃棄され再度サーバーにアクセスします。</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameter</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>user_id</strong> (<em>str</em>) – 取得したいユーザーのユーザーID</p></li>
+<li><p><strong>username</strong> (<em>str</em>) – 取得したいユーザーのユーザー名</p></li>
+<li><p><strong>host</strong> (<em>str</em><em>, </em><em>default=None</em>) – 取得したいユーザーがいるインスタンスのhost</p></li>
+</ul>
+</dd>
+<dt class="field-even">Rückgabe</dt>
+<dd class="field-even"><p>ユーザー情報</p>
+</dd>
+<dt class="field-odd">Rückgabetyp</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#mi.framework.User" title="mi.framework.User">User</a></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="mi.actions.UserActions.get_mention">
+<span class="sig-name descname"><span class="pre">get_mention</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/actions/user.html#UserActions.get_mention"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.actions.UserActions.get_mention" title="Link zu dieser Definition">#</a></dt>
+<dd><p>Get mention name of user.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameter</dt>
+<dd class="field-odd"><p><strong>user</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="#mi.framework.User" title="mi.framework.User"><em>User</em></a><em>]</em><em>, </em><em>default=None</em>) – メンションを取得したいユーザーのオブジェクト</p>
+</dd>
+<dt class="field-even">Rückgabe</dt>
+<dd class="field-even"><p>メンション</p>
+</dd>
+<dt class="field-odd">Rückgabetyp</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+</dd></dl>
+</section>
+</section>
+<section id="id5">
+<h2>型クラス<a class="headerlink" href="#id5" title="Link zu dieser Überschrift">#</a></h2>
 <section id="chatpayload">
 <h3>ChatPayload<a class="headerlink" href="#chatpayload" title="Link zu dieser Überschrift">#</a></h3>
 <div class="py-attribute-table" data-move-to-id="mi.types.ChatPayload"></div><dl class="py class">
@@ -1866,8 +2115,8 @@ Attributes</span><ul>
 <dd></dd></dl>
 </section>
 </section>
-<section id="id5">
-<h2>Behandlung von Ausnahmen<a class="headerlink" href="#id5" title="Link zu dieser Überschrift">#</a></h2>
+<section id="id6">
+<h2>Behandlung von Ausnahmen<a class="headerlink" href="#id6" title="Link zu dieser Überschrift">#</a></h2>
 <section id="notfounderror">
 <h3>NotFoundError<a class="headerlink" href="#notfounderror" title="Link zu dieser Überschrift">#</a></h3>
 <dl class="py class">
@@ -2199,7 +2448,17 @@ Attributes</span><ul>
         
         <div class="related-pages">
           
-          
+          <a class="prev-page" href="quickstart.html">
+              <svg><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">QuickStart</div>
+                
+              </div>
+            </a>
         </div>
         <div class="bottom-of-page">
           <div class="left-details">
@@ -2267,7 +2526,15 @@ Attributes</span><ul>
 <li><a class="reference internal" href="#rawuser">RawUser</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id4">型クラス</a><ul>
+<li><a class="reference internal" href="#id4">アクションクラス</a><ul>
+<li><a class="reference internal" href="#noteactions">NoteActions</a></li>
+<li><a class="reference internal" href="#adminactions">AdminActions</a></li>
+<li><a class="reference internal" href="#folderactions">FolderActions</a></li>
+<li><a class="reference internal" href="#driveactions">DriveActions</a></li>
+<li><a class="reference internal" href="#useractions">UserActions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id5">型クラス</a><ul>
 <li><a class="reference internal" href="#chatpayload">ChatPayload</a></li>
 <li><a class="reference internal" href="#propertiespayload">PropertiesPayload</a></li>
 <li><a class="reference internal" href="#folderpayload">FolderPayload</a></li>
@@ -2293,7 +2560,7 @@ Attributes</span><ul>
 <li><a class="reference internal" href="#userpayload">UserPayload</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id5">Behandlung von Ausnahmen</a><ul>
+<li><a class="reference internal" href="#id6">Behandlung von Ausnahmen</a><ul>
 <li><a class="reference internal" href="#notfounderror">NotFoundError</a></li>
 <li><a class="reference internal" href="#tasknotrunningerror">TaskNotRunningError</a></li>
 <li><a class="reference internal" href="#imai">ImAi</a></li>

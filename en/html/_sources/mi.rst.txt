@@ -250,6 +250,54 @@ RawUser
 .. autoclass:: RawUser()
    :members:
 
+アクションクラス
+--------------
+
+.. currentmodule:: mi.actions
+
+NoteActions
+~~~~~~~~~~~
+
+.. attributetable:: NoteActions
+
+.. autoclass:: NoteActions()
+   :members:
+
+
+AdminActions
+~~~~~~~~~~~
+
+.. attributetable:: AdminActions
+
+.. autoclass:: AdminActions()
+   :members:
+
+
+FolderActions
+~~~~~~~~~~~
+
+.. attributetable:: FolderActions
+
+.. autoclass:: FolderActions()
+   :members:
+
+
+DriveActions
+~~~~~~~~~~~
+
+.. attributetable:: DriveActions
+
+.. autoclass:: DriveActions()
+   :members:
+
+
+UserActions
+~~~~~~~~~~~
+
+.. attributetable:: UserActions
+
+.. autoclass:: UserActions()
+   :members:
 
 型クラス
 --------
