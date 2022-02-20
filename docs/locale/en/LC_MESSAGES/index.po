@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  Mi.py\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-12-24 07:51+0900\n"
+"POT-Creation-Date: 2022-02-20 10:16+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -14,61 +14,36 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.9.1\n"
 
-#: ../../index.rst:16
-msgid "Contents:"
-msgstr ""
-
-#: ../../index.rst:7
+#: ../../index.rst:2
 msgid "Welcome to Mi.py's documentation!"
 msgstr ""
 
-#: ../../index.rst:9
+#: ../../index.rst:4
 msgid "Mi.pyはDiscord.pyライクな書き方ができるように作成されているMisskey API Wrapeprです"
 msgstr ""
 
-#: ../../index.rst:13
+#: ../../index.rst:8
 msgid "Mi.pyは現在Preview VersionなのでPiPyではなくgithubの方を使用することを推奨します"
 msgstr ""
 
-#: ../../index.rst
-msgid "img-top"
+#: ../../index.rst:17
+msgid "Getting started"
 msgstr ""
 
-#: ../../index.rst:28
-#, fuzzy
-msgid "API reference"
-msgstr "API Reference"
-
-#: ../../index.rst:31
-msgid "どのようにクラスやメソッドを使うのかここで探検しましょう"
+#: ../../index.rst:19
+msgid "First steps :doc:`quickstart`"
 msgstr ""
 
-#: ../../index.rst:44
-msgid "QuickStart"
+#: ../../index.rst:22
+msgid "Manuals"
 msgstr ""
 
-#: ../../index.rst:47
-msgid "Mi.pyを簡単に試してみましょう"
+#: ../../index.rst:24
+msgid ":doc:`mi`"
 msgstr ""
 
-#: ../../index.rst:58
+#: ../../index.rst:27
 msgid "Recent Changes"
-msgstr ""
-
-#: ../../index.rst:63
-msgid "Indices and tables"
-msgstr ""
-
-#: ../../index.rst:65
-msgid ":ref:`genindex`"
-msgstr ""
-
-#: ../../index.rst:66
-msgid ":ref:`modindex`"
-msgstr ""
-
-#: ../../index.rst:67
-msgid ":ref:`search`"
 msgstr ""
 
 #~ msgid "このセクションではMi.pyのAPIについて説明します"
@@ -762,4 +737,34 @@ msgstr ""
 
 #~ msgid "Low-Layer API"
 #~ msgstr "Low-Layer API"
+
+#~ msgid "Contents:"
+#~ msgstr ""
+
+#~ msgid "img-top"
+#~ msgstr ""
+
+#~ msgid "API reference"
+#~ msgstr "API Reference"
+
+#~ msgid "どのようにクラスやメソッドを使うのかここで探検しましょう"
+#~ msgstr ""
+
+#~ msgid "QuickStart"
+#~ msgstr ""
+
+#~ msgid "Mi.pyを簡単に試してみましょう"
+#~ msgstr ""
+
+#~ msgid "Indices and tables"
+#~ msgstr ""
+
+#~ msgid ":ref:`genindex`"
+#~ msgstr ""
+
+#~ msgid ":ref:`modindex`"
+#~ msgstr ""
+
+#~ msgid ":ref:`search`"
+#~ msgstr ""
 

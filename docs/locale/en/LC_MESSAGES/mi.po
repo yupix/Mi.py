@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  Mi.py\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-02-20 09:15+0900\n"
+"POT-Creation-Date: 2022-02-20 10:16+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -90,10 +90,55 @@ msgstr ""
 msgid "Note"
 msgstr "note"
 
+#: mi.framework.Note.id:2 mi.framework.Note.id:4
+#: mi.wrapper.models.user.RawUser:3 of
+#, fuzzy
+msgid "ユーザーのID"
+msgstr "The id of the user"
+
+#: mi.actions.note.NoteActions.add_clips
+#: mi.actions.note.NoteActions.create_renote mi.actions.note.NoteActions.delete
+#: mi.actions.note.NoteActions.get_note mi.actions.note.NoteActions.get_replies
+#: mi.actions.note.NoteActions.send mi.actions.user.UserActions.get
+#: mi.actions.user.UserActions.get_mention mi.framework.Note.id
+#: mi.framework.models.chat.Chat.delete
+#: mi.framework.models.note.Follow.unfollow
+#: mi.framework.models.note.Note.emoji_count
+#: mi.framework.models.note.Renote.emoji_count
+#: mi.framework.models.user.User.get_followers
+#: mi.framework.models.user.User.get_profile of
+msgid "Returns"
+msgstr "Returns"
+
+#: mi.actions.note.NoteActions.add_clips
+#: mi.actions.note.NoteActions.create_renote mi.actions.note.NoteActions.delete
+#: mi.actions.note.NoteActions.get_note mi.actions.note.NoteActions.get_replies
+#: mi.actions.note.NoteActions.send mi.actions.user.UserActions.get
+#: mi.actions.user.UserActions.get_mention mi.framework.Note.action
+#: mi.framework.Note.id mi.framework.iterators.InstanceIterator.get_users
+#: mi.framework.models.chat.Chat.delete
+#: mi.framework.models.note.Follow.unfollow
+#: mi.framework.models.note.Note.emoji_count
+#: mi.framework.models.note.Renote.emoji_count
+#: mi.framework.models.user.User.get_followers
+#: mi.framework.models.user.User.get_profile of
+msgid "Return type"
+msgstr "Return type"
+
+#: mi.framework.Note.action:2 of
+msgid "ノートに対するアクション"
+msgstr ""
+
 #: mi.framework.models.note.Note.reply:2 of
 msgid "ノートに対して返信を送信します"
 msgstr ""
 
+#: mi.actions.note.NoteActions.add_clips
+#: mi.actions.note.NoteActions.create_quote
+#: mi.actions.note.NoteActions.create_renote mi.actions.note.NoteActions.delete
+#: mi.actions.note.NoteActions.get_note mi.actions.note.NoteActions.get_replies
+#: mi.actions.note.NoteActions.send mi.actions.user.UserActions.get
+#: mi.actions.user.UserActions.get_mention
 #: mi.framework.iterators.InstanceIterator.get_users
 #: mi.framework.models.note.Follow.unfollow mi.framework.models.note.Note.reply
 #: mi.framework.models.user.User.get_followers
@@ -113,34 +158,40 @@ msgstr "What to send"
 msgid "閲覧注意"
 msgstr ""
 
-#: mi.framework.models.note.Note.reply:8 of
+#: mi.actions.note.NoteActions.send:14 mi.framework.models.note.Note.reply:8 of
 msgid "メンションを展開するか, by default False"
 msgstr ""
 
-#: mi.framework.models.note.Note.reply:10 of
+#: mi.actions.note.NoteActions.send:16 mi.framework.models.note.Note.reply:10
+#: of
 msgid "ハッシュタグを展開するか, by default False"
 msgstr ""
 
-#: mi.framework.models.note.Note.reply:12 of
+#: mi.actions.note.NoteActions.send:18 mi.framework.models.note.Note.reply:12
+#: of
 msgid "絵文字を展開するか, by default False"
 msgstr ""
 
-#: mi.framework.models.note.Note.reply:14 of
+#: mi.actions.note.NoteActions.send:22 mi.framework.models.note.Note.reply:14
+#: of
 #, fuzzy
 msgid "リノート先のid, by default None"
 msgstr "User id, default=None"
 
-#: mi.framework.models.note.Note.reply:16 of
+#: mi.actions.note.NoteActions.send:24 mi.framework.models.note.Note.reply:16
+#: of
 #, fuzzy
 msgid "チャンネルid, by default None"
 msgstr "Group id, default=None"
 
-#: mi.framework.models.note.Note.reply:18 of
+#: mi.actions.note.NoteActions.send:26 mi.framework.models.note.Note.reply:18
+#: of
 #, fuzzy
 msgid "添付するファイルのid, by default None"
 msgstr "File id to attach, efault=None"
 
-#: mi.framework.models.note.Note.reply:20 of
+#: mi.actions.note.NoteActions.send:28 mi.framework.models.note.Note.reply:20
+#: of
 #, fuzzy
 msgid "アンケート, by default None"
 msgstr "User id, default=None"
@@ -150,29 +201,10 @@ msgstr "User id, default=None"
 msgid "ノートの本文にemojiが何個含まれているかを返します"
 msgstr ""
 
-#: mi.framework.models.chat.Chat.delete
-#: mi.framework.models.note.Follow.unfollow
-#: mi.framework.models.note.Note.emoji_count
-#: mi.framework.models.note.Renote.emoji_count
-#: mi.framework.models.user.User.get_followers
-#: mi.framework.models.user.User.get_profile of
-msgid "Returns"
-msgstr "Returns"
-
 #: mi.framework.models.note.Note.emoji_count:4
 #: mi.framework.models.note.Renote.emoji_count:4 of
 msgid "含まれている絵文字の数"
 msgstr ""
-
-#: mi.framework.iterators.InstanceIterator.get_users
-#: mi.framework.models.chat.Chat.delete
-#: mi.framework.models.note.Follow.unfollow
-#: mi.framework.models.note.Note.emoji_count
-#: mi.framework.models.note.Renote.emoji_count
-#: mi.framework.models.user.User.get_followers
-#: mi.framework.models.user.User.get_profile of
-msgid "Return type"
-msgstr "Return type"
 
 #: ../../mi.rst:69
 msgid "User"
@@ -222,6 +254,7 @@ msgstr "chat object"
 msgid "チャットを削除します（チャットの作者である必要があります）"
 msgstr "Delete the chat (you must be the author of the chat)"
 
+#: mi.actions.note.NoteActions.add_clips:9
 #: mi.framework.models.chat.Chat.delete:4 of
 msgid "成功したか否か"
 msgstr "Successful or not."
@@ -643,7 +676,7 @@ msgstr ""
 msgid "リアクションを付けたユーザー"
 msgstr ""
 
-#: ../../mi.rst:454 mi.wrapper.models.reaction.RawNoteReaction:18 of
+#: ../../mi.rst:502 mi.wrapper.models.reaction.RawNoteReaction:18 of
 msgid "UserPayload"
 msgstr ""
 
@@ -671,11 +704,6 @@ msgstr "The id of the user"
 #: mi.wrapper.models.user.RawUser:2 of
 msgid "id"
 msgstr ""
-
-#: mi.wrapper.models.user.RawUser:3 of
-#, fuzzy
-msgid "ユーザーのID"
-msgstr "The id of the user"
 
 #: mi.wrapper.models.user.RawUser:4 of
 msgid "name"
@@ -840,16 +868,242 @@ msgstr ""
 msgid "インスタンスの情報"
 msgstr ""
 
-#: ../../mi.rst:255
+#: ../../mi.rst:254
+msgid "アクションクラス"
+msgstr ""
+
+#: ../../mi.rst:259
+#, fuzzy
+msgid "NoteActions"
+msgstr "reaction"
+
+#: mi.actions.note.NoteActions.add_clips:2 of
+msgid "クリップに追加します"
+msgstr ""
+
+#: mi.actions.note.NoteActions.add_clips:4 of
+msgid "クリップのID"
+msgstr ""
+
+#: mi.actions.note.NoteActions.add_clips:6
+#: mi.actions.note.NoteActions.add_clips:7 of
+msgid "追加したいノートのID"
+msgstr ""
+
+#: mi.actions.note.NoteActions.send:2 of
+msgid "ノートを投稿します。"
+msgstr ""
+
+#: mi.actions.note.NoteActions.send:4 of
+msgid "投稿する内容"
+msgstr ""
+
+#: mi.actions.note.NoteActions.send:6 of
+msgid "公開範囲, by default \"public\""
+msgstr ""
+
+#: mi.actions.note.NoteActions.send:8 of
+#, fuzzy
+msgid "公開するユーザー, by default None"
+msgstr "User id, default=None"
+
+#: mi.actions.note.NoteActions.send:10 of
+#, fuzzy
+msgid "閲覧注意の文字, by default None"
+msgstr "User id, default=None"
+
+#: mi.actions.note.NoteActions.send:12 of
+msgid "ローカルにのみ表示するか, by default False"
+msgstr ""
+
+#: mi.actions.note.NoteActions.send:20 of
+#, fuzzy
+msgid "リプライ先のid, by default None"
+msgstr "User id, default=None"
+
+#: mi.actions.note.NoteActions.send:31 of
+msgid "投稿したノート"
+msgstr ""
+
+#: mi.actions.note.NoteActions.send of
+msgid "Raises"
+msgstr ""
+
+#: mi.actions.note.NoteActions.send:34 of
+msgid "[description]"
+msgstr ""
+
+#: mi.actions.note.NoteActions.delete:2 of
+msgid "ノートを削除します"
+msgstr ""
+
+#: mi.actions.note.NoteActions.delete:4 of
+msgid "削除したいノートのID"
+msgstr ""
+
+#: mi.actions.note.NoteActions.delete:7 of
+#, fuzzy
+msgid "削除に成功したか否か"
+msgstr "Successful or not."
+
+#: mi.actions.note.NoteActions.create_renote:2 of
+msgid "リノートを作成します"
+msgstr ""
+
+#: mi.actions.note.NoteActions.create_renote:4
+#: mi.actions.note.NoteActions.get_note:4 of
+msgid "ノートのID"
+msgstr ""
+
+#: mi.actions.note.NoteActions.create_renote:7 of
+msgid "作成したリノート"
+msgstr ""
+
+#: mi.actions.note.NoteActions.create_quote:2 of
+msgid "Create a note quote."
+msgstr ""
+
+#: mi.actions.note.NoteActions.create_quote:4 of
+msgid "text"
+msgstr ""
+
+#: mi.actions.note.NoteActions.create_quote:6 of
+msgid "Disclosure range"
+msgstr ""
+
+#: mi.actions.note.NoteActions.create_quote:8 of
+msgid "List of users to be published"
+msgstr ""
+
+#: mi.actions.note.NoteActions.create_quote:10 of
+msgid "Text to be displayed when warning is given"
+msgstr ""
+
+#: mi.actions.note.NoteActions.create_quote:12 of
+msgid "Whether to show only locally or not"
+msgstr ""
+
+#: mi.actions.note.NoteActions.create_quote:14 of
+msgid "Whether to expand the mention"
+msgstr ""
+
+#: mi.actions.note.NoteActions.create_quote:16 of
+msgid "Whether to expand the hashtag"
+msgstr ""
+
+#: mi.actions.note.NoteActions.create_quote:18 of
+msgid "Whether to expand the emojis"
+msgstr ""
+
+#: mi.actions.note.NoteActions.create_quote:20 of
+msgid "The ID list of files to be attached"
+msgstr ""
+
+#: mi.actions.note.NoteActions.create_quote:22 of
+msgid "Questionnaire to be created"
+msgstr ""
+
+#: mi.actions.note.NoteActions.create_quote:24 of
+msgid "Note IDs to target for renote and citations"
+msgstr ""
+
+#: mi.actions.note.NoteActions.get_note:2 of
+msgid "ノートを取得します"
+msgstr ""
+
+#: mi.actions.note.NoteActions.get_note:7 of
+msgid "取得したノートID"
+msgstr ""
+
+#: mi.actions.note.NoteActions.get_replies:2 of
+msgid "ノートに対する返信を取得します"
+msgstr ""
+
+#: mi.actions.note.NoteActions.get_replies:4 of
+msgid "指定すると、その投稿を投稿を起点としてより新しい投稿を取得します"
+msgstr ""
+
+#: mi.actions.note.NoteActions.get_replies:6 of
+msgid "指定すると、その投稿を投稿を起点としてより古い投稿を取得します"
+msgstr ""
+
+#: mi.actions.note.NoteActions.get_replies:8 of
+msgid "取得する上限"
+msgstr ""
+
+#: mi.actions.note.NoteActions.get_replies:10 of
+msgid "返信を取得したいノートのID"
+msgstr ""
+
+#: mi.actions.note.NoteActions.get_replies:13 of
+msgid "返信のリスト"
+msgstr ""
+
+#: ../../mi.rst:268
+#, fuzzy
+msgid "AdminActions"
+msgstr "reaction"
+
+#: ../../mi.rst:277
+#, fuzzy
+msgid "FolderActions"
+msgstr "reaction"
+
+#: ../../mi.rst:286
+#, fuzzy
+msgid "DriveActions"
+msgstr "reaction"
+
+#: ../../mi.rst:295
+#, fuzzy
+msgid "UserActions"
+msgstr "reaction"
+
+#: mi.actions.user.UserActions.get:2 of
+msgid ""
+"ユーザーのプロフィールを取得します。一度のみサーバーにアクセスしキャッシュをその後は使います。 "
+"fetch_userを使った場合はキャッシュが廃棄され再度サーバーにアクセスします。"
+msgstr ""
+
+#: mi.actions.user.UserActions.get:5 of
+msgid "取得したいユーザーのユーザーID"
+msgstr ""
+
+#: mi.actions.user.UserActions.get:7 of
+msgid "取得したいユーザーのユーザー名"
+msgstr ""
+
+#: mi.actions.user.UserActions.get:9 of
+msgid "取得したいユーザーがいるインスタンスのhost"
+msgstr ""
+
+#: mi.actions.user.UserActions.get:12 of
+#, fuzzy
+msgid "ユーザー情報"
+msgstr "user information"
+
+#: mi.actions.user.UserActions.get_mention:2 of
+msgid "Get mention name of user."
+msgstr ""
+
+#: mi.actions.user.UserActions.get_mention:4 of
+msgid "メンションを取得したいユーザーのオブジェクト"
+msgstr ""
+
+#: mi.actions.user.UserActions.get_mention:7 of
+msgid "メンション"
+msgstr ""
+
+#: ../../mi.rst:303
 #, fuzzy
 msgid "型クラス"
 msgstr "data class"
 
-#: ../../mi.rst:260
+#: ../../mi.rst:308
 msgid "ChatPayload"
 msgstr ""
 
-#: ../../mi.rst:269
+#: ../../mi.rst:317
 #, fuzzy
 msgid "PropertiesPayload"
 msgstr "Properties"
@@ -858,7 +1112,7 @@ msgstr "Properties"
 msgid "プロパティー情報"
 msgstr ""
 
-#: ../../mi.rst:278
+#: ../../mi.rst:326
 msgid "FolderPayload"
 msgstr ""
 
@@ -866,7 +1120,7 @@ msgstr ""
 msgid "フォルダーの情報"
 msgstr ""
 
-#: ../../mi.rst:287
+#: ../../mi.rst:335
 msgid "FilePayload"
 msgstr ""
 
@@ -874,31 +1128,31 @@ msgstr ""
 msgid "ファイル情報"
 msgstr ""
 
-#: ../../mi.rst:296
+#: ../../mi.rst:344
 msgid "EmojiPayload"
 msgstr ""
 
-#: ../../mi.rst:305
+#: ../../mi.rst:353
 msgid "FeaturesPayload"
 msgstr ""
 
-#: ../../mi.rst:314
+#: ../../mi.rst:362
 msgid "OptionalMeta"
 msgstr ""
 
-#: ../../mi.rst:323
+#: ../../mi.rst:371
 msgid "MetaPayload"
 msgstr ""
 
-#: ../../mi.rst:332
+#: ../../mi.rst:380
 msgid "OptionalInstance"
 msgstr ""
 
-#: ../../mi.rst:341
+#: ../../mi.rst:389
 msgid "InstancePayload"
 msgstr ""
 
-#: ../../mi.rst:350
+#: ../../mi.rst:398
 msgid "GeoPayload"
 msgstr ""
 
@@ -906,7 +1160,7 @@ msgstr ""
 msgid "衛星情報"
 msgstr ""
 
-#: ../../mi.rst:359
+#: ../../mi.rst:407
 msgid "PollPayload"
 msgstr ""
 
@@ -914,11 +1168,11 @@ msgstr ""
 msgid "アンケート情報"
 msgstr ""
 
-#: ../../mi.rst:368
+#: ../../mi.rst:416
 msgid "RenotePayload"
 msgstr ""
 
-#: ../../mi.rst:377
+#: ../../mi.rst:425
 msgid "NotePayload"
 msgstr ""
 
@@ -926,44 +1180,44 @@ msgstr ""
 msgid "note object"
 msgstr ""
 
-#: ../../mi.rst:386
+#: ../../mi.rst:434
 msgid "OptionalReaction"
 msgstr ""
 
-#: ../../mi.rst:395
+#: ../../mi.rst:443
 #, fuzzy
 msgid "ReactionPayload"
 msgstr "reaction"
 
-#: ../../mi.rst:404
+#: ../../mi.rst:452
 msgid "NoteReactionPayload"
 msgstr ""
 
-#: ../../mi.rst:413
+#: ../../mi.rst:461
 msgid "ChannelPayload"
 msgstr ""
 
-#: ../../mi.rst:422
+#: ../../mi.rst:470
 msgid "PinnedNotePayload"
 msgstr ""
 
-#: ../../mi.rst:431
+#: ../../mi.rst:479
 msgid "PinnedPagePayload"
 msgstr ""
 
-#: ../../mi.rst:439
+#: ../../mi.rst:487
 msgid "FieldContentPayload"
 msgstr ""
 
-#: ../../mi.rst:447
+#: ../../mi.rst:495
 msgid "OptionalUser"
 msgstr ""
 
-#: ../../mi.rst:465
+#: ../../mi.rst:513
 msgid "例外処理"
 msgstr "exception handling"
 
-#: ../../mi.rst:470
+#: ../../mi.rst:518
 msgid "NotFoundError"
 msgstr "NotFoundError"
 
@@ -971,7 +1225,7 @@ msgstr "NotFoundError"
 msgid "http アクセス時に404が帰ってきた際の例外"
 msgstr "Exception when a 404 is returned on http access"
 
-#: ../../mi.rst:474
+#: ../../mi.rst:522
 msgid "TaskNotRunningError"
 msgstr "TaskNotRunningError"
 
@@ -981,7 +1235,7 @@ msgstr ""
 "Exception thrown when attempting to stop a task and the task is not "
 "started."
 
-#: ../../mi.rst:478
+#: ../../mi.rst:526
 msgid "ImAi"
 msgstr "ImAi"
 
@@ -989,7 +1243,7 @@ msgstr "ImAi"
 msgid "私は藍です"
 msgstr "I'm Indigo."
 
-#: ../../mi.rst:482
+#: ../../mi.rst:530
 msgid "InternalServerError"
 msgstr "InternalServerError"
 
@@ -997,7 +1251,7 @@ msgstr "InternalServerError"
 msgid "http アクセス時に500が帰ってきた際の例外"
 msgstr "Exception when 500 is returned on http access"
 
-#: ../../mi.rst:486
+#: ../../mi.rst:534
 msgid "ClientError"
 msgstr "ClientError"
 
@@ -1005,7 +1259,7 @@ msgstr "ClientError"
 msgid "http アクセス時に400が帰ってきた際の例外"
 msgstr "Exception when http access returns 400"
 
-#: ../../mi.rst:491
+#: ../../mi.rst:539
 msgid "AuthenticationError"
 msgstr "AuthenticationError"
 
@@ -1013,7 +1267,7 @@ msgstr "AuthenticationError"
 msgid "認証で問題が発生した際の例外"
 msgstr "Exceptions in case of authentication problems"
 
-#: ../../mi.rst:495
+#: ../../mi.rst:543
 msgid "NotExistRequiredParameters"
 msgstr "NotExistRequiredParameters"
 
@@ -1021,7 +1275,7 @@ msgstr "NotExistRequiredParameters"
 msgid "必須のパラメーターが存在しない場合の例外"
 msgstr "Exception when a required parameter does not exist"
 
-#: ../../mi.rst:499
+#: ../../mi.rst:547
 msgid "InvalidParameters"
 msgstr "InvalidParameters"
 
@@ -1029,7 +1283,7 @@ msgstr "InvalidParameters"
 msgid "パラメーターが無効"
 msgstr "Parameter is invalid"
 
-#: ../../mi.rst:503
+#: ../../mi.rst:551
 msgid "CredentialRequired"
 msgstr "CredentialRequired"
 
@@ -1037,7 +1291,7 @@ msgstr "CredentialRequired"
 msgid "認証情報が不足している"
 msgstr "Authentication information is missing."
 
-#: ../../mi.rst:507
+#: ../../mi.rst:555
 msgid "ContentRequired"
 msgstr "ContentRequired"
 
@@ -1045,7 +1299,7 @@ msgstr "ContentRequired"
 msgid "送信するコンテンツが不足している"
 msgstr "Not enough content to send"
 
-#: ../../mi.rst:513
+#: ../../mi.rst:561
 msgid "CogNameDuplicate"
 msgstr "CogNameDuplicate"
 
@@ -1053,7 +1307,7 @@ msgstr "CogNameDuplicate"
 msgid "cogの名前が重複している"
 msgstr "Duplicate cog names."
 
-#: ../../mi.rst:517
+#: ../../mi.rst:565
 msgid "ExtensionAlreadyLoaded"
 msgstr "ExtensionAlreadyLoaded"
 
@@ -1061,7 +1315,7 @@ msgstr "ExtensionAlreadyLoaded"
 msgid "cogがすでに読み込まれている"
 msgstr "cog is already loaded."
 
-#: ../../mi.rst:521
+#: ../../mi.rst:569
 msgid "ExtensionFailed"
 msgstr "ExtensionFailed"
 
@@ -1069,7 +1323,7 @@ msgstr "ExtensionFailed"
 msgid "cog周りのエラー"
 msgstr "Errors around cog"
 
-#: ../../mi.rst:525
+#: ../../mi.rst:573
 msgid "NoEntryPointError"
 msgstr "NoEntryPointError"
 
@@ -1077,7 +1331,7 @@ msgstr "NoEntryPointError"
 msgid "cogにsetup関数が無い場合の例外"
 msgstr "Exception when cog does not have a setup function"
 
-#: ../../mi.rst:529
+#: ../../mi.rst:577
 msgid "ExtensionNotFound"
 msgstr "ExtensionNotFound"
 
@@ -1085,7 +1339,7 @@ msgstr "ExtensionNotFound"
 msgid "指定されたパスにcogが存在しない場合の例外"
 msgstr "Exception if cog does not exist in the specified path"
 
-#: ../../mi.rst:533
+#: ../../mi.rst:581
 msgid "CommandRegistrationError"
 msgstr "CommandRegistrationError"
 
@@ -1093,7 +1347,7 @@ msgstr "CommandRegistrationError"
 msgid "コマンド登録時のエラー"
 msgstr "Error in command registration"
 
-#: ../../mi.rst:537
+#: ../../mi.rst:585
 msgid "CommandError"
 msgstr "CommandError"
 
@@ -1101,7 +1355,7 @@ msgstr "CommandError"
 msgid "コマンドで問題が発生した際の例外"
 msgstr "Exception when a problem occurs with the command"
 
-#: ../../mi.rst:541
+#: ../../mi.rst:589
 msgid "CommandInvokeError"
 msgstr "CommandInvokeError"
 
@@ -1109,7 +1363,7 @@ msgstr "CommandInvokeError"
 msgid "コマンドの実行に問題が発生した際の例外"
 msgstr "Exceptions when there is a problem executing the command"
 
-#: ../../mi.rst:545
+#: ../../mi.rst:593
 msgid "CheckFailure"
 msgstr "CheckFailure"
 
@@ -1117,7 +1371,7 @@ msgstr "CheckFailure"
 msgid "コマンドの実行可能かのチェックに失敗した際の例外"
 msgstr "Exception when the command fails to check if it is executable"
 
-#: ../../mi.rst:549
+#: ../../mi.rst:597
 msgid "InvalidCogPath"
 msgstr "InvalidCogPath"
 
@@ -1125,7 +1379,7 @@ msgstr "InvalidCogPath"
 msgid "cogのパスが不正"
 msgstr "Incorrect path for cog"
 
-#: ../../mi.rst:554
+#: ../../mi.rst:602
 msgid "NotExistRequiredData"
 msgstr "NotExistRequiredData"
 
@@ -1133,7 +1387,7 @@ msgstr "NotExistRequiredData"
 msgid "必要なデータが存在しない場合に発生する例外"
 msgstr "Exception raised when the required data does not exist."
 
-#: ../../mi.rst:559
+#: ../../mi.rst:607
 msgid "Low-Level API"
 msgstr "Low-Level API"
 
@@ -1203,19 +1457,19 @@ msgstr ""
 msgid "ノートイベントを解析する関数"
 msgstr ""
 
-#: ../../mi.rst:573
+#: ../../mi.rst:621
 msgid "Low-Layer API"
 msgstr "Low-Layer API"
 
-#: ../../mi.rst:585
+#: ../../mi.rst:633
 msgid "Utils"
 msgstr ""
 
-#: ../../mi.rst:590
+#: ../../mi.rst:638
 msgid "get_emoji_list"
 msgstr ""
 
-#: ../../mi.rst:595
+#: ../../mi.rst:643
 msgid "emoji_count"
 msgstr ""
 
@@ -1223,7 +1477,7 @@ msgstr ""
 msgid "テキストの中にいくつのemojiが含まれているかをカウントします"
 msgstr ""
 
-#: ../../mi.rst:600
+#: ../../mi.rst:648
 msgid "check_multi_arg"
 msgstr ""
 
