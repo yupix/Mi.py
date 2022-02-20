@@ -5,7 +5,7 @@
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../../genindex.html" /><link rel="search" title="Search" href="../../../search.html" />
 
     <meta name="generator" content="sphinx-4.4.0, furo 2022.02.14.1"/>
-        <title>mi.framework.router - Mi.py 3.9.9 documentation</title>
+        <title>mi.framework.iterators - Mi.py 4.0.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/furo.css?digest=a8f031f701c6af50c9919b48f173a5785af06fac" />
     <link rel="stylesheet" type="text/css" href="../../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
@@ -122,7 +122,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="../../../index.html"><div class="brand">Mi.py 3.9.9 documentation</div></a>
+      <a href="../../../index.html"><div class="brand">Mi.py 4.0.0 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -180,98 +180,73 @@
           </label>
         </div>
         <article role="main">
-          <h1>Source code for mi.framework.router</h1><div class="highlight"><pre>
-<span></span><span class="sd">"""Misskeyのチャンネルへの接続や、メッセージのキャプチャ等のWebSocket関連"""</span>
+          <h1>Source code for mi.framework.iterators</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Generator</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">TYPE_CHECKING</span>
 
-<span class="kn">import</span> <span class="nn">uuid</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">TYPE_CHECKING</span>
-
-<span class="kn">from</span> <span class="nn">mi</span> <span class="kn">import</span> <span class="n">config</span>
+<span class="kn">from</span> <span class="nn">mi.framework.http</span> <span class="kn">import</span> <span class="n">Route</span>
+<span class="kn">from</span> <span class="nn">mi.framework.models.user</span> <span class="kn">import</span> <span class="n">User</span>
+<span class="kn">from</span> <span class="nn">mi.utils</span> <span class="kn">import</span> <span class="n">remove_dict_empty</span>
+<span class="kn">from</span> <span class="nn">mi.wrapper.models.user</span> <span class="kn">import</span> <span class="n">RawUser</span>
 
 <span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
-    <span class="kn">from</span> <span class="nn">aiohttp.client_ws</span> <span class="kn">import</span> <span class="n">ClientWebSocketResponse</span>
+    <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">ConnectionState</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'Router'</span><span class="p">,</span> <span class="s1">'Route'</span><span class="p">]</span>
-
-
-<div class="viewcode-block" id="Route"><a class="viewcode-back" href="../../../mi.html#mi.Route">[docs]</a><span class="k">class</span> <span class="nc">Route</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">method</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">path</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">method</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">method</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">i</span><span class="o">.</span><span class="n">origin_uri</span> <span class="o">+</span> <span class="n">path</span></div>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">'InstanceIterator'</span><span class="p">,)</span>
 
 
-<span class="k">class</span> <span class="nc">Router</span><span class="p">:</span>
-    <span class="sd">"""</span>
-<span class="sd">    Attributes</span>
-<span class="sd">    ----------</span>
-<span class="sd">    web_socket : ClientWebSocketResponse</span>
-<span class="sd">        WebSocketクライアント</span>
+<div class="viewcode-block" id="InstanceIterator"><a class="viewcode-back" href="../../../mi.html#mi.framework.InstanceIterator">[docs]</a><span class="k">class</span> <span class="nc">InstanceIterator</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="n">ConnectionState</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_state</span> <span class="o">=</span> <span class="n">state</span>
 
-<span class="sd">    Methods</span>
-<span class="sd">    -------</span>
-<span class="sd">    channels:</span>
-<span class="sd">        与えられたlistを元にチャンネルに接続します</span>
-<span class="sd">    global_time_line:</span>
-<span class="sd">        WebSocketでGlobalTimeLineに接続します</span>
-<span class="sd">    main_channel:</span>
-<span class="sd">        WebSocketでMainチャンネルに接続します</span>
-<span class="sd">    home_time_line:</span>
-<span class="sd">        WebSocketでHomeTimeLineに接続します</span>
-<span class="sd">    local_time_line:</span>
-<span class="sd">        WebSocketでLocalTimeLineに接続します</span>
-<span class="sd">    capture_message:</span>
-<span class="sd">        与えられたメッセージを元にnote idを取得し、そのメッセージをon_message等の監視対象に追加します</span>
-<span class="sd">    """</span>
-
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">web_socket</span><span class="p">:</span> <span class="n">ClientWebSocketResponse</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">web_socket</span><span class="p">:</span> <span class="n">ClientWebSocketResponse</span> <span class="o">=</span> <span class="n">web_socket</span>
-
-    <span class="k">async</span> <span class="k">def</span> <span class="nf">connect_channel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">channel_list</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="InstanceIterator.get_users"><a class="viewcode-back" href="../../../mi.html#mi.framework.InstanceIterator.get_users">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">get_users</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">limit</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
+                        <span class="o">*</span><span class="p">,</span>
+                        <span class="n">offset</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+                        <span class="n">sort</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                        <span class="n">state</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">'all'</span><span class="p">,</span>
+                        <span class="n">origin</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">'local'</span><span class="p">,</span>
+                        <span class="n">username</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                        <span class="n">hostname</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                        <span class="n">get_all</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+                        <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Generator</span><span class="p">[</span><span class="n">User</span><span class="p">]:</span>
         <span class="sd">"""</span>
-<span class="sd">        与えられたlistを元にチャンネルに接続します</span>
-
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        channel_list : List</span>
-<span class="sd">            ['global', 'local', 'home', 'main']</span>
+<span class="sd">        limit: int</span>
+<span class="sd">        offset:int</span>
+<span class="sd">        sort:str</span>
+<span class="sd">        state:str</span>
+<span class="sd">        origin:str</span>
+<span class="sd">        username:str</span>
+<span class="sd">        hostname:str</span>
+<span class="sd">        get_all:bool</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        Iterator[User]</span>
 <span class="sd">        """</span>
+        <span class="n">args</span> <span class="o">=</span> <span class="n">remove_dict_empty</span><span class="p">({</span><span class="s1">'limit'</span><span class="p">:</span> <span class="n">limit</span><span class="p">,</span>
+                                  <span class="s1">'offset'</span><span class="p">:</span> <span class="n">offset</span><span class="p">,</span>
+                                  <span class="s1">'sort'</span><span class="p">:</span> <span class="n">sort</span><span class="p">,</span>
+                                  <span class="s1">'state'</span><span class="p">:</span> <span class="n">state</span><span class="p">,</span>
+                                  <span class="s1">'origin'</span><span class="p">:</span> <span class="n">origin</span><span class="p">,</span>
+                                  <span class="s1">'username'</span><span class="p">:</span> <span class="n">username</span><span class="p">,</span>
+                                  <span class="s1">'hostname'</span><span class="p">:</span> <span class="n">hostname</span>
+                                  <span class="p">})</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">Route</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">,</span> <span class="s1">'/api/admin/show-users'</span><span class="p">),</span> <span class="n">json</span><span class="o">=</span><span class="n">args</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-        <span class="n">channel_dict</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s2">"global"</span><span class="p">:</span> <span class="s1">'globalTimeline'</span><span class="p">,</span>
-            <span class="s2">"main"</span><span class="p">:</span> <span class="s1">'main'</span><span class="p">,</span>
-            <span class="s2">"home"</span><span class="p">:</span> <span class="s1">'homeTimeline'</span><span class="p">,</span>
-            <span class="s2">"local"</span><span class="p">:</span> <span class="s1">'localTimeline'</span><span class="p">,</span>
-        <span class="p">}</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="k">for</span> <span class="n">channel</span> <span class="ow">in</span> <span class="n">channel_list</span><span class="p">:</span>
-                <span class="n">get_channel</span> <span class="o">=</span> <span class="n">channel_dict</span><span class="p">[</span><span class="n">channel</span><span class="p">]</span>
-                <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">web_socket</span><span class="o">.</span><span class="n">send_json</span><span class="p">({</span>
-                    <span class="s2">"type"</span><span class="p">:</span> <span class="s2">"connect"</span><span class="p">,</span>
-                    <span class="s2">"body"</span><span class="p">:</span> <span class="p">{</span>
-                        <span class="s2">"channel"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">get_channel</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span>
-                        <span class="s2">"id"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">()</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span>
-                    <span class="p">},</span>
-                <span class="p">}</span>
-                <span class="p">)</span>
-
-        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
-            <span class="k">pass</span>
-
-    <span class="k">async</span> <span class="k">def</span> <span class="nf">capture_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">"""</span>
-<span class="sd">        与えられたメッセージを元にnote idを取得し、そのメッセージをon_message等の監視対象に追加します</span>
-
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        message_id : str</span>
-<span class="sd">        """</span>
-
-        <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">web_socket</span><span class="o">.</span><span class="n">send_json</span><span class="p">(</span>
-            <span class="p">{</span><span class="s2">"type"</span><span class="p">:</span> <span class="s2">"subNote"</span><span class="p">,</span> <span class="s2">"body"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"id"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">message_id</span><span class="si">}</span><span class="s2">"</span><span class="p">}}</span>
-        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">get_all</span><span class="p">:</span>
+            <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">res</span><span class="p">:</span>
+                    <span class="k">yield</span> <span class="n">User</span><span class="p">(</span><span class="n">RawUser</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+                <span class="n">args</span><span class="p">[</span><span class="s1">'offset'</span><span class="p">]</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="s1">'offset'</span><span class="p">]</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+                <span class="n">res</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span><span class="o">.</span><span class="n">http</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">Route</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">,</span> <span class="s1">'/api/admin/show-users'</span><span class="p">),</span> <span class="n">json</span><span class="o">=</span><span class="n">args</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">res</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="k">break</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">res</span><span class="p">:</span>
+                <span class="k">yield</span> <span class="n">User</span><span class="p">(</span><span class="n">RawUser</span><span class="p">(</span><span class="n">i</span><span class="p">))</span></div></div>
 </pre></div>
         </article>
       </div>

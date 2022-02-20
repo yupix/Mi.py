@@ -2,10 +2,11 @@
 <html class="no-js" lang="de">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
-    <meta name="color-scheme" content="light dark"><link rel="index" title="Stichwortverzeichnis" href="genindex.html" /><link rel="search" title="Suche" href="search.html" />
+    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<link rel="index" title="Stichwortverzeichnis" href="genindex.html" /><link rel="search" title="Suche" href="search.html" />
 
     <meta name="generator" content="sphinx-4.4.0, furo 2022.02.14.1"/>
-        <title>API-Referenz - Mi.py 3.9.9 Dokumentation</title>
+        <title>API-Referenz - Mi.py 4.0.0 Dokumentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?digest=a8f031f701c6af50c9919b48f173a5785af06fac" />
     <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
@@ -122,7 +123,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="index.html"><div class="brand">Mi.py 3.9.9 Dokumentation</div></a>
+      <a href="index.html"><div class="brand">Mi.py 4.0.0 Dokumentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -180,14 +181,14 @@
           </label>
         </div>
         <article role="main">
-          <div class="section" id="api-reference">
+          <section id="api-reference">
 <h1>API-Referenz<a class="headerlink" href="#api-reference" title="Link zu dieser Überschrift">#</a></h1>
 <p>In diesem Abschnitt beschreiben wir die API von Mi.py</p>
 <div class="admonition note">
 <p class="admonition-title">Bemerkung</p>
 <p>Diese Bibliothek kann <cite>debug</cite> mittels <cite>logging</cite> ausgeben. Sie sollten <cite>debug</cite> als Startargument übergeben, da es in der Standardkonfiguration nicht verfügbar ist.</p>
 </div>
-<div class="section" id="id1">
+<section id="id1">
 <h2>Referenz des Ereignisses<a class="headerlink" href="#id1" title="Link zu dieser Überschrift">#</a></h2>
 <dl class="py function">
 <dt class="sig sig-object py" id="mi.on_ready">
@@ -209,32 +210,32 @@
 <span class="sig-prename descclassname"><span class="pre">mi.</span></span><span class="sig-name descname"><span class="pre">on_mention</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mention</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#mi.framework.Note" title="mi.framework.Note"><span class="pre">Note</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mi.on_mention" title="Link zu dieser Definition">#</a></dt>
 <dd><p>メンションが含まれたノートなどが投稿された際に呼び出されます</p>
 </dd></dl>
-</div>
-<div class="section" id="id2">
+</section>
+<section id="id2">
 <h2>Abstrakte Basisklasse<a class="headerlink" href="#id2" title="Link zu dieser Überschrift">#</a></h2>
 <p>Abstrakte Basisklasse &lt;<a class="reference external" href="https://docs.python.org/ja/3/glossary.html#term-abstract-base-class">https://docs.python.org/ja/3/glossary.html#term-abstract-base-class</a>&gt;`_ ist eine Klasse, die geerbt werden kann, um eine Liste von Methoden usw. zu erhalten. Abstrakte Basisklassen können nicht instanziiert werden.</p>
-<div class="section" id="abstractbotbase">
+<section id="abstractbotbase">
 <h3>AbstractBotBase<a class="headerlink" href="#abstractbotbase" title="Link zu dieser Überschrift">#</a></h3>
 <div class="py-attribute-table" data-move-to-id="mi.abc.AbstractChat"></div><dl class="py class">
 <dt class="sig sig-object py" id="mi.abc.AbstractChat">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.abc.</span></span><span class="sig-name descname"><span class="pre">AbstractChat</span></span><a class="reference internal" href="_modules/mi/abc/chat.html#AbstractChat"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.abc.AbstractChat" title="Link zu dieser Definition">#</a></dt>
 <dd></dd></dl>
-</div>
-<div class="section" id="abstractchatcontent">
+</section>
+<section id="abstractchatcontent">
 <h3>AbstractChatContent<a class="headerlink" href="#abstractchatcontent" title="Link zu dieser Überschrift">#</a></h3>
 <div class="py-attribute-table" data-move-to-id="mi.abc.AbstractChatContent"></div><dl class="py class">
 <dt class="sig sig-object py" id="mi.abc.AbstractChatContent">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.abc.</span></span><span class="sig-name descname"><span class="pre">AbstractChatContent</span></span><a class="reference internal" href="_modules/mi/abc/chat.html#AbstractChatContent"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.abc.AbstractChatContent" title="Link zu dieser Definition">#</a></dt>
 <dd></dd></dl>
-</div>
-</div>
-<div class="section" id="misskey">
+</section>
+</section>
+<section id="misskey">
 <h2>Misskey Modelle<a class="headerlink" href="#misskey" title="Link zu dieser Überschrift">#</a></h2>
 <div class="admonition danger">
 <p class="admonition-title">Gefahr</p>
 <p>Die folgenden Klassen sind <strong>nicht dazu bestimmt, vom Benutzer erstellt zu werden</strong>. Sie sollten keine eigenen Instanzen erstellen und die Werte nicht ändern.</p>
 </div>
-<div class="section" id="note">
+<section id="note">
 <h3>Note<a class="headerlink" href="#note" title="Link zu dieser Überschrift">#</a></h3>
 <div class="py-attribute-table" data-move-to-id="mi.framework.Note"><div class="py-attribute-table-column">
 <span>
@@ -281,8 +282,8 @@ async</span><a class="reference internal" href="#mi.framework.Note.reply">reply<
 </dl>
 </dd></dl>
 </dd></dl>
-</div>
-<div class="section" id="user">
+</section>
+<section id="user">
 <h3>User<a class="headerlink" href="#user" title="Link zu dieser Überschrift">#</a></h3>
 <div class="py-attribute-table" data-move-to-id="mi.framework.User"><div class="py-attribute-table-column">
 <span>
@@ -329,8 +330,8 @@ async</span><a class="reference internal" href="#mi.framework.User.get_profile">
 </dl>
 </dd></dl>
 </dd></dl>
-</div>
-<div class="section" id="chat">
+</section>
+<section id="chat">
 <h3>Chat<a class="headerlink" href="#chat" title="Link zu dieser Überschrift">#</a></h3>
 <div class="py-attribute-table" data-move-to-id="mi.framework.Chat"><div class="py-attribute-table-column">
 <span>
@@ -356,15 +357,15 @@ async</span><a class="reference internal" href="#mi.framework.Chat.delete">delet
 </dl>
 </dd></dl>
 </dd></dl>
-</div>
-<div class="section" id="emoji">
+</section>
+<section id="emoji">
 <h3>Emoji<a class="headerlink" href="#emoji" title="Link zu dieser Überschrift">#</a></h3>
 <div class="py-attribute-table" data-move-to-id="mi.framework.Emoji"></div><dl class="py class">
 <dt class="sig sig-object py" id="mi.framework.Emoji">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.framework.</span></span><span class="sig-name descname"><span class="pre">Emoji</span></span><a class="reference internal" href="_modules/mi/framework/models/emoji.html#Emoji"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.framework.Emoji" title="Link zu dieser Definition">#</a></dt>
 <dd></dd></dl>
-</div>
-<div class="section" id="renote">
+</section>
+<section id="renote">
 <h3>Renote<a class="headerlink" href="#renote" title="Link zu dieser Überschrift">#</a></h3>
 <div class="py-attribute-table" data-move-to-id="mi.framework.Renote"><div class="py-attribute-table-column">
 <span>
@@ -389,8 +390,8 @@ def</span><a class="reference internal" href="#mi.framework.Renote.emoji_count">
 </dl>
 </dd></dl>
 </dd></dl>
-</div>
-<div class="section" id="follow">
+</section>
+<section id="follow">
 <h3>Follow<a class="headerlink" href="#follow" title="Link zu dieser Überschrift">#</a></h3>
 <div class="py-attribute-table" data-move-to-id="mi.framework.Follow"><div class="py-attribute-table-column">
 <span>
@@ -431,39 +432,39 @@ async</span><a class="reference internal" href="#mi.framework.Follow.unfollow">u
 </dl>
 </dd></dl>
 </dd></dl>
-</div>
-<div class="section" id="header">
+</section>
+<section id="header">
 <h3>Header<a class="headerlink" href="#header" title="Link zu dieser Überschrift">#</a></h3>
 <div class="py-attribute-table" data-move-to-id="mi.framework.Header"></div><dl class="py class">
 <dt class="sig sig-object py" id="mi.framework.Header">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.framework.</span></span><span class="sig-name descname"><span class="pre">Header</span></span><a class="reference internal" href="_modules/mi/framework/models/note.html#Header"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.framework.Header" title="Link zu dieser Definition">#</a></dt>
 <dd></dd></dl>
-</div>
-<div class="section" id="properties">
+</section>
+<section id="properties">
 <h3>Properties<a class="headerlink" href="#properties" title="Link zu dieser Überschrift">#</a></h3>
 <div class="py-attribute-table" data-move-to-id="mi.framework.Properties"></div><dl class="py class">
 <dt class="sig sig-object py" id="mi.framework.Properties">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.framework.</span></span><span class="sig-name descname"><span class="pre">Properties</span></span><a class="reference internal" href="_modules/mi/framework/models/drive.html#Properties"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.framework.Properties" title="Link zu dieser Definition">#</a></dt>
 <dd></dd></dl>
-</div>
-<div class="section" id="file">
+</section>
+<section id="file">
 <h3>File<a class="headerlink" href="#file" title="Link zu dieser Überschrift">#</a></h3>
 <div class="py-attribute-table" data-move-to-id="mi.framework.File"></div><dl class="py class">
 <dt class="sig sig-object py" id="mi.framework.File">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.framework.</span></span><span class="sig-name descname"><span class="pre">File</span></span><a class="reference internal" href="_modules/mi/framework/models/drive.html#File"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.framework.File" title="Link zu dieser Definition">#</a></dt>
 <dd></dd></dl>
-</div>
-<div class="section" id="reaction">
+</section>
+<section id="reaction">
 <h3>Reaction<a class="headerlink" href="#reaction" title="Link zu dieser Überschrift">#</a></h3>
 <div class="py-attribute-table" data-move-to-id="mi.framework.Reaction"></div><dl class="py class">
 <dt class="sig sig-object py" id="mi.framework.Reaction">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.framework.</span></span><span class="sig-name descname"><span class="pre">Reaction</span></span><a class="reference internal" href="_modules/mi/framework/models/note.html#Reaction"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.framework.Reaction" title="Link zu dieser Definition">#</a></dt>
 <dd></dd></dl>
-</div>
-</div>
-<div class="section" id="id3">
+</section>
+</section>
+<section id="id3">
 <h2>Datenklassen<a class="headerlink" href="#id3" title="Link zu dieser Überschrift">#</a></h2>
-<div class="section" id="rawnote">
+<section id="rawnote">
 <h3>RawNote<a class="headerlink" href="#rawnote" title="Link zu dieser Überschrift">#</a></h3>
 <div class="py-attribute-table" data-move-to-id="mi.wrapper.models.RawNote"><div class="py-attribute-table-column">
 <span>
@@ -753,8 +754,8 @@ Attributes</span><ul>
 </dl>
 </dd></dl>
 </dd></dl>
-</div>
-<div class="section" id="rawchat">
+</section>
+<section id="rawchat">
 <h3>RawChat<a class="headerlink" href="#rawchat" title="Link zu dieser Überschrift">#</a></h3>
 <div class="py-attribute-table" data-move-to-id="mi.wrapper.models.RawChat"><div class="py-attribute-table-column">
 <span>
@@ -887,8 +888,8 @@ Attributes</span><ul>
 </dd>
 </dl>
 </dd></dl>
-</div>
-<div class="section" id="rawproperties">
+</section>
+<section id="rawproperties">
 <h3>RawProperties<a class="headerlink" href="#rawproperties" title="Link zu dieser Überschrift">#</a></h3>
 <div class="py-attribute-table" data-move-to-id="mi.wrapper.models.RawProperties"><div class="py-attribute-table-column">
 <span>
@@ -931,8 +932,8 @@ Attributes</span><ul>
 </dl>
 </dd></dl>
 </dd></dl>
-</div>
-<div class="section" id="rawfolder">
+</section>
+<section id="rawfolder">
 <h3>RawFolder<a class="headerlink" href="#rawfolder" title="Link zu dieser Überschrift">#</a></h3>
 <div class="py-attribute-table" data-move-to-id="mi.wrapper.models.RawFolder"><div class="py-attribute-table-column">
 <span>
@@ -1008,8 +1009,8 @@ Attributes</span><ul>
 </dl>
 </dd></dl>
 </dd></dl>
-</div>
-<div class="section" id="rawfile">
+</section>
+<section id="rawfile">
 <h3>RawFile<a class="headerlink" href="#rawfile" title="Link zu dieser Überschrift">#</a></h3>
 <div class="py-attribute-table" data-move-to-id="mi.wrapper.models.RawFile"><div class="py-attribute-table-column">
 <span>
@@ -1196,8 +1197,8 @@ Attributes</span><ul>
 </dl>
 </dd></dl>
 </dd></dl>
-</div>
-<div class="section" id="rawemoji">
+</section>
+<section id="rawemoji">
 <h3>RawEmoji<a class="headerlink" href="#rawemoji" title="Link zu dieser Überschrift">#</a></h3>
 <div class="py-attribute-table" data-move-to-id="mi.wrapper.models.RawEmoji"><div class="py-attribute-table-column">
 <span>
@@ -1273,8 +1274,8 @@ Attributes</span><ul>
 </dl>
 </dd></dl>
 </dd></dl>
-</div>
-<div class="section" id="rawinstance">
+</section>
+<section id="rawinstance">
 <h3>RawInstance<a class="headerlink" href="#rawinstance" title="Link zu dieser Überschrift">#</a></h3>
 <div class="py-attribute-table" data-move-to-id="mi.wrapper.models.RawInstance"><div class="py-attribute-table-column">
 <span>
@@ -1354,8 +1355,8 @@ Attributes</span><ul>
 </dl>
 </dd></dl>
 </dd></dl>
-</div>
-<div class="section" id="rawrenote">
+</section>
+<section id="rawrenote">
 <h3>RawRenote<a class="headerlink" href="#rawrenote" title="Link zu dieser Überschrift">#</a></h3>
 <div class="py-attribute-table" data-move-to-id="mi.wrapper.models.RawRenote"><div class="py-attribute-table-column">
 <span>
@@ -1499,8 +1500,8 @@ Attributes</span><ul>
 <span class="sig-name descname"><span class="pre">poll</span> <span class="pre">Optional[RawPoll]</span></span></dt>
 <dd></dd></dl>
 </dd></dl>
-</div>
-<div class="section" id="rawpollchoices">
+</section>
+<section id="rawpollchoices">
 <h3>RawPollChoices<a class="headerlink" href="#rawpollchoices" title="Link zu dieser Überschrift">#</a></h3>
 <div class="py-attribute-table" data-move-to-id="mi.wrapper.models.RawPollChoices"><div class="py-attribute-table-column">
 <span>
@@ -1543,8 +1544,8 @@ Attributes</span><ul>
 </dl>
 </dd></dl>
 </dd></dl>
-</div>
-<div class="section" id="rawnotereaction">
+</section>
+<section id="rawnotereaction">
 <h3>RawNoteReaction<a class="headerlink" href="#rawnotereaction" title="Link zu dieser Überschrift">#</a></h3>
 <div class="py-attribute-table" data-move-to-id="mi.wrapper.models.RawNoteReaction"><div class="py-attribute-table-column">
 <span>
@@ -1597,8 +1598,8 @@ Attributes</span><ul>
 </dl>
 </dd></dl>
 </dd></dl>
-</div>
-<div class="section" id="rawuserdetails">
+</section>
+<section id="rawuserdetails">
 <h3>RawUserDetails<a class="headerlink" href="#rawuserdetails" title="Link zu dieser Überschrift">#</a></h3>
 <div class="py-attribute-table" data-move-to-id="mi.wrapper.models.RawUserDetails"><div class="py-attribute-table-column">
 <span>
@@ -1642,8 +1643,8 @@ Attributes</span><ul>
 </dl>
 </dd></dl>
 </dd></dl>
-</div>
-<div class="section" id="rawuser">
+</section>
+<section id="rawuser">
 <h3>RawUser<a class="headerlink" href="#rawuser" title="Link zu dieser Überschrift">#</a></h3>
 <div class="py-attribute-table" data-move-to-id="mi.wrapper.models.RawUser"></div><dl class="py class">
 <dt class="sig sig-object py" id="mi.wrapper.models.RawUser">
@@ -1693,365 +1694,484 @@ Attributes</span><ul>
 </dd>
 </dl>
 </dd></dl>
-</div>
-</div>
-<div class="section" id="id4">
+</section>
+</section>
+<section id="id4">
 <h2>型クラス<a class="headerlink" href="#id4" title="Link zu dieser Überschrift">#</a></h2>
-<div class="section" id="chatpayload">
+<section id="chatpayload">
 <h3>ChatPayload<a class="headerlink" href="#chatpayload" title="Link zu dieser Überschrift">#</a></h3>
 <div class="py-attribute-table" data-move-to-id="mi.types.ChatPayload"></div><dl class="py class">
 <dt class="sig sig-object py" id="mi.types.ChatPayload">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.types.</span></span><span class="sig-name descname"><span class="pre">ChatPayload</span></span><a class="reference internal" href="_modules/mi/types/chat.html#ChatPayload"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.types.ChatPayload" title="Link zu dieser Definition">#</a></dt>
 <dd></dd></dl>
-</div>
-<div class="section" id="propertiespayload">
+</section>
+<section id="propertiespayload">
 <h3>PropertiesPayload<a class="headerlink" href="#propertiespayload" title="Link zu dieser Überschrift">#</a></h3>
 <div class="py-attribute-table" data-move-to-id="mi.types.PropertiesPayload"></div><dl class="py class">
 <dt class="sig sig-object py" id="mi.types.PropertiesPayload">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.types.</span></span><span class="sig-name descname"><span class="pre">PropertiesPayload</span></span><a class="reference internal" href="_modules/mi/types/drive.html#PropertiesPayload"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.types.PropertiesPayload" title="Link zu dieser Definition">#</a></dt>
 <dd><p>プロパティー情報</p>
 </dd></dl>
-</div>
-<div class="section" id="folderpayload">
+</section>
+<section id="folderpayload">
 <h3>FolderPayload<a class="headerlink" href="#folderpayload" title="Link zu dieser Überschrift">#</a></h3>
 <div class="py-attribute-table" data-move-to-id="mi.types.FolderPayload"></div><dl class="py class">
 <dt class="sig sig-object py" id="mi.types.FolderPayload">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.types.</span></span><span class="sig-name descname"><span class="pre">FolderPayload</span></span><a class="reference internal" href="_modules/mi/types/drive.html#FolderPayload"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.types.FolderPayload" title="Link zu dieser Definition">#</a></dt>
 <dd><p>フォルダーの情報</p>
 </dd></dl>
-</div>
-<div class="section" id="filepayload">
+</section>
+<section id="filepayload">
 <h3>FilePayload<a class="headerlink" href="#filepayload" title="Link zu dieser Überschrift">#</a></h3>
 <div class="py-attribute-table" data-move-to-id="mi.types.FilePayload"></div><dl class="py class">
 <dt class="sig sig-object py" id="mi.types.FilePayload">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.types.</span></span><span class="sig-name descname"><span class="pre">FilePayload</span></span><a class="reference internal" href="_modules/mi/types/drive.html#FilePayload"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.types.FilePayload" title="Link zu dieser Definition">#</a></dt>
 <dd><p>ファイル情報</p>
 </dd></dl>
-</div>
-<div class="section" id="emojipayload">
+</section>
+<section id="emojipayload">
 <h3>EmojiPayload<a class="headerlink" href="#emojipayload" title="Link zu dieser Überschrift">#</a></h3>
 <div class="py-attribute-table" data-move-to-id="mi.types.EmojiPayload"></div><dl class="py class">
 <dt class="sig sig-object py" id="mi.types.EmojiPayload">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.types.</span></span><span class="sig-name descname"><span class="pre">EmojiPayload</span></span><a class="reference internal" href="_modules/mi/types/emoji.html#EmojiPayload"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.types.EmojiPayload" title="Link zu dieser Definition">#</a></dt>
 <dd></dd></dl>
-</div>
-<div class="section" id="featurespayload">
+</section>
+<section id="featurespayload">
 <h3>FeaturesPayload<a class="headerlink" href="#featurespayload" title="Link zu dieser Überschrift">#</a></h3>
 <div class="py-attribute-table" data-move-to-id="mi.types.FeaturesPayload"></div><dl class="py class">
 <dt class="sig sig-object py" id="mi.types.FeaturesPayload">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.types.</span></span><span class="sig-name descname"><span class="pre">FeaturesPayload</span></span><a class="reference internal" href="_modules/mi/types/instance.html#FeaturesPayload"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.types.FeaturesPayload" title="Link zu dieser Definition">#</a></dt>
 <dd></dd></dl>
-</div>
-<div class="section" id="optionalmeta">
+</section>
+<section id="optionalmeta">
 <h3>OptionalMeta<a class="headerlink" href="#optionalmeta" title="Link zu dieser Überschrift">#</a></h3>
 <div class="py-attribute-table" data-move-to-id="mi.types.OptionalMeta"></div><dl class="py class">
 <dt class="sig sig-object py" id="mi.types.OptionalMeta">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.types.</span></span><span class="sig-name descname"><span class="pre">OptionalMeta</span></span><a class="reference internal" href="_modules/mi/types/instance.html#OptionalMeta"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.types.OptionalMeta" title="Link zu dieser Definition">#</a></dt>
 <dd></dd></dl>
-</div>
-<div class="section" id="metapayload">
+</section>
+<section id="metapayload">
 <h3>MetaPayload<a class="headerlink" href="#metapayload" title="Link zu dieser Überschrift">#</a></h3>
 <div class="py-attribute-table" data-move-to-id="mi.types.MetaPayload"></div><dl class="py class">
 <dt class="sig sig-object py" id="mi.types.MetaPayload">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.types.</span></span><span class="sig-name descname"><span class="pre">MetaPayload</span></span><a class="reference internal" href="_modules/mi/types/instance.html#MetaPayload"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.types.MetaPayload" title="Link zu dieser Definition">#</a></dt>
 <dd></dd></dl>
-</div>
-<div class="section" id="optionalinstance">
+</section>
+<section id="optionalinstance">
 <h3>OptionalInstance<a class="headerlink" href="#optionalinstance" title="Link zu dieser Überschrift">#</a></h3>
 <div class="py-attribute-table" data-move-to-id="mi.types.OptionalInstance"></div><dl class="py class">
 <dt class="sig sig-object py" id="mi.types.OptionalInstance">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.types.</span></span><span class="sig-name descname"><span class="pre">OptionalInstance</span></span><a class="reference internal" href="_modules/mi/types/instance.html#OptionalInstance"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.types.OptionalInstance" title="Link zu dieser Definition">#</a></dt>
 <dd></dd></dl>
-</div>
-<div class="section" id="instancepayload">
+</section>
+<section id="instancepayload">
 <h3>InstancePayload<a class="headerlink" href="#instancepayload" title="Link zu dieser Überschrift">#</a></h3>
 <div class="py-attribute-table" data-move-to-id="mi.types.InstancePayload"></div><dl class="py class">
 <dt class="sig sig-object py" id="mi.types.InstancePayload">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.types.</span></span><span class="sig-name descname"><span class="pre">InstancePayload</span></span><a class="reference internal" href="_modules/mi/types/instance.html#InstancePayload"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.types.InstancePayload" title="Link zu dieser Definition">#</a></dt>
 <dd></dd></dl>
-</div>
-<div class="section" id="geopayload">
+</section>
+<section id="geopayload">
 <h3>GeoPayload<a class="headerlink" href="#geopayload" title="Link zu dieser Überschrift">#</a></h3>
 <div class="py-attribute-table" data-move-to-id="mi.types.GeoPayload"></div><dl class="py class">
 <dt class="sig sig-object py" id="mi.types.GeoPayload">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.types.</span></span><span class="sig-name descname"><span class="pre">GeoPayload</span></span><a class="reference internal" href="_modules/mi/types/note.html#GeoPayload"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.types.GeoPayload" title="Link zu dieser Definition">#</a></dt>
 <dd><p>衛星情報</p>
 </dd></dl>
-</div>
-<div class="section" id="pollpayload">
+</section>
+<section id="pollpayload">
 <h3>PollPayload<a class="headerlink" href="#pollpayload" title="Link zu dieser Überschrift">#</a></h3>
 <div class="py-attribute-table" data-move-to-id="mi.types.PollPayload"></div><dl class="py class">
 <dt class="sig sig-object py" id="mi.types.PollPayload">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.types.</span></span><span class="sig-name descname"><span class="pre">PollPayload</span></span><a class="reference internal" href="_modules/mi/types/note.html#PollPayload"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.types.PollPayload" title="Link zu dieser Definition">#</a></dt>
 <dd><p>アンケート情報</p>
 </dd></dl>
-</div>
-<div class="section" id="renotepayload">
+</section>
+<section id="renotepayload">
 <h3>RenotePayload<a class="headerlink" href="#renotepayload" title="Link zu dieser Überschrift">#</a></h3>
 <div class="py-attribute-table" data-move-to-id="mi.types.RenotePayload"></div><dl class="py class">
 <dt class="sig sig-object py" id="mi.types.RenotePayload">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.types.</span></span><span class="sig-name descname"><span class="pre">RenotePayload</span></span><a class="reference internal" href="_modules/mi/types/note.html#RenotePayload"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.types.RenotePayload" title="Link zu dieser Definition">#</a></dt>
 <dd></dd></dl>
-</div>
-<div class="section" id="notepayload">
+</section>
+<section id="notepayload">
 <h3>NotePayload<a class="headerlink" href="#notepayload" title="Link zu dieser Überschrift">#</a></h3>
 <div class="py-attribute-table" data-move-to-id="mi.types.NotePayload"></div><dl class="py class">
 <dt class="sig sig-object py" id="mi.types.NotePayload">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.types.</span></span><span class="sig-name descname"><span class="pre">NotePayload</span></span><a class="reference internal" href="_modules/mi/types/note.html#NotePayload"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.types.NotePayload" title="Link zu dieser Definition">#</a></dt>
 <dd><p>note object</p>
 </dd></dl>
-</div>
-<div class="section" id="optionalreaction">
+</section>
+<section id="optionalreaction">
 <h3>OptionalReaction<a class="headerlink" href="#optionalreaction" title="Link zu dieser Überschrift">#</a></h3>
 <div class="py-attribute-table" data-move-to-id="mi.types.OptionalReaction"></div><dl class="py class">
 <dt class="sig sig-object py" id="mi.types.OptionalReaction">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.types.</span></span><span class="sig-name descname"><span class="pre">OptionalReaction</span></span><a class="reference internal" href="_modules/mi/types/note.html#OptionalReaction"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.types.OptionalReaction" title="Link zu dieser Definition">#</a></dt>
 <dd></dd></dl>
-</div>
-<div class="section" id="reactionpayload">
+</section>
+<section id="reactionpayload">
 <h3>ReactionPayload<a class="headerlink" href="#reactionpayload" title="Link zu dieser Überschrift">#</a></h3>
 <div class="py-attribute-table" data-move-to-id="mi.types.ReactionPayload"></div><dl class="py class">
 <dt class="sig sig-object py" id="mi.types.ReactionPayload">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.types.</span></span><span class="sig-name descname"><span class="pre">ReactionPayload</span></span><a class="reference internal" href="_modules/mi/types/note.html#ReactionPayload"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.types.ReactionPayload" title="Link zu dieser Definition">#</a></dt>
 <dd></dd></dl>
-</div>
-<div class="section" id="notereactionpayload">
+</section>
+<section id="notereactionpayload">
 <h3>NoteReactionPayload<a class="headerlink" href="#notereactionpayload" title="Link zu dieser Überschrift">#</a></h3>
 <div class="py-attribute-table" data-move-to-id="mi.types.NoteReactionPayload"></div><dl class="py class">
 <dt class="sig sig-object py" id="mi.types.NoteReactionPayload">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.types.</span></span><span class="sig-name descname"><span class="pre">NoteReactionPayload</span></span><a class="reference internal" href="_modules/mi/types/reaction.html#NoteReactionPayload"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.types.NoteReactionPayload" title="Link zu dieser Definition">#</a></dt>
 <dd></dd></dl>
-</div>
-<div class="section" id="channelpayload">
+</section>
+<section id="channelpayload">
 <h3>ChannelPayload<a class="headerlink" href="#channelpayload" title="Link zu dieser Überschrift">#</a></h3>
 <div class="py-attribute-table" data-move-to-id="mi.types.ChannelPayload"></div><dl class="py class">
 <dt class="sig sig-object py" id="mi.types.ChannelPayload">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.types.</span></span><span class="sig-name descname"><span class="pre">ChannelPayload</span></span><a class="reference internal" href="_modules/mi/types/user.html#ChannelPayload"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.types.ChannelPayload" title="Link zu dieser Definition">#</a></dt>
 <dd></dd></dl>
-</div>
-<div class="section" id="pinnednotepayload">
+</section>
+<section id="pinnednotepayload">
 <h3>PinnedNotePayload<a class="headerlink" href="#pinnednotepayload" title="Link zu dieser Überschrift">#</a></h3>
 <div class="py-attribute-table" data-move-to-id="mi.types.PinnedNotePayload"></div><dl class="py class">
 <dt class="sig sig-object py" id="mi.types.PinnedNotePayload">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.types.</span></span><span class="sig-name descname"><span class="pre">PinnedNotePayload</span></span><a class="reference internal" href="_modules/mi/types/user.html#PinnedNotePayload"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.types.PinnedNotePayload" title="Link zu dieser Definition">#</a></dt>
 <dd></dd></dl>
-</div>
-<div class="section" id="pinnedpagepayload">
+</section>
+<section id="pinnedpagepayload">
 <h3>PinnedPagePayload<a class="headerlink" href="#pinnedpagepayload" title="Link zu dieser Überschrift">#</a></h3>
 <div class="py-attribute-table" data-move-to-id="mi.types.PinnedPagePayload"></div><dl class="py class">
 <dt class="sig sig-object py" id="mi.types.PinnedPagePayload">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.types.</span></span><span class="sig-name descname"><span class="pre">PinnedPagePayload</span></span><a class="reference internal" href="_modules/mi/types/user.html#PinnedPagePayload"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.types.PinnedPagePayload" title="Link zu dieser Definition">#</a></dt>
 <dd></dd></dl>
-</div>
-<div class="section" id="fieldcontentpayload">
+</section>
+<section id="fieldcontentpayload">
 <h3>FieldContentPayload<a class="headerlink" href="#fieldcontentpayload" title="Link zu dieser Überschrift">#</a></h3>
 <div class="py-attribute-table" data-move-to-id="mi.types.FieldContentPayload"></div><dl class="py class">
 <dt class="sig sig-object py" id="mi.types.FieldContentPayload">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.types.</span></span><span class="sig-name descname"><span class="pre">FieldContentPayload</span></span><a class="reference internal" href="_modules/mi/types/user.html#FieldContentPayload"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.types.FieldContentPayload" title="Link zu dieser Definition">#</a></dt>
 <dd></dd></dl>
-</div>
-<div class="section" id="optionaluser">
+</section>
+<section id="optionaluser">
 <h3>OptionalUser<a class="headerlink" href="#optionaluser" title="Link zu dieser Überschrift">#</a></h3>
 <div class="py-attribute-table" data-move-to-id="mi.types.OptionalUser"></div><dl class="py class">
 <dt class="sig sig-object py" id="mi.types.OptionalUser">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.types.</span></span><span class="sig-name descname"><span class="pre">OptionalUser</span></span><a class="reference internal" href="_modules/mi/types/user.html#OptionalUser"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.types.OptionalUser" title="Link zu dieser Definition">#</a></dt>
 <dd></dd></dl>
-</div>
-<div class="section" id="userpayload">
+</section>
+<section id="userpayload">
 <h3>UserPayload<a class="headerlink" href="#userpayload" title="Link zu dieser Überschrift">#</a></h3>
 <div class="py-attribute-table" data-move-to-id="mi.types.UserPayload"></div><dl class="py class">
 <dt class="sig sig-object py" id="mi.types.UserPayload">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.types.</span></span><span class="sig-name descname"><span class="pre">UserPayload</span></span><a class="reference internal" href="_modules/mi/types/user.html#UserPayload"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.types.UserPayload" title="Link zu dieser Definition">#</a></dt>
 <dd></dd></dl>
-</div>
-</div>
-<div class="section" id="id5">
+</section>
+</section>
+<section id="id5">
 <h2>Behandlung von Ausnahmen<a class="headerlink" href="#id5" title="Link zu dieser Überschrift">#</a></h2>
-<div class="section" id="notfounderror">
+<section id="notfounderror">
 <h3>NotFoundError<a class="headerlink" href="#notfounderror" title="Link zu dieser Überschrift">#</a></h3>
 <dl class="py class">
 <dt class="sig sig-object py" id="mi.NotFoundError">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.</span></span><span class="sig-name descname"><span class="pre">NotFoundError</span></span><a class="reference internal" href="_modules/mi/exception.html#NotFoundError"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.NotFoundError" title="Link zu dieser Definition">#</a></dt>
 <dd><p>Ausnahme für 404-Rückgaben bei http-Zugriff</p>
 </dd></dl>
-</div>
-<div class="section" id="tasknotrunningerror">
+</section>
+<section id="tasknotrunningerror">
 <h3>TaskNotRunningError<a class="headerlink" href="#tasknotrunningerror" title="Link zu dieser Überschrift">#</a></h3>
 <dl class="py class">
 <dt class="sig sig-object py" id="mi.TaskNotRunningError">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.</span></span><span class="sig-name descname"><span class="pre">TaskNotRunningError</span></span><a class="reference internal" href="_modules/mi/exception.html#TaskNotRunningError"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.TaskNotRunningError" title="Link zu dieser Definition">#</a></dt>
 <dd><p>Ausnahme, die beim Versuch, eine Aufgabe anzuhalten, ausgelöst wird, wenn die Aufgabe nicht gestartet wurde</p>
 </dd></dl>
-</div>
-<div class="section" id="imai">
+</section>
+<section id="imai">
 <h3>ImAi<a class="headerlink" href="#imai" title="Link zu dieser Überschrift">#</a></h3>
 <dl class="py class">
 <dt class="sig sig-object py" id="mi.ImAi">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.</span></span><span class="sig-name descname"><span class="pre">ImAi</span></span><a class="reference internal" href="_modules/mi/exception.html#ImAi"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.ImAi" title="Link zu dieser Definition">#</a></dt>
 <dd><p>Ich bin Indigo.</p>
 </dd></dl>
-</div>
-<div class="section" id="internalservererror">
+</section>
+<section id="internalservererror">
 <h3>InternalServerError<a class="headerlink" href="#internalservererror" title="Link zu dieser Überschrift">#</a></h3>
 <dl class="py class">
 <dt class="sig sig-object py" id="mi.InternalServerError">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.</span></span><span class="sig-name descname"><span class="pre">InternalServerError</span></span><a class="reference internal" href="_modules/mi/exception.html#InternalServerError"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.InternalServerError" title="Link zu dieser Definition">#</a></dt>
 <dd><p>Ausnahme, wenn der http-Zugang 500 zurückgibt</p>
 </dd></dl>
-</div>
-<div class="section" id="clienterror">
+</section>
+<section id="clienterror">
 <h3>ClientFehler<a class="headerlink" href="#clienterror" title="Link zu dieser Überschrift">#</a></h3>
 <dl class="py class">
 <dt class="sig sig-object py" id="mi.ClientError">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.</span></span><span class="sig-name descname"><span class="pre">ClientError</span></span><a class="reference internal" href="_modules/mi/exception.html#ClientError"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.ClientError" title="Link zu dieser Definition">#</a></dt>
 <dd><p>Ausnahme, wenn der http-Zugang 400 zurückgibt</p>
 </dd></dl>
-</div>
-<div class="section" id="authenticationerror">
+</section>
+<section id="authenticationerror">
 <h3>AuthenticationError<a class="headerlink" href="#authenticationerror" title="Link zu dieser Überschrift">#</a></h3>
 <dl class="py class">
 <dt class="sig sig-object py" id="mi.AuthenticationError">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.</span></span><span class="sig-name descname"><span class="pre">AuthenticationError</span></span><a class="reference internal" href="_modules/mi/exception.html#AuthenticationError"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.AuthenticationError" title="Link zu dieser Definition">#</a></dt>
 <dd><p>Ausnahmen im Falle von Authentifizierungsproblemen</p>
 </dd></dl>
-</div>
-<div class="section" id="notexistrequiredparameters">
+</section>
+<section id="notexistrequiredparameters">
 <h3>NotExistRequiredParameters<a class="headerlink" href="#notexistrequiredparameters" title="Link zu dieser Überschrift">#</a></h3>
 <dl class="py class">
 <dt class="sig sig-object py" id="mi.NotExistRequiredParameters">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.</span></span><span class="sig-name descname"><span class="pre">NotExistRequiredParameters</span></span><a class="reference internal" href="_modules/mi/exception.html#NotExistRequiredParameters"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.NotExistRequiredParameters" title="Link zu dieser Definition">#</a></dt>
 <dd><p>Ausnahmen, wenn die erforderlichen Parameter nicht vorhanden sind</p>
 </dd></dl>
-</div>
-<div class="section" id="invalidparameters">
+</section>
+<section id="invalidparameters">
 <h3>InvalidParameters<a class="headerlink" href="#invalidparameters" title="Link zu dieser Überschrift">#</a></h3>
 <dl class="py class">
 <dt class="sig sig-object py" id="mi.InvalidParameters">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.</span></span><span class="sig-name descname"><span class="pre">InvalidParameters</span></span><a class="reference internal" href="_modules/mi/exception.html#InvalidParameters"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.InvalidParameters" title="Link zu dieser Definition">#</a></dt>
 <dd><p>Ungültiger Parameter</p>
 </dd></dl>
-</div>
-<div class="section" id="credentialrequired">
+</section>
+<section id="credentialrequired">
 <h3>CredentialRequired<a class="headerlink" href="#credentialrequired" title="Link zu dieser Überschrift">#</a></h3>
 <dl class="py class">
 <dt class="sig sig-object py" id="mi.CredentialRequired">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.</span></span><span class="sig-name descname"><span class="pre">CredentialRequired</span></span><a class="reference internal" href="_modules/mi/exception.html#CredentialRequired"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.CredentialRequired" title="Link zu dieser Definition">#</a></dt>
 <dd><p>Authentifizierungsinformationen fehlen</p>
 </dd></dl>
-</div>
-<div class="section" id="contentrequired">
+</section>
+<section id="contentrequired">
 <h3>ContentRequired<a class="headerlink" href="#contentrequired" title="Link zu dieser Überschrift">#</a></h3>
 <dl class="py class">
 <dt class="sig sig-object py" id="mi.ContentRequired">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.</span></span><span class="sig-name descname"><span class="pre">ContentRequired</span></span><a class="reference internal" href="_modules/mi/exception.html#ContentRequired"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.ContentRequired" title="Link zu dieser Definition">#</a></dt>
 <dd><p>Es gibt nicht genügend Inhalt zum Senden</p>
 </dd></dl>
-</div>
-<div class="section" id="cognameduplicate">
+</section>
+<section id="cognameduplicate">
 <h3>CogNameDuplicate<a class="headerlink" href="#cognameduplicate" title="Link zu dieser Überschrift">#</a></h3>
 <dl class="py class">
 <dt class="sig sig-object py" id="mi.CogNameDuplicate">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.</span></span><span class="sig-name descname"><span class="pre">CogNameDuplicate</span></span><a class="reference internal" href="_modules/mi/exception.html#CogNameDuplicate"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.CogNameDuplicate" title="Link zu dieser Definition">#</a></dt>
 <dd><p>Doppelte Cog-Namen</p>
 </dd></dl>
-</div>
-<div class="section" id="extensionalreadyloaded">
+</section>
+<section id="extensionalreadyloaded">
 <h3>ExtensionAlreadyLoaded<a class="headerlink" href="#extensionalreadyloaded" title="Link zu dieser Überschrift">#</a></h3>
 <dl class="py class">
 <dt class="sig sig-object py" id="mi.ExtensionAlreadyLoaded">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.</span></span><span class="sig-name descname"><span class="pre">ExtensionAlreadyLoaded</span></span><a class="reference internal" href="_modules/mi/exception.html#ExtensionAlreadyLoaded"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.ExtensionAlreadyLoaded" title="Link zu dieser Definition">#</a></dt>
 <dd><p>Cog ist bereits geladen</p>
 </dd></dl>
-</div>
-<div class="section" id="extensionfailed">
+</section>
+<section id="extensionfailed">
 <h3>ExtensionFailed<a class="headerlink" href="#extensionfailed" title="Link zu dieser Überschrift">#</a></h3>
 <dl class="py class">
 <dt class="sig sig-object py" id="mi.ExtensionFailed">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.</span></span><span class="sig-name descname"><span class="pre">ExtensionFailed</span></span><a class="reference internal" href="_modules/mi/exception.html#ExtensionFailed"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.ExtensionFailed" title="Link zu dieser Definition">#</a></dt>
 <dd><p>Fehler im Cog</p>
 </dd></dl>
-</div>
-<div class="section" id="noentrypointerror">
+</section>
+<section id="noentrypointerror">
 <h3>NoEntryPointError<a class="headerlink" href="#noentrypointerror" title="Link zu dieser Überschrift">#</a></h3>
 <dl class="py class">
 <dt class="sig sig-object py" id="mi.NoEntryPointError">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.</span></span><span class="sig-name descname"><span class="pre">NoEntryPointError</span></span><a class="reference internal" href="_modules/mi/exception.html#NoEntryPointError"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.NoEntryPointError" title="Link zu dieser Definition">#</a></dt>
 <dd><p>Ausnahme, wenn Cog keine Einrichtungsfunktion hat</p>
 </dd></dl>
-</div>
-<div class="section" id="extensionnotfound">
+</section>
+<section id="extensionnotfound">
 <h3>ExtensionNotFound<a class="headerlink" href="#extensionnotfound" title="Link zu dieser Überschrift">#</a></h3>
 <dl class="py class">
 <dt class="sig sig-object py" id="mi.ExtensionNotFound">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.</span></span><span class="sig-name descname"><span class="pre">ExtensionNotFound</span></span><a class="reference internal" href="_modules/mi/exception.html#ExtensionNotFound"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.ExtensionNotFound" title="Link zu dieser Definition">#</a></dt>
 <dd><p>Ausnahme, wenn Cog im angegebenen Pfad nicht existiert</p>
 </dd></dl>
-</div>
-<div class="section" id="commandregistrationerror">
+</section>
+<section id="commandregistrationerror">
 <h3>CommandRegistrationError<a class="headerlink" href="#commandregistrationerror" title="Link zu dieser Überschrift">#</a></h3>
 <dl class="py class">
 <dt class="sig sig-object py" id="mi.CommandRegistrationError">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.</span></span><span class="sig-name descname"><span class="pre">CommandRegistrationError</span></span><a class="reference internal" href="_modules/mi/exception.html#CommandRegistrationError"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.CommandRegistrationError" title="Link zu dieser Definition">#</a></dt>
 <dd><p>Fehler bei der Registrierung von Befehlen</p>
 </dd></dl>
-</div>
-<div class="section" id="commanderror">
+</section>
+<section id="commanderror">
 <h3>CommandError<a class="headerlink" href="#commanderror" title="Link zu dieser Überschrift">#</a></h3>
 <dl class="py class">
 <dt class="sig sig-object py" id="mi.CommandError">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.</span></span><span class="sig-name descname"><span class="pre">CommandError</span></span><a class="reference internal" href="_modules/mi/exception.html#CommandError"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.CommandError" title="Link zu dieser Definition">#</a></dt>
 <dd><p>Ausnahmen, wenn ein Problem mit einem Befehl auftritt</p>
 </dd></dl>
-</div>
-<div class="section" id="commandinvokeerror">
+</section>
+<section id="commandinvokeerror">
 <h3>CommandInvokeError<a class="headerlink" href="#commandinvokeerror" title="Link zu dieser Überschrift">#</a></h3>
 <dl class="py class">
 <dt class="sig sig-object py" id="mi.CommandInvokeError">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.</span></span><span class="sig-name descname"><span class="pre">CommandInvokeError</span></span><a class="reference internal" href="_modules/mi/exception.html#CommandInvokeError"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.CommandInvokeError" title="Link zu dieser Definition">#</a></dt>
 <dd><p>Ausnahmen, wenn ein Problem bei der Ausführung eines Befehls auftritt</p>
 </dd></dl>
-</div>
-<div class="section" id="checkfailure">
+</section>
+<section id="checkfailure">
 <h3>CheckFailure<a class="headerlink" href="#checkfailure" title="Link zu dieser Überschrift">#</a></h3>
 <dl class="py class">
 <dt class="sig sig-object py" id="mi.CheckFailure">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.</span></span><span class="sig-name descname"><span class="pre">CheckFailure</span></span><a class="reference internal" href="_modules/mi/exception.html#CheckFailure"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.CheckFailure" title="Link zu dieser Definition">#</a></dt>
 <dd><p>Ausnahme, wenn der Befehl nicht prüfen kann, ob er ausführbar ist</p>
 </dd></dl>
-</div>
-<div class="section" id="invalidcogpath">
+</section>
+<section id="invalidcogpath">
 <h3>InvalidCogPath<a class="headerlink" href="#invalidcogpath" title="Link zu dieser Überschrift">#</a></h3>
 <dl class="py class">
 <dt class="sig sig-object py" id="mi.InvalidCogPath">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.</span></span><span class="sig-name descname"><span class="pre">InvalidCogPath</span></span><a class="reference internal" href="_modules/mi/exception.html#InvalidCogPath"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.InvalidCogPath" title="Link zu dieser Definition">#</a></dt>
 <dd><p>Falscher Pfad zu Cog</p>
 </dd></dl>
-</div>
-<div class="section" id="notexistrequireddata">
+</section>
+<section id="notexistrequireddata">
 <h3>NotExistRequiredData<a class="headerlink" href="#notexistrequireddata" title="Link zu dieser Überschrift">#</a></h3>
 <dl class="py class">
 <dt class="sig sig-object py" id="mi.NotExistRequiredData">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.</span></span><span class="sig-name descname"><span class="pre">NotExistRequiredData</span></span><a class="reference internal" href="_modules/mi/exception.html#NotExistRequiredData"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.NotExistRequiredData" title="Link zu dieser Definition">#</a></dt>
 <dd><p>Ausnahme, die ausgelöst wird, wenn die erforderlichen Daten nicht vorhanden sind</p>
 </dd></dl>
-</div>
-</div>
-<div class="section" id="low-level-api">
+</section>
+</section>
+<section id="low-level-api">
 <h2>Niederschwellige API<a class="headerlink" href="#low-level-api" title="Link zu dieser Überschrift">#</a></h2>
 <dl class="py class">
-<dt class="sig sig-object py" id="mi.Route">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.</span></span><span class="sig-name descname"><span class="pre">Route</span></span><a class="reference internal" href="_modules/mi/framework/router.html#Route"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.Route" title="Link zu dieser Definition">#</a></dt>
-<dd></dd></dl>
-</div>
-<div class="section" id="low-layer-api">
+<dt class="sig sig-object py" id="mi.framework.ConnectionState">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.framework.</span></span><span class="sig-name descname"><span class="pre">ConnectionState</span></span><a class="reference internal" href="_modules/mi/framework/state.html#ConnectionState"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.framework.ConnectionState" title="Link zu dieser Definition">#</a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="mi.framework.ConnectionState.parse_channel">
+<span class="sig-name descname"><span class="pre">parse_channel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/framework/state.html#ConnectionState.parse_channel"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.framework.ConnectionState.parse_channel" title="Link zu dieser Definition">#</a></dt>
+<dd><p>parse_channel is a function to parse channel event</p>
+<p>チャンネルタイプのデータを解析後適切なパーサーに移動させます</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameter</dt>
+<dd class="field-odd"><p><strong>message</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – Received message</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="mi.framework.ConnectionState.parse_unfollow">
+<span class="sig-name descname"><span class="pre">parse_unfollow</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/framework/state.html#ConnectionState.parse_unfollow"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.framework.ConnectionState.parse_unfollow" title="Link zu dieser Definition">#</a></dt>
+<dd><p>フォローを解除した際のイベントを解析する関数</p>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="mi.framework.ConnectionState.parse_signin">
+<span class="sig-name descname"><span class="pre">parse_signin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/framework/state.html#ConnectionState.parse_signin"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.framework.ConnectionState.parse_signin" title="Link zu dieser Definition">#</a></dt>
+<dd><p>ログインが発生した際のイベント</p>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="mi.framework.ConnectionState.parse_receive_follow_request">
+<span class="sig-name descname"><span class="pre">parse_receive_follow_request</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/framework/state.html#ConnectionState.parse_receive_follow_request"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.framework.ConnectionState.parse_receive_follow_request" title="Link zu dieser Definition">#</a></dt>
+<dd><p>フォローリクエストを受け取った際のイベントを解析する関数</p>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="mi.framework.ConnectionState.parse_reply">
+<span class="sig-name descname"><span class="pre">parse_reply</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/framework/state.html#ConnectionState.parse_reply"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.framework.ConnectionState.parse_reply" title="Link zu dieser Definition">#</a></dt>
+<dd><p>リプライ</p>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="mi.framework.ConnectionState.parse_follow">
+<span class="sig-name descname"><span class="pre">parse_follow</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/framework/state.html#ConnectionState.parse_follow"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.framework.ConnectionState.parse_follow" title="Link zu dieser Definition">#</a></dt>
+<dd><p>ユーザーをフォローした際のイベントを解析する関数</p>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="mi.framework.ConnectionState.parse_followed">
+<span class="sig-name descname"><span class="pre">parse_followed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/framework/state.html#ConnectionState.parse_followed"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.framework.ConnectionState.parse_followed" title="Link zu dieser Definition">#</a></dt>
+<dd><p>フォローイベントを解析する関数</p>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="mi.framework.ConnectionState.parse_mention">
+<span class="sig-name descname"><span class="pre">parse_mention</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/framework/state.html#ConnectionState.parse_mention"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.framework.ConnectionState.parse_mention" title="Link zu dieser Definition">#</a></dt>
+<dd><p>メンションイベントを解析する関数</p>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="mi.framework.ConnectionState.parse_messaging_message">
+<span class="sig-name descname"><span class="pre">parse_messaging_message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/framework/state.html#ConnectionState.parse_messaging_message"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.framework.ConnectionState.parse_messaging_message" title="Link zu dieser Definition">#</a></dt>
+<dd><p>チャットが来た際のデータを処理する関数</p>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="mi.framework.ConnectionState.parse_unread_messaging_message">
+<span class="sig-name descname"><span class="pre">parse_unread_messaging_message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/framework/state.html#ConnectionState.parse_unread_messaging_message"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.framework.ConnectionState.parse_unread_messaging_message" title="Link zu dieser Definition">#</a></dt>
+<dd><p>チャットが既読になっていない場合のデータを処理する関数</p>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="mi.framework.ConnectionState.parse_notification">
+<span class="sig-name descname"><span class="pre">parse_notification</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/framework/state.html#ConnectionState.parse_notification"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.framework.ConnectionState.parse_notification" title="Link zu dieser Definition">#</a></dt>
+<dd><p>通知イベントを解析する関数</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameter</dt>
+<dd class="field-odd"><p><strong>message</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – Received message</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="mi.framework.ConnectionState.parse_unread_notification">
+<span class="sig-name descname"><span class="pre">parse_unread_notification</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/framework/state.html#ConnectionState.parse_unread_notification"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.framework.ConnectionState.parse_unread_notification" title="Link zu dieser Definition">#</a></dt>
+<dd><p>未読の通知を解析する関数</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameter</dt>
+<dd class="field-odd"><p><strong>message</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – Received message</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="mi.framework.ConnectionState.parse_reaction">
+<span class="sig-name descname"><span class="pre">parse_reaction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/framework/state.html#ConnectionState.parse_reaction"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.framework.ConnectionState.parse_reaction" title="Link zu dieser Definition">#</a></dt>
+<dd><p>リアクションに関する情報を解析する関数</p>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="mi.framework.ConnectionState.parse_note">
+<span class="sig-name descname"><span class="pre">parse_note</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/framework/state.html#ConnectionState.parse_note"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.framework.ConnectionState.parse_note" title="Link zu dieser Definition">#</a></dt>
+<dd><p>ノートイベントを解析する関数</p>
+</dd></dl>
+</dd></dl>
+</section>
+<section id="low-layer-api">
 <h2>Low-Layer-API<a class="headerlink" href="#low-layer-api" title="Link zu dieser Überschrift">#</a></h2>
-</div>
-<div class="section" id="utils">
+<dl class="py class">
+<dt class="sig sig-object py" id="mi.framework.MisskeyClientWebSocketResponse">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.framework.</span></span><span class="sig-name descname"><span class="pre">MisskeyClientWebSocketResponse</span></span><a class="reference internal" href="_modules/mi/framework/gateway.html#MisskeyClientWebSocketResponse"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.framework.MisskeyClientWebSocketResponse" title="Link zu dieser Definition">#</a></dt>
+<dd></dd></dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="mi.framework.MisskeyWebSocket">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.framework.</span></span><span class="sig-name descname"><span class="pre">MisskeyWebSocket</span></span><a class="reference internal" href="_modules/mi/framework/gateway.html#MisskeyWebSocket"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.framework.MisskeyWebSocket" title="Link zu dieser Definition">#</a></dt>
+<dd></dd></dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="mi.framework.InstanceIterator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.framework.</span></span><span class="sig-name descname"><span class="pre">InstanceIterator</span></span><a class="reference internal" href="_modules/mi/framework/iterators.html#InstanceIterator"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.framework.InstanceIterator" title="Link zu dieser Definition">#</a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="mi.framework.InstanceIterator.get_users">
+<em class="property"><span class="pre">async</span> <span class="pre">for</span> <span class="pre">...</span> <span class="pre">in</span> </em><span class="sig-name descname"><span class="pre">get_users</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">limit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sort</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'all'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">origin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'local'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hostname</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">get_all</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/framework/iterators.html#InstanceIterator.get_users"><span class="viewcode-link"><span class="pre">[Quellcode]</span></span></a><a class="headerlink" href="#mi.framework.InstanceIterator.get_users" title="Link zu dieser Definition">#</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameter</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>limit</strong> (<em>int</em>) – </p></li>
+<li><p><strong>offset</strong> (<em>int</em>) – </p></li>
+<li><p><strong>sort</strong> (<em>str</em>) – </p></li>
+<li><p><strong>state</strong> (<em>str</em>) – </p></li>
+<li><p><strong>origin</strong> (<em>str</em>) – </p></li>
+<li><p><strong>username</strong> (<em>str</em>) – </p></li>
+<li><p><strong>hostname</strong> (<em>str</em>) – </p></li>
+<li><p><strong>get_all</strong> (<em>bool</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Rückgabetyp</dt>
+<dd class="field-even"><p>Iterator[<a class="reference internal" href="#mi.framework.User" title="mi.framework.User">User</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+</dd></dl>
+</section>
+<section id="utils">
 <h2>Utils<a class="headerlink" href="#utils" title="Link zu dieser Überschrift">#</a></h2>
-<div class="section" id="get-emoji-list">
+<section id="get-emoji-list">
 <h3>get_emoji_list<a class="headerlink" href="#get-emoji-list" title="Link zu dieser Überschrift">#</a></h3>
-</div>
-<div class="section" id="emoji-count">
+</section>
+<section id="emoji-count">
 <h3>emoji_count<a class="headerlink" href="#emoji-count" title="Link zu dieser Überschrift">#</a></h3>
 <dl class="py function">
 <dt class="sig sig-object py" id="mi.utils.emoji_count">
@@ -2066,12 +2186,12 @@ Attributes</span><ul>
 </dd>
 </dl>
 </dd></dl>
-</div>
-<div class="section" id="check-multi-arg">
+</section>
+<section id="check-multi-arg">
 <h3>check_multi_arg<a class="headerlink" href="#check-multi-arg" title="Link zu dieser Überschrift">#</a></h3>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
         </article>
       </div>

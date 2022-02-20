@@ -4,7 +4,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="#" /><link rel="search" title="Search" href="search.html" />
 
-    <meta name="generator" content="sphinx-4.4.0, furo 2022.02.14.1"/><title>Index - Mi.py 3.9.9 documentation</title>
+    <meta name="generator" content="sphinx-4.4.0, furo 2022.02.14.1"/><title>Index - Mi.py 4.0.0 documentation</title>
 <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?digest=a8f031f701c6af50c9919b48f173a5785af06fac" />
     <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
@@ -121,7 +121,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="index.html"><div class="brand">Mi.py 3.9.9 documentation</div></a>
+      <a href="index.html"><div class="brand">Mi.py 4.0.0 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -251,6 +251,8 @@
         <li><a href="mi.html#mi.CommandRegistrationError">CommandRegistrationError (class in mi)</a>
 </li>
         <li><a href="mi.html#mi.wrapper.models.RawFile.comment">comment (mi.wrapper.models.RawFile attribute)</a>
+</li>
+        <li><a href="mi.html#mi.framework.ConnectionState">ConnectionState (class in mi.framework)</a>
 </li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
@@ -400,6 +402,8 @@
     <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="mi.html#mi.framework.User.get_profile">get_profile() (mi.framework.User method)</a>
 </li>
+        <li><a href="mi.html#mi.framework.InstanceIterator.get_users">get_users() (mi.framework.InstanceIterator method)</a>
+</li>
         <li><a href="mi.html#mi.wrapper.models.RawChat.group_id">group_id (mi.wrapper.models.RawChat attribute)</a>
 </li>
     </ul></td>
@@ -452,6 +456,8 @@
     <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="mi.html#mi.ImAi">ImAi (class in mi)</a>
 </li>
+        <li><a href="mi.html#mi.framework.InstanceIterator">InstanceIterator (class in mi.framework)</a>
+</li>
         <li><a href="mi.html#mi.types.InstancePayload">InstancePayload (class in mi.types)</a>
 </li>
         <li><a href="mi.html#mi.InternalServerError">InternalServerError (class in mi)</a>
@@ -490,11 +496,15 @@
     <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="mi.html#mi.wrapper.models.RawFile.md5">md5 (mi.wrapper.models.RawFile attribute)</a>
 </li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="mi.html#mi.wrapper.models.RawNote.media_ids">media_ids (mi.wrapper.models.RawNote attribute)</a>
 </li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="mi.html#mi.types.MetaPayload">MetaPayload (class in mi.types)</a>
+</li>
+        <li><a href="mi.html#mi.framework.MisskeyClientWebSocketResponse">MisskeyClientWebSocketResponse (class in mi.framework)</a>
+</li>
+        <li><a href="mi.html#mi.framework.MisskeyWebSocket">MisskeyWebSocket (class in mi.framework)</a>
 </li>
     </ul></td>
   </tr></table>
@@ -568,14 +578,42 @@
 </li>
         <li><a href="mi.html#mi.wrapper.models.RawFolder.parent_id">parent_id (mi.wrapper.models.RawFolder attribute)</a>
 </li>
+        <li><a href="mi.html#mi.framework.ConnectionState.parse_channel">parse_channel() (mi.framework.ConnectionState method)</a>
+</li>
+        <li><a href="mi.html#mi.framework.ConnectionState.parse_follow">parse_follow() (mi.framework.ConnectionState method)</a>
+</li>
+        <li><a href="mi.html#mi.framework.ConnectionState.parse_followed">parse_followed() (mi.framework.ConnectionState method)</a>
+</li>
+        <li><a href="mi.html#mi.framework.ConnectionState.parse_mention">parse_mention() (mi.framework.ConnectionState method)</a>
+</li>
+        <li><a href="mi.html#mi.framework.ConnectionState.parse_messaging_message">parse_messaging_message() (mi.framework.ConnectionState method)</a>
+</li>
+        <li><a href="mi.html#mi.framework.ConnectionState.parse_note">parse_note() (mi.framework.ConnectionState method)</a>
+</li>
+        <li><a href="mi.html#mi.framework.ConnectionState.parse_notification">parse_notification() (mi.framework.ConnectionState method)</a>
+</li>
+        <li><a href="mi.html#mi.framework.ConnectionState.parse_reaction">parse_reaction() (mi.framework.ConnectionState method)</a>
+</li>
+        <li><a href="mi.html#mi.framework.ConnectionState.parse_receive_follow_request">parse_receive_follow_request() (mi.framework.ConnectionState method)</a>
+</li>
+        <li><a href="mi.html#mi.framework.ConnectionState.parse_reply">parse_reply() (mi.framework.ConnectionState method)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="mi.html#mi.framework.ConnectionState.parse_signin">parse_signin() (mi.framework.ConnectionState method)</a>
+</li>
+        <li><a href="mi.html#mi.framework.ConnectionState.parse_unfollow">parse_unfollow() (mi.framework.ConnectionState method)</a>
+</li>
+        <li><a href="mi.html#mi.framework.ConnectionState.parse_unread_messaging_message">parse_unread_messaging_message() (mi.framework.ConnectionState method)</a>
+</li>
+        <li><a href="mi.html#mi.framework.ConnectionState.parse_unread_notification">parse_unread_notification() (mi.framework.ConnectionState method)</a>
+</li>
         <li><a href="mi.html#mi.types.PinnedNotePayload">PinnedNotePayload (class in mi.types)</a>
 </li>
         <li><a href="mi.html#mi.types.PinnedPagePayload">PinnedPagePayload (class in mi.types)</a>
 </li>
         <li><a href="mi.html#mi.wrapper.models.RawNote.poll">poll (mi.wrapper.models.RawNote attribute)</a>
 </li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="mi.html#mi.types.PollPayload">PollPayload (class in mi.types)</a>
 </li>
         <li><a href="mi.html#mi.wrapper.models.RawNote.preview">preview (mi.wrapper.models.RawNote attribute)</a>
@@ -670,8 +708,6 @@
           <li><a href="mi.html#mi.wrapper.models.RawRenote.reply_id">(mi.wrapper.models.RawRenote attribute)</a>
 </li>
         </ul></li>
-        <li><a href="mi.html#mi.Route">Route (class in mi)</a>
-</li>
     </ul></td>
   </tr></table>
 </section>

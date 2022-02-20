@@ -558,9 +558,11 @@ NotExistRequiredData
 Low-Level API
 -------------
 
+.. currentmodule:: mi.framework
+
 .. autoclass:: Route()
    :members:
-   
+
 .. autoclass:: HTTPClient()
    :members:
 
