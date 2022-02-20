@@ -243,6 +243,12 @@
 <h3>note<a class="headerlink" href="#note" title="Permalink to this headline">#</a></h3>
 <div class="py-attribute-table" data-move-to-id="mi.framework.Note"><div class="py-attribute-table-column">
 <span>
+Attributes</span><ul>
+<li class="py-attribute-table-entry">
+<a class="reference internal" href="#mi.framework.Note.action">action</a></li><li class="py-attribute-table-entry">
+<a class="reference internal" href="#mi.framework.Note.id">id</a></li></ul>
+</div><div class="py-attribute-table-column">
+<span>
 Methods</span><ul>
 <li class="py-attribute-table-entry">
 <span class="py-attribute-table-badge" title="method">
@@ -252,7 +258,30 @@ async</span><a class="reference internal" href="#mi.framework.Note.reply">reply<
 </div></div><dl class="py class">
 <dt class="sig sig-object py" id="mi.framework.Note">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.framework.</span></span><span class="sig-name descname"><span class="pre">Note</span></span><a class="reference internal" href="_modules/mi/framework/models/note.html#Note"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mi.framework.Note" title="Permalink to this definition">#</a></dt>
-<dd><dl class="py method">
+<dd><dl class="py property">
+<dt class="sig sig-object py" id="mi.framework.Note.id">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#mi.framework.Note.id" title="Permalink to this definition">#</a></dt>
+<dd><p>ユーザーのID</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>ユーザーのID</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="mi.framework.Note.action">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">action</span></span><a class="headerlink" href="#mi.framework.Note.action" title="Permalink to this definition">#</a></dt>
+<dd><p>ノートに対するアクション</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#mi.actions.NoteActions" title="mi.actions.NoteActions">NoteActions</a></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
 <dt class="sig sig-object py" id="mi.framework.Note.reply">
 <em class="property"><span class="pre">await</span> </em><span class="sig-name descname"><span class="pre">reply</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cw</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extract_mentions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extract_hashtags</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extract_emojis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">renote_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">poll</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/framework/models/note.html#Note.reply"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mi.framework.Note.reply" title="Permalink to this definition">#</a></dt>
 <dd><p>ノートに対して返信を送信します</p>

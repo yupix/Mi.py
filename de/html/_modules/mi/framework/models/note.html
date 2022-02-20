@@ -432,6 +432,14 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">id</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">"""</span>
+<span class="sd">        ユーザーのID</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        str</span>
+<span class="sd">            ユーザーのID</span>
+<span class="sd">        """</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__raw_data</span><span class="o">.</span><span class="n">id</span>
 
     <span class="nd">@property</span>
@@ -544,6 +552,13 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">action</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NoteActions</span><span class="p">:</span>
+        <span class="sd">"""</span>
+<span class="sd">        ノートに対するアクション</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        NoteActions</span>
+<span class="sd">        """</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__client</span><span class="o">.</span><span class="n">get_note_instance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
 
 <div class="viewcode-block" id="Note.reply"><a class="viewcode-back" href="../../../../mi.html#mi.framework.Note.reply">[Doku]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">reply</span><span class="p">(</span>
