@@ -23,6 +23,11 @@ Manuals
 
 - :doc:`mi`
 
+Meta
+----
+
+- :doc:`what_new`
+
 Recent Changes
 --------------
 

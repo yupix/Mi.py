@@ -629,7 +629,7 @@ Low-Layer API
 .. autoclass:: InstanceIterator()
    :members:
 
-Utils
+ユーティリティ関数
 -----
 
 .. currentmodule:: mi.utils
