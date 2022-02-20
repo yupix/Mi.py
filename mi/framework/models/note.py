@@ -245,6 +245,14 @@ class Note:
 
     @property
     def id(self) -> str:
+        """
+        ユーザーのID
+
+        Returns
+        -------
+        str
+            ユーザーのID
+        """
         return self.__raw_data.id
 
     @property
@@ -357,6 +365,13 @@ class Note:
 
     @property
     def action(self) -> NoteActions:
+        """
+        ノートに対するアクション
+
+        Returns
+        -------
+        NoteActions
+        """
         return self.__client.get_note_instance(self.id)
 
     async def reply(
