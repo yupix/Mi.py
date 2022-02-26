@@ -17,6 +17,10 @@ jobs:
       - python setup.py sdist
     useTTY: false
     condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
+  - !PublishArtifactStep
+    name: publish
+    artifacts: dist/**
+    condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
   triggers:
   - !BranchUpdateTrigger {}
   retryCondition: never
