@@ -60,6 +60,9 @@ jobs:
     name: publish
     artifacts: dist/**
     condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
+  triggers:
+  - !BranchUpdateTrigger
+    branches: master
   retryCondition: never
   maxRetries: 3
   retryDelay: 30
@@ -97,6 +100,9 @@ jobs:
     name: publish
     artifacts: dist/**
     condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
+  triggers:
+  - !BranchUpdateTrigger
+    branches: master
   retryCondition: never
   maxRetries: 3
   retryDelay: 30
