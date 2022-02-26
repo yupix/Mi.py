@@ -67,6 +67,7 @@ jobs:
   memoryRequirement: 256
   timeout: 3600
 - name: production-build(aarch64)
+  jobExecutor: host-arm64
   steps:
   - !CheckoutStep
     name: checkout
