@@ -29,7 +29,7 @@ jobs:
   cpuRequirement: 500
   memoryRequirement: 256
   timeout: 3600
-- name: production-build(3.9.*) amd64
+- name: production-build(amd64)
   jobExecutor: amd64
   steps:
   - !CheckoutStep
@@ -39,12 +39,57 @@ jobs:
     withSubmodules: false
     condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
   - !CommandStep
-    name: build
+    name: build python3.9.*
     runInContainer: true
     image: quay.io/pypa/manylinux2014_x86_64
     interpreter: !DefaultInterpreter
       commands:
       - /opt/python/cp39-cp39/bin/python3.9 setup.py sdist bdist_wheel
+    useTTY: false
+    condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
+  - !CommandStep
+    name: build python3.10.*
+    runInContainer: true
+    image: quay.io/pypa/manylinux2014_x86_64
+    interpreter: !DefaultInterpreter
+      commands:
+      - /opt/python/cp310-cp310/bin/python3.10 setup.py sdist bdist_wheel
+    useTTY: false
+    condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
+  - !PublishArtifactStep
+    name: publish
+    artifacts: dist/**
+    condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
+  retryCondition: never
+  maxRetries: 3
+  retryDelay: 30
+  cpuRequirement: 500
+  memoryRequirement: 256
+  timeout: 3600
+- name: production-build(aarch64)
+  steps:
+  - !CheckoutStep
+    name: checkout
+    cloneCredential: !DefaultCredential {}
+    withLfs: false
+    withSubmodules: false
+    condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
+  - !CommandStep
+    name: build python3.9.*
+    runInContainer: true
+    image: quay.io/pypa/manylinux2014_x86_64
+    interpreter: !DefaultInterpreter
+      commands:
+      - /opt/python/cp39-cp39/bin/python3.9 setup.py sdist bdist_wheel
+    useTTY: false
+    condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
+  - !CommandStep
+    name: build python3.10.*
+    runInContainer: true
+    image: quay.io/pypa/manylinux2014_x86_64
+    interpreter: !DefaultInterpreter
+      commands:
+      - /opt/python/cp310-cp310/bin/python3.10 setup.py sdist bdist_wheel
     useTTY: false
     condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
   - !PublishArtifactStep
