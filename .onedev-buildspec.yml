@@ -40,7 +40,7 @@ jobs:
   - !CommandStep
     name: build
     runInContainer: true
-    image: quay.io/pypa/manylinux2014_x86_64
+    image: quay.io/pypa/manylinux2014_aarch64
     interpreter: !DefaultInterpreter
       commands:
       - /opt/python/cp39-cp39/bin/python3.9 setup sdist bdist_wheel
