@@ -2,7 +2,6 @@
 mi.types
 """
 
-from .bot import *
 from .chat import *
 from .drive import *
 from .emoji import *
