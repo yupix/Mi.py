@@ -125,10 +125,10 @@ jobs:
       commands:
       - cd ./docs
       - apt update
-      - apt install make
+      - apt install make git -y
       - pip install -r requirements.txt
       - ./doc_builder.sh
-    useTTY: false
+    useTTY: true
     condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
   - !PublishArtifactStep
     name: publish
