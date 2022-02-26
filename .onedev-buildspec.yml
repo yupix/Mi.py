@@ -124,6 +124,8 @@ jobs:
     interpreter: !DefaultInterpreter
       commands:
       - cd ./docs
+      - apt update
+      - apt install make
       - pip install -r requirements.txt
       - ./doc_builder.sh
     useTTY: false
