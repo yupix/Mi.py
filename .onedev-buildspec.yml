@@ -29,7 +29,8 @@ jobs:
   cpuRequirement: 500
   memoryRequirement: 256
   timeout: 3600
-- name: production-build(3.9.*)
+- name: production-build(3.9.*) amd64
+  jobExecutor: amd64
   steps:
   - !CheckoutStep
     name: checkout
@@ -40,7 +41,7 @@ jobs:
   - !CommandStep
     name: build
     runInContainer: true
-    image: quay.io/pypa/manylinux2014_aarch64
+    image: quay.io/pypa/manylinux2014_x86_64
     interpreter: !DefaultInterpreter
       commands:
       - /opt/python/cp39-cp39/bin/python3.9 setup.py sdist bdist_wheel
