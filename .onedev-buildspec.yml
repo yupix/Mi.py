@@ -43,7 +43,7 @@ jobs:
     image: quay.io/pypa/manylinux2014_aarch64
     interpreter: !DefaultInterpreter
       commands:
-      - /opt/python/cp39-cp39/bin/python3.9 setup sdist bdist_wheel
+      - /opt/python/cp39-cp39/bin/python3.9 setup.py sdist bdist_wheel
     useTTY: false
     condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
   - !PublishArtifactStep
