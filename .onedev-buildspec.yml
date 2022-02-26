@@ -29,3 +29,30 @@ jobs:
   cpuRequirement: 500
   memoryRequirement: 256
   timeout: 3600
+- name: production-build(3.9.*)
+  steps:
+  - !CheckoutStep
+    name: checkout
+    cloneCredential: !DefaultCredential {}
+    withLfs: false
+    withSubmodules: false
+    condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
+  - !CommandStep
+    name: build
+    runInContainer: true
+    image: quay.io/pypa/manylinux2014_x86_64
+    interpreter: !DefaultInterpreter
+      commands:
+      - /opt/python/cp39-cp39/bin/python3.9 setup sdist bdist_wheel
+    useTTY: false
+    condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
+  - !PublishArtifactStep
+    name: publish
+    artifacts: dist/**
+    condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
+  retryCondition: never
+  maxRetries: 3
+  retryDelay: 30
+  cpuRequirement: 500
+  memoryRequirement: 256
+  timeout: 3600
