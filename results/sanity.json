@@ -1,0 +1,737 @@
+{"version":"3","listProblem":[{
+  "tool": "Code Inspection",
+  "category": "Python",
+  "type": "Unresolved references",
+  "tags": [
+    "Python",
+    "Sanity"
+  ],
+  "severity": "Critical",
+  "comment": "Unresolved reference 'aiohttp'",
+  "detailsInfo": "Reports references in your code that cannot be resolved.\n\nIn a dynamically typed language, this is possible in a limited number of cases.\n\nIf a reference type is unknown, then its attributes are not highlighted as unresolved even if you know that they should be:\n\n```\ndef print_string(s):\n  print(s.abc())\n```\n\nIn this code fragment `s` is always a string and `abc` should be highlighted as unresolved. However, `s`\ntype is inferred as `Any` and no warning is reported.\n\nThe IDE provides quick-fix actions to add missing references on-the-fly.",
+  "sources": [
+    {
+      "type": "file",
+      "path": "mi/abc/ext/bot.py",
+      "language": "Python",
+      "line": 6,
+      "offset": 5,
+      "length": 7,
+      "code": {
+        "startLine": 4,
+        "length": 7,
+        "offset": 73,
+        "surroundingCode": "from typing import Any, Callable, Coroutine, Dict, Optional, Tuple\n\nfrom aiohttp.client_ws import ClientWebSocketResponse\n\n"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "project",
+    "inspectionName": "PyUnresolvedReferencesInspection"
+  },
+  "hash": "-523767536775350413"
+},{
+  "tool": "Code Inspection",
+  "category": "Python",
+  "type": "Unresolved references",
+  "tags": [
+    "Python",
+    "Sanity"
+  ],
+  "severity": "Critical",
+  "comment": "Unresolved reference 'ClientWebSocketResponse'",
+  "detailsInfo": "Reports references in your code that cannot be resolved.\n\nIn a dynamically typed language, this is possible in a limited number of cases.\n\nIf a reference type is unknown, then its attributes are not highlighted as unresolved even if you know that they should be:\n\n```\ndef print_string(s):\n  print(s.abc())\n```\n\nIn this code fragment `s` is always a string and `abc` should be highlighted as unresolved. However, `s`\ntype is inferred as `Any` and no warning is reported.\n\nThe IDE provides quick-fix actions to add missing references on-the-fly.",
+  "sources": [
+    {
+      "type": "file",
+      "path": "mi/abc/ext/bot.py",
+      "language": "Python",
+      "line": 6,
+      "offset": 30,
+      "length": 23,
+      "code": {
+        "startLine": 4,
+        "length": 23,
+        "offset": 98,
+        "surroundingCode": "from typing import Any, Callable, Coroutine, Dict, Optional, Tuple\n\nfrom aiohttp.client_ws import ClientWebSocketResponse\n\n\nclass AbstractBotBase:\n    @abstractmethod\n    async def _on_message(self, message):"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "project",
+    "inspectionName": "PyUnresolvedReferencesInspection"
+  },
+  "hash": "-8925984524421530831"
+},{
+  "tool": "Code Inspection",
+  "category": "Python",
+  "type": "Unresolved references",
+  "tags": [
+    "Python",
+    "Sanity"
+  ],
+  "severity": "Critical",
+  "comment": "Unresolved reference 'aiohttp'",
+  "detailsInfo": "Reports references in your code that cannot be resolved.\n\nIn a dynamically typed language, this is possible in a limited number of cases.\n\nIf a reference type is unknown, then its attributes are not highlighted as unresolved even if you know that they should be:\n\n```\ndef print_string(s):\n  print(s.abc())\n```\n\nIn this code fragment `s` is always a string and `abc` should be highlighted as unresolved. However, `s`\ntype is inferred as `Any` and no warning is reported.\n\nThe IDE provides quick-fix actions to add missing references on-the-fly.",
+  "sources": [
+    {
+      "type": "file",
+      "path": "mi/ext/commands/bot.py",
+      "language": "Python",
+      "line": 30,
+      "offset": 9,
+      "length": 7,
+      "code": {
+        "startLine": 28,
+        "length": 7,
+        "offset": 28,
+        "surroundingCode": "\nif TYPE_CHECKING:\n    from aiohttp.client_ws import ClientWebSocketResponse\n    from mi.ext import Cog\n"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "project",
+    "inspectionName": "PyUnresolvedReferencesInspection"
+  },
+  "hash": "4713724928608407616"
+},{
+  "tool": "Code Inspection",
+  "category": "Python",
+  "type": "Unresolved references",
+  "tags": [
+    "Python",
+    "Sanity"
+  ],
+  "severity": "Critical",
+  "comment": "Module 'ClientWebSocketResponse' not found",
+  "detailsInfo": "Reports references in your code that cannot be resolved.\n\nIn a dynamically typed language, this is possible in a limited number of cases.\n\nIf a reference type is unknown, then its attributes are not highlighted as unresolved even if you know that they should be:\n\n```\ndef print_string(s):\n  print(s.abc())\n```\n\nIn this code fragment `s` is always a string and `abc` should be highlighted as unresolved. However, `s`\ntype is inferred as `Any` and no warning is reported.\n\nThe IDE provides quick-fix actions to add missing references on-the-fly.",
+  "sources": [
+    {
+      "type": "file",
+      "path": "mi/ext/commands/bot.py",
+      "language": "Python",
+      "line": 30,
+      "offset": 34,
+      "length": 23,
+      "code": {
+        "startLine": 28,
+        "length": 23,
+        "offset": 53,
+        "surroundingCode": "\nif TYPE_CHECKING:\n    from aiohttp.client_ws import ClientWebSocketResponse\n    from mi.ext import Cog\n\n__all__ = [\"BotBase\", \"Bot\"]"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "project",
+    "inspectionName": "PyUnresolvedReferencesInspection"
+  },
+  "hash": "6512283300514251405"
+},{
+  "tool": "Code Inspection",
+  "category": "Python",
+  "type": "Unresolved references",
+  "tags": [
+    "Python",
+    "Sanity"
+  ],
+  "severity": "Critical",
+  "comment": "Unresolved attribute reference '_eject' for class 'Cog'",
+  "detailsInfo": "Reports references in your code that cannot be resolved.\n\nIn a dynamically typed language, this is possible in a limited number of cases.\n\nIf a reference type is unknown, then its attributes are not highlighted as unresolved even if you know that they should be:\n\n```\ndef print_string(s):\n  print(s.abc())\n```\n\nIn this code fragment `s` is always a string and `abc` should be highlighted as unresolved. However, `s`\ntype is inferred as `Any` and no warning is reported.\n\nThe IDE provides quick-fix actions to add missing references on-the-fly.",
+  "sources": [
+    {
+      "type": "file",
+      "path": "mi/ext/commands/bot.py",
+      "language": "Python",
+      "line": 152,
+      "offset": 12,
+      "length": 6,
+      "code": {
+        "startLine": 150,
+        "length": 6,
+        "offset": 32,
+        "surroundingCode": "            return\n\n        cog._eject(self)\n\n        return cog"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "project",
+    "inspectionName": "PyUnresolvedReferencesInspection"
+  },
+  "hash": "3043035599179718227"
+},{
+  "tool": "Code Inspection",
+  "category": "Python",
+  "type": "Unresolved references",
+  "tags": [
+    "Python",
+    "Sanity"
+  ],
+  "severity": "Critical",
+  "comment": "Unresolved attribute reference 'setup' for class 'ModuleType'",
+  "detailsInfo": "Reports references in your code that cannot be resolved.\n\nIn a dynamically typed language, this is possible in a limited number of cases.\n\nIf a reference type is unknown, then its attributes are not highlighted as unresolved even if you know that they should be:\n\n```\ndef print_string(s):\n  print(s.abc())\n```\n\nIn this code fragment `s` is always a string and `abc` should be highlighted as unresolved. However, `s`\ntype is inferred as `Any` and no warning is reported.\n\nThe IDE provides quick-fix actions to add missing references on-the-fly.",
+  "sources": [
+    {
+      "type": "file",
+      "path": "mi/ext/commands/bot.py",
+      "language": "Python",
+      "line": 158,
+      "offset": 25,
+      "length": 5,
+      "code": {
+        "startLine": 156,
+        "length": 5,
+        "offset": 107,
+        "surroundingCode": "    def _load_from_module(self, spec: ModuleType, key: str) -> None:\n        try:\n            setup = spec.setup\n        except AttributeError:\n            raise NoEntryPointError(f\"{key} にsetupが存在しません\")\n"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "project",
+    "inspectionName": "PyUnresolvedReferencesInspection"
+  },
+  "hash": "4141399788285372460"
+},{
+  "tool": "Code Inspection",
+  "category": "Python",
+  "type": "Unresolved references",
+  "tags": [
+    "Python",
+    "Sanity"
+  ],
+  "severity": "Critical",
+  "comment": "Class '(Any)' does not define '__setitem__', so the '[]' operator cannot be used on its instances",
+  "detailsInfo": "Reports references in your code that cannot be resolved.\n\nIn a dynamically typed language, this is possible in a limited number of cases.\n\nIf a reference type is unknown, then its attributes are not highlighted as unresolved even if you know that they should be:\n\n```\ndef print_string(s):\n  print(s.abc())\n```\n\nIn this code fragment `s` is always a string and `abc` should be highlighted as unresolved. However, `s`\ntype is inferred as `Any` and no warning is reported.\n\nThe IDE provides quick-fix actions to add missing references on-the-fly.",
+  "sources": [
+    {
+      "type": "file",
+      "path": "mi/ext/commands/cog.py",
+      "language": "Python",
+      "line": 18,
+      "offset": 13,
+      "length": 1,
+      "code": {
+        "startLine": 16,
+        "length": 1,
+        "offset": 114,
+        "surroundingCode": "    def __new__(cls, *args: Tuple[Any], **kwargs: Dict[str, Any]):\n        name, bases, attrs = args\n        attrs['__cog_name__'] = kwargs.pop(\"name\", name)\n        attrs['__cog_settings__'] = kwargs.pop(\"command_attrs\", {})\n        listeners = {}"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "project",
+    "inspectionName": "PyUnresolvedReferencesInspection"
+  },
+  "hash": "-941940068907790138"
+},{
+  "tool": "Code Inspection",
+  "category": "Python",
+  "type": "Unresolved references",
+  "tags": [
+    "Python",
+    "Sanity"
+  ],
+  "severity": "Critical",
+  "comment": "Class '(Any)' does not define '__setitem__', so the '[]' operator cannot be used on its instances",
+  "detailsInfo": "Reports references in your code that cannot be resolved.\n\nIn a dynamically typed language, this is possible in a limited number of cases.\n\nIf a reference type is unknown, then its attributes are not highlighted as unresolved even if you know that they should be:\n\n```\ndef print_string(s):\n  print(s.abc())\n```\n\nIn this code fragment `s` is always a string and `abc` should be highlighted as unresolved. However, `s`\ntype is inferred as `Any` and no warning is reported.\n\nThe IDE provides quick-fix actions to add missing references on-the-fly.",
+  "sources": [
+    {
+      "type": "file",
+      "path": "mi/ext/commands/cog.py",
+      "language": "Python",
+      "line": 19,
+      "offset": 13,
+      "length": 1,
+      "code": {
+        "startLine": 17,
+        "length": 1,
+        "offset": 104,
+        "surroundingCode": "        name, bases, attrs = args\n        attrs['__cog_name__'] = kwargs.pop(\"name\", name)\n        attrs['__cog_settings__'] = kwargs.pop(\"command_attrs\", {})\n        listeners = {}\n        commands = {}"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "project",
+    "inspectionName": "PyUnresolvedReferencesInspection"
+  },
+  "hash": "-5299777050972097054"
+},{
+  "tool": "Code Inspection",
+  "category": "Python",
+  "type": "Unresolved references",
+  "tags": [
+    "Python",
+    "Sanity"
+  ],
+  "severity": "Critical",
+  "comment": "Function 'add_clips' does not have a parameter '追加したいノートのID'",
+  "detailsInfo": "Reports references in your code that cannot be resolved.\n\nIn a dynamically typed language, this is possible in a limited number of cases.\n\nIf a reference type is unknown, then its attributes are not highlighted as unresolved even if you know that they should be:\n\n```\ndef print_string(s):\n  print(s.abc())\n```\n\nIn this code fragment `s` is always a string and `abc` should be highlighted as unresolved. However, `s`\ntype is inferred as `Any` and no warning is reported.\n\nThe IDE provides quick-fix actions to add missing references on-the-fly.",
+  "sources": [
+    {
+      "type": "file",
+      "path": "mi/actions/note.py",
+      "language": "Python",
+      "line": 31,
+      "offset": 12,
+      "length": 11,
+      "code": {
+        "startLine": 29,
+        "length": 11,
+        "offset": 76,
+        "surroundingCode": "            クリップのID\n        note_id Optional[str], default=None\n            追加したいノートのID\n\n        Returns\n        -------\n        bool"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "project",
+    "inspectionName": "PyUnresolvedReferencesInspection"
+  },
+  "hash": "1226734765245034302"
+},{
+  "tool": "Code Inspection",
+  "category": "Python",
+  "type": "Unresolved references",
+  "tags": [
+    "Python",
+    "Sanity"
+  ],
+  "severity": "Critical",
+  "comment": "Unresolved reference 'aiocache'",
+  "detailsInfo": "Reports references in your code that cannot be resolved.\n\nIn a dynamically typed language, this is possible in a limited number of cases.\n\nIf a reference type is unknown, then its attributes are not highlighted as unresolved even if you know that they should be:\n\n```\ndef print_string(s):\n  print(s.abc())\n```\n\nIn this code fragment `s` is always a string and `abc` should be highlighted as unresolved. However, `s`\ntype is inferred as `Any` and no warning is reported.\n\nThe IDE provides quick-fix actions to add missing references on-the-fly.",
+  "sources": [
+    {
+      "type": "file",
+      "path": "mi/actions/user.py",
+      "language": "Python",
+      "line": 5,
+      "offset": 5,
+      "length": 8,
+      "code": {
+        "startLine": 3,
+        "length": 8,
+        "offset": 55,
+        "surroundingCode": "from typing import List, Optional, TYPE_CHECKING\n\nfrom aiocache import Cache, cached\n\nfrom mi.exception import NotExistRequiredData, NotExistRequiredParameters"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "project",
+    "inspectionName": "PyUnresolvedReferencesInspection"
+  },
+  "hash": "1447156743443459619"
+},{
+  "tool": "Code Inspection",
+  "category": "Python",
+  "type": "Unresolved references",
+  "tags": [
+    "Python",
+    "Sanity"
+  ],
+  "severity": "Critical",
+  "comment": "Unresolved reference 'Cache'",
+  "detailsInfo": "Reports references in your code that cannot be resolved.\n\nIn a dynamically typed language, this is possible in a limited number of cases.\n\nIf a reference type is unknown, then its attributes are not highlighted as unresolved even if you know that they should be:\n\n```\ndef print_string(s):\n  print(s.abc())\n```\n\nIn this code fragment `s` is always a string and `abc` should be highlighted as unresolved. However, `s`\ntype is inferred as `Any` and no warning is reported.\n\nThe IDE provides quick-fix actions to add missing references on-the-fly.",
+  "sources": [
+    {
+      "type": "file",
+      "path": "mi/actions/user.py",
+      "language": "Python",
+      "line": 5,
+      "offset": 21,
+      "length": 5,
+      "code": {
+        "startLine": 3,
+        "length": 5,
+        "offset": 71,
+        "surroundingCode": "from typing import List, Optional, TYPE_CHECKING\n\nfrom aiocache import Cache, cached\n\nfrom mi.exception import NotExistRequiredData, NotExistRequiredParameters"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "project",
+    "inspectionName": "PyUnresolvedReferencesInspection"
+  },
+  "hash": "2148743572935639558"
+},{
+  "tool": "Code Inspection",
+  "category": "Python",
+  "type": "Unresolved references",
+  "tags": [
+    "Python",
+    "Sanity"
+  ],
+  "severity": "Critical",
+  "comment": "Unresolved reference 'cached'",
+  "detailsInfo": "Reports references in your code that cannot be resolved.\n\nIn a dynamically typed language, this is possible in a limited number of cases.\n\nIf a reference type is unknown, then its attributes are not highlighted as unresolved even if you know that they should be:\n\n```\ndef print_string(s):\n  print(s.abc())\n```\n\nIn this code fragment `s` is always a string and `abc` should be highlighted as unresolved. However, `s`\ntype is inferred as `Any` and no warning is reported.\n\nThe IDE provides quick-fix actions to add missing references on-the-fly.",
+  "sources": [
+    {
+      "type": "file",
+      "path": "mi/actions/user.py",
+      "language": "Python",
+      "line": 5,
+      "offset": 28,
+      "length": 6,
+      "code": {
+        "startLine": 3,
+        "length": 6,
+        "offset": 78,
+        "surroundingCode": "from typing import List, Optional, TYPE_CHECKING\n\nfrom aiocache import Cache, cached\n\nfrom mi.exception import NotExistRequiredData, NotExistRequiredParameters\nfrom mi.framework.http import HTTPSession, Route\nfrom mi.framework.models.note import Note"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "project",
+    "inspectionName": "PyUnresolvedReferencesInspection"
+  },
+  "hash": "3251488705790448619"
+},{
+  "tool": "Code Inspection",
+  "category": "Python",
+  "type": "Unresolved references",
+  "tags": [
+    "Python",
+    "Sanity"
+  ],
+  "severity": "Critical",
+  "comment": "Unresolved attribute reference 'client' for class 'ClientActions'",
+  "detailsInfo": "Reports references in your code that cannot be resolved.\n\nIn a dynamically typed language, this is possible in a limited number of cases.\n\nIf a reference type is unknown, then its attributes are not highlighted as unresolved even if you know that they should be:\n\n```\ndef print_string(s):\n  print(s.abc())\n```\n\nIn this code fragment `s` is always a string and `abc` should be highlighted as unresolved. However, `s`\ntype is inferred as `Any` and no warning is reported.\n\nThe IDE provides quick-fix actions to add missing references on-the-fly.",
+  "sources": [
+    {
+      "type": "file",
+      "path": "mi/wrapper/follow.py",
+      "language": "Python",
+      "line": 85,
+      "offset": 58,
+      "length": 6,
+      "code": {
+        "startLine": 83,
+        "length": 6,
+        "offset": 103,
+        "surroundingCode": "        user_id = user_id or self.__user_id\n\n        return await mi.framework.manager.ClientActions().client.get_user(user_id)\n\n    async def accept(self, user_id: Optional[str] = None) -> bool:"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "project",
+    "inspectionName": "PyUnresolvedReferencesInspection"
+  },
+  "hash": "2120395066966846813"
+},{
+  "tool": "Code Inspection",
+  "category": "Python",
+  "type": "Unresolved references",
+  "tags": [
+    "Python",
+    "Sanity"
+  ],
+  "severity": "Critical",
+  "comment": "No module named 'emoji'",
+  "detailsInfo": "Reports references in your code that cannot be resolved.\n\nIn a dynamically typed language, this is possible in a limited number of cases.\n\nIf a reference type is unknown, then its attributes are not highlighted as unresolved even if you know that they should be:\n\n```\ndef print_string(s):\n  print(s.abc())\n```\n\nIn this code fragment `s` is always a string and `abc` should be highlighted as unresolved. However, `s`\ntype is inferred as `Any` and no warning is reported.\n\nThe IDE provides quick-fix actions to add missing references on-the-fly.",
+  "sources": [
+    {
+      "type": "file",
+      "path": "mi/utils.py",
+      "language": "Python",
+      "line": 13,
+      "offset": 7,
+      "length": 5,
+      "code": {
+        "startLine": 11,
+        "length": 5,
+        "offset": 97,
+        "surroundingCode": "from typing import Any, Callable, Dict, Iterable, List, Optional, TYPE_CHECKING, TypeVar\n\nimport emoji\n\nfrom mi import config\nfrom mi.types.util import EmojiList\n"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "project",
+    "inspectionName": "PyUnresolvedReferencesInspection"
+  },
+  "hash": "-1063700605360723832"
+},{
+  "tool": "Code Inspection",
+  "category": "Python",
+  "type": "Unresolved references",
+  "tags": [
+    "Python",
+    "Sanity"
+  ],
+  "severity": "Critical",
+  "comment": "Unresolved attribute reference '_state' for class 'Follow'",
+  "detailsInfo": "Reports references in your code that cannot be resolved.\n\nIn a dynamically typed language, this is possible in a limited number of cases.\n\nIf a reference type is unknown, then its attributes are not highlighted as unresolved even if you know that they should be:\n\n```\ndef print_string(s):\n  print(s.abc())\n```\n\nIn this code fragment `s` is always a string and `abc` should be highlighted as unresolved. However, `s`\ntype is inferred as `Any` and no warning is reported.\n\nThe IDE provides quick-fix actions to add missing references on-the-fly.",
+  "sources": [
+    {
+      "type": "file",
+      "path": "mi/framework/models/note.py",
+      "language": "Python",
+      "line": 45,
+      "offset": 26,
+      "length": 6,
+      "code": {
+        "startLine": 43,
+        "length": 6,
+        "offset": 102,
+        "surroundingCode": "        if self.id:\n            raise NotExistRequiredData('user_idがありません')\n        return await self._state.user.follow.add(user_id=self.id)\n\n    async def unfollow(self, user_id: Optional[str] = None) -> bool:"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "project",
+    "inspectionName": "PyUnresolvedReferencesInspection"
+  },
+  "hash": "-4151340566681926453"
+},{
+  "tool": "Code Inspection",
+  "category": "Python",
+  "type": "Unresolved references",
+  "tags": [
+    "Python",
+    "Sanity"
+  ],
+  "severity": "Critical",
+  "comment": "Unresolved attribute reference '_state' for class 'Follow'",
+  "detailsInfo": "Reports references in your code that cannot be resolved.\n\nIn a dynamically typed language, this is possible in a limited number of cases.\n\nIf a reference type is unknown, then its attributes are not highlighted as unresolved even if you know that they should be:\n\n```\ndef print_string(s):\n  print(s.abc())\n```\n\nIn this code fragment `s` is always a string and `abc` should be highlighted as unresolved. However, `s`\ntype is inferred as `Any` and no warning is reported.\n\nThe IDE provides quick-fix actions to add missing references on-the-fly.",
+  "sources": [
+    {
+      "type": "file",
+      "path": "mi/framework/models/note.py",
+      "language": "Python",
+      "line": 64,
+      "offset": 26,
+      "length": 6,
+      "code": {
+        "startLine": 62,
+        "length": 6,
+        "offset": 89,
+        "surroundingCode": "        if user_id is None:\n            user_id = self.user.id\n        return await self._state.user.follow.remove(user_id)\n\n"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "project",
+    "inspectionName": "PyUnresolvedReferencesInspection"
+  },
+  "hash": "7804143749205487171"
+},{
+  "tool": "Code Inspection",
+  "category": "Python",
+  "type": "Unresolved references",
+  "tags": [
+    "Python",
+    "Sanity"
+  ],
+  "severity": "Critical",
+  "comment": "Unresolved attribute reference 'get_user' for class 'ClientActions'",
+  "detailsInfo": "Reports references in your code that cannot be resolved.\n\nIn a dynamically typed language, this is possible in a limited number of cases.\n\nIf a reference type is unknown, then its attributes are not highlighted as unresolved even if you know that they should be:\n\n```\ndef print_string(s):\n  print(s.abc())\n```\n\nIn this code fragment `s` is always a string and `abc` should be highlighted as unresolved. However, `s`\ntype is inferred as `Any` and no warning is reported.\n\nThe IDE provides quick-fix actions to add missing references on-the-fly.",
+  "sources": [
+    {
+      "type": "file",
+      "path": "mi/framework/models/user.py",
+      "language": "Python",
+      "line": 286,
+      "offset": 35,
+      "length": 8,
+      "code": {
+        "startLine": 284,
+        "length": 8,
+        "offset": 77,
+        "surroundingCode": "            ユーザーのプロフィールオブジェクト\n        \"\"\"\n        return await self.__client.get_user(user_id=self.__raw_user.id, username=self.__raw_user.name,\n                                           host=self.__raw_user.host)\n"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "project",
+    "inspectionName": "PyUnresolvedReferencesInspection"
+  },
+  "hash": "7189687713334612979"
+},{
+  "tool": "Code Inspection",
+  "category": "Python",
+  "type": "Unresolved references",
+  "tags": [
+    "Python",
+    "Sanity"
+  ],
+  "severity": "Critical",
+  "comment": "Unresolved attribute reference '__state' for class 'User'",
+  "detailsInfo": "Reports references in your code that cannot be resolved.\n\nIn a dynamically typed language, this is possible in a limited number of cases.\n\nIf a reference type is unknown, then its attributes are not highlighted as unresolved even if you know that they should be:\n\n```\ndef print_string(s):\n  print(s.abc())\n```\n\nIn this code fragment `s` is always a string and `abc` should be highlighted as unresolved. However, `s`\ntype is inferred as `Any` and no warning is reported.\n\nThe IDE provides quick-fix actions to add missing references on-the-fly.",
+  "sources": [
+    {
+      "type": "file",
+      "path": "mi/framework/models/user.py",
+      "language": "Python",
+      "line": 309,
+      "offset": 20,
+      "length": 7,
+      "code": {
+        "startLine": 307,
+        "length": 7,
+        "offset": 39,
+        "surroundingCode": "\n        # TODO:治す\n        return self.__state.get_followers(username=self.__raw_user.name, host=self.__raw_user.host, until_id=until_id,\n                                          limit=limit,\n                                          get_all=get_all)"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "project",
+    "inspectionName": "PyUnresolvedReferencesInspection"
+  },
+  "hash": "1585386906170750207"
+},{
+  "tool": "Code Inspection",
+  "category": "Python",
+  "type": "Unresolved references",
+  "tags": [
+    "Python",
+    "Sanity"
+  ],
+  "severity": "Critical",
+  "comment": "Unresolved attribute reference 'emoji' for class 'ClientActions'",
+  "detailsInfo": "Reports references in your code that cannot be resolved.\n\nIn a dynamically typed language, this is possible in a limited number of cases.\n\nIf a reference type is unknown, then its attributes are not highlighted as unresolved even if you know that they should be:\n\n```\ndef print_string(s):\n  print(s.abc())\n```\n\nIn this code fragment `s` is always a string and `abc` should be highlighted as unresolved. However, `s`\ntype is inferred as `Any` and no warning is reported.\n\nThe IDE provides quick-fix actions to add missing references on-the-fly.",
+  "sources": [
+    {
+      "type": "file",
+      "path": "mi/framework/models/emoji.py",
+      "language": "Python",
+      "line": 39,
+      "offset": 52,
+      "length": 5,
+      "code": {
+        "startLine": 37,
+        "length": 5,
+        "offset": 88,
+        "surroundingCode": "    @property\n    def action(self):\n        return mi.framework.manager.ClientActions().emoji"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "project",
+    "inspectionName": "PyUnresolvedReferencesInspection"
+  },
+  "hash": "-4590433084222576376"
+},{
+  "tool": "Code Inspection",
+  "category": "Python",
+  "type": "Unresolved references",
+  "tags": [
+    "Python",
+    "Sanity"
+  ],
+  "severity": "Critical",
+  "comment": "Unresolved attribute reference 'get_users' for class 'ClientActions'",
+  "detailsInfo": "Reports references in your code that cannot be resolved.\n\nIn a dynamically typed language, this is possible in a limited number of cases.\n\nIf a reference type is unknown, then its attributes are not highlighted as unresolved even if you know that they should be:\n\n```\ndef print_string(s):\n  print(s.abc())\n```\n\nIn this code fragment `s` is always a string and `abc` should be highlighted as unresolved. However, `s`\ntype is inferred as `Any` and no warning is reported.\n\nThe IDE provides quick-fix actions to add missing references on-the-fly.",
+  "sources": [
+    {
+      "type": "file",
+      "path": "mi/framework/models/instance.py",
+      "language": "Python",
+      "line": 126,
+      "offset": 29,
+      "length": 9,
+      "code": {
+        "startLine": 124,
+        "length": 9,
+        "offset": 69,
+        "surroundingCode": "        AsyncIterator[User]\n        \"\"\"\n        return self.__client.get_users(limit=limit, offset=offset, sort=sort, state=state, origin=origin, username=username,\n                                       hostname=hostname, get_all=get_all)"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "project",
+    "inspectionName": "PyUnresolvedReferencesInspection"
+  },
+  "hash": "-8806212325091842258"
+},{
+  "tool": "Code Inspection",
+  "category": "Python",
+  "type": "Unresolved references",
+  "tags": [
+    "Python",
+    "Sanity"
+  ],
+  "severity": "Critical",
+  "comment": "No module named 'aiohttp'",
+  "detailsInfo": "Reports references in your code that cannot be resolved.\n\nIn a dynamically typed language, this is possible in a limited number of cases.\n\nIf a reference type is unknown, then its attributes are not highlighted as unresolved even if you know that they should be:\n\n```\ndef print_string(s):\n  print(s.abc())\n```\n\nIn this code fragment `s` is always a string and `abc` should be highlighted as unresolved. However, `s`\ntype is inferred as `Any` and no warning is reported.\n\nThe IDE provides quick-fix actions to add missing references on-the-fly.",
+  "sources": [
+    {
+      "type": "file",
+      "path": "mi/framework/http.py",
+      "language": "Python",
+      "line": 7,
+      "offset": 7,
+      "length": 7,
+      "code": {
+        "startLine": 5,
+        "length": 7,
+        "offset": 47,
+        "surroundingCode": "from typing import Any, Dict, Optional\n\nimport aiohttp\n\nfrom mi import __version__, exception\nfrom mi.framework.gateway import MisskeyClientWebSocketResponse\nfrom mi.framework.router import Route"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "project",
+    "inspectionName": "PyUnresolvedReferencesInspection"
+  },
+  "hash": "-6756800892513571176"
+},{
+  "tool": "Code Inspection",
+  "category": "Python",
+  "type": "Unresolved references",
+  "tags": [
+    "Python",
+    "Sanity"
+  ],
+  "severity": "Critical",
+  "comment": "Unresolved attribute reference '_on_message' for class 'Client'",
+  "detailsInfo": "Reports references in your code that cannot be resolved.\n\nIn a dynamically typed language, this is possible in a limited number of cases.\n\nIf a reference type is unknown, then its attributes are not highlighted as unresolved even if you know that they should be:\n\n```\ndef print_string(s):\n  print(s.abc())\n```\n\nIn this code fragment `s` is always a string and `abc` should be highlighted as unresolved. However, `s`\ntype is inferred as `Any` and no warning is reported.\n\nThe IDE provides quick-fix actions to add missing references on-the-fly.",
+  "sources": [
+    {
+      "type": "file",
+      "path": "mi/framework/state.py",
+      "language": "Python",
+      "line": 188,
+      "offset": 20,
+      "length": 11,
+      "code": {
+        "startLine": 186,
+        "length": 11,
+        "offset": 136,
+        "surroundingCode": "        note = Note(RawNote(message))\n        # Router(self.http.ws).capture_message(note.id) TODO: capture message\n        self.client._on_message(note)"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "project",
+    "inspectionName": "PyUnresolvedReferencesInspection"
+  },
+  "hash": "-376236387597132199"
+},{
+  "tool": "Code Inspection",
+  "category": "Python",
+  "type": "Unresolved references",
+  "tags": [
+    "Python",
+    "Sanity"
+  ],
+  "severity": "Critical",
+  "comment": "Unresolved reference 'aiohttp'",
+  "detailsInfo": "Reports references in your code that cannot be resolved.\n\nIn a dynamically typed language, this is possible in a limited number of cases.\n\nIf a reference type is unknown, then its attributes are not highlighted as unresolved even if you know that they should be:\n\n```\ndef print_string(s):\n  print(s.abc())\n```\n\nIn this code fragment `s` is always a string and `abc` should be highlighted as unresolved. However, `s`\ntype is inferred as `Any` and no warning is reported.\n\nThe IDE provides quick-fix actions to add missing references on-the-fly.",
+  "sources": [
+    {
+      "type": "file",
+      "path": "mi/framework/client.py",
+      "language": "Python",
+      "line": 11,
+      "offset": 5,
+      "length": 7,
+      "code": {
+        "startLine": 9,
+        "length": 7,
+        "offset": 116,
+        "surroundingCode": "from typing import Any, AsyncIterator, Callable, Coroutine, Dict, List, Optional, TYPE_CHECKING, Tuple, Union\n\nfrom aiohttp import ClientWebSocketResponse\n\nimport mi.framework.http"
+      }
+    }
+  ],
+  "attributes": {
+    "module": "project",
+    "inspectionName": "PyUnresolvedReferencesInspection"
+  },
+  "hash": "3105448303727802469"
+}]}
