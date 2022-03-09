@@ -68,6 +68,6 @@ setup(
         "License :: OSI Approved :: MIT License",
     ],
     ext_modules=ext_modules,
-    extras_require=extras_require
+    extras_require=extras_require,
     cmdclass=cmdclass,
 )
