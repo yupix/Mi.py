@@ -75,11 +75,11 @@ class Poll:
         self.__raw_data = raw_data
 
     @property
-    def multiple(self):
+    def multiple(self) -> bool:
         return self.__raw_data.multiple
 
     @property
-    def expires_at(self):
+    def expires_at(self) -> Optional[int]:
         return self.__raw_data.expires_at
 
     @property
@@ -87,7 +87,7 @@ class Poll:
         return self.__raw_data.choices
 
     @property
-    def expired_after(self):
+    def expired_after(self) -> Optional[int]:
         return self.__raw_data.expired_after
 
 
@@ -105,31 +105,31 @@ class Renote:
         return self.__raw_data.created_at
 
     @property
-    def user_id(self):
+    def user_id(self) -> str:
         return self.__raw_data.user_id
 
     @property
-    def user(self):
+    def user(self) -> User:
         return User(self.__raw_data.user)
 
     @property
-    def content(self):
+    def content(self) -> Optional[str]:
         return self.__raw_data.content
 
     @property
-    def cw(self):
+    def cw(self) -> Optional[str]:
         return self.__raw_data.cw
 
     @property
-    def visibility(self):
+    def visibility(self) -> str:
         return self.__raw_data.visibility
 
     @property
-    def renote_count(self):
+    def renote_count(self) -> int:
         return self.__raw_data.renote_count
 
     @property
-    def replies_count(self):
+    def replies_count(self) -> int:
         return self.__raw_data.replies_count
 
     @property
@@ -149,15 +149,15 @@ class Renote:
         return self.__raw_data.files
 
     @property
-    def reply_id(self):
+    def reply_id(self) -> Optional[str]:
         return self.__raw_data.reply_id
 
     @property
-    def renote_id(self):
+    def renote_id(self) -> Optional[str]:
         return self.__raw_data.renote_id
 
     @property
-    def uri(self):
+    def uri(self) -> Optional[str]:
         return self.__raw_data.uri
 
     @property
