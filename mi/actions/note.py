@@ -3,7 +3,8 @@ from __future__ import annotations
 from typing import List, Optional
 
 from mi.exception import ContentRequired
-from mi.framework.http import HTTPSession, Route
+from mi.framework.http import HTTPSession
+from mi.framework.router import Route
 from mi.framework.models.note import Note, NoteReaction, Poll
 from mi.utils import check_multi_arg, remove_dict_empty
 from mi.wrapper.favorite import FavoriteManager

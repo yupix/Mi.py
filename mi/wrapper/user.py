@@ -4,7 +4,8 @@ from typing import Optional
 
 from mi import config
 from mi.exception import NotSupportedError
-from mi.framework.http import HTTPSession, Route
+from mi.framework.http import HTTPSession
+from mi.framework.router import Route
 from mi.framework.models.user import User
 from mi.wrapper.models.user import RawUser
 

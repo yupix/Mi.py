@@ -3,7 +3,8 @@ from __future__ import annotations
 from typing import Optional
 
 from mi.exception import InvalidParameters
-from mi.framework.http import HTTPSession, Route
+from mi.framework.http import HTTPSession
+from mi.framework.router import Route
 from mi.framework.models.chat import Chat
 from mi.wrapper.models.chat import RawChat
 

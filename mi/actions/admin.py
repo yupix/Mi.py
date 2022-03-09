@@ -1,6 +1,7 @@
 from typing import Optional
 
-from mi.framework.http import HTTPSession, Route
+from mi.framework.http import HTTPSession
+from mi.framework.router import Route
 from mi.wrapper.ad import AdminAdvertisingManager
 from mi.wrapper.emoji import AdminEmojiManager
 from mi.wrapper.moderator import AdminModeratorManager
