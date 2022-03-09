@@ -44,8 +44,8 @@ class NoteActions:
         data = {'noteId': note_id, 'clipId': clip_id}
         return bool(await HTTPSession.request(Route('POST', '/api/clips/add-note'), json=data, auth=True))
 
-    async def send(self,
-                   content: Optional[str] = None,
+    @staticmethod
+    async def send(content: Optional[str] = None,
                    visibility: str = "public",
                    visible_user_ids: Optional[List[str]] = None,
                    cw: Optional[str] = None,
