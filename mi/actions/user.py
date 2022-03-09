@@ -3,11 +3,10 @@ from __future__ import annotations
 from typing import TYPE_CHECKING, List, Optional
 
 from aiocache import Cache, cached
-
 from mi.exception import NotExistRequiredData, NotExistRequiredParameters
 from mi.framework.http import HTTPSession
-from mi.framework.router import Route
 from mi.framework.models.note import Note
+from mi.framework.router import Route
 from mi.utils import check_multi_arg, get_cache_key, key_builder, remove_dict_empty
 from mi.wrapper.chat import ChatManager
 from mi.wrapper.follow import FollowManager, FollowRequestManager

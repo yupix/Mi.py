@@ -4,8 +4,8 @@ from typing import List, Optional
 
 import mi.framework.manager
 from mi.framework.http import HTTPSession
-from mi.framework.router import Route
 from mi.framework.models.user import FollowRequest, User
+from mi.framework.router import Route
 
 __all__ = ['FollowManager', 'FollowRequestManager']
 

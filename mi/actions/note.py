@@ -4,8 +4,8 @@ from typing import List, Optional
 
 from mi.exception import ContentRequired
 from mi.framework.http import HTTPSession
-from mi.framework.router import Route
 from mi.framework.models.note import Note, NoteReaction, Poll
+from mi.framework.router import Route
 from mi.utils import check_multi_arg, remove_dict_empty
 from mi.wrapper.favorite import FavoriteManager
 from mi.wrapper.models.note import RawNote

@@ -4,8 +4,8 @@ from typing import Optional
 
 from mi.exception import InvalidParameters
 from mi.framework.http import HTTPSession
-from mi.framework.router import Route
 from mi.framework.models.chat import Chat
+from mi.framework.router import Route
 from mi.wrapper.models.chat import RawChat
 
 
