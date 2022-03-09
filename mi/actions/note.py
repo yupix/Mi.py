@@ -25,9 +25,11 @@ class NoteActions:
 
         Parameters
         ----------
+        note_id : Optional[str], default=None
+                追加するノートのID
         clip_id : str
             クリップのID
-        note_id Optional[str], default=None
+        note_id : Optional[str], default=None
             追加したいノートのID
 
         Returns
