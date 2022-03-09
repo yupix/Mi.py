@@ -5,6 +5,8 @@ from typing import TYPE_CHECKING, List, Optional, TypedDict
 if TYPE_CHECKING:
     from mi.types import EmojiPayload
 
+__all__ = ('FeaturesPayload', 'MetaPayload', 'InstancePayload', 'OptionalInstance', 'OptionalMeta')
+
 
 class FeaturesPayload:
     registration: bool

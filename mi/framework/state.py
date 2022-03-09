@@ -10,7 +10,7 @@ from mi.framework.models.note import Note, Reaction
 from mi.framework.models.user import FollowRequest, User
 from mi.utils import get_module_logger, str_lower, upper_to_lower
 from mi.wrapper.models.chat import RawChat
-from mi.wrapper.models.note import RawNote
+from mi.wrapper.models.note import RawNote, RawReaction
 from mi.wrapper.models.user import RawUser
 
 if TYPE_CHECKING:
@@ -69,7 +69,7 @@ class ConnectionState:
         self.dispatch('follow_request', FollowRequest(message))
 
     def parse_me_updated(self, message: Dict[str, Any]):
-        pass
+        self.dispatch('me_updated', User(RawUser(message)))
 
     def parse_read_all_announcements(self, message: Dict[str, Any]) -> None:
         pass  # TODO: 実装
@@ -102,7 +102,7 @@ class ConnectionState:
         self.dispatch('mention', Note(RawNote(message)))
 
     def parse_drive_file_created(self, message: Dict[str, Any]) -> None:
-        pass  # TODO: 実装
+        self.dispatch('drive_file_created', message)
 
     def parse_read_all_unread_mentions(self, message: Dict[str, Any]) -> None:
         pass  # TODO:実装
@@ -177,7 +177,7 @@ class ConnectionState:
         """
         リアクションに関する情報を解析する関数
         """
-        self.dispatch('reaction', Reaction(message))
+        self.dispatch('reaction', Reaction(RawReaction(message)))
 
     def parse_note(self, message: NotePayload) -> None:
         """

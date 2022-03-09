@@ -27,6 +27,9 @@ class MyBot(commands.Bot):
         for extension in EXTENSIONS:
             self.load_extension(extension)
 
+    async def on_drive_file_created(self, msg):
+        print(msg)
+
     async def on_ready(self, ws):
         await Router(ws).connect_channel(['global', 'main'])
         logger.success('connected %s#%s' % (self.user.name, self.user.id))

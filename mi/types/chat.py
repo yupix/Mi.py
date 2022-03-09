@@ -2,6 +2,8 @@ from typing import List, TypedDict
 
 from mi.types.user import UserPayload
 
+__all__ = ('ChatPayload',)
+
 
 class ChatPayload(TypedDict):
     id: str

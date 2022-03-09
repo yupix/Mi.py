@@ -1,6 +1,10 @@
-from typing import TypedDict
+from __future__ import annotations
+from typing import TYPE_CHECKING, TypedDict
 
-from mi.types import UserPayload
+if TYPE_CHECKING:
+    from mi.types import UserPayload
+
+__all__ = ('NoteReactionPayload',)
 
 
 class NoteReactionPayload(TypedDict):
