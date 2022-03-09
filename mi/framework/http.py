@@ -11,7 +11,7 @@ from mi.framework.gateway import MisskeyClientWebSocketResponse
 from mi.framework.router import Route
 from mi.utils import remove_dict_empty, upper_to_lower
 
-__all__ = ('Route', 'HTTPClient', 'HTTPSession')
+__all__ = ('HTTPClient', 'HTTPSession')
 
 
 class _MissingSentinel:
