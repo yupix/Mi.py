@@ -8,10 +8,9 @@ import logging
 import re
 from datetime import datetime, timedelta
 from inspect import isawaitable
-from typing import Any, Callable, Dict, Iterable, List, Optional, TYPE_CHECKING, TypeVar
+from typing import TYPE_CHECKING, Any, Callable, Dict, Iterable, List, Optional, TypeVar
 
 import emoji
-
 from mi import config
 from mi.types.util import EmojiList
 

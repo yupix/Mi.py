@@ -1,10 +1,9 @@
 from __future__ import annotations
 
 import json
-from typing import Any, Callable, Dict, Optional, TYPE_CHECKING, TypeVar
+from typing import TYPE_CHECKING, Any, Callable, Dict, Optional, TypeVar
 
 import aiohttp
-
 from mi import config
 from mi.utils import str_lower
 

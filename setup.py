@@ -26,6 +26,12 @@ else:
 
 ext_modules = [Extension("mi.next_utils", sources=[f'mi/next_utils{ext}'])]
 
+extras_require = {
+    'dev': [
+        'pysen[lint]'
+    ]
+}
+
 packages = [
     'mi',
     'mi.abc',
@@ -62,5 +68,6 @@ setup(
         "License :: OSI Approved :: MIT License",
     ],
     ext_modules=ext_modules,
+    extras_require=extras_require
     cmdclass=cmdclass,
 )

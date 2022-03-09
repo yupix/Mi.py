@@ -2,6 +2,7 @@ from datetime import datetime
 from typing import List
 
 from mi.types.chat import ChatPayload
+
 from .user import RawUser
 
 

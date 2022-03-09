@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import List, Optional, TYPE_CHECKING, TypedDict
+from typing import TYPE_CHECKING, List, Optional, TypedDict
 
 if TYPE_CHECKING:
     from mi.types import EmojiPayload

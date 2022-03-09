@@ -1,9 +1,8 @@
 from __future__ import annotations
 
-from typing import List, Optional, TYPE_CHECKING
+from typing import TYPE_CHECKING, List, Optional
 
 from aiocache import Cache, cached
-
 from mi.exception import NotExistRequiredData, NotExistRequiredParameters
 from mi.framework.http import HTTPSession, Route
 from mi.framework.models.note import Note

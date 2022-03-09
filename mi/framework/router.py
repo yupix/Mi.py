@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import uuid
-from typing import Iterable, Literal, TYPE_CHECKING
+from typing import TYPE_CHECKING, Iterable, Literal
 
 from mi import config
 

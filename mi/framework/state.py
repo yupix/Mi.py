@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import asyncio
 import inspect
-from typing import Any, Callable, Dict, TYPE_CHECKING
+from typing import TYPE_CHECKING, Any, Callable, Dict
 
 from mi.framework.models.chat import Chat
 from mi.framework.models.emoji import Emoji
@@ -15,7 +15,7 @@ from mi.wrapper.models.user import RawUser
 
 if TYPE_CHECKING:
     from mi.framework.client import Client
-    from mi.types import NotePayload, ChatPayload
+    from mi.types import ChatPayload, NotePayload
 
 
 class ConnectionState:

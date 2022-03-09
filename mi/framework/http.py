@@ -5,7 +5,6 @@ import sys
 from typing import Any, Dict, Optional
 
 import aiohttp
-
 from mi import __version__, exception
 from mi.framework.gateway import MisskeyClientWebSocketResponse
 from mi.framework.router import Route

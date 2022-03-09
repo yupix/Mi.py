@@ -9,7 +9,7 @@ import re
 import sys
 import traceback
 from types import ModuleType
-from typing import Any, Callable, Coroutine, Dict, List, Optional, TYPE_CHECKING, Tuple, Union
+from typing import TYPE_CHECKING, Any, Callable, Coroutine, Dict, List, Optional, Tuple, Union
 
 from mi.abc.ext.bot import AbstractBotBase
 from mi.exception import (

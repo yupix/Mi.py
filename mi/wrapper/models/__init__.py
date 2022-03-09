@@ -1,3 +1,4 @@
+from .chart import RawActiveUsersChart, RawDriveChart, RawDriveLocalChart, RawDriveRemoteChart
 from .chat import *
 from .drive import *
 from .emoji import *
@@ -6,7 +7,6 @@ from .note import *
 from .poll import *
 from .reaction import *
 from .user import *
-from .chart import RawActiveUsersChart, RawDriveChart, RawDriveLocalChart, RawDriveRemoteChart
 
 __all__ = (
     'RawActiveUsersChart',

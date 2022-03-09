@@ -4,7 +4,6 @@ import random
 
 from dotenv import load_dotenv
 from loguru import logger
-
 from mi.ext import commands
 from mi.framework import Note
 from mi.framework.router import Router

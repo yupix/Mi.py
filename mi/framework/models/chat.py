@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-from mi.abc.chat import AbstractChatContent
 import mi.framework.manager as manager
+from mi.abc.chat import AbstractChatContent
 from mi.wrapper.models.chat import RawChat
 
 __all__ = ['Chat']
