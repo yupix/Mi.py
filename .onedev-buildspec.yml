@@ -157,7 +157,7 @@ jobs:
     interpreter: !DefaultInterpreter
       commands:
       - git remote add github https://yupix:@secret:token@@@github.com/yupix/Mi.py.git
-      - git push github *
+      - git push github HEAD:*
     useTTY: false
     condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
   triggers:
