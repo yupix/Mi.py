@@ -125,7 +125,11 @@ class HTTPClient:
             },
             'compress': compress
         }
-        return await self.__session.ws_connect(url, **kwargs)
+        try:
+            ws = await self.__session.ws_connect(url,**kwargs)
+        except aiohttp.client_exceptions.ClientConnectorError:
+            raise exception.ClientConnectorError()
+        return ws
 
 
 HTTPSession: HTTPClient = HTTPClient()

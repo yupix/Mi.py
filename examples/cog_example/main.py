@@ -35,10 +35,10 @@ class MyBot(commands.Bot):
         logger.success('connected %s#%s' % (self.user.name, self.user.id))
 
     async def on_message(self, note: Note):
-        if note.emojis:
-            unicode_emoji = get_unicode_emojis(note.content)
-            emoji = random.choice([i.name for i in note.emojis] + unicode_emoji)
-            await note.action.reaction.add(':%s:' % emoji)
+        # if note.emojis:
+        #     unicode_emoji = get_unicode_emojis(note.content)
+        #     emoji = random.choice([i.name for i in note.emojis] + unicode_emoji)
+        #     await note.action.reaction.add(':%s:' % emoji)
         logger.info('%s: %s' % (note.author.name, note.content))
 
 
