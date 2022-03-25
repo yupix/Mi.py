@@ -142,3 +142,31 @@ jobs:
   cpuRequirement: 500
   memoryRequirement: 256
   timeout: 3600
+- name: github-sync
+  steps:
+  - !CheckoutStep
+    name: checkout
+    cloneCredential: !DefaultCredential {}
+    withLfs: false
+    withSubmodules: false
+    condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
+  - !CommandStep
+    name: sync
+    runInContainer: true
+    image: alpine/git
+    interpreter: !DefaultInterpreter
+      commands:
+      - git remote add github https://yupix:@secret:token@@@github.com/yupix/Mi.py.git
+      - git fetch
+      - git push github --all
+      - git push github --tags
+    useTTY: false
+    condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
+  triggers:
+  - !BranchUpdateTrigger {}
+  retryCondition: never
+  maxRetries: 3
+  retryDelay: 30
+  cpuRequirement: 500
+  memoryRequirement: 256
+  timeout: 3600
