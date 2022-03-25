@@ -215,9 +215,20 @@
     <span class="s2">"TaskNotRunningError"</span><span class="p">,</span>
     <span class="s2">"NotFoundError"</span><span class="p">,</span>
     <span class="s2">"NotExistRequiredData"</span><span class="p">,</span>
-    <span class="s2">"NotSupportedError"</span>
+    <span class="s2">"NotSupportedError"</span><span class="p">,</span>
+    <span class="s2">"ClientConnectorError"</span><span class="p">,</span>
+    <span class="s2">"WebSocketRecconect"</span>
 <span class="p">)</span>
 
+<span class="k">class</span> <span class="nc">ClientConnectorError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    接続に何らかの問題が発生した際の例外</span>
+<span class="sd">    """</span>
+
+<span class="k">class</span> <span class="nc">WebSocketRecconect</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Required WebSocket Recconect</span>
+<span class="sd">    """</span>
 
 <span class="k">class</span> <span class="nc">NotSupportedError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
     <span class="sd">"""</span>
