@@ -20,7 +20,9 @@ __all__ = (
     "TaskNotRunningError",
     "NotFoundError",
     "NotExistRequiredData",
-    "NotSupportedError"
+    "NotSupportedError",
+    "ClientConnectorError",
+    "WebSocketRecconect"
 )
 
 class ClientConnectorError(Exception):
