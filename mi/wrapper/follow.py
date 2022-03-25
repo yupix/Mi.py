@@ -3,8 +3,9 @@ from __future__ import annotations
 from typing import List, Optional
 
 import mi.framework.manager
-from mi.framework.http import HTTPSession, Route
+from mi.framework.http import HTTPSession
 from mi.framework.models.user import FollowRequest, User
+from mi.framework.router import Route
 
 __all__ = ['FollowManager', 'FollowRequestManager']
 

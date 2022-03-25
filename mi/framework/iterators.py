@@ -1,9 +1,9 @@
 from __future__ import annotations
 
-from typing import Generator, Optional, TYPE_CHECKING
+from typing import TYPE_CHECKING, Generator, Optional
 
-from mi.framework.http import Route
 from mi.framework.models.user import User
+from mi.framework.router import Route
 from mi.utils import remove_dict_empty
 from mi.wrapper.models.user import RawUser
 

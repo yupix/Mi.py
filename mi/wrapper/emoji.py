@@ -4,7 +4,8 @@ from typing import List, Optional
 
 from mi import config
 from mi.exception import NotExistRequiredData
-from mi.framework.http import HTTPSession, Route
+from mi.framework.http import HTTPSession
+from mi.framework.router import Route
 from mi.utils import check_multi_arg
 
 

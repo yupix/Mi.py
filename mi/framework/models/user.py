@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from datetime import datetime
-from typing import Any, AsyncIterator, Dict, List, Optional, TYPE_CHECKING, Union
+from typing import TYPE_CHECKING, Any, AsyncIterator, Dict, List, Optional, Union
 
 import mi.framework.manager as manager
 from mi.framework.models.emoji import Emoji

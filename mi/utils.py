@@ -8,21 +8,39 @@ import logging
 import re
 from datetime import datetime, timedelta
 from inspect import isawaitable
-from typing import Any, Callable, Dict, Iterable, List, Optional, TYPE_CHECKING, TypeVar
+from typing import TYPE_CHECKING, Any, Callable, Dict, Iterable, List, Optional, TypeVar
 
 import emoji
-
 from mi import config
 from mi.types.util import EmojiList
 
 if TYPE_CHECKING:
     from mi.framework.models.note import Note
 
+__all__ = (
+    'deprecated_func',
+    'MiTime',
+    'get_cache_key',
+    'key_builder',
+    'get_module_logger',
+    'get_unicode_emojis',
+    'get_emoji_list',
+    'emoji_count',
+    'check_multi_arg',
+    'async_all',
+    'find',
+    'remove_list_empty',
+    'remove_dict_empty',
+    'upper_to_lower',
+    'str_lower',
+    'bool_to_string'
+)
+
 T = TypeVar("T")
 
 
 def deprecated_func(func):
-    print('deprecated function:' + func.__name__)
+    print(f'deprecated function:{func.__name__}')
 
 
 class MiTime:
@@ -72,7 +90,21 @@ def get_module_logger(module_name):
     return logger
 
 
-def extract_emojis(text: str):
+def get_unicode_emojis(text: str) -> List[str]:
+    """
+    テキストからunicode emojiを取得します
+
+    Parameters
+    ----------
+    text : str
+        テキスト
+
+    Returns
+    -------
+    List[str]
+        unicode emojiのリスト
+    """
+
     return re.findall(emoji.get_emoji_regexp(), text)
 
 
@@ -85,7 +117,7 @@ def get_emoji_list(
     emoji_list = {}
     for note in note_list:
         if include_unicode and note.content:
-            for i in extract_emojis(note.content):
+            for i in get_unicode_emojis(note.content):
                 emoji_list[i] = {
                     'name': i,
                     'count': emoji_list.get(i, {}).get('count', 0) + 1
@@ -166,10 +198,6 @@ def find(predicate: Callable[[T], Any], seq: Iterable[T]) -> Optional[T]:
         if predicate(element):
             return element
     return None
-
-
-def json_dump(data, *args, **kwargs):
-    return json.dumps(data, ensure_ascii=False, *args, **kwargs)
 
 
 def remove_list_empty(data: List[Any]) -> List[Any]:

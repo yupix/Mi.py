@@ -6,12 +6,12 @@ import inspect
 import re
 import sys
 import traceback
-from typing import Any, AsyncIterator, Callable, Coroutine, Dict, List, Optional, TYPE_CHECKING, Tuple, Union
-
-from aiohttp import ClientWebSocketResponse
+from typing import TYPE_CHECKING, Any, AsyncIterator, Callable, Coroutine, Dict, List, Optional, Tuple, Union
+from mi.exception import WebSocketRecconect
 
 import mi.framework.http
 import mi.framework.manager as manager
+from aiohttp import ClientWebSocketResponse
 from mi import config
 from mi.framework.models.chat import Chat
 from mi.framework.models.instance import Instance, InstanceMeta
@@ -20,6 +20,7 @@ from mi.framework.models.user import User
 from mi.framework.state import ConnectionState
 from mi.utils import get_module_logger
 from mi.wrapper.models.user import RawUser
+
 from .gateway import MisskeyWebSocket
 
 if TYPE_CHECKING:
@@ -255,16 +256,20 @@ class Client:
         data = await mi.framework.http.HTTPSession.static_login(token)
         self.user = User(RawUser(data))
 
-    async def connect(self, *, reconnect: bool = True, timeout: int = 60) -> None:
+    async def connect(self, *, reconnect: bool = True, timeout: int = 60, event_name: str='ready') -> None:
 
-        coro = MisskeyWebSocket.from_client(self, timeout=timeout)
+        coro = MisskeyWebSocket.from_client(self, timeout=timeout, event_name=event_name)
         try:
             self.ws = await asyncio.wait_for(coro, timeout=60)
         except asyncio.exceptions.TimeoutError:
             await self.connect(reconnect=reconnect, timeout=timeout)
 
         while True:
-            await self.ws.poll_event()
+            try:
+                await self.ws.poll_event()
+            except WebSocketRecconect:
+                await self.connect(event_name='reconnect')
+
 
     async def start(self, url: str, token: str, *, debug: bool = False, reconnect: bool = True, timeout: int = 60,
                     is_ayuskey: bool = False):

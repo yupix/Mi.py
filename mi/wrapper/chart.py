@@ -1,6 +1,7 @@
 __all__ = ('ChartManager',)
 
-from mi.framework.http import HTTPSession, Route
+from mi.framework.http import HTTPSession
+from mi.framework.router import Route
 from mi.wrapper.models.chart import RawActiveUsersChart, RawDriveChart
 
 

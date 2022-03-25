@@ -2,8 +2,10 @@ from __future__ import annotations
 
 from typing import Optional
 
-from mi.framework.http import HTTPSession, Route
+from mi.exception import InvalidParameters
+from mi.framework.http import HTTPSession
 from mi.framework.models.chat import Chat
+from mi.framework.router import Route
 from mi.wrapper.models.chat import RawChat
 
 
@@ -11,6 +13,31 @@ class ChatManager:
     def __init__(self, user_id: Optional[str] = None, message_id: Optional[str] = None):
         self.__user_id = user_id
         self.__message_id = message_id
+
+    @staticmethod
+    async def get_history(limit: int = 100, group: bool = True):
+        """
+        Get the chat history.
+
+        Parameters
+        ----------
+        limit : int, default=100, max=100
+            Number of items to retrieve, up to 100
+        group : bool, default=True
+            Whether to include group chat or not
+
+        Returns
+        -------
+        list[Chat]
+            List of chat history
+        """
+
+        if limit > 100:
+            raise InvalidParameters('limit must be greater than 100')
+
+        args = {'limit': limit, 'group': group}
+        data = await HTTPSession.request(Route('POST', '/api/messaging/history'), json=args, auth=True)
+        return [Chat(RawChat(d)) for d in data]
 
     async def send(
             self,

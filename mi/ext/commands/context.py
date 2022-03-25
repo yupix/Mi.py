@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from mi.ext.commands import BotBase, CMD
+    from mi.ext.commands import CMD, BotBase
     from mi.framework.models.note import Note
     from mi.framework.models.user import User
 

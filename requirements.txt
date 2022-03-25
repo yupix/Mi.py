@@ -1,4 +1,4 @@
-aiocache
-aiohttp
-emoji
-cython
+aiocache==0.11.1
+aiohttp==3.8.1
+emoji==1.6.3
+cython==0.29.28

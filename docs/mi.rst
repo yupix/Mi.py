@@ -51,6 +51,8 @@ AbstractChatContent
 Misskey モデル
 ---------------
 
+.. currentmodule:: mi.framework
+
 .. danger::
    下記のクラスは、 **ユーザーによって作成されることを考慮していません** 。
    独自のインスタンスは作成するべきではなく、値を変更するべきではありません。
@@ -138,6 +140,8 @@ Reaction
 
 データクラス
 ------------
+
+.. currentmodule:: mi.wrapper.models
 
 RawNote
 ~~~~~~~
@@ -246,9 +250,59 @@ RawUser
 .. autoclass:: RawUser()
    :members:
 
+アクションクラス
+--------------
+
+.. currentmodule:: mi.actions
+
+NoteActions
+~~~~~~~~~~~
+
+.. attributetable:: NoteActions
+
+.. autoclass:: NoteActions()
+   :members:
+
+
+AdminActions
+~~~~~~~~~~~
+
+.. attributetable:: AdminActions
+
+.. autoclass:: AdminActions()
+   :members:
+
+
+FolderActions
+~~~~~~~~~~~
+
+.. attributetable:: FolderActions
+
+.. autoclass:: FolderActions()
+   :members:
+
+
+DriveActions
+~~~~~~~~~~~
+
+.. attributetable:: DriveActions
+
+.. autoclass:: DriveActions()
+   :members:
+
+
+UserActions
+~~~~~~~~~~~
+
+.. attributetable:: UserActions
+
+.. autoclass:: UserActions()
+   :members:
 
 型クラス
 --------
+
+.. currentmodule:: mi.types
 
 ChatPayload
 ~~~~~~~~~~~
@@ -458,6 +512,8 @@ UserPayload
 例外処理
 --------
 
+.. currentmodule:: mi
+
 NotFoundError
 ~~~~~~~~~~~~~
 .. autoclass:: NotFoundError()
@@ -550,9 +606,11 @@ NotExistRequiredData
 Low-Level API
 -------------
 
+.. currentmodule:: mi.framework
+
 .. autoclass:: Route()
    :members:
-   
+
 .. autoclass:: HTTPClient()
    :members:
 
@@ -570,3 +628,24 @@ Low-Layer API
 
 .. autoclass:: InstanceIterator()
    :members:
+
+ユーティリティ関数
+-----
+
+.. currentmodule:: mi.utils
+
+get_emoji_list
+~~~~~~~~~~~~~~
+
+.. autofunction:: utils.get_emoji_list
+
+emoji_count
+~~~~~~~~~~~
+
+.. autofunction:: emoji_count
+
+check_multi_arg
+~~~~~~~~~~~~~~~
+
+.. autofunction:: utils.check_multi_arg
+

@@ -1,0 +1,172 @@
+version: 15
+jobs:
+- name: build-test
+  steps:
+  - !CheckoutStep
+    name: checkout
+    cloneCredential: !DefaultCredential {}
+    withLfs: false
+    withSubmodules: false
+    condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
+  - !CommandStep
+    name: build
+    runInContainer: true
+    image: python:3.9.10-alpine
+    interpreter: !DefaultInterpreter
+      commands:
+      - python setup.py sdist
+    useTTY: false
+    condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
+  - !PublishArtifactStep
+    name: publish
+    artifacts: dist/**
+    condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
+  triggers:
+  - !BranchUpdateTrigger {}
+  retryCondition: never
+  maxRetries: 3
+  retryDelay: 30
+  cpuRequirement: 500
+  memoryRequirement: 256
+  timeout: 3600
+- name: production-build(amd64)
+  jobExecutor: amd64
+  steps:
+  - !CheckoutStep
+    name: checkout
+    cloneCredential: !DefaultCredential {}
+    withLfs: false
+    withSubmodules: false
+    condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
+  - !CommandStep
+    name: build python3.9.*
+    runInContainer: true
+    image: quay.io/pypa/manylinux2014_x86_64
+    interpreter: !DefaultInterpreter
+      commands:
+      - /opt/python/cp39-cp39/bin/python3.9 setup.py sdist bdist_wheel
+    useTTY: false
+    condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
+  - !CommandStep
+    name: build python3.10.*
+    runInContainer: true
+    image: quay.io/pypa/manylinux2014_x86_64
+    interpreter: !DefaultInterpreter
+      commands:
+      - /opt/python/cp310-cp310/bin/python3.10 setup.py sdist bdist_wheel
+    useTTY: false
+    condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
+  - !PublishArtifactStep
+    name: publish
+    artifacts: dist/**
+    condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
+  triggers:
+  - !BranchUpdateTrigger
+    branches: master
+  retryCondition: never
+  maxRetries: 3
+  retryDelay: 30
+  cpuRequirement: 500
+  memoryRequirement: 256
+  timeout: 3600
+- name: production-build(aarch64)
+  jobExecutor: host-arm64
+  steps:
+  - !CheckoutStep
+    name: checkout
+    cloneCredential: !DefaultCredential {}
+    withLfs: false
+    withSubmodules: false
+    condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
+  - !CommandStep
+    name: build python3.9.*
+    runInContainer: true
+    image: quay.io/pypa/manylinux2014_aarch64
+    interpreter: !DefaultInterpreter
+      commands:
+      - /opt/python/cp39-cp39/bin/python3.9 setup.py sdist bdist_wheel
+    useTTY: false
+    condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
+  - !CommandStep
+    name: build python3.10.*
+    runInContainer: true
+    image: quay.io/pypa/manylinux2014_aarch64
+    interpreter: !DefaultInterpreter
+      commands:
+      - /opt/python/cp310-cp310/bin/python3.10 setup.py sdist bdist_wheel
+    useTTY: false
+    condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
+  - !PublishArtifactStep
+    name: publish
+    artifacts: dist/**
+    condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
+  triggers:
+  - !BranchUpdateTrigger
+    branches: master
+  retryCondition: never
+  maxRetries: 3
+  retryDelay: 30
+  cpuRequirement: 500
+  memoryRequirement: 256
+  timeout: 3600
+- name: document-build
+  steps:
+  - !CheckoutStep
+    name: checkout
+    cloneCredential: !DefaultCredential {}
+    withLfs: false
+    withSubmodules: false
+    condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
+  - !CommandStep
+    name: build
+    runInContainer: true
+    image: python:3.9.10-slim
+    interpreter: !DefaultInterpreter
+      commands:
+      - cd ./docs
+      - apt update
+      - apt install make git -y
+      - pip install -r requirements.txt
+      - ./doc_builder.sh
+    useTTY: true
+    condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
+  - !PublishArtifactStep
+    name: publish
+    artifacts: docs/_build/**
+    condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
+  triggers:
+  - !BranchUpdateTrigger {}
+  retryCondition: never
+  maxRetries: 3
+  retryDelay: 30
+  cpuRequirement: 500
+  memoryRequirement: 256
+  timeout: 3600
+- name: github-sync
+  steps:
+  - !CheckoutStep
+    name: checkout
+    cloneCredential: !DefaultCredential {}
+    withLfs: false
+    withSubmodules: false
+    condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
+  - !CommandStep
+    name: sync
+    runInContainer: true
+    image: alpine/git
+    interpreter: !DefaultInterpreter
+      commands:
+      - git remote add github https://yupix:@secret:token@@@github.com/yupix/Mi.py.git
+      - git fetch
+      - git push github --all
+      - git push github --tags
+    useTTY: false
+    condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
+  triggers:
+  - !BranchUpdateTrigger {}
+  retryCondition: never
+  maxRetries: 3
+  retryDelay: 30
+  cpuRequirement: 500
+  memoryRequirement: 256
+  timeout: 3600

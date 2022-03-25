@@ -9,7 +9,7 @@ import re
 import sys
 import traceback
 from types import ModuleType
-from typing import Any, Callable, Coroutine, Dict, List, Optional, TYPE_CHECKING, Tuple, Union
+from typing import TYPE_CHECKING, Any, Callable, Coroutine, Dict, List, Optional, Tuple, Union
 
 from mi.abc.ext.bot import AbstractBotBase
 from mi.exception import (
@@ -110,7 +110,7 @@ class BotBase(CommandManager, AbstractBotBase):
         -------
 
         """
-        ev = "on_" + event_name
+        ev = f"on_{event_name}"
         for event in self.special_events.get(ev, []):
             foo = importlib.import_module(event.__module__)
             coro = getattr(foo, ev)
@@ -120,7 +120,7 @@ class BotBase(CommandManager, AbstractBotBase):
         return ev in dir(self)
 
     def dispatch(self, event_name: str, *args: tuple[Any], **kwargs: Dict[Any, Any]):
-        ev = "on_" + event_name
+        ev = f"on_{event_name}"
         for event in self.extra_events.get(ev, []):
             if inspect.ismethod(event):
                 coro = event
@@ -156,8 +156,8 @@ class BotBase(CommandManager, AbstractBotBase):
     def _load_from_module(self, spec: ModuleType, key: str) -> None:
         try:
             setup = spec.setup
-        except AttributeError:
-            raise NoEntryPointError(f"{key} にsetupが存在しません")
+        except AttributeError as e:
+            raise NoEntryPointError(f"{key} にsetupが存在しません") from e
 
         try:
             setup(self)
@@ -170,8 +170,8 @@ class BotBase(CommandManager, AbstractBotBase):
     def _resolve_name(name: str, package: Optional[str]) -> str:
         try:
             return importlib.util.resolve_name(name, package)
-        except ImportError:
-            raise ExtensionNotFound(name)
+        except ImportError as e:
+            raise ExtensionNotFound(name) from e
 
     def load_extension(self, name: str, *,
                        package: Optional[str] = None) -> None:
@@ -189,8 +189,8 @@ class BotBase(CommandManager, AbstractBotBase):
             raise ExtensionAlreadyLoaded
         try:
             module = importlib.import_module(name)
-        except ModuleNotFoundError:
-            raise InvalidCogPath(f"cog: {name} へのパスが無効です")
+        except ModuleNotFoundError as e:
+            raise InvalidCogPath(f"cog: {name} へのパスが無効です") from e
         self._load_from_module(module, name)
 
     def schedule_event(
@@ -234,8 +234,7 @@ class BotBase(CommandManager, AbstractBotBase):
         return self.__cogs.get(name)
 
     async def get_context(self, message, cmd, cls=Context) -> Context:
-        ctx = cls(message=message, bot=self, cmd=cmd)
-        return ctx
+        return cls(message=message, bot=self, cmd=cmd)
 
     async def progress_command(self, message):
         for cmd in self.all_commands:
@@ -244,7 +243,7 @@ class BotBase(CommandManager, AbstractBotBase):
                 if re.search(cmd.key, message.content):
                     hit_list = re.findall(cmd.key, message.content)
                     if isinstance(hit_list[0], tuple):
-                        hit_list = tuple([i for i in hit_list[0] if len(i.rstrip()) > 0])
+                        hit_list = tuple(i for i in hit_list[0] if len(i.rstrip()) > 0)
                     ctx.args = hit_list
                     await cmd.func.invoke(ctx)
             elif message.content.find(cmd.key) != -1:

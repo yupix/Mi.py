@@ -4,6 +4,8 @@ from .drive import FilePayload
 from .emoji import EmojiPayload
 from .instance import InstancePayload
 
+__all__ = ('ChannelPayload', 'FieldContentPayload', 'UserPayload', 'PinnedPagePayload', 'PinnedNotePayload', 'OptionalUser')
+
 
 class ChannelPayload(TypedDict):
     id: Optional[str]

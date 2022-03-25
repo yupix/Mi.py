@@ -5,13 +5,12 @@ import sys
 from typing import Any, Dict, Optional
 
 import aiohttp
-
 from mi import __version__, exception
 from mi.framework.gateway import MisskeyClientWebSocketResponse
 from mi.framework.router import Route
 from mi.utils import remove_dict_empty, upper_to_lower
 
-__all__ = ('Route', 'HTTPClient', 'HTTPSession')
+__all__ = ('HTTPClient', 'HTTPSession')
 
 
 class _MissingSentinel:
@@ -126,7 +125,11 @@ class HTTPClient:
             },
             'compress': compress
         }
-        return await self.__session.ws_connect(url, **kwargs)
+        try:
+            ws = await self.__session.ws_connect(url,**kwargs)
+        except aiohttp.client_exceptions.ClientConnectorError:
+            raise exception.ClientConnectorError()
+        return ws
 
 
 HTTPSession: HTTPClient = HTTPClient()

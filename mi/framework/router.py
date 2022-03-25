@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import uuid
-from typing import List, TYPE_CHECKING
+from typing import TYPE_CHECKING, Iterable, Literal
 
 from mi import config
 
@@ -46,13 +46,13 @@ class Router:
     def __init__(self, web_socket: ClientWebSocketResponse):
         self.web_socket: ClientWebSocketResponse = web_socket
 
-    async def connect_channel(self, channel_list: List[str]) -> None:
+    async def connect_channel(self, channel_list: Iterable[Literal['global', 'main', 'home', 'local']]) -> None:
         """
         与えられたlistを元にチャンネルに接続します
 
         Parameters
         ----------
-        channel_list : List
+        channel_list : Iterable[Literal['global', 'main', 'home', 'local']]
             ['global', 'local', 'home', 'main']
         """
 

@@ -1,5 +1,7 @@
 from typing import List, Optional, TypedDict
 
+__all__ = ('EmojiPayload',)
+
 
 class EmojiPayload(TypedDict):
     id: Optional[str]

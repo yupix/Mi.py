@@ -7,6 +7,9 @@ readme_file = pathlib.Path(__file__).parent / "README.md"
 with readme_file.open(encoding="utf-8") as fh:
     long_description = fh.read()
 
+with open("requirements.txt", "r") as f:
+    requirements = f.read().splitlines()
+
 try:
     from Cython.Distutils import build_ext
 
@@ -21,7 +24,13 @@ else:
     ext = ".c"
     cmdclass = {}
 
-ext_modules = [Extension("mi.next_utils", sources=["mi/next_utils" + ext])]
+ext_modules = [Extension("mi.next_utils", sources=[f'mi/next_utils{ext}'])]
+
+extras_require = {
+    'dev': [
+        'pysen[lint]'
+    ]
+}
 
 packages = [
     'mi',
@@ -40,8 +49,8 @@ packages = [
 
 setup(
     name="mi.py",
-    version="3.9.9",
-    install_requires=["emoji", 'aiocache', 'aiohttp'],
+    version="3.9.91",
+    install_requires=requirements,
     url="https://github.com/yupix/mi.py",
     author="yupix",
     author_email="yupi0982@outlook.jp",
@@ -59,5 +68,6 @@ setup(
         "License :: OSI Approved :: MIT License",
     ],
     ext_modules=ext_modules,
+    extras_require=extras_require,
     cmdclass=cmdclass,
 )

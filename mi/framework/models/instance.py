@@ -1,10 +1,10 @@
 from __future__ import annotations
 
-from typing import AsyncIterator, Dict, List, Optional, TYPE_CHECKING
+from typing import TYPE_CHECKING, AsyncIterator, Dict, List, Optional
 
 import mi.framework.manager as manager
 from mi.framework.models.emoji import Emoji
-from mi.types.instance import (MetaPayload as InstanceMetaPayload)
+from mi.types.instance import MetaPayload as InstanceMetaPayload
 from mi.wrapper.models import RawInstance
 from mi.wrapper.models.emoji import RawEmoji
 

@@ -23,7 +23,7 @@ copyright = "2022, yupix"
 author = "yupix"
 
 # The full version, including alpha/beta/rc tags
-release = "3.9.9"
+release = "4.0.0"
 
 # -- General configuration ---------------------------------------------------
 

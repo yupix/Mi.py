@@ -7,6 +7,29 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Added
+
+- added `on_drive_file_created` event
+- pyproject.tomlの追加
+- added `PageContentPayload` class
+- added `VariablePayload` class
+- added `PageFilePayload` class
+- added `EyeCatchingImagePayload` class
+- added `AttachedFilePayload` class
+- added `PagePayload` class
+- added `PagesManager` class
+- added `get_history` method to `ChatManager` class
+- exampleのrequirements.txt に `python-dotenv` を追記
+- DocString
+
+### Changed
+- `AdminUserManager` クラスの `show` メソッドを `get_user` に命名変更しました
+- `extract_emojis` を `get_unicode_emojis` に変更しました
+
+### Removed
+
+- types モジュールにある`AbstractBotBase`クラスを削除
+
 ## [v3.9.9] 2022-02-19
 
 ### Added

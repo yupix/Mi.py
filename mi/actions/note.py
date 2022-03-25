@@ -3,8 +3,9 @@ from __future__ import annotations
 from typing import List, Optional
 
 from mi.exception import ContentRequired
-from mi.framework.http import HTTPSession, Route
+from mi.framework.http import HTTPSession
 from mi.framework.models.note import Note, NoteReaction, Poll
+from mi.framework.router import Route
 from mi.utils import check_multi_arg, remove_dict_empty
 from mi.wrapper.favorite import FavoriteManager
 from mi.wrapper.models.note import RawNote
@@ -25,9 +26,11 @@ class NoteActions:
 
         Parameters
         ----------
+        note_id : Optional[str], default=None
+                追加するノートのID
         clip_id : str
             クリップのID
-        note_id Optional[str], default=None
+        note_id : Optional[str], default=None
             追加したいノートのID
 
         Returns
@@ -41,8 +44,8 @@ class NoteActions:
         data = {'noteId': note_id, 'clipId': clip_id}
         return bool(await HTTPSession.request(Route('POST', '/api/clips/add-note'), json=data, auth=True))
 
-    async def send(self,
-                   content: Optional[str] = None,
+    @staticmethod
+    async def send(content: Optional[str] = None,
                    visibility: str = "public",
                    visible_user_ids: Optional[List[str]] = None,
                    cw: Optional[str] = None,

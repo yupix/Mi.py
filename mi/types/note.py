@@ -4,6 +4,8 @@ from .drive import FilePayload
 from .emoji import EmojiPayload
 from .user import UserPayload
 
+__all__ = ('NotePayload', 'GeoPayload', 'ReactionPayload', 'PollPayload', 'RenotePayload', 'OptionalReaction')
+
 
 class GeoPayload(TypedDict):
     """
