@@ -49,7 +49,7 @@ packages = [
 
 setup(
     name="mi.py",
-    version="3.9.9",
+    version="3.9.91",
     install_requires=requirements,
     url="https://github.com/yupix/mi.py",
     author="yupix",
