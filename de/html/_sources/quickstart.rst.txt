@@ -26,20 +26,27 @@ ubuntuなどのoperating systemでは以下のパッケージがビルドに必�
     import asyncio
 
     from mi.ext import commands
-    from mi.note import Note
-    from mi.router import Router
+    from mi.framework import Note
+    from mi.framework.router import Router
+
+    async def connect_channel(ws):
+        await Router(ws).connect_channel(['global', 'main'])
+
 
     class MyBot(commands.Bot):
         def __init__(self):
-            super().__init__('tu!')
+            super().__init__()
         
         async def on_ready(self, ws):
-            print(f'Connecting {self.i.username}')
-            await Router(ws).connect_channel(['global', 'main'])
-        
-        
+            await connect_channel(ws)
+            print('connected %s#%s' % (self.user.name, self.user.id))
+
+        async def on_reconnect(self, ws):
+            await connect_channel(ws)
+            
+
         async def on_message(self, note: Note):
-            print(f'{note.author.username}: {note.content}')
+            print('%s: %s' % (note.author.name, note.content))
 
     if __name__ == '__main__':
         bot = MyBot()

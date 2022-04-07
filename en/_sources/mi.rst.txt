@@ -141,6 +141,16 @@ Reaction
 データクラス
 ------------
 
+.. currentmodule:: mi.wrapper.file
+
+MiFile
+~~~~~~
+
+.. attributetable:: MiFile
+
+.. autoclass:: MiFile()
+   :members:
+
 .. currentmodule:: mi.wrapper.models
 
 RawNote

@@ -5,7 +5,7 @@
     <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 <link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="prev" title="QuickStart" href="quickstart.html" />
 
-    <meta name="generator" content="sphinx-4.4.0, furo 2022.03.04"/>
+    <meta name="generator" content="sphinx-4.5.0, furo 2022.03.04"/>
         <title>API Reference - Mi.py 4.0.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?digest=935aa2abcc5c1da4283d1dc201fb1f0add16d23a" />
@@ -505,6 +505,27 @@ async</span><a class="reference internal" href="#mi.framework.Follow.unfollow">u
 </section>
 <section id="id3">
 <h2>data class<a class="headerlink" href="#id3" title="Permalink to this headline">#</a></h2>
+<section id="mifile">
+<h3>MiFile<a class="headerlink" href="#mifile" title="Permalink to this headline">#</a></h3>
+<div class="py-attribute-table" data-move-to-id="mi.wrapper.file.MiFile"></div><dl class="py class">
+<dt class="sig sig-object py" id="mi.wrapper.file.MiFile">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mi.wrapper.file.</span></span><span class="sig-name descname"><span class="pre">MiFile</span></span><a class="reference internal" href="_modules/mi/wrapper/file.html#MiFile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mi.wrapper.file.MiFile" title="Permalink to this definition">#</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>default=None</em>) – path to a local file</p></li>
+<li><p><strong>file_id</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>default=None</em>) – ID of the file that exists on the drive</p></li>
+<li><p><strong>Optional</strong><strong>[</strong><strong>str</strong><strong>]</strong> (<em>name</em>) – file name</p></li>
+<li><p><strong>default=None</strong> – file name</p></li>
+<li><p><strong>folder_id</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>default=None</em>) – Folder ID</p></li>
+<li><p><strong>comment</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>default=None</em>) – Comments on files</p></li>
+<li><p><strong>is_sensitive</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>default=None</em>) – Whether this item is sensitive</p></li>
+<li><p><strong>force</strong> (<em>bool</em><em>, </em><em>default=False</em>) – Whether to force overwriting even if it already exists on the drive</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+</section>
 <section id="rawnote">
 <h3>RawNote<a class="headerlink" href="#rawnote" title="Permalink to this headline">#</a></h3>
 <div class="py-attribute-table" data-move-to-id="mi.wrapper.models.RawNote"><div class="py-attribute-table-column">
@@ -1787,7 +1808,7 @@ async</span><a class="reference internal" href="#mi.actions.NoteActions.get_repl
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="mi.actions.NoteActions.send">
-<em class="property"><span class="pre">staticmethod</span> <span class="pre">await</span> </em><span class="sig-name descname"><span class="pre">send</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visibility</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'public'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visible_user_ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cw</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">local_only</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extract_mentions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extract_hashtags</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extract_emojis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reply_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">renote_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">poll</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/actions/note.html#NoteActions.send"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mi.actions.NoteActions.send" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">staticmethod</span> <span class="pre">await</span> </em><span class="sig-name descname"><span class="pre">send</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visibility</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'public'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">visible_user_ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cw</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">local_only</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extract_mentions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extract_hashtags</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extract_emojis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reply_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">renote_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">files</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">poll</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mi/actions/note.html#NoteActions.send"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mi.actions.NoteActions.send" title="Permalink to this definition">#</a></dt>
 <dd><p>ノートを投稿します。</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1803,7 +1824,7 @@ async</span><a class="reference internal" href="#mi.actions.NoteActions.get_repl
 <li><p><strong>reply_id</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – リプライ先のid, by default None</p></li>
 <li><p><strong>renote_id</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – リノート先のid, by default None</p></li>
 <li><p><strong>channel_id</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – チャンネルid, by default None</p></li>
-<li><p><strong>file_ids</strong> (<em>[</em><em>type</em><em>]</em><em>, </em><em>optional</em>) – 添付するファイルのid, by default None</p></li>
+<li><p><strong>files</strong> (<em>List</em><em>[</em><a class="reference internal" href="#mi.wrapper.file.MiFile" title="mi.wrapper.file.MiFile"><em>MiFile</em></a><em>]</em><em>, </em><em>optional</em>) – 添付するファイルのリスト, by default None</p></li>
 <li><p><strong>poll</strong> (<em>Optional</em><em>[</em><em>Poll</em><em>]</em><em>, </em><em>optional</em>) – アンケート, by default None</p></li>
 </ul>
 </dd>
@@ -2552,6 +2573,7 @@ fetch_userを使った場合はキャッシュが廃棄され再度サーバー�
 </ul>
 </li>
 <li><a class="reference internal" href="#id3">data class</a><ul>
+<li><a class="reference internal" href="#mifile">MiFile</a></li>
 <li><a class="reference internal" href="#rawnote">RawNote</a></li>
 <li><a class="reference internal" href="#rawchat">RawChat</a></li>
 <li><a class="reference internal" href="#rawproperties">RawProperties</a></li>
