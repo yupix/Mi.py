@@ -9,6 +9,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
+- added `MiFile` class
+
+### Changed
+
+- **BREAKING CHANGE** Set the `send` method argument `file_ids` to accept the `MiFile` class as a list.
+
+
+## [v3.9.91] 2022-03-25
+
+### Added
+
 - added `on_drive_file_created` event
 - pyproject.tomlの追加
 - added `PageContentPayload` class
@@ -29,6 +40,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Removed
 
 - types モジュールにある`AbstractBotBase`クラスを削除
+
+### Fixed
+
+- Infinite loop when disconnecting WebSocket 
 
 ## [v3.9.9] 2022-02-19
 

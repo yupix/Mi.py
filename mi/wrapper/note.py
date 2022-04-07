@@ -3,6 +3,7 @@ from __future__ import annotations
 from typing import Optional
 
 from mi.framework.http import HTTPSession
+from mi.framework.router import Route
 
 
 class NoteManager:

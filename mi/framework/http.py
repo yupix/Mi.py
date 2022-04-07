@@ -55,10 +55,7 @@ class HTTPClient:
             kwargs['json'] = kwargs.pop('json')
 
         if kwargs.get('auth') and kwargs.pop('auth'):
-            if 'json' in kwargs or 'data' not in kwargs:
-                key = 'json'
-            else:
-                key = 'data'
+            key = 'json' if 'json' in kwargs or 'data' not in kwargs else 'data'
             if not kwargs.get(key):
                 kwargs[key] = {}
             kwargs[key]['i'] = self.token

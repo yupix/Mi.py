@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  Mi.py\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-02-20 10:16+0900\n"
+"POT-Creation-Date: 2022-04-07 11:38+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -150,7 +150,8 @@ msgstr ""
 #: mi.framework.state.ConnectionState.parse_channel
 #: mi.framework.state.ConnectionState.parse_notification
 #: mi.framework.state.ConnectionState.parse_unread_notification
-#: mi.utils.emoji_count mi.wrapper.models.chat.RawChat of
+#: mi.utils.emoji_count mi.wrapper.file.MiFile mi.wrapper.models.chat.RawChat
+#: of
 msgid "Parameters"
 msgstr "Parameter"
 
@@ -189,8 +190,7 @@ msgstr "Benutzerkennung, default=None"
 msgid "チャンネルid, by default None"
 msgstr "Gruppen-ID, Standard=None"
 
-#: mi.actions.note.NoteActions.send:26 mi.framework.models.note.Note.reply:18
-#: of
+#: mi.framework.models.note.Note.reply:18 of
 #, fuzzy
 msgid "添付するファイルのid, by default None"
 msgstr "Datei-ID zum Anhängen, efault=None"
@@ -259,7 +259,7 @@ msgstr "Chat-Objekte"
 msgid "チャットを削除します（チャットの作者である必要があります）"
 msgstr "Einen Chat löschen (Sie müssen der Autor des Chats sein)"
 
-#: mi.actions.note.NoteActions.add_clips:9
+#: mi.actions.note.NoteActions.add_clips:11
 #: mi.framework.models.chat.Chat.delete:4 of
 msgid "成功したか否か"
 msgstr "Erfolg oder Misserfolg"
@@ -322,6 +322,39 @@ msgstr "Datenklassen"
 
 #: ../../mi.rst:147
 #, fuzzy
+msgid "MiFile"
+msgstr "File"
+
+#: mi.wrapper.file.MiFile:2 of
+msgid "path to a local file"
+msgstr ""
+
+#: mi.wrapper.file.MiFile:4 of
+msgid "ID of the file that exists on the drive"
+msgstr ""
+
+#: mi.wrapper.file.MiFile:6 mi.wrapper.file.MiFile:7 of
+msgid "file name"
+msgstr ""
+
+#: mi.wrapper.file.MiFile:8 of
+msgid "Folder ID"
+msgstr ""
+
+#: mi.wrapper.file.MiFile:10 of
+msgid "Comments on files"
+msgstr ""
+
+#: mi.wrapper.file.MiFile:12 of
+msgid "Whether this item is sensitive"
+msgstr ""
+
+#: mi.wrapper.file.MiFile:14 of
+msgid "Whether to force overwriting even if it already exists on the drive"
+msgstr ""
+
+#: ../../mi.rst:157
+#, fuzzy
 msgid "RawNote"
 msgstr "Renote"
 
@@ -362,7 +395,7 @@ msgstr ""
 msgid "datetime"
 msgstr ""
 
-#: ../../mi.rst:246 mi.wrapper.models.chat.RawChat:30
+#: ../../mi.rst:256 mi.wrapper.models.chat.RawChat:30
 #: mi.wrapper.models.note.RawNote:16 mi.wrapper.models.note.RawRenote:16 of
 msgid "RawUser"
 msgstr ""
@@ -420,7 +453,7 @@ msgstr ""
 msgid "Optional[dict]"
 msgstr ""
 
-#: ../../mi.rst:156
+#: ../../mi.rst:166
 msgid "RawChat"
 msgstr ""
 
@@ -461,7 +494,7 @@ msgstr ""
 msgid "List"
 msgstr ""
 
-#: ../../mi.rst:165
+#: ../../mi.rst:175
 #, fuzzy
 msgid "RawProperties"
 msgstr "Properties"
@@ -485,7 +518,7 @@ msgstr ""
 msgid "ファイルの平均色"
 msgstr ""
 
-#: ../../mi.rst:174
+#: ../../mi.rst:184
 msgid "RawFolder"
 msgstr ""
 
@@ -513,7 +546,7 @@ msgstr ""
 msgid "親フォルダー"
 msgstr ""
 
-#: ../../mi.rst:183
+#: ../../mi.rst:193
 msgid "RawFile"
 msgstr ""
 
@@ -594,7 +627,7 @@ msgstr ""
 msgid "Dict[str, Any]"
 msgstr ""
 
-#: ../../mi.rst:192
+#: ../../mi.rst:202
 #, fuzzy
 msgid "RawEmoji"
 msgstr "Emoji"
@@ -623,7 +656,7 @@ msgstr ""
 msgid "絵文字のURL"
 msgstr ""
 
-#: ../../mi.rst:201
+#: ../../mi.rst:211
 msgid "RawInstance"
 msgstr ""
 
@@ -638,7 +671,7 @@ msgstr ""
 msgid "Optional[str], default=None"
 msgstr ""
 
-#: ../../mi.rst:210
+#: ../../mi.rst:220
 #, fuzzy
 msgid "RawRenote"
 msgstr "Renote"
@@ -647,7 +680,7 @@ msgstr "Renote"
 msgid "List[str]"
 msgstr ""
 
-#: ../../mi.rst:219
+#: ../../mi.rst:229
 msgid "RawPollChoices"
 msgstr ""
 
@@ -664,7 +697,7 @@ msgstr ""
 msgid "投票済みか否か"
 msgstr "Schon gelesen oder nicht?"
 
-#: ../../mi.rst:228
+#: ../../mi.rst:238
 #, fuzzy
 msgid "RawNoteReaction"
 msgstr "Reaction"
@@ -681,11 +714,11 @@ msgstr ""
 msgid "リアクションを付けたユーザー"
 msgstr ""
 
-#: ../../mi.rst:502 mi.wrapper.models.reaction.RawNoteReaction:18 of
+#: ../../mi.rst:512 mi.wrapper.models.reaction.RawNoteReaction:18 of
 msgid "UserPayload"
 msgstr ""
 
-#: ../../mi.rst:237 of
+#: ../../mi.rst:247 of
 msgid "RawUserDetails"
 msgstr ""
 
@@ -873,11 +906,11 @@ msgstr ""
 msgid "インスタンスの情報"
 msgstr ""
 
-#: ../../mi.rst:254
+#: ../../mi.rst:264
 msgid "アクションクラス"
 msgstr ""
 
-#: ../../mi.rst:259
+#: ../../mi.rst:269
 #, fuzzy
 msgid "NoteActions"
 msgstr "Reaction"
@@ -887,11 +920,14 @@ msgid "クリップに追加します"
 msgstr ""
 
 #: mi.actions.note.NoteActions.add_clips:4 of
+msgid "追加するノートのID"
+msgstr ""
+
+#: mi.actions.note.NoteActions.add_clips:6 of
 msgid "クリップのID"
 msgstr ""
 
-#: mi.actions.note.NoteActions.add_clips:6
-#: mi.actions.note.NoteActions.add_clips:7 of
+#: mi.actions.note.NoteActions.add_clips:8 of
 msgid "追加したいノートのID"
 msgstr ""
 
@@ -925,6 +961,11 @@ msgstr ""
 #, fuzzy
 msgid "リプライ先のid, by default None"
 msgstr "Benutzerkennung, default=None"
+
+#: mi.actions.note.NoteActions.send:26 of
+#, fuzzy
+msgid "添付するファイルのリスト, by default None"
+msgstr "Datei-ID zum Anhängen, efault=None"
 
 #: mi.actions.note.NoteActions.send:31 of
 msgid "投稿したノート"
@@ -1044,22 +1085,22 @@ msgstr ""
 msgid "返信のリスト"
 msgstr ""
 
-#: ../../mi.rst:268
+#: ../../mi.rst:278
 #, fuzzy
 msgid "AdminActions"
 msgstr "Reaction"
 
-#: ../../mi.rst:277
+#: ../../mi.rst:287
 #, fuzzy
 msgid "FolderActions"
 msgstr "Reaction"
 
-#: ../../mi.rst:286
+#: ../../mi.rst:296
 #, fuzzy
 msgid "DriveActions"
 msgstr "Reaction"
 
-#: ../../mi.rst:295
+#: ../../mi.rst:305
 #, fuzzy
 msgid "UserActions"
 msgstr "Reaction"
@@ -1099,16 +1140,16 @@ msgstr ""
 msgid "メンション"
 msgstr ""
 
-#: ../../mi.rst:303
+#: ../../mi.rst:313
 #, fuzzy
 msgid "型クラス"
 msgstr "Datenklassen"
 
-#: ../../mi.rst:308
+#: ../../mi.rst:318
 msgid "ChatPayload"
 msgstr ""
 
-#: ../../mi.rst:317
+#: ../../mi.rst:327
 #, fuzzy
 msgid "PropertiesPayload"
 msgstr "Properties"
@@ -1117,7 +1158,7 @@ msgstr "Properties"
 msgid "プロパティー情報"
 msgstr ""
 
-#: ../../mi.rst:326
+#: ../../mi.rst:336
 msgid "FolderPayload"
 msgstr ""
 
@@ -1125,7 +1166,7 @@ msgstr ""
 msgid "フォルダーの情報"
 msgstr ""
 
-#: ../../mi.rst:335
+#: ../../mi.rst:345
 msgid "FilePayload"
 msgstr ""
 
@@ -1133,31 +1174,31 @@ msgstr ""
 msgid "ファイル情報"
 msgstr ""
 
-#: ../../mi.rst:344
+#: ../../mi.rst:354
 msgid "EmojiPayload"
 msgstr ""
 
-#: ../../mi.rst:353
+#: ../../mi.rst:363
 msgid "FeaturesPayload"
 msgstr ""
 
-#: ../../mi.rst:362
+#: ../../mi.rst:372
 msgid "OptionalMeta"
 msgstr ""
 
-#: ../../mi.rst:371
+#: ../../mi.rst:381
 msgid "MetaPayload"
 msgstr ""
 
-#: ../../mi.rst:380
+#: ../../mi.rst:390
 msgid "OptionalInstance"
 msgstr ""
 
-#: ../../mi.rst:389
+#: ../../mi.rst:399
 msgid "InstancePayload"
 msgstr ""
 
-#: ../../mi.rst:398
+#: ../../mi.rst:408
 msgid "GeoPayload"
 msgstr ""
 
@@ -1165,7 +1206,7 @@ msgstr ""
 msgid "衛星情報"
 msgstr ""
 
-#: ../../mi.rst:407
+#: ../../mi.rst:417
 msgid "PollPayload"
 msgstr ""
 
@@ -1173,11 +1214,11 @@ msgstr ""
 msgid "アンケート情報"
 msgstr ""
 
-#: ../../mi.rst:416
+#: ../../mi.rst:426
 msgid "RenotePayload"
 msgstr ""
 
-#: ../../mi.rst:425
+#: ../../mi.rst:435
 msgid "NotePayload"
 msgstr ""
 
@@ -1185,44 +1226,44 @@ msgstr ""
 msgid "note object"
 msgstr ""
 
-#: ../../mi.rst:434
+#: ../../mi.rst:444
 msgid "OptionalReaction"
 msgstr ""
 
-#: ../../mi.rst:443
+#: ../../mi.rst:453
 #, fuzzy
 msgid "ReactionPayload"
 msgstr "Reaction"
 
-#: ../../mi.rst:452
+#: ../../mi.rst:462
 msgid "NoteReactionPayload"
 msgstr ""
 
-#: ../../mi.rst:461
+#: ../../mi.rst:471
 msgid "ChannelPayload"
 msgstr ""
 
-#: ../../mi.rst:470
+#: ../../mi.rst:480
 msgid "PinnedNotePayload"
 msgstr ""
 
-#: ../../mi.rst:479
+#: ../../mi.rst:489
 msgid "PinnedPagePayload"
 msgstr ""
 
-#: ../../mi.rst:487
+#: ../../mi.rst:497
 msgid "FieldContentPayload"
 msgstr ""
 
-#: ../../mi.rst:495
+#: ../../mi.rst:505
 msgid "OptionalUser"
 msgstr ""
 
-#: ../../mi.rst:513
+#: ../../mi.rst:523
 msgid "例外処理"
 msgstr "Behandlung von Ausnahmen"
 
-#: ../../mi.rst:518
+#: ../../mi.rst:528
 msgid "NotFoundError"
 msgstr "NotFoundError"
 
@@ -1230,7 +1271,7 @@ msgstr "NotFoundError"
 msgid "http アクセス時に404が帰ってきた際の例外"
 msgstr "Ausnahme für 404-Rückgaben bei http-Zugriff"
 
-#: ../../mi.rst:522
+#: ../../mi.rst:532
 msgid "TaskNotRunningError"
 msgstr "TaskNotRunningError"
 
@@ -1240,7 +1281,7 @@ msgstr ""
 "Ausnahme, die beim Versuch, eine Aufgabe anzuhalten, ausgelöst wird, wenn"
 " die Aufgabe nicht gestartet wurde"
 
-#: ../../mi.rst:526
+#: ../../mi.rst:536
 msgid "ImAi"
 msgstr "ImAi"
 
@@ -1248,7 +1289,7 @@ msgstr "ImAi"
 msgid "私は藍です"
 msgstr "Ich bin Indigo."
 
-#: ../../mi.rst:530
+#: ../../mi.rst:540
 msgid "InternalServerError"
 msgstr "InternalServerError"
 
@@ -1256,7 +1297,7 @@ msgstr "InternalServerError"
 msgid "http アクセス時に500が帰ってきた際の例外"
 msgstr "Ausnahme, wenn der http-Zugang 500 zurückgibt"
 
-#: ../../mi.rst:534
+#: ../../mi.rst:544
 msgid "ClientError"
 msgstr "ClientFehler"
 
@@ -1264,7 +1305,7 @@ msgstr "ClientFehler"
 msgid "http アクセス時に400が帰ってきた際の例外"
 msgstr "Ausnahme, wenn der http-Zugang 400 zurückgibt"
 
-#: ../../mi.rst:539
+#: ../../mi.rst:549
 msgid "AuthenticationError"
 msgstr "AuthenticationError"
 
@@ -1272,7 +1313,7 @@ msgstr "AuthenticationError"
 msgid "認証で問題が発生した際の例外"
 msgstr "Ausnahmen im Falle von Authentifizierungsproblemen"
 
-#: ../../mi.rst:543
+#: ../../mi.rst:553
 msgid "NotExistRequiredParameters"
 msgstr "NotExistRequiredParameters"
 
@@ -1280,7 +1321,7 @@ msgstr "NotExistRequiredParameters"
 msgid "必須のパラメーターが存在しない場合の例外"
 msgstr "Ausnahmen, wenn die erforderlichen Parameter nicht vorhanden sind"
 
-#: ../../mi.rst:547
+#: ../../mi.rst:557
 msgid "InvalidParameters"
 msgstr "InvalidParameters"
 
@@ -1288,7 +1329,7 @@ msgstr "InvalidParameters"
 msgid "パラメーターが無効"
 msgstr "Ungültiger Parameter"
 
-#: ../../mi.rst:551
+#: ../../mi.rst:561
 msgid "CredentialRequired"
 msgstr "CredentialRequired"
 
@@ -1296,7 +1337,7 @@ msgstr "CredentialRequired"
 msgid "認証情報が不足している"
 msgstr "Authentifizierungsinformationen fehlen"
 
-#: ../../mi.rst:555
+#: ../../mi.rst:565
 msgid "ContentRequired"
 msgstr "ContentRequired"
 
@@ -1304,7 +1345,7 @@ msgstr "ContentRequired"
 msgid "送信するコンテンツが不足している"
 msgstr "Es gibt nicht genügend Inhalt zum Senden"
 
-#: ../../mi.rst:561
+#: ../../mi.rst:571
 msgid "CogNameDuplicate"
 msgstr "CogNameDuplicate"
 
@@ -1312,7 +1353,7 @@ msgstr "CogNameDuplicate"
 msgid "cogの名前が重複している"
 msgstr "Doppelte Cog-Namen"
 
-#: ../../mi.rst:565
+#: ../../mi.rst:575
 msgid "ExtensionAlreadyLoaded"
 msgstr "ExtensionAlreadyLoaded"
 
@@ -1320,7 +1361,7 @@ msgstr "ExtensionAlreadyLoaded"
 msgid "cogがすでに読み込まれている"
 msgstr "Cog ist bereits geladen"
 
-#: ../../mi.rst:569
+#: ../../mi.rst:579
 msgid "ExtensionFailed"
 msgstr "ExtensionFailed"
 
@@ -1328,7 +1369,7 @@ msgstr "ExtensionFailed"
 msgid "cog周りのエラー"
 msgstr "Fehler im Cog"
 
-#: ../../mi.rst:573
+#: ../../mi.rst:583
 msgid "NoEntryPointError"
 msgstr "NoEntryPointError"
 
@@ -1336,7 +1377,7 @@ msgstr "NoEntryPointError"
 msgid "cogにsetup関数が無い場合の例外"
 msgstr "Ausnahme, wenn Cog keine Einrichtungsfunktion hat"
 
-#: ../../mi.rst:577
+#: ../../mi.rst:587
 msgid "ExtensionNotFound"
 msgstr "ExtensionNotFound"
 
@@ -1344,7 +1385,7 @@ msgstr "ExtensionNotFound"
 msgid "指定されたパスにcogが存在しない場合の例外"
 msgstr "Ausnahme, wenn Cog im angegebenen Pfad nicht existiert"
 
-#: ../../mi.rst:581
+#: ../../mi.rst:591
 msgid "CommandRegistrationError"
 msgstr "CommandRegistrationError"
 
@@ -1352,7 +1393,7 @@ msgstr "CommandRegistrationError"
 msgid "コマンド登録時のエラー"
 msgstr "Fehler bei der Registrierung von Befehlen"
 
-#: ../../mi.rst:585
+#: ../../mi.rst:595
 msgid "CommandError"
 msgstr "CommandError"
 
@@ -1360,7 +1401,7 @@ msgstr "CommandError"
 msgid "コマンドで問題が発生した際の例外"
 msgstr "Ausnahmen, wenn ein Problem mit einem Befehl auftritt"
 
-#: ../../mi.rst:589
+#: ../../mi.rst:599
 msgid "CommandInvokeError"
 msgstr "CommandInvokeError"
 
@@ -1368,7 +1409,7 @@ msgstr "CommandInvokeError"
 msgid "コマンドの実行に問題が発生した際の例外"
 msgstr "Ausnahmen, wenn ein Problem bei der Ausführung eines Befehls auftritt"
 
-#: ../../mi.rst:593
+#: ../../mi.rst:603
 msgid "CheckFailure"
 msgstr "CheckFailure"
 
@@ -1376,7 +1417,7 @@ msgstr "CheckFailure"
 msgid "コマンドの実行可能かのチェックに失敗した際の例外"
 msgstr "Ausnahme, wenn der Befehl nicht prüfen kann, ob er ausführbar ist"
 
-#: ../../mi.rst:597
+#: ../../mi.rst:607
 msgid "InvalidCogPath"
 msgstr "InvalidCogPath"
 
@@ -1384,7 +1425,7 @@ msgstr "InvalidCogPath"
 msgid "cogのパスが不正"
 msgstr "Falscher Pfad zu Cog"
 
-#: ../../mi.rst:602
+#: ../../mi.rst:612
 msgid "NotExistRequiredData"
 msgstr "NotExistRequiredData"
 
@@ -1394,7 +1435,7 @@ msgstr ""
 "Ausnahme, die ausgelöst wird, wenn die erforderlichen Daten nicht "
 "vorhanden sind"
 
-#: ../../mi.rst:607
+#: ../../mi.rst:617
 msgid "Low-Level API"
 msgstr "Niederschwellige API"
 
@@ -1464,19 +1505,19 @@ msgstr ""
 msgid "ノートイベントを解析する関数"
 msgstr ""
 
-#: ../../mi.rst:621
+#: ../../mi.rst:631
 msgid "Low-Layer API"
 msgstr "Low-Layer-API"
 
-#: ../../mi.rst:633
-msgid "Utils"
+#: ../../mi.rst:643
+msgid "ユーティリティ関数"
 msgstr ""
 
-#: ../../mi.rst:638
+#: ../../mi.rst:648
 msgid "get_emoji_list"
 msgstr ""
 
-#: ../../mi.rst:643
+#: ../../mi.rst:653
 msgid "emoji_count"
 msgstr ""
 
@@ -1484,7 +1525,7 @@ msgstr ""
 msgid "テキストの中にいくつのemojiが含まれているかをカウントします"
 msgstr ""
 
-#: ../../mi.rst:648
+#: ../../mi.rst:658
 msgid "check_multi_arg"
 msgstr ""
 
@@ -1991,4 +2032,7 @@ msgstr ""
 
 #~ msgid "最大取得数"
 #~ msgstr "Maximale Anzahl von Abrufen"
+
+#~ msgid "Utils"
+#~ msgstr ""
 

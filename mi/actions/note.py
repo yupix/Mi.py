@@ -8,6 +8,7 @@ from mi.framework.models.note import Note, NoteReaction, Poll
 from mi.framework.router import Route
 from mi.utils import check_multi_arg, remove_dict_empty
 from mi.wrapper.favorite import FavoriteManager
+from mi.wrapper.file import MiFile, check_upload, get_file_ids
 from mi.wrapper.models.note import RawNote
 from mi.wrapper.reaction import ReactionManager
 
@@ -56,7 +57,7 @@ class NoteActions:
                    reply_id: Optional[str] = None,
                    renote_id: Optional[str] = None,
                    channel_id: Optional[str] = None,
-                   file_ids=None,
+                   files: Optional[List[MiFile]]=None,
                    poll: Optional[Poll] = None
                    ) -> Note:
         """
@@ -86,8 +87,8 @@ class NoteActions:
             リノート先のid, by default None
         channel_id : Optional[str], optional
             チャンネルid, by default None
-        file_ids : [type], optional
-            添付するファイルのid, by default None
+        files : List[MiFile], optional
+            添付するファイルのリスト, by default None
         poll : Optional[Poll], optional
             アンケート, by default None
 
@@ -102,8 +103,7 @@ class NoteActions:
             [description]
         """
 
-        if file_ids is None:
-            file_ids = []
+
         field = {
             "visibility": visibility,
             "visibleUserIds": visible_user_ids,
@@ -117,7 +117,7 @@ class NoteActions:
             "renoteId": renote_id,
             "channelId": channel_id
         }
-        if not check_multi_arg(content, file_ids, renote_id, poll):
+        if not check_multi_arg(content, files, renote_id, poll):
             raise ContentRequired("ノートの送信にはcontent, file_ids, renote_id またはpollのいずれか1つが無くてはいけません")
 
         if poll and type(Poll):
@@ -129,8 +129,8 @@ class NoteActions:
             })
             field["poll"] = poll_data
 
-        if file_ids:
-            field["fileIds"] = file_ids
+        if files:
+            field["fileIds"] = await get_file_ids(files=files)
         field = remove_dict_empty(field)
         res = await HTTPSession.request(Route('POST', '/api/notes/create'), json=field, auth=True, lower=True)
         return Note(RawNote(res["created_note"]))
