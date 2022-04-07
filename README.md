@@ -35,6 +35,8 @@ await Router(ws).connect_channel(['home', 'global'])
 
 2. v3.0.0 has very little compatibility with v2.0.0.
 
+3. X.X.X > X.9.9 and X.9.9 or higher is a beta version that does not raise the major version but makes destructive changes such as BREAKING CHANGE, etc. 3.10.1 is also a beta version. The following is a list of the most common problems with the
+
 ### Collaborators
 
 <table>
