@@ -1,0 +1,43 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2022, yupix
+# This file is distributed under the same license as the Mi.py package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Mi.py \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-04-07 11:24+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: ../../what_new.rst:2
+msgid "変更履歴"
+msgstr ""
+
+#: ../../what_new.rst:5
+msgid "v4.0.0"
+msgstr ""
+
+#: ../../what_new.rst:8
+msgid "変更"
+msgstr ""
+
+#: ../../what_new.rst:9
+msgid "utils.pyの関数 ``extract_emojis`` を `get_unicode_emojis` に変更しました"
+msgstr ""
+
+#: ../../what_new.rst:12
+msgid "削除"
+msgstr ""
+
+#: ../../what_new.rst:13
+msgid "utils.pyの関数 ``json_dump`` を削除しました"
+msgstr ""
+

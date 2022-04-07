@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  Mi.py\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-02-20 10:16+0900\n"
+"POT-Creation-Date: 2022-04-07 11:24+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -189,8 +189,7 @@ msgstr "Benutzerkennung, default=None"
 msgid "チャンネルid, by default None"
 msgstr "Gruppen-ID, Standard=None"
 
-#: mi.actions.note.NoteActions.send:26 mi.framework.models.note.Note.reply:18
-#: of
+#: mi.framework.models.note.Note.reply:18 of
 #, fuzzy
 msgid "添付するファイルのid, by default None"
 msgstr "Datei-ID zum Anhängen, efault=None"
@@ -259,7 +258,7 @@ msgstr "Chat-Objekte"
 msgid "チャットを削除します（チャットの作者である必要があります）"
 msgstr "Einen Chat löschen (Sie müssen der Autor des Chats sein)"
 
-#: mi.actions.note.NoteActions.add_clips:9
+#: mi.actions.note.NoteActions.add_clips:11
 #: mi.framework.models.chat.Chat.delete:4 of
 msgid "成功したか否か"
 msgstr "Erfolg oder Misserfolg"
@@ -887,11 +886,14 @@ msgid "クリップに追加します"
 msgstr ""
 
 #: mi.actions.note.NoteActions.add_clips:4 of
+msgid "追加するノートのID"
+msgstr ""
+
+#: mi.actions.note.NoteActions.add_clips:6 of
 msgid "クリップのID"
 msgstr ""
 
-#: mi.actions.note.NoteActions.add_clips:6
-#: mi.actions.note.NoteActions.add_clips:7 of
+#: mi.actions.note.NoteActions.add_clips:8 of
 msgid "追加したいノートのID"
 msgstr ""
 
@@ -925,6 +927,11 @@ msgstr ""
 #, fuzzy
 msgid "リプライ先のid, by default None"
 msgstr "Benutzerkennung, default=None"
+
+#: mi.actions.note.NoteActions.send:26 of
+#, fuzzy
+msgid "添付するファイルのリスト, by default None"
+msgstr "Datei-ID zum Anhängen, efault=None"
 
 #: mi.actions.note.NoteActions.send:31 of
 msgid "投稿したノート"
@@ -1469,7 +1476,7 @@ msgid "Low-Layer API"
 msgstr "Low-Layer-API"
 
 #: ../../mi.rst:633
-msgid "Utils"
+msgid "ユーティリティ関数"
 msgstr ""
 
 #: ../../mi.rst:638
@@ -1991,4 +1998,7 @@ msgstr ""
 
 #~ msgid "最大取得数"
 #~ msgstr "Maximale Anzahl von Abrufen"
+
+#~ msgid "Utils"
+#~ msgstr ""
 

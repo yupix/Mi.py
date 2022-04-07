@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  Mi.py\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-02-20 10:16+0900\n"
+"POT-Creation-Date: 2022-04-07 11:24+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: de\n"
@@ -43,6 +43,14 @@ msgid ":doc:`mi`"
 msgstr ""
 
 #: ../../index.rst:27
+msgid "Meta"
+msgstr ""
+
+#: ../../index.rst:29
+msgid ":doc:`what_new`"
+msgstr ""
+
+#: ../../index.rst:32
 msgid "Recent Changes"
 msgstr ""
 
