@@ -10,6 +10,11 @@
 
 [日本語](./README-ja.md)
 
+## Warning
+
+This project will no longer be updated.
+Please consider moving to [MiPA](https://github.com/yupix/mipa), the successor project to Mi.py.
+
 ## Overview
 
 Mi.py is a Misskey API Wrapper that is designed to be written in a [Discord.py](https://github.com/Rapptz/discord.py)-like way
