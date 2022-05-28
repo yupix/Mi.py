@@ -8,6 +8,10 @@
 <a href="https://discord.gg/CcT997U"><img src="https://img.shields.io/discord/530299114387406860?style=flat-square&color=5865f2&logo=discord&logoColor=ffffff&label=discord" alt="Discord server invite" /></a>
 [![Join the chat at https://gitter.im/yupix/Mi.py](https://badges.gitter.im/yupix/Mi.py.svg)](https://gitter.im/yupix/Mi.py?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
+# 警告
+
+このプロジェクトは更新されません。
+Mi.pyの後継プロジェクトである [MiPA](https://github.com/yupix/mipa) への移行をご検討ください。
 
 ## 概要
 
